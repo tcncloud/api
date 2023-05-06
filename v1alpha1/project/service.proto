@@ -1,0 +1,492 @@
+syntax = "proto3";
+
+package v1alpha1.project;
+
+option java_package="com.tcn.api.v1alpha1.project";
+option go_package="github.com/tcncloud/api/v1alpha1.project;project";
+
+
+
+
+import "google/api/annotations.proto";
+import "annotations/authz.proto";
+import "commons/types.proto";
+import "commons/project.proto";
+import "commons/omnichannel.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+
+// Service for interacting with TCN's Project API system.
+// Accessing all of the methods require an authenticated user with the correct
+// permissions.
+service ProjectApi {
+
+  // Create/Record project defined by CreateProjectReq message for a specified
+  // name, description and status.
+  // The method will return a Project message/entity that will
+  // contain the newly created project_id value for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateProject(CreateProjectReq) returns (CreateProjectRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createproject";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // list projects for the current org
+  // The method will return a list of Project messages/entities
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListProjects(ListProjectsReq) returns (ListProjectsRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listprojects";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Update project defined by EditProjectByIdReq message for a specified
+  // project id.
+  // The method will return a Project message/entity that will
+  // contain the updated details for the project_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc EditProjectById(EditProjectByIdReq) returns (EditProjectByIdRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/editprojectbyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Closes project defined by CloseProjectByIdReq message for a specified
+  // project id.
+  // The method will stop all child campaigns and return a an empty response
+  // if successful
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CloseProjectById(CloseProjectByIdReq) returns (CloseProjectByIdRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/closeprojectbyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Get project details defined by GetProjectByIdReq message for a specified
+  // project id.
+  // The method will return a GetProjectByIdRes message/entity that will
+  // contain all the project details for the project_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetProjectById(GetProjectByIdReq) returns (Project) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getprojectbyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Create/Record canned message defined by CreateCannedMessageReq message for a specified
+  // name, description and message_body.
+  // The method will return a CannedMessage message/entity that will
+  // contain the newly created canned message details for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateCannedMessage(CreateCannedMessageReq) returns (CannedMessage) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createcannedmessage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // list canned messages for the current org
+  // The method will return a list of canned messages/entities
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListCannedMessages(ListCannedMessagesReq) returns (ListCannedMessagesRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
+        {permissions: [PERMISSION_AGENT]}];
+    };
+  }
+
+  // Update canned message defined by UpdateCannedMessageReq message for a specified
+  // name, description and message_body.
+  // The method will return a CannedMessage message/entity that will
+  // contain the updated canned message details for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateCannedMessage(UpdateCannedMessageReq) returns (CannedMessage) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/updatecannedmessage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Get canned message details for the canned_message_id
+  // The method will return an canned message/entity
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetCannedMessageById(GetCannedMessageByIdReq) returns (CannedMessageWithGroup) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getcannedmessagebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Delete canned message details for the canned_message_id
+  // The method will delete an canned message/entity
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DeleteCannedMessageById(DeleteCannedMessageByIdReq) returns (DeleteCannedMessageByIdRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/deletecannedmessagebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
+  // name and description.
+  // The method will return a CannedMessageGroup message/entity that will
+  // contain the newly created canned message group details for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateCannedMessageGroup(CreateCannedMessageGroupReq) returns (CannedMessageGroup) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createcannedmessagegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // list canned message groups for the current org
+  // The method will return a list of canned message groups/entities
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListCannedMessageGroups(ListCannedMessageGroupsReq) returns (ListCannedMessageGroupsRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessagegroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
+        {permissions: [PERMISSION_AGENT]}];
+    };
+  }
+
+  // Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
+  // name and description.
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateCannedMessageGroup(UpdateCannedMessageGroupReq) returns (UpdateCannedMessageGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/updatecannedmessagegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // Delete canned message group and all the related messages for the canned_message_group_id
+  // The method will delete an canned message group/entity
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DeleteCannedMessageGroup(DeleteCannedMessageGroupReq) returns (DeleteCannedMessageGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/deletecannedmessagegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+    };
+  }
+
+  // list canned messages for the group
+  // The method will return a list of canned messages/entities
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListCannedMessagesByGroupId(ListCannedMessagesByGroupIdReq) returns (ListCannedMessagesByGroupIdRes) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessagesbygroupid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
+        {permissions: [PERMISSION_AGENT]}];
+    };
+  }
+
+  // Get canned message group details for the canned_message_group_id
+  // The method will return an canned message group/entity
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetCannedMessageGroupById(GetCannedMessageGroupByIdReq) returns (CannedMessageGroup) {
+    option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getcannedmessagegroupbyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
+        {permissions: [PERMISSION_AGENT]}];
+    };
+  }
+}
+
+// CreateProjectReq -
+message CreateProjectReq {
+  // project name
+  string name = 1;
+  // project description
+  string description = 2;
+}
+
+// CreateProjectRes -
+message CreateProjectRes {
+  // the created project
+  Project project = 1;
+  // the ghost notifier id
+  string reference_id = 2;
+}
+
+// Project -
+message Project {
+  // project identifier
+  int64 project_sid = 1 [jstype = JS_STRING];
+  // project name
+  string name = 2;
+  // project description
+  string description = 3;
+  // project status
+  commons.ProjectStatus status = 4;
+  // creation date
+  google.protobuf.Timestamp date_created = 5;
+}
+
+// request used to get a list of projects
+message ListProjectsReq {
+  // Optional. If provided, will only list projects
+  // whose sids are in the list of sids provided.
+  repeated int64 project_sids = 1;
+}
+
+// response holding the list of projects
+message ListProjectsRes {
+  // the list of projects
+  repeated Project projects = 1;
+}
+
+//request to update omni project details by project id
+message EditProjectByIdReq {
+  //project
+  Project project = 1;
+  //field mask
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// EditProjectByIdRes - result of editing a project
+message EditProjectByIdRes {
+  // the created project
+  Project project = 1;
+  // the ghost notifier id
+  string reference_id = 2;
+}
+
+// request to closing an omni project project id
+message CloseProjectByIdReq {
+  // project id
+  int64 project_sid = 1 [jstype = JS_STRING];
+}
+
+// response to closing an omni project project id
+message CloseProjectByIdRes {}
+
+//request to get omni project details by project id
+message GetProjectByIdReq {
+  // project id
+  int64 project_sid = 1 [jstype = JS_STRING];
+}
+
+//request to create canned message
+message CreateCannedMessageReq {
+  // canned message name
+  string name = 1;
+  // description
+  string description = 2;
+  // message details
+  string message_body = 3;
+  // canned message group id
+  string canned_message_group_id = 4;
+  // allows html
+  bool allows_html = 5;
+  // attachments
+  repeated commons.OmniAttachment attachments = 6;
+}
+
+//canned message creation details
+message CannedMessage {
+  // result of generated canned_message_id
+  string canned_message_id = 1;
+  /// canned message name
+  string name = 2;
+  // description
+  string description = 3;
+  // message details
+  string message_body = 4;
+  // creation date
+  google.protobuf.Timestamp date_created = 5;
+  // last updated date
+  google.protobuf.Timestamp last_updated = 6;
+  // canned message group id
+  string canned_message_group_id = 7;
+  // allows html
+  bool allows_html = 8;
+  // attachments
+  repeated commons.OmniAttachment attachments = 9;
+}
+
+// request used to get a list of CannedMessages
+message ListCannedMessagesReq {}
+
+// response holding the list of CannedMessages with group details
+message ListCannedMessagesRes {
+  // the list of cannedMessages with group details
+  repeated CannedMessageWithGroup canned_messages_with_group = 1;
+}
+
+//request to update canned message details
+message UpdateCannedMessageReq {
+  // canned_message_id
+  string canned_message_id = 1;
+  // canned message name
+  string name = 2;
+  // description
+  string description = 3;
+  // message details
+  string message_body = 4;
+  // canned message group id
+  string canned_message_group_id = 5;
+  // allows html
+  bool allows_html = 6;
+  // attachments
+  repeated commons.OmniAttachment attachments = 7;
+}
+
+//request to get canned message by id
+message GetCannedMessageByIdReq {
+  // canned_message_id
+  string canned_message_id = 1;
+}
+
+//request to delete canned message by id
+message DeleteCannedMessageByIdReq {
+  // canned_message_id
+  string canned_message_id = 1;
+}
+
+//response to delete canned message by id
+message DeleteCannedMessageByIdRes {
+  bool Result = 1;
+}
+
+// request to create canned message group
+message CreateCannedMessageGroupReq {
+  // canned message name
+  string name = 1;
+  // description
+  string description = 2;
+}
+
+//canned message group creation details
+message CannedMessageGroup {
+  // result of generated canned_message_group_id
+  string canned_message_group_id = 1;
+  // canned message group name
+  string name = 2;
+  // description
+  string description = 3;
+  // creation date
+  google.protobuf.Timestamp date_created = 4;
+  // last updated date
+  google.protobuf.Timestamp last_updated = 5;
+}
+
+//canned message with group details
+message CannedMessageWithGroup {
+  // result of generated canned_message_id
+  string canned_message_id = 1;
+  /// canned message name
+  string name = 2;
+  // description
+  string description = 3;
+  // message details
+  string message_body = 4;
+  // creation date
+  google.protobuf.Timestamp date_created = 5;
+  // last updated date
+  google.protobuf.Timestamp last_updated = 6;
+  // canned message group id
+  string canned_message_group_id = 7;
+  // canned message group name
+  string group_name = 8;
+  // group description
+  string group_description = 9;
+  // group creation date
+  google.protobuf.Timestamp group_date_created = 10;
+  // group last updated date
+  google.protobuf.Timestamp group_last_updated = 11;
+  // allows html
+  bool allows_html = 12;
+  // attachments
+  repeated commons.OmniAttachment attachments = 13;
+  // generated canned message sid
+  int64 canned_message_sid = 14;
+}
+
+// request used to get a list of CannedMessageGroups
+message ListCannedMessageGroupsReq {}
+
+// response holding the list of CannedMessageGroups
+message ListCannedMessageGroupsRes {
+  // list of cannedMessageGroups
+  repeated CannedMessageGroup canned_message_groups = 1;
+}
+
+//request to update canned message group details
+message UpdateCannedMessageGroupReq {
+  // canned_message_group_id
+  string canned_message_group_id = 1;
+  // canned message group name
+  string name = 2;
+  // group description
+  string description = 3;
+}
+
+//response to update canned message group details
+message UpdateCannedMessageGroupRes {}
+
+//request to delete canned message group
+message DeleteCannedMessageGroupReq {
+  // canned_message_group_id
+  string canned_message_group_id = 1;
+}
+
+//response to delete canned message group
+message DeleteCannedMessageGroupRes {}
+
+// request used to get a list of CannedMessages for the group
+message ListCannedMessagesByGroupIdReq {
+  // canned_message_group_id
+  string canned_message_group_id = 1;
+}
+
+// response holding the list of CannedMessages with group details for the group
+message ListCannedMessagesByGroupIdRes {
+  // the list of cannedMessages with group details
+  repeated CannedMessageWithGroup canned_messages_with_group = 1;
+}
+
+//request to get canned message group details by id
+message GetCannedMessageGroupByIdReq {
+  // canned_message_group_id
+  string canned_message_group_id = 1;
+}

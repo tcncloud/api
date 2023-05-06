@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+enum BroadcastType {
+  TYPE_UNKNOWN = 0;
+
+  TYPE_OUTBOUND = 1000;
+  TYPE_OUTBOUND_PREVIEW_ONLY = 1100;
+  TYPE_OUTBOUND_MAC_ONLY = 1200;
+  TYPE_OUTBOUND_RINGLESS_VOICEMAIL = 1300;
+  TYPE_INBOUND = 2000;
+  TYPE_MANUAL = 3000;
+  TYPE_SMS = 4000;
+  TYPE_EMAIL = 5000;
+
+  TYPE_OUTBOUND_INBOUND = 7000;
+  TYPE_OUTBOUND_MANUAL = 8000;
+  TYPE_INBOUND_MANUAL = 9000;
+  TYPE_OUTBOUND_INBOUND_MANUAL = 10000;
+}
+
+// Enum to represent the different template types that broadcast templates can be.
+message TemplateType {
+  enum Enum {
+    UNKNOWN = 0;
+    STANDARD = 1;
+    LAYERED = 2;
+    INBOUND = 3;
+    MAC_ONLY = 4;
+    PREVIEW_ONLY = 5;
+    RINGLESS_VOICEMAIL = 6;
+  }
+}

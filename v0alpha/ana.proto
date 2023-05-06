@@ -1,0 +1,1375 @@
+syntax = "proto3";
+
+package v0alpha;
+
+option java_package="com.tcn.api.v0alpha";
+option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
+
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "commons/ana.proto";
+import "commons/ana_charts.proto";
+import "google/protobuf/empty.proto";
+
+// import "commons/types.proto";
+
+service Ana {
+
+  // gets all visualizations for a specific client
+  rpc GetSpecifiedVisualizations(GetSpecifiedVisualizationsReq) returns (Visualizations) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetSpecifiedVisualizations";
+    option (google.api.http).body = "*";
+  }
+  // Admin
+
+  // Registers a new AnaAccoun based on org_id
+  // The method will return the newly create AnaAccount
+  // on the response message AnaAccount.
+  // Required Permissions:
+  //  EDIT_ADMIN_CLIENT_PREFERENCES
+  rpc RegisterAccount(RegisterAccountReq) returns (AnaAccount) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/RegisterAccount";
+    option (google.api.http).body = "*";
+  }
+  // sets the length of analytics history the client can view
+  rpc SetWeeks(SetWeeksReq) returns (SetWeeksRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/SetWeeks";
+    option (google.api.http).body = "*";
+  }
+  // set default time filter for given ana account
+  rpc SetDefaultTimeFilter(SetDefaultTimeFilterReq)
+      returns (SetDefaultTimeFilterRes) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/SetDefaultTimeFilter";
+    option (google.api.http).body = "*";
+  }
+  // sets the dashboard that is shown by default for neo
+  rpc SetDefaultDashboard(SetDefaultDashboardReq)
+      returns (SetDefaultDashboardRes) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/SetDefaultDashboard";
+    option (google.api.http).body = "*";
+  }
+
+  // gets account details for the client
+  rpc GetAccount(GetAccountReq) returns (AnaAccount) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetAccount";
+    option (google.api.http).body = "*";
+  }
+
+  // gets account details using the org_id provided
+  rpc GetSpecifiedAccount(GetSpecifiedAccountReq) returns (AnaAccount) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetSpecifiedAccount";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets an authorized url for the clients BI analytics page
+  rpc GetAuthorizedAnalyticsLink(GetAuthorizedAnalyticsLinkReq) returns (GetAuthorizedAnalyticsLinkRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetAuthorizedAnalyticsLink";
+    option (google.api.http).body = "*";
+  }
+
+  // creates and returns a url to download billing for the month provided or the previous month if none is provided
+  rpc GenerateMonthlyBilling(GenerateMonthlyBillingReq) returns (GenerateMonthlyBillingRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/billing/GenerateMonthlyBilling";
+    option (google.api.http).body = "*";
+  }
+
+  // gets the ana_account timezone for the client
+  rpc GetTimeZone(GetTimeZoneReq) returns (TimeZone) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetTimeZone";
+    option (google.api.http).body = "*";
+  }
+
+  // updates the timezone for the account
+  rpc SetTimeZone(SetTimeZoneReq) returns (SetTimeZoneRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/SetTimeZone";
+    option (google.api.http).body = "*";
+  }
+
+  // copies the reports (dashboards legacy and visualizations legacy)
+  // corresponding with the ids provided
+  rpc CopyDashViz(CopyDashVizReq) returns (CopyDashVizRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/CopyDashViz";
+    option (google.api.http).body = "*";
+  }
+
+  // returns a summary of all billing factors for the specified client, whether client is pro, and which of those features contribute to making the client pro
+  rpc GetSpecifiedBillingSummary(GetSpecifiedBillingSummaryReq) returns (BillingSummary) {
+    option (google.api.http).post = "/api/v0alpha/ana/billing/GetSpecifiedBillingSummary";
+    option (google.api.http).body = "*";
+  }
+
+  // returns a summary of all billing factors for the client, whether client is
+  // pro, and which of those features contribute to making the client pro
+  rpc GetBillingSummary(GetBillingSummaryReq) returns (BillingSummary) {
+    option (google.api.http).post = "/api/v0alpha/ana/billing/GetBillingSummary";
+    option (google.api.http).body = "*";
+  }
+
+  // enable custom report usage for the client
+  rpc EnableCustomReports(SetCustomReportsEnabledReq)
+      returns (SetCustomReportsEnabledRes) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/EnableCustomReports";
+    option (google.api.http).body = "*";
+  }
+
+  // disable custom report usage for the client
+  rpc DisableCustomReports(SetCustomReportsEnabledReq)
+      returns (SetCustomReportsEnabledRes) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/DisableCustomReports";
+    option (google.api.http).body = "*";
+  }
+
+  // allow the client to be adopted by another account
+  rpc MakeAdoptable(MakeAdoptableReq) returns (MakeAdoptableRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/MakeAdoptable";
+    option (google.api.http).body = "*";
+  }
+
+  // disallow other accounts from adopting the client
+  rpc MakeUnadoptable(MakeAdoptableReq) returns (MakeAdoptableRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/MakeUnadoptable";
+    option (google.api.http).body = "*";
+  }
+
+  // allow the parent to view the data of the adoptable child
+  rpc AdoptAnaAccount(SetAnaAccountRelationReq)
+      returns (SetAnaAccountRelationRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/AdoptAnaAccount";
+    option (google.api.http).body = "*";
+  }
+
+  // disallow the parent from viewing the data of the child
+  rpc DisownAnaAccount(SetAnaAccountRelationReq)
+      returns (SetAnaAccountRelationRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/DisownAnaAccount";
+    option (google.api.http).body = "*";
+  }
+
+  // gets all clients that can be viewed by the client including the client
+  rpc GetAccessibleClients(GetAccessibleClientsReq) returns (SimpleRelations) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetAccessibleClients";
+    option (google.api.http).body = "*";
+  }
+
+  // gets all relations in which the client is involved grouped by whether the
+  // client is the parent or child account
+  rpc GetFamily(GetFamilyReq) returns (Family) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetFamily";
+    option (google.api.http).body = "*";
+  }
+
+  // gets the client's data visibility as defined in the database (source of
+  // truth); internal use only
+  rpc GetAllowedDataVisibility(GetVisibilityReq) returns (DataVisibility) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetAllowedDataVisibility";
+    option (google.api.http).body = "*";
+  }
+
+  // gets the client's data visibility as is evident from the elasticsearch
+  // indices structure; internal use only
+  rpc GetCurrentDataVisibility(GetVisibilityReq) returns (DataVisibility) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetCurrentDataVisibility";
+    option (google.api.http).body = "*";
+  }
+
+  // gets a visibility summary from the perspective of the elasticsearch
+  // indices; internal use only
+  rpc GetIndicesVisibility(GetVisibilityReq) returns (IndicesVisibility) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetIndicesVisibility";
+    option (google.api.http).body = "*";
+  }
+  // gets the client's data visibility as exists in the elasticsearch data;
+  // internal use only
+  rpc GetAuditableDataVisibility(GetVisibilityReq) returns (DataVisibility) {
+    option (google.api.http).post =
+        "/api/v0alpha/ana/admin/GetAuditableDataVisibility";
+    option (google.api.http).body = "*";
+  }
+
+  // gets a map of client sids to organization names
+  rpc GetOrganizationNames(GetOrganizationNamesReq) returns (GetOrganizationNamesRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetOrganizationNames";
+    option (google.api.http).body = "*";
+  }
+
+  // generate visualization data for the id
+  rpc GenerateVizDataById(GenerateVizDataByIdReq) returns (GenerateVizDataByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GenerateVizDataById";
+    option (google.api.http).body = "*";
+  }
+
+
+  // Census
+
+  // Gets client's data status
+  // Data status is the status of calls loaded in elasticsearch
+  // against all calls in the database that are within the clients weeks of data setting
+  // This method requires a client sid
+  // Required permissions:
+  //      CUSTOMER_SUPPORT
+  rpc GetClientStatus(GetClientStatusReq) returns (GetClientStatusResp) {
+    option (google.api.http).post = "/api/v0alpha/ana/census/GetClientStatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Reloads client's data
+  // This loads calls from the database into elasticsearch
+  // This method requires a client sid
+  // Required permissions:
+  //      WIP - DEV_OPS
+  rpc ReloadClientData(ReloadClientDataReq) returns (ReloadClientDataResp) {
+    option (google.api.http).post = "/api/v0alpha/ana/census/ReloadClientData";
+    option (google.api.http).body = "*";
+  }
+
+  // list all clients visualizations id and title
+  rpc ListVisualizationsLegacy(ListVisualizationsLegacyReq) returns (ListVisualizationsLegacyRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/visualization/ListLegacy";
+    option (google.api.http).body = "*";
+  }
+}
+
+
+// Admin messages
+message SetWeeksReq {
+  reserved 1;
+  int64 weeks = 2;
+  // setting weeks of specified org
+  string org_id = 4;
+}
+
+message SetWeeksRes {}
+
+message SetHomeDashboardReq { string home_dashboard = 3; }
+
+message SetHomeDashboardRes {}
+
+message SetDefaultTimeFilterReq { string default_time_filter = 3; }
+
+message SetDefaultTimeFilterRes {}
+
+message SetDefaultDashboardReq { string dashboard_id = 3; }
+
+message SetDefaultDashboardRes {}
+
+message GetAccountReq {}
+
+message GetSpecifiedAccountReq {
+  reserved 1;
+  // Specified org id tto get account information from
+  string org_id = 3;
+}
+
+message GenerateMonthlyBillingReq { // empty month+year returns current month
+  int64 month = 1;
+  int64 year = 2;
+}
+
+message GenerateMonthlyBillingRes {
+  int64 month = 1;
+  int64 year = 2;
+  string url = 3;
+}
+
+message AnaAccount {
+  string uuid = 1;
+  int64 p3_client_sid = 2;
+  google.protobuf.Timestamp registration_date = 3;
+  double price_per_doc = 4;
+  commons.AnaTimeZone ana_time_zone = 5;
+  string home_dashboard = 6;
+  bool adoptable = 7;
+  string default_time_filter = 8;
+  string neo_home_dashboard = 9;
+
+  int64 current_month_max_doc_count = 20;
+  int64 current_weeks = 21;
+}
+
+message SetCustomReportsEnabledReq {}
+
+message SetCustomReportsEnabledRes {}
+
+message RegisterAccountReq {
+  string org_id = 1;
+}
+
+message View {
+  int64 client_sid = 1;
+  int64 weeks = 2;
+}
+
+message AccountDataVisibility {
+  int64 viewer = 1;
+  repeated View views = 2;
+}
+
+message DataVisibility { repeated AccountDataVisibility visibilities = 1; }
+
+message IndexVisibility {
+  int64 client_sid = 1;
+  int64 year = 2;
+  int64 week = 3;
+  repeated int64 viewers = 4;
+}
+
+message IndicesVisibility { repeated IndexVisibility visibilities = 1; }
+
+// Visualization and Dashboard legacy
+
+message GetVisualizationsReq {}
+
+message GenerateVizDataByIdReq {
+  string visualization_id = 2;
+  string time_from = 3;
+  string time_to = 4;
+  string time_zone = 5;
+  // list of org ids to get data for
+  repeated string included_org_ids = 7;
+}
+
+message GenerateVizDataByIdRes { string json_string = 1; }
+
+message GetDashboardsReq {}
+
+message GetSpecifiedVisualizationsReq{
+  string org_id = 1;
+}
+
+message Visualizations { repeated Visualization visualizations = 1; }
+message Visualization {
+  string id = 1;
+  string title = 2;
+}
+
+message TimeFilter {
+  Relative relative = 1;
+  Absolute absolute = 2;
+  Quick quick = 3;
+}
+message Quick { string label = 1; }
+
+message Relative {
+  int64 to_quantity_time = 1;
+  commons.FilterBy to_filter_by = 2;
+  bool to_round = 3;
+  int64 from_quantity_time = 4;
+  commons.FilterBy from_filter_by = 5;
+  bool from_round = 6;
+}
+
+message Absolute {
+  google.protobuf.Timestamp to = 1;
+  google.protobuf.Timestamp from = 2;
+}
+
+message DeleteDashboardReq { string dashboard_id = 1; }
+
+message DeleteDashboardRes {}
+
+message DashboardHistoryEntry {
+  string dashboard_id = 1;
+  string title = 2;
+  string editing_user_id = 3;
+  string user_name = 4;
+  google.protobuf.Timestamp create_time = 5;
+}
+
+message GetDashboardHistoryReq { string dashboard_id = 1; }
+
+message GetDashboardHistoryRes {
+  repeated DashboardHistoryEntry dashboard_history_entries = 1;
+}
+
+message GetVisibilityReq {}
+
+message GetTimeZoneReq {}
+
+message SetTimeZoneReq { commons.AnaTimeZone ana_time_zone = 2; }
+
+message SetTimeZoneRes {}
+
+message TimeZone { commons.AnaTimeZone ana_time_zone = 1; }
+
+
+message CopyChartsAndDashboardsRes {
+  repeated CopyChartsAndDashboardsConflict conflicts = 1;
+}
+
+message CopyChartsAndDashboardsConflict {
+  string type = 1;
+  string title = 2;
+}
+
+message CopyDashVizReq {
+  reserved 1;
+  repeated string dashboard_ids = 2;
+  repeated string visualization_ids = 3;
+  // org Id to copy visualizations and dashboards to
+  string org_id = 4;
+}
+
+message CopyDashVizConflict {
+  string type = 1;
+  string title = 2;
+}
+
+message CopyDashVizRes { repeated CopyDashVizConflict conflicts = 1; }
+
+message GetSpecifiedBillingSummaryReq{
+  reserved 1;
+  google.protobuf.Timestamp ts = 2; // nil Timestamp is treated as current time
+  string org_id = 3;
+}
+
+message GetBillingSummaryReq {
+  google.protobuf.Timestamp ts = 2; // nil Timestamp is treated as current time
+}
+
+message BillingSummary {
+  int64 client_sid = 1;
+  string client_name = 2;
+  bool pro_status = 3;
+  WeeksSummary weeks = 4;
+  CustomReportsSummary custom_reports = 5;
+  ActiveReportJobsSummary report_jobs = 6;
+  ActiveWatchersSummary watchers = 7;
+  MultiClientSummary multi_client = 8;
+}
+
+message WeeksSummary {
+  int64 weeks_current = 1;
+  int64 weeks_peak = 2;
+  string weeks_editor = 3;
+  bool pro_status = 4;
+}
+
+message CustomReportsSummary {
+  CustomReportsEnabledSummary enabled = 1;
+  CustomVisualizationsSummary visualizations = 2;
+  CustomDashboardsSummary dashboards = 3;
+  bool pro_status = 4;
+}
+
+message CustomVisualizationsSummary {
+  int64 visualizations_current = 1;
+  int64 visualizations_peak = 2;
+  string custom_visualizations_editor = 3;
+}
+
+message CustomDashboardsSummary {
+  int64 dashboards_current = 1;
+  int64 dashboards_peak = 2;
+  string custom_dashboards_editor = 3;
+}
+
+message CustomReportsEnabledSummary {
+  bool custom_reports_enabled_current = 1;
+  bool custom_reports_enabled_peak = 2;
+  string custom_reports_enabled_editor = 3;
+  bool pro_status = 4;
+}
+
+message MultiClientSummary {
+  bool adoptable = 1;
+  Relations parents = 2;
+  Relations children = 3;
+  bool pro_status = 4;
+}
+
+message Relations { repeated Relation relations = 1; }
+
+message Relation {
+  int64 client_sid = 1;
+  string client_name = 2;
+  google.protobuf.Timestamp relation_initiation = 3;
+  string relation_initiator = 4; // user_id
+  google.protobuf.Timestamp relation_termination = 5;
+  string relation_terminator = 6; // user_id
+  bool is_current = 7;
+  // org id of child
+  string org_id = 8;
+}
+
+message Family {
+  int64 client_sid = 1;
+  string client_name = 2;
+  Relations parents = 3;
+  Relations children = 4;
+}
+
+message GetAccessibleClientsReq {}
+
+message GetFamilyReq {
+  reserved 1;
+  // get family for requested org
+  string org_id = 2;
+}
+
+message MakeAdoptableReq {}
+
+message MakeAdoptableRes {}
+
+message SpecifiedMakeAdoptableRes {}
+
+message SetAnaAccountRelationReq {
+  reserved 1, 2;
+  // Parent account to adopt child
+  string parent_org_id = 4;
+  // Child account to be adopted
+  string child_org_id = 5;
+}
+
+message SetAnaAccountRelationRes {}
+
+message ActiveReportJobsSummary {
+  int64 active_report_jobs_current = 1;
+  int64 processed_report_jobs = 2;
+  string report_jobs_activator = 3; // user id of activator of most recently processed report job
+  bool pro_status = 4;
+}
+
+message ActiveWatchersSummary {
+  int64 active_watchers_current = 1;
+  int64 processed_watchers = 2;
+  string watchers_activator = 3; // user id of activator of most recently processed watcher
+  bool pro_status = 4;
+}
+
+message SimpleRelations { repeated SimpleRelation simple_relations = 1; }
+
+message SimpleRelation {
+  reserved 1;
+  string client_name = 2;
+  string org_id = 3;
+}
+
+message GetOrganizationNamesReq {}
+
+message GetOrganizationNamesRes {
+  map<int64, string> names = 1;
+}
+
+// VIZDATA
+
+// get a list of categories and float values
+// message GetDataGroupedReq {
+//   string field_datapoint_id = 1;
+//   string grouping_datapoint_id = 2;
+//   Filter filter = 3;
+// }
+
+// returns a list of data with a category and float value
+// message GetDataGroupedResp {
+//   repeated CategoryData data = 1;
+// }
+
+message Datapoint {
+  string id = 1;
+  repeated string labels = 2;
+  string type = 3;
+}
+
+// get a list of datapoints filtered by type
+message GetDatapointsReq {
+  commons.Tag type = 1;
+  string group_id = 2;
+}
+
+// returns a list of datapoint ids
+message GetDatapointsRes {
+  reserved 1;
+  repeated Datapoint datapoints = 2;
+}
+
+message NewDatapoint {
+  string uuid = 1;
+  string label = 3;
+  string filter_id = 5;
+  oneof action {
+    Float float = 6;
+    String string = 7;
+    Bool bool = 8;
+    Date date = 9;
+  }
+  string datapoint_id = 10;
+  repeated commons.Tag tags = 11;
+
+  message Float {
+    commons.NumericAggregation aggregation = 1;
+    oneof operand {
+      string datapoint = 2;
+      float constant = 5;
+    }
+    commons.Operation operation = 3;
+    float percentile = 4;
+  }
+
+  message String {
+    commons.NonNumericAggregation aggregation = 1;
+    string prepend = 2;
+    string append = 3;
+  }
+
+  message Bool { commons.NonNumericAggregation aggregation = 1; }
+
+  message Date {
+    commons.NumericAggregation aggregation = 1;
+    string format = 2;
+    float percentile = 3;
+  }
+}
+
+message GetDatapointReq { string uuid = 1; }
+
+message GetDatapointResp { NewDatapoint datapoint = 1; }
+
+message CreateDatapointReq { NewDatapoint datapoint = 1; }
+
+message CreateDatapointResp {}
+
+message DeleteDatapointReq { string uuid = 1; }
+
+message DeleteDatapointResp {}
+
+message CategoryData {
+  string category = 1;
+  float value = 2;
+}
+
+message Filter {
+  reserved 4;
+  google.protobuf.Timestamp time_from = 1;
+  google.protobuf.Timestamp time_to = 2;
+  commons.AnaTimeZone time_zone = 3;
+  string filter_id = 5;
+  repeated string org_ids = 6;
+}
+
+message GetFiltersReq { commons.Tag tag = 1; }
+
+message NewFilter {
+  string uuid = 1;
+  string label = 2;
+}
+
+message GetFiltersResp { repeated NewFilter filters = 1; }
+
+message CreateFilterReq {
+  oneof creation_type {
+    Compound compound = 1;
+    Simple simple = 2;
+  }
+  string label = 3;
+  repeated commons.Tag tags = 4;
+
+  message Compound {
+    commons.CompoundFilterJoin join = 1;
+    string left_filter_id = 2;
+    string right_filter_id = 3;
+  }
+
+  message Simple {
+    string datapoint_id = 1;
+    Comparison comparison = 2;
+  }
+}
+
+message Comparison {
+  oneof comparison_type {
+    String string = 2;
+    Float float = 3;
+    Bool bool = 4;
+    Date date = 5;
+  }
+
+  message String {
+    string value = 1;
+    commons.StringComparison comparison = 2;
+  }
+
+  message Float {
+    float value = 1;
+    commons.FloatComparison comparison = 2;
+  }
+
+  message Bool {
+    bool value = 1;
+    commons.BoolComparison comparison = 2;
+  }
+
+  message Date {
+    google.protobuf.Timestamp value = 1;
+    commons.DateComparison comparison = 2;
+  }
+}
+
+message CreateFilterResp {}
+
+message MultiValueCategoryData {
+  string category = 1;
+  repeated float values = 2;
+}
+
+message GetDataReq {
+  repeated Grouping groupings = 2;
+  repeated string field_datapoint_ids = 3;
+  Filter filter = 4;
+  bool results_on_every_level = 5;
+  repeated Order orders = 6;
+  int64 limit = 7;
+}
+
+message Order {
+  string datapoint_id = 1;
+  bool desc = 2;
+}
+
+message Grouping {
+  oneof format {
+    string datapoint_id = 1;
+    commons.TimeScope time_scope = 2;
+  }
+}
+
+message GetDataResp {
+  repeated MultiCategoryMultiValueData data = 1;
+  repeated Warning warnings = 2;
+}
+
+message Warning {
+  oneof warning_type {
+    MissingFields missing_fields = 1;
+    MissingLocations missing_locations = 2;
+  }
+}
+
+message MissingFields { repeated string fields = 1; }
+
+message MissingLocations { repeated MissingLocation fields = 1; }
+
+message MissingLocation {
+  string datapoint_id = 1;
+  string message = 2;
+  string label = 3;
+}
+
+message MultiCategoryMultiValueData {
+  repeated Category categories = 1;
+  repeated Value values = 2;
+}
+
+message Category {
+  oneof data_type {
+    string string_value = 1;
+    google.protobuf.Timestamp timestamp_value = 2;
+  }
+}
+
+message Value {
+  oneof data_type {
+    string string_value = 1;
+    double float_value = 2;
+    google.protobuf.Timestamp timestamp_value = 3;
+    google.protobuf.Empty empty = 4;
+    bool bool_value = 5;
+  }
+}
+
+// message GetDataTimeIncrementReq {
+//   repeated string datapoint_ids = 1;
+//   commons.TimeScope time_scope = 2;
+//   Filter filter = 4;
+// }
+
+message GetDataTimeIncrementResp { repeated TimeIncrement time_increments = 1; }
+
+message TimeIncrement {
+  google.protobuf.Timestamp time = 1;
+  Value value = 2;
+}
+
+// Vizdata end
+
+// Charts
+
+message Charts { repeated Chart charts = 1; }
+
+message Chart {
+  string chart_id = 1;
+  string title = 3;
+  ChartDetails chart_details = 4;
+  string root_id = 5;
+  commons.ChartDisplayLabels display_labels = 6;
+}
+
+message ChartDetails {
+  oneof details {
+    SingleValueChart single_value_chart = 1;
+    PieChart pie_chart = 2;
+    RadarFixedChart radar_fixed_chart = 3;
+    BarChart bar_chart = 4;
+    BulletChart bullet_chart = 5;
+    MultiValueChart multi_value_chart = 6;
+    TreeMapChart tree_map_chart = 7;
+    ActivityGaugeChart activity_gauge_chart = 8;
+    ArcChart arc_chart = 9;
+    ScatterChart scatter_chart = 10;
+    TimeHistogramChart time_histogram_chart = 11;
+    TreeTableChart tree_table_chart = 12;
+    InfoPanelChart info_panel_chart = 13;
+    RankedListChart ranked_list_chart = 14;
+    SpeedometerChart speedometer_chart = 15;
+    LineChart line_chart = 16;
+    SplineChart spline_chart = 17;
+    AreaChart area_chart = 18;
+    TableChart table_chart = 19;
+    BubbleChart bubble_chart = 20;
+    PackedBubbleChart packed_bubble_chart = 21;
+    SunburstChart sunburst_chart = 22;
+  }
+}
+
+message SingleValueChart {
+  string data_point_id = 1;
+  string label = 2;
+  commons.SuffixChoices suffix = 3;
+  bool show_label = 4;
+}
+
+message PieChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  int64 hole_radius = 3;
+}
+
+message RadarFixedChart {
+  string grouping_data_point_id = 1;
+  repeated RadarFixedInnerChart radar_fixed_inner_charts = 2;
+  string data_labels = 3;
+}
+
+message RadarFixedInnerChart {
+  string data_point_id = 1;
+  string category_name = 2;
+  oneof inner_chart_details {
+    Area area = 3;
+    Bar bar = 4;
+    Line line = 5;
+    Spline spline = 6;
+  }
+
+  message Area {}
+  message Bar {}
+  message Line {}
+  message Spline {}
+}
+
+message BarChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  commons.BarChartOrientation orientation = 3;
+  Threshold threshold = 4;
+  string x_label = 5;
+  string y_label = 6;
+  string legend = 7;
+}
+
+message BulletChart {
+  string field_data_point_id = 1;
+  commons.ChartOrientation orientation = 2;
+  Threshold threshold = 3;
+  string legend = 4;
+}
+
+message MultiValueChart {
+  repeated DataValue data_values = 1;
+  int64 columns = 2;
+}
+
+message DataValue {
+  string data_point_id = 1;
+  string label = 2;
+}
+
+message TreeMapChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  string min_color = 3;
+  string max_color = 4;
+}
+
+message ActivityGaugeChart {
+  repeated ActivityGaugeRing activity_gauge_rings = 1;
+}
+
+message ActivityGaugeRing {
+  string data_point_id = 1;
+  Threshold threshold = 2;
+  string label = 3;
+}
+
+message ArcChart {
+  string data_point_id = 1;
+  string label = 2;
+  Threshold threshold = 3;
+}
+
+message Threshold {
+  oneof threshold_type {
+    int64 static_threshold = 3;
+    string data_point_threshold = 4;
+  }
+}
+
+message ScatterChart {
+  string grouping_data_point_id = 1;
+  string x_data_point_id = 2;
+  string y_data_point_id = 3;
+  string x_label = 4;
+  string y_label = 5;
+  string legend = 6;
+}
+
+message TimeHistogramChart {
+  string data_point_id = 1;
+  commons.TimeScope time_scope = 2;
+  Threshold threshold = 3;
+}
+
+message InfoPanelChart { repeated InfoPanelDataValue data_values = 1; }
+
+message InfoPanelDataValue {
+  string data_point_id = 1;
+  string label = 2;
+}
+
+message TreeTableChart {
+  repeated TreeTableDataValue data_values = 1;
+  repeated TreeTableGroupingValue grouping_values = 2;
+}
+
+// TODO: Should these next two just be the same as PackedBubble and Sunburst's
+// versions?
+message TreeTableDataValue {
+  string data_point_id = 1;
+  string label = 2;
+}
+
+message TreeTableGroupingValue { string grouping_data_point_id = 1; }
+
+message RankedListChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  Threshold threshold = 3;
+}
+
+message SpeedometerChart {
+  string data_point_id = 1;
+  string label = 2;
+  Threshold warning_threshold = 3;
+  Threshold danger_threshold = 4;
+  Threshold max_threshold = 5;
+  string suffix_label = 6;
+}
+
+message LineChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  commons.ChartOrientation orientation = 3;
+  Threshold threshold = 4;
+  commons.LineChartStep step = 5;
+}
+
+message SplineChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  commons.ChartOrientation orientation = 3;
+  Threshold threshold = 4;
+}
+
+message AreaChart {
+  string field_data_point_id = 1;
+  string grouping_data_point_id = 2;
+  commons.ChartOrientation orientation = 3;
+  Threshold threshold = 4;
+  commons.AreaChartChoice area_type = 5;
+}
+
+message TableChart {
+  repeated TableDataValue data_values = 1;
+  repeated TableGroupingValue grouping_values = 2;
+  repeated TableOrderByValue order_by_values = 3;
+}
+
+message TableDataValue {
+  string data_point_id = 1;
+  string label = 2;
+}
+
+message TableGroupingValue { string grouping_data_point_id = 1; }
+
+message TableOrderByValue { string order_by = 1; }
+
+message BubbleChart {
+  string grouping_data_point_id = 1;
+  string grouping_label = 2;
+  string x_data_point_id = 3;
+  string x_label = 4;
+  string y_data_point_id = 5;
+  string y_label = 6;
+  string z_data_point_id = 7;
+  string z_label = 8;
+}
+
+message PackedBubbleChart {
+  string field_data_point_id = 1;
+  string field_label = 2;
+  repeated PackedBubbleGroupingValue grouping_values = 3;
+  commons.PackedBubbleChoice packed_choice = 4;
+}
+
+message PackedBubbleGroupingValue { string grouping_data_point_id = 1; }
+
+message SunburstChart {
+  string field_data_point_id = 1;
+  repeated SunburstGroupingValue grouping_values = 2;
+  string center_label = 3;
+}
+
+message SunburstGroupingValue { string grouping_data_point_id = 1; }
+
+message CreateChartReq {
+  string title = 1;
+  ChartDetails chart_details = 2;
+  commons.ChartDisplayLabels display_labels = 3;
+}
+
+message CreateChartRes { string chart_id = 1; }
+
+message GetChartReq { string chart_id = 1; }
+
+message DeleteChartReq { string chart_id = 1; }
+
+message DeleteChartRes {}
+
+message DashPage {
+  oneof dash_page_type {
+    DashPageDashboard dashboard = 1;
+    DashPageVisualizationLegacy visualization_legacy = 2;
+    DashPageChart chart = 3;
+  }
+}
+
+message DashPageDashboard {
+  string dashboard_id = 1;
+  string title = 2;
+  string root_id = 3;
+  bool tcn_standard = 4;
+}
+
+message DashPageVisualizationLegacy {
+  string visualization_id = 1;
+  string title = 2;
+  string root_id = 3;
+}
+
+message DashPageChart {
+  string chart_id = 1;
+  string title = 2;
+  string root_id = 3;
+  bool tcn_standard = 4;
+}
+
+message GetAccessibleDashPagesReq {}
+
+message GetAccessibleDashPagesRes { repeated DashPage dash_pages = 1; }
+
+// Recommendation messages
+
+message RecommendedDashPage {
+  oneof dash_page_type {
+    RecommendedDashboard dashboard = 1;
+    RecommendedVisualizationLegacy visualization_legacy = 2;
+    RecommendedChart chart = 3;
+  }
+}
+
+message RecommendedDashboard {
+  string dashboard_id = 1;
+  string title = 2;
+  string root_id = 3;
+  bool tcn_standard = 4;
+}
+
+message RecommendedVisualizationLegacy {
+  string visualization_id = 1;
+  string title = 2;
+  string root_id = 3;
+}
+
+message RecommendedChart {
+  string chart_id = 1;
+  string title = 2;
+  string root_id = 3;
+  bool tcn_standard = 4;
+}
+
+message RecommendedDashPageReq {
+  oneof dash_page_type {
+    RecommendedDashboardReq dashboard = 1;
+    RecommendedVisualizationLegacyReq visualization_legacy = 2;
+    RecommendedChartReq chart = 3;
+  }
+}
+
+message RecommendedDashboardReq { string dashboard_id = 1; }
+
+message RecommendedVisualizationLegacyReq { string visualization_id = 1; }
+
+message RecommendedChartReq { string chart_id = 1; }
+
+message GetRecommendedDashPagesHomeReq {}
+
+message GetRecommendedDashPagesReq {
+  RecommendedDashPageReq source_dash_page = 1;
+}
+
+message GetRecommendedDashPagesRes {
+  repeated RecommendedDashPage recommended_dash_pages = 1;
+}
+
+message DashPageSelectEventReq {
+  RecommendedDashPageReq selection_dash_page = 1;
+  RecommendedDashPageReq source_dash_page = 2;
+  bool from_home = 3;
+}
+
+message DashPageSelectEventRes {}
+
+message VisualizationEventRes {}
+
+
+message GetRecommendedTimeFiltersReq {
+  string dash_page_id = 1;
+  RecommendedDashPageReq dash_page_type = 2;
+  string current_filter = 3;
+}
+
+message GetRecommendedTimeFiltersRes { repeated string filters = 1; }
+
+message TimeFilterEventReq {
+  commons.TimeFilterType time_filter_type = 1;
+  string time_filter_name = 2;
+  RecommendedDashPageReq dash_page_type = 3;
+}
+
+message TimeFilterEventRes {}
+
+// Exporter
+
+message ExportJob {
+  string export_job_id = 1;
+  string title = 3;
+  ExportDelivery export_delivery = 4;
+  ExportOptions export_options = 5;
+  ExportSchedule export_schedule = 6;
+}
+
+message ExportSchedule {
+  bool enabled = 1;
+
+  oneof schedule_type {
+    CampaignCompleteSchedule campaign_complete = 100;
+    EndOfDaySchedule end_of_day = 101;
+  }
+}
+
+message CampaignCompleteSchedule {}
+
+message EndOfDaySchedule {}
+
+message ExportOptions {
+  bool zip = 1;
+  oneof export_type { CsvOptions csv_options = 2; }
+}
+
+message CsvOptions {
+  bool fixed_width = 1;
+  commons.CsvQuoteType csv_quote_type = 2;
+  bool include_headers = 3;
+}
+
+message ExportDelivery {
+  oneof delivery_type {
+    EmailDelivery email = 1;
+    SftpDelivery sftp = 2;
+    HttpsDelivery https = 3;
+  }
+  repeated string failure_email_addreses = 10;
+}
+
+message HttpsDelivery {
+  string url = 1;
+  string post_parameter = 2;
+}
+
+message SftpDelivery {
+  oneof auth_type {
+    string password = 1;
+    string private_key = 2;
+  }
+  string user_name = 10;
+  string url = 11;
+  string path = 12;
+}
+
+message EmailDelivery { repeated string addresses = 1; }
+
+message DataSelection {
+  oneof data_selection_type {
+    string chart_id = 1;
+    commons.CustomDataSeleciton custom = 2;
+    TableDataPoints table_data_points = 3;
+  }
+  repeated string filter_ids = 10;
+}
+
+message TableDataPoints { // create new table chart
+  string title = 1;
+  repeated ExporterTableDataValue data_values = 2;
+  repeated string grouping_data_point_ids = 3;
+  repeated string order_by = 4;
+}
+
+message ExporterTableDataValue {
+  string data_point_id = 1;
+  string label = 2;
+}
+
+message CreateExportJobReq {
+  string title = 3;
+  DataSelection data_selection = 4;
+  ExportDelivery export_delivery = 5;
+  ExportOptions export_options = 6;
+  ExportSchedule export_schedule = 7;
+}
+
+message CreateExportJobRes { string export_job_id = 1; }
+
+message GetExportJobsReq {}
+
+message GetExportJobsRes { repeated ExportJob export_jobs = 1; }
+
+message SendExportReq { string export_job_id = 1; }
+
+message SendExportRes {}
+
+message DeleteExportJobReq { string export_job_id = 1; }
+
+message DeleteExportJobRes {}
+
+message SetExportJobActiveReq {
+  string export_job_id = 2;
+  bool set_active = 3;
+}
+
+message SetExportJobActiveRes {}
+
+message GetExportHistoryDetailsReq {
+  string org_id = 1;
+  google.protobuf.Timestamp time_from = 2;
+  google.protobuf.Timestamp time_to = 3;
+}
+
+message GetExportHistoryDetailsRes {
+  int64 result_count = 1;
+  repeated Export exports = 2;
+}
+
+message Export {
+  string export_job_id = 1;
+  string title = 2;
+  google.protobuf.Timestamp run_time = 3;
+  commons.ExportStatus status = 4;
+}
+
+message DownloadExportReq { string export_id = 2; }
+
+message DownloadExportRes {}
+
+message GetBillingReq {} // ????
+
+message GetBillingRes {} // ????
+
+message GetAuthorizedAnalyticsLinkReq {}
+
+message GetAuthorizedAnalyticsLinkRes {
+  string link = 1;
+}
+
+// Census
+
+// ClientGroup represents the data status
+// of elastic search data per client
+message ClientGroup {
+  // groups doc count by campaign type
+  string campaign_type = 1;
+  // count of calls loaded into elasticsearch
+  int64 processed_call_count = 2;
+  // count of calls expected to be loaded
+  int64 baseline_call_count = 3;
+}
+
+// GetClientStatus request message
+message GetClientStatusReq {
+  reserved 1;
+  // specify the window of time to check for data load completion
+  // the end time is assumed to be the present
+  google.protobuf.Timestamp start_time = 2;
+
+  // development operations can specify org
+  string org_id = 3;
+}
+
+// GetClientStatus response message
+message GetClientStatusResp {
+  // list of ClientGroups, one group for each campaign type
+  repeated ClientGroup client_groups = 1;
+}
+
+// ReloadClientDataReq request message
+message ReloadClientDataReq {
+  reserved 1;
+  // development operations can specify org
+  string org_id = 2;
+}
+
+// ReloadClientData response message
+message ReloadClientDataResp {}
+
+message ListVisualizationsLegacyReq {}
+
+message ListVisualizationsLegacyRes {
+  repeated VizDescription descriptions = 1;
+}
+
+message VizDescription {
+  string id = 1;
+  string title = 2;
+  string show_the = 3;
+  bool watcher = 4;
+  int64 tcn_modified_date = 5;
+  string description = 6;
+}

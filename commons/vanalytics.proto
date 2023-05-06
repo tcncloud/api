@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+// Interval enumerates common dynamic time periods.
+enum Interval {
+  TODAY = 0;
+  YESTERDAY = 1;
+  THIS_WEEK = 2;
+  LAST_7_DAYS = 3;
+  LAST_WEEK = 4;
+  LAST_14_DAYS = 5;
+  THIS_MONTH = 6;
+  LAST_30_DAYS = 7;
+  LAST_60_DAYS = 8;
+  LAST_90_DAYS = 9;
+  LAST_180_DAYS = 10;
+}

@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package annotations.perms;
+
+option java_package="com.tcn.api.annotations.perms";
+option go_package="github.com/tcncloud/api/annotations.perms;perms";
+
+import "google/protobuf/descriptor.proto";
+import "annotations/perms/license.proto";
+
+
+
+// Tcn defines the enum value annotations which will be used for permissions.
+message Tcn {
+  // Work-in-progress tag. Used to delineate permissions that are not
+  // yet ready to go live. Previously known as "A la carte" permissions
+  // in the legacy customer support licensing tool.
+  optional bool wip = 1;
+  // Application which the permission will be grouped under.
+  optional Application app = 2;
+  // The card/sub-app section which it's assigned to.
+  // If no card is provided, it will go under the application's default
+  // card (under the same name as the app).
+  optional Card card = 3;
+  // The list of features or effects the permission grants. 
+  repeated string features = 4;
+}
+
+extend google.protobuf.EnumValueOptions {
+  // Options contain the permission annotation properties.
+  optional Tcn options = 50001;
+}

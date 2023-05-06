@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package v1alpha1.org;
+
+option java_package="com.tcn.api.v1alpha1.org";
+option go_package="github.com/tcncloud/api/v1alpha1.org;org";
+
+import "commons/auth/perms.proto";
+import "commons/org/trusts.proto";
+
+
+
+// Request message for the CreateTrust RPC.
+message CreateTrustRequest {
+  // Org ID of the org recieving the trust.
+  string grantee = 1;
+  // Name of the trust.
+  string name = 2;
+  // Description of the trust.
+  string description = 3;
+  // Permissions given through the trust
+  repeated commons.auth.Permission permissions = 4;
+  // IDs of labels associated with the given permissions.
+  // NOTE: All given labels are applied to ALL given permissions.
+  repeated string label_ids = 5;
+}
+
+// Response message for the CreateTrust RPC.
+message CreateTrustResponse {
+  // ID of the created trust.
+  string trust_id = 1;
+}
+
+// Request message for the AcceptTrust RPC.
+message AcceptTrustRequest {
+  // ID of the trust being accepted. 
+  string trust_id = 1;
+}
+
+// Response message for the AcceptTrust RPC.
+message AcceptTrustResponse {}
+
+// Request message for the RejectTrust RPC.
+message RejectTrustRequest {
+  // ID of the trust being rejected.
+  string trust_id = 1;
+}
+
+// Response message for the RejectTrust RPC.
+message RejectTrustResponse {}
+
+// Response message for the GetTrust RPC.
+message GetTrustRequest {
+  // ID of the trust being retrieved.
+  string trust_id = 1;
+}
+
+// Response message for the GetTrust RPC.
+message GetTrustResponse {
+  // Retrieved trust.
+  commons.org.Trust trust = 1;
+
+  // Name of the Grantor org.
+  string grantor_name = 2;
+  // Name of the Grantee org.
+  string grantee_name = 3;
+}
+
+// Request message for the ListIncomingTrusts RPC.
+message ListIncomingTrustsRequest {}
+
+// Response message for the ListIncomingTrusts RPC.
+message ListIncomingTrustsResponse {
+  // List of trusts.
+  repeated Payload trusts = 1;
+
+  message Payload {
+    commons.org.Trust trust = 1;
+    string grantor_name = 2;
+    string grantee_name = 3;
+  }
+}
+
+// Request message for the ListGivenTrusts RPC.
+message ListGivenTrustsRequest {}
+
+// Response message for the ListGivenTrusts RPC.
+message ListGivenTrustsResponse {
+  // List of trusts.
+  repeated Payload trusts = 1;
+
+  message Payload {
+    commons.org.Trust trust = 1;
+    string grantor_name = 2;
+    string grantee_name = 3;
+  }
+}
+
+// Request message for the CreateTrust RPC.
+message ListAssignableTrustsRequest {}
+
+// Response message for the CreateTrust RPC.
+message ListAssignableTrustsResponse {
+  // List of trusts.
+  repeated Payload trusts = 1;
+
+  message Payload {
+    commons.org.Trust trust = 1;
+    string grantor_name = 2;
+    string grantee_name = 3;
+  }
+}
+
+// Request message for the DeleteTrust RPC.
+message DeleteTrustRequest {
+  // ID of the trust to be deleted.
+  string trust_id = 1;
+}
+
+// Response message for the DeleteTrust RPC.
+message DeleteTrustResponse {}
+
+// Request message for the AssignTrust RPC.
+message AssignTrustRequest {
+  // ID of the trust being assigned.
+  string trust_id = 1;
+  // List of user IDs to assign the trust to.
+  repeated string user_ids = 2;
+}
+
+// Response message for the AssignTrust RPC.
+message AssignTrustResponse {}
+
+// Request message for the UnassignTrust RPC.
+message UnassignTrustRequest {
+  // ID of the trust being unassigned.
+  string trust_id = 1;
+  // User ID to unassign the trust from.
+  string user_id = 2;
+}
+
+// Response message for the UnassignTrust RPC.
+message UnassignTrustResponse {}

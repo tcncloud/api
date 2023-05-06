@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+
+package commons.workflows;
+
+option java_package="com.tcn.api.commons.workflows";
+option go_package="github.com/tcncloud/api/commons.workflows;workflows";
+
+message OmniNodePrompt {
+    string prompt = 1;
+    string store_to = 2;
+    repeated string options = 3;
+}
+
+message OmniNodeSetSkill {
+    string skill = 1;
+}
+
+message OmniNodeToAgent {
+}
+
+message OmniNodeError {
+    string error = 1;
+}

@@ -1,0 +1,170 @@
+syntax = "proto3";
+
+package v1alpha1.vanalytics;
+
+option java_package="com.tcn.api.v1alpha1.vanalytics";
+option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+
+
+
+import "v1alpha1/vanalytics/filter.proto";
+
+import "google/protobuf/field_mask.proto";
+
+// CreateFlagRequest is a request for creating a flag.
+message CreateFlagRequest {
+  // The flag resource to create.
+  Flag flag = 1;
+}
+
+// ListFlagsRequest is a request for listing flags.
+message ListFlagsRequest {
+  // Optional. The number of flags to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The order by which flags will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "name".
+  // Supported order by includes:
+  //   + (name)
+  //   + (name desc)
+  string order_by = 3;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 4;
+
+  oneof where {
+    // Optional. Lists flags which are associated with given filter sid.
+    int64 filter_sid = 5;
+  }
+
+  // Optional. Lists flags which have given flag sids.
+  repeated int64 flag_sids = 6;
+
+  // Optional. Field mask which determines which flag reads will be read and
+  // included in the response.
+  google.protobuf.FieldMask read_mask = 7;
+
+  // Optional. Listed flags must have one of the provided names.
+  repeated string names = 8;
+
+  // Optional. Listed flags must have one of the provided priorities.
+  repeated int32 priorities = 9;
+
+  // Optional. Filter by flags that require a review. This does not mean
+  // that the flag has/hasn't been reviewed. This is whether it requires one.
+  repeated bool must_review = 10;
+  // Optional. Filter by flags that send notifications.
+  repeated bool must_notify = 11;
+}
+
+// ListFlagsResponse is a response for listing flags.
+message ListFlagsResponse {
+  // Token to retrieve the next page of flags, or empty if there are no
+  // more flags in the list.
+  string next_page_token = 1;
+
+  // List of flags which contains at most one request page_size.
+  repeated Flag flags = 2;
+
+  // Total number of flags.
+  uint64 total = 3;
+}
+
+// UpdateFlagRequest is a request for updating a flag.
+message UpdateFlagRequest {
+  // The ID of the flag to be updated.
+  int64 flag_sid = 1;
+
+  // The flag resource to update.
+  Flag flag = 2;
+
+  // Optional. update_mask contains a list of paths to be updated. Possible paths include
+  // name, review_group_id, notify_group_id, and priority. If no update_mask
+  // is provided it defaults to using all paths.
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+// DeleteFlagRequest is a request for deleting a flag.
+message DeleteFlagRequest {
+  // Required. The unique id of the flag to be deleted.
+  int64 flag_sid = 1;
+  // Optional. Return the flag that was deleted.
+  bool return = 3;
+}
+
+// DeleteFlagResponse is a response for deleting a flag.
+message DeleteFlagResponse {
+  // Optional. The flag that was deleted.
+  Flag flag = 1;
+}
+
+// GetFlagRequest is a request for getting a flag.
+message GetFlagRequest {
+  oneof where {
+    // The name of the flag.
+    string name = 2;
+
+    // The unique id of the flag.
+    int64 flag_sid = 3;
+  }
+}
+
+// Flag is a resource in the Vanalytics API.
+message Flag {
+  // Output only. The unique id of this flag.
+  int64 flag_sid = 1;
+
+  // Required. The name of this flag. Must be non empty and unique across all
+  // flags within an organization.
+  string name = 2;
+
+  // Optional. The org permission group id which users must have in order to
+  // to review flagged transcripts. When not provided flagged transcripts will
+  // not require review.
+  string review_group_id = 4;
+
+  // Optional. The notify group id for this flag.
+  string notify_group_id = 5;
+
+  // Optional. The priority of the flag. Defaults to 0.
+  int32 priority = 6;
+
+  // Output only. The version of this flag.
+  int64 version = 7;
+
+  // Output only. Filters associated with this flag.
+  repeated Filter filters = 8;
+
+  // Output only. Determines whether this flag must be reviewed.
+  bool must_review = 9;
+
+  // Output only. Determines whether this flag must be notified.
+  bool must_notify = 10;
+
+  // Required. Boolean expression of filters which a transcript must match
+  // for this flag to be applied.
+  BoolExpr bool_expr = 11;
+
+  // BoolExpr defines a boolean expression of filters.
+  message BoolExpr {
+    // Optional. Boolean and operator.
+    repeated BoolExpr and = 1;
+
+    // Optional. Boolean or operator.
+    repeated BoolExpr or = 2;
+
+    // Optional. Filter to match.
+    Filter filter = 3;
+
+    // Optional. Boolean not operator.
+    BoolExpr not = 4;
+
+    // Filter defines a filter.
+    message Filter {
+      // Required. Filter sid.
+      int64 filter_sid = 1;
+    }
+  }
+}

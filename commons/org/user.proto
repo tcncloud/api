@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package commons.org;
+
+option java_package="com.tcn.api.commons.org";
+option go_package="github.com/tcncloud/api/commons.org;org";
+
+import "commons/audit/event_types.proto";
+import "commons/notifications.proto";
+import "commons/org.proto";
+import "commons/org/labels.proto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+
+
+
+// User represents a user of the system.
+message User {
+  // The ID of the user
+  string user_id = 1;
+  // The ID of the org the user belongs to.
+  string org_id = 2;
+  // The Username of the user.
+  string username = 3;
+  // The ID of the p3 permission group the user has.
+  string p3_permission_group_id = 4;
+  // The p3 login sid of the user.
+  // This is going to be deprecated, RegionSidMap should be used.
+  int64 login_sid = 5;
+  // The p3 agent sid of the user.
+  // This is going to be deprecated, RegionSidMap should be used.
+  int64 agent_sid = 6;
+  // The region the user belongs to.
+  // This is going to be deprecated, RegionSidMap should be used.
+  string region_id = 7;
+  // The User's partner agent id.
+  string partner_agent_id = 8;
+
+  // The p3 client sid of the user.
+  int64 client_sid = 11;
+
+  // The user's regional sids. The key of the map is a region id.
+  map<string, RegionSids> region_sid_map = 15;
+
+  // The entity object used in the region_sid_map.
+  message RegionSids {
+    // The login sid for the region.
+    int64 login_sid = 1;
+    // THe agent sid for the region.
+    int64 agent_sid = 2;
+    // THe client sid for the region.
+    int64 client_sid = 3;
+  }
+
+  // payload
+  string api_key = 101;
+  // The User's email.
+  string email = 104;
+
+  // Whether or not the user is disabled.
+  bool login_disabled = 112;
+
+  // login preferences
+  repeated string caller_ids = 115;
+  repeated string linkback_numbers = 116;
+
+  string auth_user_id = 118;
+
+  bool enable_mfa = 123;
+
+  // The user's first name.
+  string first_name = 161;
+  // THe user's last name.
+  string last_name = 162;
+  // The date/time the user was created.
+  google.protobuf.Timestamp created = 163;
+  // The date/time the user was last updated.
+  google.protobuf.Timestamp last_updated = 164;
+  // Whether or not the user must reset their password on next login.
+  bool password_reset_required =  165;
+  // connection id is the id of the auth connection that the
+  // user is coming from if it is a delgated user. If the user
+  // is not delgated this will be nil.
+  google.protobuf.StringValue connection_id = 166;
+  // User TimeZone with wrapper for nullable timezone
+  TimeZoneWrapper time_zone_override = 167;
+  // UserSettings
+  repeated string permission_group_ids = 200;
+  // List of trust ids the user has been assigned.
+  repeated string trust_ids = 209;
+  // List of regions for user
+  // repeated string regions = 201;
+  // region_id of a user entity
+  string default_region = 202;
+  // default_app for a user
+  OperatorApplications default_application = 203;
+  // P3 permission for user
+  // User caller id
+  string user_caller_id = 205;
+  // users assigned agent profile group
+  string agent_profile_group_id = 207;
+  // The skills this user has as an agent, if any.
+  repeated Skill skills = 208;
+
+  // a bool signalling whether or not the user is also an agent
+  bool agent = 300;
+
+  // a bool to determine whether or not user is account owner
+  bool account_owner = 400;
+}
+
+// Agent skill
+message Skill {
+  int64 level = 1;
+  string name = 2;
+  string description = 3;
+  int64 skill_sid = 4;
+}

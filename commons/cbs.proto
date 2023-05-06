@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+enum ScheduledCallbackStatus {
+  SCS_INVALID = 0;
+  SCS_OPENED = 1;
+  SCS_CANCELED = 2;
+  SCS_CLOSED = 3;
+  SCS_READY = 4;
+}

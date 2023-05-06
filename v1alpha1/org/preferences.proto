@@ -1,0 +1,573 @@
+syntax = "proto3";
+
+package v1alpha1.org;
+
+option java_package="com.tcn.api.v1alpha1.org";
+option go_package="github.com/tcncloud/api/v1alpha1.org;org";
+
+import "google/protobuf/field_mask.proto";
+import "commons/org/preferences.proto";
+
+
+
+//
+// General tab preferences.
+//
+
+// Request for the GetOrganizationPreferences RPC.
+message GetOrganizationPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetOrganizationPreferences RPC.
+message GetOrganizationPreferencesResponse {
+  // Organization preferences entity.
+  commons.org.OrganizationPreferences organization_preferences = 1;
+}
+
+// Request for the UpdateOrganizationPreferences RPC.
+message UpdateOrganizationPreferencesRequest {
+  // Organization preferences entity.
+  commons.org.OrganizationPreferences organization_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateOrganizationPreferences RPC.
+message UpdateOrganizationPreferencesResponse {
+}
+
+// Request for the GetAgentPreferences RPC.
+message GetAgentPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetAgentPreferences RPC.
+message GetAgentPreferencesResponse {
+  // Agent preferences entity.
+  commons.org.AgentPreferences agent_preferences = 1;
+}
+
+// Request for the UpdateAgentPreferences RPC.
+message UpdateAgentPreferencesRequest {
+  // Agent preferences entity.
+  commons.org.AgentPreferences agent_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateAgentPreferences RPC.
+message UpdateAgentPreferencesResponse {
+}
+
+// Request for the GetContactPreferences RPC.
+message GetContactPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetContactPreferences RPC.
+message GetContactPreferencesResponse {
+  // Contact preferences entity.
+  commons.org.ContactPreferences contact_preferences = 1;
+}
+
+// Request for the UpdateContactPreferences RPC.
+message UpdateContactPreferencesRequest {
+  // Contact preferences entity.
+  commons.org.ContactPreferences contact_preferences = 1;
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateContactPreferences RPC.
+message UpdateContactPreferencesResponse {
+}
+
+// Request for the GetAuthenticationPreferences RPC.
+message GetAuthenticationPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetAuthenticationPreferences RPC.
+message GetAuthenticationPreferencesResponse {
+  // Authentication preferences entity.
+  commons.org.AuthenticationPreferences authentication_preferences = 1;
+}
+
+// Request for the UpdateAuthenticationPreferences RPC.
+message UpdateAuthenticationPreferencesRequest {
+  // Authentication preferences entity.
+  commons.org.AuthenticationPreferences authentication_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateAuthenticationPreferences RPC.
+message UpdateAuthenticationPreferencesResponse {
+}
+
+// Request for the GetWebhookPreferences RPC.
+message GetWebhookPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetWebhookPreferences RPC.
+message GetWebhookPreferencesResponse {
+  // Webhook preferences entity.
+  commons.org.WebhookPreferences webhook_preferences = 1;
+}
+
+// Request for the UpdateWebhookPreferences RPC.
+message UpdateWebhookPreferencesRequest {
+  // Webhook preferences entity.
+  commons.org.WebhookPreferences webhook_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateWebhookPreferences RPC.
+message UpdateWebhookPreferencesResponse {
+}
+
+//
+// MANAGER TAB
+//
+
+// Request for the GetDashboardGeneralPreferences RPC.
+message GetDashboardGeneralPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetDashboardGeneralPreferences RPC.
+message GetDashboardGeneralPreferencesResponse {
+  // Dashboard preferences entity.
+  commons.org.DashboardPreferences dashboard_preferences = 1;
+}
+
+// Request for the UpdateDashboardGeneralPreferences RPC.
+message UpdateDashboardGeneralPreferencesRequest {
+  // Dashboard preferences entity.
+  commons.org.DashboardPreferences dashboard_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateDashboardGeneralPreferences RPC.
+message UpdateDashboardGeneralPreferencesResponse {
+}
+
+// Request for the GetDashboardQueuePreferences RPC.
+message GetDashboardQueuePreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetDashboardQueuePreferences RPC.
+message GetDashboardQueuePreferencesResponse {
+  // Dashboard queue preferences entity.
+  commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
+}
+
+// Request for the UpdateDashboardQueuePreferences RPC.
+message UpdateDashboardQueuePreferencesRequest {
+  // Dashboard queue preferences entity.
+  commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Respons for the UpdateDashboardQueuePreferences RPC.
+message UpdateDashboardQueuePreferencesResponse{
+}
+
+//
+// Campaign tab preferences.
+//
+
+// Request for the GetPhonePreferences RPC.
+message GetPhonePreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetPhonePreferences RPC.
+message GetPhonePreferencesResponse {
+  // Phone preferences entity.
+  commons.org.PhonePreferences phone_preferences = 1;
+}
+
+// Request for the UpdatePhonePreferences RPC.
+message UpdatePhonePreferencesRequest {
+  // Phone preferences entity.
+  commons.org.PhonePreferences phone_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdatePhonePreferences RPC.
+message UpdatePhonePreferencesResponse {
+}
+
+// Internal phone preferences entity only for interfacing with database.
+message PhonePreferencesDB {
+  // Org ID.
+  string org_id = 1;
+
+  // Marshalled json representing the phone preferences entity.
+  string phone_preferences_json = 10;
+}
+
+// Request for the GetCompliancePreferences RPC.
+message GetCompliancePreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetCompliancePreferences RPC.
+message GetCompliancePreferencesResponse {
+  // Compliance preferences entity.
+  commons.org.CompliancePreferences compliance_preferences = 1;
+}
+
+// Request for the UpdateCompliancePreferences RPC.
+message UpdateCompliancePreferencesRequest {
+  // Compliance preferences entity.
+  commons.org.CompliancePreferences compliance_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateCompliancePreferences RPC.
+message UpdateCompliancePreferencesResponse {
+}
+
+// Request for the GetBroadcastPreferences RPC.
+message GetBroadcastPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetBroadcastPreferences RPC.
+message GetBroadcastPreferencesResponse {
+  // Broadcast preferences entity.
+  commons.org.BroadcastPreferences broadcast_preferences = 1;
+}
+
+// Request for the UpdateBroadcastPreferences RPC.
+message UpdateBroadcastPreferencesRequest {
+  // Broadcast preferences entity.
+  commons.org.BroadcastPreferences broadcast_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateBroadcastPreferences RPC.
+message UpdateBroadcastPreferencesResponse {
+}
+
+// Request for the GetSchedulePreferences RPC.
+message GetSchedulePreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetSchedulePreferences RPC.
+message GetSchedulePreferencesResponse {
+  // Schedule preferences entity.
+  commons.org.SchedulePreferences schedule_preferences = 1;
+}
+
+// Request for the UpdateSchedulePreferences RPC.
+message UpdateSchedulePreferencesRequest {
+  // Schedule preferences entity.
+  commons.org.SchedulePreferences schedule_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateSchedulePreferences RPC.
+message UpdateSchedulePreferencesResponse {
+}
+
+// Request for the GetEmailSmsPreferences RPC.
+message GetEmailSmsPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetEmailSmsPreferences RPC.
+message GetEmailSmsPreferencesResponse {
+  // Email/SMS preferences entity.
+  commons.org.EmailSmsPreferences email_sms_preferences = 1;
+}
+
+// Request for the UpdateEmailSmsPreferences RPC.
+message UpdateEmailSmsPreferencesRequest {
+  // Email/SMS preferences entity.
+  commons.org.EmailSmsPreferences email_sms_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateEmailSmsPreferences RPC.
+message UpdateEmailSmsPreferencesResponse {
+}
+
+//
+// Business Intelligence & Reports tab preferences.
+//
+
+// Request for the GetBusinessPreferences RPC.
+message GetBusinessPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetBusinessPreferences RPC.
+message GetBusinessPreferencesResponse {
+  // Business preferences entity.
+  commons.org.BusinessPreferences business_preferences = 1;
+}
+
+// Request for the UpdateBusinessPreferences RPC.
+message UpdateBusinessPreferencesRequest {
+  // Business preferences entity.
+  commons.org.BusinessPreferences business_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateBusinessPreferences RPC.
+message UpdateBusinessPreferencesResponse {
+}
+
+// Request for GetScorecardsPreferences
+message GetScorecardsPreferencesRequest {
+  // Org ID.
+  string org_id = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for GetScorecardsPreferences
+message GetScorecardsPreferencesResponse {
+  // Scorecards preferences entity.
+  commons.org.ScorecardsPreferences scorecards_preferences = 1;
+}
+
+// Request for UpdateScorecardsPreferences
+message UpdateScorecardsPreferencesRequest {
+  // Org ID.
+  string org_id = 1;
+  // Scorecards preferences entity.
+  commons.org.ScorecardsPreferences scorecards_preferences = 2;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 3;
+}
+
+// Response for UpdateScorecardsPreferences
+message UpdateScorecardsPreferencesResponse {
+}
+
+// Request for the GetVoiceAnalyticsPreferences RPC.
+message GetVoiceAnalyticsPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetVoiceAnalyticsPreferences RPC.
+message GetVoiceAnalyticsPreferencesResponse {
+  // Voice analytics preferences entity.
+  commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+}
+
+// Request for the ListVoiceAnalyticsPreferences RPC.
+message ListVoiceAnalyticsPreferencesRequest {
+}
+
+// Response for the ListVoiceAnalyticsPreferences RPC.
+message ListVoiceAnalyticsPreferencesResponse {
+  // List of voice analytics preferences.
+  repeated commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+}
+
+// Request for the UpdateVoiceAnalyticsPreferences RPC.
+message UpdateVoiceAnalyticsPreferencesRequest {
+  // Voice analytics preferences entity.
+  commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateVoiceAnalyticsPreferences RPC.
+message UpdateVoiceAnalyticsPreferencesResponse {
+}
+
+// Request for the GetEndOfDayPreferences RPC.
+message GetEndOfDayPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetEndOfDayPreferences RPC.
+message GetEndOfDayPreferencesResponse {
+  // EndOfDay preferences entity.
+  commons.org.EndOfDayPreferences end_of_day_preferences = 1;
+}
+
+// Request for the UpdateEndOfDayPreferences RPC.
+message UpdateEndOfDayPreferencesRequest {
+  // End-of-day preferences entity.
+  commons.org.EndOfDayPreferences end_of_day_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateEndOfDayPreferences RPC.
+message UpdateEndOfDayPreferencesResponse {
+}
+
+// Request for the GetFilterPreferences RPC.
+message GetFilterPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetFilterPreferences RPC.
+message GetFilterPreferencesResponse {
+  // Filter preferences entity.
+  commons.org.FilterPreferences filter_preferences = 1;
+}
+
+// Request for the UpdateFilterPreferences RPC.
+message UpdateFilterPreferencesRequest {
+  // Filter preferences entity.
+  commons.org.FilterPreferences filter_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateFilterPreferences RPC.
+message UpdateFilterPreferencesResponse {
+}
+
+// Request for the GetRecordingPreferences RPC.
+message GetRecordingPreferencesRequest {
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// Response for the GetRecordingPreferences RPC.
+message GetRecordingPreferencesResponse {
+  // Recording preferences entity.
+  commons.org.RecordingPreferences recording_preferences = 1;
+}
+
+// Request for the UpdateRecordingPreferences RPC.
+message UpdateRecordingPreferencesRequest {
+  // Recording preferences entity.
+  commons.org.RecordingPreferences recording_preferences = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateRecordingPreferences RPC.
+message UpdateRecordingPreferencesResponse {
+}
+
+//
+// Customer Support preferences.
+//
+
+// Request for the GetAdminClientPreferences RPC.
+message GetAdminClientPreferencesRequest {
+  // Org ID.
+  string org_id = 1;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response for the GetAdminClientPreferences RPC.
+message GetAdminClientPreferencesResponse {
+  // Admin client preferences entity.
+  commons.org.AdminClientPreferences admin_client_preferences = 1;
+}
+
+// Request for the UpdateAdminClientPreferences RPC.
+message UpdateAdminClientPreferencesRequest {
+  // Org ID.
+  string org_id = 1;
+
+  // Admin client preferences entity.
+  commons.org.AdminClientPreferences admin_client_preferences = 2;
+
+  // Field mask for filtering each field.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response for the UpdateAdminClientPreferences RPC.
+message UpdateAdminClientPreferencesResponse {
+}
+
+//
+// Miscellaneous APIs.
+//
+
+// Request for accepting linkback recording terms agreement.
+message AcceptLinkbackRecordingTermsRequest {
+}
+
+// Response for accepting linkback recording terms agreement.
+message AcceptLinkbackRecordingTermsResponse {
+}
+
+// Request for updating broadcast template 'Record' property.
+message LinkbackUpdateBroadcastTemplatesRequest {
+  // Broadcast linkback recording value.
+  bool value = 1;
+}
+
+// Response for updating broadcast template 'Record' property.
+message LinkbackUpdateBroadcastTemplatesResponse {
+}
+
+// Request for recording email unsubscribe acknowledgement.
+message RecordEmailUnsubscribeAcknowledgementRequest {
+}
+
+// Response for recording email unsubscribe acknowledgement.
+message RecordEmailUnsubscribeAcknowledgementResponse {
+}
+
+// Request for clearing email unsubscribe acknowledgement.
+message ClearEmailUnsubscribeAcknowledgementRequest {
+}
+
+// Response for clearing email unsubscribe acknowledgement.
+message ClearEmailUnsubscribeAcknowledgementResponse {
+}

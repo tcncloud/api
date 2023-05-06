@@ -1,0 +1,219 @@
+syntax = "proto3";
+
+package v1alpha1.room303;
+
+option java_package="com.tcn.api.v1alpha1.room303";
+option go_package="github.com/tcncloud/api/v1alpha1.room303;room303";
+
+
+import "google/api/annotations.proto";
+import "annotations/authz.proto";
+import "v1alpha1/room303/member.proto";
+import "v1alpha1/room303/room.proto";
+import "v1alpha1/room303/message.proto";
+import "commons/room303.proto";
+
+service Room303API {
+    //
+    // Member
+    //
+    // Add a new member to a room, you must be a room admin in order to do that
+    rpc AddRoomMember(AddRoomMemberRequest) returns (commons.Member) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/addroommember"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    // Remove room member (kick), the room member will not receive notifications from that room
+    rpc RemoveRoomMember(RemoveRoomMemberRequest) returns (RemoveRoomMemberResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/removeroommember"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    // List the members of this room
+    rpc ListRoomMembers(ListRoomMembersRequest) returns (ListRoomMembersResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/listroommembers"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    // Set a room member as admin, you must be a room admin in order to do this.
+    rpc SetAdminForRoomMember(SetAdminForRoomMemberRequest) returns (SetAdminForRoomMemberResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/setadminforroommember"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    // adds new member to a room and does not require the member to be admin
+    rpc JoinRoom(JoinRoomRequest) returns (commons.Room) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/joinroom"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    // gets the member entity from the provided room if it exists
+    rpc GetRoomMember(GetRoomMemberRequest) returns (commons.Member) {
+      option (google.api.http) = {
+        post: "/api/v1alpha1/room303/room303api/getroommember"
+        body: "*"
+      };
+      option (annotations.authz) = {
+          sets: [{permissions: [PERMISSION_ROOM303]}];
+      };
+    }
+
+    // Remove admin rights to an user from a room
+    // NOTE: do not implment this yet!
+    // rpc RemoveAdminFromRoomMember() returns()
+
+    //
+    // Message
+    //
+    rpc CreateMessage(CreateMessageRequest) returns (CreateMessageResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/createmessage"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc EditMessage(EditMessageRequest) returns (EditMessageResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/editmessage"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/deletemessage"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/getmessages"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc StreamMessageUpdates(StreamMessageUpdatesRequest) returns (stream StreamMessageUpdatesResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/streammessageupdates"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc GetUnreadStats(GetUnreadStatsRequest) returns (GetUnreadStatsResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/getunreadstats"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc MarkMessageRead(MarkMessageReadRequest) returns (MarkMessageReadResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/markmessageread"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc MarkAllMessagesRead(MarkAllMessagesReadRequest) returns (MarkAllMessagesReadResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/markallmessagesread"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc BulkMarkMessageRead(BulkMarkMessageReadRequest) returns (BulkMarkMessageReadResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/bulkmarkmessageread"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+
+    //
+    // Room
+    //
+    rpc CreateRoom(CreateRoomRequest) returns (commons.Room) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/createroom"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc GetRoom(GetRoomRequest) returns (commons.Room) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/getroom"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc ListAllRooms(ListAllRoomsRequest) returns (ListRoomsResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/listallrooms"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+
+    rpc ListRoomsForMember(ListRoomsForMemberRequest) returns (ListRoomsResponse) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/listroomsformember"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+    rpc ArchiveRoom(ArchiveRoomRequest) returns (commons.Room) {
+        option (google.api.http) = {
+            post: "/api/v1alpha1/room303/room303api/archive"
+            body: "*"
+        };
+        option (annotations.authz) = {
+            sets: [{permissions: [PERMISSION_ROOM303]}];
+        };
+    }
+}

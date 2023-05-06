@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package v1alpha1.scorecards;
+
+option java_package="com.tcn.api.v1alpha1.scorecards";
+option go_package="github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+
+
+
+import "google/protobuf/field_mask.proto";
+import "commons/scorecards.proto";
+
+// GetAutoQuestionRequest is the request to get an auto question.
+message GetAutoQuestionRequest{
+    int64 auto_question_id = 2; // Required - unique id of auto question to get.
+}
+
+// GetAutoQuestionResponse returns the auto question requested.
+message GetAutoQuestionResponse{
+    commons.AutoQuestion auto_question = 1; // auto question response object.
+}
+
+// CreateAutoQuestionRequest is the request to create a new auto question.
+message CreateAutoQuestionRequest{
+    commons.AutoQuestion auto_question = 2; // Required - auto question object to create.
+}
+
+// CreateAutoQuestionResponse returns the created auto question.
+message CreateAutoQuestionResponse{
+    commons.AutoQuestion auto_question = 1; // updated auto question object.
+}
+
+// UpdateAutoQuestionRequest is the request to update an auto question.
+message UpdateAutoQuestionRequest{
+    commons.AutoQuestion auto_question = 2; // Required - auto question to update fields from.
+    google.protobuf.FieldMask update_mask = 3; // Required - mask defining which fields to update.
+}
+
+// UpdateAutoQuestionResponse returns the updated auto question.
+message UpdateAutoQuestionResponse{
+    commons.AutoQuestion auto_question = 1; // updated auto question object.
+}
+
+// DeleteAutoQuestionRequest is the request to delete an auto question.
+message DeleteAutoQuestionRequest{
+    int64 auto_question_id = 3; // Required - unique id of auto question to delete.
+}
+
+// DeleteAutoQuestionResponse returns the deleted auto question.
+message DeleteAutoQuestionResponse{
+    commons.AutoQuestion auto_question = 1; // deleted auto question object.
+}

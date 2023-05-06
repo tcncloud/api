@@ -1,0 +1,205 @@
+syntax = "proto3";
+
+package v1alpha1.org;
+
+option java_package="com.tcn.api.v1alpha1.org";
+option go_package="github.com/tcncloud/api/v1alpha1.org;org";
+
+import "commons/audit/event_types.proto";
+import "commons/notifications.proto";
+
+import "google/protobuf/field_mask.proto";
+
+
+
+// -------------------- Subscriptions --------------------
+
+// UserSubscription contains the info to send a notification to a user.
+// It contains a user, the event type, a delivery method, and custom app settings.
+message UserSubscription {
+  // Required.
+  // The unique id given to the setting. Used for updating and deleting.
+  string subscription_id = 1;
+
+  // Required.
+  //
+  // Used by matrix-notify.
+  // It receives an event on a event type and
+  // uses it to look up the targets for that event type.
+  // e.g. commons.audit.EventType_DUMMY_EVENT_DID_SOMETHING
+  commons.audit.EventType event_type = 2;
+
+  // Required.
+  string user_id = 3;
+
+  // Required.
+  oneof deliver_method {
+    Room303 room303 = 100;
+    // TODO: add email, sms, etc.
+  }
+
+  // Optional.
+  // If set, user only notified for events that match ALL filters.
+  repeated commons.FieldValueFilter filters = 4;
+
+  // Optional. Updates must specify current version or be rejected.
+  int64 version = 5;
+
+  message Room303 {
+    string room_name = 1;
+  }
+}
+
+// Request to add a user subscription.
+message AddUserSubscriptionRequest {
+  // Required.
+  // All fields (except subscription id) must be set.
+  UserSubscription subscription = 1;
+}
+
+// Response to adding a user subscription.
+// Contains a single user subscription.
+message AddUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request to add a user subscription by a specified user with editing users org.
+message AddUserSubscriptionByUserIdRequest {
+  // Required.
+  // User assigned to subscription
+  string user_id = 1;
+  // All fields (except subscription id) must be set.
+  UserSubscription subscription = 2;
+}
+
+// Response to adding a user subscription.
+// Contains a single user subscription.
+message AddUserSubscriptionByUserIdResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for getting a user subscription.
+message GetUserSubscriptionRequest {
+  // Required.
+  string subscription_id = 1;
+}
+
+// Response for getting a user subscription.
+// Contains a single user subscription.
+message GetUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for getting a user subscription.
+message GetUserSubscriptionByUserIdRequest {
+  // Required.
+  // User assigned to subscription
+  string user_id = 1;
+
+  // Required.
+  string subscription_id = 2;
+}
+
+// Response for getting a user subscription.
+// Contains a single user subscription.
+message GetUserSubscriptionByUserIdResponse {
+  UserSubscription subscription = 1;
+}
+
+
+// Request for updating a user subscription.
+message UpdateUserSubscriptionRequest {
+  // Required.
+  // Must have org id, user id, and subscription id.
+  UserSubscription subscription = 1;
+
+  // Required. Only fields in field mask will be updated.
+  // Valid fields include: "filters", "room303"
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response for updating a user subscription.
+// Contains a single user subscription.
+message UpdateUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for updating a user subscription.
+message UpdateUserSubscriptionByUserIdRequest {
+  // Required.
+  // Must have org id, user id, and subscription id.
+  UserSubscription subscription = 1;
+
+  // Required. Only fields in field mask will be updated.
+  // Valid fields include: "filters", "room303"
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response for updating a user subscription.
+// Contains a single user subscription.
+message UpdateUserSubscriptionByUserIdResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for removing a user subscription by id.
+message RemoveUserSubscriptionRequest {
+  // Required.
+  string subscription_id = 1;
+}
+
+// Response for deleting a user subscription.
+message RemoveUserSubscriptionResponse {
+}
+
+// Request for removing a user subscription by id.
+message RemoveUserSubscriptionByUserIdRequest {
+  // Required.
+  // Primary key for subscriptions.
+  string user_id = 1;
+
+  // Required.
+  string subscription_id = 2;
+}
+
+// Response for deleting a user subscription.
+message RemoveUserSubscriptionByUserIdResponse {
+}
+
+
+// Multiple user subscriptions
+
+// Request for listing subscriptions for the current user.
+message ListUserSubscriptionsRequest {}
+
+// Response for listing subscriptions for the current user.
+// Contains a user subscriptions (plural) object.
+message ListUserSubscriptionsResponse {
+  repeated UserSubscription subscriptions = 1;
+}
+
+// Request for listing subscriptions for a given user.
+message ListUserSubscriptionsByUserIdRequest {
+  // Required.
+  string user_id = 1;
+}
+
+// Response for listing subscriptions for a given user.
+// Contains a user subscriptions (plural) object.
+message ListUserSubscriptionsByUserIdResponse {
+  repeated UserSubscription subscriptions = 1;
+}
+
+// Request for listing subscriptions (for many users) for an org.
+message ListOrgSubscriptionsRequest {
+  // Required.
+  string org_id = 1;
+
+  // Optional.
+  // Used by matrix-notify to get settings in bulk for a particular event type.
+  commons.audit.EventType event_type = 2;
+}
+
+// Response for listing subscriptions for multiple users.
+message ListOrgSubscriptionsResponse {
+  repeated UserSubscription subscriptions = 1;
+}

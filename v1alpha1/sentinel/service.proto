@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package v1alpha1.sentinel;
+
+option java_package="com.tcn.api.v1alpha1.sentinel";
+option go_package="github.com/tcncloud/api/v1alpha1.sentinel;sentinel";
+
+import "google/api/annotations.proto";
+import "annotations/authz.proto";
+import "v1alpha1/sentinel/entities.proto";
+
+
+
+
+// A service for internal observability utilities.
+service Sentinel {
+  // Send a json blob of ui events and logs.
+  rpc SendEvents(SendEventsReq) returns (SendEventsRes) {
+    option (google.api.http).post = "/api/v1alpha1/sentinel/sendevents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+}

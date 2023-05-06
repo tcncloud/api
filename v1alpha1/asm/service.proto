@@ -1,0 +1,366 @@
+// Copyright (c) 2020, TCN Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package v1alpha1.asm;
+
+option java_package="com.tcn.api.v1alpha1.asm";
+option go_package="github.com/tcncloud/api/v1alpha1.asm;asm";
+
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "commons/acd.proto";
+import "commons/omnichannel.proto";
+import "commons/asm.proto";
+import "commons/auth/user.proto";
+import "commons/event.proto";
+import "commons/types.proto";
+
+service AsmApi {
+    // Creates an agent session and enables the voice channel
+    rpc CreateSession(CreateSessionReq) returns (CreateSessionRes) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/createsession";
+        option (google.api.http).body = "*";
+    }
+    // Returns an aggregate of the statuses of all channels
+    rpc GetStatus(GetStatusReq) returns (GetStatusRes) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getstatus";
+        option (google.api.http).body = "*";
+    }
+    // Closes an asm session and all sub sessions
+    rpc EndSession(EndSessionReq) returns (EndSessionRes) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/endsession";
+        option (google.api.http).body = "*";
+    }
+    // Gets an agent's current asm session
+    rpc GetCurrentSession(GetCurrentSessionReq) returns (AsmSession) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getcurrentsession";
+        option (google.api.http).body = "*";
+    }
+    // Updates the currently active subsession
+    rpc SwitchSubsession(SwitchSubsessionReq) returns (SwitchSubsessionRes) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/switchsubsession";
+        option (google.api.http).body = "*";
+    }
+
+    // Lists the conversations for an assigned agent
+    rpc ListConversations(ListConversationsReq) returns (ListConversationsRes) {
+        option (google.api.http).post = "/api/v1alpha1/asm/asmapi/listconversations";
+        option (google.api.http).body = "*";
+    }
+
+    // Assign agent to matched conversation based on skills and channelTypes requested
+    rpc AssignNewConversation(AssignNewConversationReq) returns (AssignNewConversationRes) {
+      option (google.api.http).post = "/api/v1alpha1/asm/asmapi/assignnewconversation";
+      option (google.api.http).body = "*";
+    }
+
+    // List all agents for the given user. Contains statistical enrichments for each agent and their conversations.
+    rpc ListAgents(ListAgentsReq) returns (ListAgentsRes) {
+      option (google.api.http).post = "/api/v1alpha1/asm/asmapi/listagents";
+      option (google.api.http).body = "*";
+    }
+
+    // Set collected data per conversation
+    rpc SetConversationCollectedData(SetConversationCollectedDataReq) returns (SetConversationCollectedDataRes) {
+      option (google.api.http).post = "/api/v1alpha1/asm/asmapi/setconversationcollecteddata";
+      option (google.api.http).body = "*";
+    }
+
+    // Set queue details
+    rpc GetQueuesDetails(GetQueuesDetailsReq) returns (commons.GetQueuesDetailsRes) {
+      option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getqueuesdetails";
+      option (google.api.http).body = "*";
+    }
+}
+
+message CreateSessionReq {
+    int64 hunt_group_sid      = 1;
+    map<string, int64> skills = 2;
+    commons.AsmSubsessionType subsession_type = 3;
+}
+
+message CreateSessionRes {
+    int64 asm_session_sid                = 1;
+    int64 voice_session_sid              = 2;
+    VoiceRegistration voice_registration = 3;
+}
+
+message VoiceRegistration {
+    // The pin used to log in via a connected phone
+    string username = 2;
+    // The pass used to log in via a connected phone
+    string password = 3;
+    // The extention appended
+    string dial_url = 4;
+    // pstn phone number that will be used for the agent to dial in
+    // if it's an empty string then the voip connection must be used
+    string pstn_phone          = 5;
+    string default_time_zone   = 6;
+    int64 expiration_timestamp = 7;
+}
+
+// request used to establish a stream of status updates
+// based on the given asm session sid. Ths will return
+// all payload types in the responses
+message StreamAgentStateReq {
+    int64 asm_session_sid = 1;
+    bool keep_alive = 2;
+}
+
+// request used to establish a stream of status updates
+// based on the current authenticated user's org_id
+// This will only return the AgentState payload type
+// in the reponses
+message ManagerStreamAgentStateReq {}
+
+message GetStatusReq {
+    int64 asm_session_sid           = 1;
+    bool perform_keep_alive         = 2;
+    bool perform_get_queued_calls   = 3;
+    bool perform_get_message        = 4;
+    int64 minimum_message_timestamp = 5;
+    repeated string skills          = 6;
+    repeated commons.Event events   = 7;
+    // the current agents pbx extensions
+    repeated string agent_pbx_extensions = 8;
+}
+
+message GetStatusRes {
+    VoiceStatus voice_status = 1;
+}
+
+message VoiceStatus {
+    int64 status                         = 2;
+    commons.AgentStatus.Enum status_desc = 3;
+    bool paused                          = 4;
+    string queue                         = 5;
+    int64 current_session_id             = 6;
+    int64 last_status_change             = 7;
+    bool monitoring                      = 8;
+    int64 calls_count                    = 9;
+    int64 last_sip_code                  = 10;
+    bool agent_peer_is_lost_call         = 11;
+    bool disabled                        = 12;
+    bool keep_alive_succeeded            = 13;
+    string message                       = 14;
+    int64 message_timestamp              = 15;
+    QueuedCalls queued_calls             = 16;
+    bool caller_was_suspended            = 17;
+    repeated commons.TransferMember transfer_members = 18;
+    commons.AgentAlert alert = 19;
+    // indicates if the current call is a direct to agent call
+    bool agent_peer_is_direct_to_agent = 20;
+    // indicates if the agent is muted or not
+    bool agent_is_muted = 21;
+}
+
+message QueuedCalls {
+    // calls that were queued and have a matching subset of the agent_skills from the request.
+    repeated QueuedCallData agent_queue_calls = 16;
+    // calls that were placed on multi-hold by the agent_sid from the request.
+    repeated QueuedCallData on_hold_calls = 17;
+    // calls that were placed in the Hold Queue Monitor, are still on hold by the destination (hold music is being played by the other party) and have
+    // a matching subset of the agent_skills from the request.
+    repeated QueuedCallData hqm_calls = 18;
+
+    message QueuedCallData {
+        // id of the found call.
+        int64 call_sid = 1;
+        // number dialed when the call was placed.
+        string phone_number = 2;
+        // caller_id used when the call was placed.
+        string caller_id = 3;
+        // call type of the found call.
+        commons.CallType.Enum call_type = 4;
+        // timestamp indicating when the call started.
+        google.protobuf.Timestamp start_date = 5;
+        // timestamp indicating when the call was put on hold (only set when call is a hold call).
+        google.protobuf.Timestamp hold_date = 6;
+        // formatted skills that the call requires.
+        repeated string skills = 7;
+        // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
+        bool agent_specific = 8;
+        // queued notification type of the call.
+        commons.QueuedNotificationType queued_notification_type = 9;
+    }
+}
+
+message EndSessionReq {
+    int64 asm_session_sid = 1;
+    string reason         = 2;
+}
+message EndSessionRes {}
+
+message GetCurrentSessionReq {}
+
+message AsmSession {
+    int64 asm_session_sid                       = 1;
+    google.protobuf.Timestamp asm_session_start = 4;
+    google.protobuf.Timestamp asm_session_end   = 5;
+    VoiceSession voice_session                  = 6;
+}
+
+message VoiceSession {
+    int64 voice_session_sid                       = 1;
+    google.protobuf.Timestamp voice_session_start = 2;
+    google.protobuf.Timestamp voice_session_end   = 3;
+}
+
+message SwitchSubsessionReq {
+    int64 asm_session_sid                     = 1;
+    int64 hunt_group_sid                      = 2;
+    map<string, int64> skills                 = 3;
+    commons.AsmSubsessionType channel_type = 4;
+}
+
+message SwitchSubsessionRes {
+    int64 voice_session_sid              = 1;
+    VoiceRegistration voice_registration = 2;
+}
+
+message Conversation {
+  // conversation details
+  // agent conversation id
+  int64 conversation_sid                         = 6 [jstype = JS_STRING];
+  // initial agent conversation created time
+  google.protobuf.Timestamp conversation_created_time = 7;
+  // agent conversation assigned time
+  google.protobuf.Timestamp assigned_last_updated_time = 8;
+  // conversation status - open, closed
+  commons.ConversationStatus conversation_status = 9;
+  // channel type - voice|sms|email|chat
+  commons.ChannelType channel_type               = 10;
+  commons.ConversationCustomerInformation customer_info = 11;
+  // received time
+  google.protobuf.Timestamp last_message_time    = 12;
+  // skills
+  ConversationSkills skills = 13;
+  // agent conversation assignment status
+  commons.AgentConversationAssignmentStatus assignment_status = 14;
+  // agent conversation assignment type
+  commons.AgentConversationAssignmentType assignment_type = 15;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 16;
+  // conversation collected data
+  commons.ConversationCollectedData conversation_collected_data = 17;
+  // the time that the last group of message started. A message group is a
+  // continuous set of messages from the same type of sender
+  google.protobuf.Timestamp last_message_group_time = 18;
+  // the sender type of the last message group
+  commons.OmniSenderType last_message_group_type = 19;
+}
+
+message ConversationSkills {
+    map<string, bool> skills = 1;
+}
+message AssignNewConversationReq {
+    int64 asm_session_sid = 1;
+    // skills
+    map<string, int64> skills = 2;
+    // channel type - voice|sms|email|chat
+    repeated commons.ChannelType channel_types = 3;
+}
+
+message AssignNewConversationRes {
+  Conversation conversation = 1;
+  //send back ghost notifier referenceID
+  string reference_id = 2;
+}
+
+message ListAgentsReq {}
+
+message ListAgentsRes {
+    // list of agents in the system with enrichments
+    repeated commons.DashboardAgentInfo agents = 1;
+}
+
+//request to set collected data for a conversation
+message SetConversationCollectedDataReq {
+  // conversation_id
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // channel type - email|sms|chat|voice
+  commons.ChannelType channel_type = 2;
+  // collected data - key/value
+  map<string, string> collected_data = 3;
+}
+
+//response after setting collected data for a conversation
+message SetConversationCollectedDataRes {}
+
+// ListConversationsReq - request to list all conversations associated with a given user
+message ListConversationsReq {
+    // the asm session identifier
+    int64 asm_session_sid = 1;
+    // the currently signed in user
+    commons.auth.AuthenticatedUser authenticated_user = 2;
+    // an optional field, used to select a specific user rather than the auth user
+    string user_id = 3;
+    // an optional field, if only wanting to retrieve conversations with specific statuses
+    repeated commons.ConversationStatus statuses = 4;
+    // field mask to filter what is returned by each row
+    google.protobuf.FieldMask field_mask = 5;
+    // the channel types to list conversations for
+    repeated commons.ChannelType channel_types = 6;
+}
+
+// ListConversationsRes - result to listing a user's conversations
+message ListConversationsRes {
+    // the conversations retrieved
+    repeated commons.OmniConversation conversations = 1;
+    // Token to retrieve the next page of tasks, or empty if there are no more pages
+    //Only returned if using the ByTime or ByAssignedUser filters
+    string next_page_token = 2;
+}
+
+// GetQueuesDetailsReq - request to get details of queues
+message GetQueuesDetailsReq {
+    // the agent's asm session
+    int64 asm_session_sid = 1;
+    // the channel types to get details for
+    repeated commons.ChannelType channel_types = 2;
+    // the skills to check
+    map<string, int64> skills = 3;
+}
+
+// PushEventsReq - request to push events
+message PushEventsReq {
+    int64 asm_session_sid = 1;
+    repeated commons.AsmEvent events = 2;
+}
+
+message PushEventsRes {}
+
+message EnableVoiceReq {
+    int64 asm_session_sid                     = 1;
+    int64 hunt_group_sid                      = 2;
+    map<string, int64> skills                 = 3;
+}
+
+message EnableVoiceRes {
+    int64 voice_session_sid              = 1;
+    VoiceRegistration voice_registration = 2;
+}
+
+message DisableVoiceReq {
+    int64 asm_session_sid                     = 1;
+    int64 hunt_group_sid                      = 2;
+    map<string, int64> skills                 = 3;
+}
+
+message DisableVoiceRes {}

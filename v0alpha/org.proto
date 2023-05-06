@@ -1,0 +1,4895 @@
+syntax = "proto3";
+
+package v0alpha;
+
+option java_package="com.tcn.api.v0alpha";
+option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
+
+
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "commons/ana.proto";
+import "commons/omnichannel.proto";
+import "commons/lms.proto";
+import "commons/logging.proto";
+import "commons/perms.proto";
+import "commons/auth/perms.proto";
+import "commons/notifications.proto";
+import "commons/org_preferences.proto";
+import "commons/org.proto";
+import "commons/country.proto";
+import "google/protobuf/field_mask.proto";
+import "commons/audit/event_types.proto";
+import "commons/org/trusts.proto";
+
+
+service Org {
+  // Registers a new organization
+  rpc RegisterOrganization(RegisterOrganizationRequest) returns (RegisterOrganizationResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/register";
+    option (google.api.http).body = "*";
+  }
+
+  // Converts a standard organiztion to a manual one.
+  // WARNING: this process cannot be reversed.
+  rpc ConvertOrgToManual(ConvertOrgToManualRequest) returns (ConvertOrgToManualResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/converttomanual";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an organization
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Archives an organization. An archived organization effectively disappears, but isn't deleted.
+  rpc ArchiveOrganization(ArchiveOrganizationRequest) returns (ArchiveOrganizationResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/archive";
+    option (google.api.http).body = "*";
+  }
+
+  // Restores an archived organization.
+  rpc UnArchiveOrganization(UnArchiveOrganizationRequest) returns (UnArchiveOrganizationResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/unarchive";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns the list of organizations that have been archived.
+  rpc ListArchivedOrganizations(ListArchivedOrganizationsRequest) returns (ListArchivedOrganizationsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/archived/list";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetOrganizationProfile(GetOrganizationProfileRequest) returns (GetOrganizationProfileResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/profile/get";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetOrganizationProfileById(GetOrganizationProfileByIdRequest) returns (GetOrganizationProfileResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/profile/byid/get";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListOrganizationDescriptions(ListOrganizationDescriptionsRequest) returns (ListOrganizationDescriptionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/description/list";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListRegionalOrganizations(ListRegionalOrganizationsRequest) returns (ListRegionalOrganizationsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/organization/description/regional/list";
+    option (google.api.http).body = "*";
+  }
+
+  // update an organizations owning organization.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  rpc UpdateP3OwningOrg(UpdateP3OwningOrgRequest)
+    returns (UpdateP3OwningOrgResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/updatep3owningorg";
+    option (google.api.http).body = "*";
+  }
+
+  // gets the owning organiztion for the given org
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  rpc GetP3OwningOrg(GetP3OwningOrgRequest) returns (GetP3OwningOrgResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/getp3owningorg";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListOrganizationUserDescriptions(ListOrganizationUserDescriptionsRequest) returns (ListOrganizationUserDescriptionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/descriptions/list";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListUserDescriptions(ListUserDescriptionsRequest) returns (stream ListUserDescriptionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/all/user/descriptions/list";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetUserDirectory(GetUserDirectoryRequest) returns (GetUserDirectoryResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/directory/get";
+    option (google.api.http).body = "*";
+  }
+
+  // GetRegions takes nothing in the request and returns a list of all region names
+  rpc GetRegions(GetRegionsRequest) returns (GetRegionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/region/list";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetUserDetails(GetUserDetailsRequest) returns (UserDetails) {
+    option (google.api.http).post = "/api/v0alpha/org/user/details";
+    option (google.api.http).body = "*";
+  }
+
+  rpc AdminGetUserDetails(AdminGetUserDetailsRequest) returns (UserDetails) {
+    option (google.api.http).post = "/api/v0alpha/org/admin/user/details";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetAgentUsers(GetAgentUsersRequest) returns (GetAgentUsersResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/agents/get";
+    option (google.api.http).body = "*";
+  }
+
+  // This is transitionary api. It will be removed when user api is available.
+  // GetAgentSettings gets some agent settings as defined by the GetAgentSettingsRequest.
+  // Required Permissions:
+  // AGENT
+  rpc GetAgentSettings(GetAgentSettingsRequest)
+      returns (GetAgentSettingsResponse) {
+    option (google.api.http).post =
+        "/api/v0alpha/org/agentsettings/get";
+    option (google.api.http).body = "*";
+  }
+
+  // GetAgentProfileGroup gets a single AgentProfileGroup by given ID
+   // Required Permissions:
+  // ORG_VIEW
+  rpc GetAgentProfileGroup(GetAgentProfileGroupRequest) returns (GetAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateAgentProfileGroup updates an AgentProfileGroup. Can only update if user is in same org as AgentProfileGroup
+   // Required Permissions:
+  // ORG_EDIT
+  rpc UpdateAgentProfileGroup(UpdateAgentProfileGroupRequest) returns (UpdateAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/update";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateAgentProfileGroup creates an AgentProfileGroup. Can only create if user is in same org as AgentProfileGroup
+   // Required Permissions:
+  // ORG_EDIT
+  rpc CreateAgentProfileGroup(CreateAgentProfileGroupRequest) returns (CreateAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/create";
+    option (google.api.http).body = "*";
+  }
+
+  // ListAgentProfileGroups lists all AgentProfileGroups for a given org
+   // Required Permissions:
+  // ORG_VIEW
+  rpc ListAgentProfileGroups(ListAgentProfileGroupsRequest) returns (ListAgentProfileGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/list";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteAgentProfileGroup deletes a single AgentProfileGroup by given ID. Can only delete if user is in same org as AgentProfileGroup
+   // Required Permissions:
+  // ORG_EDIT
+  rpc DeleteAgentProfileGroup(DeleteAgentProfileGroupRequest) returns (DeleteAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // AssignAgentProfileGroups bulk assigns a list of users to a given AgentProfileGroup
+   // Required Permissions:
+  // ORG_EDIT
+  rpc AssignAgentProfileGroups(AssignAgentProfileGroupsRequest) returns (AssignAgentProfileGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/assign";
+    option (google.api.http).body = "*";
+  }
+
+
+  // UpdateUser updates a user as defined by the UpdateUserRequest.
+  // Required Permissions:
+  // USER_EDIT if the user_id is given on the request.
+  // NONE (TODO: create & use new perm) if the user_id is NOT given.
+  //  This will only the currently logged in user.
+  //  Only some of the fields on the request message can be updated
+  //  for the currently logged in user: time_zone, linkback_numbers,
+  //  caller_ids, and default_app.
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/agent/update";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateUser creates a new user as defined by the CreateUserRequest
+  // request message.
+  // Required Permissions:
+  // USER_CREATE, CUSTOMER_SUPPORT if adding to an org other than your own
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/create";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a delegated user. This should only be called by an auth0 action.
+  rpc CreateDelegatedUser(CreateDelegatedUserRequest) returns (CreateDelegatedUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/delegateduser/create";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateUserPassword updates a users password to the
+  // password given on the request message.
+  // Required Permissions:
+  // USER_EDIT if user_id was given on the request (Update another user's password)
+  // USER_EDIT_PASSWORD if user_id is retrieved from token (Update your own password)
+  rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/password/update";
+    option (google.api.http).body = "*";
+  }
+
+  // updates the users PasswordResetRequired field to false.
+  // this should only be called by an auth0 action.
+  rpc ResetUserRequirePasswordReset(ResetUserRequirePasswordResetRequest) returns (ResetUserRequirePasswordResetResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/resetpasswordrequired";
+    option (google.api.http).body = "*";
+  }
+
+  // Generate a password reset link for a user.
+  // Required Permissions:
+  //  USER_EDIT_PASSWORD if user_id not given on request.
+  //  USER_EDIT if user_id given on the request.
+  //  CUSTOMER_SUPPORT if user_id & org_id given on request. User_id must be given if org_id is.
+  rpc GetUserPasswordResetLink(GetUserPasswordResetLinkRequest) returns (GetUserPasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/password/resetlink";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns whether or not the given user's email is verified.
+  // Required Permissions:
+  //  USER_EDIT if org_id not given on request.
+  //  CUSTOMER_SUPPORT if org_id given on request.
+  rpc GetUserEmailVerified(GetUserEmailVerifiedRequest) returns (GetUserEmailVerifiedResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/emailverified";
+    option (google.api.http).body = "*";
+  }
+  // Sends a verfication email to the given users email.
+  // Required Permissions:
+  //  USER_EDIT if org_id not given on request.
+  //  CUSTOMER_SUPPORT if org_id given on request.
+  rpc SendUserVerificationEmail(SendUserVerificationEmailRequest) returns (SendUserVerificationEmailResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/sendverificationemail";
+    option (google.api.http).body = "*";
+  }
+  // Sets the given user's to verified without needing to send a verification email.
+  // Required Permissions:
+  //  USER_EDIT if org_id not given on request.
+  //  CUSTOMER_SUPPORT if org_id given on request.
+  rpc ManualUserEmailVerification(ManualUserEmailVerificationRequest) returns (ManualUserEmailVerificationResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/manualuseremailverification";
+    option (google.api.http).body = "*";
+  }
+
+  // Authenticates impersonation and generates token to be used.
+  // Required Permissions:
+  // CUSTOMER_SUPPORT
+  rpc GetTempUserToken(GetTempUserTokenReq) returns (GetTempUserTokenRes) {
+    option (google.api.http).post = "/api/v0alpha/org/user/token";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetCountriesList(GetCountriesListRequest) returns (GetCountriesListResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/countries/list/get";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetAdminClientPreferences(GetAdminClientPreferencesRequest) returns (GetAdminClientPreferencesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/admin/client/preferences/get";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateAdminClientPreferences(UpdateAdminClientPreferencesRequest) returns (UpdateAdminClientPreferencesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/admin/client/preferences/update";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetPermissions(GetPermissionsRequest) returns (GetPermissionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/permissions/get";
+    option (google.api.http).body = "*";
+  }
+
+  // RevokeAccountOwnerPermissionFromUser revokes the
+  // account owner permission for the given user
+  rpc RevokeAccountOwnerPermissionFromUser(RevokeAccountOwnerPermissionFromUserRequest) returns (RevokeAccountOwnerPermissionFromUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/permissions/revoke";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateUserDisabled updates a specified user to disabled or enabled. A disabled user cannot log in.
+  // Required Permissions:
+  //    - USER_EDIT
+  rpc UpdateUserDisabled(UpdateUserDisabledRequest) returns (UpdateUserDisabledResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/permissions/userdisabled/update";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateBulkUsersDisabled updates every given user_id to be disabled or enabled. The returned list of updated_ids contains every id that was successfully updated.
+  // Required Permissions:
+  //		- USER_EDIT
+  rpc UpdateBulkUsersDisabled(UpdateBulkUsersDisabledRequest) returns (UpdateBulkUsersDisabledResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/permissions/userdisabled/updatebulk";
+    option (google.api.http).body = "*";
+  }
+
+  // Customer Support Billing
+
+  // Returns the billing data for the given org. Billing data
+  // will only be included for countries present on the org's
+  // allowed countries preference.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.InvalidArgument: The org_id on the request was invalid.
+  //    - grpc.NotFound: The given org_id did not exist.
+  //    - grpc.Internal: An unexpected error occurred while getting the orgs billing settings.
+  rpc GetOrgBillingSettings(GetOrgBillingSettingsRequest)
+    returns (GetOrgBillingSettingsResponse) {
+      option (google.api.http).post = "/api/v0alpha/org/billing/getorgbillingsettings";
+      option (google.api.http).body = "*";
+    }
+
+  // Updates the given orgs billing settings as defined by the info
+  // given on the request message. Only fields that are given on the
+  // field mask will be updated.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.InvalidArgument: A field on the request was invalid.
+  //    - grpc.NotFound: The given org_id did not exist.
+  //    - grpc.Internal: An unexpected error occurred while updating the orgs billing settings.
+  rpc SetOrgBillingSettings(SetOrgBillingSettingsRequest)
+    returns (SetOrgBillingSettingsResponse) {
+      option (google.api.http).post = "/api/v0alpha/org/billing/setorgbillingsettings";
+      option (google.api.http).body = "*";
+    };
+
+  // Adds a single billing region override for the given orgs billing settings.
+  // If an override already exists for the given region it will be updated.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.InvalidArgument: A field on the request was invalid.
+  //    - grpc.NotFound: The given org_id did not exist.
+  //    - grpc.Internal: An unexpected error occurred while adding the override.
+  rpc AddOrgBillingOverride(AddOrgBillingOverrideRequest)
+    returns (AddOrgBillingOverrideResponse) {
+      option (google.api.http).post = "/api/v0alpha/org/billing/addorgbillingoverride";
+      option (google.api.http).body = "*";
+    };
+
+  // Removes a single billing region override for the given orgs billing settings.
+  // If the region override doesn't exist the rpcs will just do nothing.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.InvalidArgument: The given org_id was invalid.
+  //    - grpc.NotFound: The given org_id did not exist.
+  //    - grpc.Internal: An unexpected error occurred while removing the override.
+  rpc RemoveOrgBillingOverride(RemoveOrgBillingOverrideRequest)
+    returns (RemoveOrgBillingOverrideResponse) {
+      option (google.api.http).post = "/api/v0alpha/org/billing/removeorgbillingoverride";
+      option (google.api.http).body = "*";
+    };
+
+  // Returns the system default billing rates.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  rpc GetSystemDefaultBillingRates(GetSystemDefaultBillingRatesRequest)
+    returns (GetSystemDefaultBillingRatesResponse) {
+      option (google.api.http).post = "/api/v0alpha/org/billing/getsystemdefaultbillingrates";
+      option (google.api.http).body = "*";
+    }
+
+
+  // neo permissions
+
+  // ListPermissionGroups returns the list of an org's permission groups.
+  rpc ListPermissionGroups(ListPermissionGroupsRequest) returns (ListPermissionGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/list";
+    option (google.api.http).body = "*";
+  }
+
+  // CreatePermissionGroup creates a new permission group for the caller's organization.
+  rpc CreatePermissionGroup(CreatePermissionGroupRequest) returns (CreatePermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/create";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdatePermissionGroup updates a permission group by id for the caller's organization.
+  rpc UpdatePermissionGroup(UpdatePermissionGroupRequest) returns (UpdatePermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/update";
+    option (google.api.http).body = "*";
+  }
+
+  // DeletePermissionGroup deletes a permission group by id for the caller's organization.
+  rpc DeletePermissionGroup(DeletePermissionGroupRequest) returns (DeletePermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/delete";
+    option (google.api.http).body = "*";
+  }
+  // Assigns a user to a acount owner permission group.
+  rpc AssignUserToAccountOwnerPermissionGroup(AssignUserToAccountOwnerPermissionGroupRequest) returns (AssignUserToAccountOwnerPermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/admin/assignaccountowner";
+    option (google.api.http).body = "*";
+  }
+
+  // Assigns a permission group to another user.
+  // Requires that all three of permission group, calling user, and user being assigned to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc AssignUserPermissionGroup(AssignUserPermissionGroupRequest) returns (AssignUserPermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/assign";
+    option (google.api.http).body = "*";
+  }
+
+  // Assigns a permission group to multiple users.
+  // Requires that all three of permission group, calling user, and user being assigned to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc AssignUsersPermissionGroup(AssignUsersPermissionGroupRequest) returns (AssignUsersPermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/assignusers";
+    option (google.api.http).body = "*";
+  }
+
+  // Assigns permission group(s) to another user.
+  // Requires that all three of permission group, calling user, and user being assigned to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc UpdateUserNeoPermissionGroups(UpdateUserNeoPermissionGroupsRequest) returns (UpdateUserNeoPermissionGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/user/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Revokes a permission group from another user.
+  // Requires that all three of permission group, calling user, and user being revoked to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc RevokeUserPermissionGroup(RevokeUserPermissionGroupRequest) returns (RevokeUserPermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/revoke";
+    option (google.api.http).body = "*";
+  }
+
+  // Revokes a permission group to multiple users.
+  // Requires that all three of permission group, calling user, and user being revoked to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc RevokeUsersPermissionGroup(RevokeUsersPermissionGroupRequest) returns (RevokeUsersPermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/revokeusers";
+    option (google.api.http).body = "*";
+  }
+
+  // InitDefaultPermissionGroups initializes the default read only permission groups for the callers organization.
+  // Idempotent call. Returns the default permission groups for the organization.
+  rpc InitDefaultPermissionGroups(InitDefaultPermissionGroupsRequest) returns (InitDefaultPermissionGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/initialize";
+    option (google.api.http).body = "*";
+  }
+
+  // Adds a single permission to an organization's Account Owner Group.
+  rpc AddPermissionToAccountOwnerPermissionGroup(AddPermissionToAccountOwnerPermissionGroupRequest) returns (AddPermissionToAccountOwnerPermissionGroupResponse);
+
+  // Adds a single permission to an organization's Account Owner Group.
+  rpc RevokePermissionToAccountOwnerPermissionGroup(RevokePermissionToAccountOwnerPermissionGroupRequest) returns (RevokePermissionToAccountOwnerPermissionGroupResponse);
+
+  // Adds a single permission to an organization's default Super User Group.
+  // Required Permissions:
+  //    - TCN_ADMIN_SETTINGS
+  rpc AddPermissionToOrgDefaultGroup(AddPermissionToOrgDefaultGroupRequest) returns (AddPermissionToOrgDefaultGroupResponse);
+
+  // Removes a single permission from an organization's default Super User Group.
+  // Required Permissions:
+  //    - TCN_ADMIN_SETTINGS
+  rpc RemovePermissionFromOrgDefaultGroup(RemovePermissionFromOrgDefaultGroupRequest) returns (RemovePermissionFromOrgDefaultGroupResponse);
+
+  // Returns an organization's default Super User Group.
+  // Required Permissions:
+  //    - TCN_ADMIN_SETTINGS
+  rpc GetOrgDefaultSuperUserGroup (GetOrgDefaultSuperUserGroupRequest) returns (GetOrgDefaultSuperUserGroupResponse);
+
+
+  // ListP3PermissionGroups returns the list of an org's P3 permission groups.
+  rpc ListP3PermissionGroups(ListP3PermissionGroupsRequest) returns (ListP3PermissionGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/groups/list";
+    option (google.api.http).body = "*";
+  }
+
+  // AddUserRegion to a Users Accessible Regions
+  rpc AddUserRegion(AddUserRegionRequest) returns (AddUserRegionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/addregion/update";
+    option (google.api.http).body = "*";
+  }
+
+  // RemoveUserRegion from a Users Accessible Regions
+  rpc RemoveUserRegion(RemoveUserRegionRequest) returns (RemoveUserRegionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/removeregion/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates new p3 permission group
+  rpc CreateP3PermissionGroup(CreateP3PermissionGroupRequest) returns (CreateP3PermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/create";
+    option (google.api.http).body = "*";
+  }
+
+  // Update p3 permission group
+  rpc UpdateP3PermissionGroup(UpdateP3PermissionGroupRequest) returns (UpdateP3PermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete new p3 permission group
+  rpc DeleteP3PermissionGroup(DeleteP3PermissionGroupRequest) returns (DeleteP3PermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // Assign one or many users a p3 permission group
+  rpc AssignUsersP3PermissionGroup(AssignUsersP3PermissionGroupRequest) returns (AssignUsersP3PermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/group/assign";
+    option (google.api.http).body = "*";
+  }
+
+  // AddLoginToUser Creates new login for a given user
+  rpc AddLoginToUser(AddLoginToUserRequest) returns (AddLoginToUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/create/login";
+    option (google.api.http).body = "*";
+  }
+
+  // Revoke a p3 permission group to another user(s).
+  // Requires that permission group and user(s) being assigned to be of the same organization.
+  // Calling user must have PERMISSION_PERMISSION_GROUP_ASSIGN.
+  rpc RevokeUsersP3PermissionGroup(RevokeUsersP3PermissionGroupRequest) returns (RevokeUsersP3PermissionGroupResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/group/revoke";
+    option (google.api.http).body = "*";
+  }
+
+  // Preferences
+
+  // GetContactPreferences returns all contact preferences for client TODO: will replace ContactList above
+  rpc GetContactPreferences(GetContactPreferencesRequest) returns (GetContactPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateContactPreferences update fields for all contact preferences for client
+  rpc UpdateContactPreferences(UpdateContactPreferencesRequest) returns (UpdateContactPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns all client compliance preferences
+  rpc GetCompliancePreferences(GetCompliancePreferencesRequest) returns (GetCompliancePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/get";
+    option (google.api.http).body = "*";
+  }
+  // Updates all client Compliance preferences
+  rpc UpdateCompliancePreferences(UpdateCompliancePreferencesRequest) returns (UpdateCompliancePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetAgentPreferences returns all client agent preferences
+  rpc GetAgentPreferences(GetAgentPreferencesRequest) returns (GetAgentPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateAgentPreferences updates client agent preferences
+  rpc UpdateAgentPreferences(UpdateAgentPreferencesRequest) returns (UpdateAgentPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetOrganizationPreferences returns preferences for the organization tab
+  rpc GetOrganizationPreferences(GetOrganizationPreferencesRequest) returns (GetOrganizationPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateOrganizationPreferences updates preferences for the organization tab
+  rpc UpdateOrganizationPreferences(UpdateOrganizationPreferencesRequest) returns (UpdateOrganizationPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetSchedulePreferences returns all schedule preferences for an org.
+  rpc GetSchedulePreferences(GetSchedulePreferencesRequest) returns (GetSchedulePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateSchedulePreferences returns all schedule preferences for an org.
+  rpc UpdateSchedulePreferences(UpdateSchedulePreferencesRequest) returns (UpdateSchedulePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetBusinessPreferences returns all business intelligence and associated analytic preferences
+  rpc GetBusinessPreferences(GetBusinessPreferencesRequest) returns (GetBusinessPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateBusinessPreferences updates all business intelligence and associated analytic preferences
+  rpc UpdateBusinessPreferences(UpdateBusinessPreferencesRequest) returns (UpdateBusinessPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetEndOfDayPreferences returns a time (hour 1-24) for each day of the week.
+  rpc GetEndOfDayPreferences(GetEndOfDayPreferencesRequest) returns (GetEndOfDayPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateEndOfDayPreferences update fields for a time (hour 1-24) for each day of the week.
+  rpc UpdateEndOfDayPreferences(UpdateEndOfDayPreferencesRequest) returns (UpdateEndOfDayPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetReportFilterPreferences returns preferences for the organization tab
+  rpc GetReportFilterPreferences(GetFilterPreferencesRequest) returns (GetFilterPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateReportFilterPreferences updates preferences for the filter tab
+  rpc UpdateReportFilterPreferences(UpdateFilterPreferencesRequest) returns (UpdateFilterPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetPhonePreferences returns all phone and recording preferences for an org.
+  rpc GetPhonePreferences(GetPhonePreferencesRequest) returns (GetPhonePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdatePhonePreferences updates phone and recording preferences for an org.
+  rpc UpdatePhonePreferences(UpdatePhonePreferencesRequest) returns (UpdatePhonePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/update";
+    option (google.api.http).body = "*";
+  }
+  // GetDashboardGeneralPreferences returns all dashboard general preferences for an org.
+  rpc GetDashboardGeneralPreferences(GetDashboardGeneralPreferencesRequest) returns (GetDashboardGeneralPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateDashboardGeneralPreferences updates dashboard General preferences for an org.
+  rpc UpdateDashboardGeneralPreferences(UpdateDashboardGeneralPreferencesRequest) returns (UpdateDashboardGeneralPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/update";
+    option (google.api.http).body = "*";
+  }
+  // GetWebhookPreferences returns all webhook preferences for an org.
+  rpc GetWebhookPreferences(GetWebhookPreferencesRequest) returns (GetWebhookPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateWebhookPreferences updates webhook preferences for an org.
+  rpc UpdateWebhookPreferences(UpdateWebhookPreferencesRequest) returns (UpdateWebhookPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/update";
+    option (google.api.http).body = "*";
+  }
+  // GetBroadcastPreferences returns all broadcast options for campaign preferences for an org.
+  rpc GetBroadcastPreferences(GetBroadcastPreferencesRequest) returns (GetBroadcastPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateBroadcastPreferences updates broadcast options for campaign preferences for an org.
+  rpc UpdateBroadcastPreferences(UpdateBroadcastPreferencesRequest) returns (UpdateBroadcastPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/update";
+    option (google.api.http).body = "*";
+  }
+  // GetAuthenticationPreferences returns all authentication options for an org.
+  rpc GetAuthenticationPreferences(GetAuthenticationPreferencesRequest) returns (GetAuthenticationPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateAuthenticationPreferences updates authentication preferences for an org.
+  rpc UpdateAuthenticationPreferences(UpdateAuthenticationPreferencesRequest) returns (UpdateAuthenticationPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/update";
+    option (google.api.http).body = "*";
+  }
+  // GetRecordingPreferences returns all recording options for an org.
+  rpc GetRecordingPreferences(GetRecordingPreferencesRequest) returns (GetRecordingPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateRecordingPreferences updates Recording preferences for an org.
+  rpc UpdateRecordingPreferences(UpdateRecordingPreferencesRequest) returns (UpdateRecordingPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/update";
+    option (google.api.http).body = "*";
+  }
+  // GetDashboardQueuePreferences returns the Dashboard Queue table preferences.
+  rpc GetDashboardQueuePreferences(GetDashboardQueuePreferencesRequest) returns (GetDashboardQueuePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/get";
+    option (google.api.http).body = "*";
+  }
+  // UpdateDashboardQueuePreferences updates the Dashboard Queue table preferences.
+  rpc UpdateDashboardQueuePreferences(UpdateDashboardQueuePreferencesRequest) returns (UpdateDashboardQueuePreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/update";
+    option (google.api.http).body = "*";
+  }
+  // GetAgentQuickViewPreferences returns the diplay templates for the client
+  rpc GetAgentQuickViewPreferences(GetAgentQuickViewPreferencesRequest) returns (GetAgentQuickViewPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/get";
+    option (google.api.http).body = "*";
+  }
+  // GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
+  rpc GetVoiceAnalyticsPreferences(GetVoiceAnalyticsPreferencesRequest) returns (GetVoiceAnalyticsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/get";
+    option (google.api.http).body = "*";
+  }
+  // GetVoiceAnalyticsPreferences updates the all preferences for voice analytics
+  rpc UpdateVoiceAnalyticsPreferences(UpdateVoiceAnalyticsPreferencesRequest) returns (UpdateVoiceAnalyticsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetScorecardsPreferences returns the all preferences for scorecards
+  rpc GetScorecardsPreferences(GetScorecardsPreferencesRequest) returns (GetScorecardsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/get";
+    option (google.api.http).body = "*";
+  }
+
+  // GetScorecardsPreferences updates the all preferences for scorecards
+  rpc UpdateScorecardsPreferences(UpdateScorecardsPreferencesRequest) returns (UpdateScorecardsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/update";
+    option (google.api.http).body = "*";
+  }
+
+  // GetEmailSmsPreferences returns the all preferences for email and sms
+  rpc GetEmailSmsPreferences(GetEmailSmsPreferencesRequest) returns (GetEmailSmsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/email/get";
+    option (google.api.http).body = "*";
+  }
+  // GetEmailSmsPreferences updates the all preferences for email and sms
+  rpc UpdateEmailSmsPreferences(UpdateEmailSmsPreferencesRequest) returns (UpdateEmailSmsPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/email/update";
+    option (google.api.http).body = "*";
+  }
+
+  // EditAgentQuickViewPreferences return nil,error
+  rpc EditAgentQuickViewPreferences(EditAgentQuickViewPreferencesRequest) returns (EditAgentQuickViewPreferencesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/edit";
+    option (google.api.http).body = "*";
+  }
+  // EditBackofficeThemePreference returns nil, error
+  // changes the Client Skin client property
+  rpc EditBackofficeThemePreference(EditBackofficeThemePreferenceRequest) returns (EditBackofficeThemePreferenceResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/edit";
+    option (google.api.http).body = "*";
+  }
+  rpc GetBackofficeThemePreference(GetBackofficeThemePreferenceRequest) returns (GetBackofficeThemePreferenceResponse){
+    option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/get";
+    option (google.api.http).body = "*";
+  }
+
+  // AcceptLinkbackRecordingTerms controls acknowledgement for linkback recording terms and conditions
+  rpc AcceptLinkbackRecordingTerms(AcceptLinkbackRecordingTermsRequest) returns (AcceptLinkbackRecordingTermsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/linkback/acceptterms";
+    option (google.api.http).body = "*";
+  }
+
+  // LinkbackUpdateBroadcastTemplates updates broadcast template action parameters pertaining to linkback recording
+  rpc LinkbackUpdateBroadcastTemplates(LinkbackUpdateBroadcastTemplatesRequest) returns (LinkbackUpdateBroadcastTemplatesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/linkback/updatetemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // RecordEmailUnsubscribeAcknowledgement inserts an activity log when the client acknowledges responsibility
+  // for their own email unsubscribe links.
+  rpc RecordEmailUnsubscribeAcknowledgement(RecordEmailUnsubscribeAcknowledgementRequest) returns (RecordEmailUnsubscribeAcknowledgementResponse){
+    option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/record";
+    option (google.api.http).body = "*";
+  }
+
+  // ClearEmailUnsubscribeAcknowledgement inserts an activity log when the client clears acknowledgement for
+  // their own email unsubscribe links.
+  rpc ClearEmailUnsubscribeAcknowledgement(ClearEmailUnsubscribeAcknowledgementRequest) returns (ClearEmailUnsubscribeAcknowledgementResponse){
+    option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/clear";
+    option (google.api.http).body = "*";
+  }
+
+  // Web Link Templates
+
+  // Creates a new WebLinkTemplate as defined by request message CreateWebLinkTemplateRequest.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc CreateWebLinkTemplate(CreateWebLinkTemplateRequest) returns (CreateWebLinkTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/create";
+    option (google.api.http).body = "*";
+  }
+  // List every WebLinkTemplate.
+  // Required Permissions:
+  //  ORG_VIEW
+  rpc ListWebLinkTemplates(ListWebLinkTemplatesRequest) returns (ListWebLinkTemplatesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/list";
+    option (google.api.http).body = "*";
+  };
+  // Get one WebLinkTemplate with the given web_link_template_id.
+  // Required Permissions:
+  //  ORG_VIEW
+  rpc GetWebLinkTemplate(GetWebLinkTemplateRequest) returns (GetWebLinkTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/get";
+    option (google.api.http).body = "*";
+  }
+  // Updates the WebLinkTemplate with the given web_link_template_id.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc UpdateWebLinkTemplate(UpdateWebLinkTemplateRequest) returns (UpdateWebLinkTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/update";
+    option (google.api.http).body = "*";
+  }
+  // Deletes the WebLinkTemplate with the given web_link_template_id.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc DeleteWebLinkTemplate(DeleteWebLinkTemplateRequest) returns (DeleteWebLinkTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // Agent Trigger Templates
+
+  // Creates a new AgentTriggerTemplate as defined by request message CreateAgentTriggerTemplateRequest.
+  // The id field on the request message will be generated as part of
+  // this method. If the id field is set it WILL be overwritten.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc CreateAgentTriggerTemplate(CreateAgentTriggerTemplateRequest) returns (CreateAgentTriggerTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/create";
+    option (google.api.http).body = "*";
+  }
+  // Returns a list of every AgentTriggerTemplate for the given
+  // hunt_group_sid on the request.
+  // Requiree Permissions:
+  //  ORG_VIEW
+  rpc ListAgentTriggerTemplates(ListAgentTriggerTemplatesRequest) returns (ListAgentTriggerTemplatesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/list";
+    option (google.api.http).body = "*";
+  }
+  // Returns one AgentTriggerTemplate with the id given on the request message.
+  // Required Permissions:
+  //  ORG_VIEW
+  rpc GetAgentTriggerTemplate(GetAgentTriggerTemplateRequest) returns (GetAgentTriggerTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/get";
+    option (google.api.http).body = "*";
+  }
+  // Updates the AgentTriggerTemplate with the id given on the request message.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc UpdateAgentTriggerTemplate(UpdateAgentTriggerTemplateRequest) returns (UpdateAgentTriggerTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/update";
+    option (google.api.http).body = "*";
+  }
+  // Deletes the AgentTriggerTemplate with the id given on the request message.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc DeleteAgentTriggerTemplate(DeleteAgentTriggerTemplateRequest) returns (DeleteAgentTriggerTemplateResponse){
+    option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // Client Info Display Templates
+
+  // Creates a new ClientInfoDisplayTemplate as defined by request
+  // message CreateClientInfoDisplayRequest.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc CreateClientInfoDisplayTemplate(CreateClientInfoDisplayTemplateRequest)
+      returns (CreateClientInfoDisplayTemplateResponse){
+        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/create";
+        option (google.api.http).body = "*";
+      }
+  // Returns a list of every ClientInfoDisplayTemplate.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc ListClientInfoDisplayTemplates(ListClientInfoDisplayTemplatesRequest)
+      returns (ListClientInfoDisplayTemplatesResponse){
+        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/list";
+        option (google.api.http).body = "*";
+      }
+  // Updates the ClientInfoDisplayTemplate as defined by request
+  // message UpdateClientIntoDisplayTemplateRequest.
+  // Required Permissions:
+  //  ORG_VIEW
+  rpc UpdateClientInfoDisplayTemplate(UpdateClientInfoDisplayTemplateRequest)
+      returns (UpdateClientInfoDisplayTemplateResponse){
+        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/update";
+        option (google.api.http).body = "*";
+      }
+  // Deletes the ClientInfoDisplayTemplate with the id given on the request
+  // message.
+  // Required Permissions:
+  //  ORG_EDIT
+  rpc DeleteClientInfoDisplayTemplate(DeleteClientInfoDisplayTemplateRequest)
+      returns (DeleteClientInfoDisplayTemplateResponse){
+        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/delete";
+        option (google.api.http).body = "*";
+      }
+  // Returns one ClientInfoDisplayTemplate with the id given on the
+  // request message.
+  //  Required Permissions:
+  //    ORG_VIEW
+  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateRequest)
+      returns (GetClientInfoDisplayTemplateResponse){
+        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/get";
+        option (google.api.http).body = "*";
+      }
+
+  // Agent Pause Code
+
+  // Returns a slice of agent pause codes.
+  rpc ListAgentPauseCodes(ListAgentPauseCodesRequest)
+      returns (ListAgentPauseCodesResponse) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentpausecodes";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new Agent Pause Code as defined by the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: The pause_code field was not set, or the the pause_code.codes field is an empty list.
+  //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
+  rpc CreateAgentPauseCode(CreateAgentPauseCodeRequest)
+      returns (CreateAgentPauseCodeResponse) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createagentpausecode";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an Agent Pause Code with the xml_client_property_sid given on
+  // the pause_code in the request message as defined by the other fields
+  // on the pause_code message.
+  // Required Permissions:
+  //    AGENT_MANAGEMENT
+  // Errors:
+  //    - grpc.InvalidArgument: The pause_code field was not set or the pause_code.codes field was an empty list.
+  //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
+  rpc UpdateAgentPauseCode(UpdateAgentPauseCodeRequest)
+      returns (UpdateAgentPauseCodeResponse) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentpausecode";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes an Agent Pause Code with the sid given on the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: The xml_client_property_sid field is invalid.
+  rpc DeleteAgentPauseCode(DeleteAgentPauseCodeRequest)
+      returns (DeleteAgentPauseCodeResponse) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deleteagentpausecode";
+    option (google.api.http).body = "*";
+  }
+
+  // Custom Report Filters
+
+  // Returns a slice of custom report filters belonging to client_sid.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //    - grpc.NotFound: There is no entry matching the requested client_sid.
+  rpc ListCustomReportFilters(ListCustomReportFiltersRequest)
+      returns (ListCustomReportFiltersResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/list";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new custom report filter as defined by the request message.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The custom report filter has an empty name or no filtering parameters.
+  //    - grpc.Internal: An error occurred marshalling the custom report filter into an xml string.
+  rpc CreateCustomReportFilter(CreateCustomReportFilterRequest)
+      returns (CreateCustomReportFilterResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/create";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a custom report filter with the requested xml_client_property_sid
+  // with the report filter in the request message.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The pause_code field was not set or the pause_code.codes field was an empty list.
+  //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
+  rpc UpdateCustomReportFilter(UpdateCustomReportFilterRequest)
+      returns (UpdateCustomReportFilterResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a custom report filter with the sid given on the request message.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The xml_client_property_sid field is invalid.
+  rpc DeleteCustomReportFilter(DeleteCustomReportFilterRequest)
+      returns (DeleteCustomReportFilterResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns a slice of hunt group scripts belonging to the client_sid.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //    - grpc.NotFound: There is no entry matching the requested client_sid.
+  rpc ListAgentResponseGroups(ListAgentResponseGroupsRequest)
+      returns (ListAgentResponseGroupsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/agentresponses";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns a slice of last template element scripts belonging to the client_sid.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //    - grpc.NotFound: There is no entry matching the requested client_sid.
+  rpc ListLastTemplateElements(ListLastTemplateElementsRequest)
+      returns (ListLastTemplateElementsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/customreportfilter/templateelements";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the names of the custom queue configs.
+  // Required Permissions:
+  //    ORG_VIEW (If @org_id is empty)
+  //    CUSTOMER_SUPPORT (If @org_id is NOT empty)
+  // Errors:
+  //   - grpc.Internal: An error occurred while getting the config names.
+  //   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+  rpc ListQueueConfigs(ListQueueConfigsReq) returns (ListQueueConfigsRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/list";
+    option (google.api.http).body = "*";
+  };
+
+  // Deletes a queue config with the given @client_sid and @config_name.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while removing the config.
+  //    - grpc.InvalidArgument: the config_name was invalid.
+  rpc DeleteQueueConfig(DeleteQueueConfigReq) returns (DeleteQueueConfigRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/delete";
+    option (google.api.http).body = "*";
+  };
+
+  // Gets the details for the queue config for the given @client_sid with
+  // the given @name. If @merge is true, the config data will be merged
+  // with the default config data.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //   - grpc.Internal: An unexpected error occurred getting the config data.
+  //   - grpc.InvalidArgument: the given config name was invalid.
+  rpc GetQueueConfig(GetQueueConfigReq) returns (GetQueueConfigRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/get";
+    option (google.api.http).body = "*";
+  };
+
+  // Creates a queue config as defined by the @config given
+  // on the request message.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while saving the config.
+  //    - grpc.InvalidArgument: the given config was invalid.
+  rpc CreateQueueConfig(CreateQueueConfigReq) returns (CreateQueueConfigRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/create";
+    option (google.api.http).body = "*";
+  };
+
+  // Updates a new queue config as defined by the @config given
+  // on the request message.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.NotFound: The name of the given config could not be found.
+  //    - grpc.Internal: An unexpected error occurred while saving the config.
+  //    - grpc.InvalidArgument: the given config was invalid.
+  rpc UpdateQueueConfig(UpdateQueueConfigReq) returns (UpdateQueueConfigRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/update";
+    option (google.api.http).body = "*";
+  };
+
+  // Copies a queue config belonging to one organization to another.
+  // The queue config with the @from_name will be copied from the
+  // organization with the @from_org_id to the organization with the
+  // @to_org_id under the new @to_name.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while copying the config.
+  //    - grpc.InvalidArgument: A field on the request message was invalid.
+  //    - grpc.NotFound: The @to_org_id, @from_org_id, or @from_name was not found.
+  //    - grpc.AlreadyExists: The @to_name already exists for the @to_org_id.
+  rpc CopyQueueConfig(CopyQueueConfigReq) returns (CopyQueueConfigRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/copy";
+    option (google.api.http).body = "*";
+  };
+
+  // Returns the url of a downloadable zip file containing every
+  // sound for the given queue config.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while zipping the files.
+  //    - grpc.NotFound: The given queue config was not found.
+  rpc GetAllQueueConfigSounds(GetAllQueueConfigSoundsReq)
+    returns (GetAllQueueConfigSoundsRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/getall";
+    option (google.api.http).body = "*";
+  };
+
+  // Returns the url of a downladable wav file for the given config's
+  // sound matching the given sound enum. Leaving the config field empty
+  // will look up the sound for the account default config.
+  // Required Permissions:
+  //  ORG_VIEW
+  // Errors:
+  //  - grpc.Internal: An unexpected error occurrec while getting the
+  //    downloadable file url.
+  //  - grpc.NotFound: The given queue config was not found or the sound
+  //    was not found for the config.
+  rpc GetQueueConfigSound(GetQueueConfigSoundReq)
+    returns (GetQueueConfigSoundRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/get";
+    option (google.api.http).body = "*";
+    };
+
+  // Sets the given sound for the config to one of the uploaded
+  // sound files in the clients upload folder matching the
+  // given file_name on the request. Leaving the config field empty
+  // will set the sound for the account default config.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while updating
+  //      the configs sound.
+  //    - gprc.NotFound: The given queue config was not found or the
+  //      sound file was not found for the client.
+  //    - grpc.InvalidArgument: The file_name on the request was invalid.
+  rpc SetQueueConfigSound(SetQueueConfigSoundReq)
+    returns (SetQueueConfigSoundRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/set";
+    option (google.api.http).body = "*";
+    };
+
+  // Sets every sound for a given config by copying them from
+  // another config OR by copying them from a default sound set
+  // identified by language and gender. Empty config names will be
+  // treated as the account default config.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors
+  //    - grpc.Internal: An unexpected error occurred while updating
+  //      all sounds for the given to_config.
+  //    - grpc.NotFound: The given to_config or from.config (if used)
+  //      could not be found or the default sound set for the given
+  //      gender/language identifier could not be found.
+  //    - grpc.InvalidArgument: The to_config and from.config contained
+  //      the same value. (If from.config was used)
+  rpc SetAllQueueConfigSoundsFromSource(SetAllQueueConfigSoundsFromSourceReq)
+    returns (SetAllQueueConfigSoundsFromSourceRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/setallfromsource";
+    option (google.api.http).body = "*";
+    };
+
+  // Checks a user's blocked status.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while getting the user.
+  //    - grpc.InvalidArgument: The user_id on the request was invalid.
+  rpc GetUserBlocked(GetUserBlockedRequest) returns (GetUserBlockedResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/blocked";
+    option (google.api.http).body = "*";
+  };
+
+  // Unblocks the given user.
+  // Required Permissions:
+  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.Internal: An unexpected error occurred while unblocking the user.
+  //    - grpc.InvalidArgument: The user_id on the request was invalid.
+  rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/unblock";
+    option (google.api.http).body = "*";
+  };
+
+  // List all users who only exist in skunk and have not yet been migrated
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc ListP3UnMigratedUsers(ListP3UnMigratedUsersRequest) returns (ListP3UnMigratedUsersResponse){
+    option (google.api.http).post = "/api/v0alpha/org/p3/user/List";
+    option (google.api.http).body = "*";
+  };
+
+  // Migrates a login or agent from backoffice to firestore
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc MigrateP3User(MigrateP3UserRequest) returns (MigrateP3UserResponse){
+    option (google.api.http).post = "/api/v0alpha/org/p3/user/migrate";
+    option (google.api.http).body = "*";
+  };
+
+  // Updates the username in skunk only for a agent or login
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc UpdateP3UserName(UpdateP3UserNameRequest) returns (UpdateP3UserNameResponse){
+    option (google.api.http).post = "/api/v0alpha/org/p3/username/update";
+    option (google.api.http).body = "*";
+  };
+  // Gets all users under the p3 hierarchy
+  // Required Permissions:
+  //  OWNING_ORG_IMITATION
+  rpc ListOwnedUsers(ListOwnedUsersRequest) returns (ListOwnedUsersResponse){
+    option (google.api.http).post = "/api/v0alpha/org/ownedusers/list";
+    option (google.api.http).body = "*";
+  };
+  // Gets all orgs under the p3 hierarchy
+  // Required Permissions:
+  // PERMISSION_ORG_VIEW
+  rpc ListOwnedOrgs(ListOwnedOrgsRequest) returns (ListOwnedOrgsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/OwnedOrgs/list";
+    option (google.api.http).body = "*";
+  };
+
+    // Removed login strike from list of given login_log_sids
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc RemoveLoginStrikes(RemoveLoginStrikesRequest) returns (RemoveLoginStrikesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/Loginstriks/remove";
+    option (google.api.http).body = "*";
+  };
+
+  // Removed login strikes by user_id
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc RemoveUserLoginStrikes(RemoveUserLoginStrikesRequest) returns (RemoveUserLoginStrikesResponse){
+    option (google.api.http).post = "/api/v0alpha/org/user/Loginstrikes/remove";
+    option (google.api.http).body = "*";
+  };
+
+  // Lists user login history by ip or user_id
+  // Required Permissions:
+  //  CUSTOMER_SUPPORT
+  rpc ListLoginHistory(ListLoginHistoryRequest) returns (ListLoginHistoryResponse){
+    option (google.api.http).post = "/api/v0alpha/org/loginhistory/list";
+    option (google.api.http).body = "*";
+  };
+
+  // Updates a users agentsid and loginsid
+  // Required Permissions:
+  //  TCN_ADMIN_SETTINGS
+  rpc UpdateP3UserSids(UpdateP3UserSidsRequest) returns (UpdateP3UserSidsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/updatep3usersids";
+    option (google.api.http).body = "*";
+  };
+
+  // AUTH0 CONNECTIONS
+
+  // CreateAuthConnection creates a new auth0 connection.
+  rpc CreateAuthConnection(CreateAuthConnectionRequest) returns (CreateAuthConnectionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/connection/create";
+    option (google.api.http).body = "*";
+  };
+
+  // GetAuthConnectionSettings gets auth0 connection settings.
+  rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/connection/get";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateAuthConnectionSettings updates an existing auth0 connection settings.
+  rpc UpdateAuthConnectionSettings(UpdateAuthConnectionSettingsRequest) returns (UpdateAuthConnectionSettingsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/connection/update";
+    option (google.api.http).body = "*";
+  }
+
+
+  // DeleteAuthConnection removes the current orgs auth settings.
+  rpc DeleteAuthConnection(DeleteAuthConnectionRequest) returns (DeleteAuthConnectionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/connection/delete";
+    option (google.api.http).body = "*";
+  }
+
+  // USER SUBSCTRIPTIONS
+
+  // Gets a user subscription by id
+  // Required Permissions:
+  //    ORG_VIEW if user id IS provided
+  //    none if user id NOT provided
+  rpc GetUserSubscription(GetUserSubscriptionRequest) returns (GetUserSubscriptionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/getusersubscription";
+    option (google.api.http).body = "*";
+  };
+
+  // Adds a user subscription to users list of subscriptions
+  // Required Permissions:
+  //    USER_EDIT if user id IS provided
+  //    EDIT_USER_OPTIONS if user id NOT provided
+  rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/addusersubscription";
+    option (google.api.http).body = "*";
+  };
+
+  // Removes a user subscription from a users list of subscription
+  // Required Permissions:
+  //    USER_EDIT if user id IS provided
+  //    EDIT_USER_OPTIONS if user id NOT provided
+  rpc RemoveUserSubscription(RemoveUserSubscriptionRequest) returns (RemoveUserSubscriptionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/removeusersubscription";
+    option (google.api.http).body = "*";
+  };
+
+  // Updates a user subscription
+  // Required Permissions:
+  //    USER_EDIT if user id IS provided
+  //    EDIT_USER_OPTIONS if user id NOT provided
+  rpc UpdateUserSubscription(UpdateUserSubscriptionRequest) returns (UpdateUserSubscriptionResponse){
+    option (google.api.http).post = "/api/v0alpha/org/updateusersubscription";
+    option (google.api.http).body = "*";
+  };
+
+  // Lists all of a users subscriptions
+  // Required Permissions:
+  //    ORG_VIEW if user id IS provided
+  //    none if user id NOT provided
+  rpc ListUserSubscriptions(ListUserSubscriptionsRequest) returns (ListUserSubscriptionsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/listusersubscriptions";
+    option (google.api.http).body = "*";
+  };
+
+  // Lists multiple users subscriptions by org. Optionally filters by event type.
+  // Required Permissions:
+  //    ORG_VIEW
+  rpc ListOrgSubscriptions(ListOrgSubscriptionsRequest) returns (ListOrgSubscriptionsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/listorgsubscriptions";
+    option (google.api.http).body = "*";
+  };
+
+  // Returns the systems current environment details
+  // Required Permissions:
+  //    N/A
+  rpc GetSystemEnvironmentDetails(GetSystemEnvironmentDetailsRequest) returns (GetSystemEnvironmentDetailsResponse){
+    option (google.api.http).post = "/api/v0alpha/org/getsystemenvironmentdetails";
+    option (google.api.http).body = "*";
+  };
+
+  // Agent Statistics Templates
+
+  // Returns a list of agent statistics templates belonging to client_sid.
+  // Required Permissions:
+  //    ORG_VIEW
+  // Errors:
+  //    - grpc.NotFound: There is no entry matching the requested client_sid.
+  rpc ListAgentStatisticsTemplates(ListAgentStatisticsTemplatesRequest)
+      returns (ListAgentStatisticsTemplatesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/list";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new agent statistics template for the given client_sid.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.NotFound: The client_sid is not found.
+  rpc CreateAgentStatisticsTemplate(CreateAgentStatisticsTemplateRequest)
+      returns (CreateAgentStatisticsTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/create";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an existing agent statistics template for the given client_sid.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.NotFound: The client_sid is not found.
+  rpc UpdateAgentStatisticsTemplate(UpdateAgentStatisticsTemplateRequest)
+      returns (UpdateAgentStatisticsTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/update";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes an existing agent statistics template for the given client_sid.
+  // Required Permissions:
+  //    ORG_EDIT
+  // Errors:
+  //    - grpc.NotFound: The client_sid or agent statistics template is not found.
+  rpc DeleteAgentStatisticsTemplate(DeleteAgentStatisticsTemplateRequest)
+      returns (DeleteAgentStatisticsTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/delete";
+    option (google.api.http).body = "*";
+  }
+}
+
+// GET AGENT QUICK VIEW PREFERENCES
+message GetAgentQuickViewPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+message GetAgentQuickViewPreferencesResponse {
+  AgentStatusDisplayTemplate agent_status_display_template = 1;
+}
+
+// Edit AGENT QUICK VIEW PREFERENCES
+message EditAgentQuickViewPreferencesRequest {
+  AgentStatusDisplayTemplate agent_status_display_template = 1;
+}
+
+message EditAgentQuickViewPreferencesResponse {}
+
+message AgentStatusDisplayTemplate {
+  message AgentStatusSinceStyle {
+    string bg_red = 1;
+    string bg_green = 2;
+    string bg_blue = 3;
+    string fg_red = 4;
+    string fg_green = 5;
+    string fg_blue = 6;
+    int64 agent_gui_status = 7;
+    int64 duration_in_status = 8;
+  }
+
+  repeated AgentStatusSinceStyle ready_styles = 1;
+  repeated AgentStatusSinceStyle in_conference_styles = 2;
+  repeated AgentStatusSinceStyle wrap_up_styles = 3;
+  repeated AgentStatusSinceStyle paused_styles = 4;
+  repeated AgentStatusSinceStyle transfer_call_styles = 5;
+  repeated AgentStatusSinceStyle preview_call_styles = 6;
+  repeated AgentStatusSinceStyle manual_call_styles = 7;
+  repeated AgentStatusSinceStyle pbx_call_styles = 8;
+  repeated AgentStatusSinceStyle agent_intercom_styles = 9;
+  int64 xml_client_property_sid = 10;
+  repeated AgentStatusSinceStyle call_connecting_styles = 11;
+  repeated AgentStatusSinceStyle intercom_source_styles = 12;
+  repeated AgentStatusSinceStyle intercom_destination_styles = 13;
+  repeated AgentStatusSinceStyle transfer_lost_styles = 14;
+}
+
+message LocationDescription {
+  string location_name = 1;
+  string address = 2;
+  string zip = 3;
+  string state = 4;
+  string phone = 5;
+  string fax = 6;
+  string email = 7;
+  string contact_first_name = 8;
+  string contact_last_name = 9;
+  string company_name = 10;
+  string city = 11;
+  string country = 12;
+}
+
+message GetOrganizationProfileRequest {}
+
+message GetOrganizationProfileResponse {
+  reserved 3, 7, 9, 11, 12, 13;
+  string org_id = 1;
+  string name = 2;
+  bool is_manual_only_account = 4;
+  string region_id = 5;
+  string CRM_ID = 6;
+  string billing_id = 8;
+  commons.TimeZone timezone = 10;
+
+  google.protobuf.Timestamp add_date = 14;
+  // map of region_id to array of api_endpoints
+  map<string, RegionUrls> allowed_regions = 16;
+}
+
+// urls used for each region
+message RegionUrls {
+  // array of api_endpoints per region
+  repeated string api_endpoints = 1;
+}
+
+
+message GetOrganizationProfileByIdRequest {
+  string org_id = 1;
+}
+
+message ListOrganizationDescriptionsRequest {}
+
+message OrganizationDescription {
+  reserved 2, 3, 4;
+  string billing_id = 1;
+  google.protobuf.Timestamp add_date = 5;
+  int64 client_sid = 7;
+  string name = 8;
+  string org_id = 9;
+  string region_id = 10;
+
+  // last_scheduled_date has three different states.
+  // 1. the field is a valid timestamp
+  // 2. the field is a zero value timestamp. This
+  //    means the organization is in the current region
+  //    but does not have a last scheduled date.
+  // 3. the field is nil. This means the organization
+  //    does not belong to the current region.
+  google.protobuf.Timestamp last_scheduled_date = 11;
+}
+
+message ListOrganizationDescriptionsResponse {
+  repeated OrganizationDescription organization_descriptions = 1;
+}
+
+message UserDescription {
+  reserved 7, 17, 165;
+  // basic info
+  string user_id = 1;
+  string org_id = 2;
+  string user_name = 4;
+  bool login_disabled = 8;
+  bool account_owner = 9;
+
+  string org_name = 13;
+  string org_billing_id = 16;
+  repeated string linkback_numbers = 18;
+  repeated string caller_ids = 19;
+  int64 login_sid = 20;
+  repeated PermissionGroup permission_groups = 21;
+  int64 agent_sid = 22;
+
+  // Agent profile group details.
+  string agent_profile_group_id = 23; // profile group id
+  string agent_profile_group_name = 24; // profile group name
+
+  // p3 permissions
+  string p3_permission_group_id = 100;
+  string p3_permission_group_name = 101;
+
+  string first_name = 102;
+  string last_name = 103;
+
+  int32 strike_count = 110;
+  google.protobuf.Timestamp created = 163;
+  google.protobuf.Timestamp last_updated = 164;
+
+  // A list of labels assigned to the user
+  repeated Label label_entities = 171;
+
+  // Boolean for whether or not the user is a delegated login authenticated through a third party provider.
+  // Delegated login users are from connected login managements like Azure or Okta
+  bool delegated = 166;
+
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 167;
+  // The email of the user. empty if none set
+  string email = 168;
+
+  // Details of the agent-assigned hunt group.
+  int64 hunt_group_sid = 169; // hunt group sid
+  string hunt_group_name = 170; // hunt group name
+
+  // Trusts assigned to the user.
+  repeated commons.org.Trust trusts = 200;
+}
+
+message ListOrganizationUserDescriptionsRequest {}
+
+message ListOrganizationUserDescriptionsResponse {
+  repeated UserDescription user_descriptions = 1;
+}
+
+message ListRegionalOrganizationsRequest {
+  reserved 1;
+}
+
+message ListRegionalOrganizationsResponse {
+  repeated OrganizationDescription organization_descriptions = 1;
+}
+
+message GetUserDirectoryRequest {
+  bool agents_only = 1;
+}
+
+message GetUserDirectoryResponse {
+  repeated UserDirectoryEntry user_directory = 1;
+}
+
+message UserDirectoryEntry {
+  string user_id = 1;
+  string full_name = 2;
+  string user_name = 3;
+  string first_name = 4;
+  string last_name = 5;
+}
+
+message GetTempUserTokenReq {
+  // UserId that token is being created for
+  string user_id = 1;
+}
+
+message GetTempUserTokenRes {
+  string region_id = 1;
+
+  // Temporary token generated for user
+  string token = 2;
+}
+
+message ListUserDescriptionsRequest {
+  // Optional. RegionId to filter by.
+  string region_id = 1;
+  // Optional. OrgId to filter by.
+  string org_id_filter = 2;
+}
+
+message ListUserDescriptionsResponse {
+  repeated UserDescription user_descriptions = 1;
+}
+
+message GetRegionsRequest {}
+
+message GetRegionsResponse {
+  repeated string region_names = 1;
+}
+
+message GetUserDetailsRequest {
+  string user_id = 1;
+}
+
+message AdminGetUserDetailsRequest {
+  string user_id = 1;
+}
+
+// Label is an entity message.
+message Label {
+  reserved 4,5;
+  // simply the name of the label.
+  // 'Team A', 'Medical', etc
+  string name = 3;
+  // the description of the label.
+  string description = 6;
+  // Hex color code of the label.
+  string color = 7;
+  // Id of the label.
+  string label_id = 8;
+  // whether or not the label is deleted.
+  bool deleted = 9;
+}
+
+message UserDetails {
+  reserved 4, 15, 30;
+  string user_id = 1;
+  string user_name = 2;
+  string organization_name = 3;
+  string location_name = 5;
+  // Legacy P3 permission group
+  string p3_permission_group = 6;
+  // List of permission groups for this user.
+  repeated PermissionGroup permission_groups = 7;
+  string default_region = 8;
+  repeated string allowed_regions = 9;
+  bool disabled = 10;
+  string partner_agent_id = 11;
+  int64 agent_sid = 12;
+  string org_id = 13;
+  repeated string linkback_numbers = 16;
+  repeated string caller_ids = 17;
+  int64 login_sid = 18;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 19;
+  string user_caller_id = 20;
+  int64 hunt_group_sid = 21;
+  string hunt_group_name = 22;
+  repeated Skill skills = 23;
+  string first_name = 24;
+  string last_name = 25;
+  google.protobuf.Timestamp created = 26;
+  google.protobuf.Timestamp last_updated = 27;
+  bool password_reset_required =  28;
+  string agent_profile_group_id = 29;
+  // A list of labels assigned to the user
+  repeated Label label_entities = 35;
+  // Boolean for whether or not the user is a delegated login authenticated through a third party provider.
+  // Delegated login users are from connected login managements like Azure or Okta
+  bool delegated = 31;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 32;
+  // email of the user. empty if none set
+  string email = 34;
+
+  // Trusts assigned to the user.
+  repeated commons.org.Trust trusts = 200;
+}
+
+message AgentUser {
+  reserved 11, 18;
+  string user_id = 1;
+  string name = 2;
+  string user_name = 3;
+  string hunt_group_name = 4;
+  repeated Skill skills = 5;
+  string partner_agent_id = 6;
+  string callback_extension = 7;
+  string callback_number = 8;
+  int64 hunt_group_sid = 9;
+  int64 agent_sid = 10;
+  string user_caller_id = 12;
+  string first_name = 13;
+  string last_name = 14;
+  google.protobuf.Timestamp created = 15;
+  google.protobuf.Timestamp last_updated = 16;
+  string agent_profile_group_id = 17;
+  // Boolean for whether or not the user is a delegated login authenticated through a third party provider.
+  // Delegated login users are from connected login managements like Azure or Okta
+  bool delegated = 19;
+  // the name of the agent profile group assigned to the agent
+  string agent_profile_group_name = 20;
+  // whether or not the user is disabled.
+  bool disabled = 100;
+  // whether or not the user has the AGENT permission
+  bool has_agent_perm = 101;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 102;
+  // The email of the agent. Empty if none set.
+  string email = 103;
+  // A list of labels assigned to the user
+  repeated Label label_entities = 104;
+  // PermissionGroups of the Agent
+  repeated PermissionGroup permission_groups = 105;
+}
+
+message Skill {
+  int64 level = 1;
+  string name = 2;
+  string description = 3;
+  int64 skill_sid = 4;
+}
+
+message GetAgentUsersRequest {}
+
+message GetAgentUsersResponse {
+  repeated AgentUser agent_users = 1;
+}
+
+// Request for GetAgentSettings
+message GetAgentSettingsRequest{}
+
+// Response for GetAgentSettings
+message GetAgentSettingsResponse{
+  string user_caller_id = 1; // User caller ID
+  repeated PriorityGroup priority_groups = 2; // List of priority groups.
+  repeated string reserved_carriers = 3; // List of reserved carrier strings.
+}
+
+message AgentProfileGroup {
+  string id = 1;
+  string org_id = 2;
+  string name = 3;
+  repeated PriorityGroup priority_groups = 4;
+  // last time agent profile group was updated
+  google.protobuf.Timestamp last_updated = 5;
+
+  bool default_group = 10;
+}
+
+// PriorityGroup is a type and threshold in array for AgentProfileGroup
+message PriorityGroup {
+  reserved 1;
+  // threshold for the priority group
+  int32 threshold = 2;
+  // channel type for the priority group
+  commons.ChannelType channel_type = 3;
+}
+
+message GetAgentProfileGroupRequest {
+  string agent_profile_group_id = 2;
+}
+
+message GetAgentProfileGroupResponse {
+  AgentProfileGroup agent_profile_group = 1;
+}
+
+message UpdateAgentProfileGroupRequest {
+  AgentProfileGroup agent_profile_group = 2;
+}
+
+message UpdateAgentProfileGroupResponse {}
+
+message CreateAgentProfileGroupRequest {
+  AgentProfileGroup agent_profile_group = 2;
+}
+
+message CreateAgentProfileGroupResponse {
+  string agent_profile_group_id = 1;
+}
+
+message ListAgentProfileGroupsRequest {}
+
+message ListAgentProfileGroupsResponse {
+  repeated AgentProfileGroup agent_profile_groups = 1;
+}
+
+message DeleteAgentProfileGroupRequest {
+  string agent_profile_group_id = 2;
+}
+
+message DeleteAgentProfileGroupResponse {}
+
+message AssignAgentProfileGroupsRequest {
+  string agent_profile_group_id = 2;
+  repeated string user_ids = 3;
+}
+
+message AssignAgentProfileGroupsResponse {}
+
+message UpdateUserRequest {
+  reserved "name";
+  reserved 3, 5, 15;
+  string user_id = 2;
+  string first_name = 11;
+  string last_name = 12;
+  string partner_agent_id = 4;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 16;
+  repeated string linkback_numbers = 6;
+  repeated string caller_ids = 7;
+  string user_name = 8;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 9;
+  string user_caller_id = 10;
+  bool password_reset_required = 13;
+  string agent_profile_group_id = 14;
+  // A list of labels to assign to the user
+  repeated Label label_entities = 18;
+  // The users email
+  string email = 17;
+  // List of all fields being updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+message UpdateUserResponse {}
+
+message Country {
+  string country_id = 2;
+
+  int64 country_sid = 10;
+
+  string country_name = 100;
+  int64 phone_digits = 103;
+  int64 region_digits = 104;
+  int64 total_digits = 105;
+  int64 country_code = 106;
+  repeated string region_codes = 108;
+  // The enum value associated with the country.
+  commons.Country country = 109;
+}
+
+message GetCountriesListRequest {}
+
+message GetCountriesListResponse {
+  repeated Country countries = 10;
+}
+
+// user_id or login_sid and region_id must be specified
+message User {
+  reserved "name";
+  reserved 100, 117, 126;
+  string user_id = 1;
+  string org_id = 2;
+  string region_id = 3; // deprecated
+  string partner_agent_id = 4;
+
+  // legacy keys
+  int64 login_sid = 10; // deprecated
+  int64 agent_sid = 14; // deprecated
+
+  repeated string regions = 103;
+  string email = 104;
+  repeated string caller_ids = 115;
+  repeated string linkback_numbers = 116;
+  string user_name = 120;
+  // string default_app = 126;
+
+  string first_name = 127;
+  string last_name = 128;
+
+  google.protobuf.Timestamp created = 163;
+  google.protobuf.Timestamp last_updated = 164;
+  bool password_reset_required =  165;
+
+  // connection id is the id of the auth connection that the
+  // user is coming from if it is a delgated user. If the user
+  // is not delgated this will be nil.
+  google.protobuf.StringValue connection_id = 166;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 167;
+
+  // A list of labels assigned to the user
+  repeated Label label_entities = 171;
+}
+
+// Request for GetPermissions
+message GetPermissionsRequest {}
+
+// Reponse for GetPermissions
+message GetPermissionsResponse {
+  reserved 3;
+  User user = 1;
+  // List of permissions this user has.
+  repeated commons.auth.Permission permissions = 2;
+  string ui_log_level = 4;
+  string org_name = 5;
+  commons.Level log_level = 6;
+  // List of legacy permissions.
+  repeated commons.Permission p3_permissions = 7;
+  string org_default_region_id = 8;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 9;
+}
+
+message UpdateUserDisabledRequest {
+  string user_id = 1;
+  // Disables/Enables the User. true disables, false enables.
+  bool disable = 2;
+  // If org_id is given, the CUSTOMER_SUPPORT permission is required.
+  // Otherwise the org_id is pulled off of the token and the
+  // USER_EDIT permission is required.
+  string org_id = 3;
+}
+
+message UpdateUserDisabledResponse {}
+
+message UpdateBulkUsersDisabledRequest {
+  repeated string user_ids = 1;
+  bool disable = 2; // directly into User.login_disabled for every given user.
+}
+
+message UpdateBulkUsersDisabledResponse {
+  // updated_ids is a list of every id that was updated.
+  repeated string updated_ids = 1;
+}
+
+message DeleteOrganizationPropertiesResponse {}
+
+// Billing
+// Data payloads
+
+message BillingRegion {
+  string name = 1;
+  string description = 2;
+  repeated string prefixes = 3;
+}
+
+message BillingRate {
+  double standard_ppi = 1;
+  double linkback_ppi = 2;
+  double vocal_direct_msg_rate = 3;
+  double sms_msg_rate = 4;
+  int64 billing_increment_seconds = 5;
+  int64 min_billed_increments = 6;
+  int64 min_linkback_billed_increments = 7;
+
+  google.protobuf.DoubleValue inbound_ppi = 20;
+  google.protobuf.Int64Value max_billed_increments = 21;
+  google.protobuf.Int64Value max_linkback_billed_increments = 22;
+  google.protobuf.Int64Value machine_hangup_increments = 23;
+  google.protobuf.Int64Value human_hangup_increments= 24;
+}
+
+// Publicly exposed "descriptions"
+
+message BillingRegionRate {
+  BillingRegion billing_region = 1;
+  BillingRate billing_rate = 2;
+  string billing_region_id = 3;
+  string country_id = 4;
+  bool is_custom = 5;
+}
+
+// Requests/Responses
+
+message ListBillingRegionsRequest {}
+
+message ListBillingRegionsResponse {
+  repeated BillingRegionRate billing_region_rates = 1;
+}
+
+// Neo Permissions
+
+// Defines a group of permissions.
+message PermissionGroup {
+  // Unique id for this permission group.
+  string id = 1;
+  // Name to identify by.
+  string name = 3;
+  // Brief description of this group of permissions.
+  string description = 4;
+  // List of permissions in this group.
+  repeated commons.auth.Permission permissions = 5;
+  // Restricts users from modifying this group.
+  bool read_only = 6;
+}
+
+message ListPermissionGroupsRequest {
+  string org_id = 1;
+}
+
+message ListPermissionGroupsResponse {
+  repeated PermissionGroup permission_groups = 1;
+}
+
+// The request for api.v0alpha.CreatePermissionGroup.
+message CreatePermissionGroupRequest {
+  // Name to identify this permission group.
+  string name = 1;
+  // Short description about this permission group.
+  string description = 2;
+  // List of permissions included in the group.
+  repeated commons.auth.Permission permissions = 3;
+}
+
+// The response for api.v0alpha.CreatePermissionGroup.
+message CreatePermissionGroupResponse {
+  // The newly created PermissionGroup is returned.
+  PermissionGroup permission_group = 1;
+}
+
+// The request for api.v0alpha.UpdatePermissionGroup.
+message UpdatePermissionGroupRequest {
+  // Desired resulting PermissionGroup after update.
+  PermissionGroup permission_group = 1;
+}
+
+// The response for api.v0alpha.UpdatePermissionGroup.
+message UpdatePermissionGroupResponse {}
+
+// The request for api.v0alpha.DeletePermissionGroup.
+message DeletePermissionGroupRequest {
+  // id of PermissionGroup being deleted.
+  string permission_group_id = 1;
+}
+
+// The response for api.v0alpha.DeletePermissionGroup.
+message DeletePermissionGroupResponse {}
+
+// The request for org.Org.AssignUserToAccountOwnerPermissionGroup.
+message AssignUserToAccountOwnerPermissionGroupRequest {
+  // User id of the user requesting permissions.
+  string user_id = 1;
+}
+
+// The response for org.Org.AssignUserToAccountOwnerPermissionGroup.
+message AssignUserToAccountOwnerPermissionGroupResponse {}
+
+
+// The request for api.v0alpha.AssignUserPermissionGroup.
+message AssignUserPermissionGroupRequest {
+  // Required. The id of the permission group that is being assigned.
+  string permission_group_id = 1;
+  // Required. The id of the user the permission group is being assigned to.
+  string assign_user_id = 2;
+}
+
+// The response for api.v0alpha.AssignUserPermissionGroup.
+message AssignUserPermissionGroupResponse {}
+
+// The request for api.v0alpha.AssignUsersPermissionGroup.
+message AssignUsersPermissionGroupRequest {
+  // Required. The id of the permission group that is being assigned.
+  string permission_group_id = 1;
+  // Required. The ids of the users the permission group is being assigned to.
+  repeated string assign_user_ids = 2;
+}
+
+// The response for api.v0alpha.AssignUsersPermissionGroup.
+message AssignUsersPermissionGroupResponse {}
+
+// The request for api.v0alpha.UpdateUserNeoPermissionGroups.
+message UpdateUserNeoPermissionGroupsRequest {
+  string assign_user_id = 1;
+  repeated string permission_group_ids = 3;
+}
+
+// The response for api.v0alpha.UpdateUserNeoPermissionGroups.
+message UpdateUserNeoPermissionGroupsResponse {}
+
+// The request for api.v0alpha.RevokeUserPermissionGroup.
+message RevokeUserPermissionGroupRequest {
+  // Required. The id of the permission group that is being revoked.
+  string permission_group_id = 1;
+  // Required. The id of the user the permission group is to be removed from.
+  string revoke_user_id = 2;
+}
+
+// The response for api.v0alpha.RevokeUserPermissionGroup.
+message RevokeUserPermissionGroupResponse {}
+
+// The request for api.v0alpha.RevokeUsersPermissionGroup.
+message RevokeUsersPermissionGroupRequest {
+  // Required. The id of the permission group that is being revoked.
+  string permission_group_id = 1;
+  // Required. The ids of the users the permission group is being revoked from.
+  repeated string revoke_user_ids = 2;
+}
+
+// The response for api.v0alpha.RevokeUsersPermissionGroup.
+message RevokeUsersPermissionGroupResponse {}
+
+
+message ListP3PermissionGroupsRequest {
+  string org_id = 1;
+}
+
+message ListP3PermissionGroupsResponse {
+  repeated P3PermissionGroup permission_groups = 1;
+}
+
+message P3PermissionGroup {
+  string permission_group_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated commons.Permission permissions = 4;
+  // return sid for visibility on skunk permission group
+  int64 permission_group_sid = 6;
+}
+
+message CreateP3PermissionGroupRequest {
+  string name = 4;
+  string description = 5;
+  repeated commons.Permission permissions = 6;
+}
+
+message CreateP3PermissionGroupResponse {
+  P3PermissionGroup p3_permission_group = 1;
+}
+
+message UpdateP3PermissionGroupRequest {
+  // optional org_id. If not is passsed in peel off token.
+  string org_id = 1;
+  string permission_group_id = 2;
+  string name = 3;
+  string description = 4;
+  repeated commons.Permission permissions = 5;
+}
+
+message UpdateP3PermissionGroupResponse {
+  P3PermissionGroup p3_permission_group = 1;
+}
+
+message DeleteP3PermissionGroupRequest {
+  string permission_group_id = 2;
+}
+
+message DeleteP3PermissionGroupResponse {
+  string permission_group_id = 1;
+}
+
+message AddLoginToUserRequest {
+  string user_id = 1;
+}
+
+message AddLoginToUserResponse {}
+
+message AssignUsersP3PermissionGroupRequest {
+  repeated string user_ids = 1;
+  string permission_group_id = 3;
+}
+
+message AssignUsersP3PermissionGroupResponse {
+  repeated string user_ids = 1;
+}
+
+message RevokeUsersP3PermissionGroupRequest {
+  // List of users to remove permission from
+  repeated string user_ids = 1;
+  // P3 permission group to remove
+  string permission_group_id = 3;
+}
+
+message RevokeUsersP3PermissionGroupResponse {
+  // List of updated user ids
+  repeated string user_ids = 1;
+}
+
+message SyncP3PermissionGroupRequest {
+  string org_id = 1;
+}
+
+message SyncP3PermissionGroupResponse {}
+
+// The request for api.v0alpha.RegisterOrganization.
+message RegisterOrganizationRequest {
+  Organization organization = 1;
+  // allowed_countries is used to initialize the organization's
+  // allowed countries preference.
+  // This field is optional.
+  repeated commons.Country allowed_countries = 2;
+  // Required. The id of new organization's parent account.
+  string p3_parent_account = 3;
+}
+
+// The message that serves as a datastore entity for the
+// Organization table.
+message Organization {
+  reserved 1, 2, 4 to 15;
+  bool is_manual_only_account = 3;
+  // Requried. Must match one of the timezones returned by
+  // api.v0alpha.GetTimezones.
+  commons.ClientSkin backoffice_theme = 16;
+  string contract_number = 17; // DEPRECATED. Use CRM_ID.
+  string CRM_ID = 18;
+  commons.TimeZone time_zone_enum = 19;
+  // Required
+  string name = 20;
+}
+
+// The response for api.v0alpha.RegisterOrganization
+message RegisterOrganizationResponse {
+  string org_id = 1;
+}
+
+// The request for api.v0alpha.UpdateOrganization
+message UpdateOrganizationRequest {
+  reserved 2, 3;
+  // organization id
+  string org_id = 1;
+  // organizations time zone
+  commons.TimeZone time_zone = 4;
+  // organizations name
+  string name = 5;
+
+  // Field mask for update request
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+message UpdateOrganizationResponse {}
+
+// The request for api.v0alpha.ArchiveOrganization
+message ArchiveOrganizationRequest {
+  // Required. Archives the specified organization
+  string org_id = 1;
+}
+
+// The response for api.v0alpha.ArchiveOrganization
+message ArchiveOrganizationResponse {}
+
+// The request for api.v0alpha.UnArchiveOrganization
+message UnArchiveOrganizationRequest {
+  // Required. Archives the specified organization
+  string org_id = 1;
+}
+
+// The response for api.v0alpha.UnArchiveOrganization
+message UnArchiveOrganizationResponse {
+  // Description of Organization that was unarchived.
+  OrganizationDescription organization_description = 1;
+}
+
+// The request for api.v0alpha.ListArchivedOrganizations
+message ListArchivedOrganizationsRequest {}
+
+// The response for api.v0alpha.ListArchivedOrganizations
+message ListArchivedOrganizationsResponse {
+  // List of organizations currently in archived state.
+  repeated OrganizationDescription archived_organization_descriptions = 1;
+}
+
+message AddUserRegionRequest {
+  string user_id = 1;
+  string region_id = 2;
+}
+
+message AddUserRegionResponse {}
+
+message RemoveUserRegionRequest {
+  string user_id = 1;
+  string region_id = 2;
+}
+
+message RemoveUserRegionResponse {}
+
+// The request for api.v0alpha.InitDefaultPermissionGroups.
+message InitDefaultPermissionGroupsRequest {
+  // id of the organization to initialize
+  string org_id = 1;
+}
+
+// The response for api.v0alpha.InitDefaultPermissionGroups.
+message InitDefaultPermissionGroupsResponse {
+  // The list of default permission groups.
+  repeated PermissionGroup default_permission_groups = 1;
+}
+
+// The request for org.Org.AddPermissionToAccountOwnerPermissionGroup
+message AddPermissionToAccountOwnerPermissionGroupRequest {
+  reserved 2;
+  // id for which organization to add permission to default Account Owner Group.
+  string org_id = 1;
+  // Permission to be added.
+  repeated commons.auth.Permission permissions = 3;
+}
+
+// The response for org.Org.AddPermissionToAccountOwnerPermissionGroup
+message AddPermissionToAccountOwnerPermissionGroupResponse {
+  // The newly updated default permission group.
+  PermissionGroup default_permission_group = 1;
+}
+
+// The request for org.Org.RevokePermissionToAccountOwnerPermissionGroup
+message RevokePermissionToAccountOwnerPermissionGroupRequest {
+  reserved 2;
+  // id for which organization to revoke permission to default Account Owner Group.
+  string org_id = 1;
+  // Permission to be revoked.
+  repeated commons.auth.Permission permissions = 3;
+}
+// The response for org.Org.RevokePermissionToAccountOwnerPermissionGroup
+message RevokePermissionToAccountOwnerPermissionGroupResponse {
+  // The newly updated default permission group.
+  PermissionGroup default_permission_group = 1;
+}
+
+// The request for org.Org.AddPermissionToOrgDefaultGroup
+message AddPermissionToOrgDefaultGroupRequest {
+  // id for which organization to add permission to default Super group.
+  string org_id = 1;
+  // Permission to be added.
+  commons.auth.Permission permission = 2;
+}
+
+// The response for org.Org.AddPermissionToOrgDefaultGroup
+message AddPermissionToOrgDefaultGroupResponse {
+  // The newly updated default permission group.
+  PermissionGroup default_permission_group = 1;
+}
+
+// The request for org.Org.RemovePermissionFromOrgDefaultGroup
+message RemovePermissionFromOrgDefaultGroupRequest {
+  // id for which organization to remove permission from default Super group.
+  string org_id = 1;
+  // Permission to be removed.
+  commons.auth.Permission permission = 2;
+}
+
+// The response for org.Org.RemovePermissionFromOrgDefaultGroup
+message RemovePermissionFromOrgDefaultGroupResponse {
+  // The newly updated default permission group.
+  PermissionGroup default_permission_group = 1;
+}
+
+// The request message for org.Org.GetOrgDefaultSuperUserGroup
+message GetOrgDefaultSuperUserGroupRequest {
+  string org_id = 1;
+}
+
+// The response essage for org.Org.GetOrgDefaultSuperUserGroup
+message GetOrgDefaultSuperUserGroupResponse {
+  PermissionGroup default_permission_group = 1;
+}
+
+//
+// General preferences
+//
+
+// Request for GetOrganizationPreferences
+message GetOrganizationPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetOrganizationPreferences
+message GetOrganizationPreferencesResponse {
+  OrganizationPreferences organization_preferences = 1; // Organization preferences object
+}
+
+// Request for UpdateOrganizationPreferences
+message UpdateOrganizationPreferencesRequest {
+  OrganizationPreferences organization_preferences = 2; // Organization preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateOrganizationPreferences
+message UpdateOrganizationPreferencesResponse {}
+
+// Wrapper OrganizationPreferences object for get response and update request
+message OrganizationPreferences {
+  repeated commons.Country allowed_countries = 10; // List of country enums that the organization uses.
+  commons.Country default_country = 11; // Default country for organization
+  commons.TimeZone time_zone = 12; // Organization's time zone
+  commons.DisplayLanguage display_language = 13; // Default organization display language
+}
+
+// Request for GetAgentPreferences
+message GetAgentPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetAgentPreferences
+message GetAgentPreferencesResponse {
+  AgentPreferences agent_preferences = 10; // Agent preferences object
+}
+
+// Request for UpdateAgentPreferences
+message UpdateAgentPreferencesRequest {
+  AgentPreferences agent_preferences = 2; // Agent preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateAgentPreferences
+message UpdateAgentPreferencesResponse {}
+
+// Wrapper AgentPreferences object for get response and update request
+message AgentPreferences {
+  string default_agent_dial_in = 1; // Default agent dial in number
+  int32 pbx_extension_length = 2; // PBX extension length [3-9]
+  int32 default_softphone_volume_in = 3; // Default softphone input volume percent [0-100]
+  int32 default_softphone_volume_out = 4; // Default softphone output volume percent [0-100]
+  repeated string config_dial_in_numbers = 5; // (READ ONLY) List of agent dial-in numbers defined by regional skunk config
+  repeated string client_dial_in_numbers = 6; // List of client-defined custom agent dial-in numbers
+  bool manual_dial_caller_id_privacy = 7; // Allows agent to use privacy headers on the manual dial caller ID
+  bool use_manual_dial_caller_id_privacy = 8; // The default/initial setting for the caller ID privacy
+  bool message_notifications_disabled = 9; // Toggles agent message notifications.
+}
+
+// Request message for the GetContactPreferences rpc.
+message GetContactPreferencesRequest {
+  // field mask to select which fields to update
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response message for the GetContactPreferences rpc.
+message GetContactPreferencesResponse {
+  // Contact preferences object
+  ContactPreferences contact_preferences = 1;
+}
+
+// Request message for the UpdateContactPreferences rpc.
+message UpdateContactPreferencesRequest {
+  // Contact preferences object, required to update
+  ContactPreferences contact_preferences = 2;
+  // Field mask for update request
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Empty response message for UpdateContactPreferences.
+message UpdateContactPreferencesResponse {}
+
+// Will Replace ContactList's contents
+// ContactPreferences is an object containing all fields relating to an Org's Contact preferences
+message ContactPreferences {
+  // DefaultContactImportFormat sets the DefaultContactImportFormat oneof
+  ImportFormat default_contact_import_format = 10;
+  // UseContactImportFormat controls whether the default import format is enabled
+  bool use_contact_import_format = 11;
+  // DefaultContactAreaCode sets the DefaultContactAreaCodeOor oneof
+  ContactAreaCode default_contact_area_code = 12;
+  // UseContactAreaCode controls whether the default area code is enabled
+  bool use_contact_area_code = 16;
+  // DefaultAbsentNumbersHandling False: Keep Record, True: Discard Record
+  bool discard_record_default_absent_numbers_handling = 13;
+  // ContactsImportRandomization if true randomize the imported contact list default false
+  bool default_contacts_import_randomization = 14;
+  // DefaultEmailColumn sets the DefaultEmailColumn oneof
+  string default_email_column = 15;
+  // DefaultDuplicateHandling sets a string choice for duplicate numbers
+  commons.DefaultDuplicateHandling default_duplicate_handling = 17;
+}
+
+// Contact Import Template type used for default_contact_import_format preference
+message ImportFormat {
+  oneof format { // Either custom or standard format
+    CustomImportFormat custom = 1; // Client-defined import format
+    commons.StandardImportFormat standard = 2; // Standard import format enum
+  }
+}
+
+// Contact import template
+message CustomImportFormat {
+  string name = 1; // Import format name
+  int64 id = 2; // Contact import template sid
+}
+
+// Contact Area Code type used for default_contact_area_code preference
+message ContactAreaCode {
+  oneof area_code { // Either custom or contact field area code
+    int32 custom = 1; // Client-defined area code number
+    ContactFieldDesc contact_field = 2; // Contact field description with ID and name
+  }
+}
+
+// Contact field description
+message ContactFieldDesc {
+  int64 id = 1; // Contact field description sid
+  string field_name = 2; // Contact field name
+}
+
+// Request for GetAuthenticationPreferences
+message GetAuthenticationPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetAuthenticationPreferences
+message GetAuthenticationPreferencesResponse {
+  AuthenticationPreferences authentication_preferences = 1; // Authentication preferences object
+}
+
+// Request for UpdateAuthenticationPreferences
+message UpdateAuthenticationPreferencesRequest {
+  AuthenticationPreferences authentication_preferences = 2; // Authentication preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateAuthenticationPreferences
+message UpdateAuthenticationPreferencesResponse {}
+
+// Wrapper AuthenticationPreferences object for get response and update request
+message AuthenticationPreferences {
+  bool authorization_via_ip = 10; // Use IP based authentication
+  repeated string allowed_ips = 11; // String array of allowed IP addresses
+  string agent_api_key = 12; // Agent's API key (as UUID)
+}
+
+// Request for GetWebhookPreferences
+message GetWebhookPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetWebhookPreferences
+message GetWebhookPreferencesResponse {
+  WebhookPreferences webhook_preferences = 10; // Authentication preferences objecte
+}
+
+// Request for UpdateWebhookPreferences
+message UpdateWebhookPreferencesRequest {
+  WebhookPreferences webhook_preferences = 2; // Authentication preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateWebhookPreferences
+message UpdateWebhookPreferencesResponse {}
+
+// Wrapper WebhookPreferences object for get response and update request
+message WebhookPreferences {
+  bool push_urls_enabled = 1; // Web hook push URLs enabled
+  string call_result_push_url = 2; // Call result from push URL
+  string agent_response_push_url = 3; // Agent response from push URL
+}
+
+//
+// Manager preferences
+//
+
+// Request for GetDashboardGeneralPreferences
+message GetDashboardGeneralPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetDashboardGeneralPreferences
+message GetDashboardGeneralPreferencesResponse {
+  DashboardPreferences dashboard_preferences = 1; // Dashboard general preferences object
+}
+
+// Request for UpdateDashboardGeneralPreferences
+message UpdateDashboardGeneralPreferencesRequest {
+  DashboardPreferences dashboard_preferences = 2; // Dashboard preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateDashboardGeneralPreferences
+message UpdateDashboardGeneralPreferencesResponse {}
+
+// Wrapper DashboardGeneralPreferences object for get response and update request
+message DashboardPreferences {
+  bool default_info_view = 1; // Default agent dashboard view; false for icon view, true for table view.
+  bool default_table_inclusion = 2; // Include all agents in table by default.
+  bool default_info_grouping = 3; // Group agent info by hunt group by default.
+  bool default_small_icon = 4; // Agent icon size; false for large, true for small.
+  bool default_descending_sort = 5; // Agent dashboard sort direction; false for ascending, true for descending.
+  int64 table_template_sid = 6; // xml_client_property_sid associated with the agent dashboard table template property.
+  IncludedCallTypes default_call_types = 7; // Which call types are enabled in the agents dashboard
+  commons.AgentInfoSortBy default_info_sort_by_value = 8; // Agent info dashboard order-by parameter
+  BargeInFiltering default_barge_in_filtering = 9; // Barge-in agent filter, controls hunt-group and agent status parameters
+}
+
+// Possible included call types, for agent included call types
+message IncludedCallTypes {
+  bool outbound = 1; // Outbound calls
+  bool inbound = 2; // Inbound calls
+  bool manual_dial = 3; // Manual-dial calls
+  bool preview_dial = 4; // Preview-dial calls
+}
+
+// Barge-in filtering
+message BargeInFiltering {
+  HuntGroup hunt_group = 1; // Hunt group filtering parameters
+  AgentStatus agent_status = 2; // Agent status filtering parameters
+
+  message HuntGroup {
+    bool any = 1; // Any hunt group
+    int64 hunt_group_sid = 2; // Specific hunt group
+  }
+
+  message AgentStatus {
+    bool any = 1; // Any of the below statuses
+    bool waiting = 2; // Waiting
+    bool on_call = 3; // On call
+    bool wrap_up = 4; // Wrap up
+    bool paused = 5; // Paused
+    bool transfer = 6; // Transfer
+    bool preview = 7; // Preview
+    bool manual = 8; // Manual
+    bool pbx = 9; // PBX
+    bool intercom = 10; // Intercom
+  }
+}
+
+// Request for GetDashboardQueuePreferences
+message GetDashboardQueuePreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+}
+
+// Response for GetDashboardQueuePreferences
+message GetDashboardQueuePreferencesResponse {
+  DashboardQueuePreferences dashboard_queue_preferences = 1;  // The requested preferences.
+}
+
+// Request for UpdateDashboardQueuePreferences
+message UpdateDashboardQueuePreferencesRequest {
+  DashboardQueuePreferences dashboard_queue_preferences = 2;  // The preferences to be updated.
+
+  google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
+}
+
+// Empty response for UpdateDashboardQueuePreferences
+message UpdateDashboardQueuePreferencesResponse {}
+
+// Wrapper DashboardQueuePreferences object for get response and update request
+message DashboardQueuePreferences {
+  bool default_info_view = 10; // Default Queue/Hold table view.  'false' for icon view, 'true' for table view.
+  bool default_info_grouping = 11; // Default Queue/Hold table grouping. 'false' for no grouping, 'true' for group by queue type.
+  bool default_small_icon = 12; // Default table icon size.  'true' for small, 'false' for large.
+  bool default_descending_sort = 13; // Default table sort direction. 'false' for descending, 'true' for ascending.
+  int64 default_agent_skills_filter = 14; // Default skills filter.  Holds a regional sid pointing to the filter in the xml_client_property table.  Default is no filtering ('-1').
+  int64 default_info_table_template = 15; // Default table template. Holds a regional sid pointing to the filter in the xml_client_property table.  Default is no filtering ('0').
+  commons.QueueInfoSortBy default_info_sort_by_value = 16; // Default Queue/Hold Info Sort-By Value
+}
+
+//
+// Campaign preferences
+//
+
+// Request for GetPhonePreferences
+message GetPhonePreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetPhonePreferences
+message GetPhonePreferencesResponse {
+  PhonePreferences phone_preferences = 11; // Phone Preferences
+}
+
+// Request for UpdatePhonePreferences
+message UpdatePhonePreferencesRequest {
+  PhonePreferences phone_preferences = 2; // Phone preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdatePhonePreferences
+message UpdatePhonePreferencesResponse {}
+
+// Wrapper PhonePreferences object for get response and update request
+message PhonePreferences {
+  bool agent_preview_dialing = 10; // Determines whether broadcasts may be sent as Preview Dial.
+  int32 default_ring_length_threshold = 11; // The number of seconds to allow ringing to a 3rd party.
+  bool display_ring_length_threshold = 12; // Determines whether the setting may be changed while scheduling.
+  bool show_caller_id = 13; // Determines whether the setting may be show/edited while scheduling.
+  bool default_use_caller_id = 14; // Determines whether to use Caller ID by default.
+  bool override_linkback_recording = 15;  // Determines whether broadcast templates may set to record linkbacks individually.
+  int64 caller_id_cfd_sid = 16;  // The 'sid' of the Caller ID field description to use as default.
+  DialOrder default_dial_order = 17; // The dial order of a contact record.  Default 'First Number Only'.
+  commons.AnsweringMachineDetection answering_machine_detection = 18; // Which type of answering machine detection to use.
+  bool linkback_recording = 19; // Determines whether linkback recording is enabled.
+}
+
+// Dial Order holds either a type enum, or one or more Contact Field Description fields for custom order.
+message DialOrder {
+  oneof type {
+    commons.DialOrderType standard_order = 1;  // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
+    CustomDialOrder custom_order = 2;  // Defines a "Custom Order" using one or more Contact Field Descriptions.
+  }
+}
+
+// Custom Dial Order Fields holds one or more Contact Field Descriptions to indicate which fields in a contact record, and the order.
+message CustomDialOrder {
+  repeated DialOrderField dial_order_fields = 1; // One or more Contact Field Descriptions via DialOrderField.
+}
+
+// Dial Order Field holds the ID for saving into preferences and the name for display.
+message DialOrderField {
+  int64 cfd_sid = 1; // contact field description sid
+  string field_name = 2;  // The field name, for display
+}
+
+// Request for GetCompliancePreferences
+message GetCompliancePreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetCompliancePreferences
+message GetCompliancePreferencesResponse {
+  CompliancePreferences compliance_preferences = 100; // Compliance preferences object
+
+  reserved 2 to 16; // Replaced legacy fields
+}
+
+// Request for UpdateCompliancePreferences
+message UpdateCompliancePreferencesRequest {
+  CompliancePreferences compliance_preferences = 2; // Compliance preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateCompliancePreferences
+message UpdateCompliancePreferencesResponse {}
+
+// Wrapper CompliancePreferences object for get response and update request
+message CompliancePreferences {
+  bool display_after_hours_calls = 10; // Controls whether toggling after hours calling is displayed in the UI
+  bool after_hours_calls = 11; // Allows calling outside designated hours
+  bool display_natural_compliance = 12; // Displays toggle for Natural Compliance in UI
+  bool use_natural_compliance = 13; // Default Use Natural Compliance
+  string default_compliance_rule_set = 14; // Default Compliance Rule Set ID (regional)
+  bool display_cell_phone_scrub = 15; // Display cell phone scrub field
+  bool cell_phone_scrub = 16; // Cell Phone Scrub Default
+  bool display_schedule_rules = 17; // Display schedule rules field
+  bool use_schedule_rules = 18; // Use schedule rules by default
+  ScheduleRuleField default_schedule_rule = 19; // Default Schedule Rule
+  bool do_zip_code_scrub = 20; // Do zip/postal code scrubbing
+  ZipCodeField zip_code_scrub = 21; // Zip code scrub attribute
+  string default_email_compliance_list = 22; // Default email compliance list name (empty for none)
+  string default_sms_compliance_list = 23; // Default SMS compliance list name (empty for none)
+}
+
+// Schedule rule field
+message ScheduleRuleField {
+  int64 rule_id = 1; // Schedule rule sid
+  string name = 2; // Rule name
+}
+
+// Zip code field for scrubbing
+message ZipCodeField {
+  int64 cfd_sid = 1; // contact_field_description_sid in cfd table
+  string field_name = 2; // Zip code field name
+}
+
+// Request for GetBroadcastPreferences
+message GetBroadcastPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetBroadcastPreferences
+message GetBroadcastPreferencesResponse {
+  BroadcastPreferences broadcast_preferences = 10; // Broadcast preferences object
+}
+
+// Request for UpdateBroadcastPreferences
+message UpdateBroadcastPreferencesRequest {
+  BroadcastPreferences broadcast_preferences = 2; // Broadcast preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateBroadcastPreferences
+message UpdateBroadcastPreferencesResponse {}
+
+// Wrapper BroadcastPreferences object for get response and update request
+message BroadcastPreferences {
+  bool dial_list_penetration_strategy = 1; // List penetration strategy; false for depth first, true for breadth first
+  bool display_list_penetration_strategy = 2; // Displays the dial list penetration strategy field
+  bool display_follow_the_sun = 3; // Display follow the sun field
+  bool follow_the_sun = 4; // East to west scheduling
+  bool sequence_terminator_override = 5; // Allow override for sequence terminator
+  commons.BroadcastTemplateOrdering broadcast_template_ordering = 6; // Broadcast schedule template ordering
+  repeated string email_from_addresses = 7; // Choices of emails returned from sending a broadcast
+  bool start_time_enabled = 8; // Broadcast start time enabled
+  BroadcastTime default_start_time = 9; // Sets the default broadcast start time
+  bool stop_time_enabled = 10; // Broadcast stop time enabled
+  BroadcastTime default_stop_time = 11; // Sets the default broadcast stop time
+}
+
+// Broadcast time specification
+message BroadcastTime {
+  int32 hours = 1; // [0-23] hour in 24-hour time
+  int32 minutes = 2; // [0-59] minute
+  commons.TimeZone timezone = 3; // Timezone to start/stop at
+}
+
+// Request for GetSchedulePreferences
+message GetSchedulePreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetSchedulePreferences
+message GetSchedulePreferencesResponse {
+  SchedulePreferences schedule_preferences = 1; // Schedule preferences object
+}
+
+// Request for UpdateSchedulePreferences
+message UpdateSchedulePreferencesRequest {
+  SchedulePreferences schedule_preferences = 2; // Schedule preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateSchedulePreferences
+message UpdateSchedulePreferencesResponse {}
+
+// Wrapper SchedulePreferences object for get response and update request
+message SchedulePreferences {
+  bool display_schedule_by_time_zone = 1; // Display campaign schedule by time zone
+  bool use_schedule_by_time_zone = 2; // Whether or not by defualt campaigns are scheduled by time zone
+  commons.ScheduleByTimeZoneScope schedule_by_time_zone_scope = 3; // Schedule by time zone scope
+  bool display_schedule_as_paused = 4; // Display "schedule as paused" field
+  bool schedule_as_paused = 5; // Schedule paused by default
+  int64 default_completion_threshold = 6; // Default completion threshold
+  bool display_campaign_linking = 7; // Display "campaign link" field
+  bool use_campaign_linking = 8; // Use campaign linking by default
+  map<string, string> campaign_links = 9; // List of campaign links
+  string default_campaign_link_id = 10; // Default campaign link ID (id in CampaignLink associated with default)
+}
+
+// Request for GetEmailSmsPreferences
+message GetEmailSmsPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+}
+
+// Response for GetEmailSmsPreferences
+message GetEmailSmsPreferencesResponse {
+  EmailSmsPreferences email_sms_preferences = 1;  // The requested preferences.
+}
+
+// Request for UpdateEmailSmsPreferences
+message UpdateEmailSmsPreferencesRequest {
+  EmailSmsPreferences email_sms_preferences = 2;  // The preferences to be updated.
+
+  google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
+}
+
+// Empty response for UpdateEmailSmsPreferences
+message UpdateEmailSmsPreferencesResponse {}
+
+// Wrapper EmailSmsPreferences object for get response and update request
+message EmailSmsPreferences {
+  bool use_custom_links = 10; // Default Queue/Hold table view.  'false' for icon view, 'true' for table view.
+  bool client_acknowledgement = 11; // Default Queue/Hold table grouping. 'false' for no grouping, 'true' for group by queue type.
+  repeated string email_from_addresses = 12; // Choices of emails returned from sending a broadcast
+}
+
+//
+// Business intelligence & reports preferences
+//
+
+// Request for GetBusinessPreferences
+message GetBusinessPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetBusinessPreferences
+message GetBusinessPreferencesResponse {
+  BusinessPreferences business_preferences = 1; // Business preferences object
+}
+
+// Request for UpdateBusinessPreferences
+message UpdateBusinessPreferencesRequest {
+  BusinessPreferences business_preferences = 2; // Business preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateBusinessPreferences
+message UpdateBusinessPreferencesResponse {}
+
+// Wrapper BusinessPreferences object for get response and update request
+message BusinessPreferences {
+  int32 weeks_of_data = 1; // Default number of weeks shown in business intelligence analytics visualizer
+  commons.AnaTimeZone time_zone = 2; // Time zone for business intelligence
+  bool multi_client_access = 3; // Controls adoption for multi-client access
+  bool custom_visualizations = 4; // Controls custom reports visualization
+  string time_filter = 5; // Default time filter in custom dashboard and visualizations
+}
+
+// Request for GetVoiceAnalyticsPreferences
+message GetVoiceAnalyticsPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetVoiceAnalyticsPreferences
+message GetVoiceAnalyticsPreferencesResponse {
+  VoiceAnalyticsPreferences voice_analytics_preferences = 1; // Voice analytics preferences object
+}
+
+// Request for UpdateVoiceAnalyticsPreferences
+message UpdateVoiceAnalyticsPreferencesRequest {
+  VoiceAnalyticsPreferences voice_analytics_preferences = 2; // Voice analytics preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateVoiceAnalyticsPreferences
+message UpdateVoiceAnalyticsPreferencesResponse {}
+
+// Preferences for voice analytics. Primarily consumed and interpreted by
+// localmixer when mixing and transcribing call recordings.
+message VoiceAnalyticsPreferences {
+  // Optional. When enabled call recordings will be transcribed and archived by
+  // localmixer in voice analytics.
+  bool enabled = 1;
+
+  // Optional. List of redactions to be performed, when voice analytics is
+  // enabled, on each call recording and transcript.
+  repeated VoiceAnalytics.Redact redact = 2;
+
+  // Optional. Flagging transcript notification preferences.
+  VoiceAnalytics.Notify notify = 3;
+
+  // Optional. Billing report notification preferences.
+  VoiceAnalytics.Notify billing_notify = 4;
+
+  // Optional. Number format for transcript dispositions.
+  string number_format = 5;
+
+  // Optional. Will eventually be deprecated. When voice analytics is enabled
+  // and this is true all cardinal numbers in each call recording and transcript
+  // will be redacted.
+  bool redact_all_digits = 10;
+
+  // Required. Minimum milliseconds of silence to occur before considered to
+  // be silence by voice analytics.
+  uint32 silence_threshold = 100;
+
+  // Required. Minimum milliseconds of talk over to occur before considered to
+  // be talk over by voice analytics.
+  uint32 talk_over_threshold = 200;
+}
+
+// Namespace for voice analytics messages.
+message VoiceAnalytics {
+  message Redact {
+    oneof where {
+      // Optional. Redact numbers.
+      Number number = 1;
+    }
+  }
+
+  message Number {
+    // Optional. The kind of number to redact.
+    Kind kind = 1;
+
+    // Optional. When value is non zero only numbers composed of at least
+    // `min_consecutive` digits will be redacted. For example, when the
+    // transcript contains the number `one two three four five six` redaction
+    // will not occur when `min_consecutive` is greater than 6.
+    uint32 min_consecutive = 2;
+
+    // Optional. When value is non zero only numbers composed of at most
+    // `max_consecutive` digits will be redacted. For example, when the
+    // transcript contains the number `one two three four five six` redaction
+    // will not occur when `max_consecutive` is less than 6.
+    uint32 max_consecutive = 3;
+
+    // slop is the number of extra words that can be in between digits and
+    // still count as a number. For example: slop of 2 with min_consecutive 3
+    // would allow "one uh two and three" to count as a number.
+    uint32 slop = 4;
+
+    enum Kind {
+      CARDINAL = 0; // Cardinal number
+      ORDINAL = 1; // Ordinal number
+      ANY = 2; // Any number
+    }
+  }
+
+  message Notify {
+    // Optional. Cron pattern determining notification frequency. Defaults to
+    // every 15 minutes when not specified.
+    string cron = 1;
+  }
+}
+
+// Request for GetScorecardsPreferences
+message GetScorecardsPreferencesRequest {
+    google.protobuf.FieldMask field_mask = 2; // Field mask for get request
+}
+
+// Response for GetScorecardsPreferences
+message GetScorecardsPreferencesResponse {
+    ScorecardsPreferences scorecards_preferences = 1; // Scorecards preferences object
+}
+
+// Request for UpdateScorecardsPreferences
+message UpdateScorecardsPreferencesRequest {
+    ScorecardsPreferences scorecards_preferences = 2; // Scorecards preferences object, required to update
+
+    google.protobuf.FieldMask field_mask = 3; // Field mask for update request
+}
+
+// Response for UpdateScorecardsPreferences
+message UpdateScorecardsPreferencesResponse {}
+
+message ScorecardsPreferences {
+    // The percentage of randomized calls shown to the user for evaluation.
+    // Must be between 1-100.
+    uint32 call_sample_percentage = 2;
+
+    // Maximum number of evaluations per user, per category,
+    // over the given time interval
+    uint32 max_user_evaluations = 3;
+
+    // The time interval over which calls are listed for scoring.
+    Scorecards.EvaluationInterval evaluation_interval = 4;
+}
+
+message Scorecards {
+    // EvaluationsInterval enumerates common time periods for evaluations.
+    enum EvaluationInterval {
+        DAY = 0;
+        WEEK = 1;
+        MONTH = 2;
+    }
+}
+
+// Request for GetEndOfDayPreferences
+message GetEndOfDayPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetEndOfDayPreferences
+message GetEndOfDayPreferencesResponse {
+  EndOfDayPreferences end_of_day_preferences = 1; // EndOfDay preferences object
+}
+
+// Request for UpdateEndOfDayPreferences
+message UpdateEndOfDayPreferencesRequest {
+  EndOfDayPreferences end_of_day_preferences = 2; // EndOfDay preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateEndOfDayPreferences
+message UpdateEndOfDayPreferencesResponse {}
+
+// Wrapper EndOfDayPreferences object for get response and update request
+message EndOfDayPreferences {
+  int32 eod_monday = 10; // End of day hour for reporting and manual dial scheduling: Monday
+  int32 eod_tuesday = 11; // End of day hour for reporting and manual dial scheduling: Tuesday
+  int32 eod_wednesday = 12; // End of day hour for reporting and manual dial scheduling: Wednesday
+  int32 eod_thursday = 13; // End of day hour for reporting and manual dial scheduling: Thursday
+  int32 eod_friday = 14; // End of day hour for reporting and manual dial scheduling: Friday
+  int32 eod_saturday = 15; // End of day hour for reporting and manual dial scheduling: Saturday
+  int32 eod_sunday = 16; // End of day hour for reporting and manual dial scheduling: Sunday
+}
+
+// Request for GetFilterPreferences
+message GetFilterPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetFilterPreferences
+message GetFilterPreferencesResponse {
+  FilterPreferences filter_preferences = 10; // Filter preferences object
+
+}
+
+// Request for UpdateFilterPreferences
+message UpdateFilterPreferencesRequest {
+  FilterPreferences filter_preferences = 2; // Filter preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response UpdateFilterPreferences
+message UpdateFilterPreferencesResponse {}
+
+// Wrapper FilterPreferences object for get response and update request
+message FilterPreferences {
+  ReportFilter default_auto_report_filter = 10; // Automated reports default filtering type (null for no entry)
+  bool send_empty_auto_reports = 11; // Send empty automated reports
+  bool display_broadcast_resend_filter = 12; // Display broadcast resend filtering option
+  ReportFilter default_broadcast_resend_filter = 13; // Broadcast resend report filter
+  repeated CustomReportFilter custom_report_filters = 14; // List of custom report filters
+}
+
+// Report filter type, standard or custom
+message ReportFilter {
+  oneof choice {
+    commons.StandardReportFilter standard = 1; // Standard report filter (enum)
+    int64 custom = 2; // Custom report filter sid (XML client property)
+  }
+}
+
+// Custom report filter type
+message CustomReportFilter {
+  string name = 1; // Filter name
+  string description = 2; // Filter description
+  FilterConjunction conjunction = 3; // Filter conjunction
+  repeated int64 call_results_filter_list = 4; // List of individual call types to be filtered by
+  repeated ComplexBooleanExpr dtmf_expression_list = 5; // List of DTMF response key combinations
+  repeated ComplexBooleanExpr agent_response_expression_list = 6; // List of agent response filter groups
+  repeated ComplexBooleanExpr last_template_element_expression_list = 7; // List of last template element filters
+  repeated ComplexBooleanExpr exclude_dtmf_expression_list = 8; // List of hunter groups to filter by
+  repeated int64 hunt_group_sid_include_list = 10; // List of hunt groups to include
+  repeated int64 hunt_group_sid_exclude_list = 11; // List of hunt groups to exclude
+  int64 xml_client_property_sid = 9; // property sid
+
+  // Indicates how to combine major filter elements; Call Result, DTMF Key, Agent Responses and Last Template Element.
+  enum FilterConjunction {
+    AND = 0; // All major filter elements must match for data to be included in the report.
+    OR = 1; // One or more major filter elements must match for data to be included in the report.
+  }
+}
+
+// Complex boolean expression
+message ComplexBooleanExpr {
+  CompareExprList compare_expression_list = 1; // Compare expression list
+}
+
+// Compare expression list
+message CompareExprList {
+  repeated SimpleCompareExpression simple_compare_expression = 1; // List of simple compare expressions
+}
+
+// Simple compare expression
+message SimpleCompareExpression {
+  string operator_type = 1; // Comparison operator
+  string value_key = 2; // Value key
+  string compare_value = 3; // Compare value
+}
+
+// Request for GetRecordingPreferences
+message GetRecordingPreferencesRequest {
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetRecordingPreferences
+message GetRecordingPreferencesResponse {
+  RecordingPreferences recording_preferences = 10; // Recording preferences object
+
+  bool call_recording_redaction = 5; // LocalMixerOptions
+}
+
+// Request for UpdateRecordingPreferences
+message UpdateRecordingPreferencesRequest {
+  RecordingPreferences recording_preferences = 2; // Recording preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateRecordingPreferences
+message UpdateRecordingPreferencesResponse {}
+
+// Wrapper RecordingPreferences object for get response and update request
+message RecordingPreferences {
+  bool convention_enabled = 10; // Controls whether custom file name convention is used
+  RecordingsFileNamingConvention file_name_convention = 11; // Controls file naming conventions for recordings
+  bool zip_convention_enabled = 12; // Controls whether custom file name convention is used (for *.zip)
+  RecordingsZipFileNamingConvention zip_file_name_convention = 13; // Controls file naming conventions for compressed recordings
+  commons.RecordingFileType export_file_type = 14; // Export audio recordings as either .mp3 or .wav
+}
+
+// Call recordings file name convention
+message RecordingsFileNamingConvention {
+  FileNamingConvention inbound = 1; // Inbound calls
+  FileNamingConvention manual = 2; // Manual dial calls
+  FileNamingConvention outbound = 3; // Outbound calls
+  FileNamingConvention preview = 4; // Preview dial calls
+  int64 xml_client_property_sid = 5; // xml_client_property_sid associated with RecordingsFileNamingConvention key
+}
+
+// Call recordings file name convention (for *.zip)
+message RecordingsZipFileNamingConvention {
+  FileNamingConvention inbound = 1; // Inbound calls
+  FileNamingConvention manual = 2; // Manual dial calls
+  FileNamingConvention outbound = 3; // Outbound calls
+  FileNamingConvention combined = 5; // Combined call types (inbound, manual, and outbound)
+  int64 xml_client_property_sid = 4; // xml_client_property_sid associated with RecordingsZipFileNamingConvention key
+}
+
+// File name convention properties
+message FileNamingConvention {
+  reserved 1; // deprecated file_extension field
+  repeated FileNameSegment segments = 2; // Convention segments
+}
+
+// File name segment
+message FileNameSegment {
+  string segment_type = 1; // Segment type
+  string format_pattern = 2; // Format pattern (if applicable)
+  string time_zone_id = 3; // Time Zone Id (e.g. America/Denver, if applicable)
+}
+
+// Request for GetAdminClientPreferences
+message GetAdminClientPreferencesRequest {
+  string org_id = 1; // OrgId
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for get request
+}
+
+// Response for GetAdminClientPreferences
+message GetAdminClientPreferencesResponse {
+  AdminClientPreferences admin_client_preferences = 10; // Filter preferences object
+}
+
+// Request for UpdateAdminClientPreferences
+message UpdateAdminClientPreferencesRequest {
+  string org_id = 2; // OrgId
+  AdminClientPreferences admin_client_preferences = 1; // Filter preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Response for UpdateAdminClientPreferences
+message UpdateAdminClientPreferencesResponse {}
+
+// Wrapper AdminClientPreferences object for get response and update request
+message AdminClientPreferences {
+  reserved 2; // Reserved carrier string
+  bool use_reserved_carrier = 1; // Use reservered carrier preferences
+  repeated string reserved_carriers = 10; // List of reserved carrier
+  string email_key = 3; // Email Sendgrid API key
+  string email_id = 4; // Email Sendgrid API key ID
+  string email_name = 5; // Email Sendgrid API key name
+  repeated string whitelist_ips = 6; // List of whitelisted IPs
+  repeated string whitelist_domains = 7; // List of whitelisted domains
+  string callbacks_service_id = 8; // Scheduled callbacks service ID
+  bool agent_screen_recording = 9; // Agent screen recording enabled
+  repeated commons.Country allowed_countries = 11; // List of country enums that the organization uses.
+}
+
+//
+// Linkback recording
+//
+
+// Request for linkback recording terms agreement
+message AcceptLinkbackRecordingTermsRequest {}
+
+// Response for linkback recording terms agreement
+message AcceptLinkbackRecordingTermsResponse {}
+
+// Request for updating broadcast template properties
+message LinkbackUpdateBroadcastTemplatesRequest {
+  bool value = 1;
+}
+
+// Response for updating broadcast template properties
+message LinkbackUpdateBroadcastTemplatesResponse {}
+
+// Request for recording email unsubscribe acknowledgement.
+message RecordEmailUnsubscribeAcknowledgementRequest {}
+
+// Response for recording email unsubscribe acknowledgement.
+message RecordEmailUnsubscribeAcknowledgementResponse {}
+
+// Request for clearing email unsubscribe acknowledgement.
+message ClearEmailUnsubscribeAcknowledgementRequest {}
+
+// Response for clearing email unsubscribe acknowledgement.
+message ClearEmailUnsubscribeAcknowledgementResponse {}
+
+//
+// Legacy preferences
+//
+
+message CustomReportFilterPreferences {
+  string name = 1;
+  int64 xml_client_property_sid = 7;
+}
+
+// Request for GetBackofficeThemePreference
+message GetBackofficeThemePreferenceRequest {
+  string org_id = 1;
+}
+
+// Response for GetBackofficeThemePreference
+message GetBackofficeThemePreferenceResponse {
+  commons.ClientSkin backoffice_theme = 1; // Backoffice theme enum
+}
+
+// Request for EditBackofficeThemePreference
+message EditBackofficeThemePreferenceRequest {
+  string org_id = 1;
+  commons.ClientSkin backoffice_theme = 2; // Backoffice theme enum
+}
+
+// Response for EditBackofficeThemePreference
+message EditBackofficeThemePreferenceResponse {}
+
+//
+// End preferences
+//
+
+message WebLinkTemplate {
+  string web_link_template_id = 1;
+  string display_name = 2;
+  string description = 3;
+  bool is_js_link = 4;
+  repeated WebLinkBaseOption base_url = 5;
+  repeated WebLinkParameter parameters = 6;
+}
+
+message WebLinkParameter {
+  string key = 1;
+  repeated WebLinkBaseOption value = 2;
+}
+
+message WebLinkBaseOption {
+  oneof option {
+    StaticText static_text = 1;
+    TtsField tts_field = 2;
+    AgentField agent_field = 3;
+    DataKeyField data_key_field = 4;
+    DataCollect data_collect = 5;
+    DataDip data_dip = 6;
+    IvrData ivr_data = 7;
+    PhoneField phone_field = 8;
+    SipHeaderData sip_header_data = 9;
+    PostalField postal_field = 10;
+  }
+
+  message StaticText {
+    string value = 1;
+  }
+
+  message TtsField {
+    int64 contact_field_description_sid = 1;
+    string field_name = 2;
+    string display_format_string = 3;
+  }
+
+  message AgentField {
+    commons.AgentFieldOption option = 1;
+  }
+
+  message DataKeyField {
+    int64 client_properties_sid = 1;
+    string property_key = 2;
+    string property_value = 3;
+  }
+
+  message DataCollect {
+    string value = 1;
+  }
+
+  message DataDip {
+    string value = 1;
+  }
+
+  message IvrData {
+    string value = 1;
+  }
+
+  message PhoneField {
+    commons.PhoneFieldOption option = 1;
+  }
+
+  message SipHeaderData {
+    string value = 1;
+  }
+
+  message PostalField {
+    commons.PostalFieldOption option = 1;
+  }
+}
+
+message CreateWebLinkTemplateRequest {
+  WebLinkTemplate web_link_template = 1;
+}
+
+message CreateWebLinkTemplateResponse {}
+
+message ListWebLinkTemplatesRequest {}
+
+message ListWebLinkTemplatesResponse {
+  repeated WebLinkTemplate web_link_templates = 1;
+}
+
+message GetWebLinkTemplateRequest {
+  string web_link_template_id = 1;
+}
+
+message GetWebLinkTemplateResponse {
+  WebLinkTemplate web_link_template = 1;
+}
+
+message UpdateWebLinkTemplateRequest {
+  WebLinkTemplate web_link_template = 1;
+}
+
+message UpdateWebLinkTemplateResponse {}
+
+message DeleteWebLinkTemplateRequest {
+  string web_link_template_id = 1;
+}
+
+message DeleteWebLinkTemplateResponse {}
+
+message AgentTriggerTemplate {
+  reserved 12;
+  string description = 1;
+  oneof status {
+    LoggedIn logged_in = 2;
+    Waiting waiting = 3;
+    Paused paused = 4;
+    OnCall on_call = 5;
+    TransferCall transfer_call = 6;
+    TransferLost transfer_lost = 7;
+    TransferTargetLost transfer_target_lost = 8;
+    PreviewCall preview_call = 9;
+    ManualDialCall manual_dial_call = 10;
+    WrapUp wrap_up = 11;
+  }
+  string id = 13;
+
+  message LoggedIn {
+    oneof result {
+      DisplayMessage display_message = 1;
+      EjectAgent eject_agent = 2;
+      ExecuteWebLink execute_web_link = 3;
+    }
+  }
+
+  message Waiting {
+    int64 duration = 1;
+    oneof result {
+      // Valid AdvanceStatusType Values: PAUSED
+      AdvanceStatus advance_status = 2;
+      DisplayMessage display_message = 3;
+      EjectAgent eject_agent = 4;
+      ExecuteWebLink execute_web_link = 5;
+    }
+  }
+
+  message Paused {
+    int64 duration = 1;
+    oneof pause_code_type {
+      // this field is an xml_client_property_sid in skunk.
+      int64 custom_pause_code_sid = 2;
+      commons.AutomaticSystemCode automatic_system_code = 3;
+    }
+    oneof result {
+      // Valid AdvanceStatusType Values: WAITING
+      AdvanceStatus advance_status = 4;
+      DisplayMessage display_message = 5;
+      EjectAgent eject_agent = 6;
+      ExecuteWebLink execute_web_link = 7;
+    }
+    PauseCode pause_code = 8;
+  }
+
+  message OnCall {
+    bool outbound = 1;
+    bool inbound = 2;
+    bool manual = 3;
+    bool preview = 4;
+    int64 duration = 5;
+    oneof result {
+      // Valid AdvanceStatusType Values: WRAP_UP
+      AdvanceStatus advance_status = 6;
+      DisplayMessage display_message = 7;
+      EjectAgent eject_agent = 8;
+      ExecuteWebLink execute_web_link = 9;
+    }
+  }
+
+  message TransferCall {
+    int64 duration = 1;
+    oneof result {
+      DisplayMessage display_message = 2;
+      EjectAgent eject_agent = 3;
+      ExecuteWebLink execute_web_link = 4;
+    }
+  }
+
+  message TransferLost {
+    int64 duration = 1;
+    oneof result {
+      DisplayMessage display_message = 2;
+      EjectAgent eject_agent = 3;
+      ExecuteWebLink execute_web_link = 4;
+    }
+  }
+
+  message TransferTargetLost {
+    int64 duration = 1;
+    oneof result {
+      DisplayMessage display_message = 2;
+      EjectAgent eject_agent = 3;
+      ExecuteWebLink execute_web_link = 4;
+    }
+  }
+
+  message PreviewCall {
+    int64 duration = 1;
+    oneof result {
+      // Valid AdvanceStatusType Values: WAITING
+      AdvanceStatus advance_status = 2;
+      DisplayMessage display_message = 3;
+      EjectAgent eject_agent = 4;
+      ExecuteWebLink execute_web_link = 5;
+    }
+  }
+
+  message ManualDialCall {
+    int64 duration = 1;
+    bool scheduled_callback_present = 2;
+    oneof result {
+      // Valid AdvanceStatusType Values: WAITING
+      AdvanceStatus advance_status = 3;
+      DisplayMessage display_message = 4;
+      EjectAgent eject_agent = 5;
+      ExecuteWebLink execute_web_link = 6;
+    }
+  }
+
+  message WrapUp {
+    bool outbound = 1;
+    bool inbound = 2;
+    bool manual = 3;
+    bool preview = 4;
+    int64 duration = 5;
+    oneof result {
+      // Valid AdvanceStatusType Values: WAITING, PAUSED
+      AdvanceStatus advance_status = 6;
+      DisplayMessage display_message = 7;
+      EjectAgent eject_agent = 8;
+      ExecuteWebLink execute_web_link = 9;
+    }
+  }
+
+  message AdvanceStatus {
+    commons.AdvanceStatusType status_type = 3;
+  }
+
+  message DisplayMessage {
+    string message = 1;
+  }
+
+  message EjectAgent {}
+
+  message ExecuteWebLink {
+    string web_link_id = 1;
+  }
+}
+
+message CreateAgentTriggerTemplateRequest {
+  AgentTriggerTemplate agent_trigger_template = 1;
+}
+
+message CreateAgentTriggerTemplateResponse {}
+
+message ListAgentTriggerTemplatesRequest {}
+
+message ListAgentTriggerTemplatesResponse {
+  repeated AgentTriggerTemplate agent_trigger_templates = 1;
+}
+
+message UpdateAgentTriggerTemplateRequest {
+  AgentTriggerTemplate agent_trigger_template = 1;
+}
+
+message UpdateAgentTriggerTemplateResponse {}
+
+message DeleteAgentTriggerTemplateRequest {
+  string id = 1;
+}
+
+message DeleteAgentTriggerTemplateResponse {}
+
+message GetAgentTriggerTemplateRequest {
+  string id = 1;
+}
+
+message GetAgentTriggerTemplateResponse {
+  AgentTriggerTemplate agent_trigger_template = 1;
+}
+
+// Request message for the ListAgentPauseCodes RPC.
+message ListAgentPauseCodesRequest {}
+
+// Response message for the ListAgentPauseCodes RPC.
+message ListAgentPauseCodesResponse {
+  repeated PauseCode pause_codes = 1;
+}
+
+// Request message for the CreateAgentPauseCode RPC.
+message CreateAgentPauseCodeRequest {
+  // the pause_code.xml_client_property_sid field is
+  // NOT used in this context. The pause code will
+  // be created with a default xml_client_property sid.
+  PauseCode pause_code = 1;
+}
+
+// Response message for the CreateAgentPauseCode RPC.
+message CreateAgentPauseCodeResponse {}
+
+// Request message for the UpdateAgentPauseCode RPC.
+message UpdateAgentPauseCodeRequest {
+  // the pause_code.xml_client_property_sid field is
+  // used in this context. The pause code with the
+  // given xml_client_property_sid will be updated
+  // with the info as defined by the other
+  // pause_code fields.
+  PauseCode pause_code = 1;
+}
+
+// Response message for the UpdateAgentPauseCode RPC.
+message UpdateAgentPauseCodeResponse {}
+
+// Request message for the DeleteAgentPauseCode RPC.
+message DeleteAgentPauseCodeRequest {
+  int64 xml_client_property_sid = 1;
+}
+
+// Response message for the DeleteAgentPauseCode RPC.
+message DeleteAgentPauseCodeResponse {}
+
+// Entity message for the ListAgentPauseCodes, CreateAgentPauseCode, and UpdateAgentPauseCode RPCs.
+message PauseCode {
+  string name = 1;
+  string description = 2;
+  repeated string codes = 3;
+  int64 xml_client_property_sid = 4;
+}
+
+// Request message for ListCustomReportFilters
+message ListCustomReportFiltersRequest {}
+
+// Response message for ListCustomReportFilters
+message ListCustomReportFiltersResponse {
+  repeated CustomReportFilter filters = 1;
+}
+
+// Request message for GetCustomReportFilter
+message GetCustomReportFilterRequest {
+  int64 xml_client_property_sid = 2; // sid associated with xml client property
+}
+
+// Response message for GetCustomReportFilter
+message GetCustomReportFilterResponse {
+  CustomReportFilter filter = 1; // Custom report filter
+}
+
+// Request message for CreateCustomReportFilter
+message CreateCustomReportFilterRequest {
+  CustomReportFilter filter = 2; // Custom report filter
+}
+
+// Response message for CreateCustomReportFilterSet
+message CreateCustomReportFilterResponse {}
+
+// Request message for UpdateCustomReportFilterSet
+message UpdateCustomReportFilterRequest {
+  CustomReportFilter filter = 2; // Custom report filter
+}
+
+// Response message for UpdateCustomReportFilter
+message UpdateCustomReportFilterResponse {}
+
+// Request message for DeleteCustomReportFilter
+message DeleteCustomReportFilterRequest {
+  int64 xml_client_property_sid = 2; // sid associated with xml client property
+}
+
+// Response message for DeleteCustomReportFilter
+message DeleteCustomReportFilterResponse {}
+
+// Request message for ListAgentResponseGroups
+message ListAgentResponseGroupsRequest {}
+
+// Response message for ListAgentResponseGroups
+message ListAgentResponseGroupsResponse {
+  repeated string agent_responses = 1; // List of possible agent response groups.
+}
+
+// Request message for ListLastTemplateElements
+message ListLastTemplateElementsRequest {}
+
+// Response message for ListLastTemplateElements
+message ListLastTemplateElementsResponse {
+  repeated string template_elements = 1; // List of distinct template script elements.
+}
+
+message ClientInfoDisplayTemplate {
+  string name = 1;
+  string description = 2;
+  bool display_all_fields = 3;
+  DialedNumberFieldStyle dialed_number_field_style = 4;
+  repeated ContactFieldStyle contact_field_styles = 5;
+  string id = 7;
+}
+
+message DialedNumberFieldStyle {
+  Color text_color = 1;
+  Color background_color = 2;
+}
+
+message ContactFieldStyle {
+  int64 contact_field_description_sid = 1;
+  Color text_color = 2;
+  Color background_color = 3;
+}
+
+message Color {
+  int64 red = 1;
+  int64 green = 2;
+  int64 blue = 3;
+}
+
+message CreateClientInfoDisplayTemplateRequest {
+  ClientInfoDisplayTemplate client_info_display_template = 1;
+}
+
+message CreateClientInfoDisplayTemplateResponse {}
+
+message ListClientInfoDisplayTemplatesRequest {}
+
+message ListClientInfoDisplayTemplatesResponse {
+  repeated ClientInfoDisplayTemplate client_info_display_templates = 1;
+}
+
+message UpdateClientInfoDisplayTemplateRequest {
+  ClientInfoDisplayTemplate client_info_display_template = 1;
+}
+
+message UpdateClientInfoDisplayTemplateResponse {}
+
+message DeleteClientInfoDisplayTemplateRequest {
+  string id = 1;
+}
+
+message DeleteClientInfoDisplayTemplateResponse {}
+
+message GetClientInfoDisplayTemplateRequest {
+  string id = 1;
+}
+
+message GetClientInfoDisplayTemplateResponse {
+  ClientInfoDisplayTemplate client_info_display_template = 1;
+}
+
+message CreateUserRequest {
+  reserved 8, 10, 11, 14, 15;
+  // if org_id is set the user will be created for
+  // the given org_id. This requires the CUSTOMER_SUPPORT permission.
+  // if this field is not set it will get the org_id
+  // from the token. This only requires the USER_CREATE permission.
+  string org_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string user_name = 5;
+  string password = 6;
+  repeated string permission_group_ids = 7;
+  int64 hunt_group_sid = 9;
+  string partner_agent_id = 12;
+  string p3_permission_group_id = 13;
+  repeated string linkback_numbers = 16;
+  repeated string caller_ids = 17;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 19;
+  string user_caller_id = 20;
+  string agent_profile_group_id = 21;
+  // A list of labels to assign to the user
+  repeated string labels = 22;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 23;
+}
+
+message CreateUserResponse {
+  string user_id = 1;
+}
+
+message UpdateUserPasswordRequest {
+  // If user_id is set, the password for the given user_id will
+  // be updated. This requires the USER_EDIT permission.
+  // This will update another user's password.
+  // Otherwise the user_id will be retrieved from the token.
+  // This requires the USER_EDIT_PASSWORD permission.
+  // This updates your password.
+  string user_id = 1;
+  string password = 2;
+  string current_password = 3;
+  // If org_id is set, UpdateUserPassword will require
+  // the CUSTOMER_SUPPORT permission. The user_id MUST
+  // be set if this field is not empty.
+  string org_id = 4;
+}
+
+// Request message for the GetUserPasswordReset rpc.
+message GetUserPasswordResetLinkRequest {
+  // The ID of the user
+  string user_id = 1;
+  // The Org ID of the user
+  string org_id = 2;
+  // The time to live (in seconds) of the generated link. This will default to 180 if set to 0.
+  int64 ttl = 3;
+}
+
+// Request message for ResetUserRequirePasswordReset.
+message ResetUserRequirePasswordResetRequest {
+  // ID of the user.
+  string user_id = 1;
+}
+
+// Response message for ResetUserRequirePasswordReset.
+message ResetUserRequirePasswordResetResponse {}
+
+// Response message for the GetUserPasswordReset rpc.
+message GetUserPasswordResetLinkResponse {
+  // the generated link url.
+  string url = 1;
+}
+
+message UpdateUserPasswordResponse {}
+
+message UpdateP3OwningOrgRequest {
+  string org_id = 1;
+  string owner_id = 2;
+}
+
+message UpdateP3OwningOrgResponse {}
+
+message GetP3OwningOrgRequest {
+  string org_id = 1;
+}
+
+message GetP3OwningOrgResponse {
+  string id = 1;
+}
+
+message RevokeAccountOwnerPermissionFromUserRequest{
+  //user for which the account owner permission will be revoked
+  string user_id = 1;
+}
+
+message RevokeAccountOwnerPermissionFromUserResponse {}
+
+message ConvertOrgToManualRequest {
+  string org_id = 1;
+}
+
+message ConvertOrgToManualResponse {}
+
+message ListQueueConfigsReq {
+  // If org_id is left empty, the org_id will be
+  // retreived from the users token.
+  string org_id = 1;
+}
+
+message ListQueueConfigsRes {
+  // configs is a list of a clients custom queue configurations.
+  repeated QueueConfig configs = 1;
+}
+
+message DeleteQueueConfigReq {
+  // config_name is the name of the custom queue config that will be
+  // deleted.
+  string config_name = 1;
+}
+
+message DeleteQueueConfigRes {}
+
+message GetQueueConfigReq {
+  string name = 1;
+  // if merge is true, default config values will
+  // be merged with the custom config data.
+  bool merge = 2;
+}
+
+message GetQueueConfigRes {
+  QueueConfig config = 1;
+}
+
+message UpdateQueueConfigReq {
+  QueueConfig config = 1;
+}
+
+message UpdateQueueConfigRes {}
+
+message CreateQueueConfigReq {
+  QueueConfig config = 1;
+}
+
+message CreateQueueConfigRes {}
+
+message CopyQueueConfigReq {
+  string from_org_id = 1;
+  string to_org_id = 2;
+  // from_name is the name of the config that will be copied
+  // from the given from_org_id.
+  string from_name = 3;
+  // to_name is the name that the copied config will have for
+  // the given to_org_id.
+  string to_name = 4;
+}
+
+message CopyQueueConfigRes {}
+
+message QueueConfig {
+  // Name can only contain these characters:
+  //  ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,-_
+  string name = 1;
+  google.protobuf.Timestamp config_modified = 2;
+  google.protobuf.Timestamp sounds_modified = 3;
+  string sounds_language = 15;
+  string sounds_gender = 16;
+
+  // nil fields will use default config for all call types.
+  AnnouncementMixing announcement_mixing = 4;
+  PositionAnnouncements position_announcements = 5;
+  WaitTimeAnnouncements wait_time_announcements = 6;
+  AttentionTones attention_tones = 7;
+  InQueueConditions in_queue_conditions = 8;
+  KeyPressEvents key_press_events = 9;
+  PbxRingStrategy pbx_ring_strategy = 10;
+  QueueMonitoringSilenceWaitTimes queue_monitoring_silence_wait_times = 11;
+
+  // general configs:
+  int64 callback_timeout_minutes = 12;
+  bool number_update = 13;
+  commons.InboundOverrideOption inbound_override = 14;
+
+  // IntercomConnection is only editable from the default
+  // tab of the account default config. This will
+  // eventually be removed.
+  commons.IntercomConnection intercom_connection = 17;
+
+  message AnnouncementMixing {
+    // nil fields will use default config settings.
+    Config inbound = 1;
+    Config outbound = 2;
+    Config manual = 3;
+    Config preview = 4;
+    // any can only be created/edited for the account default config.
+    Config any = 5;
+
+    message Config {
+      commons.AnnouncementMixingOption option = 1;
+    }
+  }
+
+  message PositionAnnouncements {
+    // nil fields will use default config settings.
+    Disableable inbound = 1;
+    Disableable outbound = 2;
+    Disableable manual = 3;
+    Disableable preview = 4;
+    // any can only be created/edited for the account default config.
+    Disableable any = 5;
+
+    message Disableable {
+      oneof option {
+        Config config = 1;
+        Disable disable = 2;
+      }
+    }
+
+    message Config {
+      // first announcement played to caller.
+      int64 first_seconds = 1;
+      // repeates announcement after given seconds.
+      int64 repeating_seconds = 2;
+      // the "shortly" announcement is played unless the
+      // caller position is greater than or equal to the
+      // given threshold.
+      int64 threshold = 3;
+    }
+  }
+
+  message WaitTimeAnnouncements {
+    // nil fields will use default config settings.
+    Disableable inbound = 1;
+    Disableable outbound = 2;
+    Disableable manual = 3;
+    Disableable preview = 4;
+    // any can only be created/edited for the account default config.
+    Disableable any = 5;
+
+    message Disableable {
+      oneof option {
+        Config config = 1;
+        Disable disable = 2;
+      }
+    }
+
+    message Config {
+      // first announcement played to caller.
+      int64 first_seconds = 1;
+      // repeats announcement after given seconds.
+      int64 repeating_seconds = 2;
+      // no announcement is played unless the callers wait time
+      // is greater than or equal to the given threshold.
+      int64 threshold = 3;
+    }
+  }
+
+  message AttentionTones {
+    // nil fields will use default config settings.
+    Disableable inbound = 1;
+    Disableable outbound = 2;
+    Disableable manual = 3;
+    Disableable preview = 4;
+    // any can only be created/edited for the account default config.
+    Disableable any = 5;
+
+    message Disableable {
+      oneof option {
+        Config config = 1;
+        Disable disable = 2;
+      }
+    }
+
+    message Config {
+      // at least one of these statuses must be true.
+      bool agent_status_paused = 1;
+      bool agent_status_wrap_up = 2;
+      // NOTE: no more than 10 tones. pauses don't count. pauses cannot be adjacent
+      repeated Tones tones = 3;
+    }
+
+    message Tones {
+      oneof option {
+        google.protobuf.Int64Value tone = 1;
+        google.protobuf.DoubleValue pause = 2;
+      }
+    }
+  }
+
+  message InQueueConditions {
+    // Individual conditions cannot be defaulted yet.
+    // If any condition for a type (inbound, outbound, manual, preview)
+    // is defaulted, ALL conditions for that type must be default.
+    // If any condition for a type is NOT defaulted, ALL conditions
+    // for that type must NOT be default.
+
+    LimitedCondition no_agents_logged_in = 1;
+    Condition no_agents_with_required_skills_logged_in = 2;
+    LimitedCondition no_agents_available = 3;
+    Condition no_agents_with_required_skills_available = 4;
+    Condition pbx_ringing = 5; // waiting for agent to accept
+    Condition agent_lost = 6;
+    LimitedCondition default = 7;
+
+    message Condition {
+      // nil fields will use default config settings.
+      Config inbound = 1;
+      Config outbound = 2;
+      Config manual = 3;
+      Config preview = 4;
+      // any can only be created/edited for the account default config
+      Config any = 5;
+    }
+
+    message LimitedCondition {
+      // nil fields will use default config settings.
+      LimitedConfig inbound = 1;
+      LimitedConfig outbound = 2;
+      LimitedConfig manual = 3;
+      LimitedConfig preview = 4;
+      // any can only be created/edited for the account default config
+      LimitedConfig any = 5;
+    }
+
+    message Config {
+      repeated Action actions = 1;
+    }
+
+    message LimitedConfig {
+      repeated LimitedAction actions = 1;
+    }
+
+    message Action {
+      // NOTE: actions for the same Condition.Config cannot
+      // share the same after_seconds value.
+      int64 after_seconds = 1;
+      oneof action {
+        Optionless hang_up = 2;
+        Optionless voicemail = 3;
+        Optionless queued_callback = 4;
+        // the value of this field is the IVR/Script event.
+        commons.DigitWrapper trigger_ivr = 5;
+        Skills add_skills = 6;
+        Skills drop_skills = 7;
+      }
+    }
+
+    message LimitedAction {
+      int64 after_seconds = 1;
+      oneof action {
+        Optionless hang_up = 2;
+        Optionless voicemail = 3;
+        Optionless queued_callback = 4;
+        // the value of this field is the IVR/Script event.
+        commons.DigitWrapper trigger_ivr = 5;
+      }
+    }
+  }
+
+  message KeyPressEvents {
+    // Individual actions cannot be defaulted yet.
+    // If any of these are true, the respective call type
+    // within every action must be nil. Alternatively,
+    // if any of these are false, the respective call type
+    // within every action must NOT be nil.
+
+    Action zero = 1;
+    Action one = 2;
+    Action two = 3;
+    Action three = 4;
+    Action four = 5;
+    Action five = 6;
+    Action six = 7;
+    Action seven = 8;
+    Action eight = 9;
+    Action nine = 10;
+    Action asterisk = 11;
+    Action hashtag = 12;
+
+    message Action {
+      // nil fields will use default config settings.
+      Config inbound = 1;
+      Config outbound = 2;
+      Config manual = 3;
+      Config preview = 4;
+      // any can only be created/edited for the account default config.
+      Config any = 5;
+    }
+
+    message Config {
+      reserved 2;
+      // nil option will use the 'None' action.
+      oneof option {
+        Optionless hang_up = 1;
+        // NOTE: trigger_ivr is only available for inbound & outbound.
+        Optionless trigger_ivr = 7;
+        Optionless voicemail = 3;
+        Optionless queued_callback = 4;
+        Skills add_skills = 5;
+        Skills drop_skills = 6;
+      }
+    }
+  }
+
+  message PbxRingStrategy {
+    // nil fields will use default config settings.
+    Config inbound = 1;
+    Config outbound = 2;
+    Config any = 3;
+
+    message Config {
+      oneof strategy {
+        // ring all available agents.
+        Optionless ring_all = 1;
+        // ring the agent with the highest score only.
+        Optionless highest_score_only = 2;
+        // ring a randomly selected available agent.
+        Optionless random = 3;
+        // ring each available agent sequentially ordered by skill score.
+        // the value if the field is the ring time out time in seconds.
+        int64 agent_score = 4;
+        // ring highest ranked agent, then the two highest, and so on.
+        // the value if the field is the ring time out time in seconds.
+        int64 agent_score_memory = 5;
+      }
+    }
+  }
+
+  message QueueMonitoringSilenceWaitTimes {
+    // minimum allowed milliseconds: 500.
+    // maximum allowed milliseconds: 5000.
+    int64 first_milliseconds = 1;
+    int64 second_milliseconds = 2;
+  }
+
+  message Disable {}
+
+  // Optionless represents config options that do not
+  // require sub settings.
+  message Optionless {}
+
+  message Skills {
+    repeated string p3_ids = 1;
+  }
+}
+
+message GetAllQueueConfigSoundsReq {
+  string config_name = 1;
+}
+
+message GetAllQueueConfigSoundsRes {
+  string url = 2;
+}
+
+message ListOwnedUsersRequest {
+  string org_id = 1;
+}
+
+message ListOwnedUsersResponse {
+  repeated UserDescription user_descriptions = 1;
+}
+
+// Request message for the ListOwnedOrgs rpc.
+message ListOwnedOrgsRequest {
+  // organization id passed in by customer support
+  string org_id = 1;
+}
+
+message ListOwnedOrgsResponse {
+  repeated OrganizationDescription organization_descriptions = 1;
+}
+
+message GetUserBlockedRequest {
+  string user_id = 1;
+}
+
+message GetUserBlockedResponse {
+  bool blocked = 1;
+  string last_ip = 2;
+  google.protobuf.Timestamp last_login = 3;
+  google.protobuf.Timestamp last_password_reset = 4;
+  int64 logins_count = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  bool has_blocked_ips = 8;
+}
+
+message UnblockUserRequest {
+  string user_id = 1;
+}
+
+message UnblockUserResponse {}
+
+message UnMigratedUser{
+  // Optional agent_sid or login_sid (must have one)
+  int64 agent_sid = 1;
+  int64 login_sid = 2;
+  int64 client_sid = 3;
+  string user_name = 4;
+  string user_id = 5;
+  bool login_disabled = 6;
+  string first_name = 7;
+  string last_name = 8;
+}
+
+message ListP3UnMigratedUsersRequest {
+  string org_id = 1;
+}
+
+message ListP3UnMigratedUsersResponse {
+  repeated UnMigratedUser users = 1;
+}
+
+message MigrateP3UserRequest {
+  // Optional agent_sid or login_sid (must have one)
+  int64 agent_sid = 1;
+  int64 login_sid = 2;
+  int64 client_sid = 3;
+  // New password for migrated user
+  string password = 4;
+}
+
+message MigrateP3UserResponse {}
+
+message UpdateP3UserNameRequest {
+  // Optional agent_sid or login_sid (must have one)
+  int64 agent_sid = 1;
+  int64 login_sid = 2;
+  string user_name = 3;
+  int64 client_sid = 4;
+}
+
+message UpdateP3UserNameResponse {}
+
+message GetQueueConfigSoundReq {
+  string config = 1;
+  commons.ConfigSound sound = 2;
+}
+
+message GetQueueConfigSoundRes {
+  string url = 1;
+}
+
+message SetQueueConfigSoundReq {
+  string config = 1;
+  commons.ConfigSound sound = 2;
+  string file_name = 3;
+}
+
+message SetQueueConfigSoundRes {}
+
+message SetAllQueueConfigSoundsFromSourceReq {
+  string to_config = 1;
+  oneof from {
+    google.protobuf.StringValue config = 2;
+    DefaultProfile default_profile = 3;
+  }
+
+  message DefaultProfile {
+    commons.SoundLanguage language = 1;
+    commons.SoundGender gender = 2;
+  }
+}
+
+message SetAllQueueConfigSoundsFromSourceRes {}
+
+message RemoveLoginStrikesRequest {
+  repeated int64 login_log_sids = 1;
+}
+
+message RemoveLoginStrikesResponse {}
+
+message RemoveUserLoginStrikesRequest {
+  string user_id = 1;
+}
+
+message RemoveUserLoginStrikesResponse {}
+
+message ListLoginHistoryRequest {
+  oneof filter_type { // Can filter only by UserId or IP
+    string user_id = 1;
+    string origination_ip = 2;
+  }
+	int64 duration = 3;  // Number of days to grab login events from
+  bool strikes_only = 4;
+}
+
+message ListLoginHistoryResponse {
+	repeated LoginEvent login_events = 1;
+
+}
+
+message LoginEvent {
+  int64 login_log_sid = 1;
+  string user_name = 2;
+  string origination_ip = 3;
+  bool login_success = 4;
+  bool strike = 5;
+  string notes = 6;
+  google.protobuf.Timestamp date_attempted = 7;
+ }
+
+message OrgBillingSettings {
+  reserved 5;
+  string org_id = 1;
+  float voice_analytics_price_per_hour = 2;
+  float analytics_price_per_doc = 3;
+  // If default is not nil it will be used for any region
+  // that is not presesnt in the region_overrides map.
+  // otherwise the system defaults will be used for missing
+  // regions in the override map.
+  PhoneBillingRates default = 4;
+  // The given billing rates will be used for the region instead
+  // of the system defaults (or the org default if default is not nil).
+  // Key: commons.Country as int32
+  map<int32, BillingRegionMap> country_region_overrides = 8;
+  // If agent_rates is nil the AgentBillingRates fields from
+  // the system default will be used.
+  AgentBillingRates agent_rates = 6;
+  // If email_price_per_message is nil the system default value
+  // will be used.
+  google.protobuf.FloatValue email_price_per_message = 7;
+}
+
+message BillingRegionMap {
+  // Key: region name
+  map<string, PhoneBillingRates> region_rates = 1;
+}
+
+message AgentBillingRates {
+  reserved 1 to 3;
+  double agent_toll_free_ppi = 4;
+  double agent_softphone_ppi = 5;
+  double agent_local_ppi = 6;
+}
+
+message PhoneBillingRates {
+  reserved 2 to 5, 9 to 13;
+  // ppi = price per increment
+  int64 billing_increment_seconds = 1;
+  double inbound_ppi = 14;
+  double sms_price_per_attempt = 15;
+  double vocal_direct_price_per_message = 16;
+  oneof units {
+    Seconds seconds = 6;
+    Attempts attempts = 7;
+    ConnectedCalls connected_calls = 8;
+  }
+
+  message Seconds {
+    reserved 1 to 3;
+    // all billed_increment fields must be greater than 0.
+    // if any of the wrapper fields are nil there is no limit.
+    double ppi = 10;
+    double linkback_ppi = 11;
+    double agent_linkcall_ppi = 12;
+    int64 minimum_billed_increments = 4;
+    google.protobuf.Int64Value maximum_billed_increments = 5;
+    int64 minimum_linkback_billed_increments = 6;
+    google.protobuf.Int64Value maximum_linkback_billed_increments = 7;
+    google.protobuf.Int64Value machine_hangup_increments_billed = 8;
+    google.protobuf.Int64Value human_hangup_increments_billed = 9;
+  }
+
+  message Attempts {
+    reserved 1 to 3;
+    // ppa = price per attempt
+    double ppa = 4;
+    double linkback_ppa = 5;
+    double agent_linkcall_ppa = 6;
+  }
+
+  message ConnectedCalls {
+    reserved 1 to 3;
+    // ppc = price per connect
+    double ppc = 4;
+    double linkback_ppc = 5;
+    double agent_linkcall_ppc = 6;
+  }
+}
+
+// Request message for the GetOrgBillingSettings rpc.
+message GetOrgBillingSettingsRequest {
+  string org_id = 1;
+}
+
+// Response message for the GetOrgBillingSettings rpc.
+message GetOrgBillingSettingsResponse {
+  reserved 2;
+  OrgBillingSettings settings = 1;
+  // country_default_regions contains the billing data for regions
+  // that belong to the orgs allowed countries that don't
+  // have custom overrides.
+  // Key: commons.Country as int32
+  map<int32, BillingRegionMap> country_default_regions = 3;
+}
+
+// Request message for the SetOrgBillingSettings rpc.
+message SetOrgBillingSettingsRequest {
+  OrgBillingSettings settings = 1;
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response message for the SetOrgBillingSettings rpc.
+message SetOrgBillingSettingsResponse {}
+
+// Request message for the AddOrgBillingOverride rpc.
+message AddOrgBillingOverrideRequest {
+  string org_id = 1;
+  string region = 2;
+  PhoneBillingRates rates = 3;
+  commons.Country country = 4;
+}
+
+// Response message for the AddOrgBillingOverride rpc.
+message AddOrgBillingOverrideResponse {}
+
+// Request message for the RemoveOrgBillingOverride rpc.
+message RemoveOrgBillingOverrideRequest {
+  string org_id = 1;
+  string region = 2;
+  commons.Country country = 3;
+}
+
+// Response message for the RemoveOrgBillingOverride rpc.
+message RemoveOrgBillingOverrideResponse {}
+
+// Request message for the GetSystemDefaultBillingRates RPC.
+message GetSystemDefaultBillingRatesRequest {}
+
+// Response message for the GetSystemDefaultRatesSettings RPC.
+message GetSystemDefaultBillingRatesResponse {
+  // default email rate
+  float email_price_per_message = 1;
+  // default phone rates
+  PhoneBillingRates phone_rates = 2;
+  // default agent rates
+  AgentBillingRates agent_rates = 3;
+}
+
+message UpdateP3UserSidsRequest {
+  string user_id = 1;
+  int64 agent_sid = 2;
+  int64 login_sid = 3;
+
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+message UpdateP3UserSidsResponse {}
+
+// AUTH0 CONNECTIONS
+
+// ConnectionSettings is the entity for auth 0 connection information.
+message AuthConnectionSettings {
+  // provider is the type of auth0 connection.
+  // NONE means the org doesn't have a connection setup.
+  commons.IdentityProvider provider = 2;
+  // issuer_url is the url provided by the identity provider
+  // used to get authorization tokens.
+  string issuer_url = 3;
+  // tenant_url is the url used to match user's emails so
+  // that the connection is used.
+  string tenant_url = 4;
+  // client_id is the id of the application created from
+  // the auth provider.
+  string client_id = 5;
+	// connection_id is the id of the auth0 connection.
+  // This field will be populated automatically during
+  // the CreateAuthConnection rpc.
+	string connection_id = 6;
+  // secret_expiration is an optional field that is
+  // used to know when the connection's secret will
+  // expire. If the connection doesn't have a secret
+  // or the secret will never expire this will be nil.
+  SecretExpiration secret_expiration = 10;
+	// default_group defines settings used for all users for this connection
+	// regardless of their groups. Group name is ignored for the default. This
+	// field can be left nil if no default settings are desired.
+	GroupItem default_group = 12;
+	// custom_groups defines the settings that will be used if a user with
+	// this connection contains one or more of the matching group names.
+	// If a user has multiple matching groups the settings for the highest
+	// priority custom group will be used. Priority is determined by the custom
+	// groups position in the list.
+	repeated GroupItem custom_groups = 13;
+
+	message SecretExpiration {
+		google.protobuf.Timestamp date = 1;
+	}
+}
+
+// GroupItem defines settings mapped to a single group.
+message GroupItem {
+  // name of the group.
+  string group_name = 1;
+  // hunt group sid for the group.
+  int64 hunt_group_sid = 2;
+  // agent profile group for the group.
+  string agent_profile_group_id = 3;
+  // p3 permission group id for the group.
+  string p3_permission_group_id = 4;
+  // list of permission group ids for the group. If a user belongs to multiple
+  // groups the list of permission group ids will be appended to the existing
+  // permissions the user contains. All other group settings will be overridden
+  // by the highest priority group.
+  repeated string permission_group_ids = 5;
+}
+
+// Request message for the CreateAuthConnection rpc.
+message CreateAuthConnectionRequest {
+	AuthConnectionSettings settings = 1;
+	// client_secret is an optional field.
+	// some providers require a secret to create a connection.
+	// If the connection uses a secret that expires the
+	// settings.secret_expiration field should be properly
+	// set.
+	// This field is not part of the ConnectionSettings message
+	// because it should never be stored.
+	string client_secret = 2;
+}
+
+// Response message for the CreateAuthConnection rpc.
+message CreateAuthConnectionResponse {}
+
+// Request message for the GetAuthConnectionSettings rpc.
+message GetAuthConnectionSettingsRequest {}
+
+// Response message for the GetConnectionSettings rpc.
+message GetAuthConnectionSettingsResponse {
+	AuthConnectionSettings settings = 1;
+}
+
+// Request message for the UpdateAuthConnectionSettings rpc.
+message UpdateAuthConnectionSettingsRequest {
+	AuthConnectionSettings settings = 1;
+  // the secret for the connection. Only used for Azure identity type.
+	string client_secret = 2;
+	google.protobuf.FieldMask field_mask = 3;
+}
+
+// Response message for the UpdateAuthConnectionSettings rpc.
+message UpdateAuthConnectionSettingsResponse {}
+
+// Request message for the DeleteAuthConnection rpc.
+message DeleteAuthConnectionRequest {}
+
+// Response message for the DeleteAuthConnection rpc.
+message DeleteAuthConnectionResponse {}
+
+// -------------------- Subscriptions --------------------
+
+// UserSubscription contains the info to send a notification to a user.
+// It contains a user, the event type, a delivery method, and custom app settings.
+message UserSubscription {
+    // Required.
+    // The unique id given to the setting. Used for updating and deleting.
+    string subscription_id = 1;
+
+    // Required.
+    //
+    // Used by matrix-notify.
+    // It receives an event on an event type and
+    // uses it to look up the targets for that event type.
+    // e.g. commons.audit.EventType_DUMMY_APPLICAION_DID_SOMETHING
+    commons.audit.EventType event_type = 2;
+
+    // Required.
+    string user_id = 3;
+
+    // Required.
+    oneof deliver_method {
+        Room303 room303 = 100;
+        // TODO: add email, sms, etc.
+    }
+
+    // Optional. Updates must specify current version or be rejected.
+    int64 version = 5;
+
+    // Optional.
+    // If set, user only notified for events that match ALL filters.
+    repeated commons.FieldValueFilter filters = 4;
+
+    // -------------------- Deliver Methods --------------------
+    message Room303 {
+        // Optional.
+        // If set, user will be notified in the room specificed.
+        // If not set the message will be sent in the default
+        // system room.
+        string room_name = 1;
+    }
+}
+
+// -------------------- Requests and Responses --------------------
+
+// ----- Individual user subscription -----
+
+// Request to add a user subscription.
+message AddUserSubscriptionRequest {
+    // Required.
+    // All fields (except subscription id) must be set.
+    UserSubscription subscription = 1;
+}
+
+// Response to adding a user subscription.
+// Contains a single user subscription.
+message AddUserSubscriptionResponse {
+    UserSubscription subscription = 1;
+}
+
+// Request for getting a user subscription.
+message GetUserSubscriptionRequest {
+    // Required.
+    string user_id = 1;
+
+    // Required.
+    string subscription_id = 2;
+}
+
+// Response for getting a user subscription.
+// Contains a single user subscription.
+message GetUserSubscriptionResponse {
+    UserSubscription subscription = 1;
+}
+
+// Request for updating a user subscription.
+message UpdateUserSubscriptionRequest {
+    // Required.
+    // Must have org id, user id, and subscription id.
+    UserSubscription subscription = 1;
+
+    // Required. Only fields in field mask will be updated.
+    // Valid fields include: "filters", "room303"
+    google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response for updating a user subscription.
+// Contains a single user subscription.
+message UpdateUserSubscriptionResponse {
+    UserSubscription subscription = 1;
+}
+
+// Request for removing a user subscription by id.
+message RemoveUserSubscriptionRequest {
+    // Required.
+    string user_id = 1;
+
+    // Required.
+    string subscription_id = 2;
+}
+
+// Response for deleting a user subscription.
+message RemoveUserSubscriptionResponse {}
+
+// ----- Multiple user subscriptions -----
+
+// Request for listing subscriptions for a user.
+message ListUserSubscriptionsRequest {
+    // Required.
+    string user_id = 1;
+}
+
+// Response for listing subscriptions for a user.
+// Contains a user subscriptions (plural) object.
+message ListUserSubscriptionsResponse {
+    repeated UserSubscription subscriptions = 1;
+}
+
+// Request for listing subscriptions (for many users) for an org.
+message ListOrgSubscriptionsRequest {
+    // Required.
+    string org_id = 1;
+
+    // Optional.
+    // Used by matrix-notify to get settings in bulk for a particular event type.
+    commons.audit.EventType event_type = 2;
+}
+
+// Response for listing subscriptions for multiple users.
+message ListOrgSubscriptionsResponse {
+    repeated UserSubscription subscriptions = 1;
+}
+
+// Request used to get system environment details
+message GetSystemEnvironmentDetailsRequest {}
+
+// Response used to return system environment details
+message GetSystemEnvironmentDetailsResponse {
+    // the region id for the backend that answered this request
+    string region_id = 1;
+    // the cluster id for the backend that answered this request
+    string cluster_id = 2;
+}
+
+// Request message for the CreateDelegatedUser RPC.
+message CreateDelegatedUserRequest {
+  // the user id provided by the auth connection.
+  string user_id = 1;
+  // the org id the user will belong to.
+  string org_id = 2;
+  // the user's email provided by the auth connection.
+  string email = 3;
+  // the user name provided by the auth connection.
+  string user_name = 4;
+  // the user's first name.
+  string first_name = 5;
+  // the user's last name.
+  string last_name = 6;
+  // the user's groups provided by the auth connection.
+  repeated string groups = 7;
+  // the id of the auth connection the user is coming from.
+  string connection_id = 8;
+}
+
+// Response message for the CreateDelegatedUser RPC>
+message CreateDelegatedUserResponse {
+  reserved 2 to 4;
+  // the internal id of the created user.
+  string user_id = 1;
+}
+
+// Request for the GetUserEmailVerified RPC.
+message GetUserEmailVerifiedRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // Optional. The ID of the org the user belongs to.
+  // If this is set the rpc will require the support permission.
+  string org_id = 2;
+}
+
+// Response for GetUserEmailVerified RPC.
+message GetUserEmailVerifiedResponse {
+  // Whether or not the user's email is verified.
+  bool verified = 1;
+}
+
+// Request for the SendUserVerificationEmail RPC.
+message SendUserVerificationEmailRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // Optional. The ID of the org the user belongs to.
+  // If this is set the rpc will require the support permission.
+  string org_id = 2;
+}
+
+// Response for the SendUserVerificationEmail RPC.
+message SendUserVerificationEmailResponse {}
+
+// Request for the ManualUserEmailVerification RPC.
+message ManualUserEmailVerificationRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // Optional. The ID of the org the user belongs to.
+  // If this is set the rpc will require the support permission.
+  string org_id = 2;
+}
+
+// Response for the ManualUserEmailVerification RPC.
+message ManualUserEmailVerificationResponse {}
+
+// Request message for the ListAgentStatisticsTemplates RPC.
+message ListAgentStatisticsTemplatesRequest {}
+
+// Response message for the ListAgentStatisticsTemplates RPC.
+message ListAgentStatisticsTemplatesResponse {
+  // List of agent statistics templates.
+  repeated AgentLoginGuiStatisticsTemplate templates = 1;
+}
+
+// Request message for the CreateAgentStatisticsTemplate RPC.
+message CreateAgentStatisticsTemplateRequest {
+  // Agent statistics template to create.
+  AgentLoginGuiStatisticsTemplate template = 1;
+}
+
+// Response message for the CreateAgentStatisticsTemplate RPC.
+message CreateAgentStatisticsTemplateResponse {}
+
+// Request message for the UpdateAgentStatisticsTemplate RPC.
+message UpdateAgentStatisticsTemplateRequest {
+  // Agent statistics template to update.
+  AgentLoginGuiStatisticsTemplate template = 1;
+}
+
+// Response message for the UpdateAgentStatisticsTemplate RPC.
+message UpdateAgentStatisticsTemplateResponse {}
+
+// Request message for the DeleteAgentStatisticsTemplate RPC.
+message DeleteAgentStatisticsTemplateRequest {
+  // xml client property sid of the statistics template to delete.
+  int64 xml_client_property_sid = 1;
+}
+
+// Response message for the DeleteAgentStatisticsTemplate RPC.
+message DeleteAgentStatisticsTemplateResponse {}
+
+// Agent login GUI statistics template properties.
+message AgentLoginGuiStatisticsTemplate {
+  // Template description.
+  string description = 1;
+  // List of format rules.
+  repeated GenericStatisticFormatRule generic_statistic_format_rule = 2;
+  // xml_client_property_sid for template.
+  int64 xml_client_property_sid = 3;
+  // Inclusion type.
+  string inclusion_type = 4;
+  // Statistics table id.
+  string statistic_table_id = 5;
+  // Template name.
+  string name = 6;
+}
+
+// Generic statistics format rule properties.
+message GenericStatisticFormatRule {
+  // Statistic id.
+  string statistic_id = 1;
+  // Database field name.
+  string database_field_name = 2;
+  // Header field text.
+  string header_text = 3;
+  // Header tool-tip text.
+  string header_tooltip_text = 4;
+  // Date format string.
+  string simple_date_format_string = 5;
+  // Timezone id.
+  string timezone_id_string = 6;
+  // Time Zone Enum
+  commons.TimeZone time_zone_enum = 7;
+}

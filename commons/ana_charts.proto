@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+
+enum BarChartOrientation{
+    BAR_CHART_ORIENTATION_BAR = 0;
+    BAR_CHART_ORIENTATION_COLUMN = 1;
+}
+
+enum ChartOrientation{
+    CHART_ORIENTATION_HORIZONTAL = 0;
+    CHART_ORIENTATION_VERTICAL = 1;
+}
+
+enum AreaChartChoice{
+    AREA_CHART_CHOICE_AREA = 0;
+    AREA_CHART_CHOICE_AREASPLINE = 1;
+}
+
+enum LineChartStep{
+    LINE_CHART_STEP_LEFT = 0;
+    LINE_CHART_STEP_CENTER = 1;
+    LINE_CHART_STEP_RIGHT = 2;
+    LINE_CHART_STEP_NOLINE = 3;
+}
+
+enum ChartDisplayLabels{
+    CHART_DISPLAY_LABELS_NEVER = 0;
+    CHART_DISPLAY_LABELS_ALWAYS = 1;
+}
+
+enum ThresholdType{
+    THRESHOLD_TYPE_STATIC = 0;
+    THRESHOLD_TYPE_DATA_POINT = 1;
+    THRESHOLD_TYPE_NOT_SET = 2;
+}
+
+enum PackedBubbleChoice{
+    PACKED_BUBBLE_CHOICE_PACKED = 0;
+    PACKED_BUBBLE_CHOICE_SPLIT = 1;
+}
+
+enum SuffixChoices{
+    SUFFIX_CHOICES_NOSUFFIX = 0;
+    SUFFIX_CHOICES_DOLLARS = 1;
+    SUFFIX_CHOICES_PERCENTAGE = 2;
+}

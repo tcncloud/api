@@ -1,0 +1,232 @@
+syntax = "proto3";
+
+package v0alpha;
+
+option java_package="com.tcn.api.v0alpha";
+option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
+
+
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "commons/acd.proto";
+import "commons/cbs.proto";
+
+service CBS {
+  rpc CreateServiceId(CreateServiceIdReq) returns (CreateServiceIdRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/createserviceid";
+    option (google.api.http).body = "*";
+  }
+
+  rpc CreateCallbackWithDetails(CreateCallbackWithDetailsReq) returns (CreateCallbackWithDetailsRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/createcallbackwithdetails";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateScheduledCallbackToReady(UpdateScheduledCallbackToReadyReq) returns (UpdateScheduledCallbackToReadyRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktoready";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateScheduledCallbackToCanceled(UpdateScheduledCallbackToCanceledReq) returns (UpdateScheduledCallbackToCanceledRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktocanceled";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a scheduled callback and it's callback details, by checking that the callback:
+  // Has a status of READY.
+  // Has a start_time prior than the time the request is sent.
+  // Has an end_time later than the time the request is sent.
+  // Belongs to the given service_id.
+
+  // Skills that are a matching subset of the ones provided in the request.
+  // If a callback is found the status of the callback is set to OPEN.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the service_id provided in the request is invalid.
+  //   - grpc.NotFound: no matching service_id is found.
+  //                    callback is not found after updating the status of it to OPEN (shouldn't happen).
+  rpc GetNextScheduledCallbackWithDetails(GetNextScheduledCallbackWithDetailsReq) returns (GetNextScheduledCallbackWithDetailsRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/getnextscheduledcallbackwithdetails";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateScheduledCallbackToClosed(UpdateScheduledCallbackToClosedReq) returns (UpdateScheduledCallbackToClosedRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktoclosed";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a callback with the provided info, and replaces the details with the ones provided.
+  rpc UpdateScheduledCallback(UpdateScheduledCallbackReq) returns (UpdateScheduledCallbackRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallback";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a scheduled callback's info and it's details for the given scheduled_callback_id.
+  rpc GetScheduledCallbackWithDetails(GetScheduledCallbackWithDetailsReq) returns (GetScheduledCallbackWithDetailsRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/getscheduledcallbackwithdetails";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists callbacks by phone number, caller id, or time range
+  rpc ListScheduledCallbacksWithDetails(ListScheduledCallbacksWithDetailsReq) returns (stream ListScheduledCallbacksWithDetailsRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/listscheduledcallbackswithdetails";
+    option (google.api.http).body = "*";
+  }
+
+  // List callbacks by skills
+  rpc ListScheduledCallbacksWithDetailsBySkills(ListScheduledCallbacksWithDetailsBySkillsReq) returns (ListScheduledCallbacksWithDetailsRes) {
+    option (google.api.http).post = "/api/v0alpha/cbs/listscheduledcallbackswithdetailsbyskillsreq";
+    option (google.api.http).body = "*";
+  }
+}
+
+message CreateServiceIdReq {}
+
+message CreateServiceIdRes {
+  string service_id = 1;
+}
+
+message ScheduledCallback {
+  reserved 110;
+  string scheduled_callback_id = 1;
+  string service_id = 100;
+  commons.ScheduledCallbackStatus status = 101;
+  google.protobuf.Timestamp start_time = 102;
+  google.protobuf.Timestamp end_time = 103;
+  string phone_number = 104;
+  string caller_id = 105;
+  reserved 106;
+  string notes = 107;
+  google.protobuf.Timestamp create_date = 108;
+  google.protobuf.Timestamp last_update = 109;
+  string last_updated_by = 111;
+  repeated string callback_skills = 112;
+}
+
+message ScheduledCallbackDetail {
+  string scheduled_callback_detail_id = 1;
+  string scheduled_callback_id = 2;
+  string key = 100;
+  string value = 101;
+}
+
+message UpdateScheduledCallbackToReadyReq {
+  string scheduled_callback_id = 2;
+  bool is_auto_return = 3;
+  string service_id = 4;
+}
+
+message UpdateScheduledCallbackToReadyRes {}
+
+message UpdateScheduledCallbackToCanceledReq {
+  string scheduled_callback_id = 2;
+  string service_id = 3;
+}
+
+message UpdateScheduledCallbackToCanceledRes {}
+
+message UpdateScheduledCallbackToClosedReq {
+  string scheduled_callback_id = 2;
+  int64 manual_dial_call_sid = 3;
+  string service_id = 4;
+}
+
+message UpdateScheduledCallbackToClosedRes {}
+
+message CreateCallbackWithDetailsReq {
+  ScheduledCallback callback = 2;
+  repeated ScheduledCallbackDetail callback_details = 3;
+  string name = 4;
+  commons.CallType.Enum former_call_type = 5;
+  int64 former_call_sid = 6;
+  google.protobuf.Int64Value country_sid = 8;
+  bool manager_login = 9;
+}
+
+message CreateCallbackWithDetailsRes {
+  string scheduled_callback_id = 1;
+}
+
+message UpdateScheduledCallbackReq {
+  reserved 1;
+  string scheduled_callback_id = 2;
+
+  commons.ScheduledCallbackStatus new_status = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string phone_number = 6;
+  string caller_id = 7;
+  repeated string skills = 8;
+  string last_updated_by = 9;
+  string notes = 10;
+  repeated ScheduledCallbackDetail callback_details = 11;
+  string name = 12;
+}
+
+message UpdateScheduledCallbackRes {}
+
+message ScheduledCallbackWithDetails {
+  string scheduled_callback_id = 1;
+  string service_id = 2;
+  commons.ScheduledCallbackStatus status = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string phone_number = 6;
+  string caller_id = 7;
+  repeated string skills = 8;
+  string notes = 9;
+  google.protobuf.Timestamp create_date = 10;
+  google.protobuf.Timestamp last_update = 11;
+  string created_by = 12;
+  string last_updated_by = 13;
+  string name = 14;
+  int64 former_call_sid = 15;
+  commons.CallType.Enum  former_call_type = 16;
+  repeated ScheduledCallbackDetail callback_details = 17;
+  google.protobuf.Int64Value country_sid = 18;
+}
+
+message GetScheduledCallbackWithDetailsReq {
+  string service_id = 1;
+  string scheduled_callback_id = 2;
+}
+
+message GetScheduledCallbackWithDetailsRes {
+  ScheduledCallbackWithDetails callback = 1;
+}
+
+message ListScheduledCallbacksWithDetailsRes {
+  repeated ScheduledCallbackWithDetails callbacks = 1;
+}
+
+message GetNextScheduledCallbackWithDetailsReq {
+  // service id that the callback will belong to.
+  string service_id = 1;
+  // list of agent_skills (skill names) that will be used to find a matching callback.
+  repeated string agent_skills = 3;
+}
+
+message GetNextScheduledCallbackWithDetailsRes {
+  ScheduledCallbackWithDetails scheduled_callback = 1;
+}
+
+// ListScheduledCallbacksWithDetailsReq each of the following fields is applied as a filter phone_number, caller_id, or skills. The fields from_start_time and to_start_time need to be provided together.
+message ListScheduledCallbacksWithDetailsReq {
+  string phone_number = 2;
+  string caller_id = 3;
+  google.protobuf.Timestamp from_start_time = 4;
+  google.protobuf.Timestamp to_start_time = 5;
+  repeated string skills = 6;
+}
+
+// ListScheduledCallbacksWithDetailsBySkillsReq requests all the scheduled callbacks by a filter of skills.
+message ListScheduledCallbacksWithDetailsBySkillsReq {
+  // the service id that the callback will belong to.
+  string service_id = 1;
+  // list of agent_skills (skill names) that will be used to find a matching callback.
+  repeated string skills = 3;
+}

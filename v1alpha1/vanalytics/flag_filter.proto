@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package v1alpha1.vanalytics;
+
+option java_package="com.tcn.api.v1alpha1.vanalytics";
+option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+
+
+
+import "v1alpha1/vanalytics/flag.proto";
+import "v1alpha1/vanalytics/filter.proto";
+
+import "google/protobuf/field_mask.proto";
+
+// [CREATE] ====================================================================
+
+// CreateFlagFilterRequest is a request for creating a flag filter.
+// DEPRECATED
+message CreateFlagFilterRequest {
+  // The flag filter resource to create.
+  FlagFilter flag_filter = 1;
+}
+
+// [LIST] ======================================================================
+
+// ListFlagFiltersRequest is a request for listing flag filters.
+message ListFlagFiltersRequest {
+  // Optional. The number of flag filters to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 3;
+
+  // Optional. Field mask for response flag. A missing or empty field mask is
+  // interpreted as a field mask containing all possible fields.
+  google.protobuf.FieldMask flag_mask = 4;
+
+  // Optional. Field mask for response filter. A missing or empty field mask is
+  // interpreted as a field mask containing all possible fields.
+  google.protobuf.FieldMask filter_mask = 5;
+
+  // Optional. List of flag sids. Requires response filters to be associated
+  // with at least one of the provided flag sids.
+  repeated int64 flag_sids = 6;
+}
+
+// ListFlagFiltersResponse is a response for listing flag filters.
+message ListFlagFiltersResponse {
+  // Token to retrieve the next page. Empty when there are no more pages.
+  string next_page_token = 1;
+
+  // List of flag filters.
+  repeated FlagFilter flag_filters = 2;
+}
+
+// [DELETE] ====================================================================
+
+// DeleteFlagFilterRequest is a request for deleting a flag filter.
+// DEPRECATED
+message DeleteFlagFilterRequest {
+  // Optional. The unique id of the flag on the flag filter to be deleted.
+  int64 flag_sid = 1;
+
+  // Optional. The unique id of the filter on the flag filter to be deleted.
+  int64 filter_sid = 2;
+
+  // Optional. If true, then all flag filters with the given flag sid and/or
+  // filter sid will be deleted.
+  bool all = 3;
+}
+
+// DeleteFlagFilterResponse is a response for deleting a flag filter.
+// DEPRECATED
+message DeleteFlagFilterResponse {}
+
+// [RESOURCE] ==================================================================
+
+// FlagFilter is a resource in the Vanalytics API.
+message FlagFilter {
+  // Output only. The unique id of this flag filter.
+  int64 flag_filter_sid = 1;
+
+  // Required. The unique id of the filter.
+  int64 filter_sid = 2;
+
+  // Required. The unique id of the flag.
+  int64 flag_sid = 3;
+
+  // Output only. The flag for this flag filter.
+  Flag flag = 5;
+
+  // Output only. The filter for this flag filter.
+  Filter filter = 6;
+}

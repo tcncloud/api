@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+enum TaskGroupStatus {
+  TG_UNKNOWN = 0;
+  TG_PREPARE = 1000; // "TG_PREPARE", "Task Group is being prepared for scheduler"),
+  TG_SCHEDULED = 1100; // "TG_SCHEDULED", "Task Group is waiting for scheduler"),
+  TG_SCHEDULED_LINKING = 1110; // "TG_SCHEDULED_LINKING", "Task Group is scheduling a link campaign"),
+  TG_SCHEDULED_PAUSED = 1120; // "TG_SCHEDULED_PAUSED", "Task Group will be set to paused when scheduled"),
+  TG_RUNNING = 1200; // "TG_RUNNING", "Task Group is currently executing calls"),
+  TG_PAUSED = 1210; // "TG_PAUSED", "Task Group has been signaled to pause calls until further notice"),
+  TG_WAITING = 1220; // "TG_WAITING", "Task Group has been signaled to wait until the schedule rules it will allow it to run again"),
+  TG_COMPLETED = 1300; // "TG_COMPLETED", "Task Group completed normally"),
+  TG_CANCELLED_TIMEOUT = 1310; // "TG_CANCELLED_TIMEOUT", "Task Group was cancelled due to time restrictions"),
+  TG_CANCELLED_USER = 1320; // "TG_CANCELLED_USER", "Task Group was cancelled by login belonging to client"),
+  TG_CANCELLED_ADMIN = 1330; // "TG_CANCELLED_ADMIN", "Task Group was cancelled by some login not belonging to client with permissions"),
+  TG_SUMMED_COMPLETED = 1400; // "TG_SUMMED_COMPLETED", "Task Group completed normally and is summed"),
+  TG_SUMMED_CANCELLED_TIMEOUT = 1410; // "TG_SUMMED_CANCELLED_TIMEOUT", "Task Group timedout and is summed"),
+  TG_SUMMED_CANCELLED_USER = 1420; // "TG_SUMMED_CANCELLED_USER", "Task Group was cancelled by login belonging to client and is summed"),
+  TG_SUMMED_CANCELLED_ADMIN = 1430; // "TG_SUMMED_CANCELLED_ADMIN", "Task Group was cancelled by login not belonging to client and is summed")
+  TG_ACCOUNTINGEXPORT_COMPLETED = 1500; // "TG_SUMMED_COMPLETED", "Task Group completed normally, summed normally, and has been exported into the accounting packages
+  TG_ACCOUNTINGEXPORT_CANCELLED_TIMEOUT = 1510; // "TG_SUMMED_CANCELLED_TIMEOUT", "Task Group timedout, was summed normally, and has been exported into the accounting packages
+  TG_ACCOUNTINGEXPORT_CANCELLED_USER = 1520; // "TG_SUMMED_CANCELLED_USER", "Task Group was cancelled by login belonging to client, was summed normally, and has been exported into the accounting packages
+  TG_ACCOUNTINGEXPORT_CANCELLED_ADMIN = 1530; // "TG_SUMMED_CANCELLED_ADMIN", "Task Group was cancelled by login not belonging to client, was summed normally, and has been exported into the accounting packages
+}

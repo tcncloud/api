@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package v0alpha;
+
+option java_package="com.tcn.api.v0alpha";
+option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
+
+
+
+
+import "google/api/annotations.proto";
+
+service Cfg {
+  rpc GetWebAgentConfig(GetConfigReq) returns (WebAgent) {
+    option (google.api.http).post = "/api/v0alpha/cfg/getwebagentconfig";
+    option (google.api.http).body = "*";
+  }
+}
+
+message GetConfigReq {
+  string region_id = 1;
+}
+
+message WebAgent {
+  message OpenSips {
+    string address = 1;
+  }
+
+  message EnginePriority {
+    int64 java = 1;
+    int64 webrtc = 2;
+    int64 ns = 3;
+    int64 flash = 4;
+    int64 app = 5;
+    int64 p2p = 6;
+    int64 access_num = 7;
+    int64 native = 8;
+  }
+
+  message Server {
+    string sip = 1;
+    string webrtc = 2;
+  }
+
+  OpenSips open_sips = 1;
+  EnginePriority engine_priority = 2;
+  int64 log_level = 3;
+  int64 use_stun = 4;
+  int64 use_fast_stun = 5;
+  int64 use_fast_ice = 6;
+  int64 ice_timeout = 7;
+  int64 set_final_codec = 8;
+  int64 use_rport = 9;
+  Server server = 10;
+  string base_url = 11;
+  string stun_server_address = 12;
+}

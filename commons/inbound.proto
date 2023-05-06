@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+enum InboundGroupStatus {
+  IBG_UNKNOWN = 0; // never use this
+
+  IBG_PREPARE = 5000; // "IBG_PREPARE", "Inbound Group is being prepared for scheduler"),
+  IBG_SCHEDULED = 5100; // "IBG_SCHEDULED", "Inbound Group is waiting for scheduler"),
+  IBG_RUNNING = 5200; // "IBG_RUNNING", "Inbound Group is currently executing calls"),
+  IBG_PAUSED = 5210; // "IBG_PAUSED", "Inbound Group has been signaled to pause calls until further notice"),
+  IBG_COMPLETED = 5300; // "IBG_COMPLETED", "Inbound Group completed normally"),
+  IBG_CANCELLED_TIMEOUT = 5310; // "IBG_CANCELLED_TIMEOUT", "Inbound Group was cancelled due to time restrictions"),
+  IBG_CANCELLED_USER = 5320; // "IBG_CANCELLED_USER", "Inbound Group was cancelled by login belonging to client"),
+  IBG_CANCELLED_ADMIN = 5330; // "IBG_CANCELLED_ADMIN", "Inbound Group was cancelled by some login not belonging to client with permissions"),
+  IBG_SUMMED_COMPLETED = 5400; // "IBG_SUMMED_COMPLETED", "Inbound Group completed normally and is summed"),
+  IBG_SUMMED_CANCELLED_TIMEOUT = 5410; // "IBG_SUMMED_CANCELLED_TIMEOUT", "Inbound Group timedout and is summed"),
+  IBG_SUMMED_CANCELLED_USER = 5420; // "IBG_SUMMED_CANCELLED_USER", "Inbound Group was cancelled by login belonging to client and is summed"),
+  IBG_SUMMED_CANCELLED_ADMIN = 5430; // "IBG_SUMMED_CANCELLED_ADMIN", "Inbound Group was cancelled by login not belonging to client and is summed"),
+  IBG_ACCOUNTINGEXPORT_COMPLETED = 5500; // "IBG_SUMMED_COMPLETED", "Inbound Group completed normally, summed normally, and has been exported into the accounting packages
+  IBG_ACCOUNTINGEXPORT_CANCELLED_TIMEOUT = 5510; // "IBG_SUMMED_CANCELLED_TIMEOUT", "Inbound Group timedout, was summed normally, and has been exported into the accounting packages
+  IBG_ACCOUNTINGEXPORT_CANCELLED_USER = 5520; // "IBG_SUMMED_CANCELLED_USER", "Inbound Group was cancelled by login belonging to client, was summed normally, and has been exported into the accounting packages
+  IBG_ACCOUNTINGEXPORT_CANCELLED_ADMIN = 5530; // "IBG_SUMMED_CANCELLED_ADMIN", "Inbound Group was cancelled by login not belonging to client, was summed normally, and has been exported into the accounting packages
+}

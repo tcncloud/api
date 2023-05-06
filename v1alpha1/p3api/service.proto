@@ -1,0 +1,1006 @@
+syntax = "proto3";
+
+package v1alpha1.p3api;
+
+option java_package="com.tcn.api.v1alpha1.p3api";
+option go_package="github.com/tcncloud/api/v1alpha1.p3api;p3api";
+
+import "google/api/annotations.proto";
+import "annotations/authz.proto";
+import "v0alpha/p3api.proto";
+
+
+
+service P3Api {
+  rpc GetAgentHuntGroup(v0alpha.GetAgentHuntGroupReq) returns (v0alpha.HuntGroup) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getagenthuntgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetAgentSession(v0alpha.GetAgentSessionReq) returns (v0alpha.AgentSession) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getagentsession";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+  // Skills will be returned as a value pair (name, level).
+  // For agent skills, the name of each skill will be the agent_skill_sid.
+  // All other skills' names (hunt group and PBX) will be given special formats.
+  // The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+  rpc GetAgentSkills(v0alpha.GetAgentSkillsReq) returns (v0alpha.GetAgentSkillsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getagentskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Creates a new agent skill as defined by the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the client_sid or name in the request is invalid.
+  rpc CreateAgentSkill(v0alpha.CreateAgentSkillReq) returns (v0alpha.CreateAgentSkillRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createagentskill";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_ORG_EDIT]}];
+    };
+  }
+
+  // Updates an agent skill as defined by the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the agent_skill_sid or name in the request is invalid.
+  rpc UpdateAgentSkill(v0alpha.UpdateAgentSkillReq) returns (v0alpha.UpdateAgentSkillRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateagentskill";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_ORG_EDIT]}];
+    };
+  }
+
+  // Deletes the agent skill with the agent_skill_sid given on the request.
+  // Errors:
+  //    - grpc.InvalidArgument: the agent_skill_sid in the request is invalid.
+  rpc DeleteAgentSkill(v0alpha.DeleteAgentSkillReq) returns (v0alpha.DeleteAgentSkillRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deleteagentskill";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_ORG_EDIT]}];
+    };
+  }
+
+  // Returns a list of skills for the current agent.
+  rpc ListSkillsForCurrentAgent(v0alpha.ListSkillsForCurrentAgentReq) returns (v0alpha.ListSkillsForCurrentAgentRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listskillsforcurrentagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Returns a list of skills filtered by types given on
+  // the request message field type_filter. Leaving the type_filter
+  // field empty will return all types of skills.
+  rpc ListSkills(v0alpha.ListSkillsReq) returns (v0alpha.ListSkillsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_ORG_VIEW]}];
+    };
+  }
+
+  // Updates an agents assigned skills as defined by the skills list on
+  // the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the user_id on the request is invalid.
+  rpc UpdateAgentSkills(v0alpha.UpdateAgentSkillsReq) returns (v0alpha.UpdateAgentSkillsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateagentskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  rpc GetCurrentAgent(v0alpha.GetCurrentAgentReq) returns (v0alpha.Agent) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcurrentagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetClientInfoData(v0alpha.GetClientInfoDataReq) returns (v0alpha.GetClientInfoDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getclientinfodata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetClientInfoDisplayTemplate(v0alpha.GetClientInfoDisplayTemplateReq) returns (v0alpha.GetClientInfoDisplayTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListAgentStatisticsData(v0alpha.ListAgentStatisticsDataReq) returns (v0alpha.ListAgentStatisticsDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentstatisticsdata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists all agent and hunt group PBX extensions that the requested agent has.
+  rpc ListPBXExtensions(v0alpha.ListPBXExtensionsReq) returns (v0alpha.ListPBXExtensionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listpbxextensions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists every agent extension for the current client
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.Internal: unexpected error getting pbx_extensions
+  rpc ListAgentExtensions(v0alpha.ListAgentExtensionsReq) returns (v0alpha.ListAgentExtensionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentextensions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Lists every hunt group extension for the current client
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.Internal: unexpected error getting pbx_extensions
+  rpc ListHuntGroupExtensions(v0alpha.ListHuntGroupExtensionsReq) returns (v0alpha.ListHuntGroupExtensionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listhuntgroupextensions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Creates a new extension as defined by the request message
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request has missing or invalid fields.
+  //    - grpc.Internal: An unexpected error occurred while saving the extension.
+  rpc CreateExtension(v0alpha.CreateExtensionReq) returns (v0alpha.CreateExtensionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createextension";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a pbx_extension with the given pbx_extension_sid.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request had invalid or missing fields.
+  rpc DeleteExtension(v0alpha.DeleteExtensionReq) returns (v0alpha.DeleteExtensionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deleteextension";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Updates an extension as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request had invalid or missing fields.
+  //    - grpc.Internal: An unexpected error occurred updating the extension.
+  rpc UpdateExtension(v0alpha.UpdateExtensionReq) returns (v0alpha.UpdateExtensionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateextension";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  rpc UpdatePBXExtension(v0alpha.UpdatePBXExtensionReq) returns (v0alpha.UpdatePBXExtensionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updatepbxextension";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc CreateDNCLNumbers(v0alpha.CreateDNCLNumbersReq) returns (v0alpha.CreateDNCLNumbersRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/creatednclnumbers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Gets the campaign or huntgroup script for the given agent's current hunt
+  // group. If no script is found, it gets the hunt group responses for the
+  // agent's current hunt group. It also does a mail merge with the found script
+  // or responses (if able).
+  rpc GetScriptOrResponses(v0alpha.GetScriptOrResponsesReq) returns (v0alpha.GetScriptOrResponsesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getscriptorresponses";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetHuntGroupAgentSettings(v0alpha.GetHuntGroupAgentSettingsReq) returns (v0alpha.HuntGroupAgentSettings) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/gethuntgroupagentsettings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Returns a list of weblinks for the hunt group in the request.
+  // It replaces any parameters of a given weblink with the call data of the call sid and type from the request message or with the callback details (if a scheduled_callback_id is given).
+  rpc ListHuntGroupWebLinks(v0alpha.ListHuntGroupWebLinksReq) returns (v0alpha.ListHuntGroupWebLinksRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listhuntgroupweblinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetHuntGroupPauseCodes(v0alpha.GetHuntGroupPauseCodesReq) returns (v0alpha.GetHuntGroupPauseCodesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/gethuntgrouppausecodes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists the call history of the requested agent for the past day or
+  // session_sid, depending on the filter parameter.
+  rpc ListAgentCallHistory(v0alpha.ListAgentCallHistoryReq) returns (v0alpha.ListAgentCallHistoryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentcallhistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists all client phone book entries.
+  // Required Permissions:
+  //  AGENT_MANAGER
+  rpc ListClientPhoneBookEntries(v0alpha.ListClientPhoneBookEntriesReq) returns (v0alpha.ListClientPhoneBookEntriesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listclientphonebookentries";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Lists all hunt group phone book entries.
+  // Required Permissions:
+  //  AGENT_MANAGER
+  rpc ListHuntGroupPhoneBookEntries(v0alpha.ListHuntGroupPhoneBookEntriesReq) returns (v0alpha.ListHuntGroupPhoneBookEntriesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listhuntgroupphonebookentries";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Creates a new phone_book as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
+  //    - grpc.Internal: unexpected error occurred when saving the phone book.
+  rpc CreatePhoneBookEntry(v0alpha.CreatePhoneBookEntryReq) returns (v0alpha.CreatePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createphonebookentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Updates an existing phone_book as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
+  //    - grpc.Internal: unexpected error occurred when saving the phone book.
+  rpc UpdatePhoneBookEntry(v0alpha.UpdatePhoneBookEntryReq) returns (v0alpha.UpdatePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updatephonebookentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Deletes the phone_book with the phone_book_sid given on the reques message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  rpc DeletePhoneBookEntry(v0alpha.DeletePhoneBookEntryReq) returns (v0alpha.DeletePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deletephonebookentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [PERMISSION_AGENT_MANAGEMENT]}];
+    };
+  }
+
+  // Lists caller_id, outbound and transfer phone books for the requesting client and given hunt group sid.
+  // Entries will be ordered by entry_name and phone_number.
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the client_sid or hunt_group_sid in the request are invalid.
+  //   - grpc.Internal: unexpected error occurred when retrieving the phone books.
+  rpc ListPhoneBooks(v0alpha.ListPhoneBooksReq) returns (v0alpha.ListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listphonebooks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListAgentTriggers(v0alpha.ListAgentTriggersReq) returns (v0alpha.ListAgentTriggersRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagenttriggers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Gets all running broadcasts (task groups) for the requesting agent and hunt_group_sid in the request.
+  // Calculates the percentage of completed tasks for each of those task groups.
+  // Calculates the overall task completion percentage of all matching task groups.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request is invalid.
+  rpc GetCampaignCompletionStatus(v0alpha.GetCampaignCompletionStatusReq) returns (v0alpha.GetCampaignCompletionStatusRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcampaigncompletionstatus";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Uses lost peer call sid and call type from the request to get information about lost call
+  // gets the name and hunt group of the agent that was connected to that call and all types of skills the call has.
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the call_sid in the request in invalid.
+  //   - grpc.NotFound: the call sid provided wasn't previously connected to any agent.
+  rpc GetLostPeerInfo(v0alpha.GetLostPeerInfoReq) returns (v0alpha.GetLostPeerInfoRes){
+    option (google.api.http).post = "/api/v1alpha1/p3api/getlostpeerinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  };
+
+  // Gets all the available Disposition Keys
+  //
+  // Required permissions:
+  //   NONE
+  rpc GetDispositionKeys(v0alpha.GetDispositionKeysReq) returns (v0alpha.GetDispositionKeysRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getdispositionkeys";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetReadyAgents(v0alpha.GetReadyAgentsReq) returns (v0alpha.GetReadyAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getreadyagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Returns lists with call data of calls that were:
+  // Placed on multihold by the requesting agent.
+  // Queued, are ready to be handled and require a subset of the agent_skills provided.
+  // Placed in the Hold Queue Monitor, haven't been picked up yet and require a subset of the agent_skills provided.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the agent_session_sid provided in the request is invalid.
+  rpc ListAgentQueueAndOnHoldCallData(v0alpha.ListAgentQueueAndOnHoldCallDataReq) returns (v0alpha.ListAgentQueueAndOnHoldCallDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentqueueandonholdcalldata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc SaveAgentCallResponses(v0alpha.SaveAgentCallResponsesReq) returns (v0alpha.SaveAgentCallResponsesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/saveagentcallresponses";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListAgentTransferOptions(v0alpha.ListAgentTransferOptionsReq) returns (v0alpha.ListAgentTransferOptionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagenttransferoptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc UpdateAgentCallResponseValue(v0alpha.UpdateAgentCallResponseValueReq) returns (v0alpha.UpdateAgentCallResponseValueRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateagentcallresponsevalue";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetIntercomPeerInfo(v0alpha.GetIntercomPeerInfoReq) returns (v0alpha.GetIntercomPeerInfoRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getintercompeerinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists the requesting user's org response evaluators.
+  rpc ListOrgResponseEvaluators(v0alpha.ListOrgResponseEvaluatorsReq) returns (v0alpha.ListOrgResponseEvaluatorsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listorgresponseevaluators";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetQueueConfigurationOptionsArray(v0alpha.GetQueueConfigurationOptionsArrayReq) returns (v0alpha.GetQueueConfigurationOptionsArrayRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getqueueconfigurationoptionsarray";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Get the rules for conditionally adding a number to the DNCL depending on
+  // responses or scripts
+  rpc GetConditionalDNCLRules(v0alpha.GetConditionalDNCLRulesReq) returns (v0alpha.GetConditionalDNCLRulesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getconditionaldnclrules";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ManualDialStart(v0alpha.ManualDialStartReq) returns (v0alpha.ManualDialStartRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/manualdialstart";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetExtendedCallHistories(v0alpha.ListExtendedCallHistoryReq) returns (stream v0alpha.ListExtendedCallHistoryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listextendedcallhistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListWhiteListPhoneBooks(v0alpha.ListWhiteListPhoneBooksReq) returns (v0alpha.ListWhiteListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listwhitelistphonebooks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc DownloadCallRecording(v0alpha.DownloadCallRecordingReq) returns (v0alpha.DownloadRecordingRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/downloadcallrecording";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc DownloadCallRecordings(v0alpha.DownloadCallRecordingsReq) returns (v0alpha.DownloadRecordingRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/downloadcallrecordings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc PlacePreviewDialCall(v0alpha.PlacePreviewDialCallReq) returns (v0alpha.PlacePreviewDialCallRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/placepreviewdialcall";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc CancelPreviewDialCall(v0alpha.CancelPreviewDialCallReq) returns (v0alpha.CancelPreviewDialCallRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/cancelpreviewdialcall";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc UpdateTaskStatus(v0alpha.UpdateTaskStatusReq) returns (v0alpha.Nil) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updatetaskstatus";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // ListCallbackRoutingAgents returns a list of agents that are allowed to make a callback.
+  rpc ListCallbackRoutingAgents(v0alpha.ListCallbackRoutingAgentsReq) returns (v0alpha.ListCallbackRoutingAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcallbackroutingagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListCallbackRoutingSkills(v0alpha.ListCallbackRoutingSkillsReq) returns (v0alpha.ListCallbackRoutingSkillsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcallbackroutingskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc HandleRecordingDelay(v0alpha.HandleRecordingDelayReq) returns (v0alpha.HandleRecordingDelayRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/handlerecordingdelay";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc UpdateAgentAssignedHuntGroup(v0alpha.UpdateAgentAssignedHuntGroupReq) returns (v0alpha.UpdateAgentAssignedHuntGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateagentassignedhuntgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetCallData(v0alpha.GetCallDataReq) returns (v0alpha.GetCallDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcalldata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListHuntGroups(v0alpha.ListHuntGroupsReq) returns (v0alpha.ListHuntGroupsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listHuntGroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // List the hunt groups an agent within a given hunt group can reassign
+  // themselves to. The reassignment hunt groups can optionally be limited by a
+  // hunt group setting. If a hunt group does not allow reassignment, the
+  // returned list will be empty.
+  rpc ListReassignmentHuntGroups(v0alpha.ListReassignmentHuntGroupsReq) returns (v0alpha.ListReassignmentHuntGroupsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listreassignmenthuntgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc GetOrgAgentSettings(v0alpha.GetOrgAgentSettingsReq) returns (v0alpha.GetOrgAgentSettingsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getorgagentsettings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists caller id numbers with their associated region codes for the given
+  // bucket
+  rpc ListCallerIdsFromBucket(v0alpha.ListCallerIdsFromBucketReq) returns (v0alpha.ListCallerIdsFromBucketRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcalleridsfrombucket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc SaveLastCallResponse(v0alpha.SaveLastCallResponseReq) returns (v0alpha.SaveLastCallResponseRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/savelastcallresponse";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  rpc ListAgentCallLogsByCallSidAndType(v0alpha.ListAgentCallLogsByCallSidAndTypeReq) returns (v0alpha.ListAgentCallLogsByCallSidAndTypeRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentcalllogsbycallsidandtype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Lists the keys and values of the latest responses for the given call_sid,
+  // call_type and agent_sid
+  rpc ListAgentCallResponseValues(v0alpha.ListAgentCallResponseValuesReq) returns (v0alpha.ListAgentCallResponseValuesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentcallresponsevalues";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Get contact schema details based on contact group sid
+  rpc GetContactSchemaByContactGroup(v0alpha.GetContactSchemaByContactGroupReq) returns (v0alpha.ContactSchema) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcontactschemabycontactgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // List contact group details based on client sid from contact_group table
+  rpc ListContactGroupDetailsByClientSid(v0alpha.ListContactGroupDetailsByClientSidReq) returns (v0alpha.ListContactGroupDetailsByClientSidRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcontactgroupdetailsbyclientsid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Get contact group details based on contact group sid from contact_group
+  // table
+  rpc GetContactGroupDetails(v0alpha.GetContactGroupReq) returns (v0alpha.ContactGroup) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcontactgroupdetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Get contact group size based on contacts size
+  rpc GetContactGroupSize(v0alpha.GetContactGroupReq) returns (v0alpha.GetContactGroupSizeRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getcontactgroupsize";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Create contact field description details
+  rpc CreateContactFieldDescription(v0alpha.CreateContactFieldDescriptionReq) returns (v0alpha.CreateContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createcontactfielddescription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
+  // Delete contact field description details
+  rpc DeleteContactFieldDescription(v0alpha.DeleteContactFieldDescriptionReq) returns (v0alpha.DeleteContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deletecontactfielddescription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
+  // List contact field desc details from contact_field_description table
+  rpc ListContactFieldDescriptions(v0alpha.ListContactFieldDescriptionsReq) returns (v0alpha.ListContactFieldDescriptionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcontactfielddescriptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // List contact field description details based on contact group sid
+  rpc ListContactFieldDescriptionsByCGSid(v0alpha.ListContactFieldDescriptionsByCGSidReq) returns (v0alpha.ListContactFieldDescriptionsByCGSidRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcontactfielddescriptionsbycgsid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // List contactImportTemplates based on client_sid from
+  // contact_import_template table
+  rpc ListContactImportTemplates(v0alpha.ListContactImportTemplatesReq) returns (v0alpha.ListContactImportTemplatesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcontactimporttemplates";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Updates task data for a preview record to finished and logs an agent
+  // session event
+  rpc UpdatePreviewRecordToFinished(v0alpha.UpdatePreviewRecordToFinishedReq) returns (v0alpha.UpdatePreviewRecordToFinishedRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updatepreviewrecordtofinished";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Updates the requesting agent's hunt_group_sid.
+  rpc UpdateAgentHuntGroup(v0alpha.UpdateAgentHuntGroupReq) returns (v0alpha.UpdateAgentHuntGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updateagenthuntgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
+
+  // Updates every given user's hunt_group_sid.
+  // Required Permissions:
+  //    AGENT_MANAGEMENT
+  // Errors:
+  //    - grpc.Internal: an error occurred while interacting with the database.
+  //    - grpc.InvalidArgument: the hunt_group_sid or the user id list is empty or contains an invalid value.
+  rpc MultiAgentHuntGroupAssignment(v0alpha.MultiAgentHuntGroupAssignmentReq) returns (v0alpha.MultiAgentHuntGroupAssignmentRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/multiagenthuntgroupassignment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
+
+  // GetAgentProfile returns an agent profile.
+  rpc GetAgentProfile(v0alpha.GetAgentProfileReq) returns (v0alpha.AgentProfile) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getagentprofile";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // RecalculateBilling updates statuses for every billing type given on the
+  // request message for either the current or previous month.
+  // Only data that has already been summed for billing will have it's
+  // status updated.
+  // Required Permissions:
+  //  EDIT_BILLING
+  rpc RecalculateBilling(v0alpha.RecalculateBillingReq) returns (v0alpha.RecalculateBillingRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/recalculatebilling";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_TCN_BILLING}];
+    };
+  }
+
+  // Gets information of the requesting client's broadcast templates (template_number, name, type, modify_date)
+  // It reports if each found template is either STANDARD or LAYERED.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   NONE
+  rpc ListOutboundBroadcastTemplateData(v0alpha.ListOutboundBroadcastTemplateDataReq) returns (v0alpha.ListOutboundBroadcastTemplateDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listoutboundbroadcasttemplatedata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // Assign every skill to every agent with the given aptitude.
+  // Errors:
+  //    - grpc.Invalid: the aptitude field is invalid.
+  rpc MultiAgentSkillAssignment(v0alpha.MultiAgentSkillAssignmentReq) returns (v0alpha.MultiAgentSkillAssignmentRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/multiagentskillassignment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
+
+  // Unassigns every given skill from every given user.
+  // Errors:
+  //    - grpc.InvalidArgument:
+  //        - the user_ids list is empty or contains an empty string.
+  //        - one or more of the user_ids does not belong to the client.
+  //    - grpc.Internal: an error occurred while deleting the skill assignments.
+  rpc MultiAgentSkillUnassignment(v0alpha.MultiAgentSkillUnassignmentReq) returns (v0alpha.MultiAgentSkillUnassignmentRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/multiagentskillunassignment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
+
+  // List of agent hunt groups based on client sid
+  // that have manually approved messages enabled
+  rpc ListMAMAgentHuntGroupsByClientSid(v0alpha.ListMAMAgentHuntGroupsByClientSidReq) returns (v0alpha.ListMAMAgentHuntGroupsByClientSidRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listmamagenthuntgroupsbyclientsid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      no_permissions: true;
+    };
+  }
+
+  // List every tts voice
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.Internal: an error was returned while trying to retrieve the entity
+  rpc ListTtsVoices(v0alpha.ListTtsVoicesReq) returns (v0alpha.ListTtsVoicesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listttsvoices";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
+  }
+
+  // Create a new tts voice
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.InvalidArgument: the actual_name or port field on the request is invalid.
+  //    - grpc.Internal: an error was returned while trying to insert the new tts voice.
+  rpc CreateTtsVoice(v0alpha.CreateTtsVoiceReq) returns (v0alpha.CreateTtsVoiceRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createttsvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
+  }
+
+  // Delete a tts voice with the given tts_voice_sid.
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.InvalidArgument: the tts_voice_sid field on the request is invalid.
+  //    - grpc.Internal: an error was returned while trying to remove the tts voice.
+  rpc DeleteTtsVoice(v0alpha.DeleteTtsVoiceReq) returns (v0alpha.DeleteTtsVoiceRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deletettsvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
+  }
+
+  // List of account custom data keys based on client sid
+  // Required Permissions:
+  //   ORG_VIEW
+  // Errors:
+  //    - grpc.Internal: an error was returned while trying to retrieve the entity
+  rpc ListCustomDataKeys(v0alpha.ListCustomDataKeysReq) returns (v0alpha.ListCustomDataKeysRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcustomdatakeys";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // Creates a new Data Key as defined by the request message
+  // the client_properties_sid should not be set, this is assigned on the backend
+  // Required Permission:
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The custom_data_key field was not set
+  //    - grpc.Internal: error creating custom data key
+  rpc CreateCustomDataKey(v0alpha.CreateCustomDataKeyReq) returns (v0alpha.CreateCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/createcustomdatakey";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
+  // Deletes a Custom Data Key with the sid given on the request message.
+  // Required Permission:
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The client_properties_sid field is invalid.
+  //    - grpc.NotFound: no custom data key was deleted for the client_properties_sid.
+  //    - grpc.Internal: an error occurred while trying to remove the custom data key.
+  rpc DeleteCustomDataKey(v0alpha.DeleteCustomDataKeyReq) returns (v0alpha.DeleteCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/deletecustomdatakey";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
+  // Updates a custom data key with the client_properties_sid and data key
+  // given on the request
+  // Required Permissions;
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The client_properties_sid was empty or the data key was not set
+  //    - grpc.Internal: error updating custom data key, more than 1 custom data key records affected
+  //    - grpc.NotFound: no matching custom data key found
+  rpc UpdateCustomDataKey(v0alpha.UpdateCustomDataKeyReq) returns (v0alpha.UpdateCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/updatecustomdatakey";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
+  // Get Activity logs for given users and by specified time range
+  // Required Permissions;
+  //   CUSTOMER_SUPPORT
+  rpc GetActivityLogHistories(v0alpha.GetActivityLogHistoryReq) returns (stream v0alpha.GetActivityLogHistoryRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/getactivityloghistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_CUSTOMER_SUPPORT}];
+    };
+  }
+
+  // List agent and queue table template properties by client sid
+  rpc ListTableTemplateProperties(v0alpha.ListTableTemplatePropertiesReq) returns (v0alpha.ListTableTemplatePropertiesRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listtabletemplateproperties";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // List agent skills filters by client sid
+  rpc ListAgentSkillsFilters(v0alpha.ListAgentSkillsFiltersReq) returns (v0alpha.ListAgentSkillsFiltersRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listagentskillsfilters";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // List Schedule Rules
+  rpc ListScheduleRules(v0alpha.ListScheduleRulesRequest) returns (v0alpha.ListScheduleRulesResult){
+    option (google.api.http).post = "/api/v1alpha1/org/compliance/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // List custom report filters by client sid
+  rpc ListCustomReportFilters(v0alpha.ListCustomReportFiltersReq) returns (v0alpha.ListCustomReportFiltersRes) {
+    option (google.api.http).post = "/api/v1alpha1/p3api/listcustomreportfilters";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_ORG_VIEW}];
+    };
+  }
+
+  // List sms numbers by client sid
+  rpc ListSmsNumbers(v0alpha.ListSmsNumbersReq) returns (v0alpha.ListSmsNumbersRes){
+    option (google.api.http).post = "/api/v1alpha1/p3api/listsmsnumbers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: PERMISSION_OMNI_BOSS}];
+    };
+  }
+}

@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "commons/acd.proto";
+import "commons/omnichannel.proto";
+
+// a notificaiton used to return a response for an asyncronous request or
+// data for or about a backend initiated process that needs to be consumed by the user
+message GhostNotification {
+    // a structured id used to identify the given notification
+    string reference_id = 1;
+    oneof payload {
+        // payload used when no other oneof type has been defined
+        google.protobuf.Any any = 2;
+        // A way to return a message with a status code and message.
+        Status status = 3;
+        // An omni conversation
+        OmniConversation omni_conversation = 4;
+        // an alert to an agent that a message from backoffice came in
+        AgentBackofficeMessageAlert backoffice_message = 6;
+        // alert that a direct agent call is ringing
+        AgentDirectedCallRingingAlert directed_call_ringing = 7;
+        // alert that a direct agent call hungup
+        AgentDirectedCallHangupAlert directed_call_hangup = 8;
+        // notification about the current state of queued call for an agent
+        AgentQueuedCallsNotification agent_queued_calls_notification = 9;
+        // ... undetermined other possible payloads
+    }
+}
+
+// This is based on googles status proto message
+message Status {
+    // The status code
+    int32 code = 1;
+
+    // A developer-facing error message, which should be in English
+    string message = 2;
+}
+
+message AgentQueuedCallsNotification {
+    // calls that were queued and have a matching subset of the agent_skills from the request.
+    repeated QueuedCallData agent_queue_calls = 16;
+    // calls that were placed on multi-hold by the agent_sid from the request.
+    repeated QueuedCallData on_hold_calls = 17;
+    // calls that were placed in the Hold Queue Monitor, are still on hold by the destination (hold music is being played by the other party) and have
+    // a matching subset of the agent_skills from the request.
+    repeated QueuedCallData hqm_calls = 18;
+
+    message QueuedCallData {
+        // id of the found call.
+        int64 call_sid = 1;
+        // number dialed when the call was placed.
+        string phone_number = 2;
+        // caller_id used when the call was placed.
+        string caller_id = 3;
+        // call type of the found call.
+        commons.CallType.Enum call_type = 4;
+        // timestamp indicating when the call started.
+        google.protobuf.Timestamp start_date = 5;
+        // timestamp indicating when the call was put on hold (only set when call is a hold call).
+        google.protobuf.Timestamp hold_date = 6;
+        // formatted skills that the call requires.
+        repeated string skills = 7;
+        // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
+        bool agent_specific = 8;
+        // queued notification type of the call.
+        commons.QueuedNotificationType queued_notification_type = 9;
+    }
+}

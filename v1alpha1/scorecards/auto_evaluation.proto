@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package v1alpha1.scorecards;
+
+option java_package="com.tcn.api.v1alpha1.scorecards";
+option go_package="github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+
+
+
+import "google/protobuf/field_mask.proto";
+import "commons/scorecards.proto";
+
+// GetAutoEvaluationRequest is the request to get an auto evaluation
+message GetAutoEvaluationRequest{
+    int64 auto_evaluation_id = 2; // Required - unique id of auto evalution to get.
+}
+
+// GetAutoEvaluationResponse returns the auto evaluation requested.
+message GetAutoEvaluationResponse{
+    commons.AutoEvaluation auto_evaluation = 1; // auto evaluation response object.
+}
+
+// ListAutoEvaluationsRequest is the request to get a list of auto evaluations.
+message ListAutoEvaluationsRequest {
+    repeated int64 scorecard_ids = 2; // Optional - filter by scorecard ids.
+}
+
+// ListAutoEvaluationsResponse returns a list of evaluations.
+message ListAutoEvaluationsResponse {
+    repeated commons.AutoEvaluation auto_evaluations = 1; // List of responses
+}
+
+// DeleteAutoEvaluationRequest is the request to delete an auto evaluation (with sub-entities).
+message DeleteAutoEvaluationRequest {
+    int64 auto_evaluation_id = 2; // Required - unique id of auto evalution to delete.
+}
+
+// DeleteAutoEvaluationResponse returns the deleted auto evaluation.
+message DeleteAutoEvaluationResponse {
+    commons.AutoEvaluation auto_evaluation = 1; // deleted auto evaluation object.
+}
+

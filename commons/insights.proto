@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+
+enum InsightPermissionType {
+    INSIGHT_PERMISSION_TYPE_COMMON_LIBRARY = 0;
+    INSIGHT_PERMISSION_TYPE_ORG = 1;
+}
+
+enum InsightType {
+    INSIGHT_TYPE_TABLE_VIEW = 0;
+}
+
+// InsightVfsSchemaType is enum for column types in a vfs
+enum InsightVfsSchemaType {
+    INSIGHT_VFS_SCHEMA_TYPE_STRING = 0; // data type for string
+    INSIGHT_VFS_SCHEMA_TYPE_INT64 = 1; // data type for int
+    INSIGHT_VFS_SCHEMA_TYPE_FLOAT64 = 2; // data type for float
+    INSIGHT_VFS_SCHEMA_TYPE_BOOLEAN = 3; // data type for bool
+    INSIGHT_VFS_SCHEMA_TYPE_DATETIME = 4; // data type for datetime
+}

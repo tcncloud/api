@@ -1,0 +1,150 @@
+syntax = "proto3";
+
+package v1alpha1.org;
+
+option java_package="com.tcn.api.v1alpha1.org";
+option go_package="github.com/tcncloud/api/v1alpha1.org;org";
+
+import "commons/auth/perms.proto";
+import "commons/labels.proto";
+
+
+
+// Label is an entity message.
+message Label {
+  reserved 4,5;
+  // simply the name of the label.
+  // 'Team A', 'Medical', etc
+  string name = 3;
+  // the description of the label.
+  string description = 6;
+  // Hex color code of the label.
+  string color = 7;
+  // Id of the label.
+  string label_id = 8;
+  // whether or not the label is deleted.
+  bool deleted = 9;
+}
+
+// Request message for the CreateLabel rpc.
+message CreateLabelRequest {
+  Label label = 1;
+}
+
+// Response message for the CreateLabel rpc.
+message CreateLabelResponse {
+  // The ID of the returned label.
+  string label_id = 1;
+};
+
+// Request message for the DeleteLabel rpc.
+message DeleteLabelRequest {
+  reserved 1;
+  // The id of the label.
+  string label_id = 2;
+}
+
+// Response message for the DeleteLabel rpc.
+message DeleteLabelResponse {
+}
+
+// Request message for the ListLabels rpc.
+message ListLabelsRequest {
+  reserved 2;
+}
+
+// Response message for the ListLabels rpc.
+message ListLabelsResponse {
+  repeated Label labels = 1;
+}
+
+// Request message for the GetLabel RPC.
+message GetLabelRequest {
+  reserved 1;
+  // The id of the label.
+  string label_id = 2;
+}
+
+// Response message for the GetLabel RPC.
+message GetLabelResponse {
+  Label label = 1;
+}
+
+// Request message for the UpdateLabel RPC.
+message UpdateLabelRequest {
+  // The label to be updated.
+  Label label = 1;
+}
+
+// Response message for the UpdateLabel RPC.
+message UpdateLabelResponse {
+}
+
+// Entity message for a label assignment.
+message LabelAssignment {
+  reserved 4;
+  // The ID of the label.
+  string label_id = 1;
+  // type of entity being labelled.
+  commons.EntityType type = 2;
+  // id of the entity being labelled.
+  string entity_id = 3;
+
+  // The label associated with the label_id.
+  // This will only be populated during the GetLabelAssignments RPC
+  // if the request field PopulateLabelInfo is set to true.
+  Label label = 5;
+}
+
+// Request message for the AssignLabel RPC.
+message AssignLabelRequest {
+  reserved 1;
+  // The label assignments.
+  repeated LabelAssignment assignments = 2;
+}
+
+// Response message for the AssingLabel RPC.
+message AssignLabelResponse {
+}
+
+// Request message for the UnassignLabel RPC.
+message UnassignLabelRequest {
+  reserved 1;
+  // The assignments to be deleted.
+  // The type, entity_id, label_id, and org_id are used to
+  // delete a label.
+  repeated LabelAssignment assignments = 2;
+}
+
+// Response message for the UnassingLabel RPC.
+message UnassignLabelResponse {
+}
+
+// Reqeust message for the GetAssignmentCounts RPC.
+message GetAssignmentCountsRequest {
+  // The ID of the label.
+  string label_id = 1;
+}
+
+// Response message for the GetASsignmentCounts RPC.
+message GetAssignmentCountsResponse {
+  // The key is the int32 value of the commons.EntityType enum.
+  // The value is the count of all assignments belonging to the
+  // type.
+  map<int32, int64> counts = 1;
+}
+
+// Request message for the GetAssignableLabels RPC.
+message GetAssignableLabelsRequest {
+  // The given permission is used as the required permission
+  // for this RPC. It is also used to return a list of
+  // attached labels to the permission for the current user.
+  commons.auth.Permission permission = 1;
+}
+
+// Response message for the GetAssignableLabels RPC.
+message GetAssignableLabelsResponse {
+  // The list of labels available to the current user based
+  // on the users permissions.
+  repeated Label labels = 1;
+}

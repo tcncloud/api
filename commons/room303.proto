@@ -1,0 +1,103 @@
+
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+import "google/protobuf/timestamp.proto";
+
+enum RoomType {
+    // Direct Message types - can be muliple users in a direct message
+    ROOM_TYPE_DIRECT = 0;
+    // Multiple User channel
+    ROOM_TYPE_MULTI = 1;
+    // System User channel - used for system notifications
+    ROOM_TYPE_SYSTEM = 2;
+}
+
+enum MessageStatus {
+    MESSAGE_STATUS_ACTIVE   = 0;
+    MESSAGE_STATUS_EDITED   = 1;
+    MESSAGE_STATUS_ARCHIVED = 2;
+}
+
+enum RoomStatus {
+    ROOM_STATUS_ACTIVE   = 0;
+    ROOM_STATUS_ARCHIVED = 1;
+    ROOM_STATUS_DELETED  = 2;
+}
+
+message UserSid {
+    // id of the user
+    string user_id      = 1;
+    // name of the user
+    string full_name    = 2;
+    // name of the user
+    string display_name = 3;
+}
+
+// Entity used in the member api service for room303.
+message Member {
+    // contains name and id of the member to add
+    UserSid user_sid                   = 1;
+    // contains the name and id of the person adding the member
+    UserSid added_by                   = 2;
+    // Unix timestamp for the time added
+    google.protobuf.Timestamp added_at = 3;
+    // Room Id for this member
+    string room_id                     = 4;
+    // admin rights in the room
+    bool admin                         = 5;
+}
+
+message Room {
+    // organization id
+    string org_id                        = 1;
+    // TODO: WIP deprecate - unique room id
+    string room_id                       = 2;
+    // name of the room
+    reserved                               3;
+    // type - DIRECT, MULTI, SYSTEM
+    RoomType type                        = 4;
+    // unix timestamp for time created
+    google.protobuf.Timestamp created_at = 5;
+    // unix timestamp for time updated
+    google.protobuf.Timestamp updated_at = 6;
+    // status of the room
+    RoomStatus status                    = 7;
+
+    // Id's value will be a hash when room_type is DIRECT or the room name when MULTI.
+    // Used in ui for routing when room type is not available.
+    // Will replace room_id once it's fully deprecated
+    string id                            = 8;
+
+    // display name for the room which is replacing the field "name".
+    string display_name                  = 9;
+}
+
+message Message {
+    string org_id                         = 1;
+    string message_id                     = 2;
+    string room_id                        = 3;
+    commons.UserSid from_user             = 4;
+    commons.MessageStatus status          = 5;
+    google.protobuf.Timestamp received_at = 6;
+    google.protobuf.Timestamp updated_at  = 7;
+    string payload                        = 8;
+    bool unread                           = 9;
+    // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
+    // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
+    string nonce                          = 10;
+}
+
+message MessageStat{
+    string room_id        = 1;
+    int32 unread_messages = 2;
+}
+
+

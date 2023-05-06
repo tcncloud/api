@@ -1,0 +1,4003 @@
+// Copyright (c) 2020, TCN Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package v1alpha1.wfm;
+
+option java_package="com.tcn.api.v1alpha1.wfm";
+option go_package="github.com/tcncloud/api/v1alpha1.wfm;wfm";
+
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "commons/wfm.proto";
+import "commons/org.proto";
+
+// WFM is responsible for call prediction and call volume calculations based on call skills and other parameters.
+service WFM {
+  // Retrieves all the skill profiles of the org sending the request.
+  // Also it can return the skills of each of the returned profiles.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  rpc ListSkillProfiles(ListSkillProfilesReq) returns (ListSkillProfilesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listskillprofiles";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the @name, and averages of a skill profile that has the given @skill_profile_sid.
+  // It also updates it to no longer be unnamed.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid, @name or averages in the request are invalid.
+  //   - grpc.Internal: error occurs when updating the skill profile.
+  //   - grpc.NotFound: entry to be updated doesn't exist.
+  rpc UpdateSkillProfile(UpdateSkillProfileReq) returns (UpdateSkillProfileRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the @proficiencies for the given skill profile's skills that belong the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @proficiencies in the request are invalid.
+  //   - grpc.Internal: error occurs when updating the skill profiles proficiencies.
+  rpc UpdateSkillProfileProficiencies(UpdateSkillProfileProficienciesReq) returns (UpdateSkillProfileProficienciesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileproficiencies";
+    option (google.api.http).body = "*";
+  }
+
+  // Get a skill profile that has the given @skill_profile_sid.
+  // It also gets all the skills and the mappings associated with that profile.
+  // If the @inactive_as_of_date of the skill profile is nil then the mapping is of inactive profiles to this one,
+  // otherwise the mapping is of this profile to an active one.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
+  //   - grpc.Internal: error occurs when getting the skill profile.
+  //   - grpc.NotFound: skill profile doesn't exist.
+  rpc GetSkillProfile(GetSkillProfileReq) returns (GetSkillProfileRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // Resyncs the skill profiles of the org sending the request.
+  // It will add skills and skill profiles based on that client's historical call data.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when creating the new skills and skill profiles.
+  rpc ResyncSkillProfiles(ResyncSkillProfilesReq) returns (ResyncSkillProfilesRes){
+    option (google.api.http).post = "/api/v1alpha1/wfm/resyncskillprofiles";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the last date of a skill profile resync for the org seding the request.
+  // If the org has never done a skill profile resync @resync_date will not be set.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the resync date.
+  rpc GetLastSkillProfileResyncDate(GetLastSkillProfileResyncDateReq) returns (GetLastSkillProfileResyncDateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getlastskillprofileresyncdate";
+    option (google.api.http).body = "*";
+  }
+
+  // Tries to create an entry for the given forecasting parameters for the org sending the request.
+  // If the org already has an entry for them, it will update the already existing entry.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @forecasting_parameters in the request is invalid.
+  //   - grpc.Internal: error occurs when upserting the parameters.
+  rpc UpsertForecastingParameters(UpsertForecastingParametersReq) returns (UpsertForecastingParametersRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastingparameters";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the forecasting parameters for the org sending the request.
+  // If the org hasn't created any parameters, it will return the default parameters.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the parameters.
+  rpc GetForecastingParameters(GetForecastingParametersReq) returns (GetForecastingParametersRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getforecastingparameters";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the historical data for the org sending the request and the given @skill_profile_sid.
+  // It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
+  // The duration of each interval will be the interval width of the org's forecasting parameters.
+  // It also applies any deltas that the client has stored for the given @SkillProfileSid.
+  // If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
+  // If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
+  //   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+  //   - grpc.Internal: error occurs when getting the historical data.
+  rpc ListHistoricalData(ListHistoricalDataReq) returns (ListHistoricalDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldata";
+    option (google.api.http).body = "*";
+  }
+
+  // Tries to create an entry for the given @delta for the org sending the request.
+  // If the org already has an entry for it, it will update the already exisiting entry.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @delta in the request is invalid.
+  //   - grpc.Internal: error occurs when upserting the historical data interval.
+  rpc UpsertHistoricalDataDelta(UpsertHistoricalDataDeltaReq) returns (UpsertHistoricalDataDeltaRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadelta";
+    option (google.api.http).body = "*";
+  }
+
+  // Tries to create entries for the given @deltas.
+  // If the given org already has an entry for any of the deltas, it will replace the already existing entries.
+  // This is made into a unary due to the UI's lack of support for client streams.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @deltas in the request are invalid.
+  //   - grpc.Internal: error occurs when upserting the historical data deltas.
+  rpc UpsertHistoricalDataDeltas(UpsertHistoricalDataDeltasReq) returns (UpsertHistoricalDataDeltasRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadeltas";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets all the skills that the org sending the request has.
+  // Skills returned will be sorted by @skill_sid in ascending order.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the skills.
+  rpc ListSkills(ListSkillsReq) returns (ListSkillsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listskills";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds and returns a call profile template for the org sending the request and the given @skill_profile_sid.
+  // The template will be generated using the training data for said skill profile using the @training_data_range and @averages_calculation_range_in_months
+  // from the client's saved forecasting parameters.
+  // The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+  // or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+  // The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
+  //   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+  //   - grpc.Internal: error occurs when building the call profile template.
+  rpc BuildCallProfileTemplateForSkillProfile(BuildCallProfileTemplateForSkillProfileReq) returns (BuildCallProfileTemplateForSkillProfileRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildcallprofiletemplateforskillprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @inactive_skill_profile_sid, or @active_skill_profile_sid in the request are invalid.
+  //                   the @inactive_skill_profile_sid given is of an active skill profile.
+  //                   the @active_skill_profile_sid given is of an inactive skill profile.
+  //   - grpc.Internal: error occurs when creating the inactive skill profile mapping.
+  rpc CreateInactiveSkillProfileMapping(CreateInactiveSkillProfileMappingReq) returns (CreateInactiveSkillProfileMappingRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createinactiveskillprofilemapping";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a list of enums that represent all of the forecaster types that are currently available for use
+  // Required permissions:
+  //  NONE
+  // Errors:
+  //  -grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
+  rpc GetAvailableRegressionForecasterModelTypes (GetAvailableRegressionForecasterModelTypesReq) returns (GetAvailableRegressionForecasterModelTypesRes){
+    option (google.api.http).post = "/api/v1alpha1/wfm/getavailableregressionforecastermodeltypes";
+    option (google.api.http).body = "*";
+  }
+
+  // Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @inactive_skill_profile_sid in the request is invalid.
+  //   - grpc.NotFound: the skill profile is not found for the org.
+  //   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
+  //				            the given @inactive_skill_profile_sid is of an active skill profile.
+  rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes){
+    option (google.api.http).post = "/api/v1alpha1/wfm/disconnectinactiveskillprofilemapping";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
+  // If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid, or @start_datetimes in the request are invalid.
+  //   - grpc.NotFound: no matching deltas are found for deletion.
+  //   - grpc.Internal: error occurs during the deletion of the historical data interval.
+  rpc DeleteHistoricalDataDeltas(DeleteHistoricalDataDeltasReq) returns (DeleteHistoricalDataDeltasRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletehistoricaldatadeltas";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the top N skill profiles with the highest calls_count for org sending the request where N is @max_number_of_profiles.
+  // It will also return the number of skills found for that profile.
+  // Individual skills that each profile has will not be returned.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @max_number_of_profiles in the request is invalid.
+  //   - grpc.Internal: error occurs when getting the skill profiles.
+  rpc ListTopSkillProfiles(ListTopSkillProfilesReq) returns (ListTopSkillProfilesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtopskillprofiles";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the total number of skill profiles associated with the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the skill profiles count.
+  rpc GetSkillProfilesCount(GetSkillProfilesCountReq) returns (GetSkillProfilesCountRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofilescount";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds a profile forecast using the provided @call_profile_template.
+  // The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
+  // (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
+  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+  // The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+  //   - grpc.Internal: error occurs during the building of the profile forecast.
+  rpc BuildProfileForecastByInterval(BuildProfileForecastByIntervalReq) returns (stream CallDataByInterval) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyinterval";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds a profile forecast using the provided @call_profile_template.
+  // The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
+  // (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
+  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+  // The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
+  // It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+  //   - grpc.Internal: error occurs during the building of the profile forecast.
+  rpc BuildProfileForecastByIntervalWithStats(BuildProfileForecastByIntervalWithStatsReq) returns (stream BuildProfileForecastByIntervalWithStatsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyintervalwithstats";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
+  // The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
+  // @forecast_range_start_datetime to @forecast_range_end_datetime.
+  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+  // The intervals produced will be saved in the database.
+  // The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request are invalid.
+  //   - grpc.NotFound: the @skill_profile_sid doesn't exist.
+  //   - grpc.Internal: error occurs when upserting the profile forecast.
+  rpc UpsertProfileForecast(UpsertProfileForecastReq) returns (UpsertProfileForecastRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertprofileforecast";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given @call_profile_template for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @call_profile_template in the request is invalid.
+  //   - grpc.Internal: error occurs during the creation of the call profile.
+  rpc CreateCallProfileTemplate(CreateCallProfileTemplateReq) returns (CreateCallProfileTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createcallprofiletemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a call profile template for the requesting org that has the given @call_profile_template_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @call_profile_template_sid in the request is invalid.
+  //   - grpc.Internal: error occurs during the deletion of the call profile.
+  rpc DeleteCallProfileTemplate(DeleteCallProfileTemplateReq) returns (DeleteCallProfileTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletecallprofiletemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates an entry for the @regression_template for the requesting org.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Internal: error occurs when creating the regression template.
+  rpc CreateRegressionTemplate(CreateRegressionTemplateReq) returns (CreateRegressionTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createregressiontemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a regression template for the requesting org that has the given @regression_template_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @regression_template_sid in the request is invalid.
+  //   - grpc.Internal: error occurs during the deletion of the regression template.
+  rpc DeleteRegressionTemplate(DeleteRegressionTemplateReq) returns (DeleteRegressionTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteregressiontemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets all the regression templates that the org sending the request has.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the regression templates.
+  rpc ListRegressionTemplates(ListRegressionTemplatesReq) returns (ListRegressionTemplatesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listregressiontemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the forecast data intervals for the given @skill_profile_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
+  //   - grpc.Internal: error occurs when getting the forecast data intervals.
+  rpc ListForecastIntervalsForSkillProfile(ListForecastIntervalsForSkillProfileReq) returns (stream CallDataByInterval) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervalsforskillprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // Generates a regression forecast using the provided @regression_template.
+  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
+  // if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+  // It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
+  // It will use the client's saved interval width to divide the resulting forecast intervals.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Internal: error occurs during the building of the regression forecast.
+  rpc BuildRegressionForecastByInterval(BuildRegressionForecastByIntervalReq) returns (stream CallDataByInterval) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyinterval";
+    option (google.api.http).body = "*";
+  }
+
+  // Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
+  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
+  // if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+  // It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
+  // It will use the client's saved interval width to divide the resulting forecast intervals.
+  // The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
+  //
+  // Errors:
+  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
+  rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq)returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyintervalwithstats";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the call profile templates that the org sending the request has.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the templates.
+  rpc ListCallProfileTemplates(ListCallProfileTemplatesReq) returns (ListCallProfileTemplatesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listcallprofiletemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds a regression forecast for the org using the given @regression_template and saves the resulting intervals in the db.
+  // It will generate forecast intervals for the skill profiles sids in @save_forecasts_for_skill_profile_sids,
+  // if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+  // If any intervals produced already exist in the db, they will be replaced with the ones produced.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Internal: error occurs when upserting the regression forecast.
+  rpc UpsertRegressionForecast(UpsertRegressionForecastReq) returns (UpsertRegressionForecastRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertregressionforecast";
+    option (google.api.http).body = "*";
+  }
+
+  // Tries to create an entry for the given @delta for the org sending the request.
+  // If the org already has an entry for it, it will update the already exisiting entry.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @delta in the request is invalid.
+  //   - grpc.Internal: error occurs when upserting the forecast data delta.
+  rpc UpsertForecastDataDelta(UpsertForecastDataDeltaReq) returns (UpsertForecastDataDeltaRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadelta";
+    option (google.api.http).body = "*";
+  }
+
+  // Tries to create entries for the given @deltas.
+  // If the org already has entries for any of them, it will update the already existing entry.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @deltas in the request are invalid.
+  //   - grpc.Internal: error occurs when upserting the forecast data deltas.
+  rpc UpsertForecastDataDeltas(UpsertForecastDataDeltasReq) returns (UpsertForecastDataDeltasRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadeltas";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes forecast data intervals/deltas based on the parameters provided.
+  // If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+  // associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
+  // deleted will be contained in the list @interval_sids. The @delete_type field determines which
+  // table(s) in the database the intervals/deltas will be deleted from.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one of the @delete_params is invalid
+  //   - grpc.NotFound: no matching intervals/deltas are found for deletion.
+  //   - grpc.Internal: error occurs during the deletion of the forecast data intervals/deltas.
+  rpc DeleteForecastIntervals(DeleteForecastIntervalsReq) returns (DeleteForecastIntervalsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteforecastintervals";
+    option (google.api.http).body = "*";
+  }
+
+  // Retrieves the history for all the skill profiles of the requesting org.
+  // Each value in every interval that has the same @start_datetime of each skill profile will be summed then averaged and made into a single one.
+  // When calculating the averages, each interval's values will be weighted by the number of @total_calls it has.
+  // History will be sorted by @start_datetime in ascending order, and the range is determined by the client's historical range.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when retriving the history.
+  rpc ListHistoricalDataForAllSkillProfiles(ListHistoricalDataForAllSkillProfilesReq) returns (ListHistoricalDataForAllSkillProfilesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldataforallskillprofiles";
+    option (google.api.http).body = "*";
+  }
+
+  // Converts the given @profile_tod and @profile_woms to a ProfileDOW and ProfileMOY.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @profile_tod or @profile_woms in the request are invalid.
+  //   - grpc.Internal: error occurs when building the ProfileDOW or ProfileMOY.
+  rpc BuildDOWAndMOYProfiles(BuildDOWAndMOYProfilesReq) returns (BuildDOWAndMOYProfilesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/builddowandmoyprofiles";
+    option (google.api.http).body = "*";
+  }
+
+  // Calculates and returns the averages in the training data for the given @skill_profile_sid.
+  // Averages to be returned will be weighted by the number of calls that each training data interval has.
+  // The start time that the training data will be averaged can be modified based on the forecasting parameter @averages_calculation_range_in_months,
+  // which will subtract that many months from the training data range end datetime and set it as the start time.
+  // If @averages_calculation_range_in_months is 0, it will use the training data range start datetime.
+  //
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
+  //   - grpc.NotFound: the @skill_profile_sid given is not found.
+  //   - grpc.Internal: error occurs when calculating the averages from the training data.
+  rpc CalculateTrainingDataAveragesForSkillProfile(CalculateTrainingDataAveragesForSkillProfileReq) returns (CalculateTrainingDataAveragesForSkillProfileRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/calculatetrainingdataaveragesforskillprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
+  // If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+  // Averages will be weighted by the number of calls that each historical data interval has.
+  // Once the averages are calculated, they will be updated in the db for those skill profiles.
+  //
+  // If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
+  // If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
+  //
+  // If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
+  // even if those skill profiles are in @skill_profile_sids.
+  //
+  // Errors:
+  //   - grpc.Internal: error occurs when calculating the averages from the historical data.
+  rpc UpdateSkillProfileAveragesUsingHistoricalData(UpdateSkillProfileAveragesUsingHistoricalDataReq) returns (UpdateSkillProfileAveragesUsingHistoricalDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileaveragesusinghistoricaldata";
+    option (google.api.http).body = "*";
+  }
+
+
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************SCHEDULER RPCS**********************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+
+  // Updates the call center @node that has the given @call_center_node_sid.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this call center node since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the one or more of the fields in the request are invalid.
+  //   - grpc.Internal: error occurs when updating the call center node.
+  //   - grpc.NotFound: entry to be updated doesn't exist.
+  rpc UpdateCallCenterNode(UpdateCallCenterNodeReq) returns (UpdateCallCenterNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatecallcenternode";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given client @node for the org sending the request and @parent_sid in the node.
+  // The @client_node_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the parent call center node.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // The @origin_sid must be set to nil, since this method can only make an original node.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @name, @parent_sid, or @time_zone_val is invalid.
+  //   - grpc.NotFound: parent call center node doesn't exist, or belongs to a different scenario than the one given.
+  //   - grpc.Internal: error occurs when creating the client node.
+  rpc CreateClientNode(CreateClientNodeReq) returns (CreateClientNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createclientnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a client node for the org sending the request that has the given @client_node_sid and @schedule_scenario_sid.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this client node since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @node have invalid values.
+  //   - grpc.Internal: error occurs when updating the client @node.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the given @parent_sid (call_center_node_sid) belongs to a different scenario than this @node.
+  rpc UpdateClientNode(UpdateClientNodeReq) returns (UpdateClientNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateclientnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given location @node for the org sending the request and parent @client_node_sid.
+  // The @location_node_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the parent client node.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // The @origin_sid must be set to nil, since this method can only make an original node.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @node have invalid values.
+  //   - grpc.NotFound: parent client node doesn't exist or belongs to a different scenario than the one given.
+  //   - grpc.Internal: error occurs when creating the location node.
+  rpc CreateLocationNode(CreateLocationNodeReq) returns (CreateLocationNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createlocationnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a location node corresponding to the given @location_node_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this location node since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @location_node have invalid values.
+  //   - grpc.Internal: error occurs when updating the location node.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @client_node_sid belongs to a different scenario than the node to update.
+  rpc UpdateLocationNode(UpdateLocationNodeReq) returns (UpdateLocationNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatelocationnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given program @node for the org sending the request and parent @location_node_sid.
+  // The @program_node_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the parent location node.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // The @origin_sid must be set to nil, since this method can only make an original node.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @node have invalid values.
+  //   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+  //   - grpc.Internal: error occurs when creating the program node.
+  rpc CreateProgramNode(CreateProgramNodeReq) returns (CreateProgramNodeRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createprogramnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this program node since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @program_node have invalid values.
+  //   - grpc.Internal: error occurs when updating the program node.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+  rpc UpdateProgramNode(UpdateProgramNodeReq) returns (UpdateProgramNodeRes) {
+    option (google.api.http).post = "/api/v1alpha/wfm/updateprogramnode";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given @constraint_rule for the org sending the request.
+  // The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entity.
+  // If @rule_type is set to MIN_SKILL_LEVEL, the @member_target_entity field must be set with a skill proficiency and the @constraint_rule.target_sid will be ignored.
+  // If the @member_target_entity is for a skill proficiency, that skill proficiency will be created with the given @constraint_rule as parent.
+  // If @rule_type is NOT MIN_SKILL_LEVEL then the @target_sid must be that of a scheduling activity.
+  // The all other @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @constraint_rule have invalid values.
+  //   - grpc.NotFound: the given @target_sid for the given @rule_type, or @parent_entity don't exist.
+  //   - grpc.Internal: error occurs when creating the constraint rule.
+  rpc CreateConstraintRule(CreateConstraintRuleReq) returns (CreateConstraintRuleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createconstraintrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the constraint rule corresponding for given @contraint_rule_sid for the org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this constraint rule since it cannot be changed.
+  // If @rule_type is set to MIN_SKILL_LEVEL, the @member_target_entity field must be set with a skill proficiency, otherwise it should not be set and field will be ignored.
+  // If the @target_sid is for a different skill proficiency than the current one the constraint rule has as a target,
+  // the old one will be deleted and a new one will be created for the given @member_target_entity.
+  // If @rule_type is NOT MIN_SKILL_LEVEL then the @target_sid must be that of a scheduling activity.
+  // The all other @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @constraint_rule have invalid values.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the constraint rule.
+  //                  : the given @target_sid for the given @rule_type, or @parent_entity don't exist.
+  //   - grpc.Internal: error occurs when updating the constraint rule.
+  rpc UpdateConstraintRule(UpdateConstraintRuleReq) returns (UpdateConstraintRuleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateconstraintrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a constraint rule with the coresponding @constraint_rule_sid for the org sending the request.
+  // It also deletes the entity referenced by the @target_sid and @rule_type if said entity is not a member of any other entity or the on call scheduling activity.
+  // Required permissions:
+  //  NONE
+  // Errors:
+  //   - grpc.Invalid: the @constraint_rule_sid is invalid for the org making the request.
+  //   - grpc.NotFound: the given @constraint_rule doesn't exist.
+  //   - grpc.Internal: error occurs when removing the constraint rule.
+  rpc DeleteConstraintRule(DeleteConstraintRuleReq) returns (DeleteConstraintRuleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteconstraintrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given @non_skill_activity for the org sending the request.
+  // Will also create a scheduling activity wrapper for the non skill activity.
+  // The @non_skill_activity_sid and @scheduling_activity_sid of the new entities will be returned in the response.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @non_skill_activity have invalid values.
+  //   - grpc.NotFound: the @schedule_scenario_sid doesn't exist.
+  //   - grpc.Internal: error occurs when creating the non skill activity or scheduling activity.
+  rpc CreateNonSkillActivity(CreateNonSkillActivityReq) returns (CreateNonSkillActivityRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createnonskillactivity";
+    option (google.api.http).body = "*";
+  }
+
+
+  // Updates a non skill activity that has the given @non_skill_activity_sid with the given values.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: @non_skill_activity fields have invalid values.
+  //   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
+  //   - grpc.Internal: error occurs when updating the non skill activity.
+  rpc UpdateNonSkillActivity(UpdateNonSkillActivityReq) returns (UpdateNonSkillActivityRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatenonskillactivity";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @associated_entity or @relationship_type are invalid.
+  //   - grpc.Internal: error occurs when listing the associations.
+  rpc ListNonSkillActivityAssociations(ListNonSkillActivityAssociationsReq) returns (ListNonSkillActivityAssociationsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listnonskillactivityassociations";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the candidate scheduling activities for a constraint or placement rule, inherited through given @parent_of_rule for @schedule_scenario_sid for the org making the request.
+  // @parent_of_rule may be any type of node, agent group, or shift template which the rule will belong to.
+  // If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
+  // Member non skill activity of each scheduling activity will be included in the response.
+  // The on call scheduling activity will always be included.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @parent_of_rule is invalid.
+  //   - grpc.NotFound: @parent_of_rule doesn't exist
+  //   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
+  rpc ListCandidateSchedulingActivities(ListCandidateSchedulingActivitiesReq) returns (ListCandidateSchedulingActivitiesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listcandidateschedulingactivities";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates an agent group with the provided parameters.
+  // A successful response should contain the @agent_group_sid of the newly created entity.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entity.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @name, or @parent_entity are invalid.
+  //   - grpc.NotFound: @parent_entity doesn't exist
+  //   - grpc.Internal: error occurs when creating the agent group.
+  rpc CreateAgentGroup(CreateAgentGroupReq) returns (CreateAgentGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createagentgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @agent_group_sid, @parent_entity, or @name in the request are invalid.
+  //   - grpc.Internal: error occurs when updating the agent group.
+  //   - grpc.AlreadyExists: an agent group with the given @name already exists.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
+  rpc UpdateAgentGroup(UpdateAgentGroupReq) returns (UpdateAgentGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateagentgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // The @tcn_agent_sid cannot be updated.
+  // Required permission:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @wfm_agent have invalid values.
+  //   - grpc.NotFound: WFM agent with the given @wfm_agent_sid doesn't exist.
+  //   - grpc.Internal: error occurs when updating the wfm agent.
+  rpc UpdateWFMAgent(UpdateWFMAgentReq) returns (UpdateWFMAgentRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatewfmagent";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all wfm agents for the org sending the request.
+  // if @include_inactive is true then inactive agents will also be included, otherwise only active agents will be returned.
+  // if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
+  // if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
+  // WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
+  // Required Permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the wfm agents.
+  rpc ListAllWFMAgents(ListAllWFMAgentsReq) returns (ListAllWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listallwfmagents";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all candidate wfm agents for the org sending the request and given @agent_group_sid.
+  // A WFM agent is considered a candidate when it's active and it doesn't already belong to the given agent group.
+  // Member entities will not be returned.
+  // Required Permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: @agent_group_sid has an invalid value.
+  //   - grpc.Internal: error occurs when getting the wfm agents.
+  rpc ListCandidateWFMAgents(ListCandidateWFMAgentsReq) returns (ListCandidateWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listcandidatewfmagents";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all wfm agents who are not grouped with any agent group for the given org sending the request that were created at or after the given @created_after_datetime.
+  // If @schedule_scenario_sid is positive, it will filter further to get only agents who are not grouped with any agent group for that scenario.
+  // if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
+  // Member entities will not be returned.
+  // Required Permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: @created_after_datetime has an invalid value.
+  //   - grpc.Internal: error occurs when getting the wfm agents.
+  rpc ListUngroupedWFMAgents(ListUngroupedWFMAgentsReq) returns (ListUngroupedWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listungroupedwfmagents";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @agent_group_sid is invalid.
+  //   - grpc.Internal: error occurs when listing the wfm agents.
+  rpc ListWFMAgentsAssociatedWithAgentGroup(ListWFMAgentsAssociatedWithAgentGroupReq) returns (ListWFMAgentsAssociatedWithAgentGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listwfmagentsassociatedwithagentgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+  // The @schedule_scenario_sid must match the scenario of the agent group and wfm agents.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sid are invalid.
+  //   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
+  //   - grpc.Internal: error occurs when creating the association.
+  rpc CreateWFMAgentMemberships(CreateWFMAgentMembershipsReq) returns (CreateWFMAgentMembershipsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createwfmagentmemberships";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sid are invalid.
+  //   - grpc.NotFound: any of the given memberships to delete do not exist.
+  //   - grpc.Internal: error occurs when deleting the association.
+  rpc DeleteWFMAgentMemberships(DeleteWFMAgentMembershipsReq) returns (DeleteWFMAgentMembershipsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletewfmagentmemberships";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
+  // Response will only contain:
+  //    one element if build for a single @wfm_agent_sid.
+  //    one element for each WFM agent if build for an @agent_group_sid.
+  // Required permissions:
+  //   NONE
+  //   - grpc.Invalid: the @wfm_agent_sid, or @agent_group_sid is invalid.
+  //   - grpc.NotFound: the given @wfm_agent_sid doesn't exist or the @agent_group_sid has no agents.
+  //   - grpc.Internal: error occurs building the diagnostics.
+  rpc BuildAgentDiagnostics(BuildAgentDiagnosticsReq) returns (BuildAgentDiagnosticsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildagentdiagnostics";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a shift template for the org sending the request with the provided parameters
+  // The @shift_template_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the parent program node.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @name, or @program_node_sid are invalid.
+  //   - grpc.AlreadyExists: a shift template with the given @name already exists.
+  //   - grpc.NotFound: the parent program node doesn't exist or belongs to a different scenario than the one given.
+  //   - grpc.Internal: error occurs when creating the shift template.
+  rpc CreateShiftTemplate(CreateShiftTemplateReq) returns (CreateShiftTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createshifttemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a shift template for the given @shift_template_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this shift template since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @shift_template_sid, @name, @program_node_sid are invalid.
+  //   - grpc.AlreadyExists: a shift template with the given @name already exists.
+  //   - grpc.NotFound: the parent program node doesn't exist or belongs to a different scenario than the shift template to update.
+  //   - grpc.Internal: error occurs when updating the shift template.
+  rpc UpdateShiftTemplate(UpdateShiftTemplateReq) returns (UpdateShiftTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateshifttemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @shift_template_sids are invalid.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc ListShiftTemplatesBySids(ListShiftTemplatesBySidsReq) returns (ListShiftTemplatesBySidsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listshifttemplatesbysids";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds and returns the diagnostics for the shift template associated with the given @shift_template_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  //   - grpc.Invalid: the @shift_template_sid is invalid.
+  //   - grpc.NotFound: the given @shift_template_sid doesn't exist for the org sending the request.
+  //   - grpc.Internal: error occours building the diagnostics for the shift template.
+  rpc BuildShiftTemplateDiagnostics(BuildShiftTemplateDiagnosticsReq) returns (BuildShiftTemplateDiagnosticsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildshifttemplatediagnostics";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a placement rule for org sending the request with the provided parameters.
+  // The @placement_rule_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the parent shift template.
+  // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the parameters in the @placement_rule are invalid.
+  //   - grpc.NotFound: the parent shift template doesn't exist or belongs to a different scenario than the one given.
+  //                    the scheduling activity to associate with the placement rule doesn't exist or belongs to a different scenario than the one given.
+  //   - grpc.Internal: error occurs when creating the placement rule.
+  rpc CreatePlacementRule(CreatePlacementRuleReq) returns (CreatePlacementRuleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createplacementrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a placement rule corresponding with the given @placement_rule_sid for the org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this placement rule since it cannot be changed.
+  // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the one or more of the fields in the @placement_rule are invalid.
+  //   - grpc.Internal: error occurs when updating the placement rule.
+  //   - grpc.NotFound: entry to be updated doesn't exist.
+  //                  : the parent shift template or related scheduling activity don't exist or belong to a different scenario than the placement rule to update.
+  rpc UpdatePlacementRule(UpdatePlacementRuleReq) returns (UpdatePlacementRuleRes) {
+    option (google.api.http).post = "/api/v1alpha/wfm/updateplacementrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a placement rule with the coresponding @placement_rule_sid for the org sending the request.
+  // It also deletes the scheduling activity referenced by the @scheduling_activity_sid if said activity is not a member of any other entity.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @placement_rule_sid is invalid for the org making the request.
+  //   - grpc.NotFound: the given @placement_rule doesn't exist.
+  //   - grpc.Internal: error occurs when removing the placement rule.
+  rpc DeletePlacementRule(DeletePlacementRuleReq) returns (DeletePlacementRuleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteplacementrule";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates an open times pattern for the org sending the request with the provided parameters.
+  // The @open_times_pattern_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entity.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the parameters in the @open_times_pattern are invalid.
+  //   - grpc.NotFound: the parent entity doesn't exist.
+  //   - grpc.Internal: error occurs when creating the open times pattern.
+  rpc CreateOpenTimesPattern(CreateOpenTimesPatternReq) returns (CreateOpenTimesPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createopentimespattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an open times pattern for the given @open_times_pattern_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this open times pattern since it cannot be changed.
+  // Required permission:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @open_times_pattern have invalid values.
+  //   - grpc.NotFound: the given @open_times_pattern or it's @parent_entity doesn't exist.
+  //   - grpc.Internal: error occurs when updating the open times pattern.
+  rpc UpdateOpenTimesPattern(UpdateOpenTimesPatternReq) returns (UpdateOpenTimesPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateopentimespattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes an open times pattern with the coresponding @open_times_pattern_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @open_times_pattern_sid is invalid for the org making the request.
+  //   - grpc.NotFound: the given @open_times_pattern doesn't exist.
+  //   - grpc.Internal: error occurs when removing the open times pattern.
+  rpc DeleteOpenTimesPattern(DeleteOpenTimesPatternReq) returns (DeleteOpenTimesPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteopentimespattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
+  // The @schedule_scenario_sid must match the scenario of the @node_to_check.
+  // The bitmaps will be generated for the span of @datetime_range.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @node_to_check is invalid for @schedule_scenario_sid and the org making the request.
+  //                 : the @datetime_range is invalid.
+  //   - grpc.NotFound: the given @node_to_check doesn't exist.
+  //   - grpc.Internal: error occurs when getting the open times pattern bitmaps.
+  rpc GetOpenTimesBitmaps(GetOpenTimesBitmapsReq) returns (GetOpenTimesBitmapsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getopentimesbitmaps";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates an agent availability pattern for the org sending the request with the provided parameters.
+  // The @agent_availability_pattern_sid of the new entity will be returned in the response.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entity.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: the parameters in the @agent_availability_pattern are invalid.
+  //   - grpc.NotFound: the parent entity doesn't exist.
+  //   - grpc.Internal: error occurs when creating the agent availability pattern.
+  rpc CreateAgentAvailabilityPattern(CreateAgentAvailabilityPatternReq) returns (CreateAgentAvailabilityPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createagentavailabilitypattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an agent availability pattern for the given @agent_availability_pattern_sid and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @schedule_scenario_sid must be the original for this agent availability pattern since it cannot be changed.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @agent_availability_pattern have invalid values.
+  //   - grpc.Internal: error occurs when updating the agent avilability pattern.
+  //   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent availability pattern.
+  rpc UpdateAgentAvailabilityPattern(UpdateAgentAvailabilityPatternReq) returns (UpdateAgentAvailabilityPatternRes){
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateagentavailabilitypattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes an agent availability pattern with the coresponding @agent_availability_pattern_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+  //   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
+  //   - grpc.Internal: error occurs when removing the agent availability pattern.
+  rpc DeleteAgentAvailabilityPattern(DeleteAgentAvailabilityPatternReq) returns (DeleteAgentAvailabilityPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteagentavailabilitypattern";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the inherited, own, and resulting bitmaps for the agent availability patterns of @entities_to_check for @schedule_scenario_sid and the org sending the request.
+  // The @schedule_scenario_sid must match the scenario of the @entities_to_check.
+  // @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
+  // If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
+  // The bitmaps will be generated for the span of @datetime_range.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @entities_to_check is invalid for @schedule_scenario_sid and the org making the request.
+  //                 : the @datetime_range is invalid.
+  //   - grpc.NotFound: the given @entities_to_check don't exist.
+  //   - grpc.Internal: error occurs when getting the agent availability pattern bitmaps.
+  rpc GetAvailabilityBitmaps(GetAvailabilityBitmapsReq) returns (GetAvailabilityBitmapsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getavailabilitybitmaps";
+    option (google.api.http).body = "*";
+  }
+
+  // Upserts an association for the given @non_skill_activity_sid to the given @node.
+  // All downstream members of the entity will have their inheritance state cleared, and inherit the given association.
+  // If an association already exists between the non skill activity and the @node then their @relationship_type will be updated.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entity.
+  // If a NOT_ASSOCIATED_WITH relationship is being created, the tree will be checked for conflicting downstream effects.
+  // If any member rules, are referencing the non skill activity and @relationship_type is NOT_ASSOCIATED_WITH, then the upsert will not take effect, and the list of related entities to be updated/removed first will be returned.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @non_skill_activity_sid, @node or @association_type are invalid.
+  //                 : the non skill activity and @node belong to different scenarios.
+  //   - grpc.NotFound: the @non_skill_activity_sid or @node don't exist.
+  //   - grpc.Internal: error occurs when upserting the association.
+  rpc UpsertNonSkillActivityAssociation(UpsertNonSkillActivityAssociationReq) returns (UpsertNonSkillActivityAssociationRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertnonskillactivityassociation";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates skill proficiencies for the org sending the request with the provided parameters.
+  // The @schedule_scenario_sid must match the scenario of the @parent_entities.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the parameters in a @proficiency, or the @schedule_scenario_sid are invalid.
+  //   - grpc.NotFound: for any of the given @skill_proficiencies:
+  //                    the @parent_entity doesn't exist.
+  //                    the @skill_sid doesn't exist.
+  //                    the skill profile with @preferred_skill_profile_sid doesn't contain the given @skill_sid.
+  //   - grpc.AlreadyExists: a skill proficiency with the given @skill_sid and @parent_entity already exists.
+  //   - grpc.Internal: error occurs when creating the skill proficiencies.
+  rpc CreateSkillProficiencies(CreateSkillProficienciesReq) returns (CreateSkillProficienciesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createskillproficiencies";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates skill proficiencies corresponding to the given @skill_proficiency_sids and org sending the request with the provided parameters.
+  // All of the entity's parameters that are not desired to be updated must be filled with their current values.
+  // The @skill_sid and @parent_entity field of each proficiency will be ignored since it cannot be updated.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the @skill_proficiencies have invalid values.
+  //   - grpc.Internal: error occurs when updating the skill proficiencies.
+  //   - grpc.NotFound: for any of the given @skill_proficiencies:
+  //                    the @skill_sid doesn't exist.
+  //                    the skill profile with @preferred_skill_profile_sid doesn't contain the skill of the given skill proficiency.
+  //   - grpc.AlreadyExists: a skill proficiency with the given @skill_sid and @parent_entity already exists.
+  rpc UpdateSkillProficiencies(UpdateSkillProficienciesReq) returns (UpdateSkillProficienciesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillproficiencies";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a skill proficiency with the corresponding @skill_proficiency_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: the @skill_proficiency_sid is invalid for the org making the request.
+  //   -grpc.NotFound: the skill proficiency with the given @skill_proficiency_sid doesn't exist.
+  //   -grpc.Internal: error occurs when removing the skill proficiency.
+  rpc DeleteSkillProficiency(DeleteSkillProficiencyReq) returns (DeleteSkillProficiencyRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteskillproficiency";
+    option (google.api.http).body = "*";
+  }
+
+  // Copies the existing scenario with the @scenario_sid_to_copy for the org sending the request using the provided parameters.
+  // Scheduling targets of entities in the scenario to copy will also be copied.
+  // The new @schedule_scenario_sid of the new entity will be returned in the response.
+  // Required permissions:
+  //   NONE
+  // Errors:gg
+  //   - grpc.Invalid: the parameters @scenario_sid_to_copy or any others are invalid.
+  //   - grpc.NotFound: the scenario corresponding to the @scenario_sid_to_copy doesn't exist.
+  //   - grpc.Internal: error occurs when creating/coping the new scenario.
+  rpc CopyScenario(CopyScenarioReq) returns (CopyScenarioRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/copyscenario";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new schedule scenario for the org sending the request with the provided parameters.
+  // The new @schedule_scenario_sid of the new entity will be returned in the response.
+  // It also creates 1 of each of the following: call center, client, program, location node, and on call scheduling activity (if it doesn't exist already for the org).
+  // The @node_description fields may optionally be left blank.
+  // The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
+  // The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+  //   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
+  rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes){
+    option (google.api.http).post = "/api/v1alpha1/wfm/createschedulescenariowithnodes";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
+  // Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+  // The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
+  // All other fields will be ignored since they cannot be updated.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: one or more fields in the @scenario have invalid values.
+  //   -grpc.NotFound: the scenario with the given @schedule_scenario_sid doesn't exist.
+  //   -grpc.Internal: error occurs when updating the scenario.
+  rpc UpdateScheduleScenario(UpdateScheduleScenarioReq) returns (UpdateScheduleScenarioRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateschedulescenario";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity parameter.
+  // If @include_member_lists is set to true the member lists of the entities retrieved will be included.
+  // Any nodes in the returned set of entities will have inherited nonskill associations applied to the node's member_nonskill_activity fields.
+  // Prior to listing the entities it will Resync TCN Agents and skill proficiencies.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+  //   - grpc.Internal: error occurs when getting the config entities.
+  rpc ListConfigEntities(ListConfigEntitiesReq) returns (ListConfigEntitiesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listconfigentities";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
+  //   -grpc.NotFound: the shift instances with the given @shift_instance_sids don't exist.
+  //   -grpc.Internal: error occurs when removing the shift instances.
+  rpc DeleteShiftInstances(DeleteShiftInstancesReq) returns (DeleteShiftInstancesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteshiftinstances";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds and returns the diagnostics and @nodes_checked for the @node_to_check for @schedule_scenario_sid and the org sending the request.
+  // The @schedule_scenario_sid must match the scenario of the @node_to_check.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @node_to_check is invalid for @schedule_scenario_sid and the org making the request.
+  //   - grpc.NotFound: the given @node_to_check doesn't exist.
+  //   - grpc.Internal: error occurs when building the diagnostics.
+  rpc BuildNodeDiagnostics(BuildNodeDiagnosticsReq) returns (BuildNodeDiagnosticsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildnodediagnostics";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds and returns the global diagnostics and @nodes_checked for the @schedule_scenario_sid and the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @schedule_scenario_sid has an invalid values.
+  //   - grpc.NotFound: the given @schedule_scenario_sid doesn't exist for the org making the request.
+  //   - grpc.Internal: error occurs when building the diagnostics.
+  rpc BuildGlobalDiagnostics(BuildGlobalDiagnosticsReq) returns (BuildGlobalDiagnosticsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildglobaldiagnostics";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the published schedule for the corresponding @datetime_range for the org sending the request.
+  // Will create a published schedule if it does not exist already for the org sending the request.
+  // if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
+  // if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
+  // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
+  // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
+  // if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
+  // if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+  //   - grpc.NotFound: the @node_selector doesn't exist.
+  //   - grpc.Internal: error occurs when getting the published schedule.
+  rpc GetPublishedSchedule(GetPublishedScheduleReq) returns (GetPublishedScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the required calls intervals for the published schedule for the corresponding @viewing_range, for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the published schedule doesn't exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc GetPublishedScheduleRequiredCalls(GetPublishedScheduleRequiredCallsReq) returns (GetPublishedScheduleRequiredCallsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedulerequiredcalls";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the required calls intervals for the specified draft schedule for the corresponding @viewing_range, for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the draft schedule doesn't exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc GetDraftScheduleRequiredCalls(GetDraftScheduleRequiredCallsReq) returns (GetDraftScheduleRequiredCallsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedulerequiredcalls";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a draft schedule for the org sending the request with the provided parameters.
+  // The @draft_schedule_sid of the new entity will be returned in the response.
+  // The @created_at and @last_updated_at fields will be set to the current time and null respectively.
+  // The draft schedule will include the published schedule's shift instances and shift segments.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: the @name, @description or @scheduling_range are invalid.
+  //   - grpc.Internal: error occurs when creating the draft schedule.
+  rpc CreateDraftSchedule(CreateDraftScheduleReq) returns (CreateDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createdraftschedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
+  // The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
+  // @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
+  // Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
+  rpc BuildDraftSchedule(BuildDraftScheduleReq) returns (BuildDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/builddraftschedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
+  // Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
+  // If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not publish the schedule.
+  // @include parameters are used when retrieving the resulting published schedule, and work in the same way as for GetDraftSchedule.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the parameters in the @req are invalid..
+  //   - grpc.NotFound: @draft_schedule_sid doesn't exist.
+  //   - grpc.Internal: error occurs when publishing the draft schedule.
+  rpc PublishDraftSchedule(PublishDraftScheduleReq) returns (PublishDraftScheduleRes);
+
+  // Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
+  // The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
+  // if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
+  // if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included
+  // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
+  // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
+  // if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
+  // if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid.
+  //   - grpc.NotFound: the @node_selector or @draft_schedule_sid doesn't exist.
+  //   - grpc.Internal: error occurs when getting the draft schedule.
+  rpc GetDraftSchedule(GetDraftScheduleReq) returns (GetDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the draft schedules whose scheduling_range overlaps the given @datetime_range for the org sending the request.
+  // If @datetime_range is not set, all draft schedules for the org will be returned.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @datetime_range is invalid.
+  //   - grpc.Internal: error occurs when listing the draft schedules.
+  rpc ListDraftSchedules(ListDraftSchedulesReq) returns (ListDraftSchedulesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listdraftschedules";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
+  // It also deletes all of its shift instances and segments.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @draft_schedule_sid is invalid for the org making the request.
+  //   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
+  //   - grpc.Internal: error occurs when removing the draft schedule.
+  rpc DeleteDraftSchedule(DeleteDraftScheduleReq) returns (DeleteDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletedraftschedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a shift instance for the org sending the request with the provided parameters.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when creating the shift instance.
+  rpc CreateShiftInstance(CreateShiftInstanceReq) returns (CreateShiftInstanceRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstance";
+    option (google.api.http).body = "*";
+  }
+
+  // Swaps a list of shift instances to have a different @wfm_agent_sid.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when swapping the shift instances.
+  rpc SwapShiftInstances(SwapShiftInstancesReq) returns (SwapShiftInstancesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a shift instance for the org sending the request with the provided parameters.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when updating the shift instance.
+  rpc UpdateShiftInstance(UpdateShiftInstanceReq) returns (UpdateShiftInstanceRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstance";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists shift segments for the specified shift instances for the org sending the request.
+  // If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+  // If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: a shift instance doesn't exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc ListShiftSegmentsByShiftInstanceSids(ListShiftSegmentsByShiftInstanceSidsReq) returns (ListShiftSegmentsByShiftInstanceSidsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listshiftsegmentsbyshiftinstancesids";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates the given @scheduling_target for the org making the request.
+  // The @scheduling_target_sid of the new entity will be returned in the response.
+  // Any preexisting scheduling target for @node_entity will be removed upon creation of the new @scheduling_target.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @scheduling_target is invalid.
+  //   - grpc.NotFound: @node_entity doesn't exist for @schedule_scenario_sid and the org making the request.
+  //   - grpc.Internal: error occours when setting the scheduling target.
+  rpc SetSchedulingTarget(SetSchedulingTargetReq) returns (SetSchedulingTargetRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/setschedulingtarget";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the @own_scheduling_target, @inherited_scheduling_target, and @resulting_scheduling_target for the given @node_selector and the org making the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @node_selector is invalid.
+  //   - grpc.NotFound: the given @node_selector doesn't exist for the org making the request.
+  //   - grpc.Internal: error occours when getting the scheduling target.
+  rpc GetSchedulingTarget(GetSchedulingTargetReq) returns (GetSchedulingTargetRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getschedulingtarget";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes the scheduling target of the corresponding @node_selector for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: the @node_selector is invalid.
+  //   -grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
+  //   -grpc.Internal: error occurs when removing the scheduling target.
+  rpc DeleteSchedulingTarget(DeleteSchedulingTargetReq) returns (DeleteSchedulingTargetRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteschedulingtarget";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
+  // Performance metrics will be generated for each of the given @metric_params.
+  // The @interval_width_in_minutes must be a multiple of 5.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the @node_selector, @schedule_selector, or their shift instances doesn't exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc GetPerformanceMetrics(GetPerformanceMetricsReq) returns (GetPerformanceMetricsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getperformancemetrics";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the required calls intervals for the given @node_selector over the given @datetime_range for the org making the request.
+  // The @interval_width_in_minutes must be a multiple of 5.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc ListRequiredCallsIntervals(ListRequiredCallsIntervalsReq) returns (ListRequiredCallsIntervalsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listrequiredcallsintervals";
+    option (google.api.http).body = "*";
+  }
+}
+
+// Message type specifying information regarding the skill that will associated with
+// SkillProfile and other entities.
+message Skill {
+  // ID of the skill profile skill.
+  int64 skill_sid = 1;
+  // type of the skill.
+  commons.SkillType.Enum client_skill_type = 2;
+  // skill name.
+  string name = 3;
+  // approximate date that the skill was deleted, if absent, the skill has not been deleted.
+  google.protobuf.Timestamp delete_date = 4;
+  // ID of the skill (as shown in backoffice) for the given skill type (agent, PBX, hunt_group, etc).
+  int64 client_skill_sid = 5;
+  // Proficiency that this skill has for the skill profile containing it.
+  // This field will only be set when this skill is contained within a SkillProfile.
+  int32 proficiency = 6;
+}
+
+// Message type specifying a skill profile including specific skills
+message SkillProfile {
+  // ID of the skill profile.
+  int64 skill_profile_sid = 1;
+  // name of the skill profile.
+  string name = 2;
+  // description about the skill profile.
+  string description = 3;
+  // date of creation of the skill profile.
+  google.protobuf.Timestamp create_date = 4;
+  // indicates whether the autogenerated name of the skill profile has been modified by the org.
+  bool unnamed = 5;
+  // date that the profile became inactive, if not set, then the profile is currently active.
+  google.protobuf.Timestamp inactive_as_of_date = 6;
+  // skills of the skill profile.
+  repeated Skill skills = 7;
+  // number of skills that this skill profile has.
+  int32 skills_count = 8;
+  // percentage of total calls that had this skill profile.
+  float occurrence = 9;
+  // average time that calls took to be answered.
+  float average_speed_of_answer_in_seconds = 10;
+  // average duration of answered calls.
+  float average_handle_time_in_seconds = 11;
+  // average time that agents spent in wrap up.
+  float average_after_call_work_in_seconds = 12;
+  // average time that callers waited before hanging unanswered calls.
+  float average_time_to_abort_in_seconds = 13;
+  // indicates whether or not the averages were manually entered by the user (if false then the averages were automatically calculated from the historical data).
+  bool are_averages_manual = 14;
+}
+
+// Request message for the ListSkillProfiles RPC.
+message ListSkillProfilesReq {
+  // If set to true only active skill profiles will be returned, otherwise active and inactive skill profiles will be returned.
+  bool active_only = 1;
+  // If set to true the skills of skill profiles will be returned, otherwise they will not.
+  bool with_skills = 2;
+}
+
+// Response message for the ListSkillProfiles RPC.
+message ListSkillProfilesRes {
+  repeated SkillProfile skill_profiles = 1;
+  reserved 2;
+}
+
+// Request message for the UpdateSkillProfile RPC.
+message UpdateSkillProfileReq {
+  // skill profile id to modify.
+  int64 skill_profile_sid = 1;
+  // new name that the skill profile will have.
+  string name = 2;
+  // new description that the skill profile will have.
+  string description = 3;
+  // average time that calls took to be answered.
+  float average_speed_of_answer_in_seconds = 4;
+  // average duration of answered calls.
+  float average_handle_time_in_seconds = 5;
+  // average time that agents spent in wrap up.
+  float average_after_call_work_in_seconds = 6;
+  // average time that callers waited before hanging unanswered calls.
+  float average_time_to_abort_in_seconds = 7;
+  // indicates whether or not the averages were manually entered by the user (if false then the averages were automatically calculated from the historical data).
+  bool are_averages_manual = 8;
+}
+
+// Response message for the UpdateSkillProfile RPC.
+message UpdateSkillProfileRes {}
+
+// Request message for the UpdateSkillProfileProficiencies RPC.
+message UpdateSkillProfileProficienciesReq {
+  message Proficiency {
+    // ID of the skill profile that contains the @skill_sid.
+    int64 skill_profile_sid = 1;
+    // ID of the skill profile skill to update the proficiency.
+    int64 skill_sid = 2;
+    // Updated value to give the proficiency.
+    int32 proficiency = 3;
+  }
+
+  // Org ID that the skill profiles belong to.
+  string org_id = 1;
+  // Proficiencies to update.
+  repeated Proficiency proficiencies = 2;
+}
+
+// Response message for the UpdateSkillProfileProficiencies RPC.
+message UpdateSkillProfileProficienciesRes {}
+
+// Request message for the GetSkillProfile RPC.
+message GetSkillProfileReq {
+  // ID of the desired skill profile.
+  int64 skill_profile_sid = 1;
+}
+
+// Response message for the GetSkillProfile RPC.
+message GetSkillProfileRes {
+  message Mapping {
+    // ID of the skill profile mapped to the requested skill profile.
+    int64 skill_profile_sid = 1;
+    // Name of the skill profile mapped to the requested skill profile.
+    string name = 2;
+  }
+
+  SkillProfile skill_profile = 1;
+  // Inactive skill profile mappings that the requested skill profile has.
+  // If the profile's @inactive_as_of_date is nil then the mapping is of inactive profiles to this one.
+  // If the profile's @inactive_as_of_date is NOT nil then the mapping is of this profile to an active one.
+  repeated Mapping mappings = 2;
+}
+
+// Request message for the ResyncSkillProfiles RPC.
+message ResyncSkillProfilesReq {
+  // Whether or not to resync from the historical range start date time.
+  // If set to false resync will be done from the last resync date.
+  bool from_historical_range_start_date = 1;
+}
+
+// Response message for the ResyncSkillProfiles RPC.
+message ResyncSkillProfilesRes {
+  // IDs of the newly created skill profiles.
+  repeated int64 created_skill_profile_sids = 1;
+}
+
+// Request message for the GetLastSkillProfileResyncDate RPC.
+message GetLastSkillProfileResyncDateReq {}
+
+// Response message for the GetLastSkillProfileResyncDate RPC.
+message GetLastSkillProfileResyncDateRes {
+  // last date that the org resynced their skill profiles.
+  // if not set, then the org hasn't done a resync of the skill profiles at any point in time.
+  google.protobuf.Timestamp resync_date = 1;
+}
+
+// Request message for the UpsertForecastingParameters RPC.
+message UpsertForecastingParametersReq {
+  reserved 1, 2;
+  // parameters used for forecasts and training data samples.
+  commons.ForecastingParameters forecasting_parameters = 3;
+}
+
+// Response message for the UpsertForecastingParameters RPC.
+message UpsertForecastingParametersRes {}
+
+// Request message for the GetForecastingParameters RPC.
+message GetForecastingParametersReq {}
+
+// Response message for the GetForecastingParameters RPC.
+message GetForecastingParametersRes {
+  // parameters used for forecasts and training data samples.
+  commons.ForecastingParameters forecasting_parameters = 1;
+}
+
+// Message type specifying an interval of calls linked to a skill profile used for historical the forecaster
+message HistoricalDataInterval {
+  // time that this interval starts at.
+   google.protobuf.Timestamp start_datetime = 1;
+  // ID of the skill profile that this interval belongs to.
+  int64 skill_profile_sid = 2;
+
+  // the following are averages for all the calls found for this interval.
+  // average time that calls took to be answered.
+  google.protobuf.FloatValue average_speed_of_answer_in_seconds = 3;
+  // average duration of answered calls.
+  google.protobuf.FloatValue average_handle_time_in_seconds = 4;
+  // average time that agents spent in wrap up.
+  google.protobuf.FloatValue average_after_call_work_in_seconds = 5;
+  // average time that callers waited before hanging unanswered calls.
+  google.protobuf.FloatValue average_time_to_abort_in_seconds = 6;
+  // total calls found for this interval (answered + unanswered).
+  int32 total_calls = 7;
+  // total number of calls that were abandoned
+  int32 total_abandoned_calls = 8;
+  // true=interval w/ delta applied, false=historical interval
+  bool is_delta = 9;
+
+  // The following are only set by the server when requesting the training data intervals and the interval is a delta.
+  // They will contain the non delta values for that interval.
+  // original average time that calls took to be answered.
+  google.protobuf.FloatValue original_average_speed_of_answer_in_seconds = 10;
+  // original average duration of answered calls.
+  google.protobuf.FloatValue original_average_handle_time_in_seconds = 11;
+  // original average time that agents spent in wrap up.
+  google.protobuf.FloatValue original_average_after_call_work_in_seconds = 12;
+  // original average time that callers waited before hanging unanswered calls.
+  google.protobuf.FloatValue original_average_time_to_abort_in_seconds = 13;
+  // original total calls found for this interval (answered + unanswered).
+  int32 original_total_calls = 14;
+  // original total number of calls that were abandoned
+  int32 original_total_abandoned_calls = 15;
+}
+
+// Request message for the ListHistoricalData RPC
+message ListHistoricalDataReq {
+  // ID of the skill profile used to examine matching calls in the client's historical data.
+  int64 skill_profile_sid = 1;
+}
+
+// Response message for the ListHistoricalData RPC
+message ListHistoricalDataRes {
+  // historical data intervals for the skill profile that the org requested.
+  repeated HistoricalDataInterval historical_data_intervals = 1;
+}
+
+// Request message for the UpsertHistoricalDataDelta RPC
+message UpsertHistoricalDataDeltaReq {
+  // Training data delta to create/update.
+  HistoricalDataInterval delta = 1;
+}
+
+// Response message for the UpsertHistoricalDataDelta RPC
+message UpsertHistoricalDataDeltaRes {
+  // Updated delta that was stored.
+  HistoricalDataInterval delta = 1;
+}
+
+// Request message for the UpsertHistoricalDataDelta RPC.
+message UpsertHistoricalDataDeltasReq {
+  // Training data delta to create/update.
+  repeated HistoricalDataInterval deltas = 1;
+}
+
+// Response message for the UpsertHistoricalDataDelta RPC.
+message UpsertHistoricalDataDeltasRes {}
+
+// Request message for the ListSkills RPC
+message ListSkillsReq {}
+
+// Response message for the ListSkills RPC
+message ListSkillsRes {
+  // skills found for the given parameters.
+  repeated Skill skills = 1;
+}
+
+// Message type specifying parameters used to generate a profile forecast
+message CallProfileTemplate {
+  // ID of the template
+  int64 call_profile_template_sid = 1;
+  // Name of the template.
+  string name = 2;
+  // call profile for total calls
+  commons.CallProfileGroupCalls total_calls_profile = 3;
+  // call profile for total abandoned calls
+  commons.CallProfileGroupCalls total_abandoned_calls_profile = 4;
+  // call profile for ASA
+  commons.CallProfileGroupAvgs average_speed_of_answer_profile = 5;
+  // call profile for AHT
+  commons.CallProfileGroupAvgs average_handle_time_profile = 6;
+  // call profile for ACW
+  commons.CallProfileGroupAvgs average_after_call_work_profile = 7;
+  // call profile for ATAB
+  commons.CallProfileGroupAvgs average_time_to_abort_profile = 8;
+  // Fixed average for speed of answer
+  float fixed_average_speed_of_answer = 9;
+  // Fixed average for handle time
+  float fixed_average_handle_time = 10;
+  // Fixed average for after call work
+  float fixed_average_after_call_work = 11;
+  // Fixed average for time to abort
+  float fixed_average_time_to_abort = 12;
+  // Indicates if fixed averages is the default forecast that this template should be used for.
+  bool default_to_fixed_averages_forecast = 13;
+}
+
+// Request message for the BuildCallProfileTemplateForSkillProfile RPC.
+message BuildCallProfileTemplateForSkillProfileReq {
+  // ID of the skill profile of the training data used to generate the template.
+  int64 skill_profile_sid = 1;
+}
+
+// Response message for the BuildCallProfileTemplateForSkillProfile RPC.
+message BuildCallProfileTemplateForSkillProfileRes {
+  // call profile template found in the training data set.
+  CallProfileTemplate call_profile_template = 1;
+}
+
+// Request message for the CreateInactiveSkillProfileMapping RPC.
+message CreateInactiveSkillProfileMappingReq {
+  // ID of the inactive skill profile that will be mapped to the active_skill_profile_sid.
+  int64 inactive_skill_profile_sid = 1;
+  // ID of the active skill profile that the inactive_skill_profile_sid will be mapped to.
+  int64 active_skill_profile_sid = 2;
+}
+
+// Response message for the CreateInactiveSkillProfileMapping RPC.
+message CreateInactiveSkillProfileMappingRes {}
+
+// Request message for the GetAvailableRegressionForecasterModelTypes RPC.
+message GetAvailableRegressionForecasterModelTypesReq {}
+
+// Response message for the GetAvailableRegressionForecasterModelTypes RPC.
+message GetAvailableRegressionForecasterModelTypesRes  {
+  // List of all the available forecaster types currently available.
+  repeated commons.RegressionForecasterModelTypes model_types = 1;
+}
+
+// Request message for the DisconnectInactiveSkillProfileMapping RPC.
+message DisconnectInactiveSkillProfileMappingReq {
+  // IDs of the inactive skill profile to disconnect.
+  int64 inactive_skill_profile_sid = 1;
+}
+
+// Response message for the DisconnectInactiveSkillProfileMapping RPC.
+message DisconnectInactiveSkillProfileMappingRes {}
+
+// Request message for the DeleteHistoricalDataDeltas RPC.
+message DeleteHistoricalDataDeltasReq {
+  // ID of the skill profile of which to delete the deltas.
+  int64 skill_profile_sid = 1;
+  // start datetimes of the deltas to delete.
+  // If no datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
+  repeated google.protobuf.Timestamp start_datetimes = 2;
+}
+
+// Response message for the DeleteHistoricalDataDeltas RPC.
+message DeleteHistoricalDataDeltasRes {}
+
+// Request message for the ListTopSkillProfiles RPC.
+message ListTopSkillProfilesReq {
+  // max number of top skill profiles to get.
+  int32 max_number_of_profiles = 1;
+}
+
+// Response message for the ListTopSkillProfiles RPC.
+message ListTopSkillProfilesRes {
+  // skill profiles found for the given parameters.
+  repeated SkillProfile skill_profiles = 1;
+}
+
+// Request message for the GetSkillProfilesCount RPC
+message GetSkillProfilesCountReq {}
+
+// Response message for the GetSkillProfilesCount RPC
+message GetSkillProfilesCountRes {
+  // number of skill profiles that the org has.
+  int32 count = 1;
+}
+
+// Request message for the BuildProfileForecastByInterval RPC
+message BuildProfileForecastByIntervalReq{
+  // Template to use to generate the profile forecast.
+  CallProfileTemplate call_profile_template = 1;
+  // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
+  // and will only use the fixed averages fields and @total_calls_profile from the @call_profile_template.
+  // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
+  bool fixed_averages_forecast = 2;
+  // ID of the skill profile that the forecast will belong to.
+  int64 skill_profile_sid = 3;
+}
+
+// Message type specifying calls in an interval for a specific skill profile
+message CallDataByInterval {
+  // Start time of the interval.
+  google.protobuf.Timestamp  start_datetime = 1;
+  // ID of the skill profile to forecast for (not set in profile forecasts).
+  int64 skill_profile_sid = 2;
+  // the number of calls in this interval with this skill profile (answered + unanswered).
+  int32 total_calls = 3;
+  // optional
+  float average_speed_of_answer_in_seconds = 4;
+  // optional
+  float average_handle_time_in_seconds = 5;
+  // optional
+  float average_after_call_work_in_seconds = 6;
+  // optional
+  float average_time_to_abort_in_seconds = 7;
+  // the number of abandoned calls in this interval for this skill profile.
+  int32 total_abandoned_calls = 8;
+  // Whether the interval has been modified or not
+  bool is_delta = 9;
+  // ID of the forecast interval that the delta/interval belongs to
+  int64 forecast_data_interval_sid = 10;
+  // Interval width minutes that the interval used on creation.
+  // Only set for forecast intervals.
+  int32 interval_width_in_minutes = 11;
+}
+
+// Request message for the BuildProfileForecastByIntervalWithStats RPC
+message BuildProfileForecastByIntervalWithStatsReq{
+  // Template to use to generate the profile forecast.
+  CallProfileTemplate call_profile_template = 1;
+  // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
+  // and will only use the fixed averages fields and @total_calls_profile from the @call_profile_template.
+  // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
+  bool fixed_averages_forecast = 2;
+  // ID of the skill profile to use the training data for stats.
+  int64 skill_profile_sid = 3;
+}
+
+// Response message for BuildProfileForecastByIntervalWithStats RPC
+message BuildProfileForecastByIntervalWithStatsRes {
+  oneof result_oneof {
+    // Forecast data intervals generated from the forecast
+    CallDataByInterval call_data = 1;
+    // Statistics comparing the historical data during the test interval with the prediction data during the same period.
+    // This will only be the type of the first message returned.
+    GetForecastStatisticsRes forecast_stats = 2;
+  }
+}
+
+// Request message for the UpsertProfileForecast RPC
+message UpsertProfileForecastReq {
+  // ID of the skill profile that the forecast will belong to.
+  int64 skill_profile_sid = 1;
+  // Template to use to generate the forecast that will be stored.
+  CallProfileTemplate call_profile_template = 2;
+  // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
+  // and will only use the fixed averages fields and @total_calls_profile from the @call_profile_template.
+  // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
+  bool fixed_averages_forecast = 3;
+}
+
+// Response message for the UpsertProfileForecast RPC
+message UpsertProfileForecastRes {}
+
+// Request message for the CreateCallProfileTemplate RPC
+message CreateCallProfileTemplateReq {
+  // Template to store in the db.
+  CallProfileTemplate call_profile_template = 1;
+}
+
+// Response message for the CreateCallProfileTemplate RPC
+message CreateCallProfileTemplateRes{}
+
+// Request message for the DeleteCallProfileTemplate RPC
+message DeleteCallProfileTemplateReq {
+  // ID of the call profile template to delete.
+  int64 call_profile_template_sid = 1;
+}
+
+// Response message for the DeleteCallProfileTemplate RPC
+message DeleteCallProfileTemplateRes{}
+
+// Message type specifying the parameters for a regression forecast
+message RegressionTemplate {
+  // ID of the regression template.
+  int64 regression_template_sid = 1;
+  // Name of the regression template.
+  string name = 2;
+  // Selected algorithmic method to be used
+  commons.RegressionForecasterModelTypes model_type = 3;
+  // Number of weeks of training data to exclude when building a forecast.
+  int32 exclude_call_data_for_n_weeks = 4;
+  // Number of weeks in the past to emphasize;
+  int32 num_weeks_ago_to_emphasize = 5;
+  // Value that especificies the max value of deviations to use. Greater deviations than the specified values will be excluded.
+  // optional
+  float max_deviation = 6;
+  // Percentage from 0 to 100 that specifies the trend sensitivity.
+  float trend_sensitivity = 7;
+  // Whether or not to exclude intervals with no calls.
+  bool exclude_intervals_with_no_calls = 8;
+  // Processing type for the averages.
+  commons.RegressionForecasterAvgsProcessingType avgs_processing_type = 9;
+  // Whether or not to include seasonality.
+  bool include_seasonality = 10;
+  // Whether or not to include trend.
+  bool include_trend = 11;
+}
+
+// Request message for the CreateRegressionTemplate RPC
+message CreateRegressionTemplateReq {
+  // Regression template to be stored in the db.
+  RegressionTemplate regression_template = 1;
+}
+
+// Response message for the CreateRegressionTemplate RPC
+message CreateRegressionTemplateRes {}
+
+// Request message for the DeleteRegressionTemplate RPC
+message DeleteRegressionTemplateReq {
+  // ID of the regression template to delete.
+  int64 regression_template_sid = 1;
+}
+
+// Response message for the DeleteRegressionTemplate RPC
+message DeleteRegressionTemplateRes {}
+
+// Request message for the ListRegressionTemplates RPC
+message ListRegressionTemplatesReq {}
+
+// Response message for the ListRegressionTemplates RPC
+message ListRegressionTemplatesRes {
+  // List of all existing regression templates retrieved for an org.
+  repeated RegressionTemplate regression_templates = 1;
+}
+
+// Request message for the BuildRegressionForecastByInterval RPC
+message BuildRegressionForecastByIntervalReq{
+  // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
+  // optional
+  float average_speed_of_answer_in_seconds = 1;
+  // optional
+  float average_handle_time_in_seconds = 2;
+  // optional
+  float average_after_call_work_in_seconds = 3;
+  // optional
+  float average_time_to_abort_in_seconds = 4;
+  // Template to use to generate the regression forecast
+  RegressionTemplate regression_template = 5;
+  // IDs of the skill profiles to generate the forecasts,
+  // if no IDs are sent, it will forecast for all active skill profiles.
+  repeated int64 skill_profile_sids_to_forecast = 6;
+}
+
+// Request message for the BuildRegressionForecastByIntervalWithStats RPC
+message BuildRegressionForecastByIntervalWithStatsReq {
+  // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
+  // optional
+  float average_speed_of_answer_in_seconds = 1;
+  // optional
+  float average_handle_time_in_seconds = 2;
+  // optional
+  float average_after_call_work_in_seconds = 3;
+  // optional
+  float average_time_to_abort_in_seconds = 4;
+  // Template to use to generate the regression forecast
+  RegressionTemplate regression_template = 5;
+  // IDs of the skill profiles to generate the forecasts,
+  // if no IDs are sent, it will forecast for all active skill profiles.
+  repeated int64 skill_profile_sids_to_forecast = 6;
+}
+
+// Represents the statistics of a given forecast
+message GetForecastStatisticsRes {
+  // the total number of intervals measured
+  int32 num_intervals_measured = 1;
+  // total number of actual historical calls
+  int32 total_calls_historical = 2;
+  // total number of predicted calls
+  int32 total_calls_predicted = 3;
+  // percentage over predicted (+ve) or under predicted (-ve)
+  float percent_calls_over_under = 4;
+  // root-mean-squared error between actual and predicted calls
+  float rms_error_calls = 5;
+  // root-mean-squared error between actual and predicted atab
+  float rms_error_ATAB = 6;
+  // root-mean-squared error between actual and predicted asa
+  float rms_error_ASA = 7;
+  // root-mean-squared error between actual and predicted acw
+  float rms_error_ACW = 8;
+  // root-mean-squared error between actual and predicted aht
+  float rms_error_AHT = 9;
+  // Indicates whether or not the stats generated were invalid
+  bool are_stats_invalid = 10;
+  // Message explaining why the stats were invalid
+  string invalid_reason = 11;
+}
+
+// Response message for BuildRegressionForecastByIntervalWithStats RPC
+message BuildRegressionForecastByIntervalWithStatsRes {
+  oneof result_oneof {
+    // Forecast data intervals generated from the forecast
+    CallDataByInterval call_data = 1;
+    // Statistics comparing the historical data during the test interval with the prediction data during the same period.
+    // This will only be the type of the first message returned.
+    GetForecastStatisticsRes forecast_stats = 2;
+  }
+}
+
+// Request message for the ListCallProfileTemplates RPC
+message ListCallProfileTemplatesReq {}
+
+// Response message for the ListCallProfileTemplates RPC
+message ListCallProfileTemplatesRes {
+  // List of all the call profile templates for the requesting org
+  repeated CallProfileTemplate call_profile_templates = 1;
+}
+
+// Request message for the ListForecastIntervalsForSkillProfile RPC
+message ListForecastIntervalsForSkillProfileReq {
+  // ID of skill profile to get the forecast of.
+  int64 skill_profile_sid = 1;
+}
+
+// Request message for the UpsertRegressionForecast RPC
+message UpsertRegressionForecastReq {
+  // Forecast template used to build the regression forecast
+  RegressionTemplate regression_template = 1;
+  // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
+  // optional
+  float average_speed_of_answer_in_seconds = 2;
+  // optional
+  float average_handle_time_in_seconds = 3;
+  // optional
+  float average_after_call_work_in_seconds = 4;
+  // optional
+  float average_time_to_abort_in_seconds = 5;
+  // IDs of the skill Profiles of which to save the generated forecast.
+  repeated int64 skill_profile_sids_to_forecast = 6;
+}
+
+// Response message for the UpsertRegressionForecast RPC
+message UpsertRegressionForecastRes {};
+
+// Request message for the UpsertForecastDataDelta RPC
+message UpsertForecastDataDeltaReq {
+  // Delta to store
+  // The @start_datetime, @is_delta, and @skill_profile_sid fields DO NOT need to be set.
+  CallDataByInterval delta = 1;
+}
+
+// Response message for the UpsertForecastDataDelta RPC
+message UpsertForecastDataDeltaRes {
+  // Delta that was stored.
+  CallDataByInterval delta = 1;
+}
+
+// Request message for the UpsertForecastDataDeltas RPC
+message UpsertForecastDataDeltasReq {
+  // Deltas to store
+  // The @start_datetime, @is_delta, and @skill_profile_sid fields DO NOT need to be set.
+  repeated CallDataByInterval deltas = 1;
+}
+
+// Response message for the UpsertForecastDataDeltas RPC
+message UpsertForecastDataDeltasRes {}
+
+// Request message for the DeleteForecastIntervals RPC
+message DeleteForecastIntervalsReq {
+  // Enum specifying what type of forecast data interval to delete
+  enum ForecastIntervalDeleteType {
+    INTERVALS_AND_DELTAS = 0;
+    DELTAS = 1;
+  }
+  // Can't use "repeated" in a "oneof" so this field is nested in its own message
+  message IntervalSids {
+    // sids of the intervals/deltas to be deleted
+    repeated int64 sids = 1;
+  }
+    oneof delete_param{
+    // ID of the skill profile of which to delete the intervas/deltas.
+    int64 skill_profile_sid = 1;
+    // Wrapper for SIDs of intervals to be deleted
+    IntervalSids forecast_interval_sids = 2;
+  }
+  // Type of interval to delete
+  ForecastIntervalDeleteType forecast_interval_delete_type = 3;
+}
+
+// Response message for the DeleteForecastIntervals RPC
+message DeleteForecastIntervalsRes {};
+
+// Request message for the ListHistoricalDataForAllSkillProfiles RPC
+message ListHistoricalDataForAllSkillProfilesReq {}
+
+// Response message for the ListHistoricalDataForAllSkillProfiles RPC
+message ListHistoricalDataForAllSkillProfilesRes {
+  // History intervals sorted by @start_datetime.
+  repeated HistoricalDataInterval history = 1;
+};
+
+// Request message for the BuildDOWAndMOYProfiles RPC
+message BuildDOWAndMOYProfilesReq {
+  // ProfileTOD to use to build the ProfileDOW and ProfileMOY
+  commons.ProfileTOD profile_tod = 1;
+  // ProfileWOMS to use to build the ProfileDOW and ProfileMOY
+  commons.ProfileWOMS profile_woms = 2;
+  // Indicates if the @profile_tod and @profile_woms belongs to the average fields of a call profile template.
+  bool is_average_profile = 3;
+}
+
+// Response message for the BuildDOWAndMOYProfiles RPC
+message BuildDOWAndMOYProfilesRes {
+  // Generated ProfileDOW from the request parameters.
+  commons.ProfileDOW profile_dow = 1;
+  // Generated ProfileMOY from the request parameters.
+  commons.ProfileMOY profile_moy = 2;
+}
+
+// Request message for the CalculateTrainingDataAveragesForSkillProfile RPC
+message CalculateTrainingDataAveragesForSkillProfileReq {
+  // The training data used to calculate the averages will belong to this skill profile.
+  int64 skill_profile_sid = 1;
+}
+
+// Response message for the CalculateTrainingDataAveragesForSkillProfile RPC
+message CalculateTrainingDataAveragesForSkillProfileRes {
+  // averages found in the training data set.
+  float average_speed_of_answer_in_seconds = 1;
+  float average_handle_time_in_seconds = 2;
+  float average_after_call_work_in_seconds = 3;
+  float average_time_to_abort_in_seconds = 4;
+}
+
+// Request message for the UpdateSkillProfileAveragesUsingHistoricalData RPC
+message UpdateSkillProfileAveragesUsingHistoricalDataReq {
+  // IDs of the skill profiles to calculate the averages of, if none are sent it calculates it for all skill profiles the org has.
+  repeated int64 skill_profile_sids = 1;
+  // The datetime range of the training data to use to calculate the averages, if a nil range is given the following range is used:
+  // @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
+  // If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
+  commons.DatetimeRange datetime_range = 2;
+  // If true, it will exclude skill profiles that have manual averages in them from the calculation (even if those skill profiles are in @skill_profile_sids).
+  // Otherwise they will be included in the calculation.
+  bool exclude_skill_profiles_with_manual_averages = 3;
+}
+
+// Response message for the UpdateSkillProfileAveragesUsingHistoricalData RPC
+message UpdateSkillProfileAveragesUsingHistoricalDataRes {}
+
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+/**************************************************************SCHEDULER ENTITIES********************************************************************/
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+
+// UserCapability represents the rules that apply to the current user for the applicable entity.
+message UserCapability {
+  // UI can display element for this user
+  bool can_display = 1;
+  // UI can edit element
+  bool can_edit = 2;
+  // User can move a valid node B to this node A, making B a child of A
+  bool is_move_target = 3;
+  // User can move this node A to a valid node B, making A a child of B
+  // where node B has the is_move_target flag set
+  bool can_move = 4;
+  // User can mark this element as deleted
+  bool can_delete = 5;
+  // User can mark this element as undeleted
+  bool can_undelete = 6;
+  // User can add a valid child to this node
+  bool can_add_child = 7;
+}
+
+// Call Center node
+message CallCenterNode {
+  // Node unique id (genereated on the backend when sent for creation).
+  int64 call_center_node_sid = 1;
+  // Node name
+  string name = 2;
+  // Node description.
+  string description = 3;
+  // Datetime that the node was set to inactive, if not set then the node is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 4;
+  // Call Center TimeZone
+  commons.TimeZone time_zone_val = 5;
+  // ID of the schedule scenario that the call center node belongs to.
+  int64 schedule_scenario_sid = 6;
+  // client nodes that are children of call center node
+  repeated ClientNode member_client_nodes = 7;
+  // non skill activities that are children of call center node
+  repeated NonSkillActivity member_non_skill_activities = 8;
+  // open times patterns that are children of call center node
+  repeated OpenTimesPattern member_open_times_patterns = 9;
+  // agent availability patterns that are children of call center node
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 10;
+  //  constraint rules that are children of call center node
+  repeated ConstraintRule member_constraint_rules = 11;
+  // agent groups that are children of call center node
+  repeated AgentGroup member_agent_groups = 12;
+  // ID of the original Call Center Node that this node was copied from.
+  // If this node is the original, field will be set as nil.
+  google.protobuf.Int64Value origin_sid = 13;
+}
+
+// Request message for the UpdateCallCenterNode RPC
+message UpdateCallCenterNodeReq {
+  // Node entity that will be updated with the values provided.
+  // If no change is desired for a given field in @node, then the current value must be set.
+  CallCenterNode node = 1;
+}
+
+// Response message for the UpdateCallCenterNode RPC
+message UpdateCallCenterNodeRes {}
+
+// Client node
+message ClientNode {
+  // Node unique id
+  int64 client_node_sid = 1;
+  // Node name
+  string name = 2;
+  // Node description.
+  string description = 3;
+  // Parent node id -- should only have CallCenter nodes as parents
+  int64 parent_sid = 4;
+  // Datetime that the node was set to inactive, if not set then the node is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 5;
+  // Client TimeZone
+  commons.TimeZone time_zone_val = 6;
+  // ID of the schedule scenario that the client node belongs to.
+  int64 schedule_scenario_sid = 7;
+  // Location Nodes associated with @program_node_sid.
+  repeated LocationNode member_location_nodes = 8;
+  // Non Skill Activities associated with @program_node_sid.
+  repeated NonSkillActivity member_non_skill_activities = 9;
+  // Open Times Patterns associated with @program_node_sid.
+  repeated OpenTimesPattern member_open_times_patterns = 10;
+  // Agent Availability Patterns associated with @program_node_sid.
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 11;
+  // Constraint Rules associated with @program_node_sid.
+  repeated ConstraintRule member_constraint_rules = 12;
+  // Agent Groups associated with @program_node_sid.
+  repeated AgentGroup member_agent_groups = 13;
+  // ID of the original Client Node that this node was copied from.
+  // If this node is the original, field will be set as nil.
+  google.protobuf.Int64Value origin_sid = 14;
+}
+
+// Request message for the CreateClientNode RPC
+message CreateClientNodeReq {
+  // Node to create, the @client_node_sid doesn't need to be set since it won't be used.
+  ClientNode node = 1;
+}
+
+// Response message for the CreateClientNode RPC
+message CreateClientNodeRes {
+  // ID of the newly created client node
+  int64 client_node_sid = 1;
+}
+
+// Request message for the UpdateClientNode RPC
+message UpdateClientNodeReq {
+  // Client Node to update
+  ClientNode node = 1;
+}
+
+// Response message for the UpdateClientNode RPC
+message UpdateClientNodeRes {}
+
+// Location node
+message LocationNode {
+  // Node unique id
+  int64 location_node_sid = 1;
+  // Node name
+  string name = 2;
+  // Node description.
+  string description = 3;
+  // ID of the parent client node.
+  int64 client_node_sid = 4;
+  // Datetime that the node was set to inactive, if not set then the node is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 5;
+  // Timezone of this node.
+  commons.TimeZone time_zone_val = 6;
+  // Indicates whether on not the @shrinkage_value is a percentage (true=percentage, false=agents).
+  bool shrinkage_is_percentage = 7;
+  // Value of the shrinkage.
+  int32 shrinkage_value = 8;
+  // ID of the schedule scenario that the location node belongs to.
+  int64 schedule_scenario_sid = 9;
+  // Program Nodes associated with @location_node_sid.
+  repeated ProgramNode member_program_nodes = 10;
+  // Non Skill Activities associated with @location_node_sid.
+  repeated NonSkillActivity member_non_skill_activities = 11;
+  // Open Times Patterns associated with @location_node_sid.
+  repeated OpenTimesPattern member_open_times_patterns = 12;
+  // Agent Availability Patterns associated with @location_node_sid.
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 13;
+  // Constraint Rules associated with @location_node_sid.
+  repeated ConstraintRule member_constraint_rules = 14;
+  // Agent Groups associated with @location_node_sid.
+  repeated AgentGroup member_agent_groups = 15;
+  // ID of the original Location Node that this node was copied from.
+  // If this node is the original, field will be set as nil.
+  google.protobuf.Int64Value origin_sid = 16;
+}
+
+// Request message for the CreateLocationNode RPC
+message CreateLocationNodeReq {
+  // Node to create, the @location_node_sid doesn't need to be set since it won't be used.
+  LocationNode node = 1;
+}
+
+// Response message for the CreateLocationNode RPC
+message CreateLocationNodeRes {
+  // ID of the newly created location node.
+  int64 location_node_sid = 1;
+}
+
+// Request message for the UpdateLocationNode RPC
+message UpdateLocationNodeReq {
+  // Location node to update
+  LocationNode location_node = 1;
+}
+
+// Response message for the UpdateLocationNode RPC
+message UpdateLocationNodeRes {}
+
+// Program node
+message ProgramNode {
+  // Node unique id
+  int64 program_node_sid = 1;
+  // Node name
+  string name = 2;
+  // Node description.
+  string description = 3;
+  // ID of the parent location node.
+  int64 location_node_sid = 4;
+  // Datetime that the node was set to inactive, if not set then the node is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 5;
+  // Indicates whether on not the @shrinkage_value is a percentage (true=percentage, false=agents).
+  bool shrinkage_is_percentage = 6;
+  // Value of the shrinkage. Either 0-100 if @shrinkage_is_percentage is true, or a value greater than 0 otherwise.
+  int32 shrinkage_value = 7;
+  // ID of the schedule scenario that the program node belongs to.
+  int64 schedule_scenario_sid = 8;
+  // Any shift templates associated with @program_node_sid.
+  repeated ShiftTemplate member_shift_templates = 9;
+  // Any non skill activities associated with @program_node_sid.
+  repeated NonSkillActivity member_non_skill_activities = 10;
+  // Any open times patterns associated with @program_node_sid.
+  repeated OpenTimesPattern member_open_times_patterns = 11;
+  // Any agent availability patterns associated with @program_node_sid.
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 12;
+  // Any constraint rules associated with @program_node_sid.
+  repeated ConstraintRule member_constraint_rules = 13;
+  // Any agent groups associated with @program_node_sid.
+  repeated AgentGroup member_agent_groups = 14;
+  // Any skill proficiencies associated with @program_node_sid.
+  repeated SkillProficiency member_skill_proficiencies = 15;
+  // ID of the original Program Node that this node was copied from.
+  // If this node is the original, field will be set as nil.
+  google.protobuf.Int64Value origin_sid = 16;
+}
+
+// Request message for the CreateProgramNode RPC
+message CreateProgramNodeReq {
+  // Node to create, the @program_node_sid doesn't need to be set since it won't be used.
+  ProgramNode node = 1;
+}
+
+// Response message for the CreateProgramNode RPC
+message CreateProgramNodeRes {
+  // ID of the newly created program node.
+  int64 program_node_sid = 1;
+}
+
+// Request message for the UpdateProgramNode RPC
+message UpdateProgramNodeReq {
+    // Program node to update.
+    ProgramNode program_node = 1;
+}
+
+// Response messsage for the UpdateProgramNode RPC
+message UpdateProgramNodeRes {}
+
+message ParentEntity {
+  // ID of a parent entity
+  int64 parent_sid = 1;
+  // Type of entity that the @parent_sid will reference.
+  commons.ConfigEntityType parent_type = 2;
+}
+
+message ConstraintRule {
+  // ID of this constraint rule
+  int64 constraint_rule_sid = 1;
+  // Parent entity that the rule will be applied to.
+  ParentEntity parent_entity = 2;
+  // Name of the constraint rule
+  string name = 3;
+  // Description of the constraint rule.
+  string description = 4;
+  // Ammount of time that the rule will be applied for.
+  int32 val_count = 5;
+  // Measuring unit to be used by @val_count.
+  commons.ConstraintTimeUnit val_unit = 6;
+  // Specifies often @val_count will be repeated.
+  int32 per_count = 7;
+  // Measuring unit to be used by @per_count.
+  commons.ConstraintTimeUnit per_unit = 8;
+  // Priority value, higher value means higher priority.
+  int32 priority = 9;
+  // Whether or not the rule has infinite priority
+  bool is_priority_infinite = 10;
+  // The type that this rule whill be.
+  commons.ConstraintRuleType rule_type = 11;
+  // Refers to a skill_proficiency_sid if @rule_type is MIN_SKILL_LEVEL, and otherwise refers to a scheduling_activity.
+  int64 target_sid = 12;
+  // ID of the schedule scenario that the constraint rule belongs to.
+  int64 schedule_scenario_sid = 13;
+  // Entity associated with @target_sid.
+  oneof member_target_entity{
+    // The scheduling_activity associated with @target_sid.
+    SchedulingActivity scheduling_activity = 14;
+    // The skill_proficienct associated with @target_sid.
+    SkillProficiency skill_proficiency = 15;
+  }
+}
+
+// Request message for the CreateConstraintRule RPC
+message CreateConstraintRuleReq {
+  // Rule to create, the @constraint_rule_sid doesn't need to be set since it won't be used.
+  ConstraintRule constraint_rule = 1;
+}
+
+// Response message for the CreateConstraintRule RPC
+message CreateConstraintRuleRes {
+  // ID of the newly created constraint rule.
+  int64 constraint_rule_sid = 1;
+  // ID of the newly created skill proficiency (will be 0 if rule was a non skill one).
+  int64 skill_proficiency_sid = 2;
+}
+
+// Request message for the UpdateConstraintRule RPC
+message UpdateConstraintRuleReq {
+  // Constraint rule to update
+  ConstraintRule constraint_rule = 1;
+}
+
+// Response message for the UpdateConstraintRule RPC
+message UpdateConstraintRuleRes {}
+
+// Request message for the DeleteConstraintRule RPC
+message DeleteConstraintRuleReq {
+  // ID of the constraint rule to delete.
+  int64 constraint_rule_sid = 1;
+}
+
+// Response message for the DeleteConstraintRule RPC
+message DeleteConstraintRuleRes {}
+
+// Represents Agent activity not related to any SkillProfile or
+// handling a call/email/sms/etc.
+message NonSkillActivity {
+  // ID of this activity
+  int64 non_skill_activity_sid = 1;
+  // Activity name (e.g., 'lunch', 'break', 'meeting', etc.)
+  string name = 2;
+  // Activity description
+  string description = 3;
+  // Datetime that the activity was set to inactive, if not set then the activity is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 4;
+  // Display color for this activity
+  // Red value
+  int32 red = 5;
+  // Green value
+  int32 green = 6;
+  // Blue value
+  int32 blue = 7;
+  // Transparency value (between 0.0 and 1.0)
+  float transparency = 8;
+  // The highest parent node on the tree that this activity is associated with.
+  ParentEntity inherited_from_entity = 9;
+}
+
+// Request message for the CreateNonSkillActivity RPC
+message CreateNonSkillActivityReq {
+  // Non skill activity to create, the @non_skill_activity_sid doesn't need to be set since it won't be used.
+  NonSkillActivity non_skill_activity = 1;
+}
+
+// Response message for the CreateNonSkillActivity RPC
+message CreateNonSkillActivityRes {
+  // ID of the newly created non skill activity.
+  int64 non_skill_activity_sid = 1;
+  // ID of the newly created scheduling activity wrapper for @non_skill_activity.
+  int64 scheduling_activity_sid = 2;
+}
+
+// Request message for the UpdateNonSkillActivity RPC
+message UpdateNonSkillActivityReq {
+  // Non skill activity to update.
+  NonSkillActivity non_skill_activity = 1;
+}
+
+// Response message for the UpdateNonSkillActivity RPC
+message UpdateNonSkillActivityRes {}
+
+// Request message for the ListNonSkillActivityAssociations RPC
+message ListNonSkillActivityAssociationsReq{
+  // Entity to check for relationships with the non skill activities.
+  ParentEntity associated_entity = 1;
+  // Type of relationship between non skill activity and the @associated_entity.
+  commons.ConfigRelationshipType relationship_type = 2;
+}
+
+// Response message for the ListNonSkillActivityAssociations RPC
+message ListNonSkillActivityAssociationsRes{
+  // ID of the non skill activities found to have the @relationship_type with the @associated_entity in the request.
+  repeated int64 non_skill_activity_sids = 1;
+}
+
+// Scheduling activity
+message SchedulingActivity {
+  // ID of this scheduling activity.
+  int64 scheduling_activity_sid = 1;
+  // If false, the @idActivity refers to the id for a non-skill activity, if true then @activity_sid refers to all calls for any skill.
+  bool is_skill_activity = 2;
+  // ID for non-skill activity if @is_skill_activity is false, or for a skill activity if @is_skill_activity is true.
+  // This is nil by default, meaning the scheduling_activity refers to a call.
+  google.protobuf.Int64Value activity_sid = 3;
+  // The non skill activity associated with @activity_sid if @is_skill_activity is false.
+  NonSkillActivity member_non_skill_activity = 4;
+}
+
+// Request message for the ListCandidateSchedulingActivitiesReq RPC
+message ListCandidateSchedulingActivitiesReq{
+  // The parent who the rule will inherit candidate scheduling activities from.
+  // May be any node, an agent_group, or shift template.
+  // To get candidate scheduling activities for rules belonging to a wfm agent, @parent_of_rule should be the agent group the wfm agent belongs to.
+  ParentEntity parent_of_rule = 1;
+  // ID of the schedule scenario that this activity belongs to.
+  int64 schedule_scenario_sid = 2;
+}
+
+// Response message for the ListCandidateSchedulingActivitiesRes RPC
+message ListCandidateSchedulingActivitiesRes{
+  repeated SchedulingActivity scheduling_activities = 1;
+}
+
+// Represents a group of agents that have the same parent and other common properties.
+message AgentGroup {
+  // ID of this agent group
+  int64 agent_group_sid = 1;
+  // Parent entity of the agent group
+  ParentEntity parent_entity = 2;
+  // Agent group name
+  string name = 3;
+  // Agent group description.
+  string description = 4;
+  // Datetime that the agent group was set to inactive, if not set then the agent group is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 5;
+  // ID of the schedule scenario that the agent group belongs to.
+  int64 schedule_scenario_sid = 6;
+  // List of constraint rule that apply to this agent group.
+  repeated ConstraintRule member_constraint_rules = 7;
+  // List of WFM agents that are members of this agent group.
+  repeated WFMAgent member_wfm_agents = 8;
+  // List of skill proficiencies associated with this agent group.
+  repeated SkillProficiency member_skill_proficiencies = 9;
+  // List of agent availability patterns associated with this agent group.
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 10;
+}
+
+// Request message for the CreateAgentGroup RPC
+message CreateAgentGroupReq {
+  // AgentGroup to create, the @agent_group_sid doesn't need to be set since it won't be used.
+  AgentGroup agent_group = 1;
+}
+
+// Response message for the CreateAgentGroup RPC
+message CreateAgentGroupRes {
+  // ID of the newly created agent group
+  int64 agent_group_sid = 1;
+}
+
+// Request message for the UpdateAgentGroup RPC
+message UpdateAgentGroupReq{
+    // AgentGroup to update
+    AgentGroup agent_group = 1;
+}
+
+// Response message for the UpdateAgentGroup RPC
+message UpdateAgentGroupRes {}
+
+// Represents a wfm agent object refering to an agent in the TCN system.
+message WFMAgent {
+  // Unique ID for this object.
+  int64 wfm_agent_sid = 1;
+  // Reference to the affiliated tcn agent.
+  // If set to nil, that means that this WFM Agent is not assigned to a TCN agent.
+  google.protobuf.Int64Value tcn_agent_sid = 2;
+  // Name for WFM Agent.
+  // If it's for a TCN agent this value will always match that TCN agent's name.
+  string name = 3;
+  // Null by default, indicates date which agent was removed or deactivated.
+  google.protobuf.Timestamp datetime_set_to_inactive = 4;
+  // The constraint rules associated with @wfm_agent_sid.
+  repeated ConstraintRule member_constraint_rules = 5;
+  // List of skill proficiencies associated with @wfm_agent_sid.
+  repeated SkillProficiency member_skill_proficiencies = 6;
+  // List of agent availability patterns associated with this wfm agent.
+  repeated AgentAvailabilityPattern member_agent_availability_patterns = 7;
+  // Date of creation of the agent.
+  google.protobuf.Timestamp created_at = 8;
+  // If this WFM agent is for a TCN agent, it indicates whether or not this TCN Agent is enabled or not.
+  // Field is read only and cannot be modified.
+  bool tcn_agent_is_enabled = 9;
+}
+
+// Request message for the UpdateWFMAgent RPC
+message UpdateWFMAgentReq {
+  // Wfm agent to update.
+  WFMAgent wfm_agent = 1;
+}
+
+// Response message for the UpdateWFMAgent RPC
+message UpdateWFMAgentRes {}
+
+// Request message for the ListAllWFMAgents RPC
+message ListAllWFMAgentsReq {
+  // Indicates if the result should include the inactive wfm agents.
+  bool include_inactive = 1;
+  // Indicates if the resulting WFM agents should include skill proficiencies.
+  bool include_skill_proficiencies = 2;
+  // Indicates if the resulting WFM agents should include the groups that they are members of.
+  bool include_agent_groups = 3;
+}
+
+// Response message for the ListAllWFMAgents RPC
+message ListAllWFMAgentsRes {
+  // List of all wfm agents that belong to the org sending the request.
+  repeated WFMAgent wfm_agents = 1;
+  // Represents a list of agent groups which are associated with an agent.
+  message AgentGroupsByAgent{
+    repeated AgentGroup agent_groups = 1;
+  }
+  // Correlating list of agent groups that the agent with the same index is a member of.
+  // Agents with no agent groups will index to an empty slice.
+  repeated AgentGroupsByAgent agent_groups_by_agent = 2;
+}
+
+// Request message for the ListCandidateWFMAgents RPC
+message ListCandidateWFMAgentsReq {
+  // ID of the agent group to find candidate wfm agents for.
+  int64 agent_group_sid = 1;
+}
+
+// Response message for the ListCandidateWFMAgents RPC
+message ListCandidateWFMAgentsRes {
+  // List of all wfm agents who are candidates for the given @agent_group_sid.
+  repeated WFMAgent wfm_agents = 1;
+}
+
+// Request message for the ListUngroupedWFMAgents RPC
+message ListUngroupedWFMAgentsReq {
+  // Optional, ID of the schedule scenario of agent groups to check for unnasigned wfm agents.
+  // If not set, it will check for unnasigned agents for all agent groups.
+  int64 schedule_scenario_sid = 1;
+  // Ungrouped agents created after this date will be returned.
+  google.protobuf.Timestamp created_after_datetime = 2;
+  // Indicates if the resulting WFM agents should include skill proficiencies.
+  bool include_skill_proficiencies = 3;
+}
+
+// Response message for the ListUngroupedWFMAgents RPC
+message ListUngroupedWFMAgentsRes {
+  // List of all unnasigned wfm agents for the given @schedule_scenario_sid.
+  repeated WFMAgent wfm_agents = 1;
+}
+
+// Request message for the ListWFMAgentsAssociatedWithAgentGroup RPC
+message ListWFMAgentsAssociatedWithAgentGroupReq{
+  // ID of the agent group that the wfm agents have a membership with.
+  int64 agent_group_sid = 1;
+}
+
+// Response message for the ListWFMAgentsAssociatedWithAgentGroup RPC
+message ListWFMAgentsAssociatedWithAgentGroupRes{
+  // ID of the wfm agents found to have a relationship with the @agent_group_sid in the request.
+  repeated int64 wfm_agent_sids = 1;
+}
+
+// Request message for the BuildAgentDiagnostics RPC
+message BuildAgentDiagnosticsReq{
+  // ID of the wfm agent to build diagnostics for.
+  int64 wfm_agent_sid = 1;
+  // ID of the schedule scenario that the wfm agent belongs to.
+  int64 schedule_scenario_sid = 2;
+  // ID of the agent_group to build diagnostics for.
+  // If this field is set, the diagnostics will be built for every wfm agent in that agent group, and the @wfm-agent_sid field in this req will be ignored.
+  int64 agent_group_sid = 3;
+}
+
+// Response message for the BuildAgentDiagnostics RPC
+message BuildAgentDiagnosticsRes{
+  // Diagnostics built for the given req.
+  // Will only contain one element if build for a single @wfm_agent_sid.
+  // Will contain one element for each WFM agent if build for an @agent_group_sid.a
+  repeated Diagnostics diagnostics = 1;
+}
+
+// Request message for the CreateWFMAgentMemberships RPC
+message CreateWFMAgentMembershipsReq{
+  // ID of the wfm agents to create the association of.
+  repeated int64 wfm_agent_sids = 1;
+  // ID of the agent group to that the agents associate with.
+  int64 agent_group_sid = 2;
+  // ID of the schedule scenario that the sids belong to.
+  int64 schedule_scenario_sid = 3;
+}
+
+// Response message for CreateWFMAgentMemberships RPC
+message CreateWFMAgentMembershipsRes{}
+
+// Request message for the DeleteWFMAgentMemberships RPC
+message DeleteWFMAgentMembershipsReq{
+  // ID of the wfm agents to delete the association of.
+  repeated int64 wfm_agent_sids = 1;
+  // ID of the agent group to that the agents associate with.
+  int64 agent_group_sid = 2;
+}
+
+// Response message for DeleteWFMAgentMemberships RPC
+message DeleteWFMAgentMembershipsRes{}
+
+// DOW Placement
+message DOWPlacement {
+  // Minute in the day for the placement to start.
+  int32 start_minute = 1;
+  // Minute in the day for the placement to end.
+  int32 end_minute = 2;
+  // The type of placement.
+  commons.DOWPlacementType placement_type = 3;
+  // The day of the week that the placement belongs to.
+  // Each week always starts on Sunday.
+  commons.DayOfWeek day_of_week = 4;
+  // The week number, specifying which week of the template the placement belongs to.
+  // The first week should be set to 0.
+  int32 week_number = 5;
+}
+
+// Shift Template
+message ShiftTemplate {
+  // ID of this shift template.
+  int64 shift_template_sid = 1;
+  // Parent node id -- parent will only be a program nodes
+  int64 program_node_sid = 2;
+  // Template name
+  string name = 3;
+  // Template description
+  string description = 4;
+  // Datetime that the template was set to inactive, if not set then the template is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 5;
+  // Type of Shift Template (true=tour shift, false=dynamic shift)
+  bool is_tourshift = 6;
+  // Min shift width (minutes)
+  int32 min_shift_width = 7;
+  // Max shift width (minutes)
+  int32 max_shift_width = 8;
+  // Min number of agent shifts for shift template
+  int32 min_agents = 9;
+  // Max number of agent shifts for shift template
+  int32 max_agents = 10;
+  // Intervals upon which shifts may start (minutes)
+  int32 shift_start_boundary_minutes = 11;
+  // Whether or not shifts in this shift template must start at the same time each day of the week
+  bool same_time_each_DOW = 12;
+  // Whether or not all of an Agent's shifts in this shift template will be the same length
+  bool same_length_per_agent = 13;
+  // ID of the schedule scenario that the shift template belongs to.
+  int64 schedule_scenario_sid = 14;
+  // The placement rules associated with @shift_template_sid.
+  repeated PlacementRule member_placement_rules = 15;
+  // The DOW_placements set the placement days for the shift template.
+  // The length of the list must be divisible by seven to represent days of the week.
+  // May include more sets of seven days to represent another sequential week (ie, 21 placements for 3 weeks).
+  // The DOWPlacements represents sequential days of the week, always starting on Sunday.
+  repeated DOWPlacement DOW_placements = 16;
+}
+
+// Request message for the CreateShiftTemplate RPC
+message CreateShiftTemplateReq{
+  // Shift template to create, the @shift_template_sid doesn't need to be set since it won't be used
+  ShiftTemplate shift_template = 1;
+}
+
+// Response message for the CreateShiftTemplate RPC
+message CreateShiftTemplateRes {
+  // ID of the newly created shift template
+  int64 shift_template_sid = 1;
+}
+
+// Request message for the UpdateShiftTemplate RPC
+message UpdateShiftTemplateReq{
+  // Shift template to update
+  ShiftTemplate shift_template = 1;
+}
+
+// Response message for the UpdateShiftTemplate RPC
+message UpdateShiftTemplateRes {}
+
+// Request message for the ListShiftTemplatesBySids RPC
+message ListShiftTemplatesBySidsReq{
+  // IDs of the shift templates to list.
+  repeated int64 shift_template_sids = 1;
+}
+
+// Response message for the ListShiftTemplatesBySids RPC
+message ListShiftTemplatesBySidsRes {
+  // Requested shift templates.
+  repeated ShiftTemplate shift_templates = 1;
+}
+
+// Request message for BuildShiftTemplateDiagnostics RPC
+message BuildShiftTemplateDiagnosticsReq{
+  // ID of the shift template to build diagnostics for.
+  int64 shift_template_sid = 1;
+  // ID of the schedule scenario that the shift template belongs to.
+  int64 schedule_scenario_sid = 2;
+}
+
+// Response message for BuildShiftTemplateDiagnostics RPC
+message BuildShiftTemplateDiagnosticsRes{
+  // Diagnostic reports for the shift template associated with @shift_template_sid.
+  repeated Diagnostic diagnostics = 1;
+}
+
+// Represents rules that describe how shifts are placed in a schedule
+message PlacementRule {
+  // ID of this placement rule
+  int64 placement_rule_sid = 1;
+  // ID of the parent shift this rule is associated with
+  int64 shift_template_sid = 2;
+  // Ordinal that indicates order of rule within ShiftTemplate (1 = first, 2 = second, etc.)
+  int32 activity_order = 3;
+  // Minimum activity length in minutes
+  int32 min_duration_minutes = 4;
+  // Maximum activity length in minutes
+  int32 max_duration_minutes = 5;
+  // ID of the scheduling activity this rule is associated with
+  int64 scheduling_activity_sid = 6;
+  // ID of the schedule scenario that the placement rule belongs to.
+  int64 schedule_scenario_sid = 7;
+  // The scheduling activity associated with the @scheduling_activity_sid
+  SchedulingActivity member_scheduling_activity = 8;
+}
+
+// Request message for the CreatePlacementRule RPC
+message CreatePlacementRuleReq{
+  // Placement rule to create, the @placement_rule_sid doesn't need to be set since it won't be used
+  PlacementRule placement_rule = 1;
+}
+
+// Response message for the CreatePlacementRule RPC
+message CreatePlacementRuleRes {
+  // ID of the newly created placement rule
+  int64 placement_rule_sid = 1;
+}
+
+// Request message for the UpdatePlacementRule RPC
+message UpdatePlacementRuleReq{
+    // Placement rule to update.
+    PlacementRule placement_rule = 1;
+}
+
+// Response message for the UpdatePlacementRule RPC
+message UpdatePlacementRuleRes{}
+
+// Request message for the DeletePlacementRule RPC
+message DeletePlacementRuleReq {
+  // ID of the placement rule to delete.
+  int64 placement_rule_sid = 1;
+}
+
+// Response message for the DeletePlacementRule RPC
+message DeletePlacementRuleRes {}
+
+// Represents a datetime pattern that can be used for open times or agent availability
+message DatetimePattern {
+  message WeekMap {
+    message WeekMapDOW {
+      // Which day of the week the entity represents.
+      commons.DayOfWeek day_of_week = 1;
+      // Which minute the entity starts at.
+      int32 start_minute_in_day = 2;
+      // Which minute the entity ends at.
+      int32 end_minute_in_day = 3;
+      // Value that this day of the week has.
+      commons.OptionTypes value = 4;
+    }
+
+    // Datetime range of the week map.
+    commons.DatetimeRange datetime_range = 1;
+    // Days of the week that the week map has.
+    repeated WeekMapDOW day_maps = 2;
+  }
+
+  message CalendarItem {
+    // Datetime range of the calendar item.
+    commons.DatetimeRange datetime_range = 1;
+    // Value that this calendar item has.
+    commons.OptionTypes value = 2;
+  }
+
+  // All week maps that the pattern has.
+  repeated WeekMap week_maps = 1;
+  // All calendar items that the pattern has.
+  repeated CalendarItem calendar_items = 2;
+}
+
+// Represents an open times pattern
+message OpenTimesPattern {
+  // ID of this pattern.
+  int64 open_times_pattern_sid = 1;
+  // Parent entity of the pattern.
+  ParentEntity parent_entity = 2;
+  // Datetime pattern that represents this open times pattern.
+  DatetimePattern datetime_pattern = 3;
+  // ID of the schedule scenario that the open times pattern belongs to.
+  int64 schedule_scenario_sid = 4;
+}
+
+// Request message for the CreateOpenTimesPattern RPC
+message CreateOpenTimesPatternReq{
+  // Open times pattern to create, the @open_times_pattern_sid doesn't need to be set since it won't be used.
+  OpenTimesPattern open_times_pattern = 1;
+}
+
+// Response message for the CreateOpenTimesPattern RPC
+message CreateOpenTimesPatternRes {
+  // ID of the newly created open times pattern.
+  int64 open_times_pattern_sid = 1;
+}
+
+// Request message for the UpdateOpenTimesPattern RPC
+message UpdateOpenTimesPatternReq {
+  // Open times pattern to update.
+  OpenTimesPattern open_times_pattern = 1;
+}
+
+// Response message for the UpdateOpenTimesPattern RPC
+message UpdateOpenTimesPatternRes {}
+
+// Request message for the DeleteOpenTimesPattern RPC
+message DeleteOpenTimesPatternReq {
+  // ID of the open times pattern to delete.
+  int64 open_times_pattern_sid = 1;
+}
+
+// Response message for the DeleteOpenTimesPattern RPC
+message DeleteOpenTimesPatternRes {}
+
+// Request message for the GetOpenTimesBitmaps RPC
+message GetOpenTimesBitmapsReq {
+  // The node that @own_bitmap and @resulting_bitmap will be associated with.
+  ParentEntity node_to_check = 1;
+  // ID of the schedule scenario that @node_to_check belongs to.
+  int64 schedule_scenario_sid = 2;
+  // Whether or not to include inactive nodes. Will need to be set to true if @node_to_check or any of it's parents are inactive.
+  bool include_inactive = 3;
+  // Datetime range that bitmaps will cover when generated for @node_to_check.
+  commons.DatetimeRange datetime_range = 4;
+}
+
+// Response message for the GetOpenTimesBitmaps RPC
+message GetOpenTimesBitmapsRes{
+  // Map of open times options inherited from parent nodes.
+  repeated commons.OpenTimesOption inherited_bitmap = 1;
+  // Map of open times options belonging to the node being checked.
+  repeated commons.OpenTimesOption own_bitmap = 2;
+  // Map of open times options resulting from combining the inherited and own bitmap.
+  repeated commons.OpenTimesOption resulting_bitmap = 3;
+}
+
+// Represents and Agent Availability Pattern
+message AgentAvailabilityPattern{
+  // ID of this pattern.
+  int64 agent_availability_pattern_sid = 1;
+  // Parent entity of this pattern.
+  ParentEntity parent_entity = 2;
+  //Datetime pattern that represents this agent availability pattern.
+  DatetimePattern datetime_pattern = 3;
+  // ID of the schedule scenario that this agent availability pattern belongs to.
+  int64 schedule_scenario_sid = 4;
+}
+
+// Request message for the AgentAvailabilityPattern RPC
+message CreateAgentAvailabilityPatternReq{
+  // AgentAvailabilityPattern to be created, the @agent_availability_pattern_sid doesn't need to be set since it won't be used.
+  AgentAvailabilityPattern agent_availability_pattern = 1;
+}
+
+// Response message for the AgentAvailabilityPattern RPC
+message CreateAgentAvailabilityPatternRes{
+  // ID of the newly create agent availability pattern.
+  int64 agent_availability_pattern_sid = 1;
+}
+
+// Request message for the UpdateAgentAvailabilityPattern RPC
+message UpdateAgentAvailabilityPatternReq{
+  // Agent availability pattern to update.
+  AgentAvailabilityPattern agent_availability_pattern = 1;
+}
+
+// Response message for the UpdateAgentAvailabilityPattern RPC
+message UpdateAgentAvailabilityPatternRes {}
+
+// Request message for the DeleteAgentAvailabilityPattern RPC
+message DeleteAgentAvailabilityPatternReq {
+  // ID of the agent availability pattern to delete.
+  int64 agent_availability_pattern_sid = 1;
+}
+
+// Response message for the DeleteAgentAvailabilityPattern RPC
+message DeleteAgentAvailabilityPatternRes{}
+
+// Contains a set of bitmaps for an entity.
+message AvailabilityBitmapSet{
+  // Map of availability options belonging to the node being checked.
+  repeated commons.AvailabilityOption own_bitmap = 1;
+  // Map of availability options inherited from parent nodes.
+  repeated commons.AvailabilityOption inherited_bitmap = 2;
+  // Map of availability options resulting from combining the inherited and own bitmap.
+  repeated commons.AvailabilityOption resulting_bitmap = 3;
+  // Entity that the bitmaps belong to.
+  ParentEntity parent_entity = 4;
+}
+
+// Request message for the GetAvailabilityBitmaps RPC
+message GetAvailabilityBitmapsReq{
+  // The entities that @bitmaps will be associated with.
+  // Must be nodes, wfm agents, and agent groups only. For agent groups, bitmaps will be returned for each of the groups member agents,
+  repeated ParentEntity entities_to_check = 1;
+  // ID of the schedule scenario that @entities_to_check belong to.
+  int64 schedule_scenario_sid = 2;
+  // Whether or not to include inactive nodes. Will need to be set to true if @entities_to_check or any of it's parents are inactive.
+  bool include_inactive = 3;
+  // Datetime range that bitmaps will cover when generated for @entities_to_check.
+  commons.DatetimeRange datetime_range = 4;
+}
+
+// Response message for the GetAvailabilityBitmaps RPC
+message GetAvailabilityBitmapsRes{
+  // Requested bitmaps, with a pointer to the entity that the bitmaps belong.
+  repeated AvailabilityBitmapSet bitmaps = 1;
+}
+
+// Request message for the UpsertNonSkillActivityAssociation RPC
+message UpsertNonSkillActivityAssociationReq{
+  // ID of the non skill activity to upsert the association of.
+  int64 non_skill_activity_sid = 1;
+  // Node that the non skill activity will be associated with.
+  ParentEntity node = 2;
+  // Type of association that the non skill activity will have with the @node.
+  commons.ConfigRelationshipType association_type = 3;
+  // ID of the schedule scenario that this non skill activity belongs to.
+  int64 schedule_scenario_sid = 4;
+}
+
+// Response message for the UpsertNonSkillActivityAssociation RPC
+message UpsertNonSkillActivityAssociationRes{
+  // Pair of parent entities, used to relate two entities.
+  message EntityMapping {
+    // When possible, the parent entity of the pair.
+    ParentEntity left_entity = 1;
+    // When possible, the child or member entity of the pair.
+    ParentEntity right_entity = 2;
+  }
+  // Indicates whether the upsert took effect if true, or that there are conflicting entities which would be affected, that must be updated/removed first if false.
+  bool upsert_succeeded = 1;
+  // Nodes that will effectively lose the non skill activity as a candidate, through inheritance.
+  repeated ParentEntity nodes_affected = 2;
+  // Set of entities that are currently referencing the @non_skill_activity_sid.
+  // The @right_entity will be the placement rule or constraint rule in conflict, and their parent entity will be the @left_entity
+  repeated EntityMapping rules_using_activity = 3;
+}
+
+// Represents a skill proficiency
+message SkillProficiency {
+  // ID of the skill proficiency.
+  int64 skill_proficiency_sid = 1;
+  // ID of the skill that this proficiency belongs to.
+  int64 skill_sid = 2;
+  // ID of the skill profile that contains the @skill_sid.
+  // If not set to NULL, then the proficiency value of the @skill_sid for that skill profile should be used,
+  // otherwise the @manual_proficiency_value is the preferred proficiency to use for the @skill_sid.
+  google.protobuf.Int64Value preferred_skill_profile_sid = 3;
+  // Manual proficiency value (from 1 to 100), it will be used when @preferred_skill_profile_sid is NULL.
+  int32 manual_proficiency_value = 4;
+  // Parent entity of the proficiency.
+  ParentEntity parent_entity = 5;
+
+  // The following fields are only used in the return of List requests of the entity.
+  // Name of the skill with @skill_sid.
+  string skill_name = 7;
+  // Name of the skill profile with @preferred_skill_profile_sid, will be blank if said field is NULL.
+  string skill_profile_name = 8;
+  // Proficiency value that @preferred_skill_profile_sid has for the given @skill_sid, it will be 0 if @preferred_skill_profile_sid is NULL.
+  int32 skill_profile_proficiency_value = 9;
+}
+
+// Request message for the CreateSkillProficiencies RPC
+message CreateSkillProficienciesReq{
+  // Skill proficiencies to create, the @skill_proficiency_sid's don't need to be set since they won't be used.
+  repeated SkillProficiency proficiencies = 1;
+  // ID of the schedule scenario that the @parent_entity in each @proficiency belongs to.
+  int64 schedule_scenario_sid = 2;
+}
+
+// Response message for the CreateSkillProficiencies RPC
+message CreateSkillProficienciesRes {}
+
+// Request message for the UpdateSkillProficiencies RPC
+message UpdateSkillProficienciesReq {
+  // Skill proficiencies to update.
+  repeated SkillProficiency skill_proficiencies = 1;
+}
+
+// Response message for the UpdateSkillProficiencies RPC
+message UpdateSkillProficienciesRes {}
+
+// Request message for the DeleteSkillProficiency RPC
+message DeleteSkillProficiencyReq{
+  // ID of skill proficiency to delete.
+  int64 skill_proficiency_sid = 1;
+}
+
+// Response message for the DeleteSkillProficiency RPC
+message DeleteSkillProficiencyRes {}
+
+// Represents the data encapsulated by a schedule scenario.
+message ScheduleScenario {
+  // ID of the schedule scenario.
+  int64 schedule_scenario_sid = 1;
+  // Name of the schedule scenario.
+  string name = 2;
+  // Description of the schedule scenario.
+  string description = 3;
+  // Datetime that the scenario was created.
+  google.protobuf.Timestamp creation_datetime = 4;
+  // ID of User/Agent in the TCN system that created the scenario.
+  // Field is ignored in all update requests.
+  string created_by_user_id = 5;
+  // Whether this scenario was the last scenario built/used for scheduling.
+  bool is_default = 6;
+  // ID of scenario that this scenario was copied from (if applicable).
+  google.protobuf.Int64Value copied_from_scenario_sid = 7;
+  // Datetime range that schedules will cover when built using this schedule scenario.
+  commons.DatetimeRange schedule_range = 8;
+}
+
+// Request message for the CopyScenario RPC
+message CopyScenarioReq {
+  // ID of the scenario that we are going to copy from.
+  int64 scenario_sid_to_copy = 1;
+  // If the new scenario should include the inactive entities associated with the scenario_sid_to_copy.
+  bool include_inactive = 2;
+  // If no input is given, this should be "Copy of: copied_scenario.name", otherwise use the given input.
+  string name = 3;
+  // If no input is given, use copied_scenario.description, otherwise use the given input.
+  string description = 4;
+}
+
+// Response message for the CopyScenario RPC
+message CopyScenarioRes {
+  // ID of the new scenario
+  int64 schedule_scenario_sid = 1;
+}
+
+// Request message for the CreateScheduleScenarioWithNodes RPC
+message CreateScheduleScenarioWithNodesReq {
+  // ScheduleScenario to be stored in the db.
+  ScheduleScenario schedule_scenario = 1;
+  // Name for the created call center node.
+  string call_center_node_name = 2;
+  // Description for the created call center node.
+  string call_center_node_description= 3;
+  // Name for the created client node.
+  string client_node_name = 4;
+  // Description for the created client node.
+  string client_node_description = 5;
+  // Name for the created location node.
+  string location_node_name = 6;
+  // Description for the location center node.
+  string location_node_description= 7;
+  // Name for the created program node.
+  string program_node_name = 8;
+  // Description for the created program node.
+  string program_node_description = 9;
+  // TimeZoneVal is the desired timezone for the created nodes.
+  commons.TimeZone time_zone_val = 10;
+}
+
+// Response message for the CreateScheduleScenarioWithNodes RPC
+message CreateScheduleScenarioWithNodesRes {
+  // ID of the scenario just created.
+  int64 schedule_scenario_sid = 1;
+}
+
+// Request message for the UpdateScheduleScenario RPC
+message UpdateScheduleScenarioReq {
+    ScheduleScenario scheduleScenario = 1;
+}
+
+// Request message for the UpdateScheduleScenario RPC
+message UpdateScheduleScenarioRes {}
+
+// Request message for the ListConfigEntities RPC
+message ListConfigEntitiesReq {
+  // Entity type of the entities to retrieve.
+ commons.ConfigEntityType entity_type = 1;
+  // Entity that the entities to return will belong to.
+  ParentEntity belongs_to_entity = 2;
+  // Indicates whether or not to retrieve inactive entities (true=active and inactive, false=active only).
+  bool include_inactive = 3;
+  // Depth to go down the config tree for children and member entities.
+  // e.g: a value of 0 will only get the entities requested with no children/member.
+  //      a value of 1 will get the entities with children/member entities included 1 level down.
+  int32 member_depth = 4;
+}
+
+// Response message for the ListConfigEntities RPC
+message ListConfigEntitiesRes {
+  // Group containing Client Nodes.
+  message ClientNodeEntities {
+    // Client Nodes.
+    repeated ClientNode entities = 1;
+  }
+  // Group containing Location Nodes.
+  message LocationNodeEntities {
+    // Location Nodes.
+    repeated LocationNode entities = 1;
+  }
+  // Group containing Program Nodes.
+  message ProgramNodeEntities {
+    // Program Nodes.
+    repeated ProgramNode entities = 1;
+  }
+  // Group of Agent Groups.
+  message AgentGroupEntities {
+    // Agent Groups.
+    repeated AgentGroup entities = 1;
+  }
+  // Group containing Shift Templates.
+  message ShiftTemplateEntities {
+      // Shift Templates.
+      repeated ShiftTemplate entities = 1;
+  }
+  // Group of WFM Agents.
+  message WFMAgentEntities {
+    // WFM Agents.
+    repeated WFMAgent entities = 1;
+  }
+  // Group containing Placement Rules.
+  message PlacementRuleEntities {
+      // Placement Rules.
+      repeated PlacementRule entities = 1;
+  }
+  // Group containing Constraint Rules.
+  message ConstraintRuleEntities {
+    // Constraint Rules.
+    repeated ConstraintRule entities = 1;
+  }
+  // Group of Non Skill Activities.
+  message NonSkillActivityEntities {
+    // Non Skill Activities.
+    repeated NonSkillActivity entities = 1;
+  }
+  // Group of AgentAvailabilityPatterns.
+  message AgentAvailabilityPatternEntities {
+    // Agent Availability Patterns.
+    repeated AgentAvailabilityPattern entities = 1;
+  }
+  // Group of OpenTimesPatterns.
+  message OpenTimesPatternEntities {
+    // Open Times Patterns.
+    repeated OpenTimesPattern entities = 1;
+  }
+  // Group of Skill Proficiencies.
+  message SkillProficiencyEntities {
+    // Skill Proficiencies.
+    repeated SkillProficiency entities = 1;
+  }
+  // Group of Schedule Scenarios.
+  message ScheduleScenarioEntities {
+    // Schedule Scenarios.
+    repeated ScheduleScenario entities = 1;
+  }
+
+  oneof entities {
+    // Call Center Node entity retrieved when @entity_type in the request is CallCenterNode.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were ScheduleScenario.
+    CallCenterNode call_center_node = 1;
+    // Client Node entities retrieved when @entity_type in the request is ClientNode.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were CallCenterNode.
+    ClientNodeEntities client_nodes = 2;
+    // Location Node entities retrieved when @entity_type in the request is LocationNode.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were ClientNode.
+    LocationNodeEntities location_nodes = 3;
+    // Program Node entities retrieved when @entity_type in the request is ProgramNode.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were LocationNode.
+    ProgramNodeEntities program_nodes = 4;
+    // Agent Group entities retrieved when @entity_type in the request is AgentGroup.
+    // Member WFM Agents returned will only include agents that have a not nil @tcn_agent_sid.
+    AgentGroupEntities agent_groups = 5;
+    // Shift Template entities retrieved when @entity_type in the request is ShiftTemplate.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were ProgramNode.
+    ShiftTemplateEntities shift_templates = 6;
+    // WFM Agent entities retrieved when @entity_type in the request is WFMAgent.
+    // When this entity is requested, the @belongs_to_entity.type will be ignored and assumed as if were AgentGroup.
+    WFMAgentEntities wfm_agents = 7;
+    // Placement Rules entities retrieved when @entity_type in the request is PlacementRule.
+    PlacementRuleEntities placement_rules = 8;
+    // Constraint Rule entities retrieved when @entity_type in the request is ConstraintRule.
+    ConstraintRuleEntities constraint_rules = 9;
+    // Non Skill Activity entities retrieved when @entity_type in the request is NonSkillActivity.
+    // This entity supports a @belongs_to_entity.type of ScheduleScenario, and will return all non skill activities in the specified scenario.
+    NonSkillActivityEntities non_skill_activities = 10;
+    // Agent Availability entities retrieved when @entity_type in the request is AgentAvailabilityPattern.
+    AgentAvailabilityPatternEntities agent_availability_patterns = 11;
+    // Open Times Pattern entities retrieved when @entity_type in the request is OpenTimesPattern.
+    OpenTimesPatternEntities open_times_patterns = 12;
+    // Scheduling Activity retrieved when @entity_type in the request is SchedulingActivity.
+    SchedulingActivity scheduling_activity = 13;
+    // Skill Proficiency entities retrieved when @entity_type in the request is SkillProficiency.
+    SkillProficiencyEntities skill_proficiencies = 14;
+    // Schedule Scenario entities retrieved when @entity_type in the request is ScheduleScenario.
+    // When this entity is requested, no children will be returned regardless of the @member_depth.
+    ScheduleScenarioEntities schedule_scenarios = 15;
+  }
+}
+
+// Message type specifying the parameters of a diagnostic
+message Diagnostic{
+  // The diagnostic level describes the class of the diagnostic message.
+  commons.DiagnosticLevel level = 1;
+  // A code to describe the diagnostic when possible. Default value of General when a more specific code is not available.
+  commons.DiagnosticCode code = 2;
+  // The message detailing the diagnostic.
+  string message = 3;
+  // The entity that the diagnostic was built in reference to.
+  ParentEntity source_entity= 4;
+}
+
+// Represents a group of diagnostics for a single entity
+message Diagnostics {
+  // The entity that the diagnostics built reference.
+  ParentEntity source_entity = 1;
+  // Diagnostics generated for the @source_entity
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the DeleteShiftInstances RPC
+message DeleteShiftInstancesReq{
+  // IDs of shift instances to delete.
+  repeated int64 shift_instance_sids = 1;
+}
+
+// Response message for the DeleteShiftInstances RPC
+message DeleteShiftInstancesRes {}
+
+// Request message for the BuildNodeDiagnostics RPC
+message BuildNodeDiagnosticsReq{
+  // The node that @diagnostics will be associated with.
+  ParentEntity node_to_check = 1;
+  // ID of the schedule scenario that @node_to_check belongs to.
+  int64 schedule_scenario_sid = 2;
+}
+
+// Response message for the BuildNodeDiagnostics RPC
+message BuildNodeDiagnosticsRes{
+  // Set of diagnostic reports for the given @node_to_check.
+  repeated Diagnostic diagnostics = 1;
+  // Set of all nodes checked during the diagnostics.
+  repeated ParentEntity nodes_checked = 2;
+}
+
+// Request message for the BuildGlobalDiagnostics RPC
+message BuildGlobalDiagnosticsReq{
+  // ID of the schedule scenario to get diagnostics for.
+  int64 schedule_scenario_sid = 1;
+}
+
+// Response message for the BuildGlobalDiagnostics RPC
+message BuildGlobalDiagnosticsRes{
+   // Set of diagnostic reports for the given @schedule_scenario_sid.
+  repeated Diagnostic diagnostics = 1;
+  // Set of all nodes checked during the diagnostics.
+  repeated ParentEntity nodes_checked = 2;
+}
+
+message PublishedSchedule {
+  // ID of this published schedule.
+  int64 published_schedule_sid = 1;
+  // Datetime of creation.
+  google.protobuf.Timestamp created_at = 2;
+  // Datetime of last update.
+  google.protobuf.Timestamp last_updated_at = 3;
+  // Shifts that this schedule has.
+  repeated ShiftInstance shift_instances = 4;
+  // Performance metrics that this schedule has.
+  repeated PerformanceMetric performance_metrics = 5;
+}
+
+// Represents a draft schedule
+message DraftSchedule {
+  // ID of the draft schedule.
+  int64 draft_schedule_sid = 1;
+  // Time that this the schedule was created.
+  google.protobuf.Timestamp created_at = 2;
+  // Time that this schedule was last updated.
+  google.protobuf.Timestamp last_updated_at = 3;
+  // Name of the draft schedule.
+  string name = 4;
+  // A description of the draft schedule.
+  string description = 5;
+  // Datetime range over which this draft schedule spans.
+  // Is the range used when copying shifts from published schedule.
+  // Also used when publishing shifts from the draft to the published schedule.
+  commons.DatetimeRange datetime_range = 6;
+  // ID of the user who originally drafted the schedule.
+  string created_by_user_id = 7;
+  // The following field is only return of List requests of the entity.
+  // Shifts that this schedule has.
+  repeated ShiftInstance shift_instances = 8;
+  // Performance metrics that this schedule has.
+  repeated PerformanceMetric performance_metrics = 9;
+}
+
+// Represents a performance metric
+message PerformanceMetric{
+  // Datetime range over which the metrics were determined.
+  commons.DatetimeRange date_range = 1;
+  // The total calls required over the @date_range, as determined by the forecast.
+  int32 total_calls_required = 2;
+  // The total calls the the schedule is likely to address with the current shift instances.
+  int32 total_ftes_achieved = 3;
+  // The number of intervals with required calls.
+  int32 num_intervals_with_required_calls = 4;
+  // The number of intervals with FTE's but no schedules.
+  int32 num_intervals_with_ftes_but_no_schedules = 5;
+  // the number of intervals with FTE's but no forecasted calls.
+  int32 num_intervals_with_ftes_but_no_forecasted_calls = 6;
+  // The total calls forecsted where there are no FTE's scheduled.
+  int32 total_unscheduled_calls = 7;
+  // The total number of FTE's scheduled where there were no forecasted calls.
+  int32 total_unnecessary_ftes = 8;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 9;
+  // The type of metric being reported.
+  commons.PerformanceMetricType metric_type = 10;
+  // One value will be set between @fte_intervals and @service_level_intervals, depending on @metric_type.
+  // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_intervals
+  // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
+  // Interval set comparing the number of FTE required to the number achieved.
+  repeated FTERequiredVsAchievedInterval fte_intervals = 11;
+  // Interval set checking the service level achieved as a percentage.
+  repeated ServiceLevelInterval service_level_intervals = 12;
+}
+
+// Represents a service level interval.
+message ServiceLevelInterval{
+  // The start time of the interval.
+  google.protobuf.Timestamp start_datetime = 1;
+  // The service level achieved as a percent value, ranging from 0.0 to 1.0
+  float service_level_achieved = 2;
+}
+
+// Represents an fte required vs achieved interval.
+message FTERequiredVsAchievedInterval{
+  // The start time of the interval.
+  google.protobuf.Timestamp start_datetime = 1;
+  // Number of required calls in the interval.
+  int32 required_calls = 2;
+  // Number of achieved FTE's in the interval.
+  int32 achieved_ftes = 3;
+}
+
+// Represents fte required
+// Used in GetPublishedScheduleRequiredCallsRes and GetDraftScheduleRequiredCallsRes.
+message RequiredCallsInterval {
+  // The start time of the interval.
+  google.protobuf.Timestamp start_datetime = 1;
+  // Number of required calls in the interval.
+  int32 required_calls = 2;
+}
+
+// Represents a shift instance
+message ShiftInstance{
+  // ID of the shift instance.
+  int64 shift_instance_sid = 1;
+  // The start time for this shift instance
+  google.protobuf.Timestamp start_datetime = 2;
+  // Tells the scheduler to leave this instance in tact when performing 'build schedule'.
+  // If set to false, the instance will not be locked and may be lost when a new schedule is built.
+  bool is_locked = 3;
+  // The duration of this shift instance in minutes.
+  int32 width_in_minutes = 4;
+  // ID of shift template that this shift instance belongs to.
+  int64 shift_template_sid = 5;
+  // ID of the program node that the shift instance belongs to, which may be different that the one that the @parent_shift_template_sid belongs to.
+  int64 originating_program_node_sid = 6;
+  // ID of the schedule that this shift instance belongs to.
+  // May either point to a published or draft schedule.
+  int64 schedule_sid = 7;
+  // ID for the wfm agent that is scheduled to this shift.
+  int64 wfm_agent_sid = 8;
+  // Type of schedule that this shift instance belongs to.
+  commons.ScheduleType schedule_type = 9;
+
+  // The following field is only returned in List requests of the entity.
+  // The ordered set of shift segments for this shift instance.
+  repeated ShiftSegment shift_segments = 10;
+  // The shift template used to create this shift instance.
+  ShiftTemplate shift_template = 11;
+}
+
+// Represents a shift segment
+message ShiftSegment {
+  // ID of this shift segment.
+  int64 shift_segment_sid = 1;
+  // ID of the shift instance that this segment belongs to.
+  int64 shift_instance_sid = 2;
+  // Order that this segment has in it's parent shift instance.
+  int32 order_in_shift_instance = 3;
+  // Width of this shift segment in minutes.
+  int32 width_in_minutes = 4;
+  // How long after the shift instance start time, the segment to begin.
+  int32 start_minute_in_shift = 5;
+  // Scheduling activity sid of this shift segment.
+  int64 scheduling_activity_sid = 7;
+
+  // The following field is only returned in List requests of the entity.
+  // The scheduling activity referred to by @scheduling_activity_sid
+  SchedulingActivity scheduling_activity = 8;
+}
+
+// Request message for the GetPublishedSchedule RPC
+message GetPublishedScheduleReq {
+  // Date range to of the published to return.
+  commons.DatetimeRange datetime_range = 1;
+  // Set to true to include shift instances.
+  bool include_shift_instances = 2;
+  // Set to true to include shift template in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_template = 3;
+  // Set to true to include shift segments in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_segments = 4;
+  // Set to true to include scheduling activity in each of the returned shift segments.
+  // Only effective when include_shift_instances and include_shift_segments are also set to true.
+  bool include_scheduling_activity = 5;
+  // Set to true to include non skill activity in each of the returned scheduling activities.
+  // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
+  bool include_activity = 6;
+  // The the shift instances will be associated with the origin node of @node_selector or the origin node of it's children program nodes.
+  // Optional field, if left nil all matching the given parameters will be included.
+  ParentEntity node_selector = 7;
+}
+
+// Response message for the GetPublishedSchedule RPC
+message GetPublishedScheduleRes {
+  // Published schedule found.
+  PublishedSchedule published_schedule = 1;
+}
+
+// Request message for the GetPublishedScheduleRequiredCalls RPC
+message GetPublishedScheduleRequiredCallsReq {
+  // Date range to return.
+  commons.DatetimeRange viewing_range = 1;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 2;
+}
+
+// Response message for the GetPublishedScheduleRequiredCalls RPC
+message GetPublishedScheduleRequiredCallsRes {
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 1;
+  // Required-calls intervals for the published schedule.
+  repeated RequiredCallsInterval required_calls_intervals = 2;
+}
+
+// Request message for the GetDraftScheduleRequiredCalls RPC
+message GetDraftScheduleRequiredCallsReq {
+  // Id of the draft schedule.
+  int64 draft_schedule_sid = 1;
+  // Date range to return.
+  commons.DatetimeRange viewing_range = 2;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 3;
+}
+
+// Response message for the GetDraftScheduleRequiredCalls RPC
+message GetDraftScheduleRequiredCallsRes {
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 1;
+  // Required-calls intervals for the published schedule.
+  repeated RequiredCallsInterval required_calls_intervals = 2;
+}
+
+// Request message for the CreateDraftSchedule RPC
+message CreateDraftScheduleReq {
+  // Name of the draft schedule.
+  string name = 1;
+  // Description of the draft schedule.
+  string description = 2;
+  // Range to retrieve shift instances and segments from the published schedule to use for this draft schedule.
+  commons.DatetimeRange scheduling_range = 3;
+}
+
+// Response message for the CreateDraftSchedule RPC
+message CreateDraftScheduleRes {
+  // ID of the newly created draft schedule.
+  int64 draft_schedule_sid = 1;
+}
+
+// Request message for the BuildDraftSchedule RPC.
+message BuildDraftScheduleReq {
+  // ID of the draft schedule.
+  int64 draft_schedule_sid = 1;
+  // ID of the node's schedule scenario sid.
+  int64 schedule_scenario_sid = 2;
+  // Datetime range to set for the schedule scenario used to make the draft schedule.
+  // If left blank, the current scheduling range for the scenario will be used
+  commons.DatetimeRange schedule_scenario_scheduling_range = 3;
+  // The node that the shifts should be associated with.
+  ParentEntity node_selector = 4;
+  // Set to true to include shift instances.
+  bool include_shift_instances = 5;
+  // Set to true to include shift template in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_template = 6;
+  // Set to true to include shift segments in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_segments = 7;
+  // Set to true to include scheduling activity in each of the returned shift segments.
+  // Only effective when include_shift_instances and include_shift_segments are also set to true.
+  bool include_scheduling_activity = 8;
+  // Set to true to include non skill activity in each of the returned scheduling activities.
+  // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
+  bool include_activity = 9;
+}
+
+// Response message for the BuildDraftSchedule RPC
+message BuildDraftScheduleRes {
+  // The built draft schedule.
+  DraftSchedule draft_schedule = 1;
+  // Set of diagnostic reports for the given @draft_schedule_sid.
+ repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the PublishDraftSchedule RPC
+message PublishDraftScheduleReq {
+  // ID of the draft schedule being published.
+  int64 draft_schedule_sid = 1;
+  // Node that the shift instances will belong to.
+  ParentEntity node_selector = 2;
+  // Date range to of the drafts to publish.
+  commons.DatetimeRange datetime_range = 3;
+  // Include fields determine what the returned published schedule will include
+  // Set to true to include shift instances.
+  bool include_shift_instances = 4;
+  // Set to true to include shift template in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_template = 5;
+  // Set to true to include shift segments in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_segments = 6;
+  // Set to true to include scheduling activity in each of the returned shift segments.
+  // Only effective when include_shift_instances and include_shift_segments are also set to true.
+  bool include_scheduling_activity = 7;
+  // Set to true to include non skill activity in each of the returned scheduling activities.
+  // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
+  bool include_activity = 8;
+  // If set to true, it will publish the schedule regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not publish the schedule
+  bool ignore_diagnostics_errors = 9;
+}
+
+// Response message for the PublishDraftSchedule RPC
+message PublishDraftScheduleRes {
+  // Resulting Published schedule.
+  PublishedSchedule published_schedule = 1;
+  // Any diagnostics that were produced while publishing the schedule
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the GetDraftSchedule RPC
+message GetDraftScheduleReq {
+  // ID of the draft schedule to return.
+  int64 draft_schedule_sid = 1;
+  // Datetime range to set for the schedule scenario used to make the draft schedule.
+  // If left blank, the current scheduling range for the scenario will be used
+  commons.DatetimeRange datetime_range = 2;
+  // Set to true to include shift instances.
+  bool include_shift_instances = 3;
+  // Set to true to include shift template in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_template = 4;
+  // Set to true to include shift segments in each of the returned shift instances.
+  // Only effective when include_shift_instances is also set to true.
+  bool include_shift_segments = 5;
+  // Set to true to include scheduling activity in each of the returned shift segments.
+  // Only effective when include_shift_instances and include_shift_segments are also set to true.
+  bool include_scheduling_activity = 6;
+  // Set to true to include non skill activity in each of the returned scheduling activities.
+  // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
+  bool include_activity = 7;
+  // The the shift instances will be associated with the origin node of @node_selector or the origin node of it's children program nodes.
+  // Optional field, if left nil all matching the given parameters will be included.
+  ParentEntity node_selector = 8;
+}
+
+// Response message for the GetDraftSchedule RPC
+message GetDraftScheduleRes {
+  // Draft schedule found.
+  DraftSchedule draft_schedule = 1;
+}
+
+// Request message for the ListDraftSchedules RPC
+message ListDraftSchedulesReq {
+  // Date range to of the drafts to return.
+  // If left blank, then all draft schedules for the org will be returned.
+  commons.DatetimeRange datetime_range = 1;
+}
+
+// Response message for the ListDraftSchedules RPC
+message ListDraftSchedulesRes {
+  // Draft schedules found.
+  repeated DraftSchedule draft_schedules = 1;
+}
+
+// Request message for the DeleteDraftSchedule RPC
+message DeleteDraftScheduleReq{
+  // ID of draft schedule to delete.
+  int64 draft_schedule_sid = 1;
+}
+
+// Response message for the DeleteDraftSchedule RPC
+message DeleteDraftScheduleRes {}
+
+// Request message for the CreateShiftInstance RPC
+message CreateShiftInstanceReq {
+  // ID of the draft schedule for the shift instance.
+  int64 draft_schedule_sid = 1;
+  // ID of the shift template for the shift instance.
+  int64 shift_template_sid = 2;
+  // Start datetime of the shift instance.
+  google.protobuf.Timestamp start_datetime = 3;
+  // Width in minutes of the shift instance.
+  int32 width_in_minutes = 4;
+  // Indicates whether the shift instance is locked.
+  bool is_locked = 5;
+  // ID of the wfm agent for the shift instance. If null it will
+  // create a new unassigned WfmAgent for the shift instance.
+  google.protobuf.Int64Value wfm_agent_sid = 6;
+  // Metric types for the shift instance.
+  repeated commons.PerformanceMetricType metric_types = 7;
+}
+
+// Response message for the CreateShiftInstance RPC
+message CreateShiftInstanceRes {
+  // Shift instance that was created.
+  ShiftInstance shift_instance = 1;
+  // Performance metrics that this shift instance has.
+  repeated PerformanceMetric performance_metrics = 2;
+}
+
+// Request message for the SwapShiftInstances RPC
+message SwapShiftInstancesReq {
+  // ID of the wfm agent sid that the shift instances had.
+  int64 wfm_agent_sid1 = 1;
+  // ID of the wfm agent sid that the shift instances will have.
+  int64 wfm_agent_sid2 = 2;
+  // IDs of the shift instances that will be swapped.
+  repeated int64 shift_instance_sids = 3;
+}
+
+// Response message for the SwapShiftInstances RPC
+message SwapShiftInstancesRes {
+  // Shift instances that were swapped.
+  repeated ShiftInstance shift_instances = 1;
+}
+
+// Request message for the UpdateShiftInstance RPC
+message UpdateShiftInstanceReq {
+  // ID of the shift instance.
+  int64 shift_instance_sid = 1;
+  // The start time for this shift instance
+  google.protobuf.Timestamp start_datetime = 2;
+  // Tells the scheduler to leave this instance in tact when performing 'build schedule'.
+  // If set to false, the instance will not be locked and may be lost when a new schedule is built.
+  bool is_locked = 3;
+  // The duration of this shift instance in minutes.
+  int32 width_in_minutes = 4;
+  // ID of the wfm agent for the shift instance. If null it will
+  // create a new unassigned WfmAgent for the shift instance.
+  google.protobuf.Int64Value wfm_agent_sid = 5;
+  // Types of metrics.
+  repeated commons.PerformanceMetricType metric_types = 6;
+}
+
+// Response message for the UpdateShiftInstance RPC
+message UpdateShiftInstanceRes {
+  // Shift instance that was updated.
+  ShiftInstance shift_instance = 1;
+  // Performance metrics that this shift instance has.
+  repeated PerformanceMetric performance_metrics = 2;
+}
+
+// ListShiftSegmentsByShiftInstanceSids request.
+message ListShiftSegmentsByShiftInstanceSidsReq {
+  // IDs of shift instances referenced by requested shift segments.
+  repeated int64 shift_instance_sids = 1;
+  // Set to true to include the scheduling activity in each of the returned shift segments.
+  bool include_scheduling_activity = 2;
+  // Set to true to include the non skill activity for the scheduling activities returned (if those are set to be included).
+  bool include_activity = 3;
+}
+
+// ListShiftSegmentsByShiftInstanceSids response.
+message ListShiftSegmentsByShiftInstanceSidsRes {
+  // Requested shift segments.
+  repeated ShiftSegment shift_segments = 1;
+}
+
+// Represents a Performance Metric Parameter.
+message PerformanceMetricParameter {
+  // The type of metric.
+  commons.PerformanceMetricType metric_type = 1;
+  // Number of seconds allowed to answer a call if the @metric_type is set to SERVICE_LEVEL_ANALYSIS.
+  // If @metric_type is not SERVICE_LEVEL_ANALYSIS then this field must be set to nil.
+  google.protobuf.Int64Value service_level_target_duration_seconds = 2;
+}
+
+// Request message for the GetPerformanceMetrics RPC.
+message GetPerformanceMetricsReq {
+  // The schedule that the performance metric should be associated with.
+  commons.ScheduleSelector schedule_selector = 1;
+  // The origin node that the performance metrics should be associated with.
+  ParentEntity node_selector = 2;
+  // The datetime range over which the metrics will be collected.
+  commons.DatetimeRange datetime_range = 3;
+  // Parameters to get metrics for.
+  repeated PerformanceMetricParameter metric_params = 4;
+  // The number of minutes to consolidate each metric interval into.
+  // Must be a multiple of 5.
+  int32 interval_width_in_minutes = 5;
+}
+
+// Response message for the GetPerformanceMetrics RPC.
+message GetPerformanceMetricsRes {
+  // Requested set of performance metrics.
+  repeated PerformanceMetric performance_metrics = 1;
+}
+
+message SchedulingTarget {
+  // ID of the scheduling target.
+  int64 scheduling_target_sid = 1;
+  // Target type for the @node to override the inherited value.
+  commons.SchedulingTargetType scheduling_target_type = 2;
+  // Target percentage for scheduling.
+  float scheduling_target_percentage = 3;
+  // Number of seconds allowed to answer call for the scheduling if @scheduling_target_type is set to SERVICE_LEVEL.
+  // If @scheduling_target_type is not SERVICE_LEVEL then this field must be set to nil
+  google.protobuf.Int64Value service_level_target_duration_seconds = 4;
+  // The node that the scheduling target if used by.
+  // May be set to nil if associated with the master scheduling target.
+  ParentEntity node_entity = 5;
+}
+
+// SetSchedulingTarget request.
+message SetSchedulingTargetReq {
+  // Scheduling target to create.
+  SchedulingTarget scheduling_target = 1;
+  // ID of the schedule scenario that the @node_entity belongs to.
+  int64 schedule_scenario_sid = 2;
+}
+
+// SetSchedulingTarget reponse.
+message SetSchedulingTargetRes {
+  // ID of the newly created scheduling target.
+  int64 scheduling_target_sid = 1;
+}
+
+// GetSchedulingTarget request.
+message GetSchedulingTargetReq {
+  // Node to get the scheduling target from.
+  ParentEntity node_selector = 1;
+}
+
+// GetSchedulingTarget reponse.
+message GetSchedulingTargetRes {
+  // The scheduling target that the node is inheriting from a parent.
+  SchedulingTarget inherited_scheduling_target = 1;
+  // The node's own scheduling target.
+  SchedulingTarget own_scheduling_target = 2;
+  // The resulting scheduling target for the node.
+  // If there is no value for @inherited_scheduling_target or @own_scheduling_target the system default value will be used.
+  SchedulingTarget resulting_scheduling_target = 3;
+}
+
+// DeleteSchedulingTarget request.
+message DeleteSchedulingTargetReq {
+  // The node to delete the scheduling target for.
+  ParentEntity node_selector = 1;
+}
+
+// DeleteSchedulingTarget response.
+message DeleteSchedulingTargetRes {}
+
+// Request message for the ListRequiredCallsIntervals RPC.
+message ListRequiredCallsIntervalsReq{
+  // The that the required call intervals will be associated with.
+  ParentEntity node_selector = 1;
+  // The datetime range across which required call intervals will be collected.
+  commons.DatetimeRange datetime_range = 2;
+  // The number of minutes to consolidate each metric interval into.
+  // Must be a multiple of 5.
+  int32 interval_width_in_minutes = 3;
+}
+
+// Response message for the ListRequiredCallsIntervals RPC.
+message ListRequiredCallsIntervalsRes{
+  // The width of each interval in minutes.
+  int32 interval_width_in_minutes = 1;
+  // Requested required call intervals.
+  repeated RequiredCallsInterval required_calls_intervals = 2;
+}

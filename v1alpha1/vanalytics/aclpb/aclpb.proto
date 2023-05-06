@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package v1alpha1.vanalytics.aclpb;
+
+
+
+// AgentCallLog resource.
+message AgentCallLog {
+  // actions are the agent call log actions.
+  repeated Action actions = 1;
+}
+
+// Action is an agent call log action.
+message Action {
+  oneof kind {
+    // CallSkillsInitial are the initial call skills on a call.
+    CallSkillsInitial call_skills_initial = 1;
+    // CallEnded is the reason the call ended.
+    string call_ended = 2;
+  }
+}
+
+// CallSkillsInitial are the initial call skills on a call.
+message CallSkillsInitial {
+  // need is all the call skills that are needed.
+  repeated string need = 1;
+  // want is all the call skills that are wanted.
+  repeated string want = 2;
+}

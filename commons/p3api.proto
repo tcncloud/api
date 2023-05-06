@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+message ClientInfoDataRow {
+  string field_label = 1;
+  string field_value = 2;
+  bool is_phone = 3;
+  bool dialed_number = 4;
+  int64 contact_field_description_sid = 5;
+}
+
+message RGBColor {
+  int32 red = 1;
+  int32 green = 2;
+  int32 blue = 3;
+}
+
+// States for interrupting peering
+enum InterruptedPeeringStatus {
+    InterruptPeeringStatus_MANUAL = 0;
+    InterruptPeeringStatus_PREVIEW = 1;
+}
+
+// Dialed Number Field Settings
+message DialedNumberFieldSettings {
+  // Should the dialed number be displayed?
+  bool should_display = 1;
+  // Color of the text of the dialed number
+  RGBColor color = 2;
+  // Color of the background of the dialed number
+  RGBColor bg_color = 3;
+  // Shows a copy button in the row that copies the field value to your clipboard
+  bool allow_agent_copy = 4;
+}
+
+// ClientInfoDisplayTemplateRow
+message ClientInfoDisplayTemplateRow {
+  // Field label for the row
+  string field_label = 1;
+  // Color of the text in the row
+  RGBColor color = 2;
+  // Backgorund color in the row
+  RGBColor bg_color = 3;
+  // Sid that relates the row to a contact field description
+  int64 contact_field_description_sid = 4;
+  // Shows a copy button in the row that copies the field value to your clipboard
+  bool allow_agent_copy = 5;
+}
+
+message CallHistorySearchType {
+  enum Enum {
+    STANDARD = 0;
+    BY_ID = 1;
+    BY_AGENT = 2;
+  }
+}
+
+message CallHistorySearchScope {
+  enum Enum {
+    ALL = 0;
+    TWENTY_FOUR_HOURS = 1;
+    TWO_DAYS = 2;
+    THREE_DAYS = 3;
+    FIVE_DAYS = 4;
+    SEVEN_DAYS = 5;
+    THIRTY_DAYS = 6;
+    SIXTY_DAYS = 7;
+    NINETY_DAYS = 8;
+    ONEHUNDRED_TWENTY_DAYS = 9;
+    ONEHUNDRED_FIFTY_DAYS = 10;
+    ONEHUNDRED_EIGHTY_DAYS = 11;
+  }
+}
+
+message ListPhoneBookOrderBy {
+  enum Enum {
+    PHONE_BOOK_SID = 0;
+    ENTRY_TYPE = 1;
+    ENTRY_NAME = 2;
+    CLIENT_SID = 3;
+    HUNT_GROUP_SID = 4;
+    PHONE_NUMBER = 5;
+    PHONE_NUMBER_TYPE = 6;
+    PHONE_NUMBER_HIDDEN = 7;
+  }
+}
+
+enum RecalculateBillingMonth {
+  RECALCULATE_BILLING_MONTH_CURRENT = 0;
+  RECALCULATE_BILLING_MONTH_PREVIOUS = 1;
+}
+
+enum RecalculateBillingType {
+  reserved 5;
+  reserved "RECALCULATE_BILLING_TYPE_VOCAL_DIRECT";
+  RECALCULATE_BILLING_TYPE_OUTBOUND_CALLS = 0;
+  RECALCULATE_BILLING_TYPE_INBOUND_CALLS = 1;
+  RECALCULATE_BILLING_TYPE_AGENTS = 2;
+  RECALCULATE_BILLING_TYPE_SMS = 3;
+  RECALCULATE_BILLING_TYPE_EMAIL = 4;
+  RECALCULATE_BILLING_TYPE_MANUAL_DIAL_CALLS = 6;
+}
+
+enum PhoneBookSIPType {
+  PHONE_BOOK_SIP_TYPE_OUTBOUND = 0;
+  PHONE_BOOK_SIP_TYPE_TRANSFER = 1;
+}
+
+enum PhoneBookPhoneNumberType {
+  PHONE_BOOK_PHONE_NUMBER_TYPE_CALLER_ID = 0;
+  PHONE_BOOK_PHONE_NUMBER_TYPE_OUTBOUND = 1;
+  PHONE_BOOK_PHONE_NUMBER_TYPE_TRANSFER = 2;
+}

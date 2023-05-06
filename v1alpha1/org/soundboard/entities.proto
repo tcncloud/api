@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package api.v1alpha1.soundboard;
+
+import "google/protobuf/timestamp.proto";
+import "commons/auth/perms.proto";
+import "commons/org.proto";
+
+
+
+// SoundboardDetails is the core entity which contains metadata for soundboard
+// audio files, along with their identifiers.
+message SoundboardDetails {
+  // ID of the soundboard, in the snowflake ID format.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+  // Name of audio file (does not include path), e.g. 'file.wav'.
+  string file_name = 2;
+  // Audio file format of soundboard (.wav or .mp3).
+  commons.RecordingFileType file_type = 3;
+  // Soundboard title.
+  string title = 4;
+  // Soundboard description.
+  string description = 5;
+  // Timestamp of when the soundboard was created.
+  google.protobuf.Timestamp date_created = 6;
+  // Timestamp of when the soundboard was last updated.
+  google.protobuf.Timestamp last_modified = 7;
+  // Soundboard audio file size as number of bytes, e.g. '3145728' = 3mb.
+  int64 file_size = 8;
+  // Length of audio file in seconds, e.g. '192' = 3:12.
+  int64 recording_length = 9;
+}
+
+// Request message for the GetSoundboardFile RPC method.
+message GetSoundboardFileReq {
+  // ID of the requested soundboard whose file will be returned.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for the GetSoundboardFile RPC method.
+message GetSoundboardFileRes {
+  // Segments of the audio file, sent in 3mb chunks.
+  bytes soundboard_file = 1;
+}
+
+// Request message for the GetSoundboard RPC method.
+message GetSoundboardReq {
+  // ID of the requested soundboard whose details will be returned.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for the GetSoundboard RPC method.
+message GetSoundboardRes {
+  // Metadata of the soundboard.
+  SoundboardDetails soundboard = 1;
+}
+
+// Request message for the CreateSoundboard RPC method.
+message CreateSoundboardReq {
+  // The metadata of the soundboard.
+  SoundboardDetails soundboard = 1;
+  // The generated ID received from fts.GetUploadFileUrl.
+  string fts_id = 2;
+}
+
+// Response message for the CreateSoundboard RPC method.
+message CreateSoundboardRes {
+  // Generated snowflake ID which will correspond to the soundboard.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+  // The generated ID received from fts.GetUploadFileUrl.
+  string fts_id = 2;
+}
+
+// Request message for the ListSoundboards RPC method.
+message ListSoundboardsReq {
+}
+
+// Response message for the ListSoundboards RPC method.
+message ListSoundboardsRes {
+  // Each soundboard's metadata belonging to org.
+  repeated SoundboardDetails soundboards = 1;
+}
+
+// Request message for the UpdateSoundboard RPC method.
+message UpdateSoundboardReq {
+  // Soundboard details to be updated, must contain soundboard and org id.
+  SoundboardDetails soundboard = 1;
+}
+
+// Response message for the UpdateSoundboard RPC method.
+message UpdateSoundboardRes {
+  // ID of the soundboard which was updated.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+}
+
+// Request message for the DeleteSoundboard RPC method.
+message DeleteSoundboardReq {
+  // ID of the soundboard whose file and details will be deleted.
+  int64 soundboard_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for the DeleteSoundboard RPC method.
+message DeleteSoundboardRes {
+}

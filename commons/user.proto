@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+// Facilitate user filtering on archived state
+enum UserArchivedStateFilter{
+  // Do not filter (get all users)
+  USER_ARCHIVED_STATE_FILTER_ALL = 0;
+  // Filter to only archived user
+  USER_ARCHIVED_STATE_FILTER_ARCHIVED = 1;
+  // Filter to only unarchived (active) user
+  USER_ARCHIVED_STATE_FILTER_UNARCHIVED = 2;
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package commons;
+
+option java_package="com.tcn.api.commons";
+option go_package="github.com/tcncloud/api/commons;commons";
+
+
+
+
+enum AppName {
+  OUTSIDE = 0;
+  LMS = 1;
+  P3API = 2;
+  ANA = 3;
+  COMPLIANCE = 4;
+  VMDS = 5;
+  EMAIL = 6;
+  CJS = 7;
+  VANALYTICS = 8;
+  INTEGRATIONS = 9;
+  OMNICHANNEL = 10;
+  LEARN = 11;
+}

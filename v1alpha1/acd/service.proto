@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package v1alpha1.acd;
+
+option java_package="com.tcn.api.v1alpha1.acd";
+option go_package="github.com/tcncloud/api/v1alpha1.acd;acd";
+
+
+
+
+import "google/api/annotations.proto";
+import "annotations/authz.proto";
+import "commons/types.proto";
+
+service AcdApi {
+    // rpc here
+}
+
+// messages here

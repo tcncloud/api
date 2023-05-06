@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+
+
+package commons.workflows;
+
+option java_package="com.tcn.api.commons.workflows";
+option go_package="github.com/tcncloud/api/commons.workflows;workflows";
+
+import "commons/workflows/example.proto";
+import "commons/workflows/omni.proto";
+
+// A node is a single step in a flow
+message NodeDefinition {
+    // common fields for a node
+    string id = 1;
+    string name = 3;
+    string description = 4;
+    repeated string outputs = 5;
+    string error_node_id = 6;
+
+    // specific node definition
+    oneof definition {
+        NodePrint print = 101;
+        NodeRandom random = 102;
+        NodeConsoleInput console_input = 103;
+        NodeComparator comparator = 104;
+        NodeStoreInput store_input = 105;
+        NodeChatbot chatbot = 1000;
+        OmniNodePrompt omni_prompt = 201;
+        OmniNodeSetSkill omni_set_skill = 202;
+        OmniNodeToAgent omni_to_agent = 203;
+        OmniNodeError omni_error = 204;
+
+    }
+}
