@@ -2,15 +2,12 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
-import "google/protobuf/wrappers.proto";
 import "commons/auth/perms.proto";
 import "commons/org/labels.proto";
+import "google/protobuf/wrappers.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // Trust is the entity message for trusts.
 message Trust {
@@ -24,14 +21,14 @@ message Trust {
   string name = 4;
   // Description of the trust.
   string description = 5;
-  // Permissions the grantor allows users within the 
+  // Permissions the grantor allows users within the
   // grantee org to have when assigned.
   repeated commons.auth.Permission permissions = 6;
   // Labels associated with the trusted permissions.
   repeated Label labels = 7;
   // Status of the Trust.
   Status status = 8;
-  
+
   bool deleted = 9;
 }
 
@@ -75,4 +72,4 @@ message TrustFilter {
   message StatusFilter {
     repeated Status values = 1;
   }
-} 
+}

@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
-import "google/protobuf/wrappers.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum TimeZone {
   TIME_ZONE_AMERICA_PUERTO_RICO = 0; // America/Puerto_Rico
@@ -224,52 +221,52 @@ enum PhoneFieldOption {
   PHONE_FIELD_OPTION_UTC_OFFSET = 27;
 }
 
-enum PhonePostalDisplayOptions {    // An enum for the keys used to specify what Phone/Zip metadata to display in the Agent app.
-  DISPLAY_OPTION_ADMIN_CODE_1 = 0;  // KEY adminCode1
-  DISPLAY_OPTION_ADMIN_CODE_2 = 1;  // KEY adminCode2
-  DISPLAY_OPTION_ADMIN_CODE_3 = 2;  // KEY adminCode3
-  DISPLAY_OPTION_ADMIN_NAME_1 = 3;  // KEY adminName1
-  DISPLAY_OPTION_ADMIN_NAME_2 = 4;  // KEY adminName2
-  DISPLAY_OPTION_ADMIN_NAME_3 = 5;  // KEY adminName3
-  DISPLAY_OPTION_AREA_CODE = 6;     // KEY areaCode
-  DISPLAY_OPTION_CARRIER = 7;       // KEY carrier
+enum PhonePostalDisplayOptions { // An enum for the keys used to specify what Phone/Zip metadata to display in the Agent app.
+  DISPLAY_OPTION_ADMIN_CODE_1 = 0; // KEY adminCode1
+  DISPLAY_OPTION_ADMIN_CODE_2 = 1; // KEY adminCode2
+  DISPLAY_OPTION_ADMIN_CODE_3 = 2; // KEY adminCode3
+  DISPLAY_OPTION_ADMIN_NAME_1 = 3; // KEY adminName1
+  DISPLAY_OPTION_ADMIN_NAME_2 = 4; // KEY adminName2
+  DISPLAY_OPTION_ADMIN_NAME_3 = 5; // KEY adminName3
+  DISPLAY_OPTION_AREA_CODE = 6; // KEY areaCode
+  DISPLAY_OPTION_CARRIER = 7; // KEY carrier
   DISPLAY_OPTION_CENTRAL_OFFICE_CODE_TYPE = 8; // cocType
-  DISPLAY_OPTION_CITY = 9;          // KEY city
-  DISPLAY_OPTION_CITY_NAME = 10;    // KEY cityName
-  DISPLAY_OPTION_CITY_TYPE = 11;    // KEY cityType
+  DISPLAY_OPTION_CITY = 9; // KEY city
+  DISPLAY_OPTION_CITY_NAME = 10; // KEY cityName
+  DISPLAY_OPTION_CITY_TYPE = 11; // KEY cityType
   DISPLAY_OPTION_COUNTRY_CODE = 12; // KEY countryCode
   DISPLAY_OPTION_COUNTRY_CODE_SUBSCRIBER_NUMBER = 13; // KEY ccnsn
-  DISPLAY_OPTION_ISO_2 = 14;        // KEY iso2
-  DISPLAY_OPTION_COUNTY_NAME = 15;  // KEY countyName
-  DISPLAY_OPTION_COUNTY_FIPS = 16;  // KEY countyFips
+  DISPLAY_OPTION_ISO_2 = 14; // KEY iso2
+  DISPLAY_OPTION_COUNTY_NAME = 15; // KEY countyName
+  DISPLAY_OPTION_COUNTY_FIPS = 16; // KEY countyFips
   DISPLAY_OPTION_INTERNATIONAL_PREFIX = 17; // KEY internationalPrefix
-  DISPLAY_OPTION_LANGUAGE = 18;     // KEY language
-  DISPLAY_OPTION_LATITUDE = 19;     // KEY latitude
+  DISPLAY_OPTION_LANGUAGE = 18; // KEY language
+  DISPLAY_OPTION_LATITUDE = 19; // KEY latitude
   DISPLAY_OPTION_LONGITUDE_LATITUDE_ACCURACY = 20; // KEY accuracy
-  DISPLAY_OPTION_LONGITUDE = 21;    // KEY longitude
+  DISPLAY_OPTION_LONGITUDE = 21; // KEY longitude
   DISPLAY_OPTION_MAXIMUM_BLOCK_NUMBER = 22; // KEY max
   DISPLAY_OPTION_METROPOLITAN_STATISTICAL_AREA = 23; // KEY msaCode
   DISPLAY_OPTION_MINIMUM_BLOCK_NUMBER = 24; // KEY min
   DISPLAY_OPTION_NATIONAL_DESTINATION_CODE = 25; // KEY ndc
   DISPLAY_OPTION_NATIONAL_PREFIX = 26; // KEY nationalPrefix
-  DISPLAY_OPTION_NUMBER_PREFIX = 27;  // KEY prefix
-  DISPLAY_OPTION_NUMBER_TYPE = 28;    // KEY type
+  DISPLAY_OPTION_NUMBER_PREFIX = 27; // KEY prefix
+  DISPLAY_OPTION_NUMBER_TYPE = 28; // KEY type
   DISPLAY_OPTION_NUMBER_USES_NDC = 29; // KEY usesNdc
-  DISPLAY_OPTION_OBSERVES_DAYLIGHT_SAVINGS_TIME = 30;  // KEY dst
-  DISPLAY_OPTION_PLACE_NAME = 31;     // KEY placeName
-  DISPLAY_OPTION_POSTAL_CODE = 32;    // KEY postalCode
+  DISPLAY_OPTION_OBSERVES_DAYLIGHT_SAVINGS_TIME = 30; // KEY dst
+  DISPLAY_OPTION_PLACE_NAME = 31; // KEY placeName
+  DISPLAY_OPTION_POSTAL_CODE = 32; // KEY postalCode
   DISPLAY_OPTION_POSTAL_CODE_ALPHANUMERIC = 33; // KEY postalCodeKey
-  DISPLAY_OPTION_POSTAL_TYPE = 34;    // KEY postalType
+  DISPLAY_OPTION_POSTAL_TYPE = 34; // KEY postalType
   DISPLAY_OPTION_PROVINCE_ABBREVIATION = 35; // KEY regionCode
-  DISPLAY_OPTION_PROVINCE_NAME = 36;  // KEY regionName
+  DISPLAY_OPTION_PROVINCE_NAME = 36; // KEY regionName
   DISPLAY_OPTION_SPECIAL_SERVICE_CODE_1 = 37; // KEY ssc1
   DISPLAY_OPTION_SPECIAL_SERVICE_CODE_2 = 38; // KEY ssc2
   DISPLAY_OPTION_SPECIAL_SERVICE_CODE_3 = 39; // KEY ssc3
   DISPLAY_OPTION_SPECIAL_SERVICE_CODE_4 = 40; // KEY ssc4
   DISPLAY_OPTION_PROVINCE_STATE_NAME = 41; // KEY provinceName
   DISPLAY_OPTION_STATE_FIPS_CODE = 42; // KEY stateFips
-  DISPLAY_OPTION_TIME_ZONE = 43;      // KEY timeZone
-  DISPLAY_OPTION_UTC_OFFSET = 44;     // KEY utc
+  DISPLAY_OPTION_TIME_ZONE = 43; // KEY timeZone
+  DISPLAY_OPTION_UTC_OFFSET = 44; // KEY utc
 }
 
 enum OperatorApplications {
@@ -733,6 +730,7 @@ enum DefaultManualCallRecording {
   DEFAULT_MANUAL_CALL_RECORDING_ENABLED = 1;
   DEFAULT_MANUAL_CALL_RECORDING_DISABLED = 2;
 }
+
 // For settings with three states; Use Org Default (Client Preference), Enabled for this hunt group or Disabled for this hunt group.
 enum HuntGroupOrgDefaultCustom {
   HUNT_GROUP_USE_ORG_DEFAULT = 0;
@@ -810,7 +808,7 @@ enum DataDipTemplateFilterType {
 }
 
 // Facilitate organization filtering on archived state
-enum OrganizationArchivedStateFilter{
+enum OrganizationArchivedStateFilter {
   // Filter to only unarchived
   ORGANIZATION_ARCHIVED_STATE_FILTER_UNARCHIVED = 0;
   // Filter to only archived

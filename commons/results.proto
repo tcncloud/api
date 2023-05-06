@@ -2,12 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum CallResult {
   CALL_RESULT_UNKNOWN = 0; // it's here only b/c protobuf requires it ... do never use it!
@@ -19,7 +15,7 @@ enum CallResult {
   CALL_RESULT_ANSWERED_LINKCALL_ABANDONED = 2110; // "CALL_ANSWERED_LINKCALL_ABANDONED", "Answered Linkcall Abandoned", "ALA", "Call was answered and a linkback established, but was abandoned  before agent connect"),
   CALL_RESULT_ANSWERED_LINKCALL_AGENT_TALK = 2120; // "CALL_ANSWERED_LINKCALL_AGENT_TALK", "Answered Linkcall Agent Talk", "AGT", "Call was answered and a linkback established to agent"),
   CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED = 2130; // "CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED", "Answered Linkcall suspended", "call was suspended"
-	CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED_TIMEOUT = 2140; // "CALL_ANSWERED_LINKCALL_SUSPENDED_TIMEOUT", "Suspend linkcall timeout", "call was timedout"),
+  CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED_TIMEOUT = 2140; // "CALL_ANSWERED_LINKCALL_SUSPENDED_TIMEOUT", "Suspend linkcall timeout", "call was timedout"),
   CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED_INBOUND_OVERRIDE = 2150; // "CALL_ANSWERED_LINKCALL_LINKCALL_SUSPENDED_REPLACE_WITH_CALLER", "suspended call reaplaced with caller.)"
   CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED_RESUMED = 2160; // "CALL_RESULT_ANSWERED_LINKCALL_SUSPENDED_RESUMED", "Answered Linkcall Suspended Resume", "suspended call resumed.)"
   CALL_RESULT_ANSWERED_HANGUP = 2200; // "CALL_ANSWERED_HANGUP", "Answered Hangup", "ANH", "Call was answered and the TCN system hung up"),
@@ -65,5 +61,4 @@ enum CallResult {
   CALL_RESULT_CANCELED_DNCL_ZIP_CODE = 9320; // "CALL_CANCELED_DNCL_ZIP_CODE", "Canceled DNC Zip Code", "CDZ", "Call canceled due to requested zip code scrubbing"),
   CALL_RESULT_CANCELED_MAX_RETRY = 9400; // "CALL_RESULT_CANCELED_MAX_RETRY", "Canceled Max Retry", "CMR", "Call canceled due to Max Retry was reached"),
   CALL_RESULT_CANCELED_INCOMPLETE_NUMBER = 9500; // "CALL_CANCELED_INCOMPLETE_NUMBER", "Cancelled Incomplete Number", "CIN", "Call was cancelled, incomplete number");
-
 }

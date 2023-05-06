@@ -2,11 +2,9 @@ syntax = "proto3";
 
 package v1alpha1.vanalytics;
 
-option java_package="com.tcn.api.v1alpha1.vanalytics";
-option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-
-
-
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 import "v1alpha1/vanalytics/filter.proto";
 import "v1alpha1/vanalytics/flag.proto";
 import "v1alpha1/vanalytics/flag_filter.proto";
@@ -16,9 +14,8 @@ import "v1alpha1/vanalytics/flag_transcript.proto";
 import "v1alpha1/vanalytics/flag_transcript_filter.proto";
 import "v1alpha1/vanalytics/transcript.proto";
 
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/field_mask.proto";
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
 
 service Vanalytics {
   // Audit audits the used transcription audio time for a client. The window
@@ -51,7 +48,7 @@ service Vanalytics {
     option (google.api.http).body = "*";
   }
 
-   // ListTranscriptGroupNames lists transcript group names.
+  // ListTranscriptGroupNames lists transcript group names.
   rpc ListTranscriptGroupNames(ListTranscriptGroupNamesRequest) returns (ListTranscriptGroupNamesResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listtranscriptgroupnames";
     option (google.api.http).body = "*";
@@ -148,7 +145,7 @@ service Vanalytics {
     option (google.api.http).body = "*";
   }
 
-   // BulkCreateFlagReview creates flag reviews.
+  // BulkCreateFlagReview creates flag reviews.
   rpc BulkCreateFlagReview(BulkCreateFlagReviewRequest) returns (BulkCreateFlagReviewResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/bulkcreateflagreview";
     option (google.api.http).body = "*";

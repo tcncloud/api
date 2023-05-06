@@ -2,85 +2,82 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
-import "commons/omnichannel.proto";
 import "commons/asm.proto";
+import "commons/omnichannel.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 // this event will be depricated and asmevent will be used instead
 message Event {
-    StatusState state = 1;
-    int64 event_time = 2;
-    oneof event {
-        ActivatedConversationEvent activated_conversation_event = 5;
-        DeactivatedConversationEvent deactivated_conversation_event = 6;
-        SentMessageEvent sent_message_event = 7;
-        // An event to indicate that the status has changed
-        SendStatusEvent send_status_event = 8;
-        PauseEvent pause_event = 9;
-        ResumeEvent resume_event = 10;
-    }
+  StatusState state = 1;
+  int64 event_time = 2;
+  oneof event {
+    ActivatedConversationEvent activated_conversation_event = 5;
+    DeactivatedConversationEvent deactivated_conversation_event = 6;
+    SentMessageEvent sent_message_event = 7;
+    // An event to indicate that the status has changed
+    SendStatusEvent send_status_event = 8;
+    PauseEvent pause_event = 9;
+    ResumeEvent resume_event = 10;
+  }
 }
 
 message ActivatedConversationEvent {
-    commons.OmniConversation conversation = 1;
+  commons.OmniConversation conversation = 1;
 }
 
 message DeactivatedConversationEvent {
-    commons.OmniConversation conversation = 1;
+  commons.OmniConversation conversation = 1;
 }
 
 message SentMessageEvent {
-    // the time between the first customer message from the last set of customer messages and the current agent message
-    // this will be 0 for subsequest agent messages. i.e. the agent sends more than one message before the customer respnds
-    int64 response_time_seconds = 1;
-    // if this is the first agent message in this set of agent messages
-    bool is_initial_agent_message = 2;
-    // which conversation this message was sent in
-    commons.OmniConversation conversation = 3;
+  // the time between the first customer message from the last set of customer messages and the current agent message
+  // this will be 0 for subsequest agent messages. i.e. the agent sends more than one message before the customer respnds
+  int64 response_time_seconds = 1;
+  // if this is the first agent message in this set of agent messages
+  bool is_initial_agent_message = 2;
+  // which conversation this message was sent in
+  commons.OmniConversation conversation = 3;
 }
 
 // Indicate that the status has changed
 message SendStatusEvent {
-    // the status to send
-    StatusState status = 1;
+  // the status to send
+  StatusState status = 1;
 }
 
 // AsmEvent
 message AsmEvent {
-    StatusState state = 1;
-    int64 event_time = 2;
-    oneof event {
-        ActivatedConversationAsmEvent activated_conversation_asm_event = 5;
-        DeactivatedConversationAsmEvent deactivated_conversation_asm_event = 6;
-        SentMessageAsmEvent sent_message_asm_event = 7;
-        // An event to indicate that the status has changed
-        SendStatusAsmEvent send_status_asm_event = 8;
-        PauseEvent pause_event = 9;
-        ResumeEvent resume_event = 10;
-    }
+  StatusState state = 1;
+  int64 event_time = 2;
+  oneof event {
+    ActivatedConversationAsmEvent activated_conversation_asm_event = 5;
+    DeactivatedConversationAsmEvent deactivated_conversation_asm_event = 6;
+    SentMessageAsmEvent sent_message_asm_event = 7;
+    // An event to indicate that the status has changed
+    SendStatusAsmEvent send_status_asm_event = 8;
+    PauseEvent pause_event = 9;
+    ResumeEvent resume_event = 10;
+  }
 }
 
 message ActivatedConversationAsmEvent {
-    commons.OmniConversation conversation = 1;
+  commons.OmniConversation conversation = 1;
 }
 
 message DeactivatedConversationAsmEvent {
-    commons.OmniConversation conversation = 1;
+  commons.OmniConversation conversation = 1;
 }
 
 message SentMessageAsmEvent {
-    // the time between the first customer message from the last set of customer messages and the current agent message
-    // this will be 0 for subsequest agent messages. i.e. the agent sends more than one message before the customer respnds
-    int64 response_time_seconds = 1;
-    // if this is the first agent message in this set of agent messages
-    bool is_initial_agent_message = 2;
-    // which conversation this message was sent in
-    commons.OmniConversation conversation = 3;
+  // the time between the first customer message from the last set of customer messages and the current agent message
+  // this will be 0 for subsequest agent messages. i.e. the agent sends more than one message before the customer respnds
+  int64 response_time_seconds = 1;
+  // if this is the first agent message in this set of agent messages
+  bool is_initial_agent_message = 2;
+  // which conversation this message was sent in
+  commons.OmniConversation conversation = 3;
 }
 
 // Indicate that the status has changed

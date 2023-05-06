@@ -2,18 +2,15 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
-import "google/protobuf/field_mask.proto";
 import "commons/ana.proto";
 import "commons/country.proto";
 import "commons/lms.proto";
 import "commons/org.proto";
 import "commons/org_preferences.proto";
+import "google/protobuf/field_mask.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 //
 // General tab preferences.

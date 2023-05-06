@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 // Common types that will be used across the system
 
 message Empty {}

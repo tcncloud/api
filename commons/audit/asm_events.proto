@@ -1,107 +1,99 @@
 syntax = "proto3";
 
-
 package commons.audit;
 
-option java_package="com.tcn.api.commons.audit";
-option go_package="github.com/tcncloud/api/commons.audit;audit";
-
-
-
 import "commons/acd.proto";
-import "commons/omnichannel.proto";
 import "commons/asm.proto";
+import "commons/omnichannel.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.audit;audit";
+option java_package = "com.tcn.api.commons.audit";
 
 ///
 /// This file contains events from Class 400
 /// Asm events
 ///
 
-
-
 // AsmAgentLoginEvent - whenever an agent logs into asm
 message AsmAgentLoginEvent {
-    // the agent's ID
-    string user_id = 1;
-    // the asm session sid generated when the agent logged in
-    int64 asm_session_sid = 2;
+  // the agent's ID
+  string user_id = 1;
+  // the asm session sid generated when the agent logged in
+  int64 asm_session_sid = 2;
 }
 
 // AsmOpenVoiceEvent - whenever an agent opens voice
 message AsmOpenVoiceEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when agent logged into asm
-    int64 asm_session_sid = 2;
-    // the session sid generated when voice started
-    int64 voice_session_sid = 3;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when agent logged into asm
+  int64 asm_session_sid = 2;
+  // the session sid generated when voice started
+  int64 voice_session_sid = 3;
 }
 
 // AsmOpenOmniAgentEvent - whenever an agent logs into omni agent
 message AsmOpenOmniAgentEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
 }
 
 // AsmActivateConversationEvent - whenever an agent activates a conversation
 message AsmActivateConversationEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
-    // the conversation being activated
-    commons.OmniConversation conversation = 3;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
+  // the conversation being activated
+  commons.OmniConversation conversation = 3;
 }
 
 // AsmDeactivateConversationEvent - whenever agent deactivates a conversation
 message AsmDeactivateConversationEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
-    // the conversation being deactivated
-    commons.OmniConversation conversation = 3;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
+  // the conversation being deactivated
+  commons.OmniConversation conversation = 3;
 }
 
 // AsmAgentStateChangedEvent - whenever an agent's state changes
 message AsmAgentStateChangedEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
-    // the agent's new status
-    commons.StatusState new_status = 3;
-    // the agent's old status
-    commons.StatusState old_status = 4;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
+  // the agent's new status
+  commons.StatusState new_status = 3;
+  // the agent's old status
+  commons.StatusState old_status = 4;
 }
 
 // AsmAgentLogoutEvent - whenever an agent logs out of asm
 message AsmAgentLogoutEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
-    // the reason for logging out
-    string reason = 3;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
+  // the reason for logging out
+  string reason = 3;
 }
 
 // AsmPauseEvent -
 message AsmPauseEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
 }
 
 // AsmResumeEvent -
 message AsmResumeEvent {
-    // the id of the agent
-    string user_id = 1;
-    // the session sid generated when the agent logged into asm
-    int64 asm_session_sid = 2;
+  // the id of the agent
+  string user_id = 1;
+  // the session sid generated when the agent logged into asm
+  int64 asm_session_sid = 2;
 }

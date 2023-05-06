@@ -2,15 +2,12 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/org/permissions.proto";
 import "commons/perms.proto";
-
 import "google/protobuf/field_mask.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Request message for the CreateP3PermissionGroup RPC.
 message CreateP3PermissionGroupRequest {
@@ -47,16 +44,16 @@ message UpdateP3PermissionGroupResponse {
 
 // Request message for the UpdateP3PermissionGroupByOrgId RPC.
 message UpdateP3PermissionGroupByOrgIdRequest {
-    // The Id of the P3PermissionGroup to be updated
-    string p3_permission_group_id = 1;
-    // Org Id is the org this group belongs to.
-    string org_id = 2;
-    // P3 permission group values to update.
-    // The mutable fields are: name, description, permissions.
-    commons.org.P3PermissionGroup p3_permission_group = 3;
-    // Field mask for selecting which fields to update.
-    google.protobuf.FieldMask field_mask = 10;
-  }
+  // The Id of the P3PermissionGroup to be updated
+  string p3_permission_group_id = 1;
+  // Org Id is the org this group belongs to.
+  string org_id = 2;
+  // P3 permission group values to update.
+  // The mutable fields are: name, description, permissions.
+  commons.org.P3PermissionGroup p3_permission_group = 3;
+  // Field mask for selecting which fields to update.
+  google.protobuf.FieldMask field_mask = 10;
+}
 
 // Response message for the UpdateP3PermissionGroupByOrgId RPC.
 message UpdateP3PermissionGroupByOrgIdResponse {
@@ -71,8 +68,7 @@ message DeleteP3PermissionGroupRequest {
 }
 
 // Response message for the DeleteP3PermissionGroup RPC.
-message DeleteP3PermissionGroupResponse {
-}
+message DeleteP3PermissionGroupResponse {}
 
 // Request message for the AssignUsersP3PermissionGroup RPC.
 message AssignUsersP3PermissionGroupRequest {

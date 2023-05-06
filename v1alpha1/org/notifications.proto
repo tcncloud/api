@@ -2,15 +2,12 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/audit/event_types.proto";
 import "commons/notifications.proto";
-
 import "google/protobuf/field_mask.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // -------------------- Subscriptions --------------------
 
@@ -106,7 +103,6 @@ message GetUserSubscriptionByUserIdResponse {
   UserSubscription subscription = 1;
 }
 
-
 // Request for updating a user subscription.
 message UpdateUserSubscriptionRequest {
   // Required.
@@ -148,8 +144,7 @@ message RemoveUserSubscriptionRequest {
 }
 
 // Response for deleting a user subscription.
-message RemoveUserSubscriptionResponse {
-}
+message RemoveUserSubscriptionResponse {}
 
 // Request for removing a user subscription by id.
 message RemoveUserSubscriptionByUserIdRequest {
@@ -162,9 +157,7 @@ message RemoveUserSubscriptionByUserIdRequest {
 }
 
 // Response for deleting a user subscription.
-message RemoveUserSubscriptionByUserIdResponse {
-}
-
+message RemoveUserSubscriptionByUserIdResponse {}
 
 // Multiple user subscriptions
 

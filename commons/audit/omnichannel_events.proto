@@ -1,77 +1,66 @@
 syntax = "proto3";
 
-
 package commons.audit;
-
-option java_package="com.tcn.api.commons.audit";
-option go_package="github.com/tcncloud/api/commons.audit;audit";
-
-
 
 import "commons/omnichannel.proto";
 import "commons/project.proto";
 import "google/protobuf/wrappers.proto";
 
-
-
-
-
+option go_package = "github.com/tcncloud/api/commons.audit;audit";
+option java_package = "com.tcn.api.commons.audit";
 
 ///
 /// This file contains event from Class 300
 /// Omnichannel events
 ///
 
-
-
 // OmnichannelCreateProjectEvent - whenever a project is created
 message OmnichannelCreateProjectEvent {
-    int64 client_sid = 1;
-    string name = 2;
-    string description = 3;
+  int64 client_sid = 1;
+  string name = 2;
+  string description = 3;
 }
 
 // OmnichannelCreateCampaignEvent - whenever a campaign is created
 message OmnichannelCreateCampaignEvent {
-    // campaign name
-    string name = 1;
-    // campaign description
-    string description = 2;
-    // campaign type
-    commons.ChannelType channel_type = 3;
-    // campaign direction
-    commons.CampaignDirection campaign_direction = 4;
-    // generated campaign sid
-    int64 campaign_sid = 5 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 6;
-    // project identifier
-    int64 project_sid = 7 [jstype = JS_STRING];
+  // campaign name
+  string name = 1;
+  // campaign description
+  string description = 2;
+  // campaign type
+  commons.ChannelType channel_type = 3;
+  // campaign direction
+  commons.CampaignDirection campaign_direction = 4;
+  // generated campaign sid
+  int64 campaign_sid = 5 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 6;
+  // project identifier
+  int64 project_sid = 7 [jstype = JS_STRING];
 }
 
 // OmnichannelT10Event - whenever a T10 is triggered
 message OmnichannelT10Event {
-    // conversation_id
-    int64 conversation_sid = 1 [jstype = JS_STRING];
-    // campaign_id
-    int64 campaign_sid = 2 [jstype = JS_STRING];
-    // channel_type
-    commons.ChannelType channel_type = 3;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 4;
-    // the message sent by the agent
-    commons.OmniMessage message = 5;
+  // conversation_id
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // campaign_id
+  int64 campaign_sid = 2 [jstype = JS_STRING];
+  // channel_type
+  commons.ChannelType channel_type = 3;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 4;
+  // the message sent by the agent
+  commons.OmniMessage message = 5;
 }
-
 
 // OmnichannelDailyReportEvent - whenever a daily project report is generated
 message OmnichannelDailyProjectReportEvent {
-   string download_url  = 1;
+  string download_url = 1;
 }
 
 // OmnichannelDailyReportEvent - whenever a daily conversation report is generated
 message OmnichannelDailyConversationReportEvent {
-   string download_url  = 1;
+  string download_url = 1;
 }
 
 // OmnichannelAgentAssignConversationEvent - handle agent assign conversation event
@@ -130,74 +119,74 @@ message OmnichannelAgentReassignConversationEvent {
 
 // OmnichannelCustomerTextMessageEvent - whenever a customer sends a text message
 message OmnichannelCustomerTextMessageEvent {
-    // the unique identifier for the conversation
-    int64 conversation_sid = 3 [jstype = JS_STRING];
-    // the message sent by the customer
-    commons.OmniMessage message = 4;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 5;
+  // the unique identifier for the conversation
+  int64 conversation_sid = 3 [jstype = JS_STRING];
+  // the message sent by the customer
+  commons.OmniMessage message = 4;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 5;
 }
 
 // OmnichannelAgentTextMessageEvent - whenever an agent send a text message
 message OmnichannelAgentTextMessageEvent {
-    // the unique identifier for the conversation
-    int64 conversation_sid = 3 [jstype = JS_STRING];
-    // the message sent by the agent
-    commons.OmniMessage message = 4;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 5;
+  // the unique identifier for the conversation
+  int64 conversation_sid = 3 [jstype = JS_STRING];
+  // the message sent by the agent
+  commons.OmniMessage message = 4;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 5;
 }
 
 // OmnichannelManagerTextMessageEvent - whenever an agent send a text message
 message OmnichannelManagerTextMessageEvent {
-    // the unique identifier for the conversation
-    int64 conversation_sid = 3 [jstype = JS_STRING];
-    // the message sent by the agent
-    commons.OmniMessage message = 4;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 5;
+  // the unique identifier for the conversation
+  int64 conversation_sid = 3 [jstype = JS_STRING];
+  // the message sent by the agent
+  commons.OmniMessage message = 4;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 5;
 }
 
 // OmnichannelFinishWrapUpEvent - when an agent has finished wrap up
 message OmnichannelFinishWrapUpEvent {
-    // the unique identifier for the conversation
-    int64 conversation_sid = 1 [jstype = JS_STRING];
-    // the campaign identifier the event is associated with
-    int64 campaign_sid = 2 [jstype = JS_STRING];
-    // the channel type i.e. chat|email|sms|etc.
-    commons.ChannelType channel_type = 3;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 4;
-    // the message sent by the agent
-    commons.OmniMessage message = 5;
-    // AsmSessionSid
-    google.protobuf.Int64Value asm_session_sid = 6;
+  // the unique identifier for the conversation
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // the campaign identifier the event is associated with
+  int64 campaign_sid = 2 [jstype = JS_STRING];
+  // the channel type i.e. chat|email|sms|etc.
+  commons.ChannelType channel_type = 3;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 4;
+  // the message sent by the agent
+  commons.OmniMessage message = 5;
+  // AsmSessionSid
+  google.protobuf.Int64Value asm_session_sid = 6;
 }
 
 // OmnichannelBeginWrapUpEvent - when a conversation closes and moves to wrap up
 message OmnichannelBeginWrapUpEvent {
-    // the unique identifier for the conversation
-    int64 conversation_sid = 1 [jstype = JS_STRING];
-    // the campaign identifier this event is associated with
-    int64 campaign_sid = 2 [jstype = JS_STRING];
-    // the channel type i.e. chat|email|sms|etc.
-    commons.ChannelType channel_type = 3;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 4;
-    // the message sent by the agent
-    commons.OmniMessage message = 5;
+  // the unique identifier for the conversation
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // the campaign identifier this event is associated with
+  int64 campaign_sid = 2 [jstype = JS_STRING];
+  // the channel type i.e. chat|email|sms|etc.
+  commons.ChannelType channel_type = 3;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 4;
+  // the message sent by the agent
+  commons.OmniMessage message = 5;
 }
 
 // OmnichannelT11Event - whenever the t11 timer went off
 message OmnichannelT11Event {
-    // the identifier of the conversation the timer is associated with
-    int64 conversation_sid = 1 [jstype = JS_STRING];
-    // the identifier of the campaign the timer is associated with
-    int64 campaign_sid = 2 [jstype = JS_STRING];
-    // the channel type i.e. chat|sms|email|etc.
-    commons.ChannelType channel_type = 3;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 4;
+  // the identifier of the conversation the timer is associated with
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // the identifier of the campaign the timer is associated with
+  int64 campaign_sid = 2 [jstype = JS_STRING];
+  // the channel type i.e. chat|sms|email|etc.
+  commons.ChannelType channel_type = 3;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 4;
 }
 
 // // create conversation when customer sends initial message and T1 starts
@@ -214,34 +203,34 @@ message OmnichannelCreateConversationEvent {
 
 // OmnichannelAgentSuspendEvent - whenever agent suspends the conversation
 message OmnichannelAgentSuspendEvent {
-    // the suspend message
-    commons.OmniMessage message = 1;
-    // conversation this message belongs to
-    commons.OmniConversation conversation = 2;
-    // asm Session sid
-    google.protobuf.Int64Value asm_session_sid = 3;
+  // the suspend message
+  commons.OmniMessage message = 1;
+  // conversation this message belongs to
+  commons.OmniConversation conversation = 2;
+  // asm Session sid
+  google.protobuf.Int64Value asm_session_sid = 3;
 }
 
 // OmnichannelCloseConversationEvent - close conversation
 message OmnichannelCloseConversationEvent {
-    // the close message
-    commons.OmniMessage message = 1;
-    // conversation the message belongs to
-    commons.OmniConversation conversation = 2;
+  // the close message
+  commons.OmniMessage message = 1;
+  // conversation the message belongs to
+  commons.OmniConversation conversation = 2;
 }
 
 // OmnichannelUpdateCampaignEvent - whenever a campaign is update
 message OmnichannelUpdateCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelSetConversationCollectedDataEvent - handle set conversation collected data event
@@ -260,246 +249,246 @@ message OmnichannelSetConversationCollectedDataEvent {
 
 // OmnichannelCompleteCampaignEvent - whenever a campaign is completed
 message OmnichannelCompleteCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelArchiveCampaignEvent - whenever a campaign is archived
 message OmnichannelArchiveCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelStartCampaignEvent - whenever a campaign is completed
 message OmnichannelStartCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelPauseCampaignEvent - whenever a campaign is paused
 message OmnichannelPauseCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelResumeCampaignEvent - whenever a campaign is resumed
 message OmnichannelResumeCampaignEvent {
-    // campaign id
-    int64 campaign_sid = 1 [jstype = JS_STRING];
-    // campaign name
-    string name = 2;
-    // campaign description
-    string description = 3;
-    // campaign type
-    commons.ChannelType channel_type = 4;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 5;
+  // campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign name
+  string name = 2;
+  // campaign description
+  string description = 3;
+  // campaign type
+  commons.ChannelType channel_type = 4;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 5;
 }
 
 // OmnichannelScheduleModuleEvent - whenever a module is schedule status
 message OmnichannelScheduleModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelStartModuleEvent - whenever a module is start status
 message OmnichannelStartModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelPauseModuleEvent - whenever a module is pause status
 message OmnichannelPauseModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelResumeModuleEvent - whenever a module is resume status
 message OmnichannelResumeModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelErrorModuleEvent - whenever a module is error status
 message OmnichannelErrorModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelSuccessModuleEvent - whenever a module is success status
 message OmnichannelSuccessModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelFailModuleEvent - whenever a module is fail status
 message OmnichannelFailModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelCompleteModuleEvent - whenever a module is complete status
 message OmnichannelCompleteModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelArchiveModuleEvent - whenever a module is archive status
 message OmnichannelArchiveModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelUpdateModuleEvent - whenever a module is update status
 message OmnichannelUpdateModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 2;
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 2;
 }
 
 // OmnichannelAddSmsMessageSentAuditEvent - handle omnimessage and messageunits
 message OmnichannelSmsMessageSentModuleEvent {
-    // module id
-    int64 module_sid = 1 [jstype = JS_STRING];
-    // messageunits
-    int64 message_units = 2;
-    // omni campaign
-    commons.OmniCampaign omni_campaign = 3;
-    // the message sent by the agent
-    commons.OmniMessage message = 4;
-  }
+  // module id
+  int64 module_sid = 1 [jstype = JS_STRING];
+  // messageunits
+  int64 message_units = 2;
+  // omni campaign
+  commons.OmniCampaign omni_campaign = 3;
+  // the message sent by the agent
+  commons.OmniMessage message = 4;
+}
 
 // OmniChannelModuleInitialReplyEvent -
 message OmnichannelModuleInitialReplyEvent {
-    // org id
-    string org_id = 1;
-    // campaign_sid
-    int64 campaign_sid = 2;
-    // campaign_module_sid
-    int64 campaign_module_sid = 3;
-    // conversation_sid
-    int64 conversation_sid = 4;
-    // channel type
-    commons.ChannelType channel_type = 5;
-    // omnimessage
-    commons.OmniMessage message = 6;
-    // omnicampaign
-    commons.OmniCampaign campaign = 7;
+  // org id
+  string org_id = 1;
+  // campaign_sid
+  int64 campaign_sid = 2;
+  // campaign_module_sid
+  int64 campaign_module_sid = 3;
+  // conversation_sid
+  int64 conversation_sid = 4;
+  // channel type
+  commons.ChannelType channel_type = 5;
+  // omnimessage
+  commons.OmniMessage message = 6;
+  // omnicampaign
+  commons.OmniCampaign campaign = 7;
 }
 
 // OmnichannelTaskMessageSentEvent -
 message OmnichannelTaskMessageSentEvent {
-    // task identifier
-    int64 task_sid = 1;
-    // campaign identifier
-    int64 campaign_sid = 2;
-    // module identifier
-    int64 module_sid = 3;
-    // the number of individual messages sent out
-    int64 message_units = 4;
-    // the campaign the task is a part of
-    commons.OmniCampaign campaign = 5;
-    // the message sent
-    commons.OmniMessage message = 6;
-    // the task that sent the message
-    commons.OmniTask task = 7;
+  // task identifier
+  int64 task_sid = 1;
+  // campaign identifier
+  int64 campaign_sid = 2;
+  // module identifier
+  int64 module_sid = 3;
+  // the number of individual messages sent out
+  int64 message_units = 4;
+  // the campaign the task is a part of
+  commons.OmniCampaign campaign = 5;
+  // the message sent
+  commons.OmniMessage message = 6;
+  // the task that sent the message
+  commons.OmniTask task = 7;
 }
 
 // OmnichannelConnectedInboxPollEvent -
 message OmnichannelConnectedInboxPollEvent {
-    // campaign
-    commons.OmniCampaign omni_campaign = 1;
-    // campaign_module_sid
-    int64 campaign_module_sid = 2;
-    // connected inbox
-    commons.ConnectedInbox connected_inbox = 3;
+  // campaign
+  commons.OmniCampaign omni_campaign = 1;
+  // campaign_module_sid
+  int64 campaign_module_sid = 2;
+  // connected inbox
+  commons.ConnectedInbox connected_inbox = 3;
 }
 
 // OmnichannelConnectedInboxCreatedEvent -
 message OmnichannelConnectedInboxCreatedEvent {
-    // the created connected inbox
-    commons.ConnectedInbox connected_inbox = 1;
+  // the created connected inbox
+  commons.ConnectedInbox connected_inbox = 1;
 }
 
 // Omnichannel
 message OmnichannelAgentMessageUnitsEvent {
-    // the omni message
-    commons.OmniMessage message = 1;
-    // the total number of messages sent
-    int32 message_units = 2;
+  // the omni message
+  commons.OmniMessage message = 1;
+  // the total number of messages sent
+  int32 message_units = 2;
 }
 
 // OmniChannelManagerMessageUnitsEvent -
 message OmnichannelManagerMessageUnitsEvent {
-    // the omni message
-    commons.OmniMessage message = 1;
-    // the total number of messages sent
-    int32 message_units = 2;
+  // the omni message
+  commons.OmniMessage message = 1;
+  // the total number of messages sent
+  int32 message_units = 2;
 }
 
 // OmniChannelCustomerMessageUnitsEvent -
 message OmnichannelCustomerMessageUnitsEvent {
-    // the omni message
-    commons.OmniMessage message = 1;
-    // the total number of messages sent
-    int32 message_units = 2;
+  // the omni message
+  commons.OmniMessage message = 1;
+  // the total number of messages sent
+  int32 message_units = 2;
 }
 
 // OmnichannelSystemMessageUnitsEvent -
 message OmnichannelSystemMessageUnitsEvent {
-    // the omni message
-    commons.OmniMessage message = 1;
-    // the total number of messages sent
-    int32 message_units = 2;
+  // the omni message
+  commons.OmniMessage message = 1;
+  // the total number of messages sent
+  int32 message_units = 2;
 }

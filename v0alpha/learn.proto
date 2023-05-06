@@ -12,28 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
+import "commons/types.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "commons/types.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 // A service for creating and reading learning material
 service Learn {
-  rpc Exist(ExistReq) returns(ExistRes);
-  rpc Content(ContentReq) returns(ContentRes);
-  rpc ContentEditorData(ContentEditorDataReq) returns(ContentEditorDataRes);
-  rpc Update(UpdateReq) returns(UpdateRes);
+  rpc Exist(ExistReq) returns (ExistRes);
+  rpc Content(ContentReq) returns (ContentRes);
+  rpc ContentEditorData(ContentEditorDataReq) returns (ContentEditorDataRes);
+  rpc Update(UpdateReq) returns (UpdateRes);
   // exports multiple pages of the learning center markdown as PDF
   rpc ExportMany(ExportManyReq) returns (ExportRes);
   // upload url for static images
@@ -41,7 +37,7 @@ service Learn {
   // search content in learning pages
   rpc SearchContent(SearchContentReq) returns (SearchRes);
   // upload dynamic learning image screenshot
-  rpc UploadDynamicScreenshot(UploadDynamicScreenshotReq) returns(UploadDynamicScreenshotRes);
+  rpc UploadDynamicScreenshot(UploadDynamicScreenshotReq) returns (UploadDynamicScreenshotRes);
   // get standalone articles from learning pages
   rpc Standalone(StandaloneReq) returns (StandaloneRes);
 }
@@ -82,7 +78,7 @@ message UpdateReq {
   string content = 3;
 
   // commit message
-  string message  = 12;
+  string message = 12;
 }
 
 message UpdateRes {}

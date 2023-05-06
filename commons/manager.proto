@@ -2,11 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum AgentInfo {
   AGENT_INFO_ACTIVE_AGENTS = 0;
@@ -29,12 +26,12 @@ enum SkillStats {
   SKILL_STATS_CALLS_LIST = 5;
   SKILL_STATS_DAILY_BY_SKILLS_KEY = 6;
   SKILL_STATS_LONGEST_IN_QUEUE = 7;
-  SKILL_STATS_MATCHING_AGENTS_MD = 8;  // manual dial
-  SKILL_STATS_MATCHING_AGENTS_PC = 9;  // preview call
+  SKILL_STATS_MATCHING_AGENTS_MD = 8; // manual dial
+  SKILL_STATS_MATCHING_AGENTS_PC = 9; // preview call
   SKILL_STATS_MATCHING_AGENTS_LI = 10; // logged in
   SKILL_STATS_MATCHING_AGENTS_OC = 11; // on call
-  SKILL_STATS_MATCHING_AGENTS_P = 12;  // paused
-  SKILL_STATS_MATCHING_AGENTS_W = 13;  // waiting
+  SKILL_STATS_MATCHING_AGENTS_P = 12; // paused
+  SKILL_STATS_MATCHING_AGENTS_W = 13; // waiting
   SKILL_STATS_MATCHING_AGENTS_WU = 14; // wrap up
   SKILL_STATS_MATCHING_AGENTS_TC = 15; // transfer call
   SKILL_STATS_MAXIMUM_LENGTH = 16;

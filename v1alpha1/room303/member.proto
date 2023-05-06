@@ -2,42 +2,40 @@ syntax = "proto3";
 
 package v1alpha1.room303;
 
-option java_package="com.tcn.api.v1alpha1.room303";
-option go_package="github.com/tcncloud/api/v1alpha1.room303;room303";
 import "commons/room303.proto";
 
+option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
+option java_package = "com.tcn.api.v1alpha1.room303";
 
-
-
-message AddRoomMemberRequest{
-    string room_id = 1;
-    string user_id = 2;
-    bool admin     = 3;
+message AddRoomMemberRequest {
+  string room_id = 1;
+  string user_id = 2;
+  bool admin = 3;
 }
 
-message RemoveRoomMemberRequest{
-    string user_id = 1;
-    string room_id = 2;
+message RemoveRoomMemberRequest {
+  string user_id = 1;
+  string room_id = 2;
 }
 
-message RemoveRoomMemberResponse{}
+message RemoveRoomMemberResponse {}
 
-message ListRoomMembersRequest{
-    string room_id = 1;
+message ListRoomMembersRequest {
+  string room_id = 1;
 }
 
-message ListRoomMembersResponse{
-    repeated commons.Member members = 1;
+message ListRoomMembersResponse {
+  repeated commons.Member members = 1;
 }
 
-message SetAdminForRoomMemberRequest{
-    string room_id = 1;
-    string user_id = 2;
+message SetAdminForRoomMemberRequest {
+  string room_id = 1;
+  string user_id = 2;
 }
-message SetAdminForRoomMemberResponse{}
+message SetAdminForRoomMemberResponse {}
 
-message JoinRoomRequest{
-    string room_id = 1;
+message JoinRoomRequest {
+  string room_id = 1;
 }
 
 message GetRoomMemberRequest {

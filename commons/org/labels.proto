@@ -2,17 +2,14 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
 import "commons/labels.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // Label is an entity message.
 message Label {
-  reserved 4,5;
+  reserved 4, 5;
   // labels are owned by orgs. this
   // could be nasty in regards to
   // org trusts and groups.

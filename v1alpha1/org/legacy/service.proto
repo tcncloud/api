@@ -16,12 +16,10 @@ syntax = "proto3";
 
 package api.v1alpha1.org.legacy;
 
-import "google/api/annotations.proto";
 import "annotations/authz.proto";
 import "commons/types.proto";
+import "google/api/annotations.proto";
 import "v1alpha1/org/legacy/entities.proto";
-
-
 
 service OrgLegacy {
   // Registers a new organization
@@ -29,7 +27,11 @@ service OrgLegacy {
     option (google.api.http).post = "/api/v1alpha1/org/legacy/organization/register";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-            sets: [{permissions: [PERMISSION_CUSTOMER_SUPPORT]}];
-      };
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 }

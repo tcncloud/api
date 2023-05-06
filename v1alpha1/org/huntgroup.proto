@@ -2,14 +2,12 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
-import "google/protobuf/field_mask.proto";
-import "commons/org/huntgroup.proto";
 import "commons/org.proto";
+import "commons/org/huntgroup.proto";
+import "google/protobuf/field_mask.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Request message for the GetHuntGroupSettings RPC method.
 message GetHuntGroupSettingsRequest {
@@ -62,55 +60,52 @@ message UpdateHuntGroupSettingsRequest {
 }
 
 // Response message for the UpdateHuntGroupSettings RPC method.
-message UpdateHuntGroupSettingsResponse {
-}
+message UpdateHuntGroupSettingsResponse {}
 
 // Request messsage for getting the org related list of Caller ID Bucket Data.
-message ListCallerIdBucketsRequest {
-}
+message ListCallerIdBucketsRequest {}
 
 // Response message for getting the org related list of Caller ID Bucket Data.
 message ListCallerIdBucketsResponse {
-    // list of caller ID bucket data.
+  // list of caller ID bucket data.
   repeated commons.org.CallerIdBucketData caller_id_bucket_data = 1;
 }
 
 // Request messsage for the GetDataDipTemplate RPC method.
 message GetDataDipTemplateRequest {
-    // The ID of the desired template.
+  // The ID of the desired template.
   int64 xml_client_property_sid = 1;
 }
 
 // Response message for the GetDataDipTemplate RPC method.
 message GetDataDipTemplateResponse {
-    // The requested template.
+  // The requested template.
 }
 
 // Request message for ListDataDipTemplates RPC method.
 message ListDataDipTemplatesRequest {
-    // The filter for limiting the returned templates.
+  // The filter for limiting the returned templates.
   commons.DataDipTemplateFilterType filter = 1;
 }
 
 // Response message for ListDataDipTemplates RPC method.
 message ListDataDipTemplatesResponse {
-    // list of the organizations templates.
+  // list of the organizations templates.
 }
 
 // Request message for creating a Data Dip template.
 message CreateDataDipTemplateRequest {
-    // The new template to persist.
+  // The new template to persist.
 }
 
 // Response message from creating a Data Dip template.
 message CreateDataDipTemplateResponse {
-    // The ID of the newly persisted template.
-    int64 xml_client_property_sid = 1;
+  // The ID of the newly persisted template.
+  int64 xml_client_property_sid = 1;
 }
 
 // Request message for the ListAgentResponseAutoRules RPC method.
-message ListAgentResponseAutoRulesRequest {
-}
+message ListAgentResponseAutoRulesRequest {}
 
 // Response message for the ListAgentResponseAutoRules RPC method.
 message ListAgentResponseAutoRulesResponse {
@@ -125,8 +120,7 @@ message CreateAgentResponseAutoRulesRequest {
 }
 
 // Response message for the CreateAgentResponseAutoRules RPC method.
-message CreateAgentResponseAutoRulesResponse {
-}
+message CreateAgentResponseAutoRulesResponse {}
 
 // Request message for the UpdateAgentResponseAutoRules RPC method.
 message UpdateAgentResponseAutoRulesRequest {

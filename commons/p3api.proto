@@ -2,11 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 message ClientInfoDataRow {
   string field_label = 1;
@@ -24,8 +21,8 @@ message RGBColor {
 
 // States for interrupting peering
 enum InterruptedPeeringStatus {
-    InterruptPeeringStatus_MANUAL = 0;
-    InterruptPeeringStatus_PREVIEW = 1;
+  InterruptPeeringStatus_MANUAL = 0;
+  InterruptPeeringStatus_PREVIEW = 1;
 }
 
 // Dialed Number Field Settings

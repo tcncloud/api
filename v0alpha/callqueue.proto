@@ -2,16 +2,13 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
 import "commons/call.proto";
 import "commons/sms.proto";
+import "google/api/annotations.proto";
 import "v0alpha/p3api.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service CallQueue {
   // Returns either a preview record or preview call from one of multiple queues,
@@ -111,12 +108,12 @@ service CallQueue {
   }
 }
 
-message DequeuePreviewRecordOrCallReq{
+message DequeuePreviewRecordOrCallReq {
   int32 timeout_minutes = 1;
   int64 agent_session_sid = 2;
 }
 
-message DequeuePreviewRecordOrCallRes{
+message DequeuePreviewRecordOrCallRes {
   string queue_name = 1;
   commons.SimpleCallData call = 2;
   commons.SimpleRecordData record = 3;
@@ -129,7 +126,7 @@ message EnqueuePreviewRecordReq {
 
 message EnqueuePreviewRecordRes {}
 
-message DequeueScrubbedCallForPreviewRecordReq{
+message DequeueScrubbedCallForPreviewRecordReq {
   int64 hunt_group_sid = 1;
   string phone_number = 2;
   int32 phone_num_index = 3;
@@ -137,11 +134,11 @@ message DequeueScrubbedCallForPreviewRecordReq{
   int64 task_sid = 5;
 }
 
-message DequeueScrubbedCallForPreviewRecordRes{
+message DequeueScrubbedCallForPreviewRecordRes {
   commons.SimpleCallData call = 1;
 }
 
-message ClearPreviewRecordReturnQueueReq{}
+message ClearPreviewRecordReturnQueueReq {}
 
 message ClearPreviewRecordReturnQueueRes {}
 

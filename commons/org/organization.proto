@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
-import "google/protobuf/timestamp.proto";
 import "commons/org.proto";
+import "google/protobuf/timestamp.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // Organization contains the basic properties for an organization.
 message Organization {
@@ -37,7 +34,7 @@ message Organization {
   // Salesforce ID used for integrations.
   string crm_id = 11;
   // Organization's time zone.
-  commons.TimeZone time_zone =  12;
+  commons.TimeZone time_zone = 12;
   // Organization callbacks service ID.
   string callbacks_service_id = 13;
   // Organization that is the parent.

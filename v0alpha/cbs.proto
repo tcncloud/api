@@ -2,17 +2,14 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
+import "commons/acd.proto";
+import "commons/cbs.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "commons/acd.proto";
-import "commons/cbs.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service CBS {
   rpc CreateServiceId(CreateServiceIdReq) returns (CreateServiceIdRes) {
@@ -185,7 +182,7 @@ message ScheduledCallbackWithDetails {
   string last_updated_by = 13;
   string name = 14;
   int64 former_call_sid = 15;
-  commons.CallType.Enum  former_call_type = 16;
+  commons.CallType.Enum former_call_type = 16;
   repeated ScheduledCallbackDetail callback_details = 17;
   google.protobuf.Int64Value country_sid = 18;
 }

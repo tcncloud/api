@@ -1,24 +1,20 @@
-
 syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
+import "commons/acd.proto";
+import "commons/broadcasts.proto";
+import "commons/call.proto";
+import "commons/omnichannel.proto";
+import "commons/p3api.proto";
+import "commons/task.proto";
+import "commons/wfm.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "commons/acd.proto";
-import "commons/call.proto";
-import "commons/p3api.proto";
-import "commons/broadcasts.proto";
-import "commons/task.proto";
-import "commons/omnichannel.proto";
-import "commons/wfm.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service P3Api {
   rpc GetAgentHuntGroup(GetAgentHuntGroupReq) returns (HuntGroup) {
@@ -113,17 +109,13 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateReq)
-      returns (GetClientInfoDisplayTemplateRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/getclientinfodisplaytemplate";
+  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateReq) returns (GetClientInfoDisplayTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getclientinfodisplaytemplate";
     option (google.api.http).body = "*";
   }
 
-  rpc ListAgentStatisticsData(ListAgentStatisticsDataReq)
-      returns (ListAgentStatisticsDataRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listagentstatisticsdata";
+  rpc ListAgentStatisticsData(ListAgentStatisticsDataReq) returns (ListAgentStatisticsDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentstatisticsdata";
     option (google.api.http).body = "*";
   }
 
@@ -138,22 +130,20 @@ service P3Api {
   //    AGENT_MANAGER
   // Errors:
   //    - grpc.Internal: unexpected error getting pbx_extensions
-  rpc ListAgentExtensions(ListAgentExtensionsReq)
-    returns (ListAgentExtensionsRes) {
-      option (google.api.http).post = "/api/v0alpha/p3api/listagentextensions";
-      option (google.api.http).body = "*";
-    }
+  rpc ListAgentExtensions(ListAgentExtensionsReq) returns (ListAgentExtensionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentextensions";
+    option (google.api.http).body = "*";
+  }
 
   // Lists every hunt group extension for the current client
   // Required Permissions:
   //    AGENT_MANAGER
   // Errors:
   //    - grpc.Internal: unexpected error getting pbx_extensions
-  rpc ListHuntGroupExtensions(ListHuntGroupExtensionsReq)
-    returns (ListHuntGroupExtensionsRes) {
-      option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupextensions";
-      option (google.api.http).body = "*";
-    }
+  rpc ListHuntGroupExtensions(ListHuntGroupExtensionsReq) returns (ListHuntGroupExtensionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupextensions";
+    option (google.api.http).body = "*";
+  }
 
   // Creates a new extension as defined by the request message
   // Required Permissions:
@@ -187,8 +177,7 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-  rpc UpdatePBXExtension(UpdatePBXExtensionReq)
-      returns (UpdatePBXExtensionRes) {
+  rpc UpdatePBXExtension(UpdatePBXExtensionReq) returns (UpdatePBXExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatepbxextension";
     option (google.api.http).body = "*";
   }
@@ -202,37 +191,31 @@ service P3Api {
   // group. If no script is found, it gets the hunt group responses for the
   // agent's current hunt group. It also does a mail merge with the found script
   // or responses (if able).
-  rpc GetScriptOrResponses(GetScriptOrResponsesReq)
-      returns (GetScriptOrResponsesRes) {
+  rpc GetScriptOrResponses(GetScriptOrResponsesReq) returns (GetScriptOrResponsesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getscriptorresponses";
     option (google.api.http).body = "*";
   }
 
-  rpc GetHuntGroupAgentSettings(GetHuntGroupAgentSettingsReq)
-      returns (HuntGroupAgentSettings) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/gethuntgroupagentsettings";
+  rpc GetHuntGroupAgentSettings(GetHuntGroupAgentSettingsReq) returns (HuntGroupAgentSettings) {
+    option (google.api.http).post = "/api/v0alpha/p3api/gethuntgroupagentsettings";
     option (google.api.http).body = "*";
   }
 
   // Returns a list of weblinks for the hunt group in the request.
   // It replaces any parameters of a given weblink with the call data of the call sid and type from the request message or with the callback details (if a scheduled_callback_id is given).
-  rpc ListHuntGroupWebLinks(ListHuntGroupWebLinksReq)
-      returns (ListHuntGroupWebLinksRes) {
+  rpc ListHuntGroupWebLinks(ListHuntGroupWebLinksReq) returns (ListHuntGroupWebLinksRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupweblinks";
     option (google.api.http).body = "*";
   }
 
-  rpc GetHuntGroupPauseCodes(GetHuntGroupPauseCodesReq)
-      returns (GetHuntGroupPauseCodesRes) {
+  rpc GetHuntGroupPauseCodes(GetHuntGroupPauseCodesReq) returns (GetHuntGroupPauseCodesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/gethuntgrouppausecodes";
     option (google.api.http).body = "*";
   }
 
   // Lists the call history of the requested agent for the past day or
   // session_sid, depending on the filter parameter.
-  rpc ListAgentCallHistory(ListAgentCallHistoryReq)
-      returns (ListAgentCallHistoryRes) {
+  rpc ListAgentCallHistory(ListAgentCallHistoryReq) returns (ListAgentCallHistoryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentcallhistory";
     option (google.api.http).body = "*";
   }
@@ -240,8 +223,7 @@ service P3Api {
   // Lists all client phone book entries.
   // Required Permissions:
   //  AGENT_MANAGER
-  rpc ListClientPhoneBookEntries(ListClientPhoneBookEntriesReq)
-      returns (ListClientPhoneBookEntriesRes) {
+  rpc ListClientPhoneBookEntries(ListClientPhoneBookEntriesReq) returns (ListClientPhoneBookEntriesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listclientphonebookentries";
     option (google.api.http).body = "*";
   }
@@ -249,10 +231,8 @@ service P3Api {
   // Lists all hunt group phone book entries.
   // Required Permissions:
   //  AGENT_MANAGER
-  rpc ListHuntGroupPhoneBookEntries(ListHuntGroupPhoneBookEntriesReq)
-      returns (ListHuntGroupPhoneBookEntriesRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listhuntgroupphonebookentries";
+  rpc ListHuntGroupPhoneBookEntries(ListHuntGroupPhoneBookEntriesReq) returns (ListHuntGroupPhoneBookEntriesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupphonebookentries";
     option (google.api.http).body = "*";
   }
 
@@ -262,8 +242,7 @@ service P3Api {
   // Errors:
   //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
   //    - grpc.Internal: unexpected error occurred when saving the phone book.
-  rpc CreatePhoneBookEntry(CreatePhoneBookEntryReq)
-      returns (CreatePhoneBookEntryRes) {
+  rpc CreatePhoneBookEntry(CreatePhoneBookEntryReq) returns (CreatePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createphonebookentry";
     option (google.api.http).body = "*";
   }
@@ -274,8 +253,7 @@ service P3Api {
   // Errors:
   //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
   //    - grpc.Internal: unexpected error occurred when saving the phone book.
-  rpc UpdatePhoneBookEntry(UpdatePhoneBookEntryReq)
-      returns (UpdatePhoneBookEntryRes) {
+  rpc UpdatePhoneBookEntry(UpdatePhoneBookEntryReq) returns (UpdatePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatephonebookentry";
     option (google.api.http).body = "*";
   }
@@ -283,8 +261,7 @@ service P3Api {
   // Deletes the phone_book with the phone_book_sid given on the reques message.
   // Required Permissions:
   //    AGENT_MANAGER
-  rpc DeletePhoneBookEntry(DeletePhoneBookEntryReq)
-      returns (DeletePhoneBookEntryRes) {
+  rpc DeletePhoneBookEntry(DeletePhoneBookEntryReq) returns (DeletePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletephonebookentry";
     option (google.api.http).body = "*";
   }
@@ -297,10 +274,8 @@ service P3Api {
   // Errors:
   //   - grpc.Invalid: the client_sid or hunt_group_sid in the request are invalid.
   //   - grpc.Internal: unexpected error occurred when retrieving the phone books.
-  rpc ListPhoneBooks(ListPhoneBooksReq)
-    returns (ListPhoneBooksRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listphonebooks";
+  rpc ListPhoneBooks(ListPhoneBooksReq) returns (ListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listphonebooks";
     option (google.api.http).body = "*";
   }
 
@@ -309,13 +284,13 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-// Gets all running broadcasts (task groups) for the requesting agent and hunt_group_sid in the request.
-// Calculates the percentage of completed tasks for each of those task groups.
-// Calculates the overall task completion percentage of all matching task groups.
-// Required permissions:
-//   NONE
-// Errors:
-//   - grpc.Invalid: the hunt_group_sid in the request is invalid.
+  // Gets all running broadcasts (task groups) for the requesting agent and hunt_group_sid in the request.
+  // Calculates the percentage of completed tasks for each of those task groups.
+  // Calculates the overall task completion percentage of all matching task groups.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request is invalid.
   rpc GetCampaignCompletionStatus(GetCampaignCompletionStatusReq) returns (GetCampaignCompletionStatusRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcampaigncompletionstatus";
     option (google.api.http).body = "*";
@@ -329,10 +304,10 @@ service P3Api {
   // Errors:
   //   - grpc.Invalid: the call_sid in the request in invalid.
   //   - grpc.NotFound: the call sid provided wasn't previously connected to any agent.
-  rpc GetLostPeerInfo(GetLostPeerInfoReq) returns (GetLostPeerInfoRes){
+  rpc GetLostPeerInfo(GetLostPeerInfoReq) returns (GetLostPeerInfoRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getlostpeerinfo";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Gets all the available Disposition Keys
   //
@@ -361,53 +336,41 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-  rpc SaveAgentCallResponses(SaveAgentCallResponsesReq)
-      returns (SaveAgentCallResponsesRes) {
+  rpc SaveAgentCallResponses(SaveAgentCallResponsesReq) returns (SaveAgentCallResponsesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/saveagentcallresponses";
     option (google.api.http).body = "*";
   }
 
-  rpc ListAgentTransferOptions(ListAgentTransferOptionsReq)
-      returns (ListAgentTransferOptionsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listagenttransferoptions";
+  rpc ListAgentTransferOptions(ListAgentTransferOptionsReq) returns (ListAgentTransferOptionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagenttransferoptions";
     option (google.api.http).body = "*";
   }
 
-  rpc UpdateAgentCallResponseValue(UpdateAgentCallResponseValueReq)
-      returns (UpdateAgentCallResponseValueRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/updateagentcallresponsevalue";
+  rpc UpdateAgentCallResponseValue(UpdateAgentCallResponseValueReq) returns (UpdateAgentCallResponseValueRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentcallresponsevalue";
     option (google.api.http).body = "*";
   }
 
-  rpc GetIntercomPeerInfo(GetIntercomPeerInfoReq)
-      returns (GetIntercomPeerInfoRes) {
+  rpc GetIntercomPeerInfo(GetIntercomPeerInfoReq) returns (GetIntercomPeerInfoRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getintercompeerinfo";
     option (google.api.http).body = "*";
   }
 
   // Lists the requesting user's org response evaluators.
-  rpc ListOrgResponseEvaluators(ListOrgResponseEvaluatorsReq)
-      returns (ListOrgResponseEvaluatorsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listorgresponseevaluators";
+  rpc ListOrgResponseEvaluators(ListOrgResponseEvaluatorsReq) returns (ListOrgResponseEvaluatorsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listorgresponseevaluators";
     option (google.api.http).body = "*";
   }
 
-  rpc GetQueueConfigurationOptionsArray(GetQueueConfigurationOptionsArrayReq)
-      returns (GetQueueConfigurationOptionsArrayRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/getqueueconfigurationoptionsarray";
+  rpc GetQueueConfigurationOptionsArray(GetQueueConfigurationOptionsArrayReq) returns (GetQueueConfigurationOptionsArrayRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getqueueconfigurationoptionsarray";
     option (google.api.http).body = "*";
   }
 
   // Get the rules for conditionally adding a number to the DNCL depending on
   // responses or scripts
-  rpc GetConditionalDNCLRules(GetConditionalDNCLRulesReq)
-      returns (GetConditionalDNCLRulesRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/getconditionaldnclrules";
+  rpc GetConditionalDNCLRules(GetConditionalDNCLRulesReq) returns (GetConditionalDNCLRulesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getconditionaldnclrules";
     option (google.api.http).body = "*";
   }
 
@@ -416,40 +379,32 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-  rpc ListExtendedCallHistory(ListExtendedCallHistoryReq)
-      returns (stream ListExtendedCallHistoryRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listextendedcallhistory";
+  rpc ListExtendedCallHistory(ListExtendedCallHistoryReq) returns (stream ListExtendedCallHistoryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listextendedcallhistory";
     option (google.api.http).body = "*";
   }
 
-  rpc ListWhiteListPhoneBooks(ListWhiteListPhoneBooksReq)
-      returns (ListWhiteListPhoneBooksRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listwhitelistphonebooks";
+  rpc ListWhiteListPhoneBooks(ListWhiteListPhoneBooksReq) returns (ListWhiteListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listwhitelistphonebooks";
     option (google.api.http).body = "*";
   }
 
-  rpc DownloadCallRecording(DownloadCallRecordingReq)
-      returns (DownloadRecordingRes) {
+  rpc DownloadCallRecording(DownloadCallRecordingReq) returns (DownloadRecordingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecording";
     option (google.api.http).body = "*";
   }
 
-  rpc DownloadCallRecordings(DownloadCallRecordingsReq)
-      returns (DownloadRecordingRes) {
+  rpc DownloadCallRecordings(DownloadCallRecordingsReq) returns (DownloadRecordingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecordings";
     option (google.api.http).body = "*";
   }
 
-  rpc PlacePreviewDialCall(PlacePreviewDialCallReq)
-      returns (PlacePreviewDialCallRes) {
+  rpc PlacePreviewDialCall(PlacePreviewDialCallReq) returns (PlacePreviewDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/placepreviewdialcall";
     option (google.api.http).body = "*";
   }
 
-  rpc CancelPreviewDialCall(CancelPreviewDialCallReq)
-      returns (CancelPreviewDialCallRes) {
+  rpc CancelPreviewDialCall(CancelPreviewDialCallReq) returns (CancelPreviewDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/cancelpreviewdialcall";
     option (google.api.http).body = "*";
   }
@@ -466,30 +421,23 @@ service P3Api {
   // }
 
   // ListCallbackRoutingAgents returns a list of agents that are allowed to make a callback.
-  rpc ListCallbackRoutingAgents(ListCallbackRoutingAgentsReq)
-      returns (ListCallbackRoutingAgentsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcallbackroutingagents";
+  rpc ListCallbackRoutingAgents(ListCallbackRoutingAgentsReq) returns (ListCallbackRoutingAgentsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingagents";
     option (google.api.http).body = "*";
   }
 
-  rpc ListCallbackRoutingSkills(ListCallbackRoutingSkillsReq)
-      returns (ListCallbackRoutingSkillsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcallbackroutingskills";
+  rpc ListCallbackRoutingSkills(ListCallbackRoutingSkillsReq) returns (ListCallbackRoutingSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingskills";
     option (google.api.http).body = "*";
   }
 
-  rpc HandleRecordingDelay(HandleRecordingDelayReq)
-      returns (HandleRecordingDelayRes) {
+  rpc HandleRecordingDelay(HandleRecordingDelayReq) returns (HandleRecordingDelayRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/handlerecordingdelay";
     option (google.api.http).body = "*";
   }
 
-  rpc UpdateAgentAssignedHuntGroup(UpdateAgentAssignedHuntGroupReq)
-      returns (UpdateAgentAssignedHuntGroupRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/updateagentassignedhuntgroup";
+  rpc UpdateAgentAssignedHuntGroup(UpdateAgentAssignedHuntGroupReq) returns (UpdateAgentAssignedHuntGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentassignedhuntgroup";
     option (google.api.http).body = "*";
   }
 
@@ -498,10 +446,8 @@ service P3Api {
     option (google.api.http).body = "*";
   }
 
-  rpc ListHuntGroups(ListHuntGroupsReq)
-      returns (ListHuntGroupsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listHuntGroups";
+  rpc ListHuntGroups(ListHuntGroupsReq) returns (ListHuntGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listHuntGroups";
     option (google.api.http).body = "*";
   }
 
@@ -509,63 +455,49 @@ service P3Api {
   // themselves to. The reassignment hunt groups can optionally be limited by a
   // hunt group setting. If a hunt group does not allow reassignment, the
   // returned list will be empty.
-  rpc ListReassignmentHuntGroups(ListReassignmentHuntGroupsReq)
-      returns (ListReassignmentHuntGroupsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listreassignmenthuntgroups";
+  rpc ListReassignmentHuntGroups(ListReassignmentHuntGroupsReq) returns (ListReassignmentHuntGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listreassignmenthuntgroups";
     option (google.api.http).body = "*";
   }
 
-  rpc GetOrgAgentSettings(GetOrgAgentSettingsReq)
-      returns (GetOrgAgentSettingsRes) {
+  rpc GetOrgAgentSettings(GetOrgAgentSettingsReq) returns (GetOrgAgentSettingsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getorgagentsettings";
     option (google.api.http).body = "*";
   }
 
   // Lists caller id numbers with their associated region codes for the given
   // bucket
-  rpc ListCallerIdsFromBucket(ListCallerIdsFromBucketReq)
-      returns (ListCallerIdsFromBucketRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcalleridsfrombucket";
+  rpc ListCallerIdsFromBucket(ListCallerIdsFromBucketReq) returns (ListCallerIdsFromBucketRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcalleridsfrombucket";
     option (google.api.http).body = "*";
   }
 
-  rpc SaveLastCallResponse(SaveLastCallResponseReq)
-      returns (SaveLastCallResponseRes) {
+  rpc SaveLastCallResponse(SaveLastCallResponseReq) returns (SaveLastCallResponseRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/savelastcallresponse";
     option (google.api.http).body = "*";
   }
 
-  rpc ListAgentCallLogsByCallSidAndType(ListAgentCallLogsByCallSidAndTypeReq)
-      returns (ListAgentCallLogsByCallSidAndTypeRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listagentcalllogsbycallsidandtype";
+  rpc ListAgentCallLogsByCallSidAndType(ListAgentCallLogsByCallSidAndTypeReq) returns (ListAgentCallLogsByCallSidAndTypeRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentcalllogsbycallsidandtype";
     option (google.api.http).body = "*";
   }
 
   // Lists the keys and values of the latest responses for the given call_sid,
   // call_type and agent_sid
-  rpc ListAgentCallResponseValues(ListAgentCallResponseValuesReq)
-      returns (ListAgentCallResponseValuesRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listagentcallresponsevalues";
+  rpc ListAgentCallResponseValues(ListAgentCallResponseValuesReq) returns (ListAgentCallResponseValuesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentcallresponsevalues";
     option (google.api.http).body = "*";
   }
 
   // Get contact schema details based on contact group sid
-  rpc GetContactSchemaByContactGroup(GetContactSchemaByContactGroupReq)
-      returns (ContactSchema) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/getcontactschemabycontactgroup";
+  rpc GetContactSchemaByContactGroup(GetContactSchemaByContactGroupReq) returns (ContactSchema) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcontactschemabycontactgroup";
     option (google.api.http).body = "*";
   }
 
   // List contact group details based on client sid from contact_group table
-  rpc ListContactGroupDetailsByClientSid(ListContactGroupDetailsByClientSidReq)
-      returns (ListContactGroupDetailsByClientSidRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcontactgroupdetailsbyclientsid";
+  rpc ListContactGroupDetailsByClientSid(ListContactGroupDetailsByClientSidReq) returns (ListContactGroupDetailsByClientSidRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactgroupdetailsbyclientsid";
     option (google.api.http).body = "*";
   }
 
@@ -583,61 +515,46 @@ service P3Api {
   }
 
   // Create contact field description details
-  rpc CreateContactFieldDescription(CreateContactFieldDescriptionReq)
-      returns (CreateContactFieldDescriptionRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/createcontactfielddescription";
+  rpc CreateContactFieldDescription(CreateContactFieldDescriptionReq) returns (CreateContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createcontactfielddescription";
     option (google.api.http).body = "*";
   }
 
   // Delete contact field description details
-  rpc DeleteContactFieldDescription(DeleteContactFieldDescriptionReq)
-      returns (DeleteContactFieldDescriptionRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/deletecontactfielddescription";
+  rpc DeleteContactFieldDescription(DeleteContactFieldDescriptionReq) returns (DeleteContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deletecontactfielddescription";
     option (google.api.http).body = "*";
   }
 
   // List contact field desc details from contact_field_description table
-  rpc ListContactFieldDescriptions(ListContactFieldDescriptionsReq)
-      returns (ListContactFieldDescriptionsRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcontactfielddescriptions";
+  rpc ListContactFieldDescriptions(ListContactFieldDescriptionsReq) returns (ListContactFieldDescriptionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptions";
     option (google.api.http).body = "*";
   }
 
   // List contact field description details based on contact group sid
-  rpc ListContactFieldDescriptionsByCGSid(
-      ListContactFieldDescriptionsByCGSidReq)
-      returns (ListContactFieldDescriptionsByCGSidRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcontactfielddescriptionsbycgsid";
+  rpc ListContactFieldDescriptionsByCGSid(ListContactFieldDescriptionsByCGSidReq) returns (ListContactFieldDescriptionsByCGSidRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptionsbycgsid";
     option (google.api.http).body = "*";
   }
 
   // List contactImportTemplates based on client_sid from
   // contact_import_template table
-  rpc ListContactImportTemplates(ListContactImportTemplatesReq)
-      returns (ListContactImportTemplatesRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/listcontactimporttemplates";
+  rpc ListContactImportTemplates(ListContactImportTemplatesReq) returns (ListContactImportTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactimporttemplates";
     option (google.api.http).body = "*";
   }
 
   // Updates task data for a preview record to finished and logs an agent
   // session event
-  rpc UpdatePreviewRecordToFinished(UpdatePreviewRecordToFinishedReq)
-      returns (UpdatePreviewRecordToFinishedRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/updatepreviewrecordtofinished";
+  rpc UpdatePreviewRecordToFinished(UpdatePreviewRecordToFinishedReq) returns (UpdatePreviewRecordToFinishedRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatepreviewrecordtofinished";
     option (google.api.http).body = "*";
   }
 
   // Updates the requesting agent's hunt_group_sid.
-  rpc UpdateAgentHuntGroup(UpdateAgentHuntGroupReq)
-      returns (UpdateAgentHuntGroupRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/updateagenthuntgroup";
+  rpc UpdateAgentHuntGroup(UpdateAgentHuntGroupReq) returns (UpdateAgentHuntGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagenthuntgroup";
     option (google.api.http).body = "*";
   }
 
@@ -647,10 +564,8 @@ service P3Api {
   // Errors:
   //    - grpc.Internal: an error occurred while interacting with the database.
   //    - grpc.InvalidArgument: the hunt_group_sid or the user id list is empty or contains an invalid value.
-  rpc MultiAgentHuntGroupAssignment(MultiAgentHuntGroupAssignmentReq)
-      returns (MultiAgentHuntGroupAssignmentRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/p3api/multiagenthuntgroupassignment";
+  rpc MultiAgentHuntGroupAssignment(MultiAgentHuntGroupAssignmentReq) returns (MultiAgentHuntGroupAssignmentRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/multiagenthuntgroupassignment";
     option (google.api.http).body = "*";
   }
 
@@ -666,8 +581,7 @@ service P3Api {
   // status updated.
   // Required Permissions:
   //  EDIT_BILLING
-  rpc RecalculateBilling(RecalculateBillingReq)
-      returns (RecalculateBillingRes) {
+  rpc RecalculateBilling(RecalculateBillingReq) returns (RecalculateBillingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/recalculatebilling";
     option (google.api.http).body = "*";
   }
@@ -678,8 +592,7 @@ service P3Api {
   //   NONE
   // Errors:
   //   NONE
-  rpc ListOutboundBroadcastTemplateData(ListOutboundBroadcastTemplateDataReq)
-      returns (ListOutboundBroadcastTemplateDataRes) {
+  rpc ListOutboundBroadcastTemplateData(ListOutboundBroadcastTemplateDataReq) returns (ListOutboundBroadcastTemplateDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listoutboundbroadcasttemplatedata";
     option (google.api.http).body = "*";
   }
@@ -687,8 +600,7 @@ service P3Api {
   // Assign every skill to every agent with the given aptitude.
   // Errors:
   //    - grpc.Invalid: the aptitude field is invalid.
-  rpc MultiAgentSkillAssignment(MultiAgentSkillAssignmentReq)
-      returns (MultiAgentSkillAssignmentRes);
+  rpc MultiAgentSkillAssignment(MultiAgentSkillAssignmentReq) returns (MultiAgentSkillAssignmentRes);
 
   // Unassigns every given skill from every given user.
   // Errors:
@@ -696,8 +608,7 @@ service P3Api {
   //        - the user_ids list is empty or contains an empty string.
   //        - one or more of the user_ids does not belong to the client.
   //    - grpc.Internal: an error occurred while deleting the skill assignments.
-  rpc MultiAgentSkillUnassignment(MultiAgentSkillUnassignmentReq)
-      returns (MultiAgentSkillUnassignmentRes);
+  rpc MultiAgentSkillUnassignment(MultiAgentSkillUnassignmentReq) returns (MultiAgentSkillUnassignmentRes);
 
   // List of agent hunt groups based on client sid
   // that have manually approved messages enabled
@@ -806,7 +717,7 @@ service P3Api {
   }
 
   // List Schedule Rules
-  rpc ListScheduleRules(ListScheduleRulesRequest) returns (ListScheduleRulesResult){
+  rpc ListScheduleRules(ListScheduleRulesRequest) returns (ListScheduleRulesResult) {
     option (google.api.http).post = "/api/v0alpha/org/compliance/list";
     option (google.api.http).body = "*";
   }
@@ -818,13 +729,15 @@ service P3Api {
   }
 
   // List sms numbers by client sid
-  rpc ListSmsNumbers(ListSmsNumbersReq) returns (ListSmsNumbersRes){
+  rpc ListSmsNumbers(ListSmsNumbersReq) returns (ListSmsNumbersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listsmsnumbers";
     option (google.api.http).body = "*";
   }
 }
 
-message GetAgentHuntGroupReq { int64 hunt_group_sid = 1; }
+message GetAgentHuntGroupReq {
+  int64 hunt_group_sid = 1;
+}
 
 message HuntGroup {
   int64 hunt_group_sid = 1;
@@ -884,7 +797,9 @@ message ListSkillsForCurrentAgentRes {
   repeated AgentSkill skills = 1;
 }
 
-message GetAgentSessionReq { int64 agent_session_sid = 1; }
+message GetAgentSessionReq {
+  int64 agent_session_sid = 1;
+}
 
 // removing to use asm create session
 // message CreateAgentSessionReq { int64 hunt_group_sid = 1; }
@@ -1119,7 +1034,6 @@ message UpdatePhoneBookEntryReq {
 // Response message for the UpdatePhoneBookEntry RPC
 message UpdatePhoneBookEntryRes {}
 
-
 // Request message for the DeletePhoneBookEntry RPC
 message DeletePhoneBookEntryReq {
   // The sid that matches this phone book entry to a specific phone book.
@@ -1145,7 +1059,9 @@ message ListPhoneBooksRes {
   repeated PhoneBook transfer_phone_books = 3;
 }
 
-message ListAgentTriggersReq { int64 hunt_group_sid = 1; }
+message ListAgentTriggersReq {
+  int64 hunt_group_sid = 1;
+}
 
 message TriggerParameters {
   string action_key = 1;
@@ -1161,7 +1077,9 @@ message TriggerDetails {
   repeated TriggerParameters trigger_parameters = 6;
 }
 
-message ListAgentTriggersRes { repeated TriggerDetails trigger_details = 1; }
+message ListAgentTriggersRes {
+  repeated TriggerDetails trigger_details = 1;
+}
 
 message PBXExtension {
   int64 pbx_extension_sid = 1;
@@ -1248,7 +1166,9 @@ message CreateDNCLNumbersRes {
   int64 failure_count = 3; // can be extrapolated
 }
 
-message GetHuntGroupAgentSettingsReq { int64 hunt_group_sid = 1; }
+message GetHuntGroupAgentSettingsReq {
+  int64 hunt_group_sid = 1;
+}
 
 message HuntGroupAgentSettings {
   bool keypad_enabled = 1;
@@ -1394,23 +1314,23 @@ message ManualDialSettings {
 
 // Manual Dial Data Dip Configuration actions
 message ManualDialDataDipHandling {
-    enum Enum {
-        NONE = 0;
-        CANCEL = 1;
-        NOTIFY_AND_CANCEL = 2;
-        NOTIFY_AND_ALLOW_CALL = 3;
-        CALL_WITH_ORIGINAL_VALUES = 4;
-    }
+  enum Enum {
+    NONE = 0;
+    CANCEL = 1;
+    NOTIFY_AND_CANCEL = 2;
+    NOTIFY_AND_ALLOW_CALL = 3;
+    CALL_WITH_ORIGINAL_VALUES = 4;
+  }
 }
 
 // scrub list ids and field values used in lookup
 message ScrubListsAutoAdd {
-    // Scrub list ID
-    string scrub_list = 1;
-    // Field ID to be added to scrub list
-    string field_id = 2;
-    // Field name/value used to find calldata with same name/key
-    string field_name = 3;
+  // Scrub list ID
+  string scrub_list = 1;
+  // Field ID to be added to scrub list
+  string field_id = 2;
+  // Field name/value used to find calldata with same name/key
+  string field_name = 3;
 }
 
 // ScrubListsExpirationLimits - expiration time options when adding  entry to scrub list
@@ -1586,7 +1506,9 @@ message ListHuntGroupWebLinksReq {
   bool isInitialPreview = 10;
 }
 
-message ListHuntGroupWebLinksRes { repeated WebLink web_links = 1; }
+message ListHuntGroupWebLinksRes {
+  repeated WebLink web_links = 1;
+}
 
 message WebLink {
   string display_name = 1;
@@ -1597,7 +1519,9 @@ message WebLink {
   int64 hunt_group_parameter_sid = 7;
 }
 
-message GetHuntGroupPauseCodesReq { int64 hunt_group_sid = 1; }
+message GetHuntGroupPauseCodesReq {
+  int64 hunt_group_sid = 1;
+}
 
 message GetHuntGroupPauseCodesRes {
   string name = 1;
@@ -1655,7 +1579,7 @@ message GetCampaignCompletionStatusRes {
 }
 
 message GetLostPeerInfoReq {
-  int64 call_sid                  = 1;
+  int64 call_sid = 1;
   commons.CallType.Enum call_type = 2;
 }
 
@@ -1669,12 +1593,14 @@ message GetLostPeerInfoRes {
   repeated string pbx_extensions = 7;
 }
 
-message GetDispositionKeysReq{};
-message GetDispositionKeysRes{
+message GetDispositionKeysReq {}
+message GetDispositionKeysRes {
   repeated string values = 1;
-};
+}
 
-message GetScriptOrResponsesReq { MailMergeData data = 1; }
+message GetScriptOrResponsesReq {
+  MailMergeData data = 1;
+}
 
 message GetScriptOrResponsesRes {
   HuntGroupScript scripts = 1;
@@ -1683,7 +1609,9 @@ message GetScriptOrResponsesRes {
 
 message GetReadyAgentsReq {}
 
-message GetReadyAgentsRes { repeated AgentsByAgentSidShort ready_agents = 1; }
+message GetReadyAgentsRes {
+  repeated AgentsByAgentSidShort ready_agents = 1;
+}
 
 message AgentsByAgentSidShort {
   int64 agent_sid = 1;
@@ -1770,7 +1698,9 @@ message ListAgentTransferOptionsRes {
   repeated AgentsByAgentSidShort agent_profile = 5;
 }
 
-message GetIntercomPeerInfoReq { int64 agent_session_sid = 3; }
+message GetIntercomPeerInfoReq {
+  int64 agent_session_sid = 3;
+}
 
 message GetIntercomPeerInfoRes {
   int64 peer_sid = 1;
@@ -1795,7 +1725,9 @@ message GetQueueConfigurationOptionsArrayReq {
   string localized_account_default_string = 2;
 }
 
-message GetQueueConfigurationOptionsArrayRes { repeated string filenames = 1; }
+message GetQueueConfigurationOptionsArrayRes {
+  repeated string filenames = 1;
+}
 
 message AgentCallActivityDetails {
   int64 agent_sid = 1;
@@ -1821,8 +1753,7 @@ message AgentCallActivityDetails {
 message GetConditionalDNCLRulesReq {}
 
 message GetConditionalDNCLRulesRes {
-  repeated AgentDispositionConditionalDncl.DispositionRulesTable
-      disposition_rules = 1;
+  repeated AgentDispositionConditionalDncl.DispositionRulesTable disposition_rules = 1;
 }
 
 message ManualDialStartReq {
@@ -1876,8 +1807,8 @@ message ListExtendedCallHistoryRes {
   // The startDate is the chosen Timescale value (1 day, 2 days, etc.) as a time stamp based on the current date.
   // For example, if today is 05/13/22 and the Timescale value is 7 days, it will be the time stamp value of 05/06/22.
   google.protobuf.Timestamp start_date = 15;
-   // The country sid on the group, which is for the destination phone number
-   int64 country_sid = 16;
+  // The country sid on the group, which is for the destination phone number
+  int64 country_sid = 16;
 }
 
 // Request message for the ListWhiteListPhoneBooks RPC
@@ -1922,10 +1853,10 @@ message CancelPreviewDialCallRes {}
 
 // The response when a recording is downloaded.
 message DownloadRecordingRes {
-    // The url of the recording
-    string url = 1;
-    // The filename of the recording
-    string filename = 2;
+  // The url of the recording
+  string url = 1;
+  // The filename of the recording
+  string filename = 2;
 }
 
 message DownloadCallRecordingReq {
@@ -1997,9 +1928,13 @@ message ListCallbackRoutingAgentsRes {
   repeated AgentsByAgentSidShort agent_short = 1;
 }
 
-message ListCallbackRoutingSkillsReq { int64 hunt_group_sid = 2; }
+message ListCallbackRoutingSkillsReq {
+  int64 hunt_group_sid = 2;
+}
 
-message ListCallbackRoutingSkillsRes { repeated AgentSkill agent_skills = 1; }
+message ListCallbackRoutingSkillsRes {
+  repeated AgentSkill agent_skills = 1;
+}
 
 message HandleRecordingDelayReq {
   int64 hunt_group_sid = 3;
@@ -2033,9 +1968,13 @@ message UpdateAgentAssignedHuntGroupRes {}
 
 message ListHuntGroupsReq {}
 
-message ListHuntGroupsRes { repeated HuntGroup hunt_group = 1; }
+message ListHuntGroupsRes {
+  repeated HuntGroup hunt_group = 1;
+}
 
-message ListReassignmentHuntGroupsReq { int64 hunt_group_sid = 2; }
+message ListReassignmentHuntGroupsReq {
+  int64 hunt_group_sid = 2;
+}
 
 message ListReassignmentHuntGroupsRes {
   repeated SimpleHuntGroup hunt_groups = 1;
@@ -2051,9 +1990,13 @@ message GetOrgAgentSettingsRes {
   bool linkback_recording = 5;
 }
 
-message ListCallerIdsFromBucketReq { int64 bucket_number = 2; }
+message ListCallerIdsFromBucketReq {
+  int64 bucket_number = 2;
+}
 
-message ListCallerIdsFromBucketRes { repeated CallerIdInfo caller_id_info = 1; }
+message ListCallerIdsFromBucketRes {
+  repeated CallerIdInfo caller_id_info = 1;
+}
 
 message CallerIdInfo {
   string number = 1;
@@ -2229,7 +2172,9 @@ message ContactSchema {
   google.protobuf.Int32Value dfc_sid30 = 34;
 }
 
-message GetContactSchemaByContactGroupReq { int64 contact_group_sid = 2; }
+message GetContactSchemaByContactGroupReq {
+  int64 contact_group_sid = 2;
+}
 
 message ContactFieldDescription {
   int32 contact_field_description_sid = 1;
@@ -2246,9 +2191,13 @@ message ContactGroup {
   google.protobuf.StringValue sha_digest = 7;
 }
 
-message GetContactGroupReq { int64 contact_group_sid = 1; }
+message GetContactGroupReq {
+  int64 contact_group_sid = 1;
+}
 
-message GetContactGroupSizeRes { int64 contact_group_size = 1; }
+message GetContactGroupSizeRes {
+  int64 contact_group_size = 1;
+}
 
 message ListContactGroupDetailsByClientSidReq {}
 
@@ -2276,7 +2225,9 @@ message ListContactFieldDescriptionsRes {
   repeated ContactFieldDescription contact_field_description = 1;
 }
 
-message ListContactFieldDescriptionsByCGSidReq { int64 contact_group_sid = 2; }
+message ListContactFieldDescriptionsByCGSidReq {
+  int64 contact_group_sid = 2;
+}
 
 message ListContactFieldDescriptionsByCGSidRes {
   repeated ContactFieldDescription contact_field_description = 1;
@@ -2287,8 +2238,8 @@ message ListTableTemplatePropertiesReq {}
 
 // Response for ListTableTemplateProperties
 message ListTableTemplatePropertiesRes {
-    repeated TableTemplateProperty agent_table_templates = 1; // List of AgentStatusDashboardTemplates belonging to client
-    repeated TableTemplateProperty queue_table_templates = 2; // List of QueueHoldInfoDashboardTemplates belonging to client
+  repeated TableTemplateProperty agent_table_templates = 1; // List of AgentStatusDashboardTemplates belonging to client
+  repeated TableTemplateProperty queue_table_templates = 2; // List of QueueHoldInfoDashboardTemplates belonging to client
 }
 
 // TableTemplate property
@@ -2424,7 +2375,9 @@ message MultiAgentHuntGroupAssignmentReq {
 
 message MultiAgentHuntGroupAssignmentRes {}
 
-message GetAgentProfileReq { int64 agent_sid = 2; }
+message GetAgentProfileReq {
+  int64 agent_sid = 2;
+}
 
 // AgentProfile represents an agent profile.
 message AgentProfile {
@@ -2617,7 +2570,6 @@ message Extension {
   // for the extension (heard + unheard).
   int32 total_messages = 11;
 
-
   message Agent {
     reserved 1;
     // The first_name & last_name fields will be set during
@@ -2635,7 +2587,6 @@ message Extension {
     // will be overwritten.
     string hunt_group_name = 2;
   }
-
 
   message Email {
     string subject = 1;
@@ -2719,15 +2670,15 @@ message ListScheduleRulesRequest {}
 
 // Response message for listing schedule rules (ListScheduleRules).
 message ListScheduleRulesResult {
-  repeated ScheduleRule schedule_rules = 1;  // Rules that define when calls may be executed.  This mimicks the 'schedule_rule' table in Skunk.
+  repeated ScheduleRule schedule_rules = 1; // Rules that define when calls may be executed.  This mimicks the 'schedule_rule' table in Skunk.
 }
 
 // Schedule Rule after the Skunk database
 message ScheduleRule {
-  int64 schedule_rule_sid = 1;  // The 'sid' for the rule in the Skunk table.
-  google.protobuf.Int64Value client_sid = 2;  // The 'sid' for the related 'client' table in Skunk.
-  google.protobuf.StringValue name = 3;  // The name of the rule.
-  google.protobuf.StringValue rule_time_zone = 4;  // The time zone the rule is to be applied to.
+  int64 schedule_rule_sid = 1; // The 'sid' for the rule in the Skunk table.
+  google.protobuf.Int64Value client_sid = 2; // The 'sid' for the related 'client' table in Skunk.
+  google.protobuf.StringValue name = 3; // The name of the rule.
+  google.protobuf.StringValue rule_time_zone = 4; // The time zone the rule is to be applied to.
 }
 
 // Request message for listing sms numbers

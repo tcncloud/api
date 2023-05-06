@@ -2,13 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/auth/perms.proto";
 import "commons/org/trusts.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Request message for the CreateTrust RPC.
 message CreateTrustRequest {
@@ -33,7 +31,7 @@ message CreateTrustResponse {
 
 // Request message for the AcceptTrust RPC.
 message AcceptTrustRequest {
-  // ID of the trust being accepted. 
+  // ID of the trust being accepted.
   string trust_id = 1;
 }
 

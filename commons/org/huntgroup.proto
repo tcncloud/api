@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
 import "commons/country.proto";
 import "commons/org.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // HuntGroupSettings contains all of the hunt group settings.
 message HuntGroupSettings {
@@ -646,31 +643,30 @@ message NumberHistorySettings {
 
 // Sets of rules that manage automatically adding responses to the DNCL
 message AgentResponseAutoRuleSet {
-    // The ID of the ruleset
-    int64 ruleset_sid = 1;
-    // The name of the ruleset
-    string name = 2;
-    // The description of the ruleset
-    string description = 3;
-    // This country should be from the allowed list
-    commons.Country country = 4;
-    // List of Agent Call Responses with comparitors and durations
-    repeated AutoResponseChoice responses = 5;
+  // The ID of the ruleset
+  int64 ruleset_sid = 1;
+  // The name of the ruleset
+  string name = 2;
+  // The description of the ruleset
+  string description = 3;
+  // This country should be from the allowed list
+  commons.Country country = 4;
+  // List of Agent Call Responses with comparitors and durations
+  repeated AutoResponseChoice responses = 5;
 }
 
 // An Agent Call Response with comparitors and duration
 message AutoResponseChoice {
-    // The name of the agent call response
-    string agent_call_response = 1;
-    // List of comparitors with duration
-    repeated AgentResponseComparitors comparitors = 2;
+  // The name of the agent call response
+  string agent_call_response = 1;
+  // List of comparitors with duration
+  repeated AgentResponseComparitors comparitors = 2;
 }
 
 // A list of agent entries and duration to use to determine addition to DNCL
 message AgentResponseComparitors {
-    // Value is a string option that will compare against the agent response
-    string value = 1;
-    // Expiration is expressed in number of hours
-    int64 expiration = 2;
+  // Value is a string option that will compare against the agent response
+  string value = 1;
+  // Expiration is expressed in number of hours
+  int64 expiration = 2;
 }
-

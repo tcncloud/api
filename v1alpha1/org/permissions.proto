@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/auth/perms.proto";
 import "commons/org.proto";
-import "commons/org/permissions.proto";
 import "commons/org/labels.proto";
+import "commons/org/permissions.proto";
 import "commons/org/user.proto";
 import "commons/perms.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Request message for the GetPermissions RPC.
-message GetPermissionsRequest {
-}
+message GetPermissionsRequest {}
 
 // Response message for the GetPermissions RPC.
 message GetPermissionsResponse {
@@ -31,8 +28,7 @@ message GetPermissionsResponse {
 }
 
 // Request message for the GetUserPermissions RPC.
-message GetUserPermissionsRequest {
-}
+message GetUserPermissionsRequest {}
 
 // Response message for the GetUserPermissions RPC.
 message GetUserPermissionsResponse {
@@ -82,12 +78,10 @@ message DeletePermissionGroupRequest {
 }
 
 // Response message for the DeletePermissionGroup RPC.
-message DeletePermissionGroupResponse {
-}
+message DeletePermissionGroupResponse {}
 
 // Request message for the GetPermissions RPC.
-message ListPermissionGroupsRequest {
-}
+message ListPermissionGroupsRequest {}
 
 // Response message for the GetPermissions RPC.
 message ListPermissionGroupsResponse {
@@ -116,8 +110,7 @@ message AssignUsersPermissionGroupRequest {
 }
 
 // Response message for the AssignUsersPermissionGroup RPC.
-message AssignUsersPermissionGroupResponse {
-}
+message AssignUsersPermissionGroupResponse {}
 
 // Request message for the RevokeUsersPermissionGroup RPC.
 message RevokeUsersPermissionGroupRequest {
@@ -128,8 +121,7 @@ message RevokeUsersPermissionGroupRequest {
 }
 
 // Response message for the RevokeUsersPermissionGroup RPC.
-message RevokeUsersPermissionGroupResponse {
-}
+message RevokeUsersPermissionGroupResponse {}
 
 // Request message for the AssignAccountOwnerPermissionToUser RPC.
 message AssignAccountOwnerPermissionToUserRequest {
@@ -138,8 +130,7 @@ message AssignAccountOwnerPermissionToUserRequest {
 }
 
 // Response message for the AssignAccountOwnerPermissionToUser RPC.
-message AssignAccountOwnerPermissionToUserResponse {
-}
+message AssignAccountOwnerPermissionToUserResponse {}
 
 // Request message for the RevokeAccountOwnerPermissionFromUser RPC.
 message RevokeAccountOwnerPermissionFromUserRequest {
@@ -150,12 +141,10 @@ message RevokeAccountOwnerPermissionFromUserRequest {
 }
 
 // Response message for the RevokeAccountOwnerPermissionFromUser RPC.
-message RevokeAccountOwnerPermissionFromUserResponse {
-}
+message RevokeAccountOwnerPermissionFromUserResponse {}
 
 // Request message for the InitDefaultPermissionGroups RPC.
-message InitDefaultPermissionGroupsRequest {
-}
+message InitDefaultPermissionGroupsRequest {}
 
 // Response message for the InitDefaultPermissionGroups RPC.
 message InitDefaultPermissionGroupsResponse {
@@ -210,8 +199,7 @@ message UpdateLicensesRequest {
 }
 
 // Response message for the UpdateLicenses RPC.
-message UpdateLicensesResponse {
-}
+message UpdateLicensesResponse {}
 
 // Request message for the RemovePermissionFromAllPermissionGroupsRequest RPC.
 message RemovePermissionFromAllPermissionGroupsRequest {
@@ -222,5 +210,4 @@ message RemovePermissionFromAllPermissionGroupsRequest {
 }
 
 // Response message for the RemovePermissionFromAllPermissionGroupsRequest RPC.
-message RemovePermissionFromAllPermissionGroupsResponse {
-}
+message RemovePermissionFromAllPermissionGroupsResponse {}

@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.sentinel;
 
-option java_package="com.tcn.api.v1alpha1.sentinel";
-option go_package="github.com/tcncloud/api/v1alpha1.sentinel;sentinel";
-
-import "google/protobuf/timestamp.proto";
 import "commons/logging.proto";
+import "google/protobuf/timestamp.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/v1alpha1.sentinel;sentinel";
+option java_package = "com.tcn.api.v1alpha1.sentinel";
 
 message SentinelEvent {
   oneof event {
@@ -34,5 +31,4 @@ message SendEventsReq {
   repeated SentinelEvent events = 1;
 }
 
-message SendEventsRes {
-}
+message SendEventsRes {}

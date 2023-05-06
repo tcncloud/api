@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.cfg;
 
-option java_package="com.tcn.api.v1alpha1.cfg";
-option go_package="github.com/tcncloud/api/v1alpha1.cfg;cfg";
-
-import "google/api/annotations.proto";
 import "annotations/authz.proto";
+import "google/api/annotations.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/v1alpha1.cfg;cfg";
+option java_package = "com.tcn.api.v1alpha1.cfg";
 
 // Service for interacting with TCN's configuration system.
 // Accessing all of the methods requires an authenticated user with
@@ -19,9 +16,7 @@ service Cfg {
   rpc GetWebAgentConfig(GetWebAgentConfigReq) returns (WebAgent) {
     option (google.api.http).post = "/api/v1alpha1/cfg/getwebagentconfig";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      no_permissions: true;
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
 import "commons/acd.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 // Service for interacting with TCN's Agent Call Distribution system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -46,12 +42,12 @@ service Acd {
   //              check the associated error message for extra information
   //    - grpc.NotFound:
 
-  rpc AgentGetStatusStream(AgentGetStatusRequest) returns (stream AgentGetStatusReply)  {
+  rpc AgentGetStatusStream(AgentGetStatusRequest) returns (stream AgentGetStatusReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetstatusstream";
     option (google.api.http).body = "*";
   }
 
-  rpc AgentGetStatus(AgentGetStatusRequest) returns (AgentGetStatusReply)  {
+  rpc AgentGetStatus(AgentGetStatusRequest) returns (AgentGetStatusReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetstatus";
     option (google.api.http).body = "*";
   }
@@ -126,52 +122,52 @@ service Acd {
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToOutboundCancel(TransferWarmToOutboundCancelRequest) returns (TransferWarmToOutboundCancelReply) {
+  rpc TransferWarmToOutboundCancel(TransferWarmToOutboundCancelRequest) returns (TransferWarmToOutboundCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundcancel";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToAgentCancel(TransferWarmToAgentCancelRequest) returns (TransferWarmToAgentCancelReply) {
+  rpc TransferWarmToAgentCancel(TransferWarmToAgentCancelRequest) returns (TransferWarmToAgentCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentcancel";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToOutboundApprove(TransferWarmToOutboundApproveRequest) returns (TransferWarmToOutboundApproveReply) {
+  rpc TransferWarmToOutboundApprove(TransferWarmToOutboundApproveRequest) returns (TransferWarmToOutboundApproveReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundapprove";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToAgentApprove(TransferWarmToAgentApproveRequest) returns (TransferWarmToAgentApproveReply) {
+  rpc TransferWarmToAgentApprove(TransferWarmToAgentApproveRequest) returns (TransferWarmToAgentApproveReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentapprove";
     option (google.api.http).body = "*";
   }
 
-  rpc  CallerSendToVoicemail(CallerSendToVoicemailRequest) returns (CallerSendToVoicemailReply) {
+  rpc CallerSendToVoicemail(CallerSendToVoicemailRequest) returns (CallerSendToVoicemailReply) {
     option (google.api.http).post = "/api/v0alpha/acd/callersendtovoicemail";
     option (google.api.http).body = "*";
   }
 
-  rpc  AgentInviteTransferCallerToConference(AgentInviteTransferCallerToConferenceRequest) returns (AgentInviteTransferCallerToConferenceReply) {
+  rpc AgentInviteTransferCallerToConference(AgentInviteTransferCallerToConferenceRequest) returns (AgentInviteTransferCallerToConferenceReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentinvitetransfercallertoconference";
     option (google.api.http).body = "*";
   }
 
-  rpc  AgentMonitorCalls(AgentMonitorCallsRequest) returns (AgentMonitorCallsReply) {
+  rpc AgentMonitorCalls(AgentMonitorCallsRequest) returns (AgentMonitorCallsReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentmonitorcalls";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferColdToOutbound(TransferColdToOutboundRequest) returns (TransferColdToOutboundReply) {
+  rpc TransferColdToOutbound(TransferColdToOutboundRequest) returns (TransferColdToOutboundReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transfercoldtooutbound";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferColdToAgent(TransferColdToAgentRequest) returns (TransferColdToAgentReply) {
+  rpc TransferColdToAgent(TransferColdToAgentRequest) returns (TransferColdToAgentReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transfercoldtoagent";
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToOutboundStart(TransferWarmToOutboundStartRequest) returns (TransferWarmToOutboundStartReply) {
+  rpc TransferWarmToOutboundStart(TransferWarmToOutboundStartRequest) returns (TransferWarmToOutboundStartReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundstart";
     option (google.api.http).body = "*";
   }
@@ -188,7 +184,7 @@ service Acd {
     option (google.api.http).body = "*";
   }
 
-  rpc  TransferWarmToAgentStart(TransferWarmToAgentStartRequest) returns (TransferWarmToAgentStartReply) {
+  rpc TransferWarmToAgentStart(TransferWarmToAgentStartRequest) returns (TransferWarmToAgentStartReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentstart";
     option (google.api.http).body = "*";
   }
@@ -203,7 +199,7 @@ service Acd {
     option (google.api.http).body = "*";
   }
 
-  rpc  ACDGetAllAgentsStatuses(ACDGetAllAgentsStatusesRequest) returns (ACDGetAllAgentsStatusesReply) {
+  rpc ACDGetAllAgentsStatuses(ACDGetAllAgentsStatusesRequest) returns (ACDGetAllAgentsStatusesReply) {
     option (google.api.http).post = "/api/v0alpha/acd/acdgetallagentsstatuses";
     option (google.api.http).body = "*";
   }
@@ -319,7 +315,7 @@ message AgentGetStatusRequest {
 }
 
 message AgentGetStatusReply {
-  int64 status  = 2;
+  int64 status = 2;
   commons.AgentStatus.Enum status_desc = 3;
   bool paused = 4;
   string queue = 5;
@@ -425,7 +421,7 @@ message AgentSessionEventRes {}
 
 message CallerRequeueRequest {
   string new_config_folder = 3;
-  map <string,bool> skills = 4;
+  map<string, bool> skills = 4;
   bool replace_skills = 5;
   commons.ReplaceConfig.Enum replace_config = 6;
   int64 session_sid = 7;
@@ -515,14 +511,14 @@ message TransferWarmToOutboundStartReply {}
 
 // request to add a new outbound transfer member
 message CreateWarmOutboundTransferMemberRequest {
-    // where the call should look like it comming from
-    string caller_id = 3;
-    // where the call should go to
-    string destination = 4;
-    // specific carriers to use
-    repeated string reserved_carriers = 5;
-    // the session sid for the agent
-    int64 session_sid = 6;
+  // where the call should look like it comming from
+  string caller_id = 3;
+  // where the call should go to
+  string destination = 4;
+  // specific carriers to use
+  repeated string reserved_carriers = 5;
+  // the session sid for the agent
+  int64 session_sid = 6;
 }
 
 // request to add a new outbound transfer member
@@ -530,10 +526,10 @@ message CreateWarmOutboundTransferMemberReply {}
 
 // request to add a new outbound transfer member
 message RemoveTransferMemberRequest {
-    // the id of the member to be hungup
-    string member_identifier = 1;
-    // the session sid for the agent
-    int64 session_sid = 2;
+  // the id of the member to be hungup
+  string member_identifier = 1;
+  // the session sid for the agent
+  int64 session_sid = 2;
 }
 
 // request to hangup a transfer member
@@ -610,13 +606,13 @@ message AgentPBXApproveCallRequest {
 message AgentPBXApproveCallReply {}
 
 message GetCallerLostPeerRequest {
-    int64 call_sid                     = 1;
-    commons.CallType.Enum call_type    = 2;
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
 }
 
 message GetCallerLostPeerReply {
   reserved 1;
-  int64 hunt_group_sid  = 2;
+  int64 hunt_group_sid = 2;
 }
 
 message CallerGetRawEventRequest {
@@ -625,19 +621,19 @@ message CallerGetRawEventRequest {
 }
 
 message CallerGetRawEventReply {
-    CallerEvent event = 1;
+  CallerEvent event = 1;
 }
 
 // This is the front end version of the caller event. If more data is needed we can add.
 message CallerEvent {
-    map<string, bool> skills            = 19;
-    map<string, bool> allSkills         = 20;
+  map<string, bool> skills = 19;
+  map<string, bool> allSkills = 20;
 }
 
 message PeerAgentWithCallerRequest {
-    int64 call_sid = 1;
-    commons.CallType.Enum call_type = 2;
-    int64 session_sid = 3;
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+  int64 session_sid = 3;
 }
 
 message PeerAgentWithCallerReply {}
@@ -668,105 +664,100 @@ message GetAgentCallCountsRes {
 
 // message used to start a warm caller transfer
 message WarmCallerTransferStartReq {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the sid for the destination caller
-    int64 call_sid = 2;
-    // the type for the destination caller
-    commons.CallType.Enum call_type = 3;
-    // whether or not we should mute current caller ro not
-    bool caller_hold = 4;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the sid for the destination caller
+  int64 call_sid = 2;
+  // the type for the destination caller
+  commons.CallType.Enum call_type = 3;
+  // whether or not we should mute current caller ro not
+  bool caller_hold = 4;
 }
 
 // message used in response to start a warm caller transfer
-message WarmCallerTransferStartRes {
-}
+message WarmCallerTransferStartRes {}
 
 // message used to cancel a warm caller transfer
 message WarmCallerTransferCancelReq {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the reason for the cancel
-    string reason = 2;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the reason for the cancel
+  string reason = 2;
 }
 
 // message used in response to canceling a wamr caller transfer
-message WarmCallerTransferCancelRes {
-}
+message WarmCallerTransferCancelRes {}
 
 // message used to approve a warm caller transfer
 message WarmCallerTransferApproveReq {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the reason for the approve
-    string reason = 2;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the reason for the approve
+  string reason = 2;
 }
 
 // message used in response to approving a wamr caller transfer
-message WarmCallerTransferApproveRes {
-}
+message WarmCallerTransferApproveRes {}
 
 // message used in a request for playing audio from the soundboard
 message PlaySoundboardEntityReq {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the id of the requested soundboard entity to play
-    int64 soundboard_entity_id = 2 [jstype = JS_STRING];
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the id of the requested soundboard entity to play
+  int64 soundboard_entity_id = 2 [jstype = JS_STRING];
 }
 
 // message used in a response for playing audio from the soundboard
 message PlaySoundboardEntityRes {
-    // the id of the instance of sound being played
-    string sound_instance_id = 1;
+  // the id of the instance of sound being played
+  string sound_instance_id = 1;
 }
 
 // message used in a request for stopping audio from the soundbooard
 message StopSoundboardEntityReq {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the id of the instance of sound being played
-    string sound_instance_id = 2;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the id of the instance of sound being played
+  string sound_instance_id = 2;
 }
 
 // message used in a response for stopping audio from the soundbooard
-message StopSoundboardEntityRes {
-}
+message StopSoundboardEntityRes {}
 
 // message used to update an agent's skills
 message UpdateAgentSkillsRequest {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the skills to update
-    map<string, int64> skills = 2;
-    // true to replace the skills or false to add them
-    bool replace_skills = 4;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the skills to update
+  map<string, int64> skills = 2;
+  // true to replace the skills or false to add them
+  bool replace_skills = 4;
 }
 
 // message used in response to updating an agent's skills
-message UpdateAgentSkillsReply {
-}
+message UpdateAgentSkillsReply {}
 
 // message used to play a dtmf tone in an agent's conference
 message PlayDTMFRequest {
-    // the session sid for the agent
-    int64 session_sid = 1;
-    // the dtmf tone to play
-    repeated commons.DTMFDigit dtmf_digits = 2;
+  // the session sid for the agent
+  int64 session_sid = 1;
+  // the dtmf tone to play
+  repeated commons.DTMFDigit dtmf_digits = 2;
 }
 
 // message used in response to playing a dtmf tone in an agent's conference
 message PlayDTMFReply {}
 
-message AgentMuteRequest{
- // the session sid for the agent
- int64 session_sid = 1;
+message AgentMuteRequest {
+  // the session sid for the agent
+  int64 session_sid = 1;
 }
 
-message AgentMuteReply{}
+message AgentMuteReply {}
 
-message AgentUnmuteRequest{
- // the session sid for the agent
- int64 session_sid = 1;
+message AgentUnmuteRequest {
+  // the session sid for the agent
+  int64 session_sid = 1;
 }
 
-message AgentUnmuteReply{}
+message AgentUnmuteReply {}

@@ -2,13 +2,11 @@ syntax = "proto2";
 
 package annotations;
 
-option java_package="com.tcn.api.annotations";
-option go_package="github.com/tcncloud/api/annotations;annotations";
-
-import "google/protobuf/descriptor.proto";
 import "commons/auth/perms.proto";
+import "google/protobuf/descriptor.proto";
 
-
+option go_package = "github.com/tcncloud/api/annotations;annotations";
+option java_package = "com.tcn.api.annotations";
 
 extend google.protobuf.MethodOptions {
   // add annotations to method options
@@ -22,7 +20,10 @@ message Permissions {
   repeated PermissionSet sets = 1;
   // WIP inject PERMISSION_DEV into the required list
   // don't use it, it will be removed soon
-  optional bool wip = 2 [default = false, deprecated = true];
+  optional bool wip = 2 [
+    default = false,
+    deprecated = true
+  ];
   // Indicate that the method will use no permissions - it will be public.
   // Be careful with this.
   optional bool no_permissions = 3 [default = false];

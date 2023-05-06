@@ -2,11 +2,8 @@ syntax = "proto3";
 
 package commons.public;
 
-option java_package="com.tcn.api.commons.public";
-option go_package="github.com/tcncloud/api/commons.public;public";
-
-
-
+option go_package = "github.com/tcncloud/api/commons.public;public";
+option java_package = "com.tcn.api.commons.public";
 
 // all supported integrations
 enum IntegrationType {
@@ -60,7 +57,6 @@ enum RequestMethod {
   REQUEST_METHOD_RELATIENT_POSTPATIENTBALANCE = 204;
   REQUEST_METHOD_RELATIENT_GETPATIENT = 205;
   REQUEST_METHOD_RELATIENT_POSTBALANCEBYID = 206;
-
 
   REQUEST_METHOD_CYBERSOURCE_CREDITPAYMENT = 301;
   REQUEST_METHOD_CYBERSOURCE_ECHECKPAYMENT = 302;
@@ -311,6 +307,7 @@ enum FlowFieldLoc {
   // means the field needs to be in the user submitted form
   FFL_SUBMIT = 3;
 }
+
 // Validation is an enum that appears on FieldDefinition.
 // it is a hint of what the value should look like for the user,
 // and usually applies to VALUE_TYPE_STRING fields.
@@ -401,7 +398,6 @@ enum InvoiceDisplayType {
   PATIENT_ZIP_CODE = 209;
 }
 
-
 message Invoices {
   repeated InvoiceField top_level_fields = 1;
   repeated Invoice invoices = 2;
@@ -442,7 +438,7 @@ message InvoiceDescription {
   repeated FieldDefinition invoice_description_fields = 1;
   // the group of descriptions for each item in the invoice.
   // this can be empty, or have multiple items in it.
-  repeated LineItemGroup  line_items = 2;
+  repeated LineItemGroup line_items = 2;
 }
 message LineItemGroup {
   // all fields reference a description of a single item on an invoice
@@ -481,17 +477,17 @@ enum FieldSource {
   // there isn't a way to alter the payment form in v1 payment profiles.
   FIELD_SOURCE_PAYMENT_FORM = 8;
 }
-message ListOfStrings{
-    repeated string values = 1;
+message ListOfStrings {
+  repeated string values = 1;
 }
 
 // must match the numbers in the Flow message's "value" oneof
 enum FlowType {
-    FLOW_TYPE_UNKNOWN = 0;
-    FLOW_TYPE_INVOICE = 1;
-    FLOW_TYPE_PAYMENT = 2;
-    FLOW_TYPE_VERIFICATION = 3;
-    FLOW_TYPE_EXECUTE = 4;
+  FLOW_TYPE_UNKNOWN = 0;
+  FLOW_TYPE_INVOICE = 1;
+  FLOW_TYPE_PAYMENT = 2;
+  FLOW_TYPE_VERIFICATION = 3;
+  FLOW_TYPE_EXECUTE = 4;
 }
 
 message Flow {
@@ -518,20 +514,19 @@ message InvoiceFlow {
 message PaymentFlow {
   string plugin_instance_id = 1;
   oneof value {
-   PaymentExperianCC experian_cc = 2;
-   PaymentExperianACH experian_ach = 3;
-   PaymentAuthorizeNetCC authorize_net_cc = 4;
-   PaymentAuthorizeNetACH authorize_net_ach = 5;
-   PaymentAuthorizeNetPaypal authorize_net_paypal = 6;
-   PaymentAuthorizeNetApplePay authorize_net_apple_pay = 7;
-   PaymentAuthorizeNetGooglePay authorize_net_google_pay = 8;
+    PaymentExperianCC experian_cc = 2;
+    PaymentExperianACH experian_ach = 3;
+    PaymentAuthorizeNetCC authorize_net_cc = 4;
+    PaymentAuthorizeNetACH authorize_net_ach = 5;
+    PaymentAuthorizeNetPaypal authorize_net_paypal = 6;
+    PaymentAuthorizeNetApplePay authorize_net_apple_pay = 7;
+    PaymentAuthorizeNetGooglePay authorize_net_google_pay = 8;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
   // These fields are provided to allow display name, and helper text to be edited.
   // on the payment screen form.
   repeated FieldDefinition payment_fields = 20;
-
 }
 message VerificationFlow {
   string plugin_instance_id = 1;
@@ -548,34 +543,32 @@ message VerificationFlow {
   repeated FieldDefinition verification_fields = 20;
 }
 
-
 // FieldDefinition defines a field name, and type that is used in integrations.
 // This lets the UI make forms for the getting the field's value from the user
 message FieldDefinition {
-    // the name the backend and front end should when setting data about a field
-    string name = 1;
-    // the name the backend server might use as the field name.
-    string alt_name = 2;
-    // the name the front end should use on the form.
-    string display_name = 6;
-    ValueType field_type = 3;
-    // what the field should validate as,
-    //and how the front end should present the field to the user
-    Validation validation_type = 4;
-    // The datetime formats allowed to use for date types.
-    // if left blank, a default set of formats will be accepted
-    repeated string formats = 5;
-    // if this field is used on an invoice, what type of item should it be?
-    InvoiceDisplayType invoice_type = 7;
-    // the helper text of the field. This is the text that helps explain the label name
-    HelperText helper_text = 8;
+  // the name the backend and front end should when setting data about a field
+  string name = 1;
+  // the name the backend server might use as the field name.
+  string alt_name = 2;
+  // the name the front end should use on the form.
+  string display_name = 6;
+  ValueType field_type = 3;
+  // what the field should validate as,
+  //and how the front end should present the field to the user
+  Validation validation_type = 4;
+  // The datetime formats allowed to use for date types.
+  // if left blank, a default set of formats will be accepted
+  repeated string formats = 5;
+  // if this field is used on an invoice, what type of item should it be?
+  InvoiceDisplayType invoice_type = 7;
+  // the helper text of the field. This is the text that helps explain the label name
+  HelperText helper_text = 8;
 }
 
 // HelperText contains the text that explains a field definition on a form, and any other display options
 message HelperText {
-    string text = 1;
+  string text = 1;
 }
-
 
 // ExecuteFlows run exactly one integration method, and allow user submitted values to be merged with
 // the plugin instance data (like payment flows). Unlike payment flows, there doesn't have to be an
@@ -608,7 +601,7 @@ message ExecuteFlow {
     ExecuteCircproComplaintUpdate circpro_complaint_update = 409;
     ExecuteCircproVacationUpdate circpro_vacation_update = 410;
     ExecuteCircproRestartUpdate circpro_restart_update = 411;
-    ExecuteCircproLawImmediatePayment  circpro_law_immediate_payment = 412;
+    ExecuteCircproLawImmediatePayment circpro_law_immediate_payment = 412;
     ExecuteCircproLawUpdateDataWithPac circpro_law_update_data_with_pac = 413;
     ExecuteCircproLawGetCustomers circpro_law_get_customers = 414;
 
@@ -780,12 +773,11 @@ message InvoiceAuthorizeNetAuthorizedTransactionIdLookup {}
 message InvoiceAuthorizeNetLinkData {}
 message InvoiceAuthorizeNetCustomHttp {}
 message InvoiceJourney {}
-message InvoiceDynamicJourney{
-    repeated string match_fields = 1;
-    string total_field = 2;
-    map<string,ListOfStrings> journey_fields = 3;
+message InvoiceDynamicJourney {
+  repeated string match_fields = 1;
+  string total_field = 2;
+  map<string, ListOfStrings> journey_fields = 3;
 }
-
 
 // verification flows
 message VerificationExperianQueryBalance {}
@@ -794,23 +786,22 @@ message VerificationExperianZipDob {}
 message VerificationAuthorizeNetCustomerProfile {}
 message VerificationAuthorizeNetLinkData {}
 message VerificationJourney {
-    //Deprecated
-    // only used if the VerificationFlow this belongs to is empty
-    string date_of_birth_field = 1 [deprecated=true];
-    //Deprecated
-    // only used if the VerificationFlow this belongs to is empty
-    string last_name_field = 2[deprecated=true];
-    //Deprecated
-    // only used if the VerificationFlow this belongs to is empty
-    string first_name_field = 3[deprecated=true];
-    //Deprecated
-    // only used if the VerificationFlow this belongs to is empty
-    string zip_field = 4 [deprecated=true];
-    //Deprecated
-    // only used if the VerificationFlow this belongs to is empty
-    string last4_ssn = 5 [deprecated=true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string date_of_birth_field = 1 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string last_name_field = 2 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string first_name_field = 3 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string zip_field = 4 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string last4_ssn = 5 [deprecated = true];
 }
-
 
 // payment flows
 message PaymentExperianCC {}
@@ -821,7 +812,6 @@ message PaymentAuthorizeNetACH {}
 message PaymentAuthorizeNetPaypal {}
 message PaymentAuthorizeNetApplePay {}
 message PaymentAuthorizeNetGooglePay {}
-
 
 // execute flows
 message ExecuteBraintreeCreditSale {}

@@ -2,18 +2,15 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
 import "commons/omnichannel.proto";
 import "commons/project.proto";
-import "google/protobuf/wrappers.proto";
-import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 // Service for interacting with TCN's Project API system.
 // Accessing all of the methods require an authenticated user with the correct

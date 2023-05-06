@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.v1alpha1.org.legacy;
 
-import "google/protobuf/field_mask.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 import "commons/ana.proto";
 import "commons/audit/event_types.proto";
 import "commons/auth/perms.proto";
@@ -17,10 +14,9 @@ import "commons/org.proto";
 import "commons/org/trusts.proto";
 import "commons/org_preferences.proto";
 import "commons/perms.proto";
-
-
-
-
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 // GET AGENT QUICK VIEW PREFERENCES
 message GetAgentQuickViewPreferencesRequest {
@@ -36,8 +32,7 @@ message EditAgentQuickViewPreferencesRequest {
   AgentStatusDisplayTemplate agent_status_display_template = 1;
 }
 
-message EditAgentQuickViewPreferencesResponse {
-}
+message EditAgentQuickViewPreferencesResponse {}
 
 message AgentStatusDisplayTemplate {
   message AgentStatusSinceStyle {
@@ -82,8 +77,7 @@ message LocationDescription {
   string country = 12;
 }
 
-message GetOrganizationProfileRequest {
-}
+message GetOrganizationProfileRequest {}
 
 message GetOrganizationProfileResponse {
   reserved 3, 7, 9, 11, 12, 13;
@@ -106,13 +100,11 @@ message RegionUrls {
   repeated string api_endpoints = 1;
 }
 
-
 message GetOrganizationProfileByIdRequest {
   string org_id = 1;
 }
 
-message ListOrganizationDescriptionsRequest {
-}
+message ListOrganizationDescriptionsRequest {}
 
 message OrganizationDescription {
   reserved 2, 3, 4;
@@ -189,8 +181,7 @@ message UserDescription {
   repeated commons.org.Trust trusts = 200;
 }
 
-message ListOrganizationUserDescriptionsRequest {
-}
+message ListOrganizationUserDescriptionsRequest {}
 
 message ListOrganizationUserDescriptionsResponse {
   repeated UserDescription user_descriptions = 1;
@@ -243,8 +234,7 @@ message ListUserDescriptionsResponse {
   repeated UserDescription user_descriptions = 1;
 }
 
-message GetRegionsRequest {
-}
+message GetRegionsRequest {}
 
 message GetRegionsResponse {
   repeated string region_names = 1;
@@ -260,7 +250,7 @@ message AdminGetUserDetailsRequest {
 
 // Label is an entity message.
 message Label {
-  reserved 4,5;
+  reserved 4, 5;
   // simply the name of the label.
   // 'Team A', 'Medical', etc
   string name = 3;
@@ -303,7 +293,7 @@ message UserDetails {
   string last_name = 25;
   google.protobuf.Timestamp created = 26;
   google.protobuf.Timestamp last_updated = 27;
-  bool password_reset_required =  28;
+  bool password_reset_required = 28;
   string agent_profile_group_id = 29;
   // A list of labels assigned to the user
   repeated Label label_entities = 35;
@@ -363,19 +353,17 @@ message Skill {
   int64 skill_sid = 4;
 }
 
-message GetAgentUsersRequest {
-}
+message GetAgentUsersRequest {}
 
 message GetAgentUsersResponse {
   repeated AgentUser agent_users = 1;
 }
 
 // Request for GetAgentSettings
-message GetAgentSettingsRequest{
-}
+message GetAgentSettingsRequest {}
 
 // Response for GetAgentSettings
-message GetAgentSettingsResponse{
+message GetAgentSettingsResponse {
   string user_caller_id = 1; // User caller ID
   repeated PriorityGroup priority_groups = 2; // List of priority groups.
   repeated string reserved_carriers = 3; // List of reserved carrier strings.
@@ -413,8 +401,7 @@ message UpdateAgentProfileGroupRequest {
   AgentProfileGroup agent_profile_group = 2;
 }
 
-message UpdateAgentProfileGroupResponse {
-}
+message UpdateAgentProfileGroupResponse {}
 
 message CreateAgentProfileGroupRequest {
   AgentProfileGroup agent_profile_group = 2;
@@ -424,8 +411,7 @@ message CreateAgentProfileGroupResponse {
   string agent_profile_group_id = 1;
 }
 
-message ListAgentProfileGroupsRequest {
-}
+message ListAgentProfileGroupsRequest {}
 
 message ListAgentProfileGroupsResponse {
   repeated AgentProfileGroup agent_profile_groups = 1;
@@ -435,16 +421,14 @@ message DeleteAgentProfileGroupRequest {
   string agent_profile_group_id = 2;
 }
 
-message DeleteAgentProfileGroupResponse {
-}
+message DeleteAgentProfileGroupResponse {}
 
 message AssignAgentProfileGroupsRequest {
   string agent_profile_group_id = 2;
   repeated string user_ids = 3;
 }
 
-message AssignAgentProfileGroupsResponse {
-}
+message AssignAgentProfileGroupsResponse {}
 
 message UpdateUserRequest {
   reserved "name";
@@ -471,8 +455,7 @@ message UpdateUserRequest {
   google.protobuf.FieldMask field_mask = 100;
 }
 
-message UpdateUserResponse {
-}
+message UpdateUserResponse {}
 
 message Country {
   string country_id = 2;
@@ -489,8 +472,7 @@ message Country {
   commons.Country country = 109;
 }
 
-message GetCountriesListRequest {
-}
+message GetCountriesListRequest {}
 
 message GetCountriesListResponse {
   repeated Country countries = 10;
@@ -521,7 +503,7 @@ message User {
 
   google.protobuf.Timestamp created = 163;
   google.protobuf.Timestamp last_updated = 164;
-  bool password_reset_required =  165;
+  bool password_reset_required = 165;
 
   // connection id is the id of the auth connection that the
   // user is coming from if it is a delgated user. If the user
@@ -535,8 +517,7 @@ message User {
 }
 
 // Request for GetPermissions
-message GetPermissionsRequest {
-}
+message GetPermissionsRequest {}
 
 // Reponse for GetPermissions
 message GetPermissionsResponse {
@@ -564,8 +545,7 @@ message UpdateUserDisabledRequest {
   string org_id = 3;
 }
 
-message UpdateUserDisabledResponse {
-}
+message UpdateUserDisabledResponse {}
 
 message UpdateBulkUsersDisabledRequest {
   repeated string user_ids = 1;
@@ -577,8 +557,7 @@ message UpdateBulkUsersDisabledResponse {
   repeated string updated_ids = 1;
 }
 
-message DeleteOrganizationPropertiesResponse {
-}
+message DeleteOrganizationPropertiesResponse {}
 
 // Billing
 // Data payloads
@@ -602,7 +581,7 @@ message BillingRate {
   google.protobuf.Int64Value max_billed_increments = 21;
   google.protobuf.Int64Value max_linkback_billed_increments = 22;
   google.protobuf.Int64Value machine_hangup_increments = 23;
-  google.protobuf.Int64Value human_hangup_increments= 24;
+  google.protobuf.Int64Value human_hangup_increments = 24;
 }
 
 // Publicly exposed "descriptions"
@@ -617,8 +596,7 @@ message BillingRegionRate {
 
 // Requests/Responses
 
-message ListBillingRegionsRequest {
-}
+message ListBillingRegionsRequest {}
 
 message ListBillingRegionsResponse {
   repeated BillingRegionRate billing_region_rates = 1;
@@ -671,8 +649,7 @@ message UpdatePermissionGroupRequest {
 }
 
 // The response for api.v0alpha.UpdatePermissionGroup.
-message UpdatePermissionGroupResponse {
-}
+message UpdatePermissionGroupResponse {}
 
 // The request for api.v0alpha.DeletePermissionGroup.
 message DeletePermissionGroupRequest {
@@ -681,8 +658,7 @@ message DeletePermissionGroupRequest {
 }
 
 // The response for api.v0alpha.DeletePermissionGroup.
-message DeletePermissionGroupResponse {
-}
+message DeletePermissionGroupResponse {}
 
 // The request for org.Org.AssignUserToAccountOwnerPermissionGroup.
 message AssignUserToAccountOwnerPermissionGroupRequest {
@@ -691,9 +667,7 @@ message AssignUserToAccountOwnerPermissionGroupRequest {
 }
 
 // The response for org.Org.AssignUserToAccountOwnerPermissionGroup.
-message AssignUserToAccountOwnerPermissionGroupResponse {
-}
-
+message AssignUserToAccountOwnerPermissionGroupResponse {}
 
 // The request for api.v0alpha.AssignUserPermissionGroup.
 message AssignUserPermissionGroupRequest {
@@ -704,8 +678,7 @@ message AssignUserPermissionGroupRequest {
 }
 
 // The response for api.v0alpha.AssignUserPermissionGroup.
-message AssignUserPermissionGroupResponse {
-}
+message AssignUserPermissionGroupResponse {}
 
 // The request for api.v0alpha.AssignUsersPermissionGroup.
 message AssignUsersPermissionGroupRequest {
@@ -716,8 +689,7 @@ message AssignUsersPermissionGroupRequest {
 }
 
 // The response for api.v0alpha.AssignUsersPermissionGroup.
-message AssignUsersPermissionGroupResponse {
-}
+message AssignUsersPermissionGroupResponse {}
 
 // The request for api.v0alpha.UpdateUserNeoPermissionGroups.
 message UpdateUserNeoPermissionGroupsRequest {
@@ -726,8 +698,7 @@ message UpdateUserNeoPermissionGroupsRequest {
 }
 
 // The response for api.v0alpha.UpdateUserNeoPermissionGroups.
-message UpdateUserNeoPermissionGroupsResponse {
-}
+message UpdateUserNeoPermissionGroupsResponse {}
 
 // The request for api.v0alpha.RevokeUserPermissionGroup.
 message RevokeUserPermissionGroupRequest {
@@ -738,8 +709,7 @@ message RevokeUserPermissionGroupRequest {
 }
 
 // The response for api.v0alpha.RevokeUserPermissionGroup.
-message RevokeUserPermissionGroupResponse {
-}
+message RevokeUserPermissionGroupResponse {}
 
 // The request for api.v0alpha.RevokeUsersPermissionGroup.
 message RevokeUsersPermissionGroupRequest {
@@ -750,9 +720,7 @@ message RevokeUsersPermissionGroupRequest {
 }
 
 // The response for api.v0alpha.RevokeUsersPermissionGroup.
-message RevokeUsersPermissionGroupResponse {
-}
-
+message RevokeUsersPermissionGroupResponse {}
 
 message ListP3PermissionGroupsRequest {
   string org_id = 1;
@@ -806,8 +774,7 @@ message AddLoginToUserRequest {
   string user_id = 1;
 }
 
-message AddLoginToUserResponse {
-}
+message AddLoginToUserResponse {}
 
 message AssignUsersP3PermissionGroupRequest {
   repeated string user_ids = 1;
@@ -834,8 +801,7 @@ message SyncP3PermissionGroupRequest {
   string org_id = 1;
 }
 
-message SyncP3PermissionGroupResponse {
-}
+message SyncP3PermissionGroupResponse {}
 
 // The request for api.v0alpha.RegisterOrganization.
 message RegisterOrganizationRequest {
@@ -882,8 +848,7 @@ message UpdateOrganizationRequest {
   google.protobuf.FieldMask field_mask = 10;
 }
 
-message UpdateOrganizationResponse {
-}
+message UpdateOrganizationResponse {}
 
 // The request for api.v0alpha.ArchiveOrganization
 message ArchiveOrganizationRequest {
@@ -892,8 +857,7 @@ message ArchiveOrganizationRequest {
 }
 
 // The response for api.v0alpha.ArchiveOrganization
-message ArchiveOrganizationResponse {
-}
+message ArchiveOrganizationResponse {}
 
 // The request for api.v0alpha.UnArchiveOrganization
 message UnArchiveOrganizationRequest {
@@ -908,8 +872,7 @@ message UnArchiveOrganizationResponse {
 }
 
 // The request for api.v0alpha.ListArchivedOrganizations
-message ListArchivedOrganizationsRequest {
-}
+message ListArchivedOrganizationsRequest {}
 
 // The response for api.v0alpha.ListArchivedOrganizations
 message ListArchivedOrganizationsResponse {
@@ -922,16 +885,14 @@ message AddUserRegionRequest {
   string region_id = 2;
 }
 
-message AddUserRegionResponse {
-}
+message AddUserRegionResponse {}
 
 message RemoveUserRegionRequest {
   string user_id = 1;
   string region_id = 2;
 }
 
-message RemoveUserRegionResponse {
-}
+message RemoveUserRegionResponse {}
 
 // The request for api.v0alpha.InitDefaultPermissionGroups.
 message InitDefaultPermissionGroupsRequest {
@@ -968,6 +929,7 @@ message RevokePermissionToAccountOwnerPermissionGroupRequest {
   // Permission to be revoked.
   repeated commons.auth.Permission permissions = 3;
 }
+
 // The response for org.Org.RevokePermissionToAccountOwnerPermissionGroup
 message RevokePermissionToAccountOwnerPermissionGroupResponse {
   // The newly updated default permission group.
@@ -1034,8 +996,7 @@ message UpdateOrganizationPreferencesRequest {
 }
 
 // Empty response for UpdateOrganizationPreferences
-message UpdateOrganizationPreferencesResponse {
-}
+message UpdateOrganizationPreferencesResponse {}
 
 // Wrapper OrganizationPreferences object for get response and update request
 message OrganizationPreferences {
@@ -1063,8 +1024,7 @@ message UpdateAgentPreferencesRequest {
 }
 
 // Empty response for UpdateAgentPreferences
-message UpdateAgentPreferencesResponse {
-}
+message UpdateAgentPreferencesResponse {}
 
 // Wrapper AgentPreferences object for get response and update request
 message AgentPreferences {
@@ -1100,8 +1060,7 @@ message UpdateContactPreferencesRequest {
 }
 
 // Empty response message for UpdateContactPreferences.
-message UpdateContactPreferencesResponse {
-}
+message UpdateContactPreferencesResponse {}
 
 // Will Replace ContactList's contents
 // ContactPreferences is an object containing all fields relating to an Org's Contact preferences
@@ -1170,8 +1129,7 @@ message UpdateAuthenticationPreferencesRequest {
 }
 
 // Empty response for UpdateAuthenticationPreferences
-message UpdateAuthenticationPreferencesResponse {
-}
+message UpdateAuthenticationPreferencesResponse {}
 
 // Wrapper AuthenticationPreferences object for get response and update request
 message AuthenticationPreferences {
@@ -1198,8 +1156,7 @@ message UpdateWebhookPreferencesRequest {
 }
 
 // Empty response for UpdateWebhookPreferences
-message UpdateWebhookPreferencesResponse {
-}
+message UpdateWebhookPreferencesResponse {}
 
 // Wrapper WebhookPreferences object for get response and update request
 message WebhookPreferences {
@@ -1230,8 +1187,7 @@ message UpdateDashboardGeneralPreferencesRequest {
 }
 
 // Empty response for UpdateDashboardGeneralPreferences
-message UpdateDashboardGeneralPreferencesResponse {
-}
+message UpdateDashboardGeneralPreferencesResponse {}
 
 // Wrapper DashboardGeneralPreferences object for get response and update request
 message DashboardPreferences {
@@ -1280,24 +1236,23 @@ message BargeInFiltering {
 
 // Request for GetDashboardQueuePreferences
 message GetDashboardQueuePreferencesRequest {
-  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+  google.protobuf.FieldMask field_mask = 10; // Mask containing list of desired fields.
 }
 
 // Response for GetDashboardQueuePreferences
 message GetDashboardQueuePreferencesResponse {
-  DashboardQueuePreferences dashboard_queue_preferences = 1;  // The requested preferences.
+  DashboardQueuePreferences dashboard_queue_preferences = 1; // The requested preferences.
 }
 
 // Request for UpdateDashboardQueuePreferences
 message UpdateDashboardQueuePreferencesRequest {
-  DashboardQueuePreferences dashboard_queue_preferences = 2;  // The preferences to be updated.
+  DashboardQueuePreferences dashboard_queue_preferences = 2; // The preferences to be updated.
 
   google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
 }
 
 // Empty response for UpdateDashboardQueuePreferences
-message UpdateDashboardQueuePreferencesResponse {
-}
+message UpdateDashboardQueuePreferencesResponse {}
 
 // Wrapper DashboardQueuePreferences object for get response and update request
 message DashboardQueuePreferences {
@@ -1332,8 +1287,7 @@ message UpdatePhonePreferencesRequest {
 }
 
 // Empty response for UpdatePhonePreferences
-message UpdatePhonePreferencesResponse {
-}
+message UpdatePhonePreferencesResponse {}
 
 // Wrapper PhonePreferences object for get response and update request
 message PhonePreferences {
@@ -1342,8 +1296,8 @@ message PhonePreferences {
   bool display_ring_length_threshold = 12; // Determines whether the setting may be changed while scheduling.
   bool show_caller_id = 13; // Determines whether the setting may be show/edited while scheduling.
   bool default_use_caller_id = 14; // Determines whether to use Caller ID by default.
-  bool override_linkback_recording = 15;  // Determines whether broadcast templates may set to record linkbacks individually.
-  int64 caller_id_cfd_sid = 16;  // The 'sid' of the Caller ID field description to use as default.
+  bool override_linkback_recording = 15; // Determines whether broadcast templates may set to record linkbacks individually.
+  int64 caller_id_cfd_sid = 16; // The 'sid' of the Caller ID field description to use as default.
   DialOrder default_dial_order = 17; // The dial order of a contact record.  Default 'First Number Only'.
   commons.AnsweringMachineDetection answering_machine_detection = 18; // Which type of answering machine detection to use.
   bool linkback_recording = 19; // Determines whether linkback recording is enabled.
@@ -1352,8 +1306,8 @@ message PhonePreferences {
 // Dial Order holds either a type enum, or one or more Contact Field Description fields for custom order.
 message DialOrder {
   oneof type {
-    commons.DialOrderType standard_order = 1;  // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
-    CustomDialOrder custom_order = 2;  // Defines a "Custom Order" using one or more Contact Field Descriptions.
+    commons.DialOrderType standard_order = 1; // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
+    CustomDialOrder custom_order = 2; // Defines a "Custom Order" using one or more Contact Field Descriptions.
   }
 }
 
@@ -1365,7 +1319,7 @@ message CustomDialOrder {
 // Dial Order Field holds the ID for saving into preferences and the name for display.
 message DialOrderField {
   int64 cfd_sid = 1; // contact field description sid
-  string field_name = 2;  // The field name, for display
+  string field_name = 2; // The field name, for display
 }
 
 // Request for GetCompliancePreferences
@@ -1388,8 +1342,7 @@ message UpdateCompliancePreferencesRequest {
 }
 
 // Empty response for UpdateCompliancePreferences
-message UpdateCompliancePreferencesResponse {
-}
+message UpdateCompliancePreferencesResponse {}
 
 // Wrapper CompliancePreferences object for get response and update request
 message CompliancePreferences {
@@ -1439,8 +1392,7 @@ message UpdateBroadcastPreferencesRequest {
 }
 
 // Empty response for UpdateBroadcastPreferences
-message UpdateBroadcastPreferencesResponse {
-}
+message UpdateBroadcastPreferencesResponse {}
 
 // Wrapper BroadcastPreferences object for get response and update request
 message BroadcastPreferences {
@@ -1482,8 +1434,7 @@ message UpdateSchedulePreferencesRequest {
 }
 
 // Empty response for UpdateSchedulePreferences
-message UpdateSchedulePreferencesResponse {
-}
+message UpdateSchedulePreferencesResponse {}
 
 // Wrapper SchedulePreferences object for get response and update request
 message SchedulePreferences {
@@ -1501,24 +1452,23 @@ message SchedulePreferences {
 
 // Request for GetEmailSmsPreferences
 message GetEmailSmsPreferencesRequest {
-  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+  google.protobuf.FieldMask field_mask = 10; // Mask containing list of desired fields.
 }
 
 // Response for GetEmailSmsPreferences
 message GetEmailSmsPreferencesResponse {
-  EmailSmsPreferences email_sms_preferences = 1;  // The requested preferences.
+  EmailSmsPreferences email_sms_preferences = 1; // The requested preferences.
 }
 
 // Request for UpdateEmailSmsPreferences
 message UpdateEmailSmsPreferencesRequest {
-  EmailSmsPreferences email_sms_preferences = 2;  // The preferences to be updated.
+  EmailSmsPreferences email_sms_preferences = 2; // The preferences to be updated.
 
   google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
 }
 
 // Empty response for UpdateEmailSmsPreferences
-message UpdateEmailSmsPreferencesResponse {
-}
+message UpdateEmailSmsPreferencesResponse {}
 
 // Wrapper EmailSmsPreferences object for get response and update request
 message EmailSmsPreferences {
@@ -1549,8 +1499,7 @@ message UpdateBusinessPreferencesRequest {
 }
 
 // Empty response for UpdateBusinessPreferences
-message UpdateBusinessPreferencesResponse {
-}
+message UpdateBusinessPreferencesResponse {}
 
 // Wrapper BusinessPreferences object for get response and update request
 message BusinessPreferences {
@@ -1579,8 +1528,7 @@ message UpdateVoiceAnalyticsPreferencesRequest {
 }
 
 // Empty response for UpdateVoiceAnalyticsPreferences
-message UpdateVoiceAnalyticsPreferencesResponse {
-}
+message UpdateVoiceAnalyticsPreferencesResponse {}
 
 // Preferences for voice analytics. Primarily consumed and interpreted by
 // localmixer when mixing and transcribing call recordings.
@@ -1678,8 +1626,7 @@ message UpdateScorecardsPreferencesRequest {
 }
 
 // Response for UpdateScorecardsPreferences
-message UpdateScorecardsPreferencesResponse {
-}
+message UpdateScorecardsPreferencesResponse {}
 
 message ScorecardsPreferences {
   // The percentage of randomized calls shown to the user for evaluation.
@@ -1721,8 +1668,7 @@ message UpdateEndOfDayPreferencesRequest {
 }
 
 // Empty response for UpdateEndOfDayPreferences
-message UpdateEndOfDayPreferencesResponse {
-}
+message UpdateEndOfDayPreferencesResponse {}
 
 // Wrapper EndOfDayPreferences object for get response and update request
 message EndOfDayPreferences {
@@ -1743,7 +1689,6 @@ message GetFilterPreferencesRequest {
 // Response for GetFilterPreferences
 message GetFilterPreferencesResponse {
   FilterPreferences filter_preferences = 10; // Filter preferences object
-
 }
 
 // Request for UpdateFilterPreferences
@@ -1754,8 +1699,7 @@ message UpdateFilterPreferencesRequest {
 }
 
 // Empty response UpdateFilterPreferences
-message UpdateFilterPreferencesResponse {
-}
+message UpdateFilterPreferencesResponse {}
 
 // Wrapper FilterPreferences object for get response and update request
 message FilterPreferences {
@@ -1832,8 +1776,7 @@ message UpdateRecordingPreferencesRequest {
 }
 
 // Empty response for UpdateRecordingPreferences
-message UpdateRecordingPreferencesResponse {
-}
+message UpdateRecordingPreferencesResponse {}
 
 // Wrapper RecordingPreferences object for get response and update request
 message RecordingPreferences {
@@ -1896,8 +1839,7 @@ message UpdateAdminClientPreferencesRequest {
 }
 
 // Response for UpdateAdminClientPreferences
-message UpdateAdminClientPreferencesResponse {
-}
+message UpdateAdminClientPreferencesResponse {}
 
 // Wrapper AdminClientPreferences object for get response and update request
 message AdminClientPreferences {
@@ -1919,12 +1861,10 @@ message AdminClientPreferences {
 //
 
 // Request for linkback recording terms agreement
-message AcceptLinkbackRecordingTermsRequest {
-}
+message AcceptLinkbackRecordingTermsRequest {}
 
 // Response for linkback recording terms agreement
-message AcceptLinkbackRecordingTermsResponse {
-}
+message AcceptLinkbackRecordingTermsResponse {}
 
 // Request for updating broadcast template properties
 message LinkbackUpdateBroadcastTemplatesRequest {
@@ -1932,24 +1872,19 @@ message LinkbackUpdateBroadcastTemplatesRequest {
 }
 
 // Response for updating broadcast template properties
-message LinkbackUpdateBroadcastTemplatesResponse {
-}
+message LinkbackUpdateBroadcastTemplatesResponse {}
 
 // Request for recording email unsubscribe acknowledgement.
-message RecordEmailUnsubscribeAcknowledgementRequest {
-}
+message RecordEmailUnsubscribeAcknowledgementRequest {}
 
 // Response for recording email unsubscribe acknowledgement.
-message RecordEmailUnsubscribeAcknowledgementResponse {
-}
+message RecordEmailUnsubscribeAcknowledgementResponse {}
 
 // Request for clearing email unsubscribe acknowledgement.
-message ClearEmailUnsubscribeAcknowledgementRequest {
-}
+message ClearEmailUnsubscribeAcknowledgementRequest {}
 
 // Response for clearing email unsubscribe acknowledgement.
-message ClearEmailUnsubscribeAcknowledgementResponse {
-}
+message ClearEmailUnsubscribeAcknowledgementResponse {}
 
 //
 // Legacy preferences
@@ -1977,8 +1912,7 @@ message EditBackofficeThemePreferenceRequest {
 }
 
 // Response for EditBackofficeThemePreference
-message EditBackofficeThemePreferenceResponse {
-}
+message EditBackofficeThemePreferenceResponse {}
 
 //
 // End preferences
@@ -2061,11 +1995,9 @@ message CreateWebLinkTemplateRequest {
   WebLinkTemplate web_link_template = 1;
 }
 
-message CreateWebLinkTemplateResponse {
-}
+message CreateWebLinkTemplateResponse {}
 
-message ListWebLinkTemplatesRequest {
-}
+message ListWebLinkTemplatesRequest {}
 
 message ListWebLinkTemplatesResponse {
   repeated WebLinkTemplate web_link_templates = 1;
@@ -2083,15 +2015,13 @@ message UpdateWebLinkTemplateRequest {
   WebLinkTemplate web_link_template = 1;
 }
 
-message UpdateWebLinkTemplateResponse {
-}
+message UpdateWebLinkTemplateResponse {}
 
 message DeleteWebLinkTemplateRequest {
   string web_link_template_id = 1;
 }
 
-message DeleteWebLinkTemplateResponse {
-}
+message DeleteWebLinkTemplateResponse {}
 
 message AgentTriggerTemplate {
   reserved 12;
@@ -2234,8 +2164,7 @@ message AgentTriggerTemplate {
     string message = 1;
   }
 
-  message EjectAgent {
-  }
+  message EjectAgent {}
 
   message ExecuteWebLink {
     string web_link_id = 1;
@@ -2246,11 +2175,9 @@ message CreateAgentTriggerTemplateRequest {
   AgentTriggerTemplate agent_trigger_template = 1;
 }
 
-message CreateAgentTriggerTemplateResponse {
-}
+message CreateAgentTriggerTemplateResponse {}
 
-message ListAgentTriggerTemplatesRequest {
-}
+message ListAgentTriggerTemplatesRequest {}
 
 message ListAgentTriggerTemplatesResponse {
   repeated AgentTriggerTemplate agent_trigger_templates = 1;
@@ -2260,15 +2187,13 @@ message UpdateAgentTriggerTemplateRequest {
   AgentTriggerTemplate agent_trigger_template = 1;
 }
 
-message UpdateAgentTriggerTemplateResponse {
-}
+message UpdateAgentTriggerTemplateResponse {}
 
 message DeleteAgentTriggerTemplateRequest {
   string id = 1;
 }
 
-message DeleteAgentTriggerTemplateResponse {
-}
+message DeleteAgentTriggerTemplateResponse {}
 
 message GetAgentTriggerTemplateRequest {
   string id = 1;
@@ -2279,8 +2204,7 @@ message GetAgentTriggerTemplateResponse {
 }
 
 // Request message for the ListAgentPauseCodes RPC.
-message ListAgentPauseCodesRequest {
-}
+message ListAgentPauseCodesRequest {}
 
 // Response message for the ListAgentPauseCodes RPC.
 message ListAgentPauseCodesResponse {
@@ -2296,8 +2220,7 @@ message CreateAgentPauseCodeRequest {
 }
 
 // Response message for the CreateAgentPauseCode RPC.
-message CreateAgentPauseCodeResponse {
-}
+message CreateAgentPauseCodeResponse {}
 
 // Request message for the UpdateAgentPauseCode RPC.
 message UpdateAgentPauseCodeRequest {
@@ -2310,8 +2233,7 @@ message UpdateAgentPauseCodeRequest {
 }
 
 // Response message for the UpdateAgentPauseCode RPC.
-message UpdateAgentPauseCodeResponse {
-}
+message UpdateAgentPauseCodeResponse {}
 
 // Request message for the DeleteAgentPauseCode RPC.
 message DeleteAgentPauseCodeRequest {
@@ -2319,8 +2241,7 @@ message DeleteAgentPauseCodeRequest {
 }
 
 // Response message for the DeleteAgentPauseCode RPC.
-message DeleteAgentPauseCodeResponse {
-}
+message DeleteAgentPauseCodeResponse {}
 
 // Entity message for the ListAgentPauseCodes, CreateAgentPauseCode, and UpdateAgentPauseCode RPCs.
 message PauseCode {
@@ -2331,8 +2252,7 @@ message PauseCode {
 }
 
 // Request message for ListCustomReportFilters
-message ListCustomReportFiltersRequest {
-}
+message ListCustomReportFiltersRequest {}
 
 // Response message for ListCustomReportFilters
 message ListCustomReportFiltersResponse {
@@ -2355,8 +2275,7 @@ message CreateCustomReportFilterRequest {
 }
 
 // Response message for CreateCustomReportFilterSet
-message CreateCustomReportFilterResponse {
-}
+message CreateCustomReportFilterResponse {}
 
 // Request message for UpdateCustomReportFilterSet
 message UpdateCustomReportFilterRequest {
@@ -2364,8 +2283,7 @@ message UpdateCustomReportFilterRequest {
 }
 
 // Response message for UpdateCustomReportFilter
-message UpdateCustomReportFilterResponse {
-}
+message UpdateCustomReportFilterResponse {}
 
 // Request message for DeleteCustomReportFilter
 message DeleteCustomReportFilterRequest {
@@ -2373,12 +2291,10 @@ message DeleteCustomReportFilterRequest {
 }
 
 // Response message for DeleteCustomReportFilter
-message DeleteCustomReportFilterResponse {
-}
+message DeleteCustomReportFilterResponse {}
 
 // Request message for ListAgentResponseGroups
-message ListAgentResponseGroupsRequest {
-}
+message ListAgentResponseGroupsRequest {}
 
 // Response message for ListAgentResponseGroups
 message ListAgentResponseGroupsResponse {
@@ -2386,8 +2302,7 @@ message ListAgentResponseGroupsResponse {
 }
 
 // Request message for ListLastTemplateElements
-message ListLastTemplateElementsRequest {
-}
+message ListLastTemplateElementsRequest {}
 
 // Response message for ListLastTemplateElements
 message ListLastTemplateElementsResponse {
@@ -2424,11 +2339,9 @@ message CreateClientInfoDisplayTemplateRequest {
   ClientInfoDisplayTemplate client_info_display_template = 1;
 }
 
-message CreateClientInfoDisplayTemplateResponse {
-}
+message CreateClientInfoDisplayTemplateResponse {}
 
-message ListClientInfoDisplayTemplatesRequest {
-}
+message ListClientInfoDisplayTemplatesRequest {}
 
 message ListClientInfoDisplayTemplatesResponse {
   repeated ClientInfoDisplayTemplate client_info_display_templates = 1;
@@ -2438,15 +2351,13 @@ message UpdateClientInfoDisplayTemplateRequest {
   ClientInfoDisplayTemplate client_info_display_template = 1;
 }
 
-message UpdateClientInfoDisplayTemplateResponse {
-}
+message UpdateClientInfoDisplayTemplateResponse {}
 
 message DeleteClientInfoDisplayTemplateRequest {
   string id = 1;
 }
 
-message DeleteClientInfoDisplayTemplateResponse {
-}
+message DeleteClientInfoDisplayTemplateResponse {}
 
 message GetClientInfoDisplayTemplateRequest {
   string id = 1;
@@ -2521,8 +2432,7 @@ message ResetUserRequirePasswordResetRequest {
 }
 
 // Response message for ResetUserRequirePasswordReset.
-message ResetUserRequirePasswordResetResponse {
-}
+message ResetUserRequirePasswordResetResponse {}
 
 // Response message for the GetUserPasswordReset rpc.
 message GetUserPasswordResetLinkResponse {
@@ -2530,16 +2440,14 @@ message GetUserPasswordResetLinkResponse {
   string url = 1;
 }
 
-message UpdateUserPasswordResponse {
-}
+message UpdateUserPasswordResponse {}
 
 message UpdateP3OwningOrgRequest {
   string org_id = 1;
   string owner_id = 2;
 }
 
-message UpdateP3OwningOrgResponse {
-}
+message UpdateP3OwningOrgResponse {}
 
 message GetP3OwningOrgRequest {
   string org_id = 1;
@@ -2549,20 +2457,18 @@ message GetP3OwningOrgResponse {
   string id = 1;
 }
 
-message RevokeAccountOwnerPermissionFromUserRequest{
+message RevokeAccountOwnerPermissionFromUserRequest {
   //user for which the account owner permission will be revoked
   string user_id = 1;
 }
 
-message RevokeAccountOwnerPermissionFromUserResponse {
-}
+message RevokeAccountOwnerPermissionFromUserResponse {}
 
 message ConvertOrgToManualRequest {
   string org_id = 1;
 }
 
-message ConvertOrgToManualResponse {
-}
+message ConvertOrgToManualResponse {}
 
 message ListQueueConfigsReq {
   // If org_id is left empty, the org_id will be
@@ -2581,8 +2487,7 @@ message DeleteQueueConfigReq {
   string config_name = 1;
 }
 
-message DeleteQueueConfigRes {
-}
+message DeleteQueueConfigRes {}
 
 message GetQueueConfigReq {
   string name = 1;
@@ -2599,15 +2504,13 @@ message UpdateQueueConfigReq {
   QueueConfig config = 1;
 }
 
-message UpdateQueueConfigRes {
-}
+message UpdateQueueConfigRes {}
 
 message CreateQueueConfigReq {
   QueueConfig config = 1;
 }
 
-message CreateQueueConfigRes {
-}
+message CreateQueueConfigRes {}
 
 message CopyQueueConfigReq {
   string from_org_id = 1;
@@ -2620,8 +2523,7 @@ message CopyQueueConfigReq {
   string to_name = 4;
 }
 
-message CopyQueueConfigRes {
-}
+message CopyQueueConfigRes {}
 
 message QueueConfig {
   // Name can only contain these characters:
@@ -2899,13 +2801,11 @@ message QueueConfig {
     int64 second_milliseconds = 2;
   }
 
-  message Disable {
-  }
+  message Disable {}
 
   // Optionless represents config options that do not
   // require sub settings.
-  message Optionless {
-  }
+  message Optionless {}
 
   message Skills {
     repeated string p3_ids = 1;
@@ -2957,10 +2857,9 @@ message UnblockUserRequest {
   string user_id = 1;
 }
 
-message UnblockUserResponse {
-}
+message UnblockUserResponse {}
 
-message UnMigratedUser{
+message UnMigratedUser {
   // Optional agent_sid or login_sid (must have one)
   int64 agent_sid = 1;
   int64 login_sid = 2;
@@ -2989,8 +2888,7 @@ message MigrateP3UserRequest {
   string password = 4;
 }
 
-message MigrateP3UserResponse {
-}
+message MigrateP3UserResponse {}
 
 message UpdateP3UserNameRequest {
   // Optional agent_sid or login_sid (must have one)
@@ -3000,8 +2898,7 @@ message UpdateP3UserNameRequest {
   int64 client_sid = 4;
 }
 
-message UpdateP3UserNameResponse {
-}
+message UpdateP3UserNameResponse {}
 
 message GetQueueConfigSoundReq {
   string config = 1;
@@ -3018,8 +2915,7 @@ message SetQueueConfigSoundReq {
   string file_name = 3;
 }
 
-message SetQueueConfigSoundRes {
-}
+message SetQueueConfigSoundRes {}
 
 message SetAllQueueConfigSoundsFromSourceReq {
   string to_config = 1;
@@ -3034,35 +2930,31 @@ message SetAllQueueConfigSoundsFromSourceReq {
   }
 }
 
-message SetAllQueueConfigSoundsFromSourceRes {
-}
+message SetAllQueueConfigSoundsFromSourceRes {}
 
 message RemoveLoginStrikesRequest {
   repeated int64 login_log_sids = 1;
 }
 
-message RemoveLoginStrikesResponse {
-}
+message RemoveLoginStrikesResponse {}
 
 message RemoveUserLoginStrikesRequest {
   string user_id = 1;
 }
 
-message RemoveUserLoginStrikesResponse {
-}
+message RemoveUserLoginStrikesResponse {}
 
 message ListLoginHistoryRequest {
   oneof filter_type { // Can filter only by UserId or IP
     string user_id = 1;
     string origination_ip = 2;
   }
-  int64 duration = 3;  // Number of days to grab login events from
+  int64 duration = 3; // Number of days to grab login events from
   bool strikes_only = 4;
 }
 
 message ListLoginHistoryResponse {
   repeated LoginEvent login_events = 1;
-
 }
 
 message LoginEvent {
@@ -3177,8 +3069,7 @@ message SetOrgBillingSettingsRequest {
 }
 
 // Response message for the SetOrgBillingSettings rpc.
-message SetOrgBillingSettingsResponse {
-}
+message SetOrgBillingSettingsResponse {}
 
 // Request message for the AddOrgBillingOverride rpc.
 message AddOrgBillingOverrideRequest {
@@ -3189,8 +3080,7 @@ message AddOrgBillingOverrideRequest {
 }
 
 // Response message for the AddOrgBillingOverride rpc.
-message AddOrgBillingOverrideResponse {
-}
+message AddOrgBillingOverrideResponse {}
 
 // Request message for the RemoveOrgBillingOverride rpc.
 message RemoveOrgBillingOverrideRequest {
@@ -3200,12 +3090,10 @@ message RemoveOrgBillingOverrideRequest {
 }
 
 // Response message for the RemoveOrgBillingOverride rpc.
-message RemoveOrgBillingOverrideResponse {
-}
+message RemoveOrgBillingOverrideResponse {}
 
 // Request message for the GetSystemDefaultBillingRates RPC.
-message GetSystemDefaultBillingRatesRequest {
-}
+message GetSystemDefaultBillingRatesRequest {}
 
 // Response message for the GetSystemDefaultRatesSettings RPC.
 message GetSystemDefaultBillingRatesResponse {
@@ -3225,8 +3113,7 @@ message UpdateP3UserSidsRequest {
   google.protobuf.FieldMask field_mask = 10;
 }
 
-message UpdateP3UserSidsResponse {
-}
+message UpdateP3UserSidsResponse {}
 
 // AUTH0 CONNECTIONS
 
@@ -3300,12 +3187,10 @@ message CreateAuthConnectionRequest {
 }
 
 // Response message for the CreateAuthConnection rpc.
-message CreateAuthConnectionResponse {
-}
+message CreateAuthConnectionResponse {}
 
 // Request message for the GetAuthConnectionSettings rpc.
-message GetAuthConnectionSettingsRequest {
-}
+message GetAuthConnectionSettingsRequest {}
 
 // Response message for the GetConnectionSettings rpc.
 message GetAuthConnectionSettingsResponse {
@@ -3321,16 +3206,13 @@ message UpdateAuthConnectionSettingsRequest {
 }
 
 // Response message for the UpdateAuthConnectionSettings rpc.
-message UpdateAuthConnectionSettingsResponse {
-}
+message UpdateAuthConnectionSettingsResponse {}
 
 // Request message for the DeleteAuthConnection rpc.
-message DeleteAuthConnectionRequest {
-}
+message DeleteAuthConnectionRequest {}
 
 // Response message for the DeleteAuthConnection rpc.
-message DeleteAuthConnectionResponse {
-}
+message DeleteAuthConnectionResponse {}
 
 // -------------------- Subscriptions --------------------
 
@@ -3355,7 +3237,7 @@ message UserSubscription {
   // Required.
   oneof deliver_method {
     Room303 room303 = 100;
-          // TODO: add email, sms, etc.
+    // TODO: add email, sms, etc.
   }
 
   // Optional. Updates must specify current version or be rejected.
@@ -3434,8 +3316,7 @@ message RemoveUserSubscriptionRequest {
 }
 
 // Response for deleting a user subscription.
-message RemoveUserSubscriptionResponse {
-}
+message RemoveUserSubscriptionResponse {}
 
 // ----- Multiple user subscriptions -----
 
@@ -3467,8 +3348,7 @@ message ListOrgSubscriptionsResponse {
 }
 
 // Request used to get system environment details
-message GetSystemEnvironmentDetailsRequest {
-}
+message GetSystemEnvironmentDetailsRequest {}
 
 // Response used to return system environment details
 message GetSystemEnvironmentDetailsResponse {
@@ -3530,8 +3410,7 @@ message SendUserVerificationEmailRequest {
 }
 
 // Response for the SendUserVerificationEmail RPC.
-message SendUserVerificationEmailResponse {
-}
+message SendUserVerificationEmailResponse {}
 
 // Request for the ManualUserEmailVerification RPC.
 message ManualUserEmailVerificationRequest {
@@ -3543,12 +3422,10 @@ message ManualUserEmailVerificationRequest {
 }
 
 // Response for the ManualUserEmailVerification RPC.
-message ManualUserEmailVerificationResponse {
-}
+message ManualUserEmailVerificationResponse {}
 
 // Request message for the ListAgentStatisticsTemplates RPC.
-message ListAgentStatisticsTemplatesRequest {
-}
+message ListAgentStatisticsTemplatesRequest {}
 
 // Response message for the ListAgentStatisticsTemplates RPC.
 message ListAgentStatisticsTemplatesResponse {
@@ -3563,8 +3440,7 @@ message CreateAgentStatisticsTemplateRequest {
 }
 
 // Response message for the CreateAgentStatisticsTemplate RPC.
-message CreateAgentStatisticsTemplateResponse {
-}
+message CreateAgentStatisticsTemplateResponse {}
 
 // Request message for the UpdateAgentStatisticsTemplate RPC.
 message UpdateAgentStatisticsTemplateRequest {
@@ -3573,8 +3449,7 @@ message UpdateAgentStatisticsTemplateRequest {
 }
 
 // Response message for the UpdateAgentStatisticsTemplate RPC.
-message UpdateAgentStatisticsTemplateResponse {
-}
+message UpdateAgentStatisticsTemplateResponse {}
 
 // Request message for the DeleteAgentStatisticsTemplate RPC.
 message DeleteAgentStatisticsTemplateRequest {
@@ -3583,8 +3458,7 @@ message DeleteAgentStatisticsTemplateRequest {
 }
 
 // Response message for the DeleteAgentStatisticsTemplate RPC.
-message DeleteAgentStatisticsTemplateResponse {
-}
+message DeleteAgentStatisticsTemplateResponse {}
 
 // Agent login GUI statistics template properties.
 message AgentLoginGuiStatisticsTemplate {

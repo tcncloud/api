@@ -2,29 +2,25 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 import "commons/ana.proto";
-import "commons/omnichannel.proto";
+import "commons/audit/event_types.proto";
+import "commons/auth/perms.proto";
+import "commons/country.proto";
 import "commons/lms.proto";
 import "commons/logging.proto";
-import "commons/perms.proto";
-import "commons/auth/perms.proto";
 import "commons/notifications.proto";
-import "commons/org_preferences.proto";
+import "commons/omnichannel.proto";
 import "commons/org.proto";
-import "commons/country.proto";
-import "google/protobuf/field_mask.proto";
-import "commons/audit/event_types.proto";
 import "commons/org/trusts.proto";
+import "commons/org_preferences.proto";
+import "commons/perms.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service Org {
   // Registers a new organization
@@ -87,8 +83,7 @@ service Org {
   // update an organizations owning organization.
   // Required Permissions:
   //    CUSTOMER_SUPPORT
-  rpc UpdateP3OwningOrg(UpdateP3OwningOrgRequest)
-    returns (UpdateP3OwningOrgResponse) {
+  rpc UpdateP3OwningOrg(UpdateP3OwningOrgRequest) returns (UpdateP3OwningOrgResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updatep3owningorg";
     option (google.api.http).body = "*";
   }
@@ -141,15 +136,13 @@ service Org {
   // GetAgentSettings gets some agent settings as defined by the GetAgentSettingsRequest.
   // Required Permissions:
   // AGENT
-  rpc GetAgentSettings(GetAgentSettingsRequest)
-      returns (GetAgentSettingsResponse) {
-    option (google.api.http).post =
-        "/api/v0alpha/org/agentsettings/get";
+  rpc GetAgentSettings(GetAgentSettingsRequest) returns (GetAgentSettingsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/agentsettings/get";
     option (google.api.http).body = "*";
   }
 
   // GetAgentProfileGroup gets a single AgentProfileGroup by given ID
-   // Required Permissions:
+  // Required Permissions:
   // ORG_VIEW
   rpc GetAgentProfileGroup(GetAgentProfileGroupRequest) returns (GetAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/get";
@@ -157,7 +150,7 @@ service Org {
   }
 
   // UpdateAgentProfileGroup updates an AgentProfileGroup. Can only update if user is in same org as AgentProfileGroup
-   // Required Permissions:
+  // Required Permissions:
   // ORG_EDIT
   rpc UpdateAgentProfileGroup(UpdateAgentProfileGroupRequest) returns (UpdateAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/update";
@@ -165,7 +158,7 @@ service Org {
   }
 
   // CreateAgentProfileGroup creates an AgentProfileGroup. Can only create if user is in same org as AgentProfileGroup
-   // Required Permissions:
+  // Required Permissions:
   // ORG_EDIT
   rpc CreateAgentProfileGroup(CreateAgentProfileGroupRequest) returns (CreateAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/create";
@@ -173,7 +166,7 @@ service Org {
   }
 
   // ListAgentProfileGroups lists all AgentProfileGroups for a given org
-   // Required Permissions:
+  // Required Permissions:
   // ORG_VIEW
   rpc ListAgentProfileGroups(ListAgentProfileGroupsRequest) returns (ListAgentProfileGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/list";
@@ -181,7 +174,7 @@ service Org {
   }
 
   // DeleteAgentProfileGroup deletes a single AgentProfileGroup by given ID. Can only delete if user is in same org as AgentProfileGroup
-   // Required Permissions:
+  // Required Permissions:
   // ORG_EDIT
   rpc DeleteAgentProfileGroup(DeleteAgentProfileGroupRequest) returns (DeleteAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/delete";
@@ -189,13 +182,12 @@ service Org {
   }
 
   // AssignAgentProfileGroups bulk assigns a list of users to a given AgentProfileGroup
-   // Required Permissions:
+  // Required Permissions:
   // ORG_EDIT
   rpc AssignAgentProfileGroups(AssignAgentProfileGroupsRequest) returns (AssignAgentProfileGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/assign";
     option (google.api.http).body = "*";
   }
-
 
   // UpdateUser updates a user as defined by the UpdateUserRequest.
   // Required Permissions:
@@ -339,11 +331,10 @@ service Org {
   //    - grpc.InvalidArgument: The org_id on the request was invalid.
   //    - grpc.NotFound: The given org_id did not exist.
   //    - grpc.Internal: An unexpected error occurred while getting the orgs billing settings.
-  rpc GetOrgBillingSettings(GetOrgBillingSettingsRequest)
-    returns (GetOrgBillingSettingsResponse) {
-      option (google.api.http).post = "/api/v0alpha/org/billing/getorgbillingsettings";
-      option (google.api.http).body = "*";
-    }
+  rpc GetOrgBillingSettings(GetOrgBillingSettingsRequest) returns (GetOrgBillingSettingsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/getorgbillingsettings";
+    option (google.api.http).body = "*";
+  }
 
   // Updates the given orgs billing settings as defined by the info
   // given on the request message. Only fields that are given on the
@@ -354,11 +345,10 @@ service Org {
   //    - grpc.InvalidArgument: A field on the request was invalid.
   //    - grpc.NotFound: The given org_id did not exist.
   //    - grpc.Internal: An unexpected error occurred while updating the orgs billing settings.
-  rpc SetOrgBillingSettings(SetOrgBillingSettingsRequest)
-    returns (SetOrgBillingSettingsResponse) {
-      option (google.api.http).post = "/api/v0alpha/org/billing/setorgbillingsettings";
-      option (google.api.http).body = "*";
-    };
+  rpc SetOrgBillingSettings(SetOrgBillingSettingsRequest) returns (SetOrgBillingSettingsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/setorgbillingsettings";
+    option (google.api.http).body = "*";
+  }
 
   // Adds a single billing region override for the given orgs billing settings.
   // If an override already exists for the given region it will be updated.
@@ -368,11 +358,10 @@ service Org {
   //    - grpc.InvalidArgument: A field on the request was invalid.
   //    - grpc.NotFound: The given org_id did not exist.
   //    - grpc.Internal: An unexpected error occurred while adding the override.
-  rpc AddOrgBillingOverride(AddOrgBillingOverrideRequest)
-    returns (AddOrgBillingOverrideResponse) {
-      option (google.api.http).post = "/api/v0alpha/org/billing/addorgbillingoverride";
-      option (google.api.http).body = "*";
-    };
+  rpc AddOrgBillingOverride(AddOrgBillingOverrideRequest) returns (AddOrgBillingOverrideResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/addorgbillingoverride";
+    option (google.api.http).body = "*";
+  }
 
   // Removes a single billing region override for the given orgs billing settings.
   // If the region override doesn't exist the rpcs will just do nothing.
@@ -382,21 +371,18 @@ service Org {
   //    - grpc.InvalidArgument: The given org_id was invalid.
   //    - grpc.NotFound: The given org_id did not exist.
   //    - grpc.Internal: An unexpected error occurred while removing the override.
-  rpc RemoveOrgBillingOverride(RemoveOrgBillingOverrideRequest)
-    returns (RemoveOrgBillingOverrideResponse) {
-      option (google.api.http).post = "/api/v0alpha/org/billing/removeorgbillingoverride";
-      option (google.api.http).body = "*";
-    };
+  rpc RemoveOrgBillingOverride(RemoveOrgBillingOverrideRequest) returns (RemoveOrgBillingOverrideResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/removeorgbillingoverride";
+    option (google.api.http).body = "*";
+  }
 
   // Returns the system default billing rates.
   // Required Permissions:
   //    CUSTOMER_SUPPORT
-  rpc GetSystemDefaultBillingRates(GetSystemDefaultBillingRatesRequest)
-    returns (GetSystemDefaultBillingRatesResponse) {
-      option (google.api.http).post = "/api/v0alpha/org/billing/getsystemdefaultbillingrates";
-      option (google.api.http).body = "*";
-    }
-
+  rpc GetSystemDefaultBillingRates(GetSystemDefaultBillingRatesRequest) returns (GetSystemDefaultBillingRatesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/getsystemdefaultbillingrates";
+    option (google.api.http).body = "*";
+  }
 
   // neo permissions
 
@@ -495,8 +481,7 @@ service Org {
   // Returns an organization's default Super User Group.
   // Required Permissions:
   //    - TCN_ADMIN_SETTINGS
-  rpc GetOrgDefaultSuperUserGroup (GetOrgDefaultSuperUserGroupRequest) returns (GetOrgDefaultSuperUserGroupResponse);
-
+  rpc GetOrgDefaultSuperUserGroup(GetOrgDefaultSuperUserGroupRequest) returns (GetOrgDefaultSuperUserGroupResponse);
 
   // ListP3PermissionGroups returns the list of an org's P3 permission groups.
   rpc ListP3PermissionGroups(ListP3PermissionGroupsRequest) returns (ListP3PermissionGroupsResponse) {
@@ -557,247 +542,247 @@ service Org {
   // Preferences
 
   // GetContactPreferences returns all contact preferences for client TODO: will replace ContactList above
-  rpc GetContactPreferences(GetContactPreferencesRequest) returns (GetContactPreferencesResponse){
+  rpc GetContactPreferences(GetContactPreferencesRequest) returns (GetContactPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateContactPreferences update fields for all contact preferences for client
-  rpc UpdateContactPreferences(UpdateContactPreferencesRequest) returns (UpdateContactPreferencesResponse){
+  rpc UpdateContactPreferences(UpdateContactPreferencesRequest) returns (UpdateContactPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/update";
     option (google.api.http).body = "*";
   }
 
   // Returns all client compliance preferences
-  rpc GetCompliancePreferences(GetCompliancePreferencesRequest) returns (GetCompliancePreferencesResponse){
+  rpc GetCompliancePreferences(GetCompliancePreferencesRequest) returns (GetCompliancePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/get";
     option (google.api.http).body = "*";
   }
   // Updates all client Compliance preferences
-  rpc UpdateCompliancePreferences(UpdateCompliancePreferencesRequest) returns (UpdateCompliancePreferencesResponse){
+  rpc UpdateCompliancePreferences(UpdateCompliancePreferencesRequest) returns (UpdateCompliancePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/update";
     option (google.api.http).body = "*";
   }
 
   // GetAgentPreferences returns all client agent preferences
-  rpc GetAgentPreferences(GetAgentPreferencesRequest) returns (GetAgentPreferencesResponse){
+  rpc GetAgentPreferences(GetAgentPreferencesRequest) returns (GetAgentPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateAgentPreferences updates client agent preferences
-  rpc UpdateAgentPreferences(UpdateAgentPreferencesRequest) returns (UpdateAgentPreferencesResponse){
+  rpc UpdateAgentPreferences(UpdateAgentPreferencesRequest) returns (UpdateAgentPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/update";
     option (google.api.http).body = "*";
   }
 
   // GetOrganizationPreferences returns preferences for the organization tab
-  rpc GetOrganizationPreferences(GetOrganizationPreferencesRequest) returns (GetOrganizationPreferencesResponse){
+  rpc GetOrganizationPreferences(GetOrganizationPreferencesRequest) returns (GetOrganizationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateOrganizationPreferences updates preferences for the organization tab
-  rpc UpdateOrganizationPreferences(UpdateOrganizationPreferencesRequest) returns (UpdateOrganizationPreferencesResponse){
+  rpc UpdateOrganizationPreferences(UpdateOrganizationPreferencesRequest) returns (UpdateOrganizationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/update";
     option (google.api.http).body = "*";
   }
 
   // GetSchedulePreferences returns all schedule preferences for an org.
-  rpc GetSchedulePreferences(GetSchedulePreferencesRequest) returns (GetSchedulePreferencesResponse){
+  rpc GetSchedulePreferences(GetSchedulePreferencesRequest) returns (GetSchedulePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateSchedulePreferences returns all schedule preferences for an org.
-  rpc UpdateSchedulePreferences(UpdateSchedulePreferencesRequest) returns (UpdateSchedulePreferencesResponse){
+  rpc UpdateSchedulePreferences(UpdateSchedulePreferencesRequest) returns (UpdateSchedulePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/update";
     option (google.api.http).body = "*";
   }
 
   // GetBusinessPreferences returns all business intelligence and associated analytic preferences
-  rpc GetBusinessPreferences(GetBusinessPreferencesRequest) returns (GetBusinessPreferencesResponse){
+  rpc GetBusinessPreferences(GetBusinessPreferencesRequest) returns (GetBusinessPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateBusinessPreferences updates all business intelligence and associated analytic preferences
-  rpc UpdateBusinessPreferences(UpdateBusinessPreferencesRequest) returns (UpdateBusinessPreferencesResponse){
+  rpc UpdateBusinessPreferences(UpdateBusinessPreferencesRequest) returns (UpdateBusinessPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/update";
     option (google.api.http).body = "*";
   }
 
   // GetEndOfDayPreferences returns a time (hour 1-24) for each day of the week.
-  rpc GetEndOfDayPreferences(GetEndOfDayPreferencesRequest) returns (GetEndOfDayPreferencesResponse){
+  rpc GetEndOfDayPreferences(GetEndOfDayPreferencesRequest) returns (GetEndOfDayPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateEndOfDayPreferences update fields for a time (hour 1-24) for each day of the week.
-  rpc UpdateEndOfDayPreferences(UpdateEndOfDayPreferencesRequest) returns (UpdateEndOfDayPreferencesResponse){
+  rpc UpdateEndOfDayPreferences(UpdateEndOfDayPreferencesRequest) returns (UpdateEndOfDayPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/update";
     option (google.api.http).body = "*";
   }
 
   // GetReportFilterPreferences returns preferences for the organization tab
-  rpc GetReportFilterPreferences(GetFilterPreferencesRequest) returns (GetFilterPreferencesResponse){
+  rpc GetReportFilterPreferences(GetFilterPreferencesRequest) returns (GetFilterPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateReportFilterPreferences updates preferences for the filter tab
-  rpc UpdateReportFilterPreferences(UpdateFilterPreferencesRequest) returns (UpdateFilterPreferencesResponse){
+  rpc UpdateReportFilterPreferences(UpdateFilterPreferencesRequest) returns (UpdateFilterPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/update";
     option (google.api.http).body = "*";
   }
 
   // GetPhonePreferences returns all phone and recording preferences for an org.
-  rpc GetPhonePreferences(GetPhonePreferencesRequest) returns (GetPhonePreferencesResponse){
+  rpc GetPhonePreferences(GetPhonePreferencesRequest) returns (GetPhonePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/get";
     option (google.api.http).body = "*";
   }
   // UpdatePhonePreferences updates phone and recording preferences for an org.
-  rpc UpdatePhonePreferences(UpdatePhonePreferencesRequest) returns (UpdatePhonePreferencesResponse){
+  rpc UpdatePhonePreferences(UpdatePhonePreferencesRequest) returns (UpdatePhonePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/update";
     option (google.api.http).body = "*";
   }
   // GetDashboardGeneralPreferences returns all dashboard general preferences for an org.
-  rpc GetDashboardGeneralPreferences(GetDashboardGeneralPreferencesRequest) returns (GetDashboardGeneralPreferencesResponse){
+  rpc GetDashboardGeneralPreferences(GetDashboardGeneralPreferencesRequest) returns (GetDashboardGeneralPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/get";
     option (google.api.http).body = "*";
   }
   // UpdateDashboardGeneralPreferences updates dashboard General preferences for an org.
-  rpc UpdateDashboardGeneralPreferences(UpdateDashboardGeneralPreferencesRequest) returns (UpdateDashboardGeneralPreferencesResponse){
+  rpc UpdateDashboardGeneralPreferences(UpdateDashboardGeneralPreferencesRequest) returns (UpdateDashboardGeneralPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/update";
     option (google.api.http).body = "*";
   }
   // GetWebhookPreferences returns all webhook preferences for an org.
-  rpc GetWebhookPreferences(GetWebhookPreferencesRequest) returns (GetWebhookPreferencesResponse){
+  rpc GetWebhookPreferences(GetWebhookPreferencesRequest) returns (GetWebhookPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/get";
     option (google.api.http).body = "*";
   }
   // UpdateWebhookPreferences updates webhook preferences for an org.
-  rpc UpdateWebhookPreferences(UpdateWebhookPreferencesRequest) returns (UpdateWebhookPreferencesResponse){
+  rpc UpdateWebhookPreferences(UpdateWebhookPreferencesRequest) returns (UpdateWebhookPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/update";
     option (google.api.http).body = "*";
   }
   // GetBroadcastPreferences returns all broadcast options for campaign preferences for an org.
-  rpc GetBroadcastPreferences(GetBroadcastPreferencesRequest) returns (GetBroadcastPreferencesResponse){
+  rpc GetBroadcastPreferences(GetBroadcastPreferencesRequest) returns (GetBroadcastPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/get";
     option (google.api.http).body = "*";
   }
   // UpdateBroadcastPreferences updates broadcast options for campaign preferences for an org.
-  rpc UpdateBroadcastPreferences(UpdateBroadcastPreferencesRequest) returns (UpdateBroadcastPreferencesResponse){
+  rpc UpdateBroadcastPreferences(UpdateBroadcastPreferencesRequest) returns (UpdateBroadcastPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/update";
     option (google.api.http).body = "*";
   }
   // GetAuthenticationPreferences returns all authentication options for an org.
-  rpc GetAuthenticationPreferences(GetAuthenticationPreferencesRequest) returns (GetAuthenticationPreferencesResponse){
+  rpc GetAuthenticationPreferences(GetAuthenticationPreferencesRequest) returns (GetAuthenticationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/get";
     option (google.api.http).body = "*";
   }
   // UpdateAuthenticationPreferences updates authentication preferences for an org.
-  rpc UpdateAuthenticationPreferences(UpdateAuthenticationPreferencesRequest) returns (UpdateAuthenticationPreferencesResponse){
+  rpc UpdateAuthenticationPreferences(UpdateAuthenticationPreferencesRequest) returns (UpdateAuthenticationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/update";
     option (google.api.http).body = "*";
   }
   // GetRecordingPreferences returns all recording options for an org.
-  rpc GetRecordingPreferences(GetRecordingPreferencesRequest) returns (GetRecordingPreferencesResponse){
+  rpc GetRecordingPreferences(GetRecordingPreferencesRequest) returns (GetRecordingPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/get";
     option (google.api.http).body = "*";
   }
   // UpdateRecordingPreferences updates Recording preferences for an org.
-  rpc UpdateRecordingPreferences(UpdateRecordingPreferencesRequest) returns (UpdateRecordingPreferencesResponse){
+  rpc UpdateRecordingPreferences(UpdateRecordingPreferencesRequest) returns (UpdateRecordingPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/update";
     option (google.api.http).body = "*";
   }
   // GetDashboardQueuePreferences returns the Dashboard Queue table preferences.
-  rpc GetDashboardQueuePreferences(GetDashboardQueuePreferencesRequest) returns (GetDashboardQueuePreferencesResponse){
+  rpc GetDashboardQueuePreferences(GetDashboardQueuePreferencesRequest) returns (GetDashboardQueuePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/get";
     option (google.api.http).body = "*";
   }
   // UpdateDashboardQueuePreferences updates the Dashboard Queue table preferences.
-  rpc UpdateDashboardQueuePreferences(UpdateDashboardQueuePreferencesRequest) returns (UpdateDashboardQueuePreferencesResponse){
+  rpc UpdateDashboardQueuePreferences(UpdateDashboardQueuePreferencesRequest) returns (UpdateDashboardQueuePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/update";
     option (google.api.http).body = "*";
   }
   // GetAgentQuickViewPreferences returns the diplay templates for the client
-  rpc GetAgentQuickViewPreferences(GetAgentQuickViewPreferencesRequest) returns (GetAgentQuickViewPreferencesResponse){
+  rpc GetAgentQuickViewPreferences(GetAgentQuickViewPreferencesRequest) returns (GetAgentQuickViewPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/get";
     option (google.api.http).body = "*";
   }
   // GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
-  rpc GetVoiceAnalyticsPreferences(GetVoiceAnalyticsPreferencesRequest) returns (GetVoiceAnalyticsPreferencesResponse){
+  rpc GetVoiceAnalyticsPreferences(GetVoiceAnalyticsPreferencesRequest) returns (GetVoiceAnalyticsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/get";
     option (google.api.http).body = "*";
   }
   // GetVoiceAnalyticsPreferences updates the all preferences for voice analytics
-  rpc UpdateVoiceAnalyticsPreferences(UpdateVoiceAnalyticsPreferencesRequest) returns (UpdateVoiceAnalyticsPreferencesResponse){
+  rpc UpdateVoiceAnalyticsPreferences(UpdateVoiceAnalyticsPreferencesRequest) returns (UpdateVoiceAnalyticsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/update";
     option (google.api.http).body = "*";
   }
 
   // GetScorecardsPreferences returns the all preferences for scorecards
-  rpc GetScorecardsPreferences(GetScorecardsPreferencesRequest) returns (GetScorecardsPreferencesResponse){
+  rpc GetScorecardsPreferences(GetScorecardsPreferencesRequest) returns (GetScorecardsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/get";
     option (google.api.http).body = "*";
   }
 
   // GetScorecardsPreferences updates the all preferences for scorecards
-  rpc UpdateScorecardsPreferences(UpdateScorecardsPreferencesRequest) returns (UpdateScorecardsPreferencesResponse){
+  rpc UpdateScorecardsPreferences(UpdateScorecardsPreferencesRequest) returns (UpdateScorecardsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/update";
     option (google.api.http).body = "*";
   }
 
   // GetEmailSmsPreferences returns the all preferences for email and sms
-  rpc GetEmailSmsPreferences(GetEmailSmsPreferencesRequest) returns (GetEmailSmsPreferencesResponse){
+  rpc GetEmailSmsPreferences(GetEmailSmsPreferencesRequest) returns (GetEmailSmsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/email/get";
     option (google.api.http).body = "*";
   }
   // GetEmailSmsPreferences updates the all preferences for email and sms
-  rpc UpdateEmailSmsPreferences(UpdateEmailSmsPreferencesRequest) returns (UpdateEmailSmsPreferencesResponse){
+  rpc UpdateEmailSmsPreferences(UpdateEmailSmsPreferencesRequest) returns (UpdateEmailSmsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/email/update";
     option (google.api.http).body = "*";
   }
 
   // EditAgentQuickViewPreferences return nil,error
-  rpc EditAgentQuickViewPreferences(EditAgentQuickViewPreferencesRequest) returns (EditAgentQuickViewPreferencesResponse){
+  rpc EditAgentQuickViewPreferences(EditAgentQuickViewPreferencesRequest) returns (EditAgentQuickViewPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/edit";
     option (google.api.http).body = "*";
   }
   // EditBackofficeThemePreference returns nil, error
   // changes the Client Skin client property
-  rpc EditBackofficeThemePreference(EditBackofficeThemePreferenceRequest) returns (EditBackofficeThemePreferenceResponse){
+  rpc EditBackofficeThemePreference(EditBackofficeThemePreferenceRequest) returns (EditBackofficeThemePreferenceResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/edit";
     option (google.api.http).body = "*";
   }
-  rpc GetBackofficeThemePreference(GetBackofficeThemePreferenceRequest) returns (GetBackofficeThemePreferenceResponse){
+  rpc GetBackofficeThemePreference(GetBackofficeThemePreferenceRequest) returns (GetBackofficeThemePreferenceResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/get";
     option (google.api.http).body = "*";
   }
 
   // AcceptLinkbackRecordingTerms controls acknowledgement for linkback recording terms and conditions
-  rpc AcceptLinkbackRecordingTerms(AcceptLinkbackRecordingTermsRequest) returns (AcceptLinkbackRecordingTermsResponse){
+  rpc AcceptLinkbackRecordingTerms(AcceptLinkbackRecordingTermsRequest) returns (AcceptLinkbackRecordingTermsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/linkback/acceptterms";
     option (google.api.http).body = "*";
   }
 
   // LinkbackUpdateBroadcastTemplates updates broadcast template action parameters pertaining to linkback recording
-  rpc LinkbackUpdateBroadcastTemplates(LinkbackUpdateBroadcastTemplatesRequest) returns (LinkbackUpdateBroadcastTemplatesResponse){
+  rpc LinkbackUpdateBroadcastTemplates(LinkbackUpdateBroadcastTemplatesRequest) returns (LinkbackUpdateBroadcastTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/linkback/updatetemplates";
     option (google.api.http).body = "*";
   }
 
   // RecordEmailUnsubscribeAcknowledgement inserts an activity log when the client acknowledges responsibility
   // for their own email unsubscribe links.
-  rpc RecordEmailUnsubscribeAcknowledgement(RecordEmailUnsubscribeAcknowledgementRequest) returns (RecordEmailUnsubscribeAcknowledgementResponse){
+  rpc RecordEmailUnsubscribeAcknowledgement(RecordEmailUnsubscribeAcknowledgementRequest) returns (RecordEmailUnsubscribeAcknowledgementResponse) {
     option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/record";
     option (google.api.http).body = "*";
   }
 
   // ClearEmailUnsubscribeAcknowledgement inserts an activity log when the client clears acknowledgement for
   // their own email unsubscribe links.
-  rpc ClearEmailUnsubscribeAcknowledgement(ClearEmailUnsubscribeAcknowledgementRequest) returns (ClearEmailUnsubscribeAcknowledgementResponse){
+  rpc ClearEmailUnsubscribeAcknowledgement(ClearEmailUnsubscribeAcknowledgementRequest) returns (ClearEmailUnsubscribeAcknowledgementResponse) {
     option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/clear";
     option (google.api.http).body = "*";
   }
@@ -807,35 +792,35 @@ service Org {
   // Creates a new WebLinkTemplate as defined by request message CreateWebLinkTemplateRequest.
   // Required Permissions:
   //  ORG_EDIT
-  rpc CreateWebLinkTemplate(CreateWebLinkTemplateRequest) returns (CreateWebLinkTemplateResponse){
+  rpc CreateWebLinkTemplate(CreateWebLinkTemplateRequest) returns (CreateWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/create";
     option (google.api.http).body = "*";
   }
   // List every WebLinkTemplate.
   // Required Permissions:
   //  ORG_VIEW
-  rpc ListWebLinkTemplates(ListWebLinkTemplatesRequest) returns (ListWebLinkTemplatesResponse){
+  rpc ListWebLinkTemplates(ListWebLinkTemplatesRequest) returns (ListWebLinkTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/list";
     option (google.api.http).body = "*";
-  };
+  }
   // Get one WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_VIEW
-  rpc GetWebLinkTemplate(GetWebLinkTemplateRequest) returns (GetWebLinkTemplateResponse){
+  rpc GetWebLinkTemplate(GetWebLinkTemplateRequest) returns (GetWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/get";
     option (google.api.http).body = "*";
   }
   // Updates the WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_EDIT
-  rpc UpdateWebLinkTemplate(UpdateWebLinkTemplateRequest) returns (UpdateWebLinkTemplateResponse){
+  rpc UpdateWebLinkTemplate(UpdateWebLinkTemplateRequest) returns (UpdateWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/update";
     option (google.api.http).body = "*";
   }
   // Deletes the WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_EDIT
-  rpc DeleteWebLinkTemplate(DeleteWebLinkTemplateRequest) returns (DeleteWebLinkTemplateResponse){
+  rpc DeleteWebLinkTemplate(DeleteWebLinkTemplateRequest) returns (DeleteWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/delete";
     option (google.api.http).body = "*";
   }
@@ -847,7 +832,7 @@ service Org {
   // this method. If the id field is set it WILL be overwritten.
   // Required Permissions:
   //  ORG_EDIT
-  rpc CreateAgentTriggerTemplate(CreateAgentTriggerTemplateRequest) returns (CreateAgentTriggerTemplateResponse){
+  rpc CreateAgentTriggerTemplate(CreateAgentTriggerTemplateRequest) returns (CreateAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/create";
     option (google.api.http).body = "*";
   }
@@ -869,14 +854,14 @@ service Org {
   // Updates the AgentTriggerTemplate with the id given on the request message.
   // Required Permissions:
   //  ORG_EDIT
-  rpc UpdateAgentTriggerTemplate(UpdateAgentTriggerTemplateRequest) returns (UpdateAgentTriggerTemplateResponse){
+  rpc UpdateAgentTriggerTemplate(UpdateAgentTriggerTemplateRequest) returns (UpdateAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/update";
     option (google.api.http).body = "*";
   }
   // Deletes the AgentTriggerTemplate with the id given on the request message.
   // Required Permissions:
   //  ORG_EDIT
-  rpc DeleteAgentTriggerTemplate(DeleteAgentTriggerTemplateRequest) returns (DeleteAgentTriggerTemplateResponse){
+  rpc DeleteAgentTriggerTemplate(DeleteAgentTriggerTemplateRequest) returns (DeleteAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/delete";
     option (google.api.http).body = "*";
   }
@@ -887,52 +872,46 @@ service Org {
   // message CreateClientInfoDisplayRequest.
   // Required Permissions:
   //  ORG_EDIT
-  rpc CreateClientInfoDisplayTemplate(CreateClientInfoDisplayTemplateRequest)
-      returns (CreateClientInfoDisplayTemplateResponse){
-        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/create";
-        option (google.api.http).body = "*";
-      }
+  rpc CreateClientInfoDisplayTemplate(CreateClientInfoDisplayTemplateRequest) returns (CreateClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/create";
+    option (google.api.http).body = "*";
+  }
   // Returns a list of every ClientInfoDisplayTemplate.
   // Required Permissions:
   //  ORG_EDIT
-  rpc ListClientInfoDisplayTemplates(ListClientInfoDisplayTemplatesRequest)
-      returns (ListClientInfoDisplayTemplatesResponse){
-        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/list";
-        option (google.api.http).body = "*";
-      }
+  rpc ListClientInfoDisplayTemplates(ListClientInfoDisplayTemplatesRequest) returns (ListClientInfoDisplayTemplatesResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/list";
+    option (google.api.http).body = "*";
+  }
   // Updates the ClientInfoDisplayTemplate as defined by request
   // message UpdateClientIntoDisplayTemplateRequest.
   // Required Permissions:
   //  ORG_VIEW
-  rpc UpdateClientInfoDisplayTemplate(UpdateClientInfoDisplayTemplateRequest)
-      returns (UpdateClientInfoDisplayTemplateResponse){
-        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/update";
-        option (google.api.http).body = "*";
-      }
+  rpc UpdateClientInfoDisplayTemplate(UpdateClientInfoDisplayTemplateRequest) returns (UpdateClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/update";
+    option (google.api.http).body = "*";
+  }
   // Deletes the ClientInfoDisplayTemplate with the id given on the request
   // message.
   // Required Permissions:
   //  ORG_EDIT
-  rpc DeleteClientInfoDisplayTemplate(DeleteClientInfoDisplayTemplateRequest)
-      returns (DeleteClientInfoDisplayTemplateResponse){
-        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/delete";
-        option (google.api.http).body = "*";
-      }
+  rpc DeleteClientInfoDisplayTemplate(DeleteClientInfoDisplayTemplateRequest) returns (DeleteClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/delete";
+    option (google.api.http).body = "*";
+  }
   // Returns one ClientInfoDisplayTemplate with the id given on the
   // request message.
   //  Required Permissions:
   //    ORG_VIEW
-  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateRequest)
-      returns (GetClientInfoDisplayTemplateResponse){
-        option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/get";
-        option (google.api.http).body = "*";
-      }
+  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateRequest) returns (GetClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/get";
+    option (google.api.http).body = "*";
+  }
 
   // Agent Pause Code
 
   // Returns a slice of agent pause codes.
-  rpc ListAgentPauseCodes(ListAgentPauseCodesRequest)
-      returns (ListAgentPauseCodesResponse) {
+  rpc ListAgentPauseCodes(ListAgentPauseCodesRequest) returns (ListAgentPauseCodesResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentpausecodes";
     option (google.api.http).body = "*";
   }
@@ -941,8 +920,7 @@ service Org {
   // Errors:
   //    - grpc.InvalidArgument: The pause_code field was not set, or the the pause_code.codes field is an empty list.
   //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
-  rpc CreateAgentPauseCode(CreateAgentPauseCodeRequest)
-      returns (CreateAgentPauseCodeResponse) {
+  rpc CreateAgentPauseCode(CreateAgentPauseCodeRequest) returns (CreateAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/createagentpausecode";
     option (google.api.http).body = "*";
   }
@@ -955,8 +933,7 @@ service Org {
   // Errors:
   //    - grpc.InvalidArgument: The pause_code field was not set or the pause_code.codes field was an empty list.
   //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
-  rpc UpdateAgentPauseCode(UpdateAgentPauseCodeRequest)
-      returns (UpdateAgentPauseCodeResponse) {
+  rpc UpdateAgentPauseCode(UpdateAgentPauseCodeRequest) returns (UpdateAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentpausecode";
     option (google.api.http).body = "*";
   }
@@ -964,8 +941,7 @@ service Org {
   // Deletes an Agent Pause Code with the sid given on the request message.
   // Errors:
   //    - grpc.InvalidArgument: The xml_client_property_sid field is invalid.
-  rpc DeleteAgentPauseCode(DeleteAgentPauseCodeRequest)
-      returns (DeleteAgentPauseCodeResponse) {
+  rpc DeleteAgentPauseCode(DeleteAgentPauseCodeRequest) returns (DeleteAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/deleteagentpausecode";
     option (google.api.http).body = "*";
   }
@@ -977,8 +953,7 @@ service Org {
   //    ORG_VIEW
   // Errors:
   //    - grpc.NotFound: There is no entry matching the requested client_sid.
-  rpc ListCustomReportFilters(ListCustomReportFiltersRequest)
-      returns (ListCustomReportFiltersResponse) {
+  rpc ListCustomReportFilters(ListCustomReportFiltersRequest) returns (ListCustomReportFiltersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/list";
     option (google.api.http).body = "*";
   }
@@ -989,8 +964,7 @@ service Org {
   // Errors:
   //    - grpc.InvalidArgument: The custom report filter has an empty name or no filtering parameters.
   //    - grpc.Internal: An error occurred marshalling the custom report filter into an xml string.
-  rpc CreateCustomReportFilter(CreateCustomReportFilterRequest)
-      returns (CreateCustomReportFilterResponse) {
+  rpc CreateCustomReportFilter(CreateCustomReportFilterRequest) returns (CreateCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/create";
     option (google.api.http).body = "*";
   }
@@ -1002,8 +976,7 @@ service Org {
   // Errors:
   //    - grpc.InvalidArgument: The pause_code field was not set or the pause_code.codes field was an empty list.
   //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
-  rpc UpdateCustomReportFilter(UpdateCustomReportFilterRequest)
-      returns (UpdateCustomReportFilterResponse) {
+  rpc UpdateCustomReportFilter(UpdateCustomReportFilterRequest) returns (UpdateCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/update";
     option (google.api.http).body = "*";
   }
@@ -1013,8 +986,7 @@ service Org {
   //    ORG_EDIT
   // Errors:
   //    - grpc.InvalidArgument: The xml_client_property_sid field is invalid.
-  rpc DeleteCustomReportFilter(DeleteCustomReportFilterRequest)
-      returns (DeleteCustomReportFilterResponse) {
+  rpc DeleteCustomReportFilter(DeleteCustomReportFilterRequest) returns (DeleteCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/delete";
     option (google.api.http).body = "*";
   }
@@ -1024,8 +996,7 @@ service Org {
   //    ORG_VIEW
   // Errors:
   //    - grpc.NotFound: There is no entry matching the requested client_sid.
-  rpc ListAgentResponseGroups(ListAgentResponseGroupsRequest)
-      returns (ListAgentResponseGroupsResponse) {
+  rpc ListAgentResponseGroups(ListAgentResponseGroupsRequest) returns (ListAgentResponseGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/agentresponses";
     option (google.api.http).body = "*";
   }
@@ -1035,8 +1006,7 @@ service Org {
   //    ORG_VIEW
   // Errors:
   //    - grpc.NotFound: There is no entry matching the requested client_sid.
-  rpc ListLastTemplateElements(ListLastTemplateElementsRequest)
-      returns (ListLastTemplateElementsResponse) {
+  rpc ListLastTemplateElements(ListLastTemplateElementsRequest) returns (ListLastTemplateElementsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/templateelements";
     option (google.api.http).body = "*";
   }
@@ -1051,7 +1021,7 @@ service Org {
   rpc ListQueueConfigs(ListQueueConfigsReq) returns (ListQueueConfigsRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/list";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Deletes a queue config with the given @client_sid and @config_name.
   // Required Permissions:
@@ -1062,7 +1032,7 @@ service Org {
   rpc DeleteQueueConfig(DeleteQueueConfigReq) returns (DeleteQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/delete";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Gets the details for the queue config for the given @client_sid with
   // the given @name. If @merge is true, the config data will be merged
@@ -1075,7 +1045,7 @@ service Org {
   rpc GetQueueConfig(GetQueueConfigReq) returns (GetQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/get";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Creates a queue config as defined by the @config given
   // on the request message.
@@ -1087,7 +1057,7 @@ service Org {
   rpc CreateQueueConfig(CreateQueueConfigReq) returns (CreateQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/create";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Updates a new queue config as defined by the @config given
   // on the request message.
@@ -1100,7 +1070,7 @@ service Org {
   rpc UpdateQueueConfig(UpdateQueueConfigReq) returns (UpdateQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/update";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Copies a queue config belonging to one organization to another.
   // The queue config with the @from_name will be copied from the
@@ -1116,7 +1086,7 @@ service Org {
   rpc CopyQueueConfig(CopyQueueConfigReq) returns (CopyQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/copy";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Returns the url of a downloadable zip file containing every
   // sound for the given queue config.
@@ -1125,11 +1095,10 @@ service Org {
   // Errors:
   //    - grpc.Internal: An unexpected error occurred while zipping the files.
   //    - grpc.NotFound: The given queue config was not found.
-  rpc GetAllQueueConfigSounds(GetAllQueueConfigSoundsReq)
-    returns (GetAllQueueConfigSoundsRes) {
+  rpc GetAllQueueConfigSounds(GetAllQueueConfigSoundsReq) returns (GetAllQueueConfigSoundsRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/getall";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Returns the url of a downladable wav file for the given config's
   // sound matching the given sound enum. Leaving the config field empty
@@ -1141,11 +1110,10 @@ service Org {
   //    downloadable file url.
   //  - grpc.NotFound: The given queue config was not found or the sound
   //    was not found for the config.
-  rpc GetQueueConfigSound(GetQueueConfigSoundReq)
-    returns (GetQueueConfigSoundRes) {
+  rpc GetQueueConfigSound(GetQueueConfigSoundReq) returns (GetQueueConfigSoundRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/get";
     option (google.api.http).body = "*";
-    };
+  }
 
   // Sets the given sound for the config to one of the uploaded
   // sound files in the clients upload folder matching the
@@ -1159,11 +1127,10 @@ service Org {
   //    - gprc.NotFound: The given queue config was not found or the
   //      sound file was not found for the client.
   //    - grpc.InvalidArgument: The file_name on the request was invalid.
-  rpc SetQueueConfigSound(SetQueueConfigSoundReq)
-    returns (SetQueueConfigSoundRes) {
+  rpc SetQueueConfigSound(SetQueueConfigSoundReq) returns (SetQueueConfigSoundRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/set";
     option (google.api.http).body = "*";
-    };
+  }
 
   // Sets every sound for a given config by copying them from
   // another config OR by copying them from a default sound set
@@ -1179,11 +1146,10 @@ service Org {
   //      gender/language identifier could not be found.
   //    - grpc.InvalidArgument: The to_config and from.config contained
   //      the same value. (If from.config was used)
-  rpc SetAllQueueConfigSoundsFromSource(SetAllQueueConfigSoundsFromSourceReq)
-    returns (SetAllQueueConfigSoundsFromSourceRes) {
+  rpc SetAllQueueConfigSoundsFromSource(SetAllQueueConfigSoundsFromSourceReq) returns (SetAllQueueConfigSoundsFromSourceRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/setallfromsource";
     option (google.api.http).body = "*";
-    };
+  }
 
   // Checks a user's blocked status.
   // Required Permissions:
@@ -1194,7 +1160,7 @@ service Org {
   rpc GetUserBlocked(GetUserBlockedRequest) returns (GetUserBlockedResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/blocked";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Unblocks the given user.
   // Required Permissions:
@@ -1205,101 +1171,100 @@ service Org {
   rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/unblock";
     option (google.api.http).body = "*";
-  };
+  }
 
   // List all users who only exist in skunk and have not yet been migrated
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc ListP3UnMigratedUsers(ListP3UnMigratedUsersRequest) returns (ListP3UnMigratedUsersResponse){
+  rpc ListP3UnMigratedUsers(ListP3UnMigratedUsersRequest) returns (ListP3UnMigratedUsersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/user/List";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Migrates a login or agent from backoffice to firestore
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc MigrateP3User(MigrateP3UserRequest) returns (MigrateP3UserResponse){
+  rpc MigrateP3User(MigrateP3UserRequest) returns (MigrateP3UserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/user/migrate";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Updates the username in skunk only for a agent or login
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc UpdateP3UserName(UpdateP3UserNameRequest) returns (UpdateP3UserNameResponse){
+  rpc UpdateP3UserName(UpdateP3UserNameRequest) returns (UpdateP3UserNameResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/username/update";
     option (google.api.http).body = "*";
-  };
+  }
   // Gets all users under the p3 hierarchy
   // Required Permissions:
   //  OWNING_ORG_IMITATION
-  rpc ListOwnedUsers(ListOwnedUsersRequest) returns (ListOwnedUsersResponse){
+  rpc ListOwnedUsers(ListOwnedUsersRequest) returns (ListOwnedUsersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/ownedusers/list";
     option (google.api.http).body = "*";
-  };
+  }
   // Gets all orgs under the p3 hierarchy
   // Required Permissions:
   // PERMISSION_ORG_VIEW
-  rpc ListOwnedOrgs(ListOwnedOrgsRequest) returns (ListOwnedOrgsResponse){
+  rpc ListOwnedOrgs(ListOwnedOrgsRequest) returns (ListOwnedOrgsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/OwnedOrgs/list";
     option (google.api.http).body = "*";
-  };
+  }
 
-    // Removed login strike from list of given login_log_sids
+  // Removed login strike from list of given login_log_sids
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc RemoveLoginStrikes(RemoveLoginStrikesRequest) returns (RemoveLoginStrikesResponse){
+  rpc RemoveLoginStrikes(RemoveLoginStrikesRequest) returns (RemoveLoginStrikesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/Loginstriks/remove";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Removed login strikes by user_id
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc RemoveUserLoginStrikes(RemoveUserLoginStrikesRequest) returns (RemoveUserLoginStrikesResponse){
+  rpc RemoveUserLoginStrikes(RemoveUserLoginStrikesRequest) returns (RemoveUserLoginStrikesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/Loginstrikes/remove";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Lists user login history by ip or user_id
   // Required Permissions:
   //  CUSTOMER_SUPPORT
-  rpc ListLoginHistory(ListLoginHistoryRequest) returns (ListLoginHistoryResponse){
+  rpc ListLoginHistory(ListLoginHistoryRequest) returns (ListLoginHistoryResponse) {
     option (google.api.http).post = "/api/v0alpha/org/loginhistory/list";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Updates a users agentsid and loginsid
   // Required Permissions:
   //  TCN_ADMIN_SETTINGS
-  rpc UpdateP3UserSids(UpdateP3UserSidsRequest) returns (UpdateP3UserSidsResponse){
+  rpc UpdateP3UserSids(UpdateP3UserSidsRequest) returns (UpdateP3UserSidsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updatep3usersids";
     option (google.api.http).body = "*";
-  };
+  }
 
   // AUTH0 CONNECTIONS
 
   // CreateAuthConnection creates a new auth0 connection.
-  rpc CreateAuthConnection(CreateAuthConnectionRequest) returns (CreateAuthConnectionResponse){
+  rpc CreateAuthConnection(CreateAuthConnectionRequest) returns (CreateAuthConnectionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/create";
     option (google.api.http).body = "*";
-  };
+  }
 
   // GetAuthConnectionSettings gets auth0 connection settings.
-  rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse){
+  rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/get";
     option (google.api.http).body = "*";
   }
 
   // UpdateAuthConnectionSettings updates an existing auth0 connection settings.
-  rpc UpdateAuthConnectionSettings(UpdateAuthConnectionSettingsRequest) returns (UpdateAuthConnectionSettingsResponse){
+  rpc UpdateAuthConnectionSettings(UpdateAuthConnectionSettingsRequest) returns (UpdateAuthConnectionSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/update";
     option (google.api.http).body = "*";
   }
 
-
   // DeleteAuthConnection removes the current orgs auth settings.
-  rpc DeleteAuthConnection(DeleteAuthConnectionRequest) returns (DeleteAuthConnectionResponse){
+  rpc DeleteAuthConnection(DeleteAuthConnectionRequest) returns (DeleteAuthConnectionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/delete";
     option (google.api.http).body = "*";
   }
@@ -1310,62 +1275,62 @@ service Org {
   // Required Permissions:
   //    ORG_VIEW if user id IS provided
   //    none if user id NOT provided
-  rpc GetUserSubscription(GetUserSubscriptionRequest) returns (GetUserSubscriptionResponse){
+  rpc GetUserSubscription(GetUserSubscriptionRequest) returns (GetUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/getusersubscription";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Adds a user subscription to users list of subscriptions
   // Required Permissions:
   //    USER_EDIT if user id IS provided
   //    EDIT_USER_OPTIONS if user id NOT provided
-  rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse){
+  rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/addusersubscription";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Removes a user subscription from a users list of subscription
   // Required Permissions:
   //    USER_EDIT if user id IS provided
   //    EDIT_USER_OPTIONS if user id NOT provided
-  rpc RemoveUserSubscription(RemoveUserSubscriptionRequest) returns (RemoveUserSubscriptionResponse){
+  rpc RemoveUserSubscription(RemoveUserSubscriptionRequest) returns (RemoveUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/removeusersubscription";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Updates a user subscription
   // Required Permissions:
   //    USER_EDIT if user id IS provided
   //    EDIT_USER_OPTIONS if user id NOT provided
-  rpc UpdateUserSubscription(UpdateUserSubscriptionRequest) returns (UpdateUserSubscriptionResponse){
+  rpc UpdateUserSubscription(UpdateUserSubscriptionRequest) returns (UpdateUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updateusersubscription";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Lists all of a users subscriptions
   // Required Permissions:
   //    ORG_VIEW if user id IS provided
   //    none if user id NOT provided
-  rpc ListUserSubscriptions(ListUserSubscriptionsRequest) returns (ListUserSubscriptionsResponse){
+  rpc ListUserSubscriptions(ListUserSubscriptionsRequest) returns (ListUserSubscriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/listusersubscriptions";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Lists multiple users subscriptions by org. Optionally filters by event type.
   // Required Permissions:
   //    ORG_VIEW
-  rpc ListOrgSubscriptions(ListOrgSubscriptionsRequest) returns (ListOrgSubscriptionsResponse){
+  rpc ListOrgSubscriptions(ListOrgSubscriptionsRequest) returns (ListOrgSubscriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/listorgsubscriptions";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Returns the systems current environment details
   // Required Permissions:
   //    N/A
-  rpc GetSystemEnvironmentDetails(GetSystemEnvironmentDetailsRequest) returns (GetSystemEnvironmentDetailsResponse){
+  rpc GetSystemEnvironmentDetails(GetSystemEnvironmentDetailsRequest) returns (GetSystemEnvironmentDetailsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/getsystemenvironmentdetails";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Agent Statistics Templates
 
@@ -1374,8 +1339,7 @@ service Org {
   //    ORG_VIEW
   // Errors:
   //    - grpc.NotFound: There is no entry matching the requested client_sid.
-  rpc ListAgentStatisticsTemplates(ListAgentStatisticsTemplatesRequest)
-      returns (ListAgentStatisticsTemplatesResponse) {
+  rpc ListAgentStatisticsTemplates(ListAgentStatisticsTemplatesRequest) returns (ListAgentStatisticsTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/list";
     option (google.api.http).body = "*";
   }
@@ -1385,8 +1349,7 @@ service Org {
   //    ORG_EDIT
   // Errors:
   //    - grpc.NotFound: The client_sid is not found.
-  rpc CreateAgentStatisticsTemplate(CreateAgentStatisticsTemplateRequest)
-      returns (CreateAgentStatisticsTemplateResponse) {
+  rpc CreateAgentStatisticsTemplate(CreateAgentStatisticsTemplateRequest) returns (CreateAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/create";
     option (google.api.http).body = "*";
   }
@@ -1396,8 +1359,7 @@ service Org {
   //    ORG_EDIT
   // Errors:
   //    - grpc.NotFound: The client_sid is not found.
-  rpc UpdateAgentStatisticsTemplate(UpdateAgentStatisticsTemplateRequest)
-      returns (UpdateAgentStatisticsTemplateResponse) {
+  rpc UpdateAgentStatisticsTemplate(UpdateAgentStatisticsTemplateRequest) returns (UpdateAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/update";
     option (google.api.http).body = "*";
   }
@@ -1407,8 +1369,7 @@ service Org {
   //    ORG_EDIT
   // Errors:
   //    - grpc.NotFound: The client_sid or agent statistics template is not found.
-  rpc DeleteAgentStatisticsTemplate(DeleteAgentStatisticsTemplateRequest)
-      returns (DeleteAgentStatisticsTemplateResponse) {
+  rpc DeleteAgentStatisticsTemplate(DeleteAgentStatisticsTemplateRequest) returns (DeleteAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/delete";
     option (google.api.http).body = "*";
   }
@@ -1495,7 +1456,6 @@ message RegionUrls {
   // array of api_endpoints per region
   repeated string api_endpoints = 1;
 }
-
 
 message GetOrganizationProfileByIdRequest {
   string org_id = 1;
@@ -1647,7 +1607,7 @@ message AdminGetUserDetailsRequest {
 
 // Label is an entity message.
 message Label {
-  reserved 4,5;
+  reserved 4, 5;
   // simply the name of the label.
   // 'Team A', 'Medical', etc
   string name = 3;
@@ -1690,7 +1650,7 @@ message UserDetails {
   string last_name = 25;
   google.protobuf.Timestamp created = 26;
   google.protobuf.Timestamp last_updated = 27;
-  bool password_reset_required =  28;
+  bool password_reset_required = 28;
   string agent_profile_group_id = 29;
   // A list of labels assigned to the user
   repeated Label label_entities = 35;
@@ -1757,10 +1717,10 @@ message GetAgentUsersResponse {
 }
 
 // Request for GetAgentSettings
-message GetAgentSettingsRequest{}
+message GetAgentSettingsRequest {}
 
 // Response for GetAgentSettings
-message GetAgentSettingsResponse{
+message GetAgentSettingsResponse {
   string user_caller_id = 1; // User caller ID
   repeated PriorityGroup priority_groups = 2; // List of priority groups.
   repeated string reserved_carriers = 3; // List of reserved carrier strings.
@@ -1900,7 +1860,7 @@ message User {
 
   google.protobuf.Timestamp created = 163;
   google.protobuf.Timestamp last_updated = 164;
-  bool password_reset_required =  165;
+  bool password_reset_required = 165;
 
   // connection id is the id of the auth connection that the
   // user is coming from if it is a delgated user. If the user
@@ -1978,7 +1938,7 @@ message BillingRate {
   google.protobuf.Int64Value max_billed_increments = 21;
   google.protobuf.Int64Value max_linkback_billed_increments = 22;
   google.protobuf.Int64Value machine_hangup_increments = 23;
-  google.protobuf.Int64Value human_hangup_increments= 24;
+  google.protobuf.Int64Value human_hangup_increments = 24;
 }
 
 // Publicly exposed "descriptions"
@@ -2066,7 +2026,6 @@ message AssignUserToAccountOwnerPermissionGroupRequest {
 // The response for org.Org.AssignUserToAccountOwnerPermissionGroup.
 message AssignUserToAccountOwnerPermissionGroupResponse {}
 
-
 // The request for api.v0alpha.AssignUserPermissionGroup.
 message AssignUserPermissionGroupRequest {
   // Required. The id of the permission group that is being assigned.
@@ -2119,7 +2078,6 @@ message RevokeUsersPermissionGroupRequest {
 
 // The response for api.v0alpha.RevokeUsersPermissionGroup.
 message RevokeUsersPermissionGroupResponse {}
-
 
 message ListP3PermissionGroupsRequest {
   string org_id = 1;
@@ -2328,6 +2286,7 @@ message RevokePermissionToAccountOwnerPermissionGroupRequest {
   // Permission to be revoked.
   repeated commons.auth.Permission permissions = 3;
 }
+
 // The response for org.Org.RevokePermissionToAccountOwnerPermissionGroup
 message RevokePermissionToAccountOwnerPermissionGroupResponse {
   // The newly updated default permission group.
@@ -2634,17 +2593,17 @@ message BargeInFiltering {
 
 // Request for GetDashboardQueuePreferences
 message GetDashboardQueuePreferencesRequest {
-  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+  google.protobuf.FieldMask field_mask = 10; // Mask containing list of desired fields.
 }
 
 // Response for GetDashboardQueuePreferences
 message GetDashboardQueuePreferencesResponse {
-  DashboardQueuePreferences dashboard_queue_preferences = 1;  // The requested preferences.
+  DashboardQueuePreferences dashboard_queue_preferences = 1; // The requested preferences.
 }
 
 // Request for UpdateDashboardQueuePreferences
 message UpdateDashboardQueuePreferencesRequest {
-  DashboardQueuePreferences dashboard_queue_preferences = 2;  // The preferences to be updated.
+  DashboardQueuePreferences dashboard_queue_preferences = 2; // The preferences to be updated.
 
   google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
 }
@@ -2694,8 +2653,8 @@ message PhonePreferences {
   bool display_ring_length_threshold = 12; // Determines whether the setting may be changed while scheduling.
   bool show_caller_id = 13; // Determines whether the setting may be show/edited while scheduling.
   bool default_use_caller_id = 14; // Determines whether to use Caller ID by default.
-  bool override_linkback_recording = 15;  // Determines whether broadcast templates may set to record linkbacks individually.
-  int64 caller_id_cfd_sid = 16;  // The 'sid' of the Caller ID field description to use as default.
+  bool override_linkback_recording = 15; // Determines whether broadcast templates may set to record linkbacks individually.
+  int64 caller_id_cfd_sid = 16; // The 'sid' of the Caller ID field description to use as default.
   DialOrder default_dial_order = 17; // The dial order of a contact record.  Default 'First Number Only'.
   commons.AnsweringMachineDetection answering_machine_detection = 18; // Which type of answering machine detection to use.
   bool linkback_recording = 19; // Determines whether linkback recording is enabled.
@@ -2704,8 +2663,8 @@ message PhonePreferences {
 // Dial Order holds either a type enum, or one or more Contact Field Description fields for custom order.
 message DialOrder {
   oneof type {
-    commons.DialOrderType standard_order = 1;  // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
-    CustomDialOrder custom_order = 2;  // Defines a "Custom Order" using one or more Contact Field Descriptions.
+    commons.DialOrderType standard_order = 1; // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
+    CustomDialOrder custom_order = 2; // Defines a "Custom Order" using one or more Contact Field Descriptions.
   }
 }
 
@@ -2717,7 +2676,7 @@ message CustomDialOrder {
 // Dial Order Field holds the ID for saving into preferences and the name for display.
 message DialOrderField {
   int64 cfd_sid = 1; // contact field description sid
-  string field_name = 2;  // The field name, for display
+  string field_name = 2; // The field name, for display
 }
 
 // Request for GetCompliancePreferences
@@ -2850,17 +2809,17 @@ message SchedulePreferences {
 
 // Request for GetEmailSmsPreferences
 message GetEmailSmsPreferencesRequest {
-  google.protobuf.FieldMask field_mask = 10;    // Mask containing list of desired fields.
+  google.protobuf.FieldMask field_mask = 10; // Mask containing list of desired fields.
 }
 
 // Response for GetEmailSmsPreferences
 message GetEmailSmsPreferencesResponse {
-  EmailSmsPreferences email_sms_preferences = 1;  // The requested preferences.
+  EmailSmsPreferences email_sms_preferences = 1; // The requested preferences.
 }
 
 // Request for UpdateEmailSmsPreferences
 message UpdateEmailSmsPreferencesRequest {
-  EmailSmsPreferences email_sms_preferences = 2;  // The preferences to be updated.
+  EmailSmsPreferences email_sms_preferences = 2; // The preferences to be updated.
 
   google.protobuf.FieldMask field_mask = 10; // The mask indicating which fields.
 }
@@ -3008,44 +2967,44 @@ message VoiceAnalytics {
 
 // Request for GetScorecardsPreferences
 message GetScorecardsPreferencesRequest {
-    google.protobuf.FieldMask field_mask = 2; // Field mask for get request
+  google.protobuf.FieldMask field_mask = 2; // Field mask for get request
 }
 
 // Response for GetScorecardsPreferences
 message GetScorecardsPreferencesResponse {
-    ScorecardsPreferences scorecards_preferences = 1; // Scorecards preferences object
+  ScorecardsPreferences scorecards_preferences = 1; // Scorecards preferences object
 }
 
 // Request for UpdateScorecardsPreferences
 message UpdateScorecardsPreferencesRequest {
-    ScorecardsPreferences scorecards_preferences = 2; // Scorecards preferences object, required to update
+  ScorecardsPreferences scorecards_preferences = 2; // Scorecards preferences object, required to update
 
-    google.protobuf.FieldMask field_mask = 3; // Field mask for update request
+  google.protobuf.FieldMask field_mask = 3; // Field mask for update request
 }
 
 // Response for UpdateScorecardsPreferences
 message UpdateScorecardsPreferencesResponse {}
 
 message ScorecardsPreferences {
-    // The percentage of randomized calls shown to the user for evaluation.
-    // Must be between 1-100.
-    uint32 call_sample_percentage = 2;
+  // The percentage of randomized calls shown to the user for evaluation.
+  // Must be between 1-100.
+  uint32 call_sample_percentage = 2;
 
-    // Maximum number of evaluations per user, per category,
-    // over the given time interval
-    uint32 max_user_evaluations = 3;
+  // Maximum number of evaluations per user, per category,
+  // over the given time interval
+  uint32 max_user_evaluations = 3;
 
-    // The time interval over which calls are listed for scoring.
-    Scorecards.EvaluationInterval evaluation_interval = 4;
+  // The time interval over which calls are listed for scoring.
+  Scorecards.EvaluationInterval evaluation_interval = 4;
 }
 
 message Scorecards {
-    // EvaluationsInterval enumerates common time periods for evaluations.
-    enum EvaluationInterval {
-        DAY = 0;
-        WEEK = 1;
-        MONTH = 2;
-    }
+  // EvaluationsInterval enumerates common time periods for evaluations.
+  enum EvaluationInterval {
+    DAY = 0;
+    WEEK = 1;
+    MONTH = 2;
+  }
 }
 
 // Request for GetEndOfDayPreferences
@@ -3087,7 +3046,6 @@ message GetFilterPreferencesRequest {
 // Response for GetFilterPreferences
 message GetFilterPreferencesResponse {
   FilterPreferences filter_preferences = 10; // Filter preferences object
-
 }
 
 // Request for UpdateFilterPreferences
@@ -3856,7 +3814,7 @@ message GetP3OwningOrgResponse {
   string id = 1;
 }
 
-message RevokeAccountOwnerPermissionFromUserRequest{
+message RevokeAccountOwnerPermissionFromUserRequest {
   //user for which the account owner permission will be revoked
   string user_id = 1;
 }
@@ -4258,7 +4216,7 @@ message UnblockUserRequest {
 
 message UnblockUserResponse {}
 
-message UnMigratedUser{
+message UnMigratedUser {
   // Optional agent_sid or login_sid (must have one)
   int64 agent_sid = 1;
   int64 login_sid = 2;
@@ -4348,13 +4306,12 @@ message ListLoginHistoryRequest {
     string user_id = 1;
     string origination_ip = 2;
   }
-	int64 duration = 3;  // Number of days to grab login events from
+  int64 duration = 3; // Number of days to grab login events from
   bool strikes_only = 4;
 }
 
 message ListLoginHistoryResponse {
-	repeated LoginEvent login_events = 1;
-
+  repeated LoginEvent login_events = 1;
 }
 
 message LoginEvent {
@@ -4365,7 +4322,7 @@ message LoginEvent {
   bool strike = 5;
   string notes = 6;
   google.protobuf.Timestamp date_attempted = 7;
- }
+}
 
 message OrgBillingSettings {
   reserved 5;
@@ -4531,29 +4488,29 @@ message AuthConnectionSettings {
   // client_id is the id of the application created from
   // the auth provider.
   string client_id = 5;
-	// connection_id is the id of the auth0 connection.
+  // connection_id is the id of the auth0 connection.
   // This field will be populated automatically during
   // the CreateAuthConnection rpc.
-	string connection_id = 6;
+  string connection_id = 6;
   // secret_expiration is an optional field that is
   // used to know when the connection's secret will
   // expire. If the connection doesn't have a secret
   // or the secret will never expire this will be nil.
   SecretExpiration secret_expiration = 10;
-	// default_group defines settings used for all users for this connection
-	// regardless of their groups. Group name is ignored for the default. This
-	// field can be left nil if no default settings are desired.
-	GroupItem default_group = 12;
-	// custom_groups defines the settings that will be used if a user with
-	// this connection contains one or more of the matching group names.
-	// If a user has multiple matching groups the settings for the highest
-	// priority custom group will be used. Priority is determined by the custom
-	// groups position in the list.
-	repeated GroupItem custom_groups = 13;
+  // default_group defines settings used for all users for this connection
+  // regardless of their groups. Group name is ignored for the default. This
+  // field can be left nil if no default settings are desired.
+  GroupItem default_group = 12;
+  // custom_groups defines the settings that will be used if a user with
+  // this connection contains one or more of the matching group names.
+  // If a user has multiple matching groups the settings for the highest
+  // priority custom group will be used. Priority is determined by the custom
+  // groups position in the list.
+  repeated GroupItem custom_groups = 13;
 
-	message SecretExpiration {
-		google.protobuf.Timestamp date = 1;
-	}
+  message SecretExpiration {
+    google.protobuf.Timestamp date = 1;
+  }
 }
 
 // GroupItem defines settings mapped to a single group.
@@ -4575,15 +4532,15 @@ message GroupItem {
 
 // Request message for the CreateAuthConnection rpc.
 message CreateAuthConnectionRequest {
-	AuthConnectionSettings settings = 1;
-	// client_secret is an optional field.
-	// some providers require a secret to create a connection.
-	// If the connection uses a secret that expires the
-	// settings.secret_expiration field should be properly
-	// set.
-	// This field is not part of the ConnectionSettings message
-	// because it should never be stored.
-	string client_secret = 2;
+  AuthConnectionSettings settings = 1;
+  // client_secret is an optional field.
+  // some providers require a secret to create a connection.
+  // If the connection uses a secret that expires the
+  // settings.secret_expiration field should be properly
+  // set.
+  // This field is not part of the ConnectionSettings message
+  // because it should never be stored.
+  string client_secret = 2;
 }
 
 // Response message for the CreateAuthConnection rpc.
@@ -4594,15 +4551,15 @@ message GetAuthConnectionSettingsRequest {}
 
 // Response message for the GetConnectionSettings rpc.
 message GetAuthConnectionSettingsResponse {
-	AuthConnectionSettings settings = 1;
+  AuthConnectionSettings settings = 1;
 }
 
 // Request message for the UpdateAuthConnectionSettings rpc.
 message UpdateAuthConnectionSettingsRequest {
-	AuthConnectionSettings settings = 1;
+  AuthConnectionSettings settings = 1;
   // the secret for the connection. Only used for Azure identity type.
-	string client_secret = 2;
-	google.protobuf.FieldMask field_mask = 3;
+  string client_secret = 2;
+  google.protobuf.FieldMask field_mask = 3;
 }
 
 // Response message for the UpdateAuthConnectionSettings rpc.
@@ -4619,42 +4576,42 @@ message DeleteAuthConnectionResponse {}
 // UserSubscription contains the info to send a notification to a user.
 // It contains a user, the event type, a delivery method, and custom app settings.
 message UserSubscription {
-    // Required.
-    // The unique id given to the setting. Used for updating and deleting.
-    string subscription_id = 1;
+  // Required.
+  // The unique id given to the setting. Used for updating and deleting.
+  string subscription_id = 1;
 
-    // Required.
-    //
-    // Used by matrix-notify.
-    // It receives an event on an event type and
-    // uses it to look up the targets for that event type.
-    // e.g. commons.audit.EventType_DUMMY_APPLICAION_DID_SOMETHING
-    commons.audit.EventType event_type = 2;
+  // Required.
+  //
+  // Used by matrix-notify.
+  // It receives an event on an event type and
+  // uses it to look up the targets for that event type.
+  // e.g. commons.audit.EventType_DUMMY_APPLICAION_DID_SOMETHING
+  commons.audit.EventType event_type = 2;
 
-    // Required.
-    string user_id = 3;
+  // Required.
+  string user_id = 3;
 
-    // Required.
-    oneof deliver_method {
-        Room303 room303 = 100;
-        // TODO: add email, sms, etc.
-    }
+  // Required.
+  oneof deliver_method {
+    Room303 room303 = 100;
+    // TODO: add email, sms, etc.
+  }
 
-    // Optional. Updates must specify current version or be rejected.
-    int64 version = 5;
+  // Optional. Updates must specify current version or be rejected.
+  int64 version = 5;
 
+  // Optional.
+  // If set, user only notified for events that match ALL filters.
+  repeated commons.FieldValueFilter filters = 4;
+
+  // -------------------- Deliver Methods --------------------
+  message Room303 {
     // Optional.
-    // If set, user only notified for events that match ALL filters.
-    repeated commons.FieldValueFilter filters = 4;
-
-    // -------------------- Deliver Methods --------------------
-    message Room303 {
-        // Optional.
-        // If set, user will be notified in the room specificed.
-        // If not set the message will be sent in the default
-        // system room.
-        string room_name = 1;
-    }
+    // If set, user will be notified in the room specificed.
+    // If not set the message will be sent in the default
+    // system room.
+    string room_name = 1;
+  }
 }
 
 // -------------------- Requests and Responses --------------------
@@ -4663,56 +4620,56 @@ message UserSubscription {
 
 // Request to add a user subscription.
 message AddUserSubscriptionRequest {
-    // Required.
-    // All fields (except subscription id) must be set.
-    UserSubscription subscription = 1;
+  // Required.
+  // All fields (except subscription id) must be set.
+  UserSubscription subscription = 1;
 }
 
 // Response to adding a user subscription.
 // Contains a single user subscription.
 message AddUserSubscriptionResponse {
-    UserSubscription subscription = 1;
+  UserSubscription subscription = 1;
 }
 
 // Request for getting a user subscription.
 message GetUserSubscriptionRequest {
-    // Required.
-    string user_id = 1;
+  // Required.
+  string user_id = 1;
 
-    // Required.
-    string subscription_id = 2;
+  // Required.
+  string subscription_id = 2;
 }
 
 // Response for getting a user subscription.
 // Contains a single user subscription.
 message GetUserSubscriptionResponse {
-    UserSubscription subscription = 1;
+  UserSubscription subscription = 1;
 }
 
 // Request for updating a user subscription.
 message UpdateUserSubscriptionRequest {
-    // Required.
-    // Must have org id, user id, and subscription id.
-    UserSubscription subscription = 1;
+  // Required.
+  // Must have org id, user id, and subscription id.
+  UserSubscription subscription = 1;
 
-    // Required. Only fields in field mask will be updated.
-    // Valid fields include: "filters", "room303"
-    google.protobuf.FieldMask field_mask = 2;
+  // Required. Only fields in field mask will be updated.
+  // Valid fields include: "filters", "room303"
+  google.protobuf.FieldMask field_mask = 2;
 }
 
 // Response for updating a user subscription.
 // Contains a single user subscription.
 message UpdateUserSubscriptionResponse {
-    UserSubscription subscription = 1;
+  UserSubscription subscription = 1;
 }
 
 // Request for removing a user subscription by id.
 message RemoveUserSubscriptionRequest {
-    // Required.
-    string user_id = 1;
+  // Required.
+  string user_id = 1;
 
-    // Required.
-    string subscription_id = 2;
+  // Required.
+  string subscription_id = 2;
 }
 
 // Response for deleting a user subscription.
@@ -4722,29 +4679,29 @@ message RemoveUserSubscriptionResponse {}
 
 // Request for listing subscriptions for a user.
 message ListUserSubscriptionsRequest {
-    // Required.
-    string user_id = 1;
+  // Required.
+  string user_id = 1;
 }
 
 // Response for listing subscriptions for a user.
 // Contains a user subscriptions (plural) object.
 message ListUserSubscriptionsResponse {
-    repeated UserSubscription subscriptions = 1;
+  repeated UserSubscription subscriptions = 1;
 }
 
 // Request for listing subscriptions (for many users) for an org.
 message ListOrgSubscriptionsRequest {
-    // Required.
-    string org_id = 1;
+  // Required.
+  string org_id = 1;
 
-    // Optional.
-    // Used by matrix-notify to get settings in bulk for a particular event type.
-    commons.audit.EventType event_type = 2;
+  // Optional.
+  // Used by matrix-notify to get settings in bulk for a particular event type.
+  commons.audit.EventType event_type = 2;
 }
 
 // Response for listing subscriptions for multiple users.
 message ListOrgSubscriptionsResponse {
-    repeated UserSubscription subscriptions = 1;
+  repeated UserSubscription subscriptions = 1;
 }
 
 // Request used to get system environment details
@@ -4752,10 +4709,10 @@ message GetSystemEnvironmentDetailsRequest {}
 
 // Response used to return system environment details
 message GetSystemEnvironmentDetailsResponse {
-    // the region id for the backend that answered this request
-    string region_id = 1;
-    // the cluster id for the backend that answered this request
-    string cluster_id = 2;
+  // the region id for the backend that answered this request
+  string region_id = 1;
+  // the cluster id for the backend that answered this request
+  string cluster_id = 2;
 }
 
 // Request message for the CreateDelegatedUser RPC.

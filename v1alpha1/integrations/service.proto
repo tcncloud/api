@@ -2,15 +2,13 @@ syntax = "proto3";
 
 package v1alpha1.integrations;
 
-option java_package="com.tcn.api.v1alpha1.integrations";
-option go_package="github.com/tcncloud/api/v1alpha1.integrations;integrations";
-
-
-
 import "commons/public/integrations.proto";
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.integrations;integrations";
+option java_package = "com.tcn.api.v1alpha1.integrations";
 
 service Integrations {
   // combine rquest parameters with the config parameters and run the integration method
@@ -67,7 +65,7 @@ service Integrations {
   }
 
   // delete an integration config
-	rpc DeleteIntegrationConfig(DeleteIntegrationConfigReq) returns (Empty) {
+  rpc DeleteIntegrationConfig(DeleteIntegrationConfigReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/deleteintegrationconfig";
     option (google.api.http).body = "*";
   }
@@ -121,12 +119,12 @@ service Integrations {
     option (google.api.http).body = "*";
   }
   // TODO deprecate
-  rpc UpdatePortalLogo(UpdatePortalLogoReq) returns (Empty){
+  rpc UpdatePortalLogo(UpdatePortalLogoReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/updateportallogo";
     option (google.api.http).body = "*";
   }
   // TODO deprecate
-  rpc GetPortalLogo(GetPortalLogoReq) returns (Logo){
+  rpc GetPortalLogo(GetPortalLogoReq) returns (Logo) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getportallogo";
     option (google.api.http).body = "*";
   }
@@ -143,23 +141,22 @@ service Integrations {
     option (google.api.http).body = "*";
   }
   // Lists integration templates that use the passed in integration config
-  rpc ListIntegrationTemplatesByConfig(ListIntegrationTemplatesByConfigReq) returns (ListIntegrationTemplatesByConfigRes){
+  rpc ListIntegrationTemplatesByConfig(ListIntegrationTemplatesByConfigReq) returns (ListIntegrationTemplatesByConfigRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/integrationtemplatesbyconfig";
     option (google.api.http).body = "*";
   }
 }
 
-message ListJourneyConfigsReq{}
-message ListNonJourneyConfigsReq{}
+message ListJourneyConfigsReq {}
+message ListNonJourneyConfigsReq {}
 
 message IntegrationConfigs {
   repeated IntegrationConfig values = 1;
 }
 
-
 message GetIntegrationConfigReq {
   commons.public.IntegrationType integration_id = 3;
-  string  name = 4;
+  string name = 4;
   // if this exists, we will do GetIntegrationConfigById, otherwise we will do GetIntegrationConfigByName
   string id = 5;
 }
@@ -218,11 +215,10 @@ message ProcessRes {
   string transaction_id = 5;
 }
 
-
-
 message IntegrationInfos {
   repeated IntegrationInfo values = 1;
 }
+
 // IntegrationInfo describes one of our payment sub-services
 // it is used in static structures in integrations/adapters/integrations go packages
 message IntegrationInfo {
@@ -274,7 +270,7 @@ message Parameter {
   commons.public.ValueType param_type = 2;
   // if the field must appear in the request payload or not
   bool required = 3;
-    // what is used if the value is not provided
+  // what is used if the value is not provided
   Value default_value = 4;
   // some names are really ugly, display names are what the user should be shown
   string display_name = 5;
@@ -297,18 +293,19 @@ message Parameter {
   commons.public.Validation validation = 10;
 }
 
-
 message Empty {}
 
 message GetIntegrationTransactionReq {
   string integration_transaction_id = 1;
 }
+
 // get a summary of all the aggregated data between two dates
 message GetAggregatedMetadataReq {
   google.protobuf.Timestamp start = 3;
   google.protobuf.Timestamp end = 4;
   commons.public.RequestMethod method_id = 5;
 }
+
 // the metadata values. All values should be numbers or dates
 message GetAggregatedMetadataRes {
   int32 views = 1;
@@ -319,6 +316,7 @@ message GetAggregatedMetadataRes {
   double payment_amount = 6;
   repeated string fields = 7;
 }
+
 // GetIntegrationTransactionReportReq gives summarizes the IntegrationTrasactions between two dates
 message GetIntegrationTransactionReportReq {
   google.protobuf.Timestamp start = 3;
@@ -330,7 +328,7 @@ message GetIntegrationTransactionReportReq {
 message IntegrationTransactionReportRow {
   commons.public.IntegrationType integration_id = 5; // integration used
   string integration_name = 17;
-  commons.public.RequestMethod method_id = 6;        // external service method
+  commons.public.RequestMethod method_id = 6; // external service method
   string method_name = 18;
   commons.public.TransactionType transaction_type = 7; // payment, data inquiry, etc.
   commons.public.RequestSource request_source = 8; // email/web/sms/ivr/chat
@@ -357,7 +355,7 @@ message IntegrationTransactionReportRow {
   // DD-MM-YYYY format of lowest traffic day
   string lowest_traffic_date = 16;
   // views, verification, invoice, and payment attempts, etc
-  map<string,int64> count_metrics = 24;
+  map<string, int64> count_metrics = 24;
   // the names of the fields uploaded to portal link, and sent for enriching portal link campaign info
   // to get these values, you must make a separate api call
   repeated string fields = 25;
@@ -379,14 +377,14 @@ message GetIntegrationTransactionReportDataReq {
   int64 search_after_sid = 10;
 }
 message GetIntegrationTransactionReportDataRow {
-    map<string, int64> count_metrics = 1;
-    map<string, string> link_data = 2;
-    google.protobuf.Timestamp date = 3;
-    double payment_amount = 4;
+  map<string, int64> count_metrics = 1;
+  map<string, string> link_data = 2;
+  google.protobuf.Timestamp date = 3;
+  double payment_amount = 4;
 }
 message GetIntegrationTransactionReportDataRes {
-    repeated GetIntegrationTransactionReportDataRow entities = 1;
-    int64 last_transaction_sid = 2;
+  repeated GetIntegrationTransactionReportDataRow entities = 1;
+  int64 last_transaction_sid = 2;
 }
 
 message SearchIntegrationTransactionsReq {
@@ -439,6 +437,7 @@ message GetPaymentLinkConfigReq {
   // the pk of payment_link_config table that contains method we will be creating links for
   string id = 3;
 }
+
 // is just the primary key of the config
 message DeletePaymentLinkConfigReq {
   string id = 3;
@@ -456,6 +455,7 @@ message ListPortalConfigsReq {
   int32 page_size = 3;
   int32 page = 4;
 }
+
 // LETS MOVE THIS TO portals.proto WHERE IT BELONGS
 message GetPortalConfigReq {
   PortalConfigId entity = 1;
@@ -471,13 +471,13 @@ message DeletePortalConfigReq {
   // DEPRECATED only here because integrations service needs it
   string id = 3;
 }
-message UpdatePortalLogoReq{
+message UpdatePortalLogoReq {
   // id of portal_config
   string id = 3;
   // is the logo used in the corner of the payment portal screen
   bytes logo = 4;
 }
-message GetPortalLogoReq{
+message GetPortalLogoReq {
   // id of portal_config
   string id = 3;
 }
@@ -490,6 +490,7 @@ message RefreshLinkRes {
   // when the new link will expire
   google.protobuf.Timestamp new_expiry = 1;
 }
+
 // same as PaymentPortalLinkConfigDB, but with nicer field types
 message PaymentLinkConfig {
   // the pk of payment_link_config table that contains method we will be creating links for
@@ -497,14 +498,14 @@ message PaymentLinkConfig {
   string name = 3;
   string description = 4;
   // the journey collection that will enrich the link data
-  string collection_id = 5[deprecated=true];
+  string collection_id = 5 [deprecated = true];
   // which integration will be used in the links
-  commons.public.IntegrationType integration_id = 6[deprecated=true];
+  commons.public.IntegrationType integration_id = 6 [deprecated = true];
   // the verification method. This is used if there is no collection_id to enrich link data
-  commons.public.RequestMethod verification_method_id = 7[deprecated=true];
-  commons.public.RequestMethod invoice_method_id = 8[deprecated=true];
+  commons.public.RequestMethod verification_method_id = 7 [deprecated = true];
+  commons.public.RequestMethod invoice_method_id = 8 [deprecated = true];
   // which method will be called when a payment portal link is process
-  commons.public.RequestMethod payment_method_id = 9[deprecated=true];
+  commons.public.RequestMethod payment_method_id = 9 [deprecated = true];
   // journey names and method parameter names might not match one to one
   // the keys of this mapping are journey keys
   // the values are method parameter name the key maps to
@@ -512,7 +513,7 @@ message PaymentLinkConfig {
   // for an alternative key name
   map<string, string> name_mapping = 10;
   // these fields will be used to verify customer identity
-  repeated string verification_fields = 11 [deprecated=true];
+  repeated string verification_fields = 11 [deprecated = true];
   // name of the payment portal config that contains all the details for a payment portal screen shown to the user.
   // (visible to link receiver)
   // these don't affect usability of the service, meaning the backend doesn't require any of this info
@@ -538,14 +539,14 @@ message PaymentLinkConfig {
   // but can list as many as they want for the user to pick from.
   // only one PaymentRequest will be processed
   repeated PaymentRequest payment_requests = 22;
-  map<string,Value> base_data = 23;
- // a marshalled PaymentTemplates proto message
+  map<string, Value> base_data = 23;
+  // a marshalled PaymentTemplates proto message
   PaymentLinkConfigTemplates templates = 24;
   // the name of the profile used to generate this profile
   string payment_profile_name = 25;
 }
 
-message PaymentLinkConfigTemplates{
+message PaymentLinkConfigTemplates {
   // template string like: "{{name}} thanks for paying {{amount}}"
   // it shows up on the receipt text sent after payment is taken
   // values are populated from what values we know from verification, or in the integration_config
@@ -601,7 +602,6 @@ message InvoiceRequest {
   Request invoice_request = 3;
   // removes these keys from the response so they are not shown to the user
   repeated string filter_response_keys = 4;
-
 }
 message Request {
   oneof val {
@@ -613,9 +613,9 @@ message Request {
     string config_id = 5;
   }
   // add in this static data
-  map<string,Value> static_data = 6;
+  map<string, Value> static_data = 6;
   // rename the keys to the values in the response from 'val'
-  map<string,string> rename_response_keys = 7;
+  map<string, string> rename_response_keys = 7;
   // reassigns the names in key to be the value's validation
   map<string, Validation> reassign_validations = 8;
 }
@@ -632,7 +632,6 @@ message MethodCall {
   commons.public.RequestMethod method_id = 2;
 }
 
-
 message PortalConfigs {
   repeated PortalConfig values = 1;
 }
@@ -640,7 +639,7 @@ message ListPaymentLinkConfigsReq {}
 message PaymentLinkConfigs {
   repeated PaymentLinkConfig values = 1;
 }
-message ListLinksReq{}
+message ListLinksReq {}
 
 message CreatePaymentPortalLinksReq {
   // the pk of link_config table that contains method we will be creating links for
@@ -657,7 +656,7 @@ message CreatePaymentPortalLinksRes {
   repeated string urls = 1;
 }
 
-message SummaryReq{
+message SummaryReq {
   // a num in YYYY format
   int32 year = 3;
 }
@@ -676,9 +675,9 @@ message CalendarSummary {
   repeated IntegrationTypeSummary type_summaries = 3;
 }
 
-message IntegrationTypeSummary{
+message IntegrationTypeSummary {
   commons.public.IntegrationType integration_type = 1;
-  TransactionSummary integration_summary =2;
+  TransactionSummary integration_summary = 2;
 }
 
 message TransactionSummary {
@@ -689,39 +688,41 @@ message TransactionSummary {
   double avg_amount_collected = 5;
 }
 
-
-message ListIntegrationTemplatesByConfigReq{
+message ListIntegrationTemplatesByConfigReq {
   string integration_config_name = 2;
 }
 
-message ListIntegrationTemplatesByConfigRes{
+message ListIntegrationTemplatesByConfigRes {
   repeated IntegrationTemplateInfo integration_templates = 1;
 }
 
-message IntegrationTemplateInfo{
+message IntegrationTemplateInfo {
   int64 broadcast_template_sid = 1;
   string template_name = 2;
 }
 
 // DEPRECATED
-message CopyPaymentLinkConfigReq{
+message CopyPaymentLinkConfigReq {
   string id = 3;
 }
 
 // DEPRECATED
-message CopyPaymentLinkConfigRes{
-string new_name = 1;
+message CopyPaymentLinkConfigRes {
+  string new_name = 1;
 }
+
 // DEPRECATED
 message ProfileName {
   string name = 1;
 }
+
 // DEPRECATED
 message PaymentProfiles {
   repeated PaymentProfile values = 1;
 }
+
 // DEPRECATED
-message PaymentProfile{
+message PaymentProfile {
   string verification = 8;
   string invoice = 9;
   repeated string payments = 10;
@@ -746,6 +747,7 @@ message UnknownField {
   // none of these suggestions have to be used, the user can just "write in" a ProvidedField
   repeated ProvidedField suggested_fields = 4;
 }
+
 // DEPRECATED
 message ProvidedField {
   // the name of the field as it was asked for in UnknownField.
@@ -825,7 +827,7 @@ message IntegrationConfig {
   Values params = 9;
   bool deleted = 10;
   google.protobuf.Timestamp created_on = 11;
-    // alternative names that map to parameter names.
+  // alternative names that map to parameter names.
   MapString alias = 13;
   // these conditions will be checked on the integration's response. If any evaluate to false, the integration method will fail
   Conditions conds = 14;
@@ -835,14 +837,14 @@ message IntegrationConfig {
 message IntegrationTransaction {
   string integration_transaction_id = 1;
   string task_id = 4;
-  commons.public.IntegrationType integration_id = 5;    // integration used
-  commons.public.RequestMethod method_id = 6;           // external service method
-  commons.public.TransactionType transaction_type = 7;  // payment, data inquiry, etc.
-  commons.public.RequestSource request_source = 8;      // email/web/sms/ivr/chat
-  commons.public.TransactionResult result = 9;          // success/failure
+  commons.public.IntegrationType integration_id = 5; // integration used
+  commons.public.RequestMethod method_id = 6; // external service method
+  commons.public.TransactionType transaction_type = 7; // payment, data inquiry, etc.
+  commons.public.RequestSource request_source = 8; // email/web/sms/ivr/chat
+  commons.public.TransactionResult result = 9; // success/failure
   double amount_collected = 10;
   Values request_data = 11;
-  Values response_data = 12;                     // response from external service
+  Values response_data = 12; // response from external service
   google.protobuf.Timestamp created_on = 13;
   string config_name = 14;
   Conditions conds = 15;
@@ -858,7 +860,7 @@ message Conditions {
 
 message Task {
   // the data used to fetch info about this task when the user clicks on a link
-  map<string,Value> values = 1;
+  map<string, Value> values = 1;
   // the sms_id, email_id, etc that can be used to identify what generated this link
   string task_id = 2;
   // the type of the source for this link. ex: Email, Sms, Chat
@@ -870,6 +872,7 @@ message Task {
 message PortalConfigId {
   string id = 3;
 }
+
 // all these things will show up on the portal screen to the receiver of
 // the link contact info should look like the company who is using the portal
 // (not tcn)
@@ -926,14 +929,14 @@ message Portal {
 }
 
 message PortalText {
-    string verification_header = 1;
-    string verification_footer = 2;
-    string payment_header = 3;
-    string payment_footer = 4;
-    string receipt_header = 5;
-    string receipt_footer = 6;
-    string invoice_header = 7;
-    string invoice_footer = 8;
+  string verification_header = 1;
+  string verification_footer = 2;
+  string payment_header = 3;
+  string payment_footer = 4;
+  string receipt_header = 5;
+  string receipt_footer = 6;
+  string invoice_header = 7;
+  string invoice_footer = 8;
 }
 message PortalType {
   oneof data {
@@ -949,8 +952,7 @@ message PaymentPortal {
   PortalText portal_text = 20;
 }
 
-message IVRPortal {
-}
+message IVRPortal {}
 
 message PluginInstanceId {
   string id = 3;
@@ -970,30 +972,31 @@ message PluginInstance {
 // PortalLinkTransactionRow is all the metrics about a portal link,
 // and how it was used in any integration transactions.
 message PortalLinkTransactionRow {
-    // all this from the PortalLink.Metadata map
-    int32 views = 1;
-    int32 verify_attempts = 2;
-    int32 verify_successes = 3;
-    int32 payment_attempts = 4;
-    int32 payment_successes = 5;
-    double payment_amount = 6;
-    google.protobuf.Timestamp date = 7;
+  // all this from the PortalLink.Metadata map
+  int32 views = 1;
+  int32 verify_attempts = 2;
+  int32 verify_successes = 3;
+  int32 payment_attempts = 4;
+  int32 payment_successes = 5;
+  double payment_amount = 6;
+  google.protobuf.Timestamp date = 7;
 
-    // from PortalLink.Data map
-    map<string, Value> link_data = 8;
+  // from PortalLink.Data map
+  map<string, Value> link_data = 8;
 }
+
 // GetPortalLinksByDateRangeReq gives a paginated view of portal links
 message GetPortalLinksByDateRangeReq {
-    string org_id = 1;
-    string region_id = 2;
-    google.protobuf.Timestamp start = 3;
-    google.protobuf.Timestamp end = 4;
-    int32 page_size = 5;
-    int32 page_num = 6;
-    commons.public.RequestMethod method_id = 7;
+  string org_id = 1;
+  string region_id = 2;
+  google.protobuf.Timestamp start = 3;
+  google.protobuf.Timestamp end = 4;
+  int32 page_size = 5;
+  int32 page_num = 6;
+  commons.public.RequestMethod method_id = 7;
 }
 
 // GetPortalLinksByDateRangeRes returns a page of data
 message GetPortalLinksByDateRangeRes {
-    repeated PortalLinkTransactionRow rows = 2;
+  repeated PortalLinkTransactionRow rows = 2;
 }

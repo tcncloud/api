@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 import "commons/ana.proto";
 import "commons/ana_charts.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 // import "commons/types.proto";
 
 service Ana {
-
   // gets all visualizations for a specific client
   rpc GetSpecifiedVisualizations(GetSpecifiedVisualizationsReq) returns (Visualizations) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetSpecifiedVisualizations";
@@ -39,17 +36,13 @@ service Ana {
     option (google.api.http).body = "*";
   }
   // set default time filter for given ana account
-  rpc SetDefaultTimeFilter(SetDefaultTimeFilterReq)
-      returns (SetDefaultTimeFilterRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/SetDefaultTimeFilter";
+  rpc SetDefaultTimeFilter(SetDefaultTimeFilterReq) returns (SetDefaultTimeFilterRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultTimeFilter";
     option (google.api.http).body = "*";
   }
   // sets the dashboard that is shown by default for neo
-  rpc SetDefaultDashboard(SetDefaultDashboardReq)
-      returns (SetDefaultDashboardRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/SetDefaultDashboard";
+  rpc SetDefaultDashboard(SetDefaultDashboardReq) returns (SetDefaultDashboardRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultDashboard";
     option (google.api.http).body = "*";
   }
 
@@ -61,8 +54,7 @@ service Ana {
 
   // gets account details using the org_id provided
   rpc GetSpecifiedAccount(GetSpecifiedAccountReq) returns (AnaAccount) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetSpecifiedAccount";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetSpecifiedAccount";
     option (google.api.http).body = "*";
   }
 
@@ -111,18 +103,14 @@ service Ana {
   }
 
   // enable custom report usage for the client
-  rpc EnableCustomReports(SetCustomReportsEnabledReq)
-      returns (SetCustomReportsEnabledRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/EnableCustomReports";
+  rpc EnableCustomReports(SetCustomReportsEnabledReq) returns (SetCustomReportsEnabledRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/EnableCustomReports";
     option (google.api.http).body = "*";
   }
 
   // disable custom report usage for the client
-  rpc DisableCustomReports(SetCustomReportsEnabledReq)
-      returns (SetCustomReportsEnabledRes) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/DisableCustomReports";
+  rpc DisableCustomReports(SetCustomReportsEnabledReq) returns (SetCustomReportsEnabledRes) {
+    option (google.api.http).post = "/api/v0alpha/ana/admin/DisableCustomReports";
     option (google.api.http).body = "*";
   }
 
@@ -139,23 +127,20 @@ service Ana {
   }
 
   // allow the parent to view the data of the adoptable child
-  rpc AdoptAnaAccount(SetAnaAccountRelationReq)
-      returns (SetAnaAccountRelationRes) {
+  rpc AdoptAnaAccount(SetAnaAccountRelationReq) returns (SetAnaAccountRelationRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/AdoptAnaAccount";
     option (google.api.http).body = "*";
   }
 
   // disallow the parent from viewing the data of the child
-  rpc DisownAnaAccount(SetAnaAccountRelationReq)
-      returns (SetAnaAccountRelationRes) {
+  rpc DisownAnaAccount(SetAnaAccountRelationReq) returns (SetAnaAccountRelationRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/DisownAnaAccount";
     option (google.api.http).body = "*";
   }
 
   // gets all clients that can be viewed by the client including the client
   rpc GetAccessibleClients(GetAccessibleClientsReq) returns (SimpleRelations) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetAccessibleClients";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetAccessibleClients";
     option (google.api.http).body = "*";
   }
 
@@ -169,31 +154,27 @@ service Ana {
   // gets the client's data visibility as defined in the database (source of
   // truth); internal use only
   rpc GetAllowedDataVisibility(GetVisibilityReq) returns (DataVisibility) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetAllowedDataVisibility";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetAllowedDataVisibility";
     option (google.api.http).body = "*";
   }
 
   // gets the client's data visibility as is evident from the elasticsearch
   // indices structure; internal use only
   rpc GetCurrentDataVisibility(GetVisibilityReq) returns (DataVisibility) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetCurrentDataVisibility";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetCurrentDataVisibility";
     option (google.api.http).body = "*";
   }
 
   // gets a visibility summary from the perspective of the elasticsearch
   // indices; internal use only
   rpc GetIndicesVisibility(GetVisibilityReq) returns (IndicesVisibility) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetIndicesVisibility";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetIndicesVisibility";
     option (google.api.http).body = "*";
   }
   // gets the client's data visibility as exists in the elasticsearch data;
   // internal use only
   rpc GetAuditableDataVisibility(GetVisibilityReq) returns (DataVisibility) {
-    option (google.api.http).post =
-        "/api/v0alpha/ana/admin/GetAuditableDataVisibility";
+    option (google.api.http).post = "/api/v0alpha/ana/admin/GetAuditableDataVisibility";
     option (google.api.http).body = "*";
   }
 
@@ -208,7 +189,6 @@ service Ana {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GenerateVizDataById";
     option (google.api.http).body = "*";
   }
-
 
   // Census
 
@@ -240,7 +220,6 @@ service Ana {
   }
 }
 
-
 // Admin messages
 message SetWeeksReq {
   reserved 1;
@@ -251,15 +230,21 @@ message SetWeeksReq {
 
 message SetWeeksRes {}
 
-message SetHomeDashboardReq { string home_dashboard = 3; }
+message SetHomeDashboardReq {
+  string home_dashboard = 3;
+}
 
 message SetHomeDashboardRes {}
 
-message SetDefaultTimeFilterReq { string default_time_filter = 3; }
+message SetDefaultTimeFilterReq {
+  string default_time_filter = 3;
+}
 
 message SetDefaultTimeFilterRes {}
 
-message SetDefaultDashboardReq { string dashboard_id = 3; }
+message SetDefaultDashboardReq {
+  string dashboard_id = 3;
+}
 
 message SetDefaultDashboardRes {}
 
@@ -315,7 +300,9 @@ message AccountDataVisibility {
   repeated View views = 2;
 }
 
-message DataVisibility { repeated AccountDataVisibility visibilities = 1; }
+message DataVisibility {
+  repeated AccountDataVisibility visibilities = 1;
+}
 
 message IndexVisibility {
   int64 client_sid = 1;
@@ -324,7 +311,9 @@ message IndexVisibility {
   repeated int64 viewers = 4;
 }
 
-message IndicesVisibility { repeated IndexVisibility visibilities = 1; }
+message IndicesVisibility {
+  repeated IndexVisibility visibilities = 1;
+}
 
 // Visualization and Dashboard legacy
 
@@ -339,15 +328,19 @@ message GenerateVizDataByIdReq {
   repeated string included_org_ids = 7;
 }
 
-message GenerateVizDataByIdRes { string json_string = 1; }
+message GenerateVizDataByIdRes {
+  string json_string = 1;
+}
 
 message GetDashboardsReq {}
 
-message GetSpecifiedVisualizationsReq{
+message GetSpecifiedVisualizationsReq {
   string org_id = 1;
 }
 
-message Visualizations { repeated Visualization visualizations = 1; }
+message Visualizations {
+  repeated Visualization visualizations = 1;
+}
 message Visualization {
   string id = 1;
   string title = 2;
@@ -358,7 +351,9 @@ message TimeFilter {
   Absolute absolute = 2;
   Quick quick = 3;
 }
-message Quick { string label = 1; }
+message Quick {
+  string label = 1;
+}
 
 message Relative {
   int64 to_quantity_time = 1;
@@ -374,7 +369,9 @@ message Absolute {
   google.protobuf.Timestamp from = 2;
 }
 
-message DeleteDashboardReq { string dashboard_id = 1; }
+message DeleteDashboardReq {
+  string dashboard_id = 1;
+}
 
 message DeleteDashboardRes {}
 
@@ -386,7 +383,9 @@ message DashboardHistoryEntry {
   google.protobuf.Timestamp create_time = 5;
 }
 
-message GetDashboardHistoryReq { string dashboard_id = 1; }
+message GetDashboardHistoryReq {
+  string dashboard_id = 1;
+}
 
 message GetDashboardHistoryRes {
   repeated DashboardHistoryEntry dashboard_history_entries = 1;
@@ -396,12 +395,15 @@ message GetVisibilityReq {}
 
 message GetTimeZoneReq {}
 
-message SetTimeZoneReq { commons.AnaTimeZone ana_time_zone = 2; }
+message SetTimeZoneReq {
+  commons.AnaTimeZone ana_time_zone = 2;
+}
 
 message SetTimeZoneRes {}
 
-message TimeZone { commons.AnaTimeZone ana_time_zone = 1; }
-
+message TimeZone {
+  commons.AnaTimeZone ana_time_zone = 1;
+}
 
 message CopyChartsAndDashboardsRes {
   repeated CopyChartsAndDashboardsConflict conflicts = 1;
@@ -425,9 +427,11 @@ message CopyDashVizConflict {
   string title = 2;
 }
 
-message CopyDashVizRes { repeated CopyDashVizConflict conflicts = 1; }
+message CopyDashVizRes {
+  repeated CopyDashVizConflict conflicts = 1;
+}
 
-message GetSpecifiedBillingSummaryReq{
+message GetSpecifiedBillingSummaryReq {
   reserved 1;
   google.protobuf.Timestamp ts = 2; // nil Timestamp is treated as current time
   string org_id = 3;
@@ -488,7 +492,9 @@ message MultiClientSummary {
   bool pro_status = 4;
 }
 
-message Relations { repeated Relation relations = 1; }
+message Relations {
+  repeated Relation relations = 1;
+}
 
 message Relation {
   int64 client_sid = 1;
@@ -547,7 +553,9 @@ message ActiveWatchersSummary {
   bool pro_status = 4;
 }
 
-message SimpleRelations { repeated SimpleRelation simple_relations = 1; }
+message SimpleRelations {
+  repeated SimpleRelation simple_relations = 1;
+}
 
 message SimpleRelation {
   reserved 1;
@@ -622,7 +630,9 @@ message NewDatapoint {
     string append = 3;
   }
 
-  message Bool { commons.NonNumericAggregation aggregation = 1; }
+  message Bool {
+    commons.NonNumericAggregation aggregation = 1;
+  }
 
   message Date {
     commons.NumericAggregation aggregation = 1;
@@ -631,15 +641,23 @@ message NewDatapoint {
   }
 }
 
-message GetDatapointReq { string uuid = 1; }
+message GetDatapointReq {
+  string uuid = 1;
+}
 
-message GetDatapointResp { NewDatapoint datapoint = 1; }
+message GetDatapointResp {
+  NewDatapoint datapoint = 1;
+}
 
-message CreateDatapointReq { NewDatapoint datapoint = 1; }
+message CreateDatapointReq {
+  NewDatapoint datapoint = 1;
+}
 
 message CreateDatapointResp {}
 
-message DeleteDatapointReq { string uuid = 1; }
+message DeleteDatapointReq {
+  string uuid = 1;
+}
 
 message DeleteDatapointResp {}
 
@@ -657,14 +675,18 @@ message Filter {
   repeated string org_ids = 6;
 }
 
-message GetFiltersReq { commons.Tag tag = 1; }
+message GetFiltersReq {
+  commons.Tag tag = 1;
+}
 
 message NewFilter {
   string uuid = 1;
   string label = 2;
 }
 
-message GetFiltersResp { repeated NewFilter filters = 1; }
+message GetFiltersResp {
+  repeated NewFilter filters = 1;
+}
 
 message CreateFilterReq {
   oneof creation_type {
@@ -755,9 +777,13 @@ message Warning {
   }
 }
 
-message MissingFields { repeated string fields = 1; }
+message MissingFields {
+  repeated string fields = 1;
+}
 
-message MissingLocations { repeated MissingLocation fields = 1; }
+message MissingLocations {
+  repeated MissingLocation fields = 1;
+}
 
 message MissingLocation {
   string datapoint_id = 1;
@@ -793,7 +819,9 @@ message Value {
 //   Filter filter = 4;
 // }
 
-message GetDataTimeIncrementResp { repeated TimeIncrement time_increments = 1; }
+message GetDataTimeIncrementResp {
+  repeated TimeIncrement time_increments = 1;
+}
 
 message TimeIncrement {
   google.protobuf.Timestamp time = 1;
@@ -804,7 +832,9 @@ message TimeIncrement {
 
 // Charts
 
-message Charts { repeated Chart charts = 1; }
+message Charts {
+  repeated Chart charts = 1;
+}
 
 message Chart {
   string chart_id = 1;
@@ -948,7 +978,9 @@ message TimeHistogramChart {
   Threshold threshold = 3;
 }
 
-message InfoPanelChart { repeated InfoPanelDataValue data_values = 1; }
+message InfoPanelChart {
+  repeated InfoPanelDataValue data_values = 1;
+}
 
 message InfoPanelDataValue {
   string data_point_id = 1;
@@ -967,7 +999,9 @@ message TreeTableDataValue {
   string label = 2;
 }
 
-message TreeTableGroupingValue { string grouping_data_point_id = 1; }
+message TreeTableGroupingValue {
+  string grouping_data_point_id = 1;
+}
 
 message RankedListChart {
   string field_data_point_id = 1;
@@ -1018,9 +1052,13 @@ message TableDataValue {
   string label = 2;
 }
 
-message TableGroupingValue { string grouping_data_point_id = 1; }
+message TableGroupingValue {
+  string grouping_data_point_id = 1;
+}
 
-message TableOrderByValue { string order_by = 1; }
+message TableOrderByValue {
+  string order_by = 1;
+}
 
 message BubbleChart {
   string grouping_data_point_id = 1;
@@ -1040,7 +1078,9 @@ message PackedBubbleChart {
   commons.PackedBubbleChoice packed_choice = 4;
 }
 
-message PackedBubbleGroupingValue { string grouping_data_point_id = 1; }
+message PackedBubbleGroupingValue {
+  string grouping_data_point_id = 1;
+}
 
 message SunburstChart {
   string field_data_point_id = 1;
@@ -1048,7 +1088,9 @@ message SunburstChart {
   string center_label = 3;
 }
 
-message SunburstGroupingValue { string grouping_data_point_id = 1; }
+message SunburstGroupingValue {
+  string grouping_data_point_id = 1;
+}
 
 message CreateChartReq {
   string title = 1;
@@ -1056,11 +1098,17 @@ message CreateChartReq {
   commons.ChartDisplayLabels display_labels = 3;
 }
 
-message CreateChartRes { string chart_id = 1; }
+message CreateChartRes {
+  string chart_id = 1;
+}
 
-message GetChartReq { string chart_id = 1; }
+message GetChartReq {
+  string chart_id = 1;
+}
 
-message DeleteChartReq { string chart_id = 1; }
+message DeleteChartReq {
+  string chart_id = 1;
+}
 
 message DeleteChartRes {}
 
@@ -1094,7 +1142,9 @@ message DashPageChart {
 
 message GetAccessibleDashPagesReq {}
 
-message GetAccessibleDashPagesRes { repeated DashPage dash_pages = 1; }
+message GetAccessibleDashPagesRes {
+  repeated DashPage dash_pages = 1;
+}
 
 // Recommendation messages
 
@@ -1134,11 +1184,17 @@ message RecommendedDashPageReq {
   }
 }
 
-message RecommendedDashboardReq { string dashboard_id = 1; }
+message RecommendedDashboardReq {
+  string dashboard_id = 1;
+}
 
-message RecommendedVisualizationLegacyReq { string visualization_id = 1; }
+message RecommendedVisualizationLegacyReq {
+  string visualization_id = 1;
+}
 
-message RecommendedChartReq { string chart_id = 1; }
+message RecommendedChartReq {
+  string chart_id = 1;
+}
 
 message GetRecommendedDashPagesHomeReq {}
 
@@ -1160,14 +1216,15 @@ message DashPageSelectEventRes {}
 
 message VisualizationEventRes {}
 
-
 message GetRecommendedTimeFiltersReq {
   string dash_page_id = 1;
   RecommendedDashPageReq dash_page_type = 2;
   string current_filter = 3;
 }
 
-message GetRecommendedTimeFiltersRes { repeated string filters = 1; }
+message GetRecommendedTimeFiltersRes {
+  repeated string filters = 1;
+}
 
 message TimeFilterEventReq {
   commons.TimeFilterType time_filter_type = 1;
@@ -1202,7 +1259,9 @@ message EndOfDaySchedule {}
 
 message ExportOptions {
   bool zip = 1;
-  oneof export_type { CsvOptions csv_options = 2; }
+  oneof export_type {
+    CsvOptions csv_options = 2;
+  }
 }
 
 message CsvOptions {
@@ -1235,7 +1294,9 @@ message SftpDelivery {
   string path = 12;
 }
 
-message EmailDelivery { repeated string addresses = 1; }
+message EmailDelivery {
+  repeated string addresses = 1;
+}
 
 message DataSelection {
   oneof data_selection_type {
@@ -1266,17 +1327,25 @@ message CreateExportJobReq {
   ExportSchedule export_schedule = 7;
 }
 
-message CreateExportJobRes { string export_job_id = 1; }
+message CreateExportJobRes {
+  string export_job_id = 1;
+}
 
 message GetExportJobsReq {}
 
-message GetExportJobsRes { repeated ExportJob export_jobs = 1; }
+message GetExportJobsRes {
+  repeated ExportJob export_jobs = 1;
+}
 
-message SendExportReq { string export_job_id = 1; }
+message SendExportReq {
+  string export_job_id = 1;
+}
 
 message SendExportRes {}
 
-message DeleteExportJobReq { string export_job_id = 1; }
+message DeleteExportJobReq {
+  string export_job_id = 1;
+}
 
 message DeleteExportJobRes {}
 
@@ -1305,7 +1374,9 @@ message Export {
   commons.ExportStatus status = 4;
 }
 
-message DownloadExportReq { string export_id = 2; }
+message DownloadExportReq {
+  string export_id = 2;
+}
 
 message DownloadExportRes {}
 

@@ -2,94 +2,92 @@ syntax = "proto3";
 
 package v1alpha1.room303;
 
-option java_package="com.tcn.api.v1alpha1.room303";
-option go_package="github.com/tcncloud/api/v1alpha1.room303;room303";
-
-
-
 import "commons/room303.proto";
 import "google/protobuf/timestamp.proto";
 
-message CreateMessageRequest{
-    string room_id = 1;
-    string payload = 2;
-    // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
-    // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
-    string nonce   = 3;
+option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
+option java_package = "com.tcn.api.v1alpha1.room303";
+
+message CreateMessageRequest {
+  string room_id = 1;
+  string payload = 2;
+  // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
+  // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
+  string nonce = 3;
 }
 
-message CreateMessageResponse{
-    commons.Message message = 1;
+message CreateMessageResponse {
+  commons.Message message = 1;
 }
 
-message EditMessageRequest{
-    string message_id = 1;
-    string payload    = 2;
-    string room_id    = 3;
-    // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
-    // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
-    string nonce     = 4;
+message EditMessageRequest {
+  string message_id = 1;
+  string payload = 2;
+  string room_id = 3;
+  // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
+  // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
+  string nonce = 4;
 }
 
-message EditMessageResponse{
-    commons.Message message = 1;
+message EditMessageResponse {
+  commons.Message message = 1;
 }
 
-message GetMessagesRequest{
-    reserved                            1;
-    string room_id                    = 2;
-    google.protobuf.Timestamp offset  = 3;
+message GetMessagesRequest {
+  reserved 1;
+  string room_id = 2;
+  google.protobuf.Timestamp offset = 3;
 }
 
-message GetMessagesResponse{
-    repeated commons.Message messages = 1;
+message GetMessagesResponse {
+  repeated commons.Message messages = 1;
 }
 
-message StreamMessageUpdatesRequest{
-    string room_id = 1;
-    string member_id = 2;
+message StreamMessageUpdatesRequest {
+  string room_id = 1;
+  string member_id = 2;
 }
-message StreamMessageUpdatesResponse{
-    commons.Message message = 1;
-}
-
-message MarkMessageReadRequest{
-    string message_id = 1;
-    string member_id = 2;
+message StreamMessageUpdatesResponse {
+  commons.Message message = 1;
 }
 
-message MarkMessageReadResponse{}
+message MarkMessageReadRequest {
+  string message_id = 1;
+  string member_id = 2;
+}
 
-message MarkAllMessagesReadRequest{
-    string room_id = 1;
+message MarkMessageReadResponse {}
+
+message MarkAllMessagesReadRequest {
+  string room_id = 1;
 }
 
 message MarkAllMessagesReadResponse {
-    repeated commons.Message rows_updated = 1;
+  repeated commons.Message rows_updated = 1;
 }
 
-message GetUnreadStatsRequest{}
-message GetUnreadStatsResponse{
-    repeated commons.MessageStat stats = 1;
+message GetUnreadStatsRequest {}
+message GetUnreadStatsResponse {
+  repeated commons.MessageStat stats = 1;
 }
 
-message DeleteMessageRequest{
-    string message_id = 1;
-    string room_id    = 2;
-    // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
-    // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
-    string nonce      = 3;
+message DeleteMessageRequest {
+  string message_id = 1;
+  string room_id = 2;
+  // nonce  is set by UI and used to tell if the message coming through the message update stream was created by that client.
+  // this is so when the user is logged in on multiple clients (different device, tabs, browser) they can see their updated message on those clients.
+  string nonce = 3;
 }
 
-message DeleteMessageResponse{
-    commons.Message message = 1;
+message DeleteMessageResponse {
+  commons.Message message = 1;
 }
 
-message BulkMarkMessageReadRequest{
-    string room_id               = 1;
-    repeated string message_ids  = 2;
+message BulkMarkMessageReadRequest {
+  string room_id = 1;
+  repeated string message_ids = 2;
 }
 
-message BulkMarkMessageReadResponse{
-    repeated commons.Message messages = 1;
+message BulkMarkMessageReadResponse {
+  repeated commons.Message messages = 1;
 }

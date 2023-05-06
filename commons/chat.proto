@@ -2,12 +2,10 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
 import "commons/org.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum ChatMessageSenderType {
   CHAT_MESSAGE_SENDER_TYPE_AGENT = 0;
@@ -18,9 +16,9 @@ enum ChatMessageSenderType {
 // The status for a chat campaign
 enum ChatCampaignStatus {
   CHAT_CAMPAIGN_UNKNOWN = 0;
-  CHAT_CAMPAIGN_RUNNING = 15010;  //Chat campaign started running
-  CHAT_CAMPAIGN_STOPPED = 15050;  //Chat campaign has been executed
-  CHAT_CAMPAIGN_ARCHIVED = 15060;  //Chat campaign has been archived
+  CHAT_CAMPAIGN_RUNNING = 15010; //Chat campaign started running
+  CHAT_CAMPAIGN_STOPPED = 15050; //Chat campaign has been executed
+  CHAT_CAMPAIGN_ARCHIVED = 15060; //Chat campaign has been archived
   CHAT_CAMPAIGN_PAUSED = 15070; //Chat campaign has been paused
 }
 

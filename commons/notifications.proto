@@ -2,28 +2,26 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 // FieldValueFilter resents a field mask and value to match on.
 // For now we are only supporting string matching.
 message FieldValueFilter {
-	// key is a valid field mask
-	string key = 1;
+  // key is a valid field mask
+  string key = 1;
 
-	// value is the stringified value at the field mask
-	string value = 2;
+  // value is the stringified value at the field mask
+  string value = 2;
 }
 
 message NotificationType {
-	enum Enum {
-		INVALID = 0;
-		EMAIL = 1;
-		SERVER_PUSH = 2;
-		IOS = 3;
-		ANDROID = 4;
-		SMS = 5;
-	}
+  enum Enum {
+    INVALID = 0;
+    EMAIL = 1;
+    SERVER_PUSH = 2;
+    IOS = 3;
+    ANDROID = 4;
+    SMS = 5;
+  }
 }

@@ -2,15 +2,12 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
 import "annotations/perms/license.proto";
 import "commons/auth/perms.proto";
 import "commons/perms.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // PermiissionGroup defines the permission group entity.
 message PermissionGroup {

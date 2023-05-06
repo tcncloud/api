@@ -2,19 +2,16 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 // REMOVE IF I FORGET
 message DLFSDef {
-    int64 vfs_id = 1;
-    bool incremental = 10;
-    // More to come I'm sure
+  int64 vfs_id = 1;
+  bool incremental = 10;
+  // More to come I'm sure
 }
 
 message DLFSDefs {
-    repeated DLFSDef defs = 1;
+  repeated DLFSDef defs = 1;
 }

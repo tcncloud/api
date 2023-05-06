@@ -2,16 +2,13 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/country.proto";
 import "commons/org.proto";
 import "commons/org/organization.proto";
-
 import "google/protobuf/timestamp.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // CreateOrganizationRequest request for creating a new organization.
 message CreateOrganizationRequest {
@@ -40,8 +37,7 @@ message CreateOrganizationResponse {
 }
 
 // GetOrganizationRequest request to get users organization
-message GetOrganizationRequest {
-}
+message GetOrganizationRequest {}
 
 // GetOrganizationResponse a single organization
 message GetOrganizationResponse {
@@ -97,13 +93,11 @@ message ConvertOrgToManualRequest {
 }
 
 // ConvertOrgToManualRequest response for converting an organization to manual.
-message ConvertOrgToManualResponse {
-}
+message ConvertOrgToManualResponse {}
 
 // ListOwnedOrgsRequest request for listing p3 owned orgs for a specific org id.
 // Org id is that of the calling user.
-message ListOwnedOrgsRequest {
-}
+message ListOwnedOrgsRequest {}
 
 // ListOwnedOrgsRequest response listing orgs owned by the requested org id.
 message ListOwnedOrgsResponse {
@@ -157,8 +151,7 @@ message UnArchiveOrganizationRequest {
 message UnArchiveOrganizationResponse {}
 
 // ListOrganizationsGloballyRequest request to list all organizations globally - gets archived and unarchived
-message ListAllOrganizationsGloballyRequest {
-}
+message ListAllOrganizationsGloballyRequest {}
 
 // Response for the ListAllOrganizationsGlobally RPC, returning all organizations globally - gets archived and unarchived
 message ListAllOrganizationsGloballyResponse {
@@ -231,8 +224,7 @@ message ListOrganizationsByRegionResponse {
 }
 
 // Request for the ListArchivedOrganizations RPC, returning archived organizations in the current region.
-message ListArchivedOrganizationsRequest {
-}
+message ListArchivedOrganizationsRequest {}
 
 // Response for the ListArchivedOrganizations RPC, returning archived organizations in the current region.
 message ListArchivedOrganizationsResponse {

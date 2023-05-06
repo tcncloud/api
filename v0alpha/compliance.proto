@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/empty.proto";
-import "google/protobuf/wrappers.proto";
-import "google/longrunning/operations.proto";
+import "commons/acd.proto";
 import "commons/communication.proto";
 import "commons/compliance.proto";
-import "commons/acd.proto";
 import "commons/enums.proto";
+import "google/api/annotations.proto";
+import "google/longrunning/operations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service Compliance {
   rpc RuleAutoComplete(RuleAutoCompleteReq) returns (RuleAutoCompleteRes) {
@@ -146,7 +143,7 @@ service Compliance {
   rpc GetScenario(GetScenarioReq) returns (GetScenarioRes) {
     option (google.api.http).get = "/api/v0alpha/compliance/getscenario";
   }
-	// Updates a Scenario
+  // Updates a Scenario
   rpc UpdateScenario(UpdateScenarioReq) returns (UpdateScenarioRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/updatescenario";
     option (google.api.http).body = "*";
@@ -160,47 +157,47 @@ service Compliance {
   rpc RunAssignedScenarios(RunAssignedScenariosReq) returns (RunAssignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/runassignedscenarios";
     option (google.api.http).body = "*";
-  };
+  }
   // Lists all scenarios
   rpc ListAllScenarios(ListAllScenariosReq) returns (ListAllScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listallscenarios";
     option (google.api.http).body = "*";
   }
   // List currently unassigned scenarios available to be assigned to a given ruleset
-	rpc ListUnassignedScenarios(ListUnassignedScenariosReq) returns (ListUnassignedScenariosRes) {
+  rpc ListUnassignedScenarios(ListUnassignedScenariosReq) returns (ListUnassignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listunassignedscenarios";
     option (google.api.http).body = "*";
-  };
+  }
   // List rule sets currently assigned to a given scenario
   rpc ListAssignedRuleSets(ListAssignedRuleSetsReq) returns (ListAssignedRuleSetsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listassignedrulesets";
     option (google.api.http).body = "*";
-  };
-	// List scenarios currently assigned to a given ruleset
+  }
+  // List scenarios currently assigned to a given ruleset
   rpc ListAssignedScenarios(ListAssignedScenariosReq) returns (ListAssignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listassignedscenarios";
     option (google.api.http).body = "*";
-  };
-	// Assign a scenario to a given ruleset
-	rpc AssignScenario(AssignScenarioReq) returns (google.protobuf.Empty) {
+  }
+  // Assign a scenario to a given ruleset
+  rpc AssignScenario(AssignScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/assignscenario";
     option (google.api.http).body = "*";
-  };
-	// Unassign a scenario from a given ruleset
-	rpc UnassignScenario(UnassignScenarioReq) returns (google.protobuf.Empty) {
+  }
+  // Unassign a scenario from a given ruleset
+  rpc UnassignScenario(UnassignScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/unassignscenario";
     option (google.api.http).body = "*";
-  };
-	// Enable an scenario
-	rpc EnableScenario(EnableScenarioReq) returns (google.protobuf.Empty) {
+  }
+  // Enable an scenario
+  rpc EnableScenario(EnableScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/enablescenario";
     option (google.api.http).body = "*";
-  };
-	// Disable an scenario
-	rpc DisableScenario(DisableScenarioReq) returns (google.protobuf.Empty) {
+  }
+  // Disable an scenario
+  rpc DisableScenario(DisableScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/disablescenario";
     option (google.api.http).body = "*";
-  };
+  }
 
   // Frequency data calls
   // This will get all available Meta Fields
@@ -455,7 +452,7 @@ service Compliance {
 }
 
 // request used to process an outbound call against a rule set
-message ProcessOutboundCallReq{
+message ProcessOutboundCallReq {
   // The name of the rule set to use for processing
   string rule_set_name = 1;
   // The country code of the phone number
@@ -482,7 +479,7 @@ message RuleResponse {
 }
 
 // response given after processing something against a rule set
-message ProcessRes{
+message ProcessRes {
   // indicates if the process request was permitted or not
   bool permit = 1;
   // the list of rules checked against
@@ -636,7 +633,6 @@ message GetRuleSetReq {
 message GetRuleSetByNameReq {
   string name = 3;
 }
-
 
 message AssignRuleSetReq {
   commons.CommType comm_type = 1;
@@ -854,7 +850,7 @@ message Scenario {
 message ScenarioData {
   commons.CommType comm_type = 1;
   string phone_number = 2;
-  string country_code = 3 [deprecated=true];
+  string country_code = 3 [deprecated = true];
   string email = 4;
   map<string, string> call_metadata = 5;
   google.protobuf.Timestamp time_of_call = 6;
@@ -969,7 +965,7 @@ message CreateConsentProfileReq {
   string profile_name = 10;
   bool disabled = 11;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 12 [ deprecated = true ];
+  commons.CommType channel = 12 [deprecated = true];
 
   // auditing
   string created_by = 50;
@@ -992,7 +988,7 @@ message CreateConsentReq {
   google.protobuf.Timestamp expire = 12;
   string referring_url = 13;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [ deprecated = true ];
+  commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -1027,7 +1023,7 @@ message ConsentProfile {
   bool disabled = 11;
   repeated Consent consents = 12;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [ deprecated = true ];
+  commons.CommType channel = 13 [deprecated = true];
 
   // auditing
   google.protobuf.Timestamp created_on = 50;
@@ -1050,7 +1046,7 @@ message Consent {
   google.protobuf.Timestamp expire = 13;
   string referring_url = 14;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [ deprecated = true ];
+  commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -1060,11 +1056,11 @@ message Consent {
   // proof of consent (pdf, voice recording etc) this will be filename which can be retrieved via matrix-fts
   string proof = 19;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 20 [ deprecated = true ];
-  string condition_time_of_day_from = 21 [ deprecated = true ];
-  string condition_time_of_day_to = 22 [ deprecated = true ];
-  google.protobuf.Timestamp condition_from = 23 [ deprecated = true ];
-  google.protobuf.Timestamp condition_to = 24 [ deprecated = true ];
+  repeated commons.Weekday.Enum condition_days_of_the_week = 20 [deprecated = true];
+  string condition_time_of_day_from = 21 [deprecated = true];
+  string condition_time_of_day_to = 22 [deprecated = true];
+  google.protobuf.Timestamp condition_from = 23 [deprecated = true];
+  google.protobuf.Timestamp condition_to = 24 [deprecated = true];
   string notes = 25;
   // Consent Conditions
   repeated ConsentCondition conditions = 26;
@@ -1093,7 +1089,6 @@ message ConsentCondition {
   google.protobuf.Timestamp to_date = 14;
 }
 
-
 message GetConsentProfileReq {
   string consent_profile_id = 1;
 }
@@ -1109,7 +1104,7 @@ message UpdateConsentReq {
   google.protobuf.Timestamp expire = 13;
   string referring_url = 14;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [ deprecated = true ];
+  commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -1163,7 +1158,7 @@ message ListConsentProfile {
   int64 count = 3;
   bool disabled = 4;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 5 [ deprecated = true ];
+  commons.CommType channel = 5 [deprecated = true];
 }
 
 message ListConsentProfilesRes {
@@ -1197,7 +1192,7 @@ message GetFieldNamesReq {
 }
 
 message FieldNames {
- repeated string names = 1;
+  repeated string names = 1;
 }
 
 message GetResultDescriptionsReq {}
@@ -1252,7 +1247,7 @@ message ConsentByContent {
   bool disabled = 12;
 
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [ deprecated = true ];
+  commons.CommType channel = 13 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 14;
   // consent conditions
@@ -1292,7 +1287,7 @@ message GetConsentByProfileAndContentRes {
   bool disabled = 12;
 
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [ deprecated = true ];
+  commons.CommType channel = 13 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 14;
   // consent conditions

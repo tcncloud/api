@@ -2,11 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum SMSStatus {
   SMS_UNKWNON = 0;
@@ -21,25 +18,25 @@ enum SMSStatus {
   SMS_SUMMED_CANCELLED = 7410; //"SMS_SUMMED_CANCELLED", "Sms group has been cancelled and is summed"),
   SMS_SUMMED_CANCELLED_ADMIN = 7420; //"SMS_SUMMED_CANCELLED_ADMIN", "Sms group has been cancelled by the admin and is summed"),
   SMS_PAUSED = 7500; // "SMS_PAUSED", "Sms group has been signaled to pause until further notice"),
-  SMS_TASK_WAITING=7600; // "SMS_TASK_WAITIN";//"SMS Task is ready to be sent"),
-  SMS_TASK_PROCESSING=7700; //"SMS_TASK_PROCESSING";//"SMS Task is sent to gateway "),
-  SMS_TASK_DNC=7710; //"SMS_TASK_DNC";//"SMS Task is DNC "),
-  SMS_TASK_INVALID=7720; //"SMS_TASK_INVALID";//"SMS Task is invalid "),
-  SMS_TASK_QUEUED=7800; //"SMS_TASK_QUEUED";//"SMS Task status received as Queued from provider "),
-  SMS_TASK_SENT=7900; //"SMS_TASK_SENT";//"SMS Task status received as Sent from provider"),
-  SMS_TASK_DELIVERED=7910;//"SMS_TASK_DELIVERED", "SMS Task status received as delivered from provider"),
-  SMS_TASK_NOT_DELIVERED=7920;//"SMS_TASK_NOT_DELIVERED", "SMS Task is not delivered by provider"),
-  SMS_TASK_CANCELED=7930;//"SMS_TASK_CANCELED", "SMS Task is canceled by user/admin");
+  SMS_TASK_WAITING = 7600; // "SMS_TASK_WAITIN";//"SMS Task is ready to be sent"),
+  SMS_TASK_PROCESSING = 7700; //"SMS_TASK_PROCESSING";//"SMS Task is sent to gateway "),
+  SMS_TASK_DNC = 7710; //"SMS_TASK_DNC";//"SMS Task is DNC "),
+  SMS_TASK_INVALID = 7720; //"SMS_TASK_INVALID";//"SMS Task is invalid "),
+  SMS_TASK_QUEUED = 7800; //"SMS_TASK_QUEUED";//"SMS Task status received as Queued from provider "),
+  SMS_TASK_SENT = 7900; //"SMS_TASK_SENT";//"SMS Task status received as Sent from provider"),
+  SMS_TASK_DELIVERED = 7910; //"SMS_TASK_DELIVERED", "SMS Task status received as delivered from provider"),
+  SMS_TASK_NOT_DELIVERED = 7920; //"SMS_TASK_NOT_DELIVERED", "SMS Task is not delivered by provider"),
+  SMS_TASK_CANCELED = 7930; //"SMS_TASK_CANCELED", "SMS Task is canceled by user/admin");
 }
 
 enum SMSIBGroupStatus {
   IB_SMS_GROUP_UNKNOWN = 0;
-  IB_SMS_GROUP_PREPARING = 11000;  //Inbound Sms Group is being prepared for scheduler
-  IB_SMS_GROUP_SCHEDULED = 11010;  //Inbound Sms Group is waiting for scheduler
-  IB_SMS_GROUP_RUNNING = 11020;  //Inbound Sms group is currently being executed
-  IB_SMS_GROUP_PAUSED = 11030;  //Inbound Sms group has been signaled to pause calls until further notice
-  IB_SMS_GROUP_RESUME = 11040;  //Inbound Sms group is ready to restart after being paused
-  IB_SMS_GROUP_COMPLETED = 11050;  //Inbound Sms group has been executed
+  IB_SMS_GROUP_PREPARING = 11000; //Inbound Sms Group is being prepared for scheduler
+  IB_SMS_GROUP_SCHEDULED = 11010; //Inbound Sms Group is waiting for scheduler
+  IB_SMS_GROUP_RUNNING = 11020; //Inbound Sms group is currently being executed
+  IB_SMS_GROUP_PAUSED = 11030; //Inbound Sms group has been signaled to pause calls until further notice
+  IB_SMS_GROUP_RESUME = 11040; //Inbound Sms group is ready to restart after being paused
+  IB_SMS_GROUP_COMPLETED = 11050; //Inbound Sms group has been executed
   IB_SMS_GROUP_CANCELLED_USER = 11060; //Inbound Sms group has been cancelled by user
   IB_SMS_GROUP_CANCELLED_ADMIN = 11070; //Inbound Sms group has been cancelled by admin
   IB_SMS_GROUP_SUMMED_COMPLETED = 11150; //Inbound Sms group has been executed and is summed
@@ -49,7 +46,7 @@ enum SMSIBGroupStatus {
 
 enum SMSIBTaskStatus {
   IB_SMS_TASK_UNKNOWN = 0;
-  IB_SMS_TASK_COMPLETED = 13000;  //Inbound Sms Task is being received successfully
+  IB_SMS_TASK_COMPLETED = 13000; //Inbound Sms Task is being received successfully
 }
 
 enum SMSConversationAuditAction {

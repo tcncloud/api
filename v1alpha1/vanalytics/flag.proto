@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.vanalytics;
 
-option java_package="com.tcn.api.v1alpha1.vanalytics";
-option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-
-
-
+import "google/protobuf/field_mask.proto";
 import "v1alpha1/vanalytics/filter.proto";
 
-import "google/protobuf/field_mask.proto";
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
 
 // CreateFlagRequest is a request for creating a flag.
 message CreateFlagRequest {

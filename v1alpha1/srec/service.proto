@@ -2,16 +2,14 @@ syntax = "proto3";
 
 package v1alpha1.srec;
 
-option java_package="com.tcn.api.v1alpha1.srec";
-option go_package="github.com/tcncloud/api/v1alpha1.srec;srec";
-
-
-
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
+option go_package = "github.com/tcncloud/api/v1alpha1.srec;srec";
+option java_package = "com.tcn.api.v1alpha1.srec";
+
 service Srec {
- // ListScreenRecordings returns screen recordings.
+  // ListScreenRecordings returns screen recordings.
   rpc ListScreenRecordings(ListScreenRecordingsRequest) returns (ListScreenRecordingsResponse) {
     option (google.api.http).post = "/api/v1alpha1/srec/srec/listscreenrecordings";
     option (google.api.http).body = "*";

@@ -2,12 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum EmailResult {
   EMAIL_RESULT_UNKNOWN = 0;
@@ -26,7 +22,7 @@ enum EmailResult {
   EMAIL_TASK_CLICKED = 8950; //, "EMAIL_TASK_CLICKED","Clicked","CLK", "Recipient clicked on a link within the message.");,
   EMAIL_TASK_UNSUBSCRIBED = 8960; // "EMAIL_TASK_UNSUBSCRIBED","Unsubscribed","USB", "Recipient clicked on the 'Opt Out of All Emails' link"),
   EMAIL_TASK_MARKED_AS_SPAM = 8970; // "EMAIL_TASK_MARKED_AS_SPAM","Marked As Spam","SPM", "Recipient marked message as spam.");
-  EMAIL_TASK_BLOCKED=8980;//"EMAIL_TASK_BLOCKED","Recipient marked message as blocked.");
+  EMAIL_TASK_BLOCKED = 8980; //"EMAIL_TASK_BLOCKED","Recipient marked message as blocked.");
 }
 
 enum EmailStatus {
@@ -46,14 +42,14 @@ enum EmailStatus {
 
 enum EmailIBGroupStatus {
   IB_EMAIL_GROUP_UNKNOWN = 0;
-  IB_EMAIL_GROUP_PREPARING = 10000;  //Inbound Email Group is being prepared for scheduler
-  IB_EMAIL_GROUP_SCHEDULED = 10010;  //Inbound Email Group is waiting for scheduler
-  IB_EMAIL_GROUP_RUNNING = 10020;  //Inbound Email group is currently being executed
-  IB_EMAIL_GROUP_PAUSED = 10030;  //Inbound Email group has been signaled to pause calls until further notice
-  IB_EMAIL_GROUP_RESUME = 10040;  //Inbound Email group is ready to restart after being paused
+  IB_EMAIL_GROUP_PREPARING = 10000; //Inbound Email Group is being prepared for scheduler
+  IB_EMAIL_GROUP_SCHEDULED = 10010; //Inbound Email Group is waiting for scheduler
+  IB_EMAIL_GROUP_RUNNING = 10020; //Inbound Email group is currently being executed
+  IB_EMAIL_GROUP_PAUSED = 10030; //Inbound Email group has been signaled to pause calls until further notice
+  IB_EMAIL_GROUP_RESUME = 10040; //Inbound Email group is ready to restart after being paused
   IB_EMAIL_GROUP_RUNNING_WITH_ERROR = 10041; //Inbound Email group running but with errors
   IB_EMAIL_GROUP_ERROR_STANDBY = 10042; //Inbound Email group ris stopped because it hit a consecutive error limit
-  IB_EMAIL_GROUP_COMPLETED = 10050;  //Inbound Email group has been executed
+  IB_EMAIL_GROUP_COMPLETED = 10050; //Inbound Email group has been executed
   IB_EMAIL_GROUP_CANCELLED_USER = 10060; //Inbound Email group has been cancelled by user
   IB_EMAIL_GROUP_CANCELLED_ADMIN = 10070; //Inbound Email group has been cancelled by admin
   IB_EMAIL_GROUP_SUMMED_COMPLETED = 10150; //Inbound Email group has been executed and is summed
@@ -63,10 +59,10 @@ enum EmailIBGroupStatus {
 
 enum EmailIBReplyStatus {
   IB_EMAIL_REPLY_UNKNOWN = 0;
-  IB_EMAIL_REPLY_RECEIVED = 12000;  //Inbound Email reply received successfully
+  IB_EMAIL_REPLY_RECEIVED = 12000; //Inbound Email reply received successfully
   IB_EMAIL_AGENT_REPLY_SENDING = 12010; //Inbound Email while agent sending reply
   IB_EMAIL_AGENT_REPLY_SENDING_FAILED = 12020; //Inbound Email failed while agent sending reply
-  IB_EMAIL_AGENT_REPLY_INVALID = 12030;  //Inbound Email Reply has been flagged for having an invalid destination
+  IB_EMAIL_AGENT_REPLY_INVALID = 12030; //Inbound Email Reply has been flagged for having an invalid destination
   IB_EMAIL_AGENT_REPLY_SENT = 12040; //Inbound Email agent reply queued/sent successfully
   IB_EMAIL_AGENT_REPLY_DELIVERED = 12050; //Inbound Email agent reply delivered successfully
   IB_EMAIL_AGENT_REPLY_DROPPED = 12060; //Inbound Email agent reply dropped with reasons: Invalid SMTPAPI header, Spam Content (if spam checker app enabled), Unsubscribed Address, Bounced Address, Spam Reporting Address, Invalid, Recipient List over Package Quota
@@ -76,9 +72,9 @@ enum EmailIBReplyStatus {
   IB_EMAIL_AGENT_REPLY_CLICKED = 12100; //Inbound Email agent reply "Clicked","CLK", "Recipient clicked on a link within the message.,
   IB_EMAIL_AGENT_REPLY_UNSUBSCRIBED = 12110; //Inbound Email agent reply "Unsubscribed","USB", "Recipient clicked on the 'Opt Out of All Emails' link
   IB_EMAIL_AGENT_REPLY_MARKED_AS_SPAM = 12120; // Inbound Email agent reply "Marked As Spam","SPM", "Recipient marked message as spam.
-  IB_EMAIL_AGENT_REPLY_BLOCKED = 12130;//Inbound Email agent reply recipient marked message as blocked.
-  IB_EMAIL_REPLY_DNC = 12140;  //Inbound Email Reply has been scrubbed because it is on EMAIL DNC list
-  IB_EMAIL_REPLY_CANCELLED = 12150;  //Inbound Email Reply has been cancelled
+  IB_EMAIL_AGENT_REPLY_BLOCKED = 12130; //Inbound Email agent reply recipient marked message as blocked.
+  IB_EMAIL_REPLY_DNC = 12140; //Inbound Email Reply has been scrubbed because it is on EMAIL DNC list
+  IB_EMAIL_REPLY_CANCELLED = 12150; //Inbound Email Reply has been cancelled
 }
 
 enum EmailIBGroupEvent {

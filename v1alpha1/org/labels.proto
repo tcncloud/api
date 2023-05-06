@@ -2,17 +2,15 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/auth/perms.proto";
 import "commons/labels.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Label is an entity message.
 message Label {
-  reserved 4,5;
+  reserved 4, 5;
   // simply the name of the label.
   // 'Team A', 'Medical', etc
   string name = 3;
@@ -35,7 +33,7 @@ message CreateLabelRequest {
 message CreateLabelResponse {
   // The ID of the returned label.
   string label_id = 1;
-};
+}
 
 // Request message for the DeleteLabel rpc.
 message DeleteLabelRequest {
@@ -45,8 +43,7 @@ message DeleteLabelRequest {
 }
 
 // Response message for the DeleteLabel rpc.
-message DeleteLabelResponse {
-}
+message DeleteLabelResponse {}
 
 // Request message for the ListLabels rpc.
 message ListLabelsRequest {
@@ -77,8 +74,7 @@ message UpdateLabelRequest {
 }
 
 // Response message for the UpdateLabel RPC.
-message UpdateLabelResponse {
-}
+message UpdateLabelResponse {}
 
 // Entity message for a label assignment.
 message LabelAssignment {
@@ -104,8 +100,7 @@ message AssignLabelRequest {
 }
 
 // Response message for the AssingLabel RPC.
-message AssignLabelResponse {
-}
+message AssignLabelResponse {}
 
 // Request message for the UnassignLabel RPC.
 message UnassignLabelRequest {
@@ -117,8 +112,7 @@ message UnassignLabelRequest {
 }
 
 // Response message for the UnassingLabel RPC.
-message UnassignLabelResponse {
-}
+message UnassignLabelResponse {}
 
 // Reqeust message for the GetAssignmentCounts RPC.
 message GetAssignmentCountsRequest {

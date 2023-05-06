@@ -2,15 +2,12 @@ syntax = "proto3";
 
 package commons.audit;
 
-option java_package="com.tcn.api.commons.audit";
-option go_package="github.com/tcncloud/api/commons.audit;audit";
-
 import "commons/tickets.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.audit;audit";
+option java_package = "com.tcn.api.commons.audit";
 
 message TicketEvent {
-    commons.EditTicket editticket = 1; // update ticket
-    string created_by_id = 2; 
+  commons.EditTicket editticket = 1; // update ticket
+  string created_by_id = 2;
 }

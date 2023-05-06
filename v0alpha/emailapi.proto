@@ -2,17 +2,14 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
+import "commons/email.proto";
+import "commons/omnichannel.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "commons/email.proto";
-import "commons/omnichannel.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service EmailApi {
   // Create/Record email template details defined by CreateEmailTemplateReq message for a specified
@@ -145,7 +142,6 @@ service EmailApi {
     option (google.api.http).body = "*";
   }
 
-
   // Retreives a list of email replies for a conversation that come after the given
   // timestamp
   // Required permissions:
@@ -267,7 +263,7 @@ service EmailApi {
   // array of inbound_email_group_ids
   // The method will mark the InboundEmail groups as completed.
   // Required permissions: VIEW_EMAIL
-  rpc StopAllInboundEmailGroups(StopAllInboundEmailGroupsReq) returns (StopInboundEmailGroupRes){
+  rpc StopAllInboundEmailGroups(StopAllInboundEmailGroupsReq) returns (StopInboundEmailGroupRes) {
     option (google.api.http).post = "/api/v0alpha/emailapi/stopallinboundemailgroups";
     option (google.api.http).body = "*";
   }
@@ -508,8 +504,8 @@ service EmailApi {
   // Required Permissions:
   //    OMNI_BOSS
   rpc DashboardEmailConversationSearch(DashboardEmailConversationSearchReq) returns (DashboardEmailConversationSearchRes) {
-      option (google.api.http).post = "/api/v0alpha/emailapi/dashboardemailconversationsearch";
-      option (google.api.http).body = "*";
+    option (google.api.http).post = "/api/v0alpha/emailapi/dashboardemailconversationsearch";
+    option (google.api.http).body = "*";
   }
 
   // ReassignEmailConversation.  unassign current user and assign
@@ -552,7 +548,6 @@ service EmailApi {
     option (google.api.http).post = "/api/v0alpha/emailapi/closeemailconversation";
     option (google.api.http).body = "*";
   }
-
 }
 
 message CustomUnsubscribeSettingsReq {}
@@ -719,15 +714,15 @@ message EmailGroupSearchRes {
 }
 
 message GetEmailGroupsByGroupSidsReq {
-	repeated int64 email_group_sids_arr = 2;
+  repeated int64 email_group_sids_arr = 2;
 }
 
 message GetEmailGroupsByGroupSidsRes {
-	repeated EmailGroupSearchDetailsRes email_group_search_details_res = 1;
+  repeated EmailGroupSearchDetailsRes email_group_search_details_res = 1;
 }
 
 message GetEmailGroupByGroupSidReq {
-	int64 email_group_sid = 2;
+  int64 email_group_sid = 2;
 }
 
 message EmailGroupDetailsWithAttachments {
@@ -778,7 +773,7 @@ message EmailGroupDetailsWithAttachments {
 }
 
 message GetEmailGroupByGroupIdReq {
-	string email_group_id = 2;
+  string email_group_id = 2;
 }
 
 message GetEmailTasksByGroupSidsReq {
@@ -790,12 +785,12 @@ message GetEmailTasksByGroupSidsRes {
 }
 
 message EmailTemplateAttachmentDetails {
-	int64 email_template_attachment_sid = 1;
-	int64 email_template_sid = 2;
-	string file_name = 5;
-	int64 file_size = 6;
-	string content_type = 7;
-	string hash = 8;
+  int64 email_template_attachment_sid = 1;
+  int64 email_template_sid = 2;
+  string file_name = 5;
+  int64 file_size = 6;
+  string content_type = 7;
+  string hash = 8;
 }
 
 message GetAllEmailTemplateAttachmentRes {
@@ -811,16 +806,16 @@ message CreateEmailTemplateAttachmentReq {
 
 message CreateEmailTemplateAttachmentRes {
   int64 email_template_attachment_sid = 1;
-  string url_path       = 2;
-  string gs_path        = 3;
+  string url_path = 2;
+  string gs_path = 3;
 }
 
 message CopyEmailTemplateWithAttachmentsReq {
-    int64 email_template_sid = 3;
-    string email_body = 4;
+  int64 email_template_sid = 3;
+  string email_body = 4;
 }
 message CopyEmailTemplateWithAttachmentsRes {
-    int64 email_template_sid = 1;
+  int64 email_template_sid = 1;
 }
 
 message GetEmailMessageReq {
@@ -835,7 +830,7 @@ message GetEmailMessageRes {
 
 message ScheduleReq {
   int64 email_template_sid = 2;
-  int64 initial_pace  = 3;
+  int64 initial_pace = 3;
   string selected_email_col = 4;
   string from_address = 5;
   bool allow_duplicates = 6;
@@ -856,7 +851,7 @@ message ScheduleRes {
 //request to schedule outbound email group
 message ScheduleOutboundEmailGroupReq {
   //initial pace
-  int64 initial_pace  = 2;
+  int64 initial_pace = 2;
   //email column
   string selected_email_col = 3;
   //from email address
@@ -894,9 +889,9 @@ message ScheduleOutboundEmailGroupRes {
 }
 
 message EmailMessageDetails {
-	int64 email_message_sid = 1;
-	string email_subject = 4;
-	string email_body = 5;
+  int64 email_message_sid = 1;
+  string email_subject = 4;
+  string email_body = 5;
 }
 
 message ConnectedInbox {
@@ -922,8 +917,8 @@ message ConnectedInbox {
 
 message CreateInboundEmailTemplateReq {
   string connected_inbox_id = 1;
-  string name                       = 4;
-  EmailConversationSkills skills    = 6;
+  string name = 4;
+  EmailConversationSkills skills = 6;
 }
 
 message EmailConversationSkills {
@@ -946,7 +941,7 @@ message UpdateInboundEmailTemplateRes {
 }
 
 message DeleteInboundEmailTemplateByIdReq {
-	string inbound_email_template_id = 1;
+  string inbound_email_template_id = 1;
 }
 
 message DeleteInboundEmailTemplateByIdRes {
@@ -954,21 +949,21 @@ message DeleteInboundEmailTemplateByIdRes {
 }
 
 message InboundEmailTemplate {
-  google.protobuf.StringValue inbound_email_template_id  = 1;
+  google.protobuf.StringValue inbound_email_template_id = 1;
   google.protobuf.StringValue connected_inbox_id = 2;
-  string name                                            = 5;
-  google.protobuf.Timestamp last_updated                 = 7;
-  EmailConversationSkills skills                         = 8;
+  string name = 5;
+  google.protobuf.Timestamp last_updated = 7;
+  EmailConversationSkills skills = 8;
 }
 
 message ListInboundEmailTemplatesReq {}
 
 message ListInboundEmailTemplatesRes {
-	repeated InboundEmailTemplate inbound_email_template = 1;
+  repeated InboundEmailTemplate inbound_email_template = 1;
 }
 
 message GetInboundEmailTemplateByIdReq {
-	string inbound_email_template_id = 3;
+  string inbound_email_template_id = 3;
 }
 
 message UpdateInboundEmailGroupStatusReq {
@@ -977,7 +972,7 @@ message UpdateInboundEmailGroupStatusReq {
 }
 
 message UpdateInboundEmailGroupStatusRes {
-	bool Result = 1;
+  bool Result = 1;
 }
 
 message StopInboundEmailGroupReq {
@@ -985,7 +980,7 @@ message StopInboundEmailGroupReq {
 }
 
 message StopInboundEmailGroupRes {
-	bool Result = 1;
+  bool Result = 1;
 }
 
 message StopAllInboundEmailGroupsReq {
@@ -997,7 +992,7 @@ message StopAllOutboundEmailGroupsReq {
 }
 
 message StopAllOutboundEmailGroupsRes {
-	bool Result = 1;
+  bool Result = 1;
 }
 
 message InboundEmailGroup {
@@ -1069,22 +1064,22 @@ message PureInboundEmailGroupSearchRes {
 }
 
 message InboundEmailGroupSearchReq {
-    google.protobuf.Timestamp search_from = 3;
-    google.protobuf.Timestamp search_to   = 4;
-    string status_str                     = 5;
-    string name                           = 6;
+  google.protobuf.Timestamp search_from = 3;
+  google.protobuf.Timestamp search_to = 4;
+  string status_str = 5;
+  string name = 6;
 }
 
 message InboundEmailGroupSearchRes {
-    repeated InboundEmailGroup inbound_email_group = 1;
+  repeated InboundEmailGroup inbound_email_group = 1;
 }
 
 message ListInboundEmailGroupsByGroupIdsReq {
-	repeated string inbound_email_group_ids_arr = 3;
+  repeated string inbound_email_group_ids_arr = 3;
 }
 
 message ListInboundEmailGroupsByGroupIdsRes {
-	repeated InboundEmailGroup inbound_email_group = 1;
+  repeated InboundEmailGroup inbound_email_group = 1;
 }
 
 message InboundEmailTaskDetails {
@@ -1110,15 +1105,15 @@ message InboundEmailTaskDetails {
 }
 
 message ListInboundEmailTasksByGroupIdsReq {
-	repeated string inbound_email_group_ids_arr = 3;
+  repeated string inbound_email_group_ids_arr = 3;
 }
 
 message ListInboundEmailTasksByGroupIdsRes {
-	repeated InboundEmailTaskDetails inbound_email_task_details = 1;
+  repeated InboundEmailTaskDetails inbound_email_task_details = 1;
 }
 
 message InboundEmailGroupByIdReq {
-	string inbound_email_group_id = 3;
+  string inbound_email_group_id = 3;
 }
 
 message DownloadInboundEmailAttachmentReq {
@@ -1149,27 +1144,27 @@ message UpdateEmailTemplateAttachmentReq {
 }
 
 message UpdateEmailTemplateAttachmentRes {
-	bool Result = 1;
+  bool Result = 1;
 }
 
 message ListActiveInboundEmailGroupsReq {}
 
 message ListActiveInboundEmailGroupsRes {
-	repeated InboundEmailGroup inbound_email_group = 1;
+  repeated InboundEmailGroup inbound_email_group = 1;
 }
 
 message EmailMessageReply {
   reserved 13;
-	google.protobuf.StringValue email_message_reply_id = 1;
-	string from_address = 2;
-	string to_address = 3;
-	string subject = 4;
-	google.protobuf.Timestamp received_time = 5;
-	string message = 6;
-	google.protobuf.Int64Value email_task_sid = 7;
-	google.protobuf.StringValue inbound_email_group_id = 8;
-	commons.EmailIBReplyStatus status = 9;
-	double cost = 10;
+  google.protobuf.StringValue email_message_reply_id = 1;
+  string from_address = 2;
+  string to_address = 3;
+  string subject = 4;
+  google.protobuf.Timestamp received_time = 5;
+  string message = 6;
+  google.protobuf.Int64Value email_task_sid = 7;
+  google.protobuf.StringValue inbound_email_group_id = 8;
+  commons.EmailIBReplyStatus status = 9;
+  double cost = 10;
   google.protobuf.StringValue message_id = 12;
   google.protobuf.StringValue email_conversation_id = 14;
   string raw_data_location = 15;
@@ -1181,30 +1176,30 @@ message EmailMessageReply {
 }
 
 message EmailMessageReplyAttachment {
-	google.protobuf.StringValue email_message_reply_attachment_id = 1;
-	google.protobuf.StringValue email_message_reply_id = 4;
-	string file_name = 5;
-	int64 file_size = 6;
-	string content_type = 7;
-	string hash = 8;
+  google.protobuf.StringValue email_message_reply_attachment_id = 1;
+  google.protobuf.StringValue email_message_reply_id = 4;
+  string file_name = 5;
+  int64 file_size = 6;
+  string content_type = 7;
+  string hash = 8;
 }
 
 message ListEmailMessageReplyAttachmentsByReplyIdReq {
-	string email_message_reply_id = 1;
+  string email_message_reply_id = 1;
 }
 
 message ListEmailMessageReplyAttachmentsByReplyIdRes {
-	repeated EmailMessageReplyAttachment email_message_reply_attachment = 1;
+  repeated EmailMessageReplyAttachment email_message_reply_attachment = 1;
 }
 
 message InboundEmailGroupReplyAttachments {
-	EmailMessageReply email_message_reply = 1;
-	repeated EmailMessageReplyAttachment email_message_reply_attachment = 2;
+  EmailMessageReply email_message_reply = 1;
+  repeated EmailMessageReplyAttachment email_message_reply_attachment = 2;
 }
 
 message ListInboundEmailGroupReplyAttachmentsByIdRes {
-	InboundEmailGroup inbound_email_group = 1;
-	repeated InboundEmailGroupReplyAttachments inbound_email_group_reply_attachments = 2;
+  InboundEmailGroup inbound_email_group = 1;
+  repeated InboundEmailGroupReplyAttachments inbound_email_group_reply_attachments = 2;
 }
 
 message SchedulePureInboundEmailReq {
@@ -1217,22 +1212,22 @@ message SchedulePureInboundEmailReq {
 }
 
 message SchedulePureInboundEmailRes {
-	string inbound_email_group_id = 1;
+  string inbound_email_group_id = 1;
 }
 
 message CreateEmailMessageAgentReplyReq {
-  string to_address                                       = 4;
-  string subject                                          = 5;
-  string content                                          = 6;
-  string inbound_email_group_id                           = 7;
-  string email_conversation_id                            = 8;
+  string to_address = 4;
+  string subject = 5;
+  string content = 6;
+  string inbound_email_group_id = 7;
+  string email_conversation_id = 8;
   repeated string attachment_ids = 10;
 }
 
 message CreateEmailMessageAgentReplyAttachmentReq {
-  string file_name              = 4;
-  int64 file_size               = 5;
-  string file_type              = 6;
+  string file_name = 4;
+  int64 file_size = 5;
+  string file_type = 6;
 }
 
 message CreateEmailMessageAgentReplyAttachmentRes {
@@ -1242,14 +1237,14 @@ message CreateEmailMessageAgentReplyAttachmentRes {
 }
 
 message SendReplyReq {
-    string email_message_reply_id = 1;
-    string in_reply_to = 2;
+  string email_message_reply_id = 1;
+  string in_reply_to = 2;
 }
 
 message ListNewEmailMessageRepliesReq {
   // user_id is overriden unless the call comes from ManagerListNewEmailMessageReplies
-  string user_id             = 3;
-  string email_conversation_id             = 4;
+  string user_id = 3;
+  string email_conversation_id = 4;
   google.protobuf.Timestamp last_timestamp = 5;
 }
 
@@ -1258,7 +1253,7 @@ message ListNewEmailMessageRepliesRes {
 }
 
 message EmailMessageReplyWithAttachments {
-  EmailMessageReply email_message_reply            = 1;
+  EmailMessageReply email_message_reply = 1;
   repeated EmailMessageReplyAttachment attachments = 2;
 }
 
@@ -1355,7 +1350,7 @@ message ListEmailMessageAttachmentsReq {
 
 //response to get list of email message attachments
 message ListEmailMessageAttachmentsRes {
-  repeated EmailMessageAttachment email_message_attachments= 1;
+  repeated EmailMessageAttachment email_message_attachments = 1;
 }
 
 message EmailMessageAttachment {
@@ -1376,83 +1371,82 @@ message UnassignCurrentUserFromEmailConversationReq {
 // response to unassign email conversation
 message UnassignUserFromEmailConversationRes {}
 
-
 // get the email conversations for omni dashboard
 message DashboardEmailConversationSearchReq {
-    // start date of the search
-    google.protobuf.Timestamp search_from = 1;
-    // end date for the search
-    google.protobuf.Timestamp search_to = 2;
-  }
-
-  // DashboardEmailConversationSearchRes
-  message DashboardEmailConversationSearchRes {
-    // list of email conversations for the dashboard
-    repeated DashboardEmailConversationResEntry dashboard_email_conversation_res_entrys = 1;
-  }
-
-  // DashboardEmailConversationResEntry -
-  message DashboardEmailConversationResEntry {
-    //EmailConversation
-    EmailConversation email_conversation = 1;
-    //list of agents assigned to conversation
-    repeated EmailConversationAssignedUser email_conversation_assigned_users = 2;
-    // associated campaign name
-    string name = 3;
-  }
-
-  message EmailConversationAssignedUser {
-    // assignment Type
-    commons.AgentConversationAssignmentType assignment_type = 2;
-    // Notify
-    bool notify = 3;
-    //conversation id
-    string conversation_id = 4;
-    // last updated time
-    google.protobuf.Timestamp assigned_last_updated_time = 5;
-    // assignemnt status
-    commons.AgentConversationAssignmentStatus assignment_status = 6;
-    // name of the agent
-    google.protobuf.StringValue user_name = 7;
-    // id of the agent
-    string user_id = 8;
+  // start date of the search
+  google.protobuf.Timestamp search_from = 1;
+  // end date for the search
+  google.protobuf.Timestamp search_to = 2;
 }
 
-  message EmailConversation {
-    // conversation id
-    google.protobuf.StringValue conversation_id        = 1;
-    // org_id
-    string org_id                                      = 2;
-    // region_id
-    string region_id                                   = 3;
-    // Email group id for inbound comapigns
-    google.protobuf.StringValue email_inbound_group_id = 4;
-    // Time of birth
-    google.protobuf.Timestamp conversation_created_time = 5;
-    // Needed skills
-    EmailConversationSkills skills                     = 6;
-    // Status of the conversaton
-    commons.ConversationStatus conversation_status = 7;
-    // last message time stamp
-    google.protobuf.Timestamp last_message_time = 8;
-    // customer's email
-    string customer_email = 9;
-    // customer's name
-    string customer_name = 10;
-    // Email group id for outbound campaigns
-    google.protobuf.StringValue email_group_id = 11;
-    // sla and timeouts
-    commons.SLATimeouts sla_timeouts = 12;
+// DashboardEmailConversationSearchRes
+message DashboardEmailConversationSearchRes {
+  // list of email conversations for the dashboard
+  repeated DashboardEmailConversationResEntry dashboard_email_conversation_res_entrys = 1;
+}
+
+// DashboardEmailConversationResEntry -
+message DashboardEmailConversationResEntry {
+  //EmailConversation
+  EmailConversation email_conversation = 1;
+  //list of agents assigned to conversation
+  repeated EmailConversationAssignedUser email_conversation_assigned_users = 2;
+  // associated campaign name
+  string name = 3;
+}
+
+message EmailConversationAssignedUser {
+  // assignment Type
+  commons.AgentConversationAssignmentType assignment_type = 2;
+  // Notify
+  bool notify = 3;
+  //conversation id
+  string conversation_id = 4;
+  // last updated time
+  google.protobuf.Timestamp assigned_last_updated_time = 5;
+  // assignemnt status
+  commons.AgentConversationAssignmentStatus assignment_status = 6;
+  // name of the agent
+  google.protobuf.StringValue user_name = 7;
+  // id of the agent
+  string user_id = 8;
+}
+
+message EmailConversation {
+  // conversation id
+  google.protobuf.StringValue conversation_id = 1;
+  // org_id
+  string org_id = 2;
+  // region_id
+  string region_id = 3;
+  // Email group id for inbound comapigns
+  google.protobuf.StringValue email_inbound_group_id = 4;
+  // Time of birth
+  google.protobuf.Timestamp conversation_created_time = 5;
+  // Needed skills
+  EmailConversationSkills skills = 6;
+  // Status of the conversaton
+  commons.ConversationStatus conversation_status = 7;
+  // last message time stamp
+  google.protobuf.Timestamp last_message_time = 8;
+  // customer's email
+  string customer_email = 9;
+  // customer's name
+  string customer_name = 10;
+  // Email group id for outbound campaigns
+  google.protobuf.StringValue email_group_id = 11;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 12;
 }
 
 // ReassignEmailConversationReq - For OMNIBOSS dashbard.
 message ReassignEmailConversationReq {
-    // chat_conversation_id
-    string email_conversation_id= 2;
-    // current user
-    string current_assigned_user = 3;
-    // new_user
-    string new_assigned_user = 4;
+  // chat_conversation_id
+  string email_conversation_id = 2;
+  // current user
+  string current_assigned_user = 3;
+  // new_user
+  string new_assigned_user = 4;
 }
 
 // ReassignEmailConversationRes - For OMNIBOSS dashbard.
@@ -1460,24 +1454,24 @@ message ReassignEmailConversationRes {}
 
 // AssignEmailConversationReq
 message AssignEmailConversationReq {
-    // EmailConversationId
-    string email_conversation_id = 2;
-    // UserId
-    string user_id = 3;
-    // AssignmentType
-    commons.AgentConversationAssignmentType assignment_type = 4;
-  }
+  // EmailConversationId
+  string email_conversation_id = 2;
+  // UserId
+  string user_id = 3;
+  // AssignmentType
+  commons.AgentConversationAssignmentType assignment_type = 4;
+}
 
 // AssignEmailConversationRes -
-message AssignEmailConversationRes{
+message AssignEmailConversationRes {
   //send back ghost notifier referenceID
   string reference_id = 1;
 }
 
 // request used to suspend an email conversation
 message SuspendEmailConversationReq {
-    // the id of the conversation to be suspended
-    string email_conversation_id = 1;
+  // the id of the conversation to be suspended
+  string email_conversation_id = 1;
 }
 
 // response used after suspending an email conversation
@@ -1531,10 +1525,10 @@ message OutboundEmailCampaignWithProjectDetails {
 
 //req for closing email conversation
 message CloseEmailConversationReq {
-    //email conversation id
-    string email_conversation_id = 1;
-    //email conversation status
-    commons.ConversationStatus status = 2;
+  //email conversation id
+  string email_conversation_id = 1;
+  //email conversation status
+  commons.ConversationStatus status = 2;
 }
 
 //res for closing email conversation

@@ -2,26 +2,23 @@ syntax = "proto3";
 
 package v1alpha1.vanalytics;
 
-option java_package="com.tcn.api.v1alpha1.vanalytics";
-option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-
-
-
-import "v1alpha1/vanalytics/expr.proto";
-import "v1alpha1/vanalytics/aclpb/aclpb.proto";
 import "commons/acd.proto";
-
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/field_mask.proto";
-import "google/protobuf/wrappers.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "v1alpha1/vanalytics/aclpb/aclpb.proto";
+import "v1alpha1/vanalytics/expr.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
 
 // [BULK_DELETE] ===============================================================
 
 // BulkDeleteTranscriptsRequest defines the bulk delete transcripts request.
 message BulkDeleteTranscriptsRequest {
- // Required. A query which determines which transcripts to delete.
- SearchRequest query = 1;
+  // Required. A query which determines which transcripts to delete.
+  SearchRequest query = 1;
 }
 
 // BulkDeleteTranscriptsResponse defines the bulk delete transcripts response.
@@ -34,8 +31,8 @@ message BulkDeleteTranscriptsResponse {
 
 // BulkRestoreTranscriptsRequest defines the bulk restore transcripts request.
 message BulkRestoreTranscriptsRequest {
- // Required. A query which determines which transcripts to restore.
- SearchRequest query = 1;
+  // Required. A query which determines which transcripts to restore.
+  SearchRequest query = 1;
 }
 
 // BulkRestoreTranscriptsResponse defines the bulk restore transcripts response.
@@ -150,7 +147,7 @@ message SearchRequest {
     }
   }
 
- message PositionOffset {
+  message PositionOffset {
     google.protobuf.Duration start = 1;
     google.protobuf.Duration stop = 2;
   }
@@ -572,8 +569,6 @@ message Transcript {
   string number_format = 21;
   map<string, AgentResponse> agent_response = 22;
 }
-
-
 
 message Result {
   int32 channel = 1;

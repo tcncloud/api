@@ -2,11 +2,8 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum AnaTimeZone {
   ANA_TIME_ZONE_UNKNOWN = 0;
@@ -246,7 +243,9 @@ enum Operation {
   OPERATION_DIVIDE_RIGHT = 5;
 }
 
-enum CustomDataSeleciton { CUSTOM_DATA_SELECTION_UKNOWN = 0; }
+enum CustomDataSeleciton {
+  CUSTOM_DATA_SELECTION_UKNOWN = 0;
+}
 
 enum DataPointType {
   DATA_POINT_TYPE_NUMBER = 0;

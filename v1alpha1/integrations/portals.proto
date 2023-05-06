@@ -2,16 +2,14 @@ syntax = "proto3";
 
 package v1alpha1.integrations;
 
-option java_package="com.tcn.api.v1alpha1.integrations";
-option go_package="github.com/tcncloud/api/v1alpha1.integrations;integrations";
-
-
-
 import "commons/public/integrations.proto";
-// our entities are located here, entities should probably be in own file
-import "v1alpha1/integrations/service.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
+// our entities are located here, entities should probably be in own file
+import "v1alpha1/integrations/service.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.integrations;integrations";
+option java_package = "com.tcn.api.v1alpha1.integrations";
 
 service PortalManagerApi {
   rpc UpsertPortalConfig(UpsertPortalConfigReq) returns (UpsertPortalConfigRes) {
@@ -42,7 +40,6 @@ service PortalManagerApi {
   rpc ListPortalLinks(ListPortalLinksReq) returns (ListPortalLinksRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listportallinks";
     option (google.api.http).body = "*";
-
   }
   rpc GetPortalLink(GetPortalLinkReq) returns (GetPortalLinkRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportallink";
@@ -60,55 +57,55 @@ service PortalManagerApi {
   rpc UpsertPortal(UpsertPortalReq) returns (UpsertPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/upsertportal";
     option (google.api.http).body = "*";
-  };
+  }
   rpc GetPortal(GetPortalReq) returns (GetPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportal";
     option (google.api.http).body = "*";
-  };
+  }
   rpc DeletePortal(DeletePortalReq) returns (DeletePortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteportal";
     option (google.api.http).body = "*";
-  };
+  }
   rpc ListPortals(ListPortalsReq) returns (ListPortalsRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listportals";
     option (google.api.http).body = "*";
-  };
+  }
   rpc ListDetailedPortals(ListDetailedPortalsReq) returns (ListDetailedPortalsRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listdetailedportals";
     option (google.api.http).body = "*";
-  };
+  }
   rpc GetDetailedPortal(GetDetailedPortalReq) returns (GetDetailedPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getdetailedportal";
     option (google.api.http).body = "*";
-  };
+  }
   // PluginInstances
   rpc UpsertPluginInstance(UpsertPluginInstanceReq) returns (UpsertPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/upsertplugininstance";
     option (google.api.http).body = "*";
-  };
+  }
   rpc GetPluginInstance(GetPluginInstanceReq) returns (GetPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getplugininstance";
     option (google.api.http).body = "*";
-  };
+  }
   rpc DeletePluginInstance(DeletePluginInstanceReq) returns (DeletePluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteplugininstance";
     option (google.api.http).body = "*";
-  };
+  }
   rpc ListPluginInstance(ListPluginInstanceReq) returns (ListPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listplugininstances";
     option (google.api.http).body = "*";
-  };
+  }
   rpc ListFlowFieldNames(ListFlowFieldNamesReq) returns (ListFlowFieldNamesRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listflowfieldnames";
     option (google.api.http).body = "*";
-  };
+  }
   // returns the default form fields for verification flow
-  rpc ListAvailableVerificationFields(ListAvailableVerificationFieldsReq) returns (ListAvailableVerificationFieldsRes){
+  rpc ListAvailableVerificationFields(ListAvailableVerificationFieldsReq) returns (ListAvailableVerificationFieldsRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listavailableverificationfields";
     option (google.api.http).body = "*";
   }
   // returns the default form fields for payment flow
-  rpc ListAvailablePaymentFields(ListAvailablePaymentFieldsReq) returns (ListAvailablePaymentFieldsRes){
+  rpc ListAvailablePaymentFields(ListAvailablePaymentFieldsReq) returns (ListAvailablePaymentFieldsRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listavailablePaymentfields";
     option (google.api.http).body = "*";
   }
@@ -130,8 +127,7 @@ message GetPortalConfigRes {
 // TODO LETS MOVE THIS TO HERE WHEN WE CAN UPDATE FRONT ENd IMPORT
 // message DeletePortalConfigReq
 
-message DeletePortalConfigRes {
-}
+message DeletePortalConfigRes {}
 // TODO LETS MOVE THIS TO HERE WHEN WE CAN UPDATE FRONT ENd IMPORT
 // message ListPortalConfigsReq
 
@@ -142,8 +138,7 @@ message ListPortalConfigsRes {
 message UpdatePortalConfigLogoReq {
   PortalConfig entity = 1;
 }
-message UpdatePortalConfigLogoRes {
-}
+message UpdatePortalConfigLogoRes {}
 message GetPortalConfigLogoReq {
   PortalConfigId entity = 1;
 }
@@ -167,8 +162,7 @@ message GetPortalRes {
 message DeletePortalReq {
   PortalId entity = 1;
 }
-message DeletePortalRes {
-}
+message DeletePortalRes {}
 message ListPortalsReq {
   PortalId entity = 1;
   google.protobuf.FieldMask mask = 2;
@@ -189,7 +183,7 @@ message ListDetailedPortalsReq {
   // If left empty, only each plugin_instance.name, and plugin_instance.id fields will be set.
   google.protobuf.FieldMask plugin_instance_mask = 4;
   int32 page_size = 5;
-  int32 page  = 6;
+  int32 page = 6;
   repeated PortalType ptypes = 7;
 }
 message ListDetailedPortalsRes {
@@ -238,8 +232,7 @@ message GetPluginInstanceRes {
 message DeletePluginInstanceReq {
   PluginInstanceId entity = 1;
 }
-message DeletePluginInstanceRes {
-}
+message DeletePluginInstanceRes {}
 message ListPluginInstanceReq {
   PluginInstance entity = 1;
   google.protobuf.FieldMask mask = 2;
@@ -249,8 +242,7 @@ message ListPluginInstanceReq {
 message ListPluginInstanceRes {
   repeated PluginInstance entities = 1;
 }
-message ListPluginsReq {
-}
+message ListPluginsReq {}
 message ListPluginsRes {
   // TODO DISCUSS
 }
@@ -258,7 +250,7 @@ message ListPortalLinksReq {
   PortalLinkId entity = 1;
   google.protobuf.FieldMask mask = 2;
   int32 page_size = 3;
-  int32 page  = 4;
+  int32 page = 4;
 }
 message ListPortalLinksRes {
   repeated PortalLink entities = 1;
@@ -273,8 +265,7 @@ message GetPortalLinkRes {
 message DeletePortalLinkReq {
   PortalLinkId entity = 1;
 }
-message DeletePortalLinkRes {
-}
+message DeletePortalLinkRes {}
 message CreatePortalLinksReq {
   // the portal's pk the link is for
   PortalId entity = 1;
@@ -299,6 +290,7 @@ message ListFlowFieldNamesReq {
   }
   Entity entity = 5;
 }
+
 // the field names the flow will look for at the request's specified location
 message ListFlowFieldNamesRes {
   repeated string field_names = 1;
@@ -306,21 +298,20 @@ message ListFlowFieldNamesRes {
 
 // for listing fields on the given verification flow
 message ListAvailableVerificationFieldsReq {
-    commons.public.VerificationFlow verification = 1;
+  commons.public.VerificationFlow verification = 1;
 }
 
 // the available fields for the verification flow
 message ListAvailableVerificationFieldsRes {
-    repeated commons.public.FieldDefinition verification_fields = 2;
+  repeated commons.public.FieldDefinition verification_fields = 2;
 }
 
 // for listing fields on the given payment flow
 message ListAvailablePaymentFieldsReq {
-    commons.public.PaymentFlow payment = 1;
+  commons.public.PaymentFlow payment = 1;
 }
 
 // the available fields for the payment flow
 message ListAvailablePaymentFieldsRes {
-    repeated commons.public.FieldDefinition payment_fields = 2;
+  repeated commons.public.FieldDefinition payment_fields = 2;
 }
-

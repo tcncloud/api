@@ -2,18 +2,15 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
-import "commons/org.proto";
-import "google/protobuf/empty.proto";
 import "annotations/authz.proto";
 import "commons/auth/perms.proto";
+import "commons/org.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service Dashboards {
   // CreateDashboard creates a dashboard and associated panels
@@ -21,7 +18,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/CreateDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // GetDashboard retrieves a dashboard by the given ID and orgID and fetches its associated panels
@@ -29,14 +33,22 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/GetDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW]}];
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
     };
   }
   rpc GetDefaultDashboard(GetDefaultDashboardRequest) returns (Dashboard) {
     option (google.api.http).post = "/api/v0alpha/dashboards/GetDefaultDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW]}];
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
     };
   }
   // ListDashboards retrieves all dashboard summaries for the given organization
@@ -44,14 +56,22 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/ListDashboards";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW]}];
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
     };
   }
   rpc ListProductTypes(ListProductTypesRequest) returns (ListProductTypesResult) {
     option (google.api.http).post = "/api/v0alpha/dashboards/ListProductTypes";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW]}];
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
     };
   }
   // Deletes a given dashboard
@@ -59,7 +79,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/DeleteDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // Sets a dashboard as the user's default
@@ -67,7 +94,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/SetDefaultDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // UpdateDashboard updates a dashboard
@@ -75,7 +109,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // UpdateDashboardTitleAndDescription updates a dashboards title and description
@@ -83,7 +124,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardTitleAndDescription";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // UpdateDashboardView updates a dashboards view with the given view
@@ -91,7 +139,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardView";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
   // UpdateDashboardLayout replaces a dashboards layout with a given layout
@@ -99,7 +154,14 @@ service Dashboards {
     option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardLayout";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [PERMISSION_DASHBOARDS_VIEW, PERMISSION_DASHBOARDS_EDIT]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
     };
   }
 }
@@ -121,7 +183,7 @@ message DashboardSummary {
   // optional dashboard description
   string description = 3;
   // number of associated panels
-  int32  panel_count = 4;
+  int32 panel_count = 4;
 }
 
 // GetDefaultDashboardRequest used in GetDefaultDashboard rpc
@@ -129,19 +191,19 @@ message GetDefaultDashboardRequest {}
 
 // SetDefaultDashboardRequest used in SetDefaultDashboard rpc
 message SetDefaultDashboardRequest {
-    // unique ID of dashboard to be set as default
-    string dashboard_id = 1;
+  // unique ID of dashboard to be set as default
+  string dashboard_id = 1;
 }
 
 message ListProductTypesRequest {}
 
 message ListProductTypesResult {
-    repeated ProductType types = 1;
+  repeated ProductType types = 1;
 }
 
 message ProductType {
-    string name = 1;
-    string id = 2;
+  string name = 1;
+  string id = 2;
 }
 
 // DeleteDashboardRequest used in DeleteDashboard rpc
@@ -228,8 +290,8 @@ message Dashboard {
 // DashboardType, specifies what type of dashboard we are dealing with
 message DashboardType {
   oneof type {
-      HistoricConfig historic = 6;
-      RealTimeConfig real_time = 7;
+    HistoricConfig historic = 6;
+    RealTimeConfig real_time = 7;
   }
 }
 
@@ -322,5 +384,4 @@ message TimeSpan {
     google.protobuf.Timestamp start = 1;
     google.protobuf.Timestamp end = 2;
   }
-
 }

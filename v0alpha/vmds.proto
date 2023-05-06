@@ -2,16 +2,13 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
 import "commons/acd.proto";
+import "google/api/annotations.proto";
 
-service Vmds{
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service Vmds {
   rpc GetVoicemailMetadata(GetVoicemailMetadataReq) returns (stream GetVoicemailMetadataRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmetadata";
     option (google.api.http).body = "*";
@@ -202,7 +199,7 @@ message ListAvailableGreetingsReq {}
 
 message ListAvailableGreetingsRes {
   message FileInfo {
-    string filename  = 1;
+    string filename = 1;
     int64 size = 2;
   }
   repeated FileInfo greetings = 1;

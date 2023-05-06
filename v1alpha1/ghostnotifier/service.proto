@@ -16,20 +16,18 @@ syntax = "proto3";
 
 package v1alpha1.ghostnotifier;
 
-option java_package="com.tcn.api.v1alpha1.ghostnotifier";
-option go_package="github.com/tcncloud/api/v1alpha1.ghostnotifier;ghostnotifier";
-
-
-
 import "commons/ghostnotifier.proto";
 import "google/api/annotations.proto";
 
+option go_package = "github.com/tcncloud/api/v1alpha1.ghostnotifier;ghostnotifier";
+option java_package = "com.tcn.api.v1alpha1.ghostnotifier";
+
 service GhostNotifierApi {
-    // Opens a server side stream that will forward and ghost notifications to the client for the given user
-    rpc ListNotifications(ListNotificationsReq) returns (stream commons.GhostNotification) {
-        option (google.api.http).post = "/api/v1alpha1/ghostnotifier/ghostnotifierapi/listnotifications";
-        option (google.api.http).body = "*";
-    };
+  // Opens a server side stream that will forward and ghost notifications to the client for the given user
+  rpc ListNotifications(ListNotificationsReq) returns (stream commons.GhostNotification) {
+    option (google.api.http).post = "/api/v1alpha1/ghostnotifier/ghostnotifierapi/listnotifications";
+    option (google.api.http).body = "*";
+  }
 }
 
 message ListNotificationsReq {}

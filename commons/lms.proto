@@ -2,12 +2,10 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
 import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 message RecordField {
   string name = 1;
@@ -266,7 +264,6 @@ enum ComplianceListType {
   COMPLIANCE_LIST_TYPE_CONSENT = 1;
 }
 
-
 enum EventState {
   // state does not apply
   EVENT_STATE_NONE = 0;
@@ -317,9 +314,9 @@ message Expiration {
 }
 
 enum TimeUnit {
-    //DEFAULT is decided by SURL (no quantity needed)
-    DEFAULT = 0;
-    TIME_WEEKS = 1;
-    TIME_DAYS = 2;
-    TIME_HOURS = 3;
+  //DEFAULT is decided by SURL (no quantity needed)
+  DEFAULT = 0;
+  TIME_WEEKS = 1;
+  TIME_DAYS = 2;
+  TIME_HOURS = 3;
 }

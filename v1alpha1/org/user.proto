@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
 import "commons/org.proto";
-import "commons/user.proto";
 import "commons/org/labels.proto";
 import "commons/org/permissions.proto";
 import "commons/org/trusts.proto";
 import "commons/org/user.proto";
 import "commons/perms.proto";
+import "commons/user.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 // Request message for the CreateUser rpc.
 message CreateUserRequest {
@@ -96,8 +93,7 @@ message CreateDelegatedUserResponse {
 }
 
 // Request message for GetMyUser.
-message GetMyUserRequest {
-}
+message GetMyUserRequest {}
 
 // Response message for GetMyUser.
 message GetMyUserResponse {
@@ -225,7 +221,6 @@ message GetUserResponse {
   google.protobuf.Timestamp last_updated = 27;
   // user's password reset required
   bool password_reset_required = 28;
-
 }
 
 // Request message for GetUserByOrgId.
@@ -281,8 +276,7 @@ message GetUserByOrgIdResponse {
 }
 
 // Request message for listAgents rpc.
-message ListAgentsRequest {
-}
+message ListAgentsRequest {}
 
 // Response message for listAgents rpc.
 message ListAgentsResponse {
@@ -328,8 +322,7 @@ message ListAgentsResponse {
 }
 
 // Request message for listUsers rpc.
-message ListUsersRequest {
-}
+message ListUsersRequest {}
 
 // Response message for listUsers rpc.
 message ListUsersResponse {
@@ -453,7 +446,7 @@ message ListUsersByRegionResponse {
 // Request message for the UpdateMyUser rpc.
 message UpdateMyUserRequest {
   // The linkback numbers the updated user will have.
-  repeated string  linkback_numbers = 1;
+  repeated string linkback_numbers = 1;
   // The caller ids the updated user will have.
   repeated string caller_ids = 2;
   // User TimeZone with wrapper for nullable timezone.
@@ -465,8 +458,7 @@ message UpdateMyUserRequest {
 }
 
 // Response message for the UpdateMyUser rpc.
-message UpdateMyUserResponse {
-}
+message UpdateMyUserResponse {}
 
 // Request message for the UpdateUser rpc.
 message UpdateUserRequest {
@@ -481,7 +473,7 @@ message UpdateUserRequest {
   // User TimeZone with wrapper for nullable timezone.
   commons.TimeZoneWrapper time_zone_override = 5;
   // The linkback numbers the updated user will have.
-  repeated string  linkback_numbers = 6;
+  repeated string linkback_numbers = 6;
   // The caller ids the updated user will have.
   repeated string caller_ids = 7;
   // Default app the user starts on
@@ -504,8 +496,7 @@ message UpdateUserRequest {
 }
 
 // Response message for the UpdateUser rpc.
-message UpdateUserResponse {
-}
+message UpdateUserResponse {}
 
 // Request message for the UpdateUserLabels rpc.
 message UpdateUserLabelsRequest {
@@ -529,8 +520,7 @@ message UpdateUserCallerIdRequest {
 }
 
 // Response message for the UpdateUserCallerId rpc.
-message UpdateUserCallerIdResponse {
-}
+message UpdateUserCallerIdResponse {}
 
 // Request message for the UpdateUserDisabled rpc.
 message UpdateUserDisabledRequest {
@@ -541,8 +531,7 @@ message UpdateUserDisabledRequest {
 }
 
 // Response message for the UpdateUserDisabled rpc.
-message UpdateUserDisabledResponse {
-}
+message UpdateUserDisabledResponse {}
 
 // Request message for the UpdateUserDisabledByOrgId rpc.
 message UpdateUserDisabledByOrgIdRequest {
@@ -555,8 +544,7 @@ message UpdateUserDisabledByOrgIdRequest {
 }
 
 // Response message for the UpdateUserDisabledByOrgId rpc.
-message UpdateUserDisabledByOrgIdResponse {
-}
+message UpdateUserDisabledByOrgIdResponse {}
 
 // Request message for the GetMyUserPasswordResetLink rpc.
 message GetMyUserPasswordResetLinkRequest {
@@ -612,7 +600,7 @@ message GetUserLoginInfoRequest {
 // Response message for the GetUserLoginInfo rpc.
 message GetUserLoginInfoResponse {
   // Whether the user is manually blocked in auth0
-  bool  blocked = 1;
+  bool blocked = 1;
   // The last IP the user used to login
   string last_ip = 2;
   // The time of the user's latest login
@@ -679,7 +667,7 @@ message SendUserEmailVerificationByOrgIdResponse {}
 message GetUserSessionDataRequest {}
 
 // Response message for the GetUserSessionData rpc.
-message GetUserSessionDataResponse{
+message GetUserSessionDataResponse {
   message User {
     // The ID of the user
     string user_id = 1;
@@ -706,8 +694,6 @@ message GetUserSessionDataResponse{
     // region_id of a the user's default region
     string default_region = 11;
 
-
-
     // payload
     string api_key = 12;
     // The User's email.
@@ -733,7 +719,7 @@ message GetUserSessionDataResponse{
     // The date/time the user was last updated.
     google.protobuf.Timestamp last_updated = 22;
     // Whether or not the user must reset their password on next login.
-    bool password_reset_required =  23;
+    bool password_reset_required = 23;
     // connection id is the id of the auth connection that the
     // user is coming from if it is a delgated user. If the user
     // is not delgated this will be nil.

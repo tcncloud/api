@@ -2,13 +2,10 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
 import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service FTS {
   rpc GetUploadFileUrl(GetUploadFileUrlReq) returns (GetUploadFileUrlRes) {

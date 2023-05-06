@@ -2,16 +2,13 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum ProjectStatus {
   PROJECT_STATUS_UNKNOWN = 0;
-  PROJECT_STATUS_OPEN = 17000;  //Project status is Open
-  PROJECT_STATUS_CLOSED = 17010;  //Project status is Closed
+  PROJECT_STATUS_OPEN = 17000; //Project status is Open
+  PROJECT_STATUS_CLOSED = 17010; //Project status is Closed
 }
 
 enum CampaignStatus {

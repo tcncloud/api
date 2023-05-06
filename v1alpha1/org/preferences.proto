@@ -2,13 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
-import "google/protobuf/field_mask.proto";
 import "commons/org/preferences.proto";
+import "google/protobuf/field_mask.proto";
 
-
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 //
 // General tab preferences.
@@ -36,8 +34,7 @@ message UpdateOrganizationPreferencesRequest {
 }
 
 // Response for the UpdateOrganizationPreferences RPC.
-message UpdateOrganizationPreferencesResponse {
-}
+message UpdateOrganizationPreferencesResponse {}
 
 // Request for the GetAgentPreferences RPC.
 message GetAgentPreferencesRequest {
@@ -61,8 +58,7 @@ message UpdateAgentPreferencesRequest {
 }
 
 // Response for the UpdateAgentPreferences RPC.
-message UpdateAgentPreferencesResponse {
-}
+message UpdateAgentPreferencesResponse {}
 
 // Request for the GetContactPreferences RPC.
 message GetContactPreferencesRequest {
@@ -85,8 +81,7 @@ message UpdateContactPreferencesRequest {
 }
 
 // Response for the UpdateContactPreferences RPC.
-message UpdateContactPreferencesResponse {
-}
+message UpdateContactPreferencesResponse {}
 
 // Request for the GetAuthenticationPreferences RPC.
 message GetAuthenticationPreferencesRequest {
@@ -110,8 +105,7 @@ message UpdateAuthenticationPreferencesRequest {
 }
 
 // Response for the UpdateAuthenticationPreferences RPC.
-message UpdateAuthenticationPreferencesResponse {
-}
+message UpdateAuthenticationPreferencesResponse {}
 
 // Request for the GetWebhookPreferences RPC.
 message GetWebhookPreferencesRequest {
@@ -135,8 +129,7 @@ message UpdateWebhookPreferencesRequest {
 }
 
 // Response for the UpdateWebhookPreferences RPC.
-message UpdateWebhookPreferencesResponse {
-}
+message UpdateWebhookPreferencesResponse {}
 
 //
 // MANAGER TAB
@@ -164,8 +157,7 @@ message UpdateDashboardGeneralPreferencesRequest {
 }
 
 // Response for the UpdateDashboardGeneralPreferences RPC.
-message UpdateDashboardGeneralPreferencesResponse {
-}
+message UpdateDashboardGeneralPreferencesResponse {}
 
 // Request for the GetDashboardQueuePreferences RPC.
 message GetDashboardQueuePreferencesRequest {
@@ -189,8 +181,7 @@ message UpdateDashboardQueuePreferencesRequest {
 }
 
 // Respons for the UpdateDashboardQueuePreferences RPC.
-message UpdateDashboardQueuePreferencesResponse{
-}
+message UpdateDashboardQueuePreferencesResponse {}
 
 //
 // Campaign tab preferences.
@@ -218,8 +209,7 @@ message UpdatePhonePreferencesRequest {
 }
 
 // Response for the UpdatePhonePreferences RPC.
-message UpdatePhonePreferencesResponse {
-}
+message UpdatePhonePreferencesResponse {}
 
 // Internal phone preferences entity only for interfacing with database.
 message PhonePreferencesDB {
@@ -252,8 +242,7 @@ message UpdateCompliancePreferencesRequest {
 }
 
 // Response for the UpdateCompliancePreferences RPC.
-message UpdateCompliancePreferencesResponse {
-}
+message UpdateCompliancePreferencesResponse {}
 
 // Request for the GetBroadcastPreferences RPC.
 message GetBroadcastPreferencesRequest {
@@ -277,8 +266,7 @@ message UpdateBroadcastPreferencesRequest {
 }
 
 // Response for the UpdateBroadcastPreferences RPC.
-message UpdateBroadcastPreferencesResponse {
-}
+message UpdateBroadcastPreferencesResponse {}
 
 // Request for the GetSchedulePreferences RPC.
 message GetSchedulePreferencesRequest {
@@ -302,8 +290,7 @@ message UpdateSchedulePreferencesRequest {
 }
 
 // Response for the UpdateSchedulePreferences RPC.
-message UpdateSchedulePreferencesResponse {
-}
+message UpdateSchedulePreferencesResponse {}
 
 // Request for the GetEmailSmsPreferences RPC.
 message GetEmailSmsPreferencesRequest {
@@ -327,8 +314,7 @@ message UpdateEmailSmsPreferencesRequest {
 }
 
 // Response for the UpdateEmailSmsPreferences RPC.
-message UpdateEmailSmsPreferencesResponse {
-}
+message UpdateEmailSmsPreferencesResponse {}
 
 //
 // Business Intelligence & Reports tab preferences.
@@ -356,8 +342,7 @@ message UpdateBusinessPreferencesRequest {
 }
 
 // Response for the UpdateBusinessPreferences RPC.
-message UpdateBusinessPreferencesResponse {
-}
+message UpdateBusinessPreferencesResponse {}
 
 // Request for GetScorecardsPreferences
 message GetScorecardsPreferencesRequest {
@@ -386,8 +371,7 @@ message UpdateScorecardsPreferencesRequest {
 }
 
 // Response for UpdateScorecardsPreferences
-message UpdateScorecardsPreferencesResponse {
-}
+message UpdateScorecardsPreferencesResponse {}
 
 // Request for the GetVoiceAnalyticsPreferences RPC.
 message GetVoiceAnalyticsPreferencesRequest {
@@ -402,8 +386,7 @@ message GetVoiceAnalyticsPreferencesResponse {
 }
 
 // Request for the ListVoiceAnalyticsPreferences RPC.
-message ListVoiceAnalyticsPreferencesRequest {
-}
+message ListVoiceAnalyticsPreferencesRequest {}
 
 // Response for the ListVoiceAnalyticsPreferences RPC.
 message ListVoiceAnalyticsPreferencesResponse {
@@ -421,8 +404,7 @@ message UpdateVoiceAnalyticsPreferencesRequest {
 }
 
 // Response for the UpdateVoiceAnalyticsPreferences RPC.
-message UpdateVoiceAnalyticsPreferencesResponse {
-}
+message UpdateVoiceAnalyticsPreferencesResponse {}
 
 // Request for the GetEndOfDayPreferences RPC.
 message GetEndOfDayPreferencesRequest {
@@ -446,8 +428,7 @@ message UpdateEndOfDayPreferencesRequest {
 }
 
 // Response for the UpdateEndOfDayPreferences RPC.
-message UpdateEndOfDayPreferencesResponse {
-}
+message UpdateEndOfDayPreferencesResponse {}
 
 // Request for the GetFilterPreferences RPC.
 message GetFilterPreferencesRequest {
@@ -471,8 +452,7 @@ message UpdateFilterPreferencesRequest {
 }
 
 // Response for the UpdateFilterPreferences RPC.
-message UpdateFilterPreferencesResponse {
-}
+message UpdateFilterPreferencesResponse {}
 
 // Request for the GetRecordingPreferences RPC.
 message GetRecordingPreferencesRequest {
@@ -496,8 +476,7 @@ message UpdateRecordingPreferencesRequest {
 }
 
 // Response for the UpdateRecordingPreferences RPC.
-message UpdateRecordingPreferencesResponse {
-}
+message UpdateRecordingPreferencesResponse {}
 
 //
 // Customer Support preferences.
@@ -531,20 +510,17 @@ message UpdateAdminClientPreferencesRequest {
 }
 
 // Response for the UpdateAdminClientPreferences RPC.
-message UpdateAdminClientPreferencesResponse {
-}
+message UpdateAdminClientPreferencesResponse {}
 
 //
 // Miscellaneous APIs.
 //
 
 // Request for accepting linkback recording terms agreement.
-message AcceptLinkbackRecordingTermsRequest {
-}
+message AcceptLinkbackRecordingTermsRequest {}
 
 // Response for accepting linkback recording terms agreement.
-message AcceptLinkbackRecordingTermsResponse {
-}
+message AcceptLinkbackRecordingTermsResponse {}
 
 // Request for updating broadcast template 'Record' property.
 message LinkbackUpdateBroadcastTemplatesRequest {
@@ -553,21 +529,16 @@ message LinkbackUpdateBroadcastTemplatesRequest {
 }
 
 // Response for updating broadcast template 'Record' property.
-message LinkbackUpdateBroadcastTemplatesResponse {
-}
+message LinkbackUpdateBroadcastTemplatesResponse {}
 
 // Request for recording email unsubscribe acknowledgement.
-message RecordEmailUnsubscribeAcknowledgementRequest {
-}
+message RecordEmailUnsubscribeAcknowledgementRequest {}
 
 // Response for recording email unsubscribe acknowledgement.
-message RecordEmailUnsubscribeAcknowledgementResponse {
-}
+message RecordEmailUnsubscribeAcknowledgementResponse {}
 
 // Request for clearing email unsubscribe acknowledgement.
-message ClearEmailUnsubscribeAcknowledgementRequest {
-}
+message ClearEmailUnsubscribeAcknowledgementRequest {}
 
 // Response for clearing email unsubscribe acknowledgement.
-message ClearEmailUnsubscribeAcknowledgementResponse {
-}
+message ClearEmailUnsubscribeAcknowledgementResponse {}

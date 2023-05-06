@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
-import "google/protobuf/timestamp.proto";
 import "commons/results.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 enum CallStatus {
   CALL_UNKNOWN = 0;
@@ -25,7 +22,7 @@ message SimpleCallData {
   int64 client_sid = 4;
   int64 country_sid = 5;
   int64 agent_sid = 6;
-  int64	start_time = 7;
+  int64 start_time = 7;
 
   string caller_id = 8;
   string phone_number = 9;
@@ -79,6 +76,6 @@ message SimpleRecordData {
   int64 task_sid = 1;
   int64 task_group_sid = 2;
   int64 agent_sid = 3;
-  google.protobuf.Timestamp	start_time = 4;
-  google.protobuf.Timestamp	stop_time = 5;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp stop_time = 5;
 }

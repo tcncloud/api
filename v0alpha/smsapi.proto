@@ -2,17 +2,14 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/api/annotations.proto";
+import "commons/sms.proto";
 import "commons/types.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "commons/sms.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 // Service for interacting with TCN's SMS API system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -87,7 +84,6 @@ service SmsApi {
     option (google.api.http).body = "*";
   }
 
-
   // Update a SmsIntentTemplate defined by SmsIntentTemplate message for
   // the specified sms_intent_template_sid
   // will update the following
@@ -153,7 +149,6 @@ service SmsApi {
     option (google.api.http).body = "*";
   }
 
-
   // Delete a SmsSourceNumber defined by DeleteSmsSourceNumberReq message for
   // the specified sms_number_id
   // The method will return a DeleteSmsSourceNumberRes message with true or false .
@@ -183,7 +178,6 @@ service SmsApi {
     option (google.api.http).post = "/api/v0alpha/smsapi/sendsmsnotification";
     option (google.api.http).body = "*";
   }
-
 
   // List Sms Group defined by ListSmsGroupByFiltersReq message.
   // Gets all details belong to the clientsid  with filters
@@ -303,7 +297,6 @@ service SmsApi {
     option (google.api.http).body = "*";
   }
 
-
   // Search SMS activity defined by SmsActivitySearchReq message for
   // any of the following filters:
   // ClientSid, ToNumber and FromNumber, FromDate, ToDate, SentOnly
@@ -396,7 +389,6 @@ service SmsApi {
     option (google.api.http).body = "*";
   }
 
-
   // List InboundSmsGroup  defined by ListInboundSmsGroupsReq message.
   // Gets all of the Inbound sms group specified according to the filters.
   // The method will return a stream of ListInboundSmsGroupsRes messages
@@ -407,7 +399,6 @@ service SmsApi {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroups";
     option (google.api.http).body = "*";
   }
-
 
   // List Active InboundSmsGroup  defined by ListActiveInboundSmsGroupsReq message.
   // Gets active Inbound sms group specified according to the filters.
@@ -561,8 +552,7 @@ service SmsApi {
   // Create/Record a SmsConversationAssignedAgent defined by SmsConversationAssignedAgent message.
   // The method will return a CreateSmsConversationAssignedAgentRes message with true or false
   // Required permissions: VIEW_SMS
-  rpc CreateSmsConversationAssignedAgent(SmsConversationAssignedAgent) returns
-  (CreateSmsConversationAssignedAgentRes) {
+  rpc CreateSmsConversationAssignedAgent(SmsConversationAssignedAgent) returns (CreateSmsConversationAssignedAgentRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversationassignedagent";
     option (google.api.http).body = "*";
   }
@@ -573,8 +563,7 @@ service SmsApi {
   // containing Assigned AgentId, Primary Agent, and Notiify
   // belonging to the smsconversationassignedagent.
   // Required permissions: VIEW_SMS
-  rpc ListSmsConversationAssignedAgents(ListSmsConversationAssignedAgentsReq) returns
-  (ListSmsConversationAssignedAgentsRes) {
+  rpc ListSmsConversationAssignedAgents(ListSmsConversationAssignedAgentsReq) returns (ListSmsConversationAssignedAgentsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversationassignedagents";
     option (google.api.http).body = "*";
   }
@@ -583,8 +572,7 @@ service SmsApi {
   // conversation_id & assigned_agent_id
   // The method will return a SmsConversationAssignedAgent.
   // Required permissions: VIEW_SMS
-  rpc GetSmsConversationAssignedAgentById(GetSmsConversationAssignedAgentByIdReq) returns
-  (GetSmsConversationAssignedAgentByIdRes) {
+  rpc GetSmsConversationAssignedAgentById(GetSmsConversationAssignedAgentByIdReq) returns (GetSmsConversationAssignedAgentByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationassignedagentbyid";
     option (google.api.http).body = "*";
   }
@@ -622,7 +610,7 @@ service SmsApi {
 message ListSmsTemplatesReq {}
 
 message ListSmsTemplatesRes {
-  repeated SmsTemplateWithIntents  sms_template_with_intents= 1;
+  repeated SmsTemplateWithIntents sms_template_with_intents = 1;
 }
 
 message SmsTemplateWithIntents {
@@ -687,7 +675,6 @@ message ListSmsIntentTemplatesRes {
   repeated SmsIntentTemplate sms_intent_template = 1;
 }
 
-
 message UpdateSmsIntentTemplateRes {
   bool result = 1;
 }
@@ -699,7 +686,6 @@ message DeleteSmsIntentTemplateReq {
 message DeleteSmsIntentTemplateRes {
   bool result = 1;
 }
-
 
 message CreateSmsIntentTemplateRes {
   int64 sms_intent_template_sid = 1;
@@ -841,7 +827,7 @@ message ListSmsTasksWithDetailedStatusRes {
 }
 
 message SmsTaskInfoWithReply {
-  SmsTaskInfoRes sms_task_info_res  = 1;
+  SmsTaskInfoRes sms_task_info_res = 1;
   repeated SmsReceivedReplies sms_received_replies = 2;
 }
 
@@ -882,7 +868,7 @@ message UpdateSmsGroupRes {
 
 message ScheduleSmsReq {
   int64 sms_template_sid = 1;
-  int64 initial_pace  = 2;
+  int64 initial_pace = 2;
   string selected_phone_col = 3;
   string source_number = 4;
   int64 country_sid = 5;
@@ -917,7 +903,6 @@ message SmsActivitySearchReq {
   bool sent_only = 6;
 }
 
-
 message SmsActivitySearchRes {
   repeated SmsGroupWithIntents sms_group_with_intents = 1;
   repeated SmsTaskInfoRes sms_task_info_res = 2;
@@ -931,11 +916,10 @@ message InboundSmsTemplate {
   google.protobuf.Timestamp last_updated = 5;
 }
 
-message ListInboundSmsTemplatesReq {
-}
+message ListInboundSmsTemplatesReq {}
 
 message ListInboundSmsTemplatesRes {
-  repeated InboundSmsTemplateWithIntents  inbound_sms_template_with_intents= 1;
+  repeated InboundSmsTemplateWithIntents inbound_sms_template_with_intents = 1;
 }
 
 message InboundSmsTemplateWithIntents {
@@ -962,7 +946,6 @@ message DeleteInboundSmsTemplateReq {
 message DeleteInboundSmsTemplateRes {
   bool result = 1;
 }
-
 
 message CreateInboundSmsTemplateReq {
   int64 sms_number_sid = 1;
@@ -1004,11 +987,10 @@ message InboundSmsGroup {
   google.protobuf.Timestamp date_created = 12;
 }
 
-message ListInboundSmsGroupsReq {
-}
+message ListInboundSmsGroupsReq {}
 
 message ListInboundSmsGroupsRes {
-  repeated InboundSmsGroupWithIntents  inbound_sms_group_with_intents= 1;
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
 }
 
 message UpdateInboundSmsGroupReq {
@@ -1055,14 +1037,13 @@ message GetInboundSmsGroupByIdReq {
 }
 
 message GetInboundSmsGroupByIdRes {
-  InboundSmsGroupWithIntents  inbound_sms_group_with_intents = 1;
+  InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
 }
 
-message ListActiveInboundSmsGroupsReq {
-}
+message ListActiveInboundSmsGroupsReq {}
 
 message ListActiveInboundSmsGroupsRes {
-  repeated InboundSmsGroupWithIntents  inbound_sms_group_with_intents = 1;
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
 }
 
 message ListInboundSmsGroupByFiltersReq {
@@ -1073,7 +1054,7 @@ message ListInboundSmsGroupByFiltersReq {
 }
 
 message ListInboundSmsGroupByFiltersRes {
-  repeated InboundSmsGroupWithIntents  inbound_sms_group_with_intents = 1;
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
 }
 
 message ListInboundSmsGroupsByGroupIdsReq {
@@ -1081,7 +1062,7 @@ message ListInboundSmsGroupsByGroupIdsReq {
 }
 
 message ListInboundSmsGroupsByGroupIdsRes {
-  repeated InboundSmsGroupWithIntents  inbound_sms_group_with_intents = 1;
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
 }
 
 message ScheduleInboundSmsReq {
@@ -1109,11 +1090,10 @@ message SmsConversation {
   google.protobuf.Timestamp created_on = 4;
 }
 
-message ListSmsConversationsReq {
-}
+message ListSmsConversationsReq {}
 
 message ListSmsConversationsRes {
-  repeated SmsConversation  sms_conversations= 1;
+  repeated SmsConversation sms_conversations = 1;
 }
 
 message UpdateSmsConversationReq {
@@ -1148,7 +1128,7 @@ message GetSmsConversationByIdReq {
 }
 
 message GetSmsConversationByIdRes {
-  SmsConversation  sms_conversation = 1;
+  SmsConversation sms_conversation = 1;
 }
 
 message ListSmsConversationAuditsReq {
@@ -1156,7 +1136,7 @@ message ListSmsConversationAuditsReq {
 }
 
 message ListSmsConversationAuditsRes {
-  repeated SmsConversationAudit  sms_conversation_audits= 1;
+  repeated SmsConversationAudit sms_conversation_audits = 1;
 }
 
 message CreateSmsConversationAuditRes {
@@ -1168,7 +1148,7 @@ message GetSmsConversationAuditByIdReq {
 }
 
 message GetSmsConversationAuditByIdRes {
-  SmsConversationAudit  sms_conversation_audit = 1;
+  SmsConversationAudit sms_conversation_audit = 1;
 }
 
 message ListSmsConversationAssignedAgentsReq {
@@ -1176,9 +1156,8 @@ message ListSmsConversationAssignedAgentsReq {
 }
 
 message ListSmsConversationAssignedAgentsRes {
-  repeated SmsConversationAssignedAgent  sms_conversation_assigned_agents= 1;
+  repeated SmsConversationAssignedAgent sms_conversation_assigned_agents = 1;
 }
-
 
 message CreateSmsConversationAssignedAgentRes {
   bool result = 1;
@@ -1190,7 +1169,7 @@ message GetSmsConversationAssignedAgentByIdReq {
 }
 
 message GetSmsConversationAssignedAgentByIdRes {
-  SmsConversationAssignedAgent  sms_conversation_assigned_agent = 1;
+  SmsConversationAssignedAgent sms_conversation_assigned_agent = 1;
 }
 
 message SmsConversationAudit {
@@ -1217,7 +1196,7 @@ message GetSmsMessageReq {
 }
 
 message GetSmsMessageRes {
-  SmsMessage  sms_message = 1;
+  SmsMessage sms_message = 1;
 }
 
 message SmsMessage {

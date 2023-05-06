@@ -1,15 +1,11 @@
-
 syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
 
 // Represents the skill types that a client's skills can be.
 message SkillType {
@@ -82,6 +78,7 @@ message ForecastingParameters {
   // Otherwise, it will subtract that many months from the @training_data_range end datetime and use it as the start time.
   int32 averages_calculation_range_in_months = 13;
 }
+
 // ----------------------- Message types used by BuildProfileForecastReq() ------------------
 // a profile for time of day, for each day of the week
 message ProfileTOD {
@@ -137,11 +134,10 @@ message ProfileMOY {
   float december = 12;
 }
 
-
 // note that for any of the profile_XX fields below, if a profile has length 0, then a profile value of 1.0 is assumed for that profile
 // Each profile element is in the range 0..1 inclusive
 
-message DistributionProfile{
+message DistributionProfile {
   // For each of the 7 days of the week, a list of intervals signifying the distribution by time of day in intervals
   // determined by interval_minutes, starting with interval 0 = 12AM. so there would be 96 element for 15-minute intervals
   ProfileTOD profile_tod = 1;
@@ -155,16 +151,15 @@ message DistributionProfile{
   ProfileMOY profile_moy = 4;
 }
 
-
 // defines a template profile for call count distributions
-message CallProfileGroupCalls{
+message CallProfileGroupCalls {
   int32 total_calls = 1;
 
   DistributionProfile distribution_profile = 2;
 }
 
 // defines a template profile of call characteristic distributions
-message CallProfileGroupAvgs{
+message CallProfileGroupAvgs {
   // min average (e.g. min ATAB)
   float min_average = 1;
   // max average (e.g. max ATAB)
@@ -246,10 +241,10 @@ enum ConstraintRuleType {
 }
 
 // Enum representing the different types of placements for the DOW Placement.
-enum DOWPlacementType{
+enum DOWPlacementType {
   MUST_NOT = 0;
   MAY = 1;
-  MUST =  2;
+  MUST = 2;
 }
 
 // Enum representing the options for open times.
@@ -297,77 +292,77 @@ enum ConfigRelationshipType {
 }
 
 // Enum representing the level of a diagnostic.
-enum DiagnosticLevel{
-    // The diagnostic is reporting an information level report.
-    INFORMATION = 0;
-    // The diagnostic is reporting a suggestion level report.
-    SUGGESTION = 1;
-    // The diagnostic is reporting a warning level report.
-    WARNING = 2;
-    // The diagnostic is reporting an error level report.
-    DIAGNOSTIC_ERROR = 3;
-    // The diagnostic is reporting an internal error level report.
-    INTERNAL_ERROR = 4;
+enum DiagnosticLevel {
+  // The diagnostic is reporting an information level report.
+  INFORMATION = 0;
+  // The diagnostic is reporting a suggestion level report.
+  SUGGESTION = 1;
+  // The diagnostic is reporting a warning level report.
+  WARNING = 2;
+  // The diagnostic is reporting an error level report.
+  DIAGNOSTIC_ERROR = 3;
+  // The diagnostic is reporting an internal error level report.
+  INTERNAL_ERROR = 4;
 }
 
 // Enum representing the type of a diagnostic.
-enum DiagnosticCode{
-    // The code type used when no other code is appropriate.
-    GENERAL = 0;
-    // The diagnostic is reporting no errors found.
-    OK = 1;
-    // The diagnostic is reporting no skills in the dictionary.
-    NO_SKILLS_IN_DICTIONARY = 2;
-    // The diagnostic is reporting a wfm agent with no skill proficiencies.
-    AGENT_HAS_NO_SKILL_PROFICIENCIES = 3;
-    // The diagnostic is reporting an agent with no skills.
-    AGENT_HAS_NO_SKILLS = 4;
-    // The diagnostic is reporting the constraint rules don't have a scheduling activity.
-    NO_SCHEDULING_ACTIVITIES_FOR_CONSTRAINT_RULES = 5;
-    // The diagnostic is reporting a constraint rule pointing to a scheduling activity that cannot be found.
-    SCHEDULING_ACTIVITY_FOR_CONSTRAINT_RULE_NOT_FOUND = 6;
-    // The diagnostic is reporting a NONE value for a shift template
-    SHIFT_TEMPLATE_CANNOT_BE_NONE = 7;
-    // The diagnostic is reporting a shift template with no member placement rules.
-    SHIFT_TEMPLATE_HAS_NO_PLACEMENT_RULES = 8;
-    // The diagnostic is reporting a shift template whose placement rules do not include an on-call placement.
-    NO_ONCALL_IN_SHIFT_TEMPLATE_PLACEMENT_RULES = 9;
-    // The diagnostic is reporting the min duration for a shift templates placement rule being greater than the max duration.
-    MIN_GT_MAX_DURATION_IN_SHIFT_TEMPLATE_PLACEMENT_RULES = 10;
-    // The diagnostic is reporting a shift template with a min_agents value greater than it's max_agents value.
-    MIN_GT_MAX_AGENTS_IN_SHIFT_TEMPLATE = 11;
-    // The diagnostic is reporting no placement rules as members of the shift template.
-    NO_PLACEMENT_RULES_FOR_SHIFT_TEMPLATE = 12;
-    // The diagnostic is reporting that the activities are too short for the shift.
-    ACTIVITIES_SHORTER_THAN_SHIFT = 13;
-    // The diagnostic is reporting that a shift doesn't have a sufficient number of agents available.
-    NOT_ENOUGH_AGENTS_FOR_SHIFT = 14;
-    // The diagnostic is reporting that a program node has no member agent groups.
-    PROGRAM_HAS_NO_AGENT_GROUPS = 15;
-    // The diagnostic is reporting that a program node has no member shift templates.
-    PROGRAM_HAS_NO_SHIFT_TEMPLATES = 16;
-    // The diagnostic is reporting that a location node has no member program nodes.
-    LOCATION_HAS_NO_PROGRAMS = 17;
-    // The diagnostic is reporting that a client node has no member location nodes.
-    CLIENT_HAS_NO_LOCATIONS = 18;
-    // The diagnostic is reporting that a call center node has no member client nodes
-    CALL_CENTER_HAS_NO_CLIENTS = 19;
-    // The diagnostic is reporting that a program node has an invalid parent location node.
-    PROGRAM_HAS_INVALID_PARENT_LOCATION = 20;
-    // The diagnostic is reporting that a location node has an invalid parent client node.
-    LOCATION_HAS_INVALID_PARENT_CLIENT = 21;
-    // The diagnostic is reporting that a client node has an invalid parent call center.
-    CLIENT_HAS_INVALID_PARENT_CALL_CENTER = 22;
-    // The diagnostic is reporting that an agent group has an invalid parent node.
-    AGENT_GROUP_HAS_INVALID_PARENT_NODE = 23;
-    // The diagnostic is reporting an invalid parent program for a shift template.
-    SHIFT_TEMPLATE_HAS_INVALID_PARENT_PROGRAM = 24;
-    // The diagnostic is reporting a constraint rule pointing to a missing skill proficiency.
-    NO_SKILL_PROFICIENCY_FOR_MIN_SKILL_PROFICIENCY_CONSTRAINT_RULE = 25;
+enum DiagnosticCode {
+  // The code type used when no other code is appropriate.
+  GENERAL = 0;
+  // The diagnostic is reporting no errors found.
+  OK = 1;
+  // The diagnostic is reporting no skills in the dictionary.
+  NO_SKILLS_IN_DICTIONARY = 2;
+  // The diagnostic is reporting a wfm agent with no skill proficiencies.
+  AGENT_HAS_NO_SKILL_PROFICIENCIES = 3;
+  // The diagnostic is reporting an agent with no skills.
+  AGENT_HAS_NO_SKILLS = 4;
+  // The diagnostic is reporting the constraint rules don't have a scheduling activity.
+  NO_SCHEDULING_ACTIVITIES_FOR_CONSTRAINT_RULES = 5;
+  // The diagnostic is reporting a constraint rule pointing to a scheduling activity that cannot be found.
+  SCHEDULING_ACTIVITY_FOR_CONSTRAINT_RULE_NOT_FOUND = 6;
+  // The diagnostic is reporting a NONE value for a shift template
+  SHIFT_TEMPLATE_CANNOT_BE_NONE = 7;
+  // The diagnostic is reporting a shift template with no member placement rules.
+  SHIFT_TEMPLATE_HAS_NO_PLACEMENT_RULES = 8;
+  // The diagnostic is reporting a shift template whose placement rules do not include an on-call placement.
+  NO_ONCALL_IN_SHIFT_TEMPLATE_PLACEMENT_RULES = 9;
+  // The diagnostic is reporting the min duration for a shift templates placement rule being greater than the max duration.
+  MIN_GT_MAX_DURATION_IN_SHIFT_TEMPLATE_PLACEMENT_RULES = 10;
+  // The diagnostic is reporting a shift template with a min_agents value greater than it's max_agents value.
+  MIN_GT_MAX_AGENTS_IN_SHIFT_TEMPLATE = 11;
+  // The diagnostic is reporting no placement rules as members of the shift template.
+  NO_PLACEMENT_RULES_FOR_SHIFT_TEMPLATE = 12;
+  // The diagnostic is reporting that the activities are too short for the shift.
+  ACTIVITIES_SHORTER_THAN_SHIFT = 13;
+  // The diagnostic is reporting that a shift doesn't have a sufficient number of agents available.
+  NOT_ENOUGH_AGENTS_FOR_SHIFT = 14;
+  // The diagnostic is reporting that a program node has no member agent groups.
+  PROGRAM_HAS_NO_AGENT_GROUPS = 15;
+  // The diagnostic is reporting that a program node has no member shift templates.
+  PROGRAM_HAS_NO_SHIFT_TEMPLATES = 16;
+  // The diagnostic is reporting that a location node has no member program nodes.
+  LOCATION_HAS_NO_PROGRAMS = 17;
+  // The diagnostic is reporting that a client node has no member location nodes.
+  CLIENT_HAS_NO_LOCATIONS = 18;
+  // The diagnostic is reporting that a call center node has no member client nodes
+  CALL_CENTER_HAS_NO_CLIENTS = 19;
+  // The diagnostic is reporting that a program node has an invalid parent location node.
+  PROGRAM_HAS_INVALID_PARENT_LOCATION = 20;
+  // The diagnostic is reporting that a location node has an invalid parent client node.
+  LOCATION_HAS_INVALID_PARENT_CLIENT = 21;
+  // The diagnostic is reporting that a client node has an invalid parent call center.
+  CLIENT_HAS_INVALID_PARENT_CALL_CENTER = 22;
+  // The diagnostic is reporting that an agent group has an invalid parent node.
+  AGENT_GROUP_HAS_INVALID_PARENT_NODE = 23;
+  // The diagnostic is reporting an invalid parent program for a shift template.
+  SHIFT_TEMPLATE_HAS_INVALID_PARENT_PROGRAM = 24;
+  // The diagnostic is reporting a constraint rule pointing to a missing skill proficiency.
+  NO_SKILL_PROFICIENCY_FOR_MIN_SKILL_PROFICIENCY_CONSTRAINT_RULE = 25;
 }
 
 // Enum representing the type of a performance metric.
-enum PerformanceMetricType{
+enum PerformanceMetricType {
   // The metric is a simplified comparison of FTE calls vs achieved calls.
   FTE_REQUIRED_VS_ACHIEVED_SIMPLE = 0;
   // The metric is an extended comparison of FTE calls vs achieved calls.
@@ -390,7 +385,7 @@ enum ScheduleShouldInclude {
   ONLY_PERFORMANCE_METRICS = 1;
   // Include both entities.
   SHIFT_INSTANCES_AND_PERFORMANCE_METRICS = 2;
-};
+}
 
 // enum representing the type of a schedule.
 enum ScheduleType {

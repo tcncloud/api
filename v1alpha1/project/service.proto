@@ -2,25 +2,21 @@ syntax = "proto3";
 
 package v1alpha1.project;
 
-option java_package="com.tcn.api.v1alpha1.project";
-option go_package="github.com/tcncloud/api/v1alpha1.project;project";
-
-
-
-
-import "google/api/annotations.proto";
 import "annotations/authz.proto";
-import "commons/types.proto";
-import "commons/project.proto";
 import "commons/omnichannel.proto";
-import "google/protobuf/timestamp.proto";
+import "commons/project.proto";
+import "commons/types.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.project;project";
+option java_package = "com.tcn.api.v1alpha1.project";
 
 // Service for interacting with TCN's Project API system.
 // Accessing all of the methods require an authenticated user with the correct
 // permissions.
 service ProjectApi {
-
   // Create/Record project defined by CreateProjectReq message for a specified
   // name, description and status.
   // The method will return a Project message/entity that will
@@ -31,7 +27,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createproject";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -43,7 +43,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listprojects";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -57,7 +61,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/editprojectbyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -71,7 +79,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/closeprojectbyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -85,7 +97,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getprojectbyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -99,7 +115,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createcannedmessage";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -111,8 +131,14 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessages";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
-        {permissions: [PERMISSION_AGENT]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
     };
   }
 
@@ -126,7 +152,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/updatecannedmessage";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -138,7 +168,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getcannedmessagebyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -150,7 +184,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/deletecannedmessagebyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -164,7 +202,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/createcannedmessagegroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -176,8 +218,14 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessagegroups";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
-        {permissions: [PERMISSION_AGENT]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
     };
   }
 
@@ -189,7 +237,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/updatecannedmessagegroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -201,7 +253,11 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/deletecannedmessagegroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
     };
   }
 
@@ -213,8 +269,14 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/listcannedmessagesbygroupid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
-        {permissions: [PERMISSION_AGENT]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
     };
   }
 
@@ -226,8 +288,14 @@ service ProjectApi {
     option (google.api.http).post = "/api/v1alpha1/projectapi/projectapi/getcannedmessagegroupbyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_OMNI_BOSS]},
-        {permissions: [PERMISSION_AGENT]}];
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
     };
   }
 }

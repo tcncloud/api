@@ -2,127 +2,223 @@ syntax = "proto3";
 
 package v1alpha1.acs;
 
-option java_package="com.tcn.api.v1alpha1.acs";
-option go_package="github.com/tcncloud/api/v1alpha1.acs;acs";
-
-
-
-import "google/protobuf/timestamp.proto";
-import "google/api/annotations.proto";
-import "commons/acd.proto";
 import "annotations/authz.proto";
+import "commons/acd.proto";
 import "commons/auth/perms.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.acs;acs";
+option java_package = "com.tcn.api.v1alpha1.acs";
 
 service Acs {
-  rpc CreateScript (CreateScriptRequest) returns (CreateScriptResponse) {
+  rpc CreateScript(CreateScriptRequest) returns (CreateScriptResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/script/create";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc UpdateScript (UpdateScriptRequest) returns (UpdateScriptResponse) {
+  rpc UpdateScript(UpdateScriptRequest) returns (UpdateScriptResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/script/update";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
-}
+  }
 
-rpc GetScriptById (GetScriptByIdRequest) returns (GetScriptByIdResponse) {
+  rpc GetScriptById(GetScriptByIdRequest) returns (GetScriptByIdResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/script/getbyid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc ListScripts (ListScriptsRequest) returns (stream ScriptDetails) {
+  rpc ListScripts(ListScriptsRequest) returns (stream ScriptDetails) {
     option (google.api.http).post = "/api/v1alpha1/acs/script/list";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc SaveResponses (SaveResponsesRequest) returns (SaveResponsesResponse) {
+  rpc SaveResponses(SaveResponsesRequest) returns (SaveResponsesResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/responses/save";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc GetResponses (GetResponsesRequest) returns (GetResponsesResponse) {
+  rpc GetResponses(GetResponsesRequest) returns (GetResponsesResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/responses/get";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc CreateRule (CreateRuleRequest) returns (CreateRuleResponse) {
+  rpc CreateRule(CreateRuleRequest) returns (CreateRuleResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/mapper/create";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc UpdateRules (UpdateRulesRequest) returns (UpdateRulesResponse) {
+  rpc UpdateRules(UpdateRulesRequest) returns (UpdateRulesResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/mapper/update";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc ListRules (ListRulesRequest) returns (ListRulesResponse) {
+  rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/mapper/list";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc CreateRegexEvaluator (CreateRegexEvaluatorRequest) returns (CreateRegexEvaluatorResponse) {
+  rpc CreateRegexEvaluator(CreateRegexEvaluatorRequest) returns (CreateRegexEvaluatorResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/regex/create";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc UpdateRegexEvaluator (UpdateRegexEvaluatorRequest) returns (UpdateRegexEvaluatorResponse) {
+  rpc UpdateRegexEvaluator(UpdateRegexEvaluatorRequest) returns (UpdateRegexEvaluatorResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/regex/update";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc ListRegexEvaluators (ListRegexEvaluatorsRequest) returns (ListRegexEvaluatorsResponse) {
+  rpc ListRegexEvaluators(ListRegexEvaluatorsRequest) returns (ListRegexEvaluatorsResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/regex/list";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc DeleteRule (DeleteRuleRequest) returns (DeleteRuleResponse) {
+  rpc DeleteRule(DeleteRuleRequest) returns (DeleteRuleResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/mapper/delete";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 
-  rpc GetScript (GetScriptRequest) returns (GetScriptResponse) {
+  rpc GetScript(GetScriptRequest) returns (GetScriptResponse) {
     option (google.api.http).post = "/api/v1alpha1/acs/script/get";
     option (google.api.http).body = "*";
-        option (annotations.authz) = {
-        sets: [{permissions: [PERMISSION_AGENT_CALL_SCRIPTS, PERMISSION_DEV]}];
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_AGENT_CALL_SCRIPTS,
+            PERMISSION_DEV
+          ]
+        }
+      ];
     };
   }
 }
@@ -180,7 +276,7 @@ message ScriptPage {
 }
 
 message ScriptElement {
-  string id = 1;   // uuid
+  string id = 1; // uuid
   string name = 2; // no spaces and special chars !@#$%^&*(){}[],;"':\/?<>.
   string header = 3;
   string prompt = 4;
@@ -190,32 +286,32 @@ message ScriptElement {
 }
 
 enum ScriptElementType {
-  RAW_TEXT = 0;          // Raw Text only (no response)
-  TEXT_BOX = 1;          // Free Form
+  RAW_TEXT = 0; // Raw Text only (no response)
+  TEXT_BOX = 1; // Free Form
   TEXT_BOX_ALPHA = 2;
   TEXT_BOX_NUM = 3;
   TEXT_AREA = 4;
   TEXT_VERIFICATION = 5;
   REGEX = 6;
   REGEX_TEXT_AREA = 7;
-  DROP_DOWN = 100;       // Single Choice
+  DROP_DOWN = 100; // Single Choice
   CALENDAR = 101;
   PHONE = 102;
   RADIO = 103;
-  MULTI_SELECT = 200;    // Multi Choice
+  MULTI_SELECT = 200; // Multi Choice
   CHECKBOX = 201;
 }
 message ElementType {
   oneof element {
-    RawText raw_text = 1;                       // RawText, no value
-    StringDefaultValue text_area = 2;           // FreeForm
+    RawText raw_text = 1; // RawText, no value
+    StringDefaultValue text_area = 2; // FreeForm
     StringDefaultValue text_box = 3;
     StringDefaultValue text_box_alpha = 4;
     StringDefaultValue text_box_num = 5;
     StringDefaultValue text_verification = 6;
     RegexDefaultValue regex = 7;
     RegexDefaultValue regex_text_area = 8;
-    SelectDefaultValue drop_down = 100;         // SingleChoice
+    SelectDefaultValue drop_down = 100; // SingleChoice
     StringDefaultValue calendar = 101;
     StringDefaultValue phone = 102;
     SelectDefaultValue radio = 103;
@@ -270,7 +366,6 @@ enum ComparisonType {
   DOES_NOT_END_WITH = 13;
 }
 
-
 // -------- Agent Actions Stream -------
 // continuously tracked and occasionally batch updated
 message AgentAction {
@@ -294,16 +389,16 @@ enum AgentEventTypeEnum {
 
 message AgentEventType {
   oneof event {
-    CallConnected connected = 1;         // relative timestamp
-    CallDisconnected disconnected = 2;   // relative timstamp
-    PageChange page_change = 3;          // script pagination nav
-    ElementFocus element_focus = 4;      // script element was focused by user
+    CallConnected connected = 1; // relative timestamp
+    CallDisconnected disconnected = 2; // relative timstamp
+    PageChange page_change = 3; // script pagination nav
+    ElementFocus element_focus = 4; // script element was focused by user
     ElementResponse element_updated = 5; // script element was updated by user
-    KeyPress key_press = 6;              // special key presses (shortcuts, etc)
-    ClickLink click_link = 7;            // weblink or link script element clicked
-    ClickButton click_button = 8;        // a button in the UI was clicked
-    AppUnfocused app_unfocused = 9;      // the entire app was unfocused
-    AppRefocused app_refocused = 10;     // the entire app was refocused
+    KeyPress key_press = 6; // special key presses (shortcuts, etc)
+    ClickLink click_link = 7; // weblink or link script element clicked
+    ClickButton click_button = 8; // a button in the UI was clicked
+    AppUnfocused app_unfocused = 9; // the entire app was unfocused
+    AppRefocused app_refocused = 10; // the entire app was refocused
   }
 }
 
@@ -354,12 +449,11 @@ message ClickLink {
   // maybe include the url with the mailmerge fields intact
 }
 
-
 // -------- Agent Script Responses --------
 message SaveResponsesRequest {
-  string script_id = 1;                      // need to link these? for transfers?
-  int64 call_id = 2;                         // needed for sure
-  string campaign_id = 3;                    // to enable searching by campaign? maybe not relevant
+  string script_id = 1; // need to link these? for transfers?
+  int64 call_id = 2; // needed for sure
+  string campaign_id = 3; // to enable searching by campaign? maybe not relevant
   // string org_id = 4;
   // string region_id = 5;
   // int64 agent_id = 6;                     // only one agent_id associated with this anyway...
@@ -370,33 +464,33 @@ message Responses {
   repeated ElementResponse responses = 1;
 }
 
-message StringArrayResponse {                 // since you can't do repeated in oneofs
+message StringArrayResponse { // since you can't do repeated in oneofs
   repeated string values = 1;
 }
 
 message RegexStringResponse {
   string value = 1;
-  int64 response_evaluator_sid = 2;           // used for validating on call history edits
+  int64 response_evaluator_sid = 2; // used for validating on call history edits
 }
 
 message ElementResponse {
-  string id = 1;                              // used for populating on transfer
+  string id = 1; // used for populating on transfer
   string header = 2;
   google.protobuf.Timestamp last_edited = 3;
   oneof element {
     // RawText raw_text = 1;                  // No Response
-    string text_area = 10;                    // FreeForm
+    string text_area = 10; // FreeForm
     string text_box = 11;
     string text_box_alpha = 12;
     string text_box_num = 13;
     string text_verification = 14;
     RegexStringResponse regex = 15;
     RegexStringResponse regex_text_area = 16;
-    string drop_down = 100;                  // SingleChoice
+    string drop_down = 100; // SingleChoice
     string calendar = 101;
     string phone = 102;
     string radio = 103;
-    StringArrayResponse multi_select = 200;  // MultiChoice
+    StringArrayResponse multi_select = 200; // MultiChoice
     StringArrayResponse checkbox = 201;
   }
 }
@@ -501,7 +595,7 @@ message UpdateRegexEvaluatorResponse {
 }
 
 message ListRegexEvaluatorsRequest { // add criteria later?
- // string org_id  = 1;
+  // string org_id  = 1;
 }
 
 message ListRegexEvaluatorsResponse {

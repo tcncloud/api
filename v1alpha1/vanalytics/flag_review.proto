@@ -2,12 +2,10 @@ syntax = "proto3";
 
 package v1alpha1.vanalytics;
 
-option java_package="com.tcn.api.v1alpha1.vanalytics";
-option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-
-
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
 
 // [CREATE] ====================================================================
 
@@ -75,7 +73,7 @@ message FlagReview {
   int64 transcript_sid = 2;
 
   // DEPRECATED. Use flag_snapshot_sid instead.
-  int64 flag_sid = 3 [deprecated=true];
+  int64 flag_sid = 3 [deprecated = true];
 
   // Output only. The timestamp when this flag review was created. Assigned by the
   // server.

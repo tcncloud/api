@@ -2,106 +2,102 @@ syntax = "proto3";
 
 package v1alpha1.scorecards;
 
-option java_package="com.tcn.api.v1alpha1.scorecards";
-option go_package="github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-
-
-
+import "commons/acd.proto";
+import "commons/scorecards.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
-import "commons/acd.proto";
-import "commons/scorecards.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+option java_package = "com.tcn.api.v1alpha1.scorecards";
 
 // CreateCategoryRequest is request to create a category.
 message CreateCategoryRequest {
-    commons.Category category = 1; // Required.
+  commons.Category category = 1; // Required.
 }
 
 // CreateCategoryResponse returns the created category.
 message CreateCategoryResponse {
-    commons.Category category = 1;
+  commons.Category category = 1;
 }
 
 // ListCategoriesRequest is the request to list categories by some criteria.
 message ListCategoriesRequest {
-    repeated string author_ids = 2; // Optional. Returns categories by any author.
-    repeated int64 skill_profiles = 3; // Optional. Returns categories with any skill.
-    repeated commons.CallType.Enum call_types = 4; // Optional. Returns categories with any call type.
-    CategoryType category_type = 5; // Required. Returns categories matching type.
+  repeated string author_ids = 2; // Optional. Returns categories by any author.
+  repeated int64 skill_profiles = 3; // Optional. Returns categories with any skill.
+  repeated commons.CallType.Enum call_types = 4; // Optional. Returns categories with any call type.
+  CategoryType category_type = 5; // Required. Returns categories matching type.
 
-    enum CategoryType {
-        ANY = 0; // Default. Returns all category types.
-        SYSTEM = 1; // System created category (cannot be edited by users).
-        USER = 2; //  User created category.
-    }
+  enum CategoryType {
+    ANY = 0; // Default. Returns all category types.
+    SYSTEM = 1; // System created category (cannot be edited by users).
+    USER = 2; //  User created category.
+  }
 }
-
 
 // ListCategoriesResponse returns a list of categories.
 message ListCategoriesResponse {
-    repeated commons.Category categories = 1;
+  repeated commons.Category categories = 1;
 }
 
 // UpdateCategoryRequest is the request to update a category by id.
 message UpdateCategoryRequest {
-    // Required.
-    commons.Category category = 1;
+  // Required.
+  commons.Category category = 1;
 
-    // Required. Valid paths: [title, description].
-    google.protobuf.FieldMask update_mask = 2;
+  // Required. Valid paths: [title, description].
+  google.protobuf.FieldMask update_mask = 2;
 }
 
 // UpdateCategoryResponse returns the updated category.
 message UpdateCategoryResponse {
-    commons.Category category = 1;
+  commons.Category category = 1;
 }
 
 // DeleteCategoryRequest is request to delete a category by id.
 message DeleteCategoryRequest {
-    int64 category_id = 2;  // Required.
+  int64 category_id = 2; // Required.
 }
 
 // DeleteCategoryResponse returns the deleted category.
 message DeleteCategoryResponse {
-    commons.Category category = 1;
+  commons.Category category = 1;
 }
 
 // GetCategoryRequest is request to get a category by id.
 message GetCategoryRequest {
-    int64 category_id = 2; // Required. Must set category_id or title.
-    string title = 3; // Required. Must set category_id or title.
+  int64 category_id = 2; // Required. Must set category_id or title.
+  string title = 3; // Required. Must set category_id or title.
 }
 
 // GetCategoryResponse returns the category.
 message GetCategoryResponse {
-    commons.Category category = 1;
+  commons.Category category = 1;
 }
 
 // SampleCallsByCategoryRequest is a request to get some sample calls for evaluating
 message SampleCallsByCategoryRequest {
-	int64 category_id = 2; // required for getting skill profile(s)
-	google.protobuf.Timestamp start_time = 3; // required
-	google.protobuf.Timestamp end_time = 4; // optional. if not set, use time.Now()
-	int32 scorer_max_evaluations = 5; // required
-	int32 sample_percentage = 6; // optional. range from 1-100. If not set, return all
-	repeated string agent_user_ids = 7; // optional. filter calls by agent user id
-	int64 scorecard_id = 10; // optional. filter calls by scorecard id
+  int64 category_id = 2; // required for getting skill profile(s)
+  google.protobuf.Timestamp start_time = 3; // required
+  google.protobuf.Timestamp end_time = 4; // optional. if not set, use time.Now()
+  int32 scorer_max_evaluations = 5; // required
+  int32 sample_percentage = 6; // optional. range from 1-100. If not set, return all
+  repeated string agent_user_ids = 7; // optional. filter calls by agent user id
+  int64 scorecard_id = 10; // optional. filter calls by scorecard id
 }
 
 // SampleCallsByCategoryResponse returns the agent calls
 message SampleCallsByCategoryResponse {
-	repeated SampleAgentCall agent_calls = 1;
+  repeated SampleAgentCall agent_calls = 1;
 }
 
 // SampleAgentCall is an Agent Call returned by SampleCallsByCategory
 message SampleAgentCall {
-	int64 call_sid = 1; // id of the call
-	commons.CallType.Enum call_type = 2; // call type - i.e. manual, inbound, etc.
-	google.protobuf.Timestamp call_start = 3; // timestamp of call start
-	google.protobuf.Duration call_duration = 4; // duration of call
-	google.protobuf.Duration speech = 5; // amount of speech in call
-	google.protobuf.Duration silence = 6; // amount of silence in call
-	string agent_user_id = 7; // user id of first agent on call
+  int64 call_sid = 1; // id of the call
+  commons.CallType.Enum call_type = 2; // call type - i.e. manual, inbound, etc.
+  google.protobuf.Timestamp call_start = 3; // timestamp of call start
+  google.protobuf.Duration call_duration = 4; // duration of call
+  google.protobuf.Duration speech = 5; // amount of speech in call
+  google.protobuf.Duration silence = 6; // amount of silence in call
+  string agent_user_id = 7; // user id of first agent on call
 }
-

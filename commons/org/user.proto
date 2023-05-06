@@ -2,19 +2,15 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
 import "commons/audit/event_types.proto";
 import "commons/notifications.proto";
 import "commons/org.proto";
 import "commons/org/labels.proto";
-
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 // User represents a user of the system.
 message User {
@@ -79,7 +75,7 @@ message User {
   // The date/time the user was last updated.
   google.protobuf.Timestamp last_updated = 164;
   // Whether or not the user must reset their password on next login.
-  bool password_reset_required =  165;
+  bool password_reset_required = 165;
   // connection id is the id of the auth connection that the
   // user is coming from if it is a delgated user. If the user
   // is not delgated this will be nil.

@@ -2,41 +2,39 @@ syntax = "proto3";
 
 package v1alpha1.scorecards;
 
-option java_package="com.tcn.api.v1alpha1.scorecards";
-option go_package="github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-
-
-
-import "google/protobuf/field_mask.proto";
 import "commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+option java_package = "com.tcn.api.v1alpha1.scorecards";
 
 // CreateEvaluationQuestionRequest is request to create an evaluation question
 message CreateEvaluationQuestionRequest {
-    commons.EvaluationQuestion evaluation_question = 1; // Required - the entity which is requested to be created
+  commons.EvaluationQuestion evaluation_question = 1; // Required - the entity which is requested to be created
 }
 
 // CreateEvaluationQuestionResponse is response with requested entity
 message CreateEvaluationQuestionResponse {
-    commons.EvaluationQuestion evaluation_question = 1; // Required - the entity which was created
+  commons.EvaluationQuestion evaluation_question = 1; // Required - the entity which was created
 }
 
 // UpdateEvaluationQuestionRequest is request to update an existing evaluation question
 message UpdateEvaluationQuestionRequest {
-    commons.EvaluationQuestion evaluation_question = 1; // Required - evaluation question that is to be updated
-    google.protobuf.FieldMask update_mask = 2; // Required - specification of which fields should be updated
+  commons.EvaluationQuestion evaluation_question = 1; // Required - evaluation question that is to be updated
+  google.protobuf.FieldMask update_mask = 2; // Required - specification of which fields should be updated
 }
 
 // UpdateEvaluationQuestionResponse is response with updated entity
 message UpdateEvaluationQuestionResponse {
-    commons.EvaluationQuestion evaluation_question = 1; // updated evaluation question
+  commons.EvaluationQuestion evaluation_question = 1; // updated evaluation question
 }
 
 // DeleteEvaluationQuestionRequest is request to delete an evaluation question
 message DeleteEvaluationQuestionRequest {
-    int64 evaluation_question_id = 2; // Required - unique id of evaluation question to delete
+  int64 evaluation_question_id = 2; // Required - unique id of evaluation question to delete
 }
 
 // DeleteEvaluationQuestionResponse is response with deleted entity
 message DeleteEvaluationQuestionResponse {
-    commons.EvaluationQuestion evaluation_question = 1; // evaluation question object deleted
+  commons.EvaluationQuestion evaluation_question = 1; // evaluation question object deleted
 }

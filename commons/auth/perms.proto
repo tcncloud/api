@@ -2,13 +2,10 @@ syntax = "proto3";
 
 package commons.auth;
 
-option java_package="com.tcn.api.commons.auth";
-option go_package="github.com/tcncloud/api/commons.auth;auth";
-
 import "annotations/perms/tcn.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.auth;auth";
+option java_package = "com.tcn.api.commons.auth";
 
 // Permission enum contains the permissions to be used for access control.
 enum Permission {
@@ -46,9 +43,7 @@ enum Permission {
   PERMISSION_OWNING_ORG_IMITATION = 130 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_ORGANIZATION
-    features: [
-      "Imitate Within Org Hierarchy"
-    ]
+    features: ["Imitate Within Org Hierarchy"]
   }];
 
   // Enables ability to create users.
@@ -123,7 +118,7 @@ enum Permission {
   PERMISSION_HUNTGROUP_VIEW = 1900 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_HUNT_GROUPS
-    features:  [
+    features: [
       "Group Scripts",
       "Pause Options",
       "Web Link Templates",
@@ -179,32 +174,18 @@ enum Permission {
    */
 
   // Enables access to agent.
-  PERMISSION_AGENT = 300 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
-  PERMISSION_ACCEPT_QUEUED_CALLS = 310 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_AGENT = 300 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  PERMISSION_ACCEPT_QUEUED_CALLS = 310 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables ability to view the campaign completion box.
-  PERMISSION_VIEW_CAMPAIGN_COMPLETION = 320 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_VIEW_CAMPAIGN_COMPLETION = 320 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Ability to view voice mails for agents.
-  PERMISSION_VIEW_VOICE_MAIL = 321 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_VIEW_VOICE_MAIL = 321 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enabled access to scrublist options on calls.
-  PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS = 330 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS = 330 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables access to edit extensions.
-  PERMISSION_EXTENSION_EDIT = 1400 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_EXTENSION_EDIT = 1400 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables downloading of voicemails.
-  PERMISSION_VOICEMAIL_DOWNLOAD = 1401 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-  }];
+  PERMISSION_VOICEMAIL_DOWNLOAD = 1401 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
 
   /*
    * Voice Analytics
@@ -220,29 +201,17 @@ enum Permission {
     ]
   }];
   // Enables access to managing flags within voice analytics.
-  PERMISSION_VOICE_ANALYTICS_FLAG = 501 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_FLAG = 501 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables access to configuration within voice analytics.
-  PERMISSION_VOICE_ANALYTICS_CONFIG = 502 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_CONFIG = 502 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables ability to download recordings within voice analytics.
-  PERMISSION_VOICE_ANALYTICS_RECORDING_DOWNLOAD = 503 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_RECORDING_DOWNLOAD = 503 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables ability to download transcripts within voice analytics.
-  PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DOWNLOAD = 504 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DOWNLOAD = 504 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables access to voice analytics screenRecording navigation.
-  PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING = 505 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING = 505 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables ability to delete transcripts within voice analytics.
-  PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE = 506 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE = 506 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Enables ability to delete screen recordings.
   PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING_DELETE = 507 [(annotations.perms.options) = {
     wip: true
@@ -256,7 +225,7 @@ enum Permission {
   // Enables access to BI analytics app.
   PERMISSION_BUSINESS_INTELLIGENCE = 600 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
-    features:  [
+    features: [
       "Viewer",
       "Builder",
       "Legacy Analytics"
@@ -265,9 +234,7 @@ enum Permission {
   // Enables ability to view BI dashboards.
   PERMISSION_DASHBOARDS_VIEW = 601 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: [
-      "Viewer"
-    ]
+    features: ["Viewer"]
   }];
   // Enables ability to edit BI dashboards.
   PERMISSION_DASHBOARDS_EDIT = 602 [(annotations.perms.options) = {
@@ -285,9 +252,7 @@ enum Permission {
   // Enables access to insights.
   PERMISSION_INSIGHTS_MANAGE = 604 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: [
-      "Insight Builder"
-    ]
+    features: ["Insight Builder"]
   }];
 
   /*
@@ -325,7 +290,7 @@ enum Permission {
   // Enables access to the compliance app.
   PERMISSION_COMPLIANCE = 900 [(annotations.perms.options) = {
     app: APPLICATION_NATURAL_LANGUAGE_COMPLIANCE
-    features:  [
+    features: [
       "Rule Sets",
       "Scrub Lists",
       "Scenarios"
@@ -334,9 +299,7 @@ enum Permission {
   // Enables access to compliance consent profiles .
   PERMISSION_COMPLIANCE_CONSENT = 910 [(annotations.perms.options) = {
     app: APPLICATION_NATURAL_LANGUAGE_COMPLIANCE
-    features: [
-      "Consent"
-    ]
+    features: ["Consent"]
   }];
 
   /*
@@ -355,9 +318,7 @@ enum Permission {
     ]
   }];
   // Enables access to editing LMS properties.
-  PERMISSION_LMS_EDIT = 1001 [(annotations.perms.options) = {
-    app: APPLICATION_LIST_MANAGEMENT_SERVICES
-  }];
+  PERMISSION_LMS_EDIT = 1001 [(annotations.perms.options) = {app: APPLICATION_LIST_MANAGEMENT_SERVICES}];
 
   /*
    * Omni Boss app
@@ -391,16 +352,12 @@ enum Permission {
   // Enables access to integrations payment menu options.
   PERMISSION_INTEGRATIONS_PAYMENT = 1301 [(annotations.perms.options) = {
     app: APPLICATION_INTEGRATIONS
-    features: [
-      "Payment Integrations"
-    ]
+    features: ["Payment Integrations"]
   }];
   // Enables access to integrations journey menu options.
   PERMISSION_INTEGRATIONS_JOURNEY = 1302 [(annotations.perms.options) = {
     app: APPLICATION_INTEGRATIONS
-    features: [
-      "Journey Integrations"
-    ]
+    features: ["Journey Integrations"]
   }];
 
   /*
@@ -423,21 +380,15 @@ enum Permission {
   }];
 
   /*
-  * Scorecards
-  */
+   * Scorecards
+   */
 
   // Enables access to Scorecards app.
-  PERMISSION_SCORECARDS = 1600 [(annotations.perms.options) = {
-    app: APPLICATION_SCORECARDS
-  }];
+  PERMISSION_SCORECARDS = 1600 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
   // Enables access to managing scorecards.
-  PERMISSION_SCORECARDS_MANAGE = 1601 [(annotations.perms.options) = {
-    app: APPLICATION_SCORECARDS
-  }];
+  PERMISSION_SCORECARDS_MANAGE = 1601 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
   // Enables access to evaluating scorecards.
-  PERMISSION_SCORECARDS_EVALUATE = 1602 [(annotations.perms.options) = {
-    app: APPLICATION_SCORECARDS
-  }];
+  PERMISSION_SCORECARDS_EVALUATE = 1602 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
 
   /*
    * Dev Tools
@@ -446,9 +397,7 @@ enum Permission {
   // Enables access to Dev Tools app.
   PERMISSION_DEV_TOOLS = 1800 [(annotations.perms.options) = {
     app: APPLICATION_DEV_TOOLS
-    features: [
-      "API Explorer"
-    ]
+    features: ["API Explorer"]
   }];
 
   /*
@@ -456,24 +405,16 @@ enum Permission {
    */
 
   // Enables access to view delivery notifications.
-  PERMISSION_DELIVERY_NOTIFICATIONS_VIEW = 2000 [(annotations.perms.options) = {
-    app: APPLICATION_DELIVERY_SERVICE
-  }];
+  PERMISSION_DELIVERY_NOTIFICATIONS_VIEW = 2000 [(annotations.perms.options) = {app: APPLICATION_DELIVERY_SERVICE}];
   // Enables access to create, update, or delete delivery notifications.
-  PERMISSION_DELIVERY_NOTIFICATIONS_EDIT = 2001 [(annotations.perms.options) = {
-    app: APPLICATION_DELIVERY_SERVICE
-  }];
+  PERMISSION_DELIVERY_NOTIFICATIONS_EDIT = 2001 [(annotations.perms.options) = {app: APPLICATION_DELIVERY_SERVICE}];
 
   /*
    * Ticketing System
    */
 
   // ACCESS the Tickets APP: Routing, Listing the tickets, dashboard, reports.
-  PERMISSION_TICKETS_APP = 3100 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_TICKETS_APP = 3100 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
   // Adds Extra Access to: EnableProject
-  PERMISSION_TICKETS_ADMIN = 3101 [(annotations.perms.options) = {
-    app: APPLICATION_VOICE_ANALYTICS
-  }];
+  PERMISSION_TICKETS_ADMIN = 3101 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
 }

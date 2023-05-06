@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package v1alpha1.vanalytics;
 
-option java_package="com.tcn.api.v1alpha1.vanalytics";
-option go_package="github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-
-
-
+import "google/protobuf/timestamp.proto";
 import "v1alpha1/vanalytics/transcript.proto";
 
-import "google/protobuf/timestamp.proto";
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
 
 // [RESOURCE] ==================================================================
 

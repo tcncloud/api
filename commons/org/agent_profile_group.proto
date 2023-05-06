@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package commons.org;
 
-option java_package="com.tcn.api.commons.org";
-option go_package="github.com/tcncloud/api/commons.org;org";
-
-import "google/protobuf/timestamp.proto";
 import "commons/omnichannel.proto";
+import "google/protobuf/timestamp.proto";
 
-
-
+option go_package = "github.com/tcncloud/api/commons.org;org";
+option java_package = "com.tcn.api.commons.org";
 
 message AgentProfileGroup {
   string id = 1;

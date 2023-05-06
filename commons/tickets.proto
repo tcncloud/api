@@ -2,218 +2,217 @@ syntax = "proto3";
 
 package commons;
 
-option java_package="com.tcn.api.commons";
-option go_package="github.com/tcncloud/api/commons;commons";
-
-
-
-
 // import "google/protobuf/duration.proto";
 // import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.api.commons";
+
 // Ticket - Fields for Ticket creation, List tickets and view ticket
 message Ticket {
-    // The snowflake id of a ticket row
-    int64 ticket_sid = 1 [jstype = JS_STRING];
-    // The imported/enabled ticket_project project_sid from omni.project
-    int64 project_sid = 2 [jstype = JS_STRING];
-    // project_title
-    string project_title = 3;
-    // A globally distributable, custom sequence generated per-project-per-month for a ticket row.
-    string ticket_code = 4;
-    // The title of the ticket
-    string title = 5;
-    // The description of the ticket
-    string description = 6;
-    // The org where the created was created
-    string org_id = 7;
-    // The userId (uuid) who created the ticket
-    string created_by_id = 8;
-    // The created_by_name from omni.project
-    string created_by_name = 9;
+  // The snowflake id of a ticket row
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+  // The imported/enabled ticket_project project_sid from omni.project
+  int64 project_sid = 2 [jstype = JS_STRING];
+  // project_title
+  string project_title = 3;
+  // A globally distributable, custom sequence generated per-project-per-month for a ticket row.
+  string ticket_code = 4;
+  // The title of the ticket
+  string title = 5;
+  // The description of the ticket
+  string description = 6;
+  // The org where the created was created
+  string org_id = 7;
+  // The userId (uuid) who created the ticket
+  string created_by_id = 8;
+  // The created_by_name from omni.project
+  string created_by_name = 9;
 
-    google.protobuf.Timestamp created_by_date = 10;
+  google.protobuf.Timestamp created_by_date = 10;
 
-    // due-date
-    google.protobuf.Timestamp due_date = 11;
+  // due-date
+  google.protobuf.Timestamp due_date = 11;
 
-    // A list of hunt groups, skills or users assigned to this ticket.
-    string assignee_list = 12; // note: bound to re-factor later.
+  // A list of hunt groups, skills or users assigned to this ticket.
+  string assignee_list = 12; // note: bound to re-factor later.
 
-    // A list of conversation context meatadatgit stata
-    repeated Metadata metadata = 14;
-    // A list of skills assotiated with a ticket
-    repeated Skills ticket_skills = 15;
-    // Status - Ticket status : 1 open, 2 doing, 3 close etc
-    int64 status = 16;
-    // A list of sla  assotiated with a ticket
-    repeated Sla ticket_sla = 17;
-
+  // A list of conversation context meatadatgit stata
+  repeated Metadata metadata = 14;
+  // A list of skills assotiated with a ticket
+  repeated Skills ticket_skills = 15;
+  // Status - Ticket status : 1 open, 2 doing, 3 close etc
+  int64 status = 16;
+  // A list of sla  assotiated with a ticket
+  repeated Sla ticket_sla = 17;
 }
 
 // Metadata - Contains a key value pair of strings, Will have metadata of an agent conversations
 message Metadata {
-    string name = 1;
-    string value = 2;
+  string name = 1;
+  string value = 2;
 }
 
 // Skills - Field for a skill set assigned to a ticket
 message Skills {
-    string skill_id = 1;
+  string skill_id = 1;
 }
+
 // Sla - Field for a sla set assigned to a ticket
 message Sla {
-    int64 condition_sid = 1 [jstype = JS_STRING];
-    int64 sla_sid = 2 [jstype = JS_STRING];
-    int64 sla_min = 3 [jstype = JS_STRING];
-
+  int64 condition_sid = 1 [jstype = JS_STRING];
+  int64 sla_sid = 2 [jstype = JS_STRING];
+  int64 sla_min = 3 [jstype = JS_STRING];
 }
+
 // Comment - Fields for Comment on a ticket, listing comments of a ticket (ViewComment)
 message Comment {
-    // The snowflake id of a comment row in ticket_comment.
-    int64 comment_sid = 1 [jstype = JS_STRING];
-    // The ticket reference where the comment was added.
-    int64 ticket_sid = 2 [jstype = JS_STRING];
-    // The comment text
-    string comment = 3;
-    // commenter by id
-    string created_by_id = 4; // used in creating comment
-    // comment by name
-    string created_by_name = 5;
-    // created by date
-    google.protobuf.Timestamp created_by_date = 6;
-
+  // The snowflake id of a comment row in ticket_comment.
+  int64 comment_sid = 1 [jstype = JS_STRING];
+  // The ticket reference where the comment was added.
+  int64 ticket_sid = 2 [jstype = JS_STRING];
+  // The comment text
+  string comment = 3;
+  // commenter by id
+  string created_by_id = 4; // used in creating comment
+  // comment by name
+  string created_by_name = 5;
+  // created by date
+  google.protobuf.Timestamp created_by_date = 6;
 }
 
 // CloseTicket - Fields for closing a Ticket
 message CloseTicket {
-    int64 ticket_sid = 1 [jstype = JS_STRING];
-    int64 status = 2;
-    // The comment text
-    string comment = 3;
-    // before status
-    int64  from_status = 4;
-    // commenter by id
-    string created_by_id = 5; // used in creating comment
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 status = 2;
+  // The comment text
+  string comment = 3;
+  // before status
+  int64 from_status = 4;
+  // commenter by id
+  string created_by_id = 5; // used in creating comment
 }
+
 // ConfirmClose - Boolean response Field post closing a Ticket
 message ConfirmClose {
-    int64 status = 1;
+  int64 status = 1;
 }
 
 // EditComment - Fields for editing a comment
 /*message EditComment {
-    // The snowflake id of a comment row in ticket_comment.
-    int64 comment_sid = 1 [jstype = JS_STRING];
-    // The ticket reference where the comment was added.
-    int64 ticket_sid = 2 [jstype = JS_STRING];
-    // The comment text
-    string comment = 3;
-    // commenter by id
-    string created_by_id = 4; // used in creating comment
-}*/
+       // The snowflake id of a comment row in ticket_comment.
+       int64 comment_sid = 1 [jstype = JS_STRING];
+       // The ticket reference where the comment was added.
+       int64 ticket_sid = 2 [jstype = JS_STRING];
+       // The comment text
+       string comment = 3;
+       // commenter by id
+       string created_by_id = 4; // used in creating comment
+   }*/
 
 /*message ConfirmEditComment {
-    // boolean value to confirm edit comment
-    bool is_edited = 1;
-}*/
+       // boolean value to confirm edit comment
+       bool is_edited = 1;
+   }*/
 
 //TicketProject - Fields for Project setting in ticketing system
 message TicketProject {
-    // Seq Id of project entry
-    int64 ticket_project_id = 1 [jstype = JS_STRING];
-    // Logged in user's Org
-	string org_id  = 2;
-    // Seq Id of Project from Omni
-	int64 project_sid = 3 [jstype = JS_STRING];
-    // 3 to 5 letter User entered Project Code
-    string project_code = 4;
-	// Project Title as in omni
-	string project_title = 5;
-    // Indicates if Project is enabled in ticketing system
-	bool is_active = 6;
+  // Seq Id of project entry
+  int64 ticket_project_id = 1 [jstype = JS_STRING];
+  // Logged in user's Org
+  string org_id = 2;
+  // Seq Id of Project from Omni
+  int64 project_sid = 3 [jstype = JS_STRING];
+  // 3 to 5 letter User entered Project Code
+  string project_code = 4;
+  // Project Title as in omni
+  string project_title = 5;
+  // Indicates if Project is enabled in ticketing system
+  bool is_active = 6;
 }
 
 // TicketSla - Fields for sla on a ticket
 message TicketSla {
-    // The snowflake id of a comment row in ticket_comment.
-    int64 sla_sid = 1 [jstype = JS_STRING];
-    // The name.
-    string name = 2;
-    // The description text
-    string description = 3;
-    // interval
-    int64 interval = 4;
-    // Indicates sla is enable or disable
-	int64 is_active = 5;
-
+  // The snowflake id of a comment row in ticket_comment.
+  int64 sla_sid = 1 [jstype = JS_STRING];
+  // The name.
+  string name = 2;
+  // The description text
+  string description = 3;
+  // interval
+  int64 interval = 4;
+  // Indicates sla is enable or disable
+  int64 is_active = 5;
 }
 
 // SlaConditions - Condition Fields for sla on a ticket
 message SlaConditions {
-    // The snowflake id of a comment row in ticket_comment.
-    int64 sla_condition_sid = 1 [jstype = JS_STRING];
-    // The name.
-    string sla_condition_name = 2;
+  // The snowflake id of a comment row in ticket_comment.
+  int64 sla_condition_sid = 1 [jstype = JS_STRING];
+  // The name.
+  string sla_condition_name = 2;
 }
+
 // SlaConditions - Condition Fields for sla on a ticket
 message ReplyComment {
-    // The snowflake id of a comment row in ticket_comment.
-    int64 comment_sid = 1 [jstype = JS_STRING];
-    // The ticket reference where the comment was added.
-    int64 ticket_sid = 2 [jstype = JS_STRING];
-    // The comment text
-    string reply = 3;
-    // commenter by id
-    string created_by_id = 4; // used in creating comment
-    google.protobuf.Timestamp created_by_date = 5;
+  // The snowflake id of a comment row in ticket_comment.
+  int64 comment_sid = 1 [jstype = JS_STRING];
+  // The ticket reference where the comment was added.
+  int64 ticket_sid = 2 [jstype = JS_STRING];
+  // The comment text
+  string reply = 3;
+  // commenter by id
+  string created_by_id = 4; // used in creating comment
+  google.protobuf.Timestamp created_by_date = 5;
 }
 
 // ConfirmReplyComment -
 message ConfirmReplyComment {
-    // boolean value to confirm edit comment
-    bool is_created = 1;
+  // boolean value to confirm edit comment
+  bool is_created = 1;
 }
+
 // TicketAuditLog -
 message TicketAuditLog {
-    // ticket_audit_event_log_id
-    string ticket_audit_event_log_id = 1;
-    // Logged in user's Org
-	string org_id  = 2;
-    // Logged event
-	string event  = 3;
-    // ticket_sid
-    int64 ticket_sid = 4 [jstype = JS_STRING];
-    // event_type
-    string event_type = 5;
-	// used in creating comment
-    string created_by_id = 6;
-    // created by date
-    google.protobuf.Timestamp created_by_date = 7;
+  // ticket_audit_event_log_id
+  string ticket_audit_event_log_id = 1;
+  // Logged in user's Org
+  string org_id = 2;
+  // Logged event
+  string event = 3;
+  // ticket_sid
+  int64 ticket_sid = 4 [jstype = JS_STRING];
+  // event_type
+  string event_type = 5;
+  // used in creating comment
+  string created_by_id = 6;
+  // created by date
+  google.protobuf.Timestamp created_by_date = 7;
 }
 
 // EditTicket - Fields for Edit Ticket , listing attributes of a ticket which can be edited
 message EditTicket {
-    // The ticket reference where the comment was added.
-    int64 ticket_sid = 1 [jstype = JS_STRING];
-    // The comment text
-    EditAttribute edit_value = 2;
+  // The ticket reference where the comment was added.
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+  // The comment text
+  EditAttribute edit_value = 2;
 }
+
 // Edit Attribute
 /*
-Description = 1
-Skills = 2
-Status = 3
-Due Date = 4
-SLA = 5
-All Values must come as String. BE to convert values to int64, JSON and DateTime
+   Description = 1
+   Skills = 2
+   Status = 3
+   Due Date = 4
+   SLA = 5
+   All Values must come as String. BE to convert values to int64, JSON and DateTime
 */
 message EditAttribute {
-    // Column Descripter
-    int64   col_desc = 1 [jstype = JS_STRING];
-    string  from_val = 2;
-    string  to_val = 3;
-    bool    is_edited = 4;
+  // Column Descripter
+  int64 col_desc = 1 [jstype = JS_STRING];
+  string from_val = 2;
+  string to_val = 3;
+  bool is_edited = 4;
 }

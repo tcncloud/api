@@ -2,116 +2,114 @@ syntax = "proto3";
 
 package v1alpha1.scorecards;
 
-option java_package="com.tcn.api.v1alpha1.scorecards";
-option go_package="github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-
-
-
-import "google/protobuf/field_mask.proto";
 import "commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+option java_package = "com.tcn.api.v1alpha1.scorecards";
 
 // CreateQuestionRequest is the request to create a new question in the library.
 message CreateQuestionRequest {
-    commons.Question question = 1;
+  commons.Question question = 1;
 }
 
 // CreateQuestionResponse contains the question that was created.
 message CreateQuestionResponse {
-    commons.Question question = 1;
+  commons.Question question = 1;
 }
 
 // ListQuestionsRequest is the request to list questions by some criteria.
 message ListQuestionsRequest {
-    // TODO: Consider more flexible message type(s)
-    repeated string author_ids = 2;     // Optional.
-    repeated int64 category_ids = 3;    // Optional.
+  // TODO: Consider more flexible message type(s)
+  repeated string author_ids = 2; // Optional.
+  repeated int64 category_ids = 3; // Optional.
 
-    // TODO: add request for keywords.
+  // TODO: add request for keywords.
 }
 
 // ListQuestionsResponse contains a list of questions.
 message ListQuestionsResponse {
-    repeated commons.Question questions = 1;
+  repeated commons.Question questions = 1;
 }
 
 // UpdateQuestionRequest is the request to update question by id.
 message UpdateQuestionRequest {
-    // Required.
-    commons.Question question = 1;
+  // Required.
+  commons.Question question = 1;
 
-    // Required. Valid paths: [question, description].
-    // To update Categories, use *Category and *QuestionCategory methods.
-    google.protobuf.FieldMask update_mask = 2;
+  // Required. Valid paths: [question, description].
+  // To update Categories, use *Category and *QuestionCategory methods.
+  google.protobuf.FieldMask update_mask = 2;
 }
 
 // UpdateQuestionResponse contains the updated question.
 message UpdateQuestionResponse {
-    commons.Question question = 1;
+  commons.Question question = 1;
 }
 
 // DeleteQuestionRequest is the request to delete a question by id.
 message DeleteQuestionRequest {
-    int64 question_id = 2;  // Required.
+  int64 question_id = 2; // Required.
 }
 
 // DeleteQuestionResponse returns the deleted question.
 message DeleteQuestionResponse {
-    commons.Question question = 1;
+  commons.Question question = 1;
 }
 
 // GetQuestionRequest is the request to get a question by id.
 // Must have one of either question_id or question
 message GetQuestionRequest {
-    int64 question_id = 2;  // Optional.
-    string question = 3;    // Optional
+  int64 question_id = 2; // Optional.
+  string question = 3; // Optional
 }
 
 // GetQuestionResponse contains a question.
 message GetQuestionResponse {
-    commons.Question question = 1;
+  commons.Question question = 1;
 }
 
 // CreateQuestionCategoryRequest is request to link a scorecard question and category
-message CreateQuestionCategoryRequest{
-    // All Fields Required
-    int64 question_id = 2;
-    int64 category_id = 3;
+message CreateQuestionCategoryRequest {
+  // All Fields Required
+  int64 question_id = 2;
+  int64 category_id = 3;
 }
 
 // CreateQuestionCategoryResponse returns the updated question
-message CreateQuestionCategoryResponse{
-    int64 question_id = 2;
-    int64 category_id = 3;
-    int64 question_category_id = 4;
+message CreateQuestionCategoryResponse {
+  int64 question_id = 2;
+  int64 category_id = 3;
+  int64 question_category_id = 4;
 }
 
 // DeleteQuestionCategoryRequest deletes link between a scorecard question and category
-message DeleteQuestionCategoryRequest{
-    oneof where {
-        int64 question_category_id = 2; // Required if not BothIds
-        BothIds both_ids = 3; // Required if not question_category_id
-    }
-    // BothIds is question_id and category_id in a link
-    message BothIds {
-        int64 question_id = 1; // question_id of link
-        int64 category_id = 2; // category_id of link
-    }
+message DeleteQuestionCategoryRequest {
+  oneof where {
+    int64 question_category_id = 2; // Required if not BothIds
+    BothIds both_ids = 3; // Required if not question_category_id
+  }
+  // BothIds is question_id and category_id in a link
+  message BothIds {
+    int64 question_id = 1; // question_id of link
+    int64 category_id = 2; // category_id of link
+  }
 }
 
 // DeleteQuestionCategoryResponse returns the updated question
-message DeleteQuestionCategoryResponse{
-    int64 question_id = 2; // question id of deleted link
-    int64 category_id = 3; //  category id of deleted link
-    int64 question_category_id = 4; // question category id of deleted link
+message DeleteQuestionCategoryResponse {
+  int64 question_id = 2; // question id of deleted link
+  int64 category_id = 3; //  category id of deleted link
+  int64 question_category_id = 4; // question category id of deleted link
 }
 
 // BulkCreateQuestionsRequest creates questions from a given scorecard
-message BulkCreateQuestionsRequest{
-    int64 scorecard_id = 3; // Required - scorecard id of scorecard to create questions from.
-    bool use_default = 4; // Whether to use default scorecard.
+message BulkCreateQuestionsRequest {
+  int64 scorecard_id = 3; // Required - scorecard id of scorecard to create questions from.
+  bool use_default = 4; // Whether to use default scorecard.
 }
 
 // BulkCreateQuestionsResponse returns the created questions
-message BulkCreateQuestionsResponse{
-    repeated commons.Question questions = 1; // Created questions.
+message BulkCreateQuestionsResponse {
+  repeated commons.Question questions = 1; // Created questions.
 }

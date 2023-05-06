@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package v0alpha;
 
-option java_package="com.tcn.api.v0alpha";
-option go_package="github.com/tcncloud/api/v0alpha;v0alpha";
-
-
-
-
-import "google/protobuf/wrappers.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/duration.proto";
-import "google/protobuf/empty.proto";
-import "google/api/annotations.proto";
-import "commons/lms.proto";
-import "commons/types.proto";
 import "commons/communication.proto";
 import "commons/compliance.proto";
+import "commons/lms.proto";
+import "commons/types.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
 
 service LMS {
   rpc GetPublicKey(GetPublicKeyReq) returns (PublicKey) {
@@ -68,11 +65,11 @@ service LMS {
     option (google.api.http).post = "/api/v0alpha/lms/fieldsbyelement";
     option (google.api.http).body = "*";
   }
-    // list campaign links and descriptions
-  rpc ListCampaignLinks(google.protobuf.Empty) returns (ListCampaignLinksRes){
+  // list campaign links and descriptions
+  rpc ListCampaignLinks(google.protobuf.Empty) returns (ListCampaignLinksRes) {
     option (google.api.http).post = "/api/v0alpha/lms/campaignlink/list";
     option (google.api.http).body = "*";
-  };
+  }
 
   rpc PeekList(PeekListReq) returns (PeekListRes) {
     option (google.api.http).post = "/api/v0alpha/lms/lists/preview";
@@ -135,12 +132,12 @@ service LMS {
     option (google.api.http).body = "*";
   }
 
-  rpc FindFieldUsages(FindFieldUsagesReq) returns (FindFieldUsagesRes){
+  rpc FindFieldUsages(FindFieldUsagesReq) returns (FindFieldUsagesRes) {
     option (google.api.http).post = "/api/v0alpha/lms/find-field-usages";
     option (google.api.http).body = "*";
   }
 
-  rpc FindInvalidElements(FindInvalidElementsReq) returns (FindInvalidElementsRes){
+  rpc FindInvalidElements(FindInvalidElementsReq) returns (FindInvalidElementsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/find-invalid-elements";
     option (google.api.http).body = "*";
   }
@@ -308,9 +305,9 @@ message ElementSummary {
   string element_name = 2;
   ElementError error = 3;
 }
-message FindInvalidElementsReq{
-	string org_id = 1;
-	string region_id = 2;
+message FindInvalidElementsReq {
+  string org_id = 1;
+  string region_id = 2;
 }
 message FindInvalidElementsRes {
   repeated ElementSummary invalid_elements = 1;
@@ -321,7 +318,9 @@ message GetComplianceScrubListsRes {
   repeated string scrub_lists = 1;
 }
 
-message ProcessElementReq { string element_id = 1; }
+message ProcessElementReq {
+  string element_id = 1;
+}
 
 message ListAvailableFieldsByElementIdReq {
   string element_id = 1;
@@ -372,6 +371,7 @@ message GetHistoryRes {
   string element_id = 3;
   repeated HistoryAndCount commits = 11;
 }
+
 // the history table stores history for pipeline_elements
 message History {
   string element_id = 3;
@@ -393,6 +393,7 @@ message History {
   ListMetrics metrics = 23;
   ListMetrics discard_metrics = 24;
 }
+
 // since its possible to get a load of history events that all look the same
 // this keeps track of the range. history_id and ending_history_id
 // are the range of data where 'failed', and 'reason' were the same.
@@ -420,12 +421,14 @@ message HistoryAndCount {
   int64 event_id = 18;
   string parent_element_id = 22;
   ListMetrics metrics = 23;
-  ListMetrics discard_metrics= 25;
+  ListMetrics discard_metrics = 25;
   // how many messages encountered a similar 'reason' field
   int64 count = 24;
 }
 
-message RecordProto { repeated RecordFieldProto fields = 1; }
+message RecordProto {
+  repeated RecordFieldProto fields = 1;
+}
 
 message RecordProtoPair {
   RecordProto old = 1;
@@ -448,7 +451,9 @@ message ProcessFields {
   repeated Field fields = 8;
 }
 
-message FieldPK { string name = 3; }
+message FieldPK {
+  string name = 3;
+}
 
 message Field {
   string name = 3;
@@ -525,7 +530,9 @@ message FieldMetadata {
   int32 field_length = 14;
 }
 
-message Fields { repeated Field fields = 1; }
+message Fields {
+  repeated Field fields = 1;
+}
 
 // first value is the field_name in the record.
 // additional values are nested fields on record field looked up from index[0]
@@ -559,9 +566,13 @@ message RecordFieldProto {
     EnrichedZip enriched_zip = 17;
   }
 }
-message RepeatedRecords { repeated RecordProto records = 1; }
+message RepeatedRecords {
+  repeated RecordProto records = 1;
+}
 
-message ListElementsReq { repeated string labels = 1; }
+message ListElementsReq {
+  repeated string labels = 1;
+}
 message GetFileTemplatesReq {}
 
 message FileTemplateField {
@@ -569,9 +580,13 @@ message FileTemplateField {
   commons.FieldType type = 2;
 }
 
-message FileTemplateFields { repeated FileTemplateField fields = 1; }
+message FileTemplateFields {
+  repeated FileTemplateField fields = 1;
+}
 
-message FieldTypes { repeated commons.FieldType values = 1; }
+message FieldTypes {
+  repeated commons.FieldType values = 1;
+}
 
 message FileTemplate {
   string file_template_id = 3;
@@ -606,14 +621,14 @@ message Process {
     GSExportProcess gs_export = 42;
     P3ExportProcess p3_export = 44;
     // USE LookupProcess
-    ComplProcess compl = 45 [ deprecated = true ];
+    ComplProcess compl = 45 [deprecated = true];
     DeDupCriteria dedup = 46;
     CFSExportProcess cfs_export = 47;
     SftpExportProcess sftp_export = 48;
     ReshapeProcess reshape = 49;
     LookupProcess lookup = 50;
     // split into ApiEntrypoint and SftpImport
-    EntrypointProcess entrypoint = 51 [ deprecated = true ];
+    EntrypointProcess entrypoint = 51 [deprecated = true];
     ComplianceExportProcess compliance_export = 52;
     ApiEntrypoint api_entrypoint = 53;
     SftpImport sftp_import = 54;
@@ -695,7 +710,7 @@ message ConsentExportProcess {
   // Profile to use
   string consent_profile = 4;
   // Profile ID of profile to use
-  string consent_profile_id = 5;     // Optional, only needed with phone/sms
+  string consent_profile_id = 5; // Optional, only needed with phone/sms
   // Run as test, disabled, or normal
   commons.RunType run_type = 6;
   // Type of consent action to do: ADD/REVOKE
@@ -718,13 +733,13 @@ message ConsentExportProcess {
   string notes = 15;
   // Field name for expire timestamp when creating consent
   // replaced by expiration
-  string expire = 16 [ deprecated = true ];
+  string expire = 16 [deprecated = true];
   // Field name for "condition from" timestamp when creating consent
   string condition_from = 17;
   // Field name for "condition to" timestamp when creating consent
   string condition_to = 18;
   // Either a field name or content type value for the contennt type of the content
-    oneof content_type {
+  oneof content_type {
     commons.ContentType content_type_val = 27;
     string content_type_field_name = 28;
   }
@@ -773,11 +788,11 @@ message Expiration {
 }
 
 enum TimeUnit {
-    //DEFAULT is decided by SURL (no quantity needed)
-    DEFAULT = 0;
-    TIME_WEEKS = 1;
-    TIME_DAYS = 2;
-    TIME_HOURS = 3;
+  //DEFAULT is decided by SURL (no quantity needed)
+  DEFAULT = 0;
+  TIME_WEEKS = 1;
+  TIME_DAYS = 2;
+  TIME_HOURS = 3;
 }
 
 // split into ApiEntrypoint and SftpImport
@@ -953,6 +968,7 @@ message PaginatedHttpRequest {
   // whether the end page has records on it
   bool process_stop_page = 9;
 }
+
 // Takes SFTP credentials and import a file
 message SftpImport {
   // SFTP credentials. `password` will
@@ -994,7 +1010,6 @@ message RndEnrichmentProcess {
   string field = 2;
   string date_last_contact_field = 3;
 }
-
 
 message CjsImportProcess {
   // Specifies which CJS List to import from
@@ -1078,11 +1093,15 @@ message CjsEnrichmentProcess {
 
 // this process downloads the records from the signed_url
 // and writes them to the output
-message AppendProcess { string fts_id = 5; }
+message AppendProcess {
+  string fts_id = 5;
+}
 
 // USE INSTEAD of ComplProcess
 message LookupProcess {
-  message ComplProcess { string country_code = 11; }
+  message ComplProcess {
+    string country_code = 11;
+  }
   message ListLookup {
     string org_id = 1;
     string region_id = 2;
@@ -1108,6 +1127,7 @@ message LookupProcess {
     UrlLookup url = 9;
   }
 }
+
 // DEPRECATED
 message ComplProcess {}
 
@@ -1141,6 +1161,7 @@ message FilterOperation {
   repeated FilterCheck checks = 1;
   commons.ChainOperator operator = 2;
 }
+
 // Describes a lookup of a field on a record, checking its value or type against
 // another value. Each FilterCheck must boil down to a bool value.
 message FilterCheck {
@@ -1246,7 +1267,7 @@ message P3ExportProcess {
   // can change depending on the day.
   // The directory field in this `file_pattern`
   // should not be used (it will be ignored)
-  commons.FilePattern file_pattern = 13 [deprecated=true];
+  commons.FilePattern file_pattern = 13 [deprecated = true];
   // what to name the file
   commons.ConstructedFilename filename = 43;
 
@@ -1360,7 +1381,7 @@ message ComplianceExportProcess {
   string list_name = 2;
   string field = 3;
   string expiration_field = 4; // Optional, has to be type date
-  string country_code = 5;     // Optional, only needed with phone/sms
+  string country_code = 5; // Optional, only needed with phone/sms
   commons.RunType run_type = 6;
   commons.ComplianceListType compliance_list_type = 7;
 }
@@ -1445,7 +1466,7 @@ message SftpExportProcess {
   string record_delimiter = 10;
 
   // Specifies the construction of the export filename
-  commons.FilePattern file_pattern = 11 [deprecated=true];
+  commons.FilePattern file_pattern = 11 [deprecated = true];
   // Run type can be RUN (default), TEST, or DISABLED
   commons.RunType run_type = 12;
 
@@ -1479,7 +1500,9 @@ message WfmExportProcess {
     WfmMultiSkill multi = 2;
   }
 }
-message ExportHeader { repeated string names = 1; }
+message ExportHeader {
+  repeated string names = 1;
+}
 
 message SortReq {
   oneof request {
@@ -1512,7 +1535,9 @@ message Error {
   string raw_value = 2;
 }
 
-message RecordFieldMap { map<string, RecordFieldProto> fields = 1; }
+message RecordFieldMap {
+  map<string, RecordFieldProto> fields = 1;
+}
 
 message Currency {
   string symbol = 1;
@@ -1621,6 +1646,7 @@ message EnrichedZip {
   float utc = 27;
   //RecordFieldProto enriched_from = 28;
 }
+
 // represents need for getting current timestamp during processing
 message Now {}
 
@@ -1665,7 +1691,9 @@ message MonthAndDay {
 }
 
 // a specific day of the week.  sunday = 0
-message DayOfWeek { int32 day_of_week = 3; }
+message DayOfWeek {
+  int32 day_of_week = 3;
+}
 
 // a specific time of day. 24 hour format. 12:00:00AM = 0,0,0
 message TimeOfDay {
@@ -1676,8 +1704,8 @@ message TimeOfDay {
 
 message FileFormatParams {
   // use skip_first_lines
-  int32 skip_first_no_lines = 10 [ deprecated = true ];
-  string skip_lines_match_regex = 11 [ deprecated = true ];
+  int32 skip_first_no_lines = 10 [deprecated = true];
+  string skip_lines_match_regex = 11 [deprecated = true];
   bool trim_spaces = 12;
   string custom_delimiter = 13;
   bool skip_first_line = 14;
@@ -1690,7 +1718,9 @@ message FileFormatParams {
   // If left blank, we are expected each json object to be on its own line: (jsonl)
   string json_dot_path = 15;
 }
-message ReshapeProcess { repeated ReshapeAction actions = 1; }
+message ReshapeProcess {
+  repeated ReshapeAction actions = 1;
+}
 
 message ReshapeAction {
   // rename this field's name to new_name, keep the value the same
@@ -1703,7 +1733,7 @@ message ReshapeAction {
     double value = 11;
   }
   // add or subtract a datetime modifier to the field
-  message AddDate{
+  message AddDate {
     DateTimeModifier datetime = 45;
   }
   // add two fields values together. If field is time-like, other_field must be
@@ -1723,12 +1753,16 @@ message ReshapeAction {
   }
   // convert a field to another type, if conversion fails, it will be an error
   // type
-  message Convert { commons.RecordType newType = 17; }
+  message Convert {
+    commons.RecordType newType = 17;
+  }
   // will remove "field" from the record
   message RemoveField {}
   // will add "field" to the record with default starting value
   // TODO: make a RecordFieldProtoValue, it is a noeof
-  message AddNewField { RecordFieldProto starting_value = 18; }
+  message AddNewField {
+    RecordFieldProto starting_value = 18;
+  }
 
   // will add "field" to the record with default starting value from other field
   message AddNewFieldFromField {
@@ -1739,7 +1773,9 @@ message ReshapeAction {
   message ChangeCurrencyType { // legal: Currency
   }
   // will set field with the value
-  message SetFieldValue { RecordFieldProto value = 18; }
+  message SetFieldValue {
+    RecordFieldProto value = 18;
+  }
 
   // will set "field" from other field
   message SetFieldFromField {
@@ -1753,7 +1789,7 @@ message ReshapeAction {
     message FieldOrVal {
       oneof val {
         FieldIndex field = 38; // fetch the string from this field
-        string value = 43;     // use this exact string value
+        string value = 43; // use this exact string value
       }
     }
     repeated FieldOrVal data = 44;
@@ -1769,25 +1805,25 @@ message ReshapeAction {
     bool prefix = 13;
   }
 
-   //trims off specific characters from a prefix or suffix.
+  //trims off specific characters from a prefix or suffix.
   //Or can trim off a certain amount of characters from the left or right.
   message Trim {
     oneof opt {
-        // trim this exact amount of chars. If the string is less than amount in length
-        // the string is set to the empty string
-        // examples:
-        // - trim.amount = 3 on 'abcdef' => 'def'
-        // - trim.amount = 3 on 'ab' => ''
-        int32 amount = 1;
-        // trim this specific string from the field if it exists, otherwise do nothing
-        // examples:
-        // - trim.data = 'abc' on 'abcdef' => 'def'
-        // - trim.data = 'abc' on 'ab' => 'ab'
-        string data = 2;
-        // trim til this specific marker. If marker doesn't exist string is left alone
-        // examples:
-        // - trim.marker = 'de' on 'abcdef' = 'def'
-        string marker = 3;
+      // trim this exact amount of chars. If the string is less than amount in length
+      // the string is set to the empty string
+      // examples:
+      // - trim.amount = 3 on 'abcdef' => 'def'
+      // - trim.amount = 3 on 'ab' => ''
+      int32 amount = 1;
+      // trim this specific string from the field if it exists, otherwise do nothing
+      // examples:
+      // - trim.data = 'abc' on 'abcdef' => 'def'
+      // - trim.data = 'abc' on 'ab' => 'ab'
+      string data = 2;
+      // trim til this specific marker. If marker doesn't exist string is left alone
+      // examples:
+      // - trim.marker = 'de' on 'abcdef' = 'def'
+      string marker = 3;
     }
     // if true, the trim operation starts at the end of the string and works backwards
     bool suffix = 10;
@@ -1796,31 +1832,31 @@ message ReshapeAction {
   // extract takes a string and can take any combination of substrings of the string
   message Extract {
     // represents an index. can be a string or a number
-    message Index{
-        oneof val {
-            // the base 0 index of the string
-            int32 position = 12;
-            // an index matching the substring. Starting at the beginning of the substring
-            string match = 43;
-        }
-    }
-      // Slice represents a part of a string. think of a python or golang slice operator
-      // where the new substring starts at the starting index and ends at the ending index exclusively
-      message Slice{
-          // the default inclusivity is [start, end)
-          // this marks whether to not include the start_index marker in the slice
-          bool start_is_exclusive = 13;
-          // this marks whether to include the end_index marker in the slice
-          bool end_is_inclusive = 14;
-          // start index marks where to start the slice at. can be a string or number
-          // subsequent indexes are backup indexes incase the first doesn't exist
-          repeated Index start_index = 35;
-          // end index marks where to start the slice at. can be a string or number
-          // subsequent indexes are backup indexes incase the first doesn't exist
-          repeated Index end_index = 36;
+    message Index {
+      oneof val {
+        // the base 0 index of the string
+        int32 position = 12;
+        // an index matching the substring. Starting at the beginning of the substring
+        string match = 43;
       }
-      // parts represents several substrings using indices
-      repeated Slice parts = 39;
+    }
+    // Slice represents a part of a string. think of a python or golang slice operator
+    // where the new substring starts at the starting index and ends at the ending index exclusively
+    message Slice {
+      // the default inclusivity is [start, end)
+      // this marks whether to not include the start_index marker in the slice
+      bool start_is_exclusive = 13;
+      // this marks whether to include the end_index marker in the slice
+      bool end_is_inclusive = 14;
+      // start index marks where to start the slice at. can be a string or number
+      // subsequent indexes are backup indexes incase the first doesn't exist
+      repeated Index start_index = 35;
+      // end index marks where to start the slice at. can be a string or number
+      // subsequent indexes are backup indexes incase the first doesn't exist
+      repeated Index end_index = 36;
+    }
+    // parts represents several substrings using indices
+    repeated Slice parts = 39;
   }
 
   // NOT a FieldIndex
@@ -1848,7 +1884,6 @@ message ReshapeAction {
     Extract extract = 54;
   }
 }
-
 
 // stored as json in lms_history table
 message ListMetrics {
@@ -1946,7 +1981,9 @@ message Event {
   // not nil)
   google.protobuf.Int64Value latest_history = 15;
 }
-message Events { repeated Event events = 1; }
+message Events {
+  repeated Event events = 1;
+}
 
 message ViewQueueReq {
   // return events with upload_ts times newer than this timestamp
@@ -2103,7 +2140,7 @@ message CjsSearchField {
   string cjs_search_definition_id = 2;
   string field_name = 3;
   commons.FieldType field_type = 4;
-  string field_value = 5;             // leave empty in definition to prompt user for value
+  string field_value = 5; // leave empty in definition to prompt user for value
 }
 
 message CjsSearchDefinitionMetadata {

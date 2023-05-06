@@ -2,14 +2,12 @@ syntax = "proto3";
 
 package v1alpha1.integrationspublic;
 
-option java_package="com.tcn.api.v1alpha1.integrationspublic";
-option go_package="github.com/tcncloud/api/v1alpha1.integrationspublic;integrationspublic";
-
-
-
 import "commons/public/integrations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.integrationspublic;integrationspublic";
+option java_package = "com.tcn.api.v1alpha1.integrationspublic";
 
 service IntegrationsPublic {
   rpc GetLinkData(GetLinkDataReq) returns (GetLinkDataRes) {
@@ -38,8 +36,6 @@ service IntegrationsPublic {
   }
 }
 
-
-
 message Values {
   map<string, Value> values = 1;
 }
@@ -61,6 +57,7 @@ message Value {
   // a value that does not match its validation enum is just invalid.
   commons.public.Validation validation = 8;
 }
+
 // represents the individual parts of a string, where some of the parts are
 // fields in the payload, and other parts are static strings
 // CompositeVal cannot handle circular references. Meaning you cannot have two
@@ -69,6 +66,7 @@ message Value {
 message CompositeVal {
   repeated FieldOrStr parts = 1;
 }
+
 // represents either a field name whose value needs to be looked up in the payload
 // or a static string value
 message FieldOrStr {
@@ -81,6 +79,7 @@ message FieldOrStr {
 message PortalConfigId {
   string id = 3;
 }
+
 // all these things will show up on the portal screen to the receiver of the link
 // contact info should look like the company who is using the portal(not tcn)
 message PortalConfig {
@@ -139,14 +138,14 @@ message GetLinkDataRes {
 }
 
 message PortalText {
-    string verification_header = 1;
-    string verification_footer = 2;
-    string payment_header = 3;
-    string payment_footer = 4;
-    string receipt_header = 5;
-    string receipt_footer = 6;
-    string invoice_header = 7;
-    string invoice_footer = 8;
+  string verification_header = 1;
+  string verification_footer = 2;
+  string payment_header = 3;
+  string payment_footer = 4;
+  string receipt_header = 5;
+  string receipt_footer = 6;
+  string invoice_header = 7;
+  string invoice_footer = 8;
 }
 
 message SubmitVerificationReq {

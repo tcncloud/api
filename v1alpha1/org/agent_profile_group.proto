@@ -2,12 +2,10 @@ syntax = "proto3";
 
 package v1alpha1.org;
 
-option java_package="com.tcn.api.v1alpha1.org";
-option go_package="github.com/tcncloud/api/v1alpha1.org;org";
-
-
-
 import "commons/org/agent_profile_group.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
 
 message GetAgentProfileGroupRequest {
   string agent_profile_group_id = 2;
@@ -30,7 +28,7 @@ message ListAgentProfileGroupsResponse {
 }
 
 message CreateAgentProfileGroupRequest {
-    commons.org.AgentProfileGroup agent_profile_group = 2;
+  commons.org.AgentProfileGroup agent_profile_group = 2;
 }
 
 message CreateAgentProfileGroupResponse {
