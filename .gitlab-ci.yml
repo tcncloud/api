@@ -70,6 +70,7 @@ build:go:
     - git config user.email "597933+namtzigla@users.noreply.github.com"
     - git add .
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
+    - cd ..
     - echo $BUF_TOKEN | buf registry login --token-stdin --username florin-stan
     - buf push 
 
@@ -88,6 +89,7 @@ build:go:tags:
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
     - git tag -a "$CI_COMMIT_TAG" -m "$CI_COMMIT_TAG"
     - git push --tags --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go 
+    - cd ..
     - echo $BUF_TOKEN | buf registry login  --token-stdin --username florin-stan
     - buf push -t "$CI_COMMIT_TAG"
     
