@@ -5,6 +5,8 @@ stages:
 
 lint:
   stage: test
+  tags:
+    - linux-amd64 
   image: bufbuild/buf:latest
   allow_failure: true
   script:
@@ -12,6 +14,8 @@ lint:
 format:
   stage: test
   image: bufbuild/buf:latest
+  tags:
+    - linux-amd64 
   script:
     - d=$(buf format -d)
     - if [ -n "$d" ]; then echo "$d"; exit 1; fi
@@ -19,6 +23,8 @@ format:
 breaking_changes:
   stage: test
   image: bufbuild/buf:latest
+  tags:
+    - linux-amd64 
   allow_failure: true
   only:
     - master
@@ -28,6 +34,8 @@ breaking_changes:
 build:outpb: 
   stage: build
   image: bufbuild/buf:latest
+  tags:
+    - linux-amd64 
   script:
     - buf build -o out.pb
   artifacts:
@@ -39,6 +47,8 @@ build:outpb:
 build:go:
   stage: build
   image: bufbuild/buf:latest
+  tags:
+    - linux-amd64 
   only:
     - master
   script:
@@ -49,10 +59,12 @@ build:go:
     - git config user.email "597933+namtzigla@users.noreply.github.com"
     - git add .
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
-    
+
 build:go:tags:
   stage: build
   image: bufbuild/buf:latest
+  tags:
+    - linux-amd64 
   only:
     - tags
   script:
