@@ -29,7 +29,7 @@ breaking_changes:
   only:
     - master
   script:
-    - buf breaking --against-input '.git#branch=main,ref=HEAD~1'
+    - buf breaking --against '.git#branch=main,ref=HEAD~1'
 
 check-npm-packages-version:
   stage: test
@@ -70,7 +70,7 @@ build:go:
     - git config user.email "597933+namtzigla@users.noreply.github.com"
     - git add .
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
-    - echo $BUF_TOKEN | buf registry login --username florin-stan
+    - echo $BUF_TOKEN | buf registry login --token-stdin --username florin-stan
     - buf push 
 
 build:go:tags:
@@ -88,6 +88,6 @@ build:go:tags:
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
     - git tag -a "$CI_COMMIT_TAG" -m "$CI_COMMIT_TAG"
     - git push --tags --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go 
-    - echo $BUF_TOKEN | buf registry login --username florin-stan
+    - echo $BUF_TOKEN | buf registry login  --token-stdin --username florin-stan
     - buf push -t "$CI_COMMIT_TAG"
     
