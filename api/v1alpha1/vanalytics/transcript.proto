@@ -3,14 +3,14 @@ syntax = "proto3";
 package api.v1alpha1.vanalytics;
 
 import "api/commons/acd.proto";
+import "api/v1alpha1/vanalytics/aclpb/aclpb.proto";
+import "api/v1alpha1/vanalytics/expr.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "api/v1alpha1/vanalytics/aclpb/aclpb.proto";
-import "api/v1alpha1/vanalytics/expr.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option go_package = "github.com/tcncloud/api/v1alpha1/vanalytics;vanalytics";
 option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 // [BULK_DELETE] ===============================================================

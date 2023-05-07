@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.omniapi;omniapi";
+option go_package = "github.com/tcncloud/api/v1alpha1/omniapi;omniapi";
 option java_package = "com.tcn.matrix.api.v1alpha1.omniapi";
 
 // Service for interacting with TCN's Omni API system.

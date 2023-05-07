@@ -3,10 +3,10 @@ syntax = "proto3";
 package api.v1alpha1.p3api;
 
 import "annotations/authz.proto";
-import "google/api/annotations.proto";
 import "api/v0alpha/p3api.proto";
+import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.p3api;p3api";
+option go_package = "github.com/tcncloud/api/v1alpha1/p3api;p3api";
 option java_package = "com.tcn.matrix.api.v1alpha1.p3api";
 
 service P3Api {

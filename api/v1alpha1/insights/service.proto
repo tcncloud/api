@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package api.v1alpha1.insights;
 
-import "google/api/annotations.proto";
 import "api/v1alpha1/insights/insight.proto";
+import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.insights;insights";
+option go_package = "github.com/tcncloud/api/v1alpha1/insights;insights";
 option java_package = "com.tcn.matrix.api.v1alpha1.insights";
 
 service Insights {

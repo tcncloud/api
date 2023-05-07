@@ -20,10 +20,10 @@ import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "api/commons/asm.proto";
 import "api/commons/omnichannel.proto";
-import "google/api/annotations.proto";
 import "api/v1alpha1/asm/service.proto";
+import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.asm;asm";
+option go_package = "github.com/tcncloud/api/v1alpha1/asm;asm";
 option java_package = "com.tcn.matrix.api.v1alpha1.asm";
 
 service Asm {

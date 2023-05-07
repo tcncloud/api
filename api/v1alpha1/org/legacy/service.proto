@@ -18,8 +18,11 @@ package api.v1alpha1.org.legacy;
 
 import "annotations/authz.proto";
 import "api/commons/types.proto";
-import "google/api/annotations.proto";
 import "api/v1alpha1/org/legacy/entities.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1/org/legacy;legacy";
+option java_package = "com.tcn.matrix.api.v1alpha1.org.legacy";
 
 service OrgLegacy {
   // Registers a new organization

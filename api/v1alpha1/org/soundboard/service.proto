@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.soundboard;
 
-import "google/api/annotations.proto";
 import "api/v1alpha1/org/soundboard/entities.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1/org/soundboard;soundboard";
+option java_package = "com.tcn.matrix.api.v1alpha1.org.soundboard";
 
 service Soundboard {
   // GetSoundboardFile streams back segments of the audio file stored in rec

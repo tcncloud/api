@@ -5,7 +5,7 @@ package api.v1alpha1.scorecards;
 import "api/commons/scorecards.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+option go_package = "github.com/tcncloud/api/v1alpha1/scorecards;scorecards";
 option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 // CreateEvaluationRequest is request to create a new evaluation

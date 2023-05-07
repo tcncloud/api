@@ -6,7 +6,7 @@ import "api/commons/org.proto";
 import "api/commons/org/huntgroup.proto";
 import "google/protobuf/field_mask.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option go_package = "github.com/tcncloud/api/v1alpha1/org;org";
 option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Request message for the GetHuntGroupSettings RPC method.

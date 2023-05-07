@@ -4,7 +4,7 @@ package api.v1alpha1.room303;
 
 import "api/commons/room303.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
+option go_package = "github.com/tcncloud/api/v1alpha1/room303;room303";
 option java_package = "com.tcn.matrix.api.v1alpha1.room303";
 
 message AddRoomMemberRequest {
