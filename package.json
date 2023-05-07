@@ -1,5 +1,11 @@
 {
-  "dependencies": {
+  "name": "tcn",
+  "version": "1.0.0",
+  "devDependencies": {
     "ts-protoc-gen": "^0.15.0"
-  }
+  },
+  "workspaces": [
+    "tcnapi-connect-es",
+    "tcnapi-grpc-web"
+  ]
 }
