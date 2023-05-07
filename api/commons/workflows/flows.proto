@@ -4,7 +4,7 @@ package api.commons.workflows;
 
 import "api/commons/workflows/nodes.proto";
 
-option go_package = "github.com/tcncloud/api-go/api.commons.workflows;workflows";
+option go_package = "github.com/tcncloud/api-go/api/commons/workflows;workflows";
 option java_package = "com.tcn.matrix.api.commons.workflows";
 
 // The overarching object that defines a flow

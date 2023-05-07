@@ -5,7 +5,7 @@ package annotations.perms;
 import "annotations/perms/license.proto";
 import "google/protobuf/descriptor.proto";
 
-option go_package = "github.com/tcncloud/api-go/annotations.perms;perms";
+option go_package = "github.com/tcncloud/api-go/annotations/perms;perms";
 option java_package = "com.tcn.matrix.api.annotations.perms";
 
 // Tcn defines the enum value annotations which will be used for permissions.

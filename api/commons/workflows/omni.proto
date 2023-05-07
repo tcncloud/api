@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.commons.workflows;
 
-option go_package = "github.com/tcncloud/api-go/api.commons.workflows;workflows";
+option go_package = "github.com/tcncloud/api-go/api/commons/workflows;workflows";
 option java_package = "com.tcn.matrix.api.commons.workflows";
 
 message OmniNodePrompt {

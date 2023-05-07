@@ -7,7 +7,7 @@ import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/api.commons.audit;audit";
+option go_package = "github.com/tcncloud/api-go/api/commons/audit;audit";
 option java_package = "com.tcn.matrix.api.commons.audit";
 
 // ScorecardsCreateQuestionEvent is event when a question library question is created
