@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.tickets;
 
-import "commons/audit/audit.proto";
-import "commons/tickets.proto";
+import "api/commons/audit/audit.proto";
+import "api/commons/tickets.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.tickets;tickets";
-option java_package = "com.tcn.api.v1alpha1.tickets";
+option java_package = "com.tcn.matrix.api.v1alpha1.tickets";
 
 // EnableProjectReq - Details of project to be enabled in the ticketing system
 message EnableProjectReq {
@@ -32,7 +32,7 @@ message ListEnabledProjectsReq {}
 //ListEnabledProjectsRes - Response wraps list of projects enabled for ticketing system
 message ListEnabledProjectsRes {
   // enabled projects list
-  repeated commons.TicketProject projects = 1;
+  repeated api.commons.TicketProject projects = 1;
 }
 
 // ListTicketAuditLogReq -
@@ -44,5 +44,5 @@ message ListTicketAuditLogReq {
 // ListTicketAuditLogRes -
 message ListTicketAuditLogRes {
   // the retrieved audit events
-  repeated commons.audit.AuditEvent events = 1;
+  repeated api.commons.audit.AuditEvent events = 1;
 }

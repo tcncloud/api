@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/email.proto";
-import "commons/omnichannel.proto";
+import "api/commons/email.proto";
+import "api/commons/omnichannel.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service EmailApi {
   // Create/Record email template details defined by CreateEmailTemplateReq message for a specified
@@ -675,7 +675,7 @@ message EmailGroupSearchDetailsRes {
   // pacing count per miniute
   int64 sends_per_minute = 8;
   // outbound email group status
-  commons.EmailStatus status = 9;
+  api.commons.EmailStatus status = 9;
   // total cost for the group
   double total_cost = 10;
   // from email address used for the outgoing email
@@ -699,7 +699,7 @@ message EmailGroupSearchDetailsRes {
   //description of the email group
   string description = 21;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 22;
+  api.commons.SLATimeouts sla_timeouts = 22;
 }
 
 message EmailGroupSearchReq {
@@ -739,7 +739,7 @@ message EmailGroupDetailsWithAttachments {
   // pacing count per miniute
   int64 sends_per_minute = 8;
   // outbound email group status
-  commons.EmailStatus status = 9;
+  api.commons.EmailStatus status = 9;
   // total cost for the group
   double total_cost = 10;
   // from email address used for the outgoing email
@@ -769,7 +769,7 @@ message EmailGroupDetailsWithAttachments {
   //add all the attachments
   repeated EmailMessageAttachment email_message_attachments = 24;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 25;
+  api.commons.SLATimeouts sla_timeouts = 25;
 }
 
 message GetEmailGroupByGroupIdReq {
@@ -877,7 +877,7 @@ message ScheduleOutboundEmailGroupReq {
   //email attachments
   repeated int64 email_message_attachment_sids = 15;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 16;
+  api.commons.SLATimeouts sla_timeouts = 16;
 }
 
 //response to schedule outbound email group
@@ -912,7 +912,7 @@ message ConnectedInbox {
   int32 max_message_size = 17;
   int32 max_messages = 18;
   int32 message_count = 19;
-  commons.ConnectedInboxAuthenticationType authentication_type = 20;
+  api.commons.ConnectedInboxAuthenticationType authentication_type = 20;
 }
 
 message CreateInboundEmailTemplateReq {
@@ -968,7 +968,7 @@ message GetInboundEmailTemplateByIdReq {
 
 message UpdateInboundEmailGroupStatusReq {
   string inbound_email_group_id = 3;
-  commons.EmailIBGroupStatus status = 4;
+  api.commons.EmailIBGroupStatus status = 4;
 }
 
 message UpdateInboundEmailGroupStatusRes {
@@ -1001,7 +1001,7 @@ message InboundEmailGroup {
   //connected email inbox server details
   google.protobuf.StringValue connected_inbox_id = 4;
   //inbound email group status
-  commons.EmailIBGroupStatus status = 5;
+  api.commons.EmailIBGroupStatus status = 5;
   //time when inbound email group needs to be started
   google.protobuf.Timestamp start_time = 6;
   //time when inbound email group needs to be stopped
@@ -1021,7 +1021,7 @@ message InboundEmailGroup {
   // description of the inbound email group
   string description = 16;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 17;
+  api.commons.SLATimeouts sla_timeouts = 17;
 }
 
 //Pure Inbound email group details
@@ -1031,7 +1031,7 @@ message PureInboundEmailGroup {
   //connected email inbox server details
   google.protobuf.StringValue connected_inbox_id = 4;
   //inbound email group status
-  commons.EmailIBGroupStatus status = 5;
+  api.commons.EmailIBGroupStatus status = 5;
   //time when inbound email group needs to be started
   google.protobuf.Timestamp start_time = 6;
   //time when inbound email group needs to be stopped
@@ -1092,12 +1092,12 @@ message InboundEmailTaskDetails {
   string message = 6;
   google.protobuf.StringValue inbound_email_group_id = 7;
   double cost = 8;
-  commons.EmailIBReplyStatus status = 9;
+  api.commons.EmailIBReplyStatus status = 9;
   google.protobuf.StringValue message_id = 11;
   google.protobuf.StringValue email_conversation_id = 13;
   string raw_data_location = 14;
   google.protobuf.Int64Value email_task_sid = 15;
-  commons.EmailIBReplyType reply_type = 16;
+  api.commons.EmailIBReplyType reply_type = 16;
   google.protobuf.Int64Value delivery_status = 17;
   google.protobuf.StringValue delivery_status_message = 18;
   repeated EmailMessageReplyAttachment email_message_reply_attachment = 19;
@@ -1163,12 +1163,12 @@ message EmailMessageReply {
   string message = 6;
   google.protobuf.Int64Value email_task_sid = 7;
   google.protobuf.StringValue inbound_email_group_id = 8;
-  commons.EmailIBReplyStatus status = 9;
+  api.commons.EmailIBReplyStatus status = 9;
   double cost = 10;
   google.protobuf.StringValue message_id = 12;
   google.protobuf.StringValue email_conversation_id = 14;
   string raw_data_location = 15;
-  commons.EmailIBReplyType reply_type = 16;
+  api.commons.EmailIBReplyType reply_type = 16;
   google.protobuf.Int64Value delivery_status = 17;
   google.protobuf.StringValue delivery_status_message = 18;
   google.protobuf.StringValue user_id = 19;
@@ -1274,7 +1274,7 @@ message SchedulePureOmniLinkInboundEmailReq {
   // description of the inbound email group
   string description = 8;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 9;
+  api.commons.SLATimeouts sla_timeouts = 9;
 }
 
 //response to schedule pure inbound email group for omnilink
@@ -1298,7 +1298,7 @@ message UpdateInboundEmailGroupReq {
   //time when inbound email group needs to be started
   google.protobuf.Timestamp start_time = 6;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 7;
+  api.commons.SLATimeouts sla_timeouts = 7;
 }
 
 //response to update inbound email group
@@ -1317,7 +1317,7 @@ message UpdateOutboundEmailGroupReq {
   //description of the email group
   string description = 6;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 7;
+  api.commons.SLATimeouts sla_timeouts = 7;
 }
 
 //response to update outbound email group
@@ -1397,7 +1397,7 @@ message DashboardEmailConversationResEntry {
 
 message EmailConversationAssignedUser {
   // assignment Type
-  commons.AgentConversationAssignmentType assignment_type = 2;
+  api.commons.AgentConversationAssignmentType assignment_type = 2;
   // Notify
   bool notify = 3;
   //conversation id
@@ -1405,7 +1405,7 @@ message EmailConversationAssignedUser {
   // last updated time
   google.protobuf.Timestamp assigned_last_updated_time = 5;
   // assignemnt status
-  commons.AgentConversationAssignmentStatus assignment_status = 6;
+  api.commons.AgentConversationAssignmentStatus assignment_status = 6;
   // name of the agent
   google.protobuf.StringValue user_name = 7;
   // id of the agent
@@ -1426,7 +1426,7 @@ message EmailConversation {
   // Needed skills
   EmailConversationSkills skills = 6;
   // Status of the conversaton
-  commons.ConversationStatus conversation_status = 7;
+  api.commons.ConversationStatus conversation_status = 7;
   // last message time stamp
   google.protobuf.Timestamp last_message_time = 8;
   // customer's email
@@ -1436,7 +1436,7 @@ message EmailConversation {
   // Email group id for outbound campaigns
   google.protobuf.StringValue email_group_id = 11;
   // sla and timeouts
-  commons.SLATimeouts sla_timeouts = 12;
+  api.commons.SLATimeouts sla_timeouts = 12;
 }
 
 // ReassignEmailConversationReq - For OMNIBOSS dashbard.
@@ -1459,7 +1459,7 @@ message AssignEmailConversationReq {
   // UserId
   string user_id = 3;
   // AssignmentType
-  commons.AgentConversationAssignmentType assignment_type = 4;
+  api.commons.AgentConversationAssignmentType assignment_type = 4;
 }
 
 // AssignEmailConversationRes -
@@ -1500,7 +1500,7 @@ message InboundEmailCampaignWithProjectDetails {
   //campaign name
   string campaign_name = 2;
   //campaign status
-  commons.EmailIBGroupStatus status = 3;
+  api.commons.EmailIBGroupStatus status = 3;
   //project id
   string project_id = 4;
   //project name
@@ -1516,7 +1516,7 @@ message OutboundEmailCampaignWithProjectDetails {
   //campaign name
   string campaign_name = 3;
   // campaign status
-  commons.EmailStatus status = 4;
+  api.commons.EmailStatus status = 4;
   //project id
   string project_id = 5;
   //project name
@@ -1528,7 +1528,7 @@ message CloseEmailConversationReq {
   //email conversation id
   string email_conversation_id = 1;
   //email conversation status
-  commons.ConversationStatus status = 2;
+  api.commons.ConversationStatus status = 2;
 }
 
 //res for closing email conversation

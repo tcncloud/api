@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics;
 
-import "commons/acd.proto";
+import "api/commons/acd.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -11,7 +11,7 @@ import "api/v1alpha1/vanalytics/aclpb/aclpb.proto";
 import "api/v1alpha1/vanalytics/expr.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-option java_package = "com.tcn.api.v1alpha1.vanalytics";
+option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 // [BULK_DELETE] ===============================================================
 
@@ -75,7 +75,7 @@ message SearchRequest {
   TimestampExpr call_start_time = 17;
   // Optional. Call types to filter on. Possible call types are INBOUND, OUTBOUND,
   // PREVIEW, and MANUAL.
-  repeated commons.CallType.Enum call_types = 18;
+  repeated api.commons.CallType.Enum call_types = 18;
   // Optional. Call sids to filter on.
   repeated int64 call_sids = 19;
   // Optional. Hunt group sids to filter on.
@@ -258,7 +258,7 @@ message SearchQuery {
   // CallEnded is a query for the call ended.
   message CallEnded {
     // Required. The reasons to be filtered on.
-    repeated commons.AgentCallLogCallEnded reasons = 1;
+    repeated api.commons.AgentCallLogCallEnded reasons = 1;
   }
 
   // CallSkillsInitial is a query for the initial call skills.
@@ -548,7 +548,7 @@ message ListAgentResponseValuesResponse {
 message Transcript {
   int64 transcript_sid = 1;
   int64 call_sid = 3;
-  commons.CallType.Enum call_type = 4;
+  api.commons.CallType.Enum call_type = 4;
   repeated Result results = 5;
   Silence silence = 6;
   // talk time in milliseconds

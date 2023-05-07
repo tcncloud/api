@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "api/v1alpha1/insights/insight.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.insights;insights";
-option java_package = "com.tcn.api.v1alpha1.insights";
+option java_package = "com.tcn.matrix.api.v1alpha1.insights";
 
 service Insights {
   // CreateInsight creates a new insight

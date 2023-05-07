@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/auth/perms.proto";
-import "commons/org/trusts.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/org/trusts.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Request message for the CreateTrust RPC.
 message CreateTrustRequest {
@@ -17,7 +17,7 @@ message CreateTrustRequest {
   // Description of the trust.
   string description = 3;
   // Permissions given through the trust
-  repeated commons.auth.Permission permissions = 4;
+  repeated api.commons.auth.Permission permissions = 4;
   // IDs of labels associated with the given permissions.
   // NOTE: All given labels are applied to ALL given permissions.
   repeated string label_ids = 5;
@@ -56,7 +56,7 @@ message GetTrustRequest {
 // Response message for the GetTrust RPC.
 message GetTrustResponse {
   // Retrieved trust.
-  commons.org.Trust trust = 1;
+  api.commons.org.Trust trust = 1;
 
   // Name of the Grantor org.
   string grantor_name = 2;
@@ -73,7 +73,7 @@ message ListIncomingTrustsResponse {
   repeated Payload trusts = 1;
 
   message Payload {
-    commons.org.Trust trust = 1;
+    api.commons.org.Trust trust = 1;
     string grantor_name = 2;
     string grantee_name = 3;
   }
@@ -88,7 +88,7 @@ message ListGivenTrustsResponse {
   repeated Payload trusts = 1;
 
   message Payload {
-    commons.org.Trust trust = 1;
+    api.commons.org.Trust trust = 1;
     string grantor_name = 2;
     string grantee_name = 3;
   }
@@ -103,7 +103,7 @@ message ListAssignableTrustsResponse {
   repeated Payload trusts = 1;
 
   message Payload {
-    commons.org.Trust trust = 1;
+    api.commons.org.Trust trust = 1;
     string grantor_name = 2;
     string grantee_name = 3;
   }

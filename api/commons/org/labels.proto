@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "api/commons/labels.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option java_package = "com.tcn.matrix.api.commons.org";
+
+// Label is an entity message.
+message Label {
+  reserved 4, 5;
+  // labels are owned by orgs. this
+  // could be nasty in regards to
+  // org trusts and groups.
+  string org_id = 1;
+  // simply the name of the label.
+  // 'Team A', 'Medical', etc
+  string name = 3;
+  // the description of the label.
+  string description = 6;
+  // Hex color code of the label.
+  string color = 7;
+  // Id of the label.
+  string label_id = 8;
+  // whether or not the label is deleted.
+  bool deleted = 9;
+}
+
+// Entity message for a label assignment.
+message LabelAssignment {
+  // The ID of the label.
+  string label_id = 1;
+  // type of entity being labelled.
+  api.commons.EntityType type = 2;
+  // id of the entity being labelled.
+  string entity_id = 3;
+  // the id of the organization the label belongs too
+  string org_id = 4;
+
+  // The label associated with the label_id.
+  // This will only be populated during the GetLabelAssignments RPC
+  // if the request field PopulateLabelInfo is set to true.
+  Label label = 5;
+}

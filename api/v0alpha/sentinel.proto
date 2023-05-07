@@ -16,11 +16,11 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/logging.proto";
+import "api/commons/logging.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 // A service for internal observability utilities.
 // service UIEventLogging {
@@ -45,7 +45,7 @@ message LogEvent {
   string stack_trace = 7;
   google.protobuf.Timestamp timestamp = 8;
   map<string, string> metadata = 9;
-  commons.Level severity = 10;
+  api.commons.Level severity = 10;
 }
 
 message SendEventsReq {

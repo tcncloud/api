@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
+import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Vmds {
   rpc GetVoicemailMetadata(GetVoicemailMetadataReq) returns (stream GetVoicemailMetadataRes) {
@@ -87,7 +87,7 @@ message GetVoicemailMetadataReq {
 message GetVoicemailMetadataRes {
   string caller_id = 1;
   string caller_sid = 2;
-  commons.CallType.Enum caller_type = 3;
+  api.commons.CallType.Enum caller_type = 3;
   string dialed_number = 4;
   int32 duration_seconds = 5;
   bool flag_read = 6;
@@ -99,7 +99,7 @@ message GetVoicemailMetadataRes {
 message DeleteVoicemailReq {
   string mail_box = 2;
   string caller_sid = 3;
-  commons.CallType.Enum caller_type = 4;
+  api.commons.CallType.Enum caller_type = 4;
 }
 
 message DeleteVoicemailRes {}
@@ -129,7 +129,7 @@ message GetVoicemailCountRes {
 message UpdateVoicemailFlagReadReq {
   string mail_box = 2;
   string caller_sid = 3;
-  commons.CallType.Enum caller_type = 4;
+  api.commons.CallType.Enum caller_type = 4;
   bool flag_read = 5;
 }
 
@@ -140,7 +140,7 @@ message UpdateVoicemailFlagReadRes {
 message DownloadMessageReq {
   string mail_box = 2;
   string caller_sid = 3;
-  commons.CallType.Enum caller_type = 4;
+  api.commons.CallType.Enum caller_type = 4;
 }
 
 message DownloadMessageRes {

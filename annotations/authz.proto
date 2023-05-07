@@ -2,11 +2,11 @@ syntax = "proto2";
 
 package annotations;
 
-import "commons/auth/perms.proto";
+import "api/commons/auth/perms.proto";
 import "google/protobuf/descriptor.proto";
 
 option go_package = "github.com/tcncloud/api/annotations;annotations";
-option java_package = "com.tcn.api.annotations";
+option java_package = "com.tcn.matrix.api.annotations";
 
 extend google.protobuf.MethodOptions {
   // add annotations to method options
@@ -30,5 +30,5 @@ message Permissions {
 }
 
 message PermissionSet {
-  repeated commons.auth.Permission permissions = 1;
+  repeated api.commons.auth.Permission permissions = 1;
 }

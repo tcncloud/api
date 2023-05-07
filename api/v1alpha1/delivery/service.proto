@@ -3,14 +3,14 @@ syntax = "proto3";
 package api.v1alpha1.delivery;
 
 import "annotations/authz.proto";
-import "commons/delivery.proto";
-import "commons/org.proto";
+import "api/commons/delivery.proto";
+import "api/commons/org.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.delivery;delivery";
-option java_package = "com.tcn.api.v1alpha1.delivery";
+option java_package = "com.tcn.matrix.api.v1alpha1.delivery";
 
 service DeliveryApi {
   rpc CreateTransferConfig(CreateTransferConfigReq) returns (CreateTransferConfigRes) {
@@ -301,7 +301,7 @@ message History {
   // when the record was inserted into the db (delivery ended)
   google.protobuf.Timestamp transfer_complete = 10;
   // the application calling for delivery
-  commons.OperatorApplications origin = 11;
+  api.commons.OperatorApplications origin = 11;
 }
 message ListByIDReq {
   // start listing records less than this sid
@@ -323,7 +323,7 @@ message Credential {
   google.protobuf.Timestamp last_edited = 11;
 }
 message Destination {
-  commons.Encryption encryption = 1;
+  api.commons.Encryption encryption = 1;
   oneof value {
     EmailDestination email = 2;
     Room303Destination room303 = 3;
@@ -392,7 +392,7 @@ message AESPassword {
 }
 
 message Source {
-  commons.Encryption encryption = 1;
+  api.commons.Encryption encryption = 1;
   oneof value {
     SftpSource sftp = 2;
   }

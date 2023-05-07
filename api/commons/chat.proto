@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "api/commons/org.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+enum ChatMessageSenderType {
+  CHAT_MESSAGE_SENDER_TYPE_AGENT = 0;
+  CHAT_MESSAGE_SENDER_TYPE_CUSTOMER = 1;
+  CHAT_MESSAGE_SENDER_TYPE_MANAGER = 2;
+}
+
+// The status for a chat campaign
+enum ChatCampaignStatus {
+  CHAT_CAMPAIGN_UNKNOWN = 0;
+  CHAT_CAMPAIGN_RUNNING = 15010; //Chat campaign started running
+  CHAT_CAMPAIGN_STOPPED = 15050; //Chat campaign has been executed
+  CHAT_CAMPAIGN_ARCHIVED = 15060; //Chat campaign has been archived
+  CHAT_CAMPAIGN_PAUSED = 15070; //Chat campaign has been paused
+}
+
+// The type of events for chat campaigns
+enum ChatCampaignEvent {
+  CHAT_CAMPAIGN_EVENT_UNKNOWN = 0;
+  CHAT_CAMPAIGN_EVENT_SCHEDULED = 1; // when the chat campaign is scheduled
+  CHAT_CAMPAIGN_EVENT_STOPPED = 2; // when the manager stops the chat campaign
+  CHAT_CAMPAIGN_EVENT_ARCHIVED = 3; // when the manager archives the chat campaign
+  CHAT_CAMPAIGN_EVENT_PAUSED = 4; // when the chat campaign paused by manager
+}
+
+message ChatColorProperties {
+  string primary_color = 1;
+  string header_text_color = 2;
+  string paragraph_text_color = 3;
+}
+
+// The header data for the chat widget associated to a given chat campaign
+message ChatHeader {
+  // the main text to display
+  string header = 1;
+  // the text to display beneath the header
+  string subheader = 2;
+}
+
+enum ChatMessageType {
+  CHAT_REPLY_FROM_CUSTOMER = 0; // Received chat message reply from customer
+  CHAT_REPLY_FROM_AGENT = 1; // Its a chat message reply by an agent
+}
+
+message HoursOfOperation {
+  repeated HoursOfOperationRange monday = 1;
+  repeated HoursOfOperationRange tuesday = 2;
+  repeated HoursOfOperationRange wednesday = 3;
+  repeated HoursOfOperationRange thursday = 4;
+  repeated HoursOfOperationRange friday = 5;
+  repeated HoursOfOperationRange saturday = 6;
+  repeated HoursOfOperationRange sunday = 7;
+}
+
+message HoursOfOperationRange {
+  int64 start_hour = 1;
+  int64 start_minute = 2;
+  int64 end_hour = 3;
+  int64 end_minute = 4;
+}

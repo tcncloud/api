@@ -3,21 +3,21 @@ syntax = "proto3";
 package api.v1alpha1.room303;
 
 import "annotations/authz.proto";
-import "commons/room303.proto";
+import "api/commons/room303.proto";
 import "google/api/annotations.proto";
 import "api/v1alpha1/room303/member.proto";
 import "api/v1alpha1/room303/message.proto";
 import "api/v1alpha1/room303/room.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
-option java_package = "com.tcn.api.v1alpha1.room303";
+option java_package = "com.tcn.matrix.api.v1alpha1.room303";
 
 service Room303API {
   //
   // Member
   //
   // Add a new member to a room, you must be a room admin in order to do that
-  rpc AddRoomMember(AddRoomMemberRequest) returns (commons.Member) {
+  rpc AddRoomMember(AddRoomMemberRequest) returns (api.commons.Member) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/addroommember"
       body: "*"
@@ -73,7 +73,7 @@ service Room303API {
     };
   }
   // adds new member to a room and does not require the member to be admin
-  rpc JoinRoom(JoinRoomRequest) returns (commons.Room) {
+  rpc JoinRoom(JoinRoomRequest) returns (api.commons.Room) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/joinroom"
       body: "*"
@@ -87,7 +87,7 @@ service Room303API {
     };
   }
   // gets the member entity from the provided room if it exists
-  rpc GetRoomMember(GetRoomMemberRequest) returns (commons.Member) {
+  rpc GetRoomMember(GetRoomMemberRequest) returns (api.commons.Member) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/getroommember"
       body: "*"
@@ -229,7 +229,7 @@ service Room303API {
   //
   // Room
   //
-  rpc CreateRoom(CreateRoomRequest) returns (commons.Room) {
+  rpc CreateRoom(CreateRoomRequest) returns (api.commons.Room) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/createroom"
       body: "*"
@@ -242,7 +242,7 @@ service Room303API {
       ];
     };
   }
-  rpc GetRoom(GetRoomRequest) returns (commons.Room) {
+  rpc GetRoom(GetRoomRequest) returns (api.commons.Room) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/getroom"
       body: "*"
@@ -282,7 +282,7 @@ service Room303API {
       ];
     };
   }
-  rpc ArchiveRoom(ArchiveRoomRequest) returns (commons.Room) {
+  rpc ArchiveRoom(ArchiveRoomRequest) returns (api.commons.Room) {
     option (google.api.http) = {
       post: "/api/v1alpha1/room303/room303api/archive"
       body: "*"

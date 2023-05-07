@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/country.proto";
-import "commons/org.proto";
-import "commons/org/organization.proto";
+import "api/commons/country.proto";
+import "api/commons/org.proto";
+import "api/commons/org/organization.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // CreateOrganizationRequest request for creating a new organization.
 message CreateOrganizationRequest {
@@ -17,15 +17,15 @@ message CreateOrganizationRequest {
   // Salesforce ID used for integrations.
   string crm_id = 2;
   // Organization's time zone.
-  commons.TimeZone time_zone = 3;
+  api.commons.TimeZone time_zone = 3;
   // Whether account is manual only.
   bool is_manual_only_account = 4;
   // Backoffice UI theme/skin.
-  commons.ClientSkin backoffice_theme = 5;
+  api.commons.ClientSkin backoffice_theme = 5;
 
   // Allowed countries is used to initialize the organization's list of allowed
   // countries preference. This field is optional.
-  repeated commons.Country allowed_countries = 6;
+  repeated api.commons.Country allowed_countries = 6;
   // The ID of new organization's parent account.
   string p3_parent_account = 7;
 }
@@ -42,7 +42,7 @@ message GetOrganizationRequest {}
 // GetOrganizationResponse a single organization
 message GetOrganizationResponse {
   // Organization filtered by field masks
-  commons.org.Organization organization = 1;
+  api.commons.org.Organization organization = 1;
 }
 
 // GetOrganizationByIdRequest request to get single organization by given id
@@ -54,7 +54,7 @@ message GetOrganizationByIdRequest {
 // GetOrganizationByIdResponse a single organization from given org id
 message GetOrganizationByIdResponse {
   // Organization
-  commons.org.Organization organization = 1;
+  api.commons.org.Organization organization = 1;
 }
 
 // Request for the ListOrganizations RPC, filtered by region.
@@ -80,7 +80,7 @@ message ListOrganizationsResponse {
 // Wrapper for associating non entity fields with an Organization
 message OrganizationDetails {
   // Organization core entity.
-  commons.org.Organization organization = 1;
+  api.commons.org.Organization organization = 1;
   // Date the last broadcast was scheduled.
   google.protobuf.Timestamp last_scheduled_date = 2;
 }
@@ -111,7 +111,7 @@ message UpdateOrganizationRequest {
   // Id of organization to update.
   string org_id = 1;
   // TimeZone to set.
-  commons.TimeZone time_zone = 2;
+  api.commons.TimeZone time_zone = 2;
   // BillingId to set.
   string billing_id = 3;
   // Name to set.
@@ -129,7 +129,7 @@ message UpdateOrganizationRequest {
 // UpdateOrganizationResponse response for updating an organization
 // returns the organization.
 message UpdateOrganizationResponse {
-  commons.org.Organization organization = 1;
+  api.commons.org.Organization organization = 1;
 }
 
 // The request for ArchiveOrganization

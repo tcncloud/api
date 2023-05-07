@@ -1,0 +1,621 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+// a complex type that completely identifies an agent
+message AgentSession {
+  // the agent's sid
+  int64 agent_sid = 1;
+  // the client's sid
+  int64 tenant_sid = 2;
+  // the voice session sid
+  int64 session_sid = 3;
+  // the asm session sid
+  int64 asm_session_sid = 4;
+  // the org id of the user/agent
+  string org_id = 5;
+  // the region id of the user/agent
+  string region_id = 6;
+  // the user's id
+  string user_id = 8;
+}
+
+// a complex type that completely identifies a caller
+message CallerSid {
+  // the caller's sid
+  int64 caller_sid = 1;
+  // the type of the caller
+  api.commons.CallType.Enum type = 2;
+  // the client's sid
+  int64 tenant_sid = 3;
+}
+
+enum ACDStatus {
+  ACD_UNKNOWN = 0; // never used
+  AGENT_SESSION_LOGGING_IN = 4100; // "AGENT_SESSION_LOGGING_IN", "Agent is logging in"),
+  AGENT_SESSION_LOGGED_IN = 4110; // "AGENT_SESSION_LOGGED_IN", "Agent is logged in"),
+  AGENT_SESSION_COMPLETED = 4200; // "AGENT_SESSION_COMPLETED", "Agent Session completed"),
+  AGENT_SESSION_SUMMED = 4300; // "AGENT_SESSION_SUMMED", "Agent Session Summed"),
+  AGENT_SESSION_ACCOUNTINGEXPORT = 4400; // "AGENT_SESSION_ACCOUNTINGEXPORT", "Agent Session Exported into
+  // the accounting packages
+}
+
+message AgentStatus {
+  enum Enum {
+    UNAVALIABLE = 0;
+    IDLE = 1;
+    READY = 2;
+    HUNGUP = 3;
+    DESTROYED = 4;
+    PEERED = 5;
+    PAUSED = 6;
+    WRAPUP = 7;
+    PREPARING_AFTER_IDLE = 8;
+    PREPARING_AFTER_WRAPUP = 9;
+    PREPARING_AFTER_PAUSE = 10;
+    PREPARING_AFTER_DIAL_CANCEL = 11;
+    PREPARING_AFTER_PBX_REJECT = 12;
+    PREPARING_AFTER_PBX_HANGUP = 13;
+    PREPARING_AFTER_PBX_WAS_TAKEN = 14;
+    PREPARING_AFTER_GUI_BUSY = 15;
+    MANUAL_DIAL_PREPARED = 16;
+    PREVIEW_DIAL_PREPARED = 17;
+    MANUAL_DIAL_STARTED = 18;
+    PREVIEW_DIAL_STARTED = 19;
+    OUTBOUND_LOCKED = 20;
+    WARM_AGENT_TRANSFER_STARTED_SOURCE = 21;
+    WARM_AGENT_TRANSFER_STARTED_DESTINATION = 22;
+    WARM_OUTBOUND_TRANSFER_STARTED = 23;
+    WARM_OUTBOUND_TRANSFER_PEER_LOST = 24;
+    PBX_POPUP_LOCKED = 25;
+    PEERED_WITH_CALL_ON_HOLD = 26;
+    CALLBACK_RESUMING = 27;
+    GUI_BUSY = 28;
+    INTERCOM = 29;
+    INTERCOM_RINGING_SOURCE = 30;
+    INTERCOM_RINGING_DESTINATION = 31;
+    WARM_OUTBOUND_TRANSFER_OUTBOUND_LOST = 32;
+    PREPARED_TO_PEER = 33;
+    WARM_SKILL_TRANSFER_SOURCE_PENDING = 34;
+    // when the transfer has started
+    CALLER_TRANSFER_STARTED = 35;
+    // when the transfer is running and the peer hangs up
+    CALLER_TRANSFER_LOST_PEER = 36;
+    // when the transfer is running and the dest caller hangs up
+    CALLER_TRANSFER_LOST_MERGED_CALLER = 37;
+
+    // interim state for cold outbound transfer
+    COLD_OUTBOUND_TRANSFER_STARTED = 38;
+
+    // interim state for cold agent transfer
+    COLD_AGENT_TRANSFER_STARTED = 39;
+  }
+}
+
+message CallerStatus {
+  enum Enum {
+    UNAVALIABLE = 0;
+    IDLE = 1;
+    READY = 2;
+    HUNGUP = 3;
+    DESTROYED = 4;
+    PEERED = 5;
+    OUTBOUND_LOCKED = 6;
+    OUTBOUND_PEERED = 7;
+    PBX_POPUP_LOCKED = 8;
+    VOICEMAIL = 9;
+    PEERED_WITH_CALL_ON_HOLD = 10;
+    CALLBACK_SUSPENDED = 11;
+    WARM_AGENT_TRANSFER_STARTED = 12;
+    WARM_OUTBOUND_TRANSFER_STARTED = 13;
+    OUTBOUND_DIAL_TRANSFER_STARTED = 14;
+    PREPARED_TO_PEER = 15;
+    WARM_SKILL_TRANSFER_PENDING = 16;
+    // when the transfer starts for the peer
+    CALLER_TRANSFER_PEER = 17;
+    // when the transfer starts for the destination caller
+    CALLER_TRANSFER_MERGED_CALLER = 18;
+    // when the transfer is accepted and the agent leaves the transfer
+    CALLER_PEERED = 19;
+  }
+}
+
+// Call type definition that's going to be used by the ACD client to determine
+// the call_id type
+message CallType {
+  enum Enum {
+    // INBOUND should be default
+    INBOUND = 0;
+    OUTBOUND = 1;
+    PREVIEW = 2;
+    MANUAL = 3;
+    MAC = 4;
+  }
+}
+
+message AgentDialIn {
+  enum Enum {
+    TOLL_FREE = 0;
+    SOFTPHONE = 1;
+    LOCAL = 2;
+  }
+}
+
+message HuntGroupType {
+  enum Enum {
+    UNCONNECTED = 0;
+    CONNECTED = 1;
+    SOFTPHONE = 2;
+  }
+}
+
+message AgentSessionLogActionKey {
+  enum Enum {
+    // FRONTEND ENUMS
+    AGENT_PAUSE_START = 0;
+    AGENT_PAUSE_STOP = 1;
+    AGENT_SKILLS_INITIAL = 2;
+    AGENT_LOGOUT = 3;
+    EXECUTED_AGENT_TRIGGER = 4;
+    DURATION_SINCE_LAST_LOGON = 5;
+    AGENT_LOGIN_IP = 6;
+    MAC_DECISION = 7;
+    MAC_10_KEY_DECISION = 8;
+    MAC_10_KEY_CONFIRM = 9;
+    HUNT_GROUP_REASSIGNMENT = 10;
+
+    // BACKEND ENUMS
+
+    // PBX
+    PBX_ACCEPT = 11;
+    PBX_HANGUP = 12;
+    PBX_LOST = 13;
+    PBX_REJECT = 14;
+    PBX_TIMEOUT = 15;
+
+    // WARM AGENT TRANSFER
+    WARM_TRANSFER_AGENT_INVITE_CALLER_INITIAL = 16;
+    WARM_TRANSFER_AGENT_INVITE_CALLER = 17;
+    WARM_TRANSFER_AGENT_START_SOURCE = 18;
+    WARM_TRANSFER_AGENT_END_SOURCE = 19;
+    WARM_TRANSFER_AGENT_START_DESTINATION = 20;
+    WARM_TRANSFER_AGENT_END_DESTINATION = 21;
+
+    // WARM OUTBOUND TRANSFER
+    WARM_TRANSFER_OUTBOUND_INVITE_CALLER_INITIAL = 22;
+    WARM_TRANSFER_OUTBOUND_INVITE_CALLER = 23;
+    WARM_TRANSFER_OUTBOUND_START = 24;
+    WARM_TRANSFER_OUTBOUND_END = 25;
+
+    // COLD OUTBOUND TRANSFER
+    COLD_TRANSFER_OUTBOUND_START = 26;
+
+    // COLD AGENT TRANSFER
+    COLD_TRANSFER_AGENT_START_SOURCE = 27;
+    COLD_TRANSFER_AGENT_END_SOURCE = 28;
+    COLD_TRANSFER_AGENT_START_DESTINATION = 29;
+    COLD_TRANSFER_AGENT_END_DESTINATION = 30;
+
+    // HOLD
+    HOLD_START = 31;
+    HOLD_END = 32;
+
+    // QUEUE
+    REQUEUE = 33;
+
+    // VOICEMAIL
+    CALLER_SENT_TO_VOICEMAIL = 34;
+
+    // RECORDING
+    RECORDING_START = 35;
+    RECORDING_STOP = 36;
+
+    // PREVIEW BY RECORD
+    PBR_STARTED_RECORD = 37;
+    PBR_FINISHED_RECORD = 38;
+
+    // ACD ENUMS
+    ACD_LOGOUT = 39;
+    ACD_REGISTER = 40;
+
+    // FRONTEND WEBLINK ENUM
+    EXECUTED_AGENT_WEBLINK = 41;
+
+    // Transfer Hold and Unhold
+    TRANSFER_HOLD_CALLER = 42;
+    TRANSFER_UNHOLD_CALLER = 43;
+    TRANSFER_HOLD_AGENT = 44;
+    TRANSFER_UNHOLD_AGENT = 45;
+    TRANSFER_HOLD = 46;
+    TRANSFER_UNHOLD = 47;
+    TRANSFER_HOLD_OUTBOUND = 48;
+    TRANSFER_UNHOLD_OUTBOUND = 49;
+
+    // Transfer Add and Remove
+    TRANSFER_ADD_OUTBOUND = 50;
+    TRANSFER_REMOVE_OUTBOUND = 51;
+
+    // Warm Caller Transfer
+
+    // when the transfer starts for the agent
+    WARM_CALLER_TRANSFER_START = 52;
+    // when the transfer starts and the source caller is not on hold
+    WARM_CALLER_TRANSFER_INVITE_CALLER_INITIAL = 53;
+    // when during transfer and the source caller is taken of hold
+    WARM_CALLER_TRANSFER_INVITE_CALLER = 54;
+    // when the transfer ends
+    WARM_CALLER_TRANSFER_END = 55;
+  }
+}
+
+message AgentCallLogActionKey {
+  enum Enum {
+    DNCL_ADD = 0;
+    CALL_ENDED = 1;
+    CALL_DISCONNECT = 2;
+    CALLER_HUNGUP = 3;
+
+    // WARM TRANSFER
+    WARM_TRANSFER_AGENT_INVITE_CALLER_INITIAL = 4;
+    WARM_TRANSFER_AGENT_INVITE_CALLER = 5;
+    WARM_TRANSFER_AGENT_START = 6;
+    WARM_TRANSFER_AGENT_END = 7;
+
+    WARM_TRANSFER_OUTBOUND_INVITE_CALLER = 8;
+    WARM_TRANSFER_OUTBOUND_INVITE_CALLER_INITIAL = 9;
+    WARM_TRANSFER_OUTBOUND_START = 10;
+    WARM_TRANSFER_OUTBOUND_END = 11;
+
+    // COLD TRANSFER
+    COLD_TRANSFER_AGENT_START = 12;
+    COLD_TRANSFER_AGENT_END = 13;
+
+    COLD_TRANSFER_OUTBOUND_START = 14;
+
+    // CALLBACK SUSPEND
+    CALLBACK_SUSPEND_START = 15;
+    CALLBACK_RESUMING = 16;
+
+    // VOICEMAIL
+    VOICEMAIL_END = 17;
+    CALLER_SENT_TO_VOICEMAIL = 18;
+
+    // HOLD
+    HOLD_START = 19;
+    HOLD_END = 20;
+
+    // RECORDING
+    RECORDING_START = 21;
+    RECORDING_STOP = 22;
+
+    // SKILLS
+    CALL_SKILLS_SCORE = 23;
+    CALL_SKILLS_MATCHED = 24;
+    CALL_SKILLS_CURRENT = 25;
+    CALL_SKILLS_INITIAL = 26;
+    SKILLS_CHANGED_DROPSKILLS = 27;
+    SKILLS_CHANGED_ADDSKILLS = 28;
+
+    // QUEUEING
+    REQUEUE = 29;
+    SKILLS_CHANGED_REQUEUE = 30;
+
+    // SCRUBBING
+    SCRUB_OVERRIDE = 31;
+
+    // More CALLBACK SUSPEND
+    CALLBACK_RESUMING_WITH_MANUAL_CALL_START = 32;
+    CALLBACK_RESUMING_WITH_MANUAL_CALL_FINISH = 33;
+    CALLBACK_RESUMING_WITH_MANUAL_CALL_TIMEDOUT = 34;
+    CALLBACK_RESUMING_WITH_MANUAL_CALL_REPLACED = 35;
+
+    // Tranfer Hold and Unhold
+    TRANSFER_HOLD = 36;
+    TRANSFER_UNHOLD = 37;
+
+    // Warm Caller Transfer
+
+    // when the transfer starts for the source caller
+    WARM_CALLER_TRANSFER_SOURCE_START = 38;
+    // when the transfer starts for the destination caller
+    WARM_CALLER_TRANSFER_DESTINATION_START = 39;
+    // when the transfer starts and the source caller is not on hold
+    WARM_CALLER_TRANSFER_INVITE_CALLER_INITIAL = 40;
+    // when during transfer and the source caller is taken of hold
+    WARM_CALLER_TRANSFER_INVITE_CALLER = 41;
+    // when the transfer ends for a caller
+    WARM_CALLER_TRANSFER_END = 42;
+  }
+}
+
+message AgentCallLogActionValue {
+  enum Enum {
+    UNSPECIFIED = 0;
+    DNCL_RESULT_FAILED = 1;
+    CALL_ENDED_CALLER_DISCONNECTED = 2; // Ended via the agent.
+    /*DNCL_RESULT_ADDED    = "ADDED ";
+
+       DNCL_NUMBER          = "NUMBER: ";
+       DNCL_COUNTRY         = "COUNTRY: ";
+       DNCL_EXPIRATION      = "EXPIRATION: ";*/
+  }
+}
+
+enum AgentCallLogCallEnded {
+  AGENT_CANCELLED = 0;
+  CALLER_DISCONNECTED = 1;
+  NOT_CONNECTED = 2;
+  AGENT_LOST = 3;
+  AGENT_HANGUP = 4;
+  CALLER_HANGUP = 5;
+  CALL_END_ESTIMATE = 6;
+}
+
+message HuntGroupParamKey {
+  enum Enum {
+    AGENT_DIAL_IN_NUMBER = 0;
+    AGENT_LOGIN_GUI_STATISTICS_TEMPLATE = 1;
+    AGENT_PASSWORD_REQUIRES_LETTER = 2;
+    AGENT_PASSWORD_REQUIRES_NUMBER = 3;
+    AGENT_PASSWORD_REQUIRES_SYMBOL = 4;
+    AGENT_PASSWORD_REQUIRES_UPPER_LOWER = 5;
+    AGENT_SKILLS_REASSIGNMENT = 6;
+    AGENT_STATS_CALL_HISTORY = 7;
+    AGENT_TRIGGER = 8;
+    AGENT_DISPOSITION_CONDITIONAL_DNCL = 9;
+    ALLOWED_IPS = 10;
+    ALLOW_AGENT_HOLD = 11;
+    ALLOW_AGENT_INTERCOM = 12;
+    ALLOW_AGENT_PASSWORD_RESET = 13;
+    ALLOW_AGENT_PAUSE_CODE_RESET = 14;
+    ALLOW_AGENT_TO_PAUSE = 15;
+    ALLOW_CALLBACK_SCHEDULING = 16;
+    ALLOW_EXPORT_PHONE_NUMBER_ACTIVITY = 17;
+    ALLOW_MANUAL_APPROVAL_OF_CALLS = 18;
+    ALLOW_MANUAL_DIALING = 19;
+    ALLOW_PHONE_NUMBER_ACTIVITY = 20;
+    ALLOW_PREVIEW_DIAL_CANCEL = 21;
+    ALLOW_SCHEDULED_CALLBACK_CALLING = 22;
+    ALLOW_TRANSFER_CALLS = 23;
+    ALPHANUMERIC_KEYPAD = 24;
+    AUTO_PAUSE_ON_MULTI_HOLD = 25;
+    AUTO_PAUSE_ON_PREVIEW_CANCEL = 26;
+    DEFAULT_AGENT_PAUSE_CODE = 27;
+    DEFAULT_AGENT_TRANSFERS_FILTERING = 28;
+    DEFAULT_DNCL_COUNTRY = 29;
+    DEFAULT_DNCL_EXPIRATION = 30;
+    DEFAULT_INBOUND_CALL_DNCL_EXPIRATION = 31;
+    DEFAULT_MANUAL_CALL_DNCL_EXPIRATION = 32;
+    DEFAULT_OUTBOUND_CALL_DNCL_EXPIRATION = 33;
+    DEFAULT_PREVIEW_CALL_DNCL_EXPIRATION = 34;
+    DEFAULT_SCHEDULED_CALLBACK_ROUTING = 35;
+    DISCONNECT_CALL_CONFIRMATION = 36;
+    DISPLAY_AGENT_TRANSFERS_FILTERING = 37;
+    DISPLAY_DATA_COLLECT_DATA = 38;
+    DISPLAY_DATA_DIPPED_DATA = 39;
+    DISPLAY_IVR_KEYS_PRESSED = 40;
+    DISPLAY_PHONE_ZIP_METADATA = 41;
+    DISPLAY_RECORDING_INDICATOR = 42;
+    DO_ALLOW_ADD_DNCL = 43;
+    ENABLE_RECORDING_PAUSE = 44;
+    HOLD_QUEUE_MONITORING = 45;
+    HOLD_QUEUE_MONITORING_AGENT_ROUTING = 46;
+    HOLD_QUEUE_MONITORING_PREFERRED_HUNT_GROUP_ROUTING = 47;
+    HOLD_QUEUE_MONITORING_REQUIRED_HUNT_GROUP_ROUTING = 48;
+    HUNT_GROUP_CLIENT_INFO_DISPLAY_TEMPLATE = 49;
+    HUNT_GROUP_SCRIPT = 50;
+    HUNT_GROUP_WEB_LINK = 51;
+    MANUAL_APPROVAL_NUMBER_CONFIRMATION = 52;
+    MANUAL_DIAL_AUTO_DNCL_ADD = 53;
+    MANUAL_DIAL_DEFAULT_CALLER_ID = 54;
+    MANUAL_DIAL_DEFAULT_COUNTRY = 55;
+    MANUAL_DIAL_DISPLAY_COUNTRY_SELECT_MENU = 56;
+    MANUAL_DIAL_DEFAULT_CALLER_ID_COUNTRY = 57;
+    MANUAL_DIAL_DISPLAY_CALLER_ID_COUNTRY_SELECT_MENU = 58;
+    MANUAL_DIAL_DISPLAY_OUTBOUND_NUMBER_PHONE_BOOK = 59;
+    MANUAL_DIAL_DISPLAY_PHONE_BOOK = 60;
+    MANUAL_DIAL_NUMBER_WHITE_LIST = 61;
+    MANUAL_DIAL_OVERRIDE_CELL_SCRUB = 62;
+    MANUAL_DIAL_OVERRIDE_RECORDING_SETTINGS = 64;
+    MANUAL_DIAL_SCRUB_OVERRIDE = 65;
+    MANUAL_DIAL_TIMEZONE_OVERRIDE = 66;
+    MANUAL_DIAL_USER_EDITABLE_CALLER_ID = 67;
+    MANUAL_QUEUE_CONFIGURATION_NAME = 68;
+    MINIMUM_AGENT_PASSWORD_LENGTH = 69;
+    PHONE_NUMBER_ACTIVITY_EDIT_RESPONSES = 70;
+    PHONE_NUMBER_ACTIVITY_RECORDINGS_DOWNLOAD = 71;
+    PREVIEW_DIAL_AUTO_DNCL_ADD = 72;
+    PREVIEW_DIAL_CALL_TIMEOUT = 73;
+    PREVIEW_DIAL_CONFIRMATION = 74;
+    PREVIEW_QUEUE_CONFIGURATION_NAME = 75;
+    RECORDING_DELAY = 76;
+    REQUEUE_TRANSFER_QUEUE_CONFIGURATION_NAME = 77;
+    SCHEDULED_CALLBACKS_RETRIEVAL_MODE = 78;
+    SCHEDULED_CALLBACK_ROUTING_DISALLOWED = 79;
+    TRANSFER_CALLS_DEFAULT_CALLER_ID = 80;
+    TRANSFER_CALLS_DEFAULT_COUNTRY = 81;
+    TRANSFER_CALLS_DEFAULT_TRANSFER_NUMBER = 82;
+    TRANSFER_CALLS_DISPLAY_CALLER_ID_PHONE_BOOK = 83;
+    TRANSFER_CALLS_DISPLAY_COUNTRY_SELECT_MENU = 84;
+    TRANSFER_CALLS_DISPLAY_TRANSFER_NUMBER_PHONE_BOOK = 85;
+    TRANSFER_CALLS_HAND_OFF_TYPE = 86;
+    TRANSFER_CALLS_TRANSFER_TYPE = 87;
+    TRANSFER_CALLS_USER_EDITABLE_CALLER_ID = 88;
+    TRANSFER_CALLS_USER_EDITABLE_TRANSFER_NUMBER = 89;
+    TRANSFER_RECORDING_STATUS = 90;
+    USE_ADVANCED_GATEWAY_TITLE = 91;
+    USE_AGENT_PAUSE_CODES = 92;
+    USE_IP_BASED_AUTH = 93;
+    HUNT_GROUP_REASSIGNMENT_DISALLOWED = 94;
+    REQUEUE_TRANSFER_DISALLOWED_SKILLS = 95;
+    ALLOW_MANUAL_APPROVAL_FOR_MESSAGING = 96;
+    DISPLAY_SKILLS = 97;
+    PBX_TRANSFER_DISALLOWED_EXTENSIONS = 98;
+  }
+}
+
+enum HoldType {
+  UNKNOWN = 0;
+  SIMPLE = 1;
+  MULTI = 2;
+}
+
+message ReplaceConfig {
+  enum Enum {
+    NO_CHANGE = 0;
+    TENANT = 1;
+    REPLACE = 2;
+  }
+}
+
+// Queued notification type definition that's going to be used by the ACD client to determine
+// the notification type of the queued call
+enum QueuedNotificationType {
+  // does not have PBX Skill, doesn't have an Agent Skill, and isn't requeued
+  QueuedNotificationType_GENERAL_INITIAL = 0;
+  // a call with the PBX skill
+  QueuedNotificationType_PBX_INITIAL = 1;
+  // A call that has an agent specific call and has been isn't requeued
+  QueuedNotificationType_AGENT_BOUND_INITIAL = 2;
+  // A call that been requeued
+  QueuedNotificationType_GENERAL_REQUEUED = 3;
+  // A call that has an agent specific call and has been requeued
+  QueuedNotificationType_AGENT_BOUND_REQUEUED = 4;
+}
+
+message TransferMember {
+  string identifier = 1;
+  string display_label = 2;
+  TransferMemberType member_type = 3;
+}
+
+enum TransferMemberType {
+  TransferMemberType_AGENT = 0;
+  TransferMemberType_CALLER = 1;
+  TransferMemberType_OUTBOUND = 2;
+}
+
+// UI Bound agent messages
+
+// message used to wrap the alert one of
+message AgentAlert {
+  // the one for the agent alert
+  oneof alert {
+    // a message from backoffice
+    AgentBackofficeMessageAlert backoffice_message = 1;
+    // alert that a direct agent call is ringing
+    AgentDirectedCallRingingAlert directed_call_ringing = 2;
+    // alert that a direct agent call hungup
+    AgentDirectedCallHangupAlert directed_call_hangup = 3;
+  }
+}
+
+// an event used to send a back office message to an agent
+message AgentBackofficeMessageAlert {
+  // the amount of time in seconds the event should expire - 0 mean no expiration
+  int64 expire_duration = 1;
+  // the date/time that the even happened
+  google.protobuf.Timestamp timestamp = 2;
+  // the information of the agent this event is for
+  api.commons.AgentSession target_agent_session = 3;
+  // the message send from backoffice
+  string message = 4;
+  // a unique id for the message
+  string id = 5;
+}
+
+// an event used to alert an agent that they have an agent directed call that came in
+message AgentDirectedCallRingingAlert {
+  // the amount of time in seconds the event should expire - 0 mean no expiration
+  int64 expire_duration = 1;
+  // the date/time that the even happened
+  google.protobuf.Timestamp timestamp = 2;
+  // the information of the agent this event is for
+  api.commons.AgentSession target_agent_session = 3;
+  // the information of the caller entity
+  CallerSid caller_sid = 4;
+  // the number the caller called from
+  string caller_id = 5;
+  // the number the caller called
+  string destination_number = 6;
+  // a unique id for the message
+  string id = 7;
+}
+
+// an event used to alert an agent that they have an agent directed call that hung up
+message AgentDirectedCallHangupAlert {
+  // the amount of time in seconds the event should expire - 0 mean no expiration
+  int64 expire_duration = 1;
+  // the date/time that the even happened
+  google.protobuf.Timestamp timestamp = 2;
+  // the information of the agent this event is for
+  api.commons.AgentSession target_agent_session = 3;
+  // the information of the caller entity
+  CallerSid caller_sid = 4;
+  // a unique id for the message
+  string id = 5;
+}
+
+message AgentState {
+  // the asterisk status
+  int64 status = 2;
+  // the status enum
+  AgentStatus.Enum status_desc = 3;
+  // if the agent is paused
+  bool paused = 4;
+  // the queue the agent is in (client id)
+  string queue = 5;
+  // the voice session id
+  int64 current_session_id = 6;
+  // the time the status changed
+  int64 last_status_change = 7;
+  // if the agent is monitoring
+  bool monitoring = 8;
+  // the number of calls the agent has taken
+  int64 calls_count = 9;
+  // the last sip code
+  int64 last_sip_code = 10;
+  // if the agent is on call with a lost call
+  bool agent_peer_is_lost_call = 11;
+  // if the agent is disabled
+  bool disabled = 12;
+  // if the agent is on call with a call that was suspended
+  bool caller_was_suspended = 13;
+  // the list of transfer members
+  repeated TransferMember transfer_members = 14;
+  // if the agent is on call with a direct to agent call
+  bool agent_peer_is_direct_to_agent = 15;
+  // the user_id of the agent
+  string user_id = 16;
+  // the agent_sid of the agent
+  int64 agent_sid = 17;
+  // the asm_session_sid of the agent
+  int64 asm_session_sid = 18;
+  // indicates if the agent is muted or not
+  bool agent_is_muted = 19;
+}
+
+// enum used to represent a dtmf tone
+enum DTMFDigit {
+  DTMFDigit_0 = 0;
+  DTMFDigit_1 = 1;
+  DTMFDigit_2 = 2;
+  DTMFDigit_3 = 3;
+  DTMFDigit_4 = 4;
+  DTMFDigit_5 = 5;
+  DTMFDigit_6 = 6;
+  DTMFDigit_7 = 7;
+  DTMFDigit_8 = 8;
+  DTMFDigit_9 = 9;
+  DTMFDigit_A = 10;
+  DTMFDigit_B = 11;
+  DTMFDigit_C = 12;
+  DTMFDigit_D = 13;
+  DTMFDigit_STAR = 14;
+  DTMFDigit_POUND = 15;
+}

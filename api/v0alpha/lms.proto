@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/communication.proto";
-import "commons/compliance.proto";
-import "commons/lms.proto";
-import "commons/types.proto";
+import "api/commons/communication.proto";
+import "api/commons/compliance.proto";
+import "api/commons/lms.proto";
+import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
@@ -13,7 +13,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service LMS {
   rpc GetPublicKey(GetPublicKeyReq) returns (PublicKey) {
@@ -335,7 +335,7 @@ message Element {
   repeated bool input_is_discard = 20;
 
   Process transform = 13;
-  commons.PipelineElementStatusType last_status = 14;
+  api.commons.PipelineElementStatusType last_status = 14;
   repeated string labels = 16;
   google.protobuf.Timestamp created_date = 17;
   google.protobuf.Timestamp last_edited = 18;
@@ -438,11 +438,11 @@ message RecordProtoPair {
 message ProcessFields {
   message NestedField {
     string name = 1;
-    commons.RecordType field_type = 2;
+    api.commons.RecordType field_type = 2;
   }
   message Field {
     string name = 3;
-    commons.RecordType field_type = 4;
+    api.commons.RecordType field_type = 4;
     // any nested fields, could be empty
     repeated NestedField nested = 5;
     string format = 9;
@@ -457,7 +457,7 @@ message FieldPK {
 
 message Field {
   string name = 3;
-  commons.FieldType type = 4;
+  api.commons.FieldType type = 4;
   google.protobuf.Timestamp date_modified = 5;
   FieldMetadata metadata = 10;
   string description = 11;
@@ -465,7 +465,7 @@ message Field {
 
 message UpdateFieldReq {
   string name = 3;
-  commons.FieldType type = 4;
+  api.commons.FieldType type = 4;
   google.protobuf.Timestamp date_modified = 5;
   string new_name = 6;
   FieldMetadata metadata = 10;
@@ -474,7 +474,7 @@ message UpdateFieldReq {
 
 message FieldMetadata {
   string time_format = 1;
-  commons.DateTimePrecision precision = 2;
+  api.commons.DateTimePrecision precision = 2;
 
   // 3-10 are Parsing Options
   // Remove any characters that are in this string
@@ -577,7 +577,7 @@ message GetFileTemplatesReq {}
 
 message FileTemplateField {
   string name = 1;
-  commons.FieldType type = 2;
+  api.commons.FieldType type = 2;
 }
 
 message FileTemplateFields {
@@ -585,7 +585,7 @@ message FileTemplateFields {
 }
 
 message FieldTypes {
-  repeated commons.FieldType values = 1;
+  repeated api.commons.FieldType values = 1;
 }
 
 message FileTemplate {
@@ -594,7 +594,7 @@ message FileTemplate {
   string description = 11;
   repeated string field_names = 12;
   FileFormatParams file_format_params = 14;
-  commons.FileFormat file_format = 15;
+  api.commons.FileFormat file_format = 15;
   repeated Field fields = 16;
 }
 
@@ -670,7 +670,7 @@ message ComplianceProcessor {
   // ID for the rulset to run against
   string rule_set_id = 1;
   // Comm type we are using (phone, email, sms)
-  commons.CommType comm_type = 5;
+  api.commons.CommType comm_type = 5;
   // call type we are checking (inbound, outbound, preview, mac)
   // or field containing the call type
   string call_type = 6;
@@ -712,9 +712,9 @@ message ConsentExportProcess {
   // Profile ID of profile to use
   string consent_profile_id = 5; // Optional, only needed with phone/sms
   // Run as test, disabled, or normal
-  commons.RunType run_type = 6;
+  api.commons.RunType run_type = 6;
   // Type of consent action to do: ADD/REVOKE
-  commons.ConsentActionType action = 7;
+  api.commons.ConsentActionType action = 7;
   // Field name or literal value for referring url when creating consent
   string referring_url = 8;
   // Field name or literal value for topic when creating consent
@@ -740,12 +740,12 @@ message ConsentExportProcess {
   string condition_to = 18;
   // Either a field name or content type value for the contennt type of the content
   oneof content_type {
-    commons.ContentType content_type_val = 27;
+    api.commons.ContentType content_type_val = 27;
     string content_type_field_name = 28;
   }
   // Either a field name or channel type value for the channel type. Field value should be a string
   oneof channel_type {
-    commons.Channel channel_type_val = 29;
+    api.commons.Channel channel_type_val = 29;
     string channel_type_field_name = 30;
   }
   oneof expiration {
@@ -836,7 +836,7 @@ message HttpReq {
   // construct the body often, body is either empty, or a json string
   string body = 3;
   // what type of request to make  GET by default
-  commons.HttpVerb method = 4;
+  api.commons.HttpVerb method = 4;
   // the values to save from this response.
   // saved values can be referenced on *all* future requests.
   // so things like auth tokens need to be declared here so they can be
@@ -951,14 +951,14 @@ message PaginatedHttpRequest {
   // the starting value of i.
   int64 start_index = 2;
   // terminates if *any* of the terminators return true
-  repeated commons.PaginationTerminator end_for_any = 3;
+  repeated api.commons.PaginationTerminator end_for_any = 3;
   // terminates if all fo the terminators return true
-  repeated commons.PaginationTerminator end_for_all = 4;
+  repeated api.commons.PaginationTerminator end_for_all = 4;
   // if set, and if the PaginationTerminator returns true
   // the response is considered not done.
   // No rows are expected to be imported from this response,
   // and the request will retry.
-  commons.PaginationTerminator request_not_ready = 5;
+  api.commons.PaginationTerminator request_not_ready = 5;
   // how many seconds we will wait before retrying if request_not_ready returns true
   int64 not_ready_wait_seconds = 6;
   // whether to retry the preliminary when we get a not ready state
@@ -980,7 +980,7 @@ message SftpImport {
   string address = 7;
   string port = 8;
 
-  commons.FilePattern file_pattern = 13;
+  api.commons.FilePattern file_pattern = 13;
 
   // We will only process if enabled
   bool enabled = 15;
@@ -1038,7 +1038,7 @@ message CjsExportProcess {
   // Specifies which fields should be exported
   ExportHeader header = 4;
   // To Disable, or run as a test
-  commons.RunType run_type = 5;
+  api.commons.RunType run_type = 5;
   // `list_name` and `key_field` are only needed
   // when creating a new list, they will
   // be ignored otherwise
@@ -1071,12 +1071,12 @@ message CjsEnrichmentProcess {
   // AND - Keep only records that are in both lists, merge the records
   // JOIN - Keep all of the primary source and merge in matches from the
   //        secondary source
-  commons.EnrichmentType enrich_type = 5;
+  api.commons.EnrichmentType enrich_type = 5;
   // Specifies the primary list (LMS or CJS)
   // When merging records, all the fields from the primary
   // source will be used, and only the extra fields (if any)
   // will be added to the record
-  commons.PrimarySource primary_source = 6;
+  api.commons.PrimarySource primary_source = 6;
   // Specifies the Journey collection field
   // to be matched against.
   // Available options can be obtained
@@ -1088,7 +1088,7 @@ message CjsEnrichmentProcess {
   bool column_overwrite = 8;
   // Specifies what to do when there
   // is a duplicate match for the key in the collection
-  commons.DedupKeyPolicy dedup_key_policy = 9;
+  api.commons.DedupKeyPolicy dedup_key_policy = 9;
 }
 
 // this process downloads the records from the signed_url
@@ -1132,7 +1132,7 @@ message LookupProcess {
 message ComplProcess {}
 
 message CFSExportConfig {
-  commons.ExportType type = 1;
+  api.commons.ExportType type = 1;
   string value = 2;
 }
 
@@ -1159,7 +1159,7 @@ message FilterOperation {
   // All results are then either AND-ed or OR-ed together. The resulting bool is
   // returned.
   repeated FilterCheck checks = 1;
-  commons.ChainOperator operator = 2;
+  api.commons.ChainOperator operator = 2;
 }
 
 // Describes a lookup of a field on a record, checking its value or type against
@@ -1184,7 +1184,7 @@ message FilterCheck {
     // name of the field to lookup in record. This field's value will be used
     FieldIndex field_name = 6;
     // operation we are performing
-    commons.CompareOperator op = 7;
+    api.commons.CompareOperator op = 7;
     // other value to compare against
     Value value = 8;
     // if "negate" is true, we negate the result of this comparison
@@ -1197,7 +1197,7 @@ message FilterCheck {
     // name of the field to lookup in record. This field's type will be used
     FieldIndex field_name = 9;
     // the type we must match to report true
-    commons.RecordType matches_field_type = 10;
+    api.commons.RecordType matches_field_type = 10;
     // if "negate" is true, we negate the result of this comparison
     bool negate = 11;
   }
@@ -1245,9 +1245,9 @@ message P3ExportProcess {
   // 'Discard' = discard both.
   // 'Duplicate List' = create duplicate list
   // Default = 'Keep and Discard'
-  commons.DuplicatePolicyType dupe_policy = 6;
+  api.commons.DuplicatePolicyType dupe_policy = 6;
   // Specifies how records without numbers should be handled.
-  commons.AbsentPolicyType absent_policy = 7;
+  api.commons.AbsentPolicyType absent_policy = 7;
   /// The number of the import template describing this import.
   int32 template_id = 8;
   // Specifies a default area code to use with file
@@ -1261,15 +1261,15 @@ message P3ExportProcess {
   string description = 11;
 
   // To Disable or run as test
-  commons.RunType run_type = 12;
+  api.commons.RunType run_type = 12;
   // `file_pattern` is what sets the description
-  // we are using commons.FilePattern so that it
+  // we are using api.commons.FilePattern so that it
   // can change depending on the day.
   // The directory field in this `file_pattern`
   // should not be used (it will be ignored)
-  commons.FilePattern file_pattern = 13 [deprecated = true];
+  api.commons.FilePattern file_pattern = 13 [deprecated = true];
   // what to name the file
-  commons.ConstructedFilename filename = 43;
+  api.commons.ConstructedFilename filename = 43;
 
   // Advanced options
   // Allows ids to be specificied in place of the ones
@@ -1282,7 +1282,7 @@ message P3ExportProcess {
   // Campaign end time
   google.protobuf.Timestamp end_time = 17;
   // FIRST, NATURAL, or CUSTOM. Will default to FIRST
-  commons.DialOrderType dial_order = 18;
+  api.commons.DialOrderType dial_order = 18;
   // TCN P3 will use the custom calling rules defined in the account.
   // If client preference is set for custom calling rules they will be used.
   // Default = 'false'
@@ -1349,7 +1349,7 @@ message P3ExportProcess {
   // If the export filetype is anything other than custom
   // `field_delimiter`, `record_delimiter` and `quote_fields`
   // will be ignored
-  commons.FileFormat file_format = 39;
+  api.commons.FileFormat file_format = 39;
   // The fields `days_into_future`, `start_hour`
   // and `end_hour`
   // will override `start_time`, `end_time`
@@ -1382,8 +1382,8 @@ message ComplianceExportProcess {
   string field = 3;
   string expiration_field = 4; // Optional, has to be type date
   string country_code = 5; // Optional, only needed with phone/sms
-  commons.RunType run_type = 6;
-  commons.ComplianceListType compliance_list_type = 7;
+  api.commons.RunType run_type = 6;
+  api.commons.ComplianceListType compliance_list_type = 7;
 }
 
 message ScrubProcess {
@@ -1455,7 +1455,7 @@ message SftpExportProcess {
   // File format to use (CSV, CUSTOM, TSV, etc.)
   // `field_delimiter`, `record_dilimiter`, and `quote_fields`
   // will be ignored the the format is not CUSTOM
-  commons.FileFormat fileformat = 7;
+  api.commons.FileFormat fileformat = 7;
 
   // Specifies whether to use headers in the
   // export file or not.
@@ -1466,9 +1466,9 @@ message SftpExportProcess {
   string record_delimiter = 10;
 
   // Specifies the construction of the export filename
-  commons.FilePattern file_pattern = 11 [deprecated = true];
+  api.commons.FilePattern file_pattern = 11 [deprecated = true];
   // Run type can be RUN (default), TEST, or DISABLED
-  commons.RunType run_type = 12;
+  api.commons.RunType run_type = 12;
 
   // Specifies which fields to export
   ExportHeader header = 13;
@@ -1482,7 +1482,7 @@ message SftpExportProcess {
   // directory to put the file in
   string directory = 16;
   // what to name the file
-  commons.ConstructedFilename filename = 17;
+  api.commons.ConstructedFilename filename = 17;
   // If true, it will try to bunch all phone number
   // fields to the left.
   bool shift_phone_fields = 18;
@@ -1520,13 +1520,13 @@ message CFSExportReq {
   }
 }
 message DeDupCriteria {
-  commons.DeDupActions action = 3;
+  api.commons.DeDupActions action = 3;
   repeated FieldIndex fields = 2;
 }
 
 message SortCriteria {
   // The ordering, ascending or descending
-  repeated commons.SortOrder ordering = 1;
+  repeated api.commons.SortOrder ordering = 1;
   repeated FieldIndex field_order = 2;
 }
 
@@ -1579,7 +1579,7 @@ message DateTime {
   // the format string used to create this datetime object
   string format = 2;
   // our date value ordered from most specific to least
-  commons.DateTimePrecision precision = 3;
+  api.commons.DateTimePrecision precision = 3;
   // modifier to apply to our value when comparing
   DateTimeModifier modifier = 11;
 }
@@ -1754,7 +1754,7 @@ message ReshapeAction {
   // convert a field to another type, if conversion fails, it will be an error
   // type
   message Convert {
-    commons.RecordType newType = 17;
+    api.commons.RecordType newType = 17;
   }
   // will remove "field" from the record
   message RemoveField {}
@@ -1862,7 +1862,7 @@ message ReshapeAction {
   // NOT a FieldIndex
   string field = 19;
   // will only execute on the matching type (defaults to ALL)
-  commons.RecordType matching_type = 20 [deprecated = true];
+  api.commons.RecordType matching_type = 20 [deprecated = true];
   FilterCheck predicate = 50;
   oneof action {
     Rename rename = 22;
@@ -1895,13 +1895,13 @@ message ListMetrics {
   repeated string field_names = 3;
   // all the field types that exist. field_types[i] has a name of field_names[i].
   // THeir indexes match up
-  repeated commons.RecordType field_types = 4;
+  repeated api.commons.RecordType field_types = 4;
   // the counts of the field_name[i], field_type[i] pairs.
   // ex: if field_name[i] == 'test' and field_types[i] == record_type_err, and field_counts[i] == 10
   // means we woud have 10 fiels named test that were error types in the list.
   repeated int32 field_counts = 5;
   // the run type for the exchange.  Will only mean anything if the element is an exchange.
-  commons.RunType run_type = 6;
+  api.commons.RunType run_type = 6;
   // will contain the http post response body from the POST request to p3 backoffice
   // only relevent on p3 exchange elements.
   string success_message = 7;
@@ -1962,7 +1962,7 @@ message Event {
   // element_id that created this event (nil if its an upload, or sftp_import)
   google.protobuf.StringValue parent_id = 5;
   // other inputs to this event
-  commons.StringArraySql input_ids = 6;
+  api.commons.StringArraySql input_ids = 6;
   string element_id = 7;
 
   Process process = 9;
@@ -2032,7 +2032,7 @@ message MatchRes {
 // Metadata associated with a field
 message CollectionFieldMetadata {
   string field_name = 1;
-  commons.FieldType field_type = 2;
+  api.commons.FieldType field_type = 2;
   // Optional field
   // Specifies formating for the field
   // e.g. for a datetime it might be
@@ -2139,7 +2139,7 @@ message CjsSearchField {
   string cjs_search_field_id = 1;
   string cjs_search_definition_id = 2;
   string field_name = 3;
-  commons.FieldType field_type = 4;
+  api.commons.FieldType field_type = 4;
   string field_value = 5; // leave empty in definition to prompt user for value
 }
 
@@ -2195,7 +2195,7 @@ message CollectionEntries {
 message CjsExecuteSearchField {
   oneof field {
     string field_name = 1;
-    commons.FieldType field_type = 2;
+    api.commons.FieldType field_type = 2;
   }
 
   string field_value = 3;
@@ -2220,5 +2220,5 @@ message GetCjsSecureSearchCriteriaReq {}
 message CjsSecureSearchCriteriaField {
   string cjs_secure_search_criteria_field_id = 1;
   string cjs_secure_search_criteria_id = 2;
-  commons.FieldType field_type = 3;
+  api.commons.FieldType field_type = 3;
 }

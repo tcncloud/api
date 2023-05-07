@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "api/commons/acd.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+enum AsmSubsessionType {
+  VOICE = 0;
+  OMNI = 1;
+}
+
+enum StatusState {
+  // unknown
+  STATUS_STATE_UNKNOWN = 0;
+  // no conversations assigned
+  WAITING = 1;
+  // conversations assigned but none open
+  IDLE = 2;
+  // conversation is open
+  CONVERSATION_OPEN = 3;
+}
+
+message DashboardAgentInfo {
+  // TODO remove unused fields
+
+  // agents user id
+  string user_id = 1;
+  // agents name
+  string name = 2;
+  // agents user name
+  string user_name = 3;
+  // agents hunt group name
+  string hunt_group_name = 4;
+  // partner agent id
+  string partner_agent_id = 6;
+  // the agents hunt group sid
+  int64 hunt_group_sid = 9;
+  // the agents sid
+  int64 agent_sid = 10;
+  // the user caller id
+  string user_caller_id = 12;
+  // agents first name
+  string first_name = 13;
+  // agents last name
+  string last_name = 14;
+  // the date of creation
+  google.protobuf.Timestamp created = 15;
+  // the date of last update
+  google.protobuf.Timestamp last_updated = 16;
+  // agents profile group id
+  string agent_profile_group_id = 17;
+  // agents profile group name
+  string agent_profile_group_name = 18;
+  // TODO add loginTime
+
+  // enum of agents status
+  StatusState agent_status = 19;
+  // the agents current conversation
+  int64 current_conversation_sid = 20 [jstype = JS_STRING];
+  // time from first customer message to agent response. between all conversations.
+  int64 average_customer_wait_time_seconds = 22;
+  // responste time between all conversations.
+  int64 average_time_to_respond_seconds = 23;
+  // time from first customer message to conversation close. between all conversations.
+  int64 average_conversation_duration_seconds = 24;
+  // login time
+  google.protobuf.Timestamp login_time = 25;
+  // last event time
+  google.protobuf.Timestamp last_event_time = 26;
+
+  // The response event information for an agent
+  message DashboardAgentResponseEvent {
+    // the time it took to respond in seconds
+    int64 response_time_seconds = 1;
+    // the time of the event
+    google.protobuf.Timestamp time = 2;
+    // whether or not this was the initial message sent by the agent
+    bool is_initial_agent_message = 3;
+  }
+
+  // the list of response events
+  repeated DashboardAgentResponseEvent events = 27;
+
+  // Agents Skills
+  map<string, int64> skills = 28;
+  // Asm Session Sid
+  google.protobuf.Int64Value asm_session_sid = 29;
+}
+
+message StreamAgentStateRes {
+  oneof agent_state {
+    api.commons.AgentState state = 1;
+    KeepAlive heart_beat = 2;
+    QueueCallAdd call_queue_add = 3;
+    QueueCallRemove call_queue_remove = 4;
+  }
+}
+
+message KeepAlive {}
+
+message QueueCallAdd {
+  // number dialed when the call was placed.
+  string phone_number = 1;
+  // caller_id used when the call was placed.
+  string caller_id = 2;
+  // timestamp indicating when the call started.
+  google.protobuf.Timestamp start_date = 3;
+  // timestamp indicating when the call was put on hold (only set when call is a hold call).
+  google.protobuf.Timestamp hold_date = 4;
+  // formatted skills that the call requires.
+  repeated string skills = 5;
+  // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
+  bool agent_specific = 6;
+  // queued notification type of the call.
+  api.commons.QueuedNotificationType queued_notification_type = 7;
+  // callersid
+  api.commons.CallerSid caller_sid = 8;
+}
+
+message QueueCallRemove {
+  api.commons.CallerSid caller_sid = 1;
+}

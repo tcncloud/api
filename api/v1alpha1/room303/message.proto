@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.room303;
 
-import "commons/room303.proto";
+import "api/commons/room303.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
-option java_package = "com.tcn.api.v1alpha1.room303";
+option java_package = "com.tcn.matrix.api.v1alpha1.room303";
 
 message CreateMessageRequest {
   string room_id = 1;
@@ -17,7 +17,7 @@ message CreateMessageRequest {
 }
 
 message CreateMessageResponse {
-  commons.Message message = 1;
+  api.commons.Message message = 1;
 }
 
 message EditMessageRequest {
@@ -30,7 +30,7 @@ message EditMessageRequest {
 }
 
 message EditMessageResponse {
-  commons.Message message = 1;
+  api.commons.Message message = 1;
 }
 
 message GetMessagesRequest {
@@ -40,7 +40,7 @@ message GetMessagesRequest {
 }
 
 message GetMessagesResponse {
-  repeated commons.Message messages = 1;
+  repeated api.commons.Message messages = 1;
 }
 
 message StreamMessageUpdatesRequest {
@@ -48,7 +48,7 @@ message StreamMessageUpdatesRequest {
   string member_id = 2;
 }
 message StreamMessageUpdatesResponse {
-  commons.Message message = 1;
+  api.commons.Message message = 1;
 }
 
 message MarkMessageReadRequest {
@@ -63,12 +63,12 @@ message MarkAllMessagesReadRequest {
 }
 
 message MarkAllMessagesReadResponse {
-  repeated commons.Message rows_updated = 1;
+  repeated api.commons.Message rows_updated = 1;
 }
 
 message GetUnreadStatsRequest {}
 message GetUnreadStatsResponse {
-  repeated commons.MessageStat stats = 1;
+  repeated api.commons.MessageStat stats = 1;
 }
 
 message DeleteMessageRequest {
@@ -80,7 +80,7 @@ message DeleteMessageRequest {
 }
 
 message DeleteMessageResponse {
-  commons.Message message = 1;
+  api.commons.Message message = 1;
 }
 
 message BulkMarkMessageReadRequest {
@@ -89,5 +89,5 @@ message BulkMarkMessageReadRequest {
 }
 
 message BulkMarkMessageReadResponse {
-  repeated commons.Message messages = 1;
+  repeated api.commons.Message messages = 1;
 }

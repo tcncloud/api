@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
-import "commons/scorecards.proto";
+import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-option java_package = "com.tcn.api.v1alpha1.scorecards";
+option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 // GetAutoEvaluationRequest is the request to get an auto evaluation
 message GetAutoEvaluationRequest {
@@ -15,7 +15,7 @@ message GetAutoEvaluationRequest {
 
 // GetAutoEvaluationResponse returns the auto evaluation requested.
 message GetAutoEvaluationResponse {
-  commons.AutoEvaluation auto_evaluation = 1; // auto evaluation response object.
+  api.commons.AutoEvaluation auto_evaluation = 1; // auto evaluation response object.
 }
 
 // ListAutoEvaluationsRequest is the request to get a list of auto evaluations.
@@ -25,7 +25,7 @@ message ListAutoEvaluationsRequest {
 
 // ListAutoEvaluationsResponse returns a list of evaluations.
 message ListAutoEvaluationsResponse {
-  repeated commons.AutoEvaluation auto_evaluations = 1; // List of responses
+  repeated api.commons.AutoEvaluation auto_evaluations = 1; // List of responses
 }
 
 // DeleteAutoEvaluationRequest is the request to delete an auto evaluation (with sub-entities).
@@ -35,5 +35,5 @@ message DeleteAutoEvaluationRequest {
 
 // DeleteAutoEvaluationResponse returns the deleted auto evaluation.
 message DeleteAutoEvaluationResponse {
-  commons.AutoEvaluation auto_evaluation = 1; // deleted auto evaluation object.
+  api.commons.AutoEvaluation auto_evaluation = 1; // deleted auto evaluation object.
 }

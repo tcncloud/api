@@ -2,20 +2,20 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
-import "commons/scorecards.proto";
+import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-option java_package = "com.tcn.api.v1alpha1.scorecards";
+option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 // CreateQuestionRequest is the request to create a new question in the library.
 message CreateQuestionRequest {
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 }
 
 // CreateQuestionResponse contains the question that was created.
 message CreateQuestionResponse {
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 }
 
 // ListQuestionsRequest is the request to list questions by some criteria.
@@ -29,13 +29,13 @@ message ListQuestionsRequest {
 
 // ListQuestionsResponse contains a list of questions.
 message ListQuestionsResponse {
-  repeated commons.Question questions = 1;
+  repeated api.commons.Question questions = 1;
 }
 
 // UpdateQuestionRequest is the request to update question by id.
 message UpdateQuestionRequest {
   // Required.
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 
   // Required. Valid paths: [question, description].
   // To update Categories, use *Category and *QuestionCategory methods.
@@ -44,7 +44,7 @@ message UpdateQuestionRequest {
 
 // UpdateQuestionResponse contains the updated question.
 message UpdateQuestionResponse {
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 }
 
 // DeleteQuestionRequest is the request to delete a question by id.
@@ -54,7 +54,7 @@ message DeleteQuestionRequest {
 
 // DeleteQuestionResponse returns the deleted question.
 message DeleteQuestionResponse {
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 }
 
 // GetQuestionRequest is the request to get a question by id.
@@ -66,7 +66,7 @@ message GetQuestionRequest {
 
 // GetQuestionResponse contains a question.
 message GetQuestionResponse {
-  commons.Question question = 1;
+  api.commons.Question question = 1;
 }
 
 // CreateQuestionCategoryRequest is request to link a scorecard question and category
@@ -111,5 +111,5 @@ message BulkCreateQuestionsRequest {
 
 // BulkCreateQuestionsResponse returns the created questions
 message BulkCreateQuestionsResponse {
-  repeated commons.Question questions = 1; // Created questions.
+  repeated api.commons.Question questions = 1; // Created questions.
 }

@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/omnichannel.proto";
-import "commons/types.proto";
+import "api/commons/omnichannel.proto";
+import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 // Service for interacting with TCN's Omni API system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -27,13 +27,13 @@ service OmniApi {
   // the method will return newly created OmniCampaign for this client
   // Required Permission:
   //      OMNI_BOSS
-  rpc CreateCampaign(CreateCampaignReq) returns (commons.OmniCampaign) {
+  rpc CreateCampaign(CreateCampaignReq) returns (api.commons.OmniCampaign) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createcampaign";
     option (google.api.http).body = "*";
   }
 
   //Get campaign defined by GetChatCampaignById.
-  rpc GetCampaignById(GetCampaignByIdReq) returns (commons.OmniCampaign) {
+  rpc GetCampaignById(GetCampaignByIdReq) returns (api.commons.OmniCampaign) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getcampaignbyid";
     option (google.api.http).body = "*";
   }
@@ -81,26 +81,26 @@ service OmniApi {
 
   // Get a stream of new conversation message for a given conversation. Used
   // only for managers. It is not for customers.
-  rpc ManagerListMessages(ManagerListMessagesReq) returns (stream commons.OmniMessage) {
+  rpc ManagerListMessages(ManagerListMessagesReq) returns (stream api.commons.OmniMessage) {
     option (google.api.http).post = "/api/v0alpha/omniapi/managerlistmessages";
     option (google.api.http).body = "*";
   }
 
   // Get a stream of conversation message for a given conversation. Used
   // only for agents/users. It is not for customers.
-  rpc ListMessages(ListMessagesReq) returns (stream commons.OmniMessage) {
+  rpc ListMessages(ListMessagesReq) returns (stream api.commons.OmniMessage) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listmessages";
     option (google.api.http).body = "*";
   }
 
   // Send a chat message
-  rpc SendOmniMessage(SendOmniMessageReq) returns (commons.Empty) {
+  rpc SendOmniMessage(SendOmniMessageReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/sendomnimessage";
     option (google.api.http).body = "*";
   }
 
   // Send a chat message
-  rpc ManagerSendOmniMessage(SendOmniMessageReq) returns (commons.Empty) {
+  rpc ManagerSendOmniMessage(SendOmniMessageReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/managersendomnimessage";
     option (google.api.http).body = "*";
   }
@@ -126,7 +126,7 @@ service OmniApi {
   }
 
   // DeleteDisposition - delete an existing disposition
-  rpc DeleteDisposition(DeleteDispositionReq) returns (commons.Empty) {
+  rpc DeleteDisposition(DeleteDispositionReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deletedisposition";
     option (google.api.http).body = "*";
   }
@@ -138,19 +138,19 @@ service OmniApi {
   }
 
   // UpdateDisposition - update an existing disposition
-  rpc UpdateDisposition(UpdateDispositionReq) returns (commons.Empty) {
+  rpc UpdateDisposition(UpdateDispositionReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatedisposition";
     option (google.api.http).body = "*";
   }
 
   // ListCustomUnsubscribeLinks - retrieves all the custom unsubscribe links
-  rpc ListCustomUnsubscribeLinks(commons.Empty) returns (ListCustomUnsubscribeLinksRes) {
+  rpc ListCustomUnsubscribeLinks(api.commons.Empty) returns (ListCustomUnsubscribeLinksRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listcustomunsubscribelinks";
     option (google.api.http).body = "*";
   }
 
   // CreateUnsubscribeLink - creates a new unsubscribe link
-  rpc CreateCustomUnsubscribeLink(commons.OmniCustomUnsubscribeLink) returns (CreateCustomUnsubscribeLinkRes) {
+  rpc CreateCustomUnsubscribeLink(api.commons.OmniCustomUnsubscribeLink) returns (CreateCustomUnsubscribeLinkRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createcustomunsubscribelink";
     option (google.api.http).body = "*";
   }
@@ -162,7 +162,7 @@ service OmniApi {
   }
 
   // DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
-  rpc DeleteCustomUnsubscribeLink(DeleteCustomUnsubscribeLinkReq) returns (commons.Empty) {
+  rpc DeleteCustomUnsubscribeLink(DeleteCustomUnsubscribeLinkReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deletecustomunsubscribelink";
     option (google.api.http).body = "*";
   }
@@ -184,7 +184,7 @@ service OmniApi {
   // GetTask - retrieves a task using the provided criteria
   // Required permissions:
   //    OMNI_AGENT
-  rpc GetTask(GetTaskReq) returns (commons.OmniTask) {
+  rpc GetTask(GetTaskReq) returns (api.commons.OmniTask) {
     option (google.api.http).post = "/api/v0alpha/omniapi/gettask";
     option (google.api.http).body = "*";
   }
@@ -200,7 +200,7 @@ service OmniApi {
   // CreateConnectedInbox - create a new connected inbox
   // Required permissions:
   //    OMNI_BOSS
-  rpc CreateConnectedInbox(commons.ConnectedInbox) returns (CreateConnectedInboxRes) {
+  rpc CreateConnectedInbox(api.commons.ConnectedInbox) returns (CreateConnectedInboxRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createconnectedinbox";
     option (google.api.http).body = "*";
   }
@@ -208,7 +208,7 @@ service OmniApi {
   // DeleteConnectedInboxBySid - deletes a connected inbox given it's identifier
   // Required permissions:
   //    OMNI_BOSS
-  rpc DeleteConnectedInboxBySid(DeleteConnectedInboxBySidReq) returns (commons.Empty) {
+  rpc DeleteConnectedInboxBySid(DeleteConnectedInboxBySidReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deleteconnectedinboxbysid";
     option (google.api.http).body = "*";
   }
@@ -216,7 +216,7 @@ service OmniApi {
   // GetConnectedInboxBySid - retrieves a connected inbox given it's identifier
   // Required permissions:
   //    OMNI_BOSS
-  rpc GetConnectedInboxBySid(GetConnectedInboxBySidReq) returns (commons.ConnectedInbox) {
+  rpc GetConnectedInboxBySid(GetConnectedInboxBySidReq) returns (api.commons.ConnectedInbox) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getconnectedinboxbysid";
     option (google.api.http).body = "*";
   }
@@ -242,7 +242,7 @@ service OmniApi {
   // username, password, server_name, and server_port (other fields from ConnectedInbox are ignored).
   // Required permissions:
   //    OMNI_BOSS
-  rpc TestConnectedInbox(commons.ConnectedInbox) returns (TestConnectedInboxRes) {
+  rpc TestConnectedInbox(api.commons.ConnectedInbox) returns (TestConnectedInboxRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/testconnectedinbox";
     option (google.api.http).body = "*";
   }
@@ -250,7 +250,7 @@ service OmniApi {
   // UpdateConnectedInbox - update a connected inbox
   // Required permissions:
   //    OMNI_BOSS
-  rpc UpdateConnectedInbox(UpdateConnectedInboxReq) returns (commons.Empty) {
+  rpc UpdateConnectedInbox(UpdateConnectedInboxReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updateconnectedinbox";
     option (google.api.http).body = "*";
   }
@@ -258,7 +258,7 @@ service OmniApi {
   // CreateVerifiedEmail.  this will create a new verified email
   // Required permissions
   //      OMNI_BOSS
-  rpc CreateVerifiedEmail(commons.VerifiedEmail) returns (CreateVerifiedEmailRes) {
+  rpc CreateVerifiedEmail(api.commons.VerifiedEmail) returns (CreateVerifiedEmailRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createverifiedemail";
     option (google.api.http).body = "*";
   }
@@ -279,7 +279,7 @@ service OmniApi {
   // DeleteVerifiedEmail - deletes a verified email record using the given identifier
   // Required permissions
   //      OMNI_BOSS
-  rpc DeleteVerifiedEmail(DeleteVerifiedEmailReq) returns (commons.Empty) {
+  rpc DeleteVerifiedEmail(DeleteVerifiedEmailReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deleteverifiedemail";
     option (google.api.http).body = "*";
   }
@@ -289,7 +289,7 @@ service OmniApi {
   // This method will return an OmniVerifiedEmail message/entity.
   // Required permissions
   //      OMNI_BOSS
-  rpc GetVerifiedEmailBySid(GetVerifiedEmailBySidReq) returns (commons.VerifiedEmail) {
+  rpc GetVerifiedEmailBySid(GetVerifiedEmailBySidReq) returns (api.commons.VerifiedEmail) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getverifiedemailbyid";
     option (google.api.http).body = "*";
   }
@@ -315,7 +315,7 @@ service OmniApi {
   }
 
   // Updates verified email description
-  rpc UpdateVerifiedEmail(UpdateVerifiedEmailReq) returns (commons.Empty) {
+  rpc UpdateVerifiedEmail(UpdateVerifiedEmailReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updateverifiedemail";
     option (google.api.http).body = "*";
   }
@@ -337,7 +337,7 @@ service OmniApi {
   // GetOmniAttachment - retrieves the omni attachment details based on the request
   // Required permissions:
   //    OMNI_BOSS
-  rpc GetOmniAttachment(GetOmniAttachmentReq) returns (commons.OmniAttachment) {
+  rpc GetOmniAttachment(GetOmniAttachmentReq) returns (api.commons.OmniAttachment) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getomniattachment";
     option (google.api.http).body = "*";
   }
@@ -392,14 +392,14 @@ message SuggestResponseRes {
 // CreateCampaignReq - request to create an omni campaign
 message CreateCampaignReq {
   // the campaign to create
-  commons.OmniCampaign campaign = 1;
+  api.commons.OmniCampaign campaign = 1;
   // the modules to create on the campaign
   repeated CampaignModule modules = 2;
 
   // CampaignModule - information required to create an omni campaign module
   message CampaignModule {
     // the module to create
-    commons.OmniCampaignModule module = 1;
+    api.commons.OmniCampaignModule module = 1;
     // the data source for outbound contacts (only applicable if outbound module)
     oneof data_source {
       ContactListsDataSource omni_contact_list = 100; // TODO: make plural
@@ -422,7 +422,7 @@ message ContactListDataSource {
 // ListCampaignsReq - request to list all campaigns using a given filter
 message ListCampaignsReq {
   // the statuses to select by when listing campaigns (if empty, selects all)
-  repeated commons.OmniCampaignStatus statuses = 1;
+  repeated api.commons.OmniCampaignStatus statuses = 1;
   // field mask for selecting extra campaign module details (if empty, does not select any details)
   google.protobuf.FieldMask field_mask = 2;
 
@@ -485,9 +485,9 @@ message ListCampaignsReq {
 // ListCampaignsRes - result of listing filtered campaigns
 message ListCampaignsRes {
   // the listed campaigns
-  repeated commons.OmniCampaign campaigns = 1;
+  repeated api.commons.OmniCampaign campaigns = 1;
   // associated modules
-  repeated commons.OmniCampaignModule modules = 2;
+  repeated api.commons.OmniCampaignModule modules = 2;
 }
 
 // Request to get a campaign by it's id
@@ -518,7 +518,7 @@ message ManagerListMessagesReq {
   // live flag
   bool live = 4;
   // channel type
-  commons.ChannelType channel_type = 5;
+  api.commons.ChannelType channel_type = 5;
   oneof filter {
     // select messages by the given conversation sid
     ByConversationSid by_conversation_sid = 101;
@@ -545,7 +545,7 @@ message ListMessagesReq {
   // live flag
   bool live = 5;
   // channel type
-  commons.ChannelType channel_type = 6;
+  api.commons.ChannelType channel_type = 6;
   oneof filter {
     // select messages by the given conversation sid
     ByConversationSid by_conversation_sid = 101;
@@ -566,19 +566,19 @@ message SendOmniMessageReq {
   // the id of the conversation this message belongs to
   int64 conversation_sid = 1 [jstype = JS_STRING];
   // the message
-  commons.OmniMessagePayload payload = 3;
+  api.commons.OmniMessagePayload payload = 3;
   // the id of the chat campaign
   int64 campaign_sid = 4 [jstype = JS_STRING];
   // a unique id created by the client to ensure it doesn't send the same message twice
   string ui_reference_id = 5;
   // channel type
-  commons.ChannelType channel_type = 6;
+  api.commons.ChannelType channel_type = 6;
 }
 
 // Request to update a campaign
 message UpdateCampaignReq {
   // the campaign to update
-  commons.OmniCampaign campaign = 1;
+  api.commons.OmniCampaign campaign = 1;
   // the identifier of the user who initiated the request
   string user_id = 2;
   // list of all fields being updated
@@ -594,11 +594,11 @@ message UpdateCampaignRes {
 // ListConversationsReq - request to get conversations
 message ListConversationsReq {
   // the channel types to list conversations for
-  repeated commons.ChannelType channel_types = 1;
+  repeated api.commons.ChannelType channel_types = 1;
   // field mask to filter what is returned by each row
   google.protobuf.FieldMask field_mask = 2;
   // list of conversation status that we want returned, if empty return everything.
-  repeated commons.ConversationStatus statuses = 3;
+  repeated api.commons.ConversationStatus statuses = 3;
   // the filter for determining what rows to pull
   oneof filter {
     // list conversations by time
@@ -624,7 +624,7 @@ message ListConversationsReq {
     // the assigned user
     string user_id = 1;
     // the statuses of the conversations to retrieve, or empty if retrieving everything : deprecated because we moved to the main request.
-    repeated commons.ConversationStatus statuses = 2 [deprecated = true];
+    repeated api.commons.ConversationStatus statuses = 2 [deprecated = true];
     // Optional. The number of listconversation to include in a single response. When not provided this defaults to 100.
     uint32 page_size = 4;
     //Optional. When provided all other request fields are ignored.
@@ -635,7 +635,7 @@ message ListConversationsReq {
 // ListConversationsRes - list of conversations satisfying the request parameters
 message ListConversationsRes {
   // list of conversations for the dashboard
-  repeated commons.OmniConversation conversations = 1;
+  repeated api.commons.OmniConversation conversations = 1;
   // Token to retrieve the next page of tasks, or empty if there are no more pages
   //Only returned if using the ByTime or ByAssignedUser filters
   string next_page_token = 2;
@@ -656,7 +656,7 @@ message CreateDispositionRes {
 // DeleteDispositionReq - request to delete a disposition
 message DeleteDispositionReq {
   // the disposition to delete
-  commons.Disposition disposition = 1;
+  api.commons.Disposition disposition = 1;
 }
 
 // ListDispositionsReq - request to list dispositions
@@ -665,7 +665,7 @@ message ListDispositionsReq {}
 // ListDispositionsRes - result to listing dispositions
 message ListDispositionsRes {
   // the listed dispositions
-  repeated commons.Disposition dispositions = 1;
+  repeated api.commons.Disposition dispositions = 1;
 }
 
 // UpdateDispositionReq - request to update disposition
@@ -679,7 +679,7 @@ message UpdateDispositionReq {
 // ListCustomUnsubscribeLinksRes - result to listing custom unsubscribe links
 message ListCustomUnsubscribeLinksRes {
   // the listed custom unsubscribe links
-  repeated commons.OmniCustomUnsubscribeLink custom_unsubscribe_links = 1;
+  repeated api.commons.OmniCustomUnsubscribeLink custom_unsubscribe_links = 1;
 }
 
 // CreateUnsubscribeLinkRes - result to creating unsubscribe link
@@ -721,9 +721,9 @@ message PauseCampaignReq {
   // the campaign identifier
   int64 campaign_sid = 1 [jstype = JS_STRING];
   // the campaign's channel type
-  commons.ChannelType channel_type = 2;
+  api.commons.ChannelType channel_type = 2;
   // the campaign direction
-  commons.OmniCampaignDirection campaign_direction = 3;
+  api.commons.OmniCampaignDirection campaign_direction = 3;
 }
 
 // Response to pause a campaign
@@ -737,9 +737,9 @@ message ResumeCampaignReq {
   // the campaign identifier
   int64 campaign_sid = 1 [jstype = JS_STRING];
   // the campaign's channel type
-  commons.ChannelType channel_type = 2;
+  api.commons.ChannelType channel_type = 2;
   // the campaign direction
-  commons.OmniCampaignDirection campaign_direction = 3;
+  api.commons.OmniCampaignDirection campaign_direction = 3;
 }
 
 // Response to resume a campaign
@@ -753,9 +753,9 @@ message ArchiveCampaignReq {
   // the campaign identifier
   int64 campaign_sid = 1 [jstype = JS_STRING];
   // the campaign's channel type
-  commons.ChannelType channel_type = 2;
+  api.commons.ChannelType channel_type = 2;
   // the campaign direction
-  commons.OmniCampaignDirection campaign_direction = 3;
+  api.commons.OmniCampaignDirection campaign_direction = 3;
 }
 
 // Response to archive a campaign
@@ -770,9 +770,9 @@ message UpdateCampaignPacingSpeedReq {
   // the campaign identifier
   int64 campaign_sid = 1 [jstype = JS_STRING];
   // the campaign's channel type
-  commons.ChannelType channel_type = 2;
+  api.commons.ChannelType channel_type = 2;
   // the campaign direction
-  commons.OmniCampaignDirection campaign_direction = 3;
+  api.commons.OmniCampaignDirection campaign_direction = 3;
   // sends per hour
   int64 sends_per_hour = 4;
   //the campaignModules identifier
@@ -805,7 +805,7 @@ message ListContactListsReq {
 // ListContactListsRes - result to listing contact lists
 message ListContactListsRes {
   // the listed contact lists
-  repeated commons.ContactList contact_lists = 1;
+  repeated api.commons.ContactList contact_lists = 1;
 }
 
 // GetAvailableHeadersReq - request to retrieve all available headers for contact lists
@@ -869,7 +869,7 @@ message ListTasksRes {
   // no more tasks in the list.
   string next_page_token = 1;
   // The list of tasks.
-  repeated commons.OmniTask tasks = 2;
+  repeated api.commons.OmniTask tasks = 2;
 }
 
 // CreateConnectedInboxRes - result of creating a new connected inbox
@@ -913,9 +913,9 @@ message ListConnectedInboxesRes {
   // ListConnectedInbox - a wrapper for a listed connected inbox containing the inbox and a list of it's associated campaigns
   message ListConnectedInbox {
     // the listed connected inbox
-    commons.ConnectedInbox connected_inbox = 1;
+    api.commons.ConnectedInbox connected_inbox = 1;
     // the associated campaigns
-    repeated commons.OmniCampaign campaigns = 2;
+    repeated api.commons.OmniCampaign campaigns = 2;
   }
 }
 
@@ -930,7 +930,7 @@ message TestConnectedInboxRes {
 // UpdateConnectedInboxReq - request to update a connected inbox
 message UpdateConnectedInboxReq {
   // the connected inbox to update with the specified fields updated
-  commons.ConnectedInbox connected_inbox = 1;
+  api.commons.ConnectedInbox connected_inbox = 1;
   // the fields to update
   google.protobuf.FieldMask field_mask = 2;
 }
@@ -975,7 +975,7 @@ message ListVerifiedEmailsReq {}
 // response to list verified email
 message ListVerifiedEmailsRes {
   // list of verified emails
-  repeated commons.VerifiedEmail verified_emails = 1;
+  repeated api.commons.VerifiedEmail verified_emails = 1;
 }
 
 //request to resend verified email
@@ -1067,7 +1067,7 @@ message CreateSignatureReq {
 // CreateSignatureRes - the result of creating a new signature
 message CreateSignatureRes {
   // the created signature object
-  commons.Signature signature = 1;
+  api.commons.Signature signature = 1;
 }
 
 // DeleteSignatureReq - request to delete message signature
@@ -1085,13 +1085,13 @@ message ListSignaturesReq {}
 // ListSignaturesRes - result of listing message signatures
 message ListSignaturesRes {
   // the message signatures created by the organization
-  repeated commons.Signature signatures = 1;
+  repeated api.commons.Signature signatures = 1;
 }
 
 // UpdateSignatureReq - request to update a message signature
 message UpdateSignatureReq {
   // the signature details to update
-  commons.Signature signature = 1;
+  api.commons.Signature signature = 1;
   // the field mask to update with
   google.protobuf.FieldMask field_mask = 2;
 }
@@ -1099,5 +1099,5 @@ message UpdateSignatureReq {
 // UpdateSignatureRes - response to updating a message signature
 message UpdateSignatureRes {
   // the updated signature
-  commons.Signature signature = 1;
+  api.commons.Signature signature = 1;
 }

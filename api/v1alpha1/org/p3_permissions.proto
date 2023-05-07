@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/org/permissions.proto";
-import "commons/perms.proto";
+import "api/commons/org/permissions.proto";
+import "api/commons/perms.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Request message for the CreateP3PermissionGroup RPC.
 message CreateP3PermissionGroupRequest {
@@ -16,7 +16,7 @@ message CreateP3PermissionGroupRequest {
   // More detailed description for this group
   string description = 2;
   // List of permissions associated with this group
-  repeated commons.Permission permissions = 3;
+  repeated api.commons.Permission permissions = 3;
 }
 
 // Response message for the CreateP3PermissionGroup RPC.
@@ -31,7 +31,7 @@ message UpdateP3PermissionGroupRequest {
   string p3_permission_group_id = 1;
   // P3 permission group values to update.
   // The mutable fields are: name, description, permissions.
-  commons.org.P3PermissionGroup p3_permission_group = 3;
+  api.commons.org.P3PermissionGroup p3_permission_group = 3;
   // Field mask for selecting which fields to update.
   google.protobuf.FieldMask field_mask = 10;
 }
@@ -39,7 +39,7 @@ message UpdateP3PermissionGroupRequest {
 // Response message for the UpdateP3PermissionGroup RPC.
 message UpdateP3PermissionGroupResponse {
   // The updated P3PermissionGroup
-  commons.org.P3PermissionGroup p3_permission_group = 1;
+  api.commons.org.P3PermissionGroup p3_permission_group = 1;
 }
 
 // Request message for the UpdateP3PermissionGroupByOrgId RPC.
@@ -50,7 +50,7 @@ message UpdateP3PermissionGroupByOrgIdRequest {
   string org_id = 2;
   // P3 permission group values to update.
   // The mutable fields are: name, description, permissions.
-  commons.org.P3PermissionGroup p3_permission_group = 3;
+  api.commons.org.P3PermissionGroup p3_permission_group = 3;
   // Field mask for selecting which fields to update.
   google.protobuf.FieldMask field_mask = 10;
 }
@@ -58,7 +58,7 @@ message UpdateP3PermissionGroupByOrgIdRequest {
 // Response message for the UpdateP3PermissionGroupByOrgId RPC.
 message UpdateP3PermissionGroupByOrgIdResponse {
   // The updated P3PermissionGroup
-  commons.org.P3PermissionGroup p3_permission_group = 1;
+  api.commons.org.P3PermissionGroup p3_permission_group = 1;
 }
 
 // Request message for the DeleteP3PermissionGroup RPC.
@@ -107,5 +107,5 @@ message ListP3PermissionGroupsRequest {
 // Response message for the ListP3PermissionGroups RPC.
 message ListP3PermissionGroupsResponse {
   // List of P3PermissionGroups for the requested org
-  repeated commons.org.P3PermissionGroup p3_permission_groups = 1;
+  repeated api.commons.org.P3PermissionGroup p3_permission_groups = 1;
 }

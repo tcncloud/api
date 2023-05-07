@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/org/preferences.proto";
+import "api/commons/org/preferences.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 //
 // General tab preferences.
@@ -21,13 +21,13 @@ message GetOrganizationPreferencesRequest {
 // Response for the GetOrganizationPreferences RPC.
 message GetOrganizationPreferencesResponse {
   // Organization preferences entity.
-  commons.org.OrganizationPreferences organization_preferences = 1;
+  api.commons.org.OrganizationPreferences organization_preferences = 1;
 }
 
 // Request for the UpdateOrganizationPreferences RPC.
 message UpdateOrganizationPreferencesRequest {
   // Organization preferences entity.
-  commons.org.OrganizationPreferences organization_preferences = 1;
+  api.commons.org.OrganizationPreferences organization_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -45,13 +45,13 @@ message GetAgentPreferencesRequest {
 // Response for the GetAgentPreferences RPC.
 message GetAgentPreferencesResponse {
   // Agent preferences entity.
-  commons.org.AgentPreferences agent_preferences = 1;
+  api.commons.org.AgentPreferences agent_preferences = 1;
 }
 
 // Request for the UpdateAgentPreferences RPC.
 message UpdateAgentPreferencesRequest {
   // Agent preferences entity.
-  commons.org.AgentPreferences agent_preferences = 1;
+  api.commons.org.AgentPreferences agent_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -69,13 +69,13 @@ message GetContactPreferencesRequest {
 // Response for the GetContactPreferences RPC.
 message GetContactPreferencesResponse {
   // Contact preferences entity.
-  commons.org.ContactPreferences contact_preferences = 1;
+  api.commons.org.ContactPreferences contact_preferences = 1;
 }
 
 // Request for the UpdateContactPreferences RPC.
 message UpdateContactPreferencesRequest {
   // Contact preferences entity.
-  commons.org.ContactPreferences contact_preferences = 1;
+  api.commons.org.ContactPreferences contact_preferences = 1;
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
 }
@@ -92,13 +92,13 @@ message GetAuthenticationPreferencesRequest {
 // Response for the GetAuthenticationPreferences RPC.
 message GetAuthenticationPreferencesResponse {
   // Authentication preferences entity.
-  commons.org.AuthenticationPreferences authentication_preferences = 1;
+  api.commons.org.AuthenticationPreferences authentication_preferences = 1;
 }
 
 // Request for the UpdateAuthenticationPreferences RPC.
 message UpdateAuthenticationPreferencesRequest {
   // Authentication preferences entity.
-  commons.org.AuthenticationPreferences authentication_preferences = 1;
+  api.commons.org.AuthenticationPreferences authentication_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -116,13 +116,13 @@ message GetWebhookPreferencesRequest {
 // Response for the GetWebhookPreferences RPC.
 message GetWebhookPreferencesResponse {
   // Webhook preferences entity.
-  commons.org.WebhookPreferences webhook_preferences = 1;
+  api.commons.org.WebhookPreferences webhook_preferences = 1;
 }
 
 // Request for the UpdateWebhookPreferences RPC.
 message UpdateWebhookPreferencesRequest {
   // Webhook preferences entity.
-  commons.org.WebhookPreferences webhook_preferences = 1;
+  api.commons.org.WebhookPreferences webhook_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -144,13 +144,13 @@ message GetDashboardGeneralPreferencesRequest {
 // Response for the GetDashboardGeneralPreferences RPC.
 message GetDashboardGeneralPreferencesResponse {
   // Dashboard preferences entity.
-  commons.org.DashboardPreferences dashboard_preferences = 1;
+  api.commons.org.DashboardPreferences dashboard_preferences = 1;
 }
 
 // Request for the UpdateDashboardGeneralPreferences RPC.
 message UpdateDashboardGeneralPreferencesRequest {
   // Dashboard preferences entity.
-  commons.org.DashboardPreferences dashboard_preferences = 1;
+  api.commons.org.DashboardPreferences dashboard_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -168,13 +168,13 @@ message GetDashboardQueuePreferencesRequest {
 // Response for the GetDashboardQueuePreferences RPC.
 message GetDashboardQueuePreferencesResponse {
   // Dashboard queue preferences entity.
-  commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
+  api.commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
 }
 
 // Request for the UpdateDashboardQueuePreferences RPC.
 message UpdateDashboardQueuePreferencesRequest {
   // Dashboard queue preferences entity.
-  commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
+  api.commons.org.DashboardQueuePreferences dashboard_queue_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -196,13 +196,13 @@ message GetPhonePreferencesRequest {
 // Response for the GetPhonePreferences RPC.
 message GetPhonePreferencesResponse {
   // Phone preferences entity.
-  commons.org.PhonePreferences phone_preferences = 1;
+  api.commons.org.PhonePreferences phone_preferences = 1;
 }
 
 // Request for the UpdatePhonePreferences RPC.
 message UpdatePhonePreferencesRequest {
   // Phone preferences entity.
-  commons.org.PhonePreferences phone_preferences = 1;
+  api.commons.org.PhonePreferences phone_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -229,13 +229,13 @@ message GetCompliancePreferencesRequest {
 // Response for the GetCompliancePreferences RPC.
 message GetCompliancePreferencesResponse {
   // Compliance preferences entity.
-  commons.org.CompliancePreferences compliance_preferences = 1;
+  api.commons.org.CompliancePreferences compliance_preferences = 1;
 }
 
 // Request for the UpdateCompliancePreferences RPC.
 message UpdateCompliancePreferencesRequest {
   // Compliance preferences entity.
-  commons.org.CompliancePreferences compliance_preferences = 1;
+  api.commons.org.CompliancePreferences compliance_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -253,13 +253,13 @@ message GetBroadcastPreferencesRequest {
 // Response for the GetBroadcastPreferences RPC.
 message GetBroadcastPreferencesResponse {
   // Broadcast preferences entity.
-  commons.org.BroadcastPreferences broadcast_preferences = 1;
+  api.commons.org.BroadcastPreferences broadcast_preferences = 1;
 }
 
 // Request for the UpdateBroadcastPreferences RPC.
 message UpdateBroadcastPreferencesRequest {
   // Broadcast preferences entity.
-  commons.org.BroadcastPreferences broadcast_preferences = 1;
+  api.commons.org.BroadcastPreferences broadcast_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -277,13 +277,13 @@ message GetSchedulePreferencesRequest {
 // Response for the GetSchedulePreferences RPC.
 message GetSchedulePreferencesResponse {
   // Schedule preferences entity.
-  commons.org.SchedulePreferences schedule_preferences = 1;
+  api.commons.org.SchedulePreferences schedule_preferences = 1;
 }
 
 // Request for the UpdateSchedulePreferences RPC.
 message UpdateSchedulePreferencesRequest {
   // Schedule preferences entity.
-  commons.org.SchedulePreferences schedule_preferences = 1;
+  api.commons.org.SchedulePreferences schedule_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -301,13 +301,13 @@ message GetEmailSmsPreferencesRequest {
 // Response for the GetEmailSmsPreferences RPC.
 message GetEmailSmsPreferencesResponse {
   // Email/SMS preferences entity.
-  commons.org.EmailSmsPreferences email_sms_preferences = 1;
+  api.commons.org.EmailSmsPreferences email_sms_preferences = 1;
 }
 
 // Request for the UpdateEmailSmsPreferences RPC.
 message UpdateEmailSmsPreferencesRequest {
   // Email/SMS preferences entity.
-  commons.org.EmailSmsPreferences email_sms_preferences = 1;
+  api.commons.org.EmailSmsPreferences email_sms_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -329,13 +329,13 @@ message GetBusinessPreferencesRequest {
 // Response for the GetBusinessPreferences RPC.
 message GetBusinessPreferencesResponse {
   // Business preferences entity.
-  commons.org.BusinessPreferences business_preferences = 1;
+  api.commons.org.BusinessPreferences business_preferences = 1;
 }
 
 // Request for the UpdateBusinessPreferences RPC.
 message UpdateBusinessPreferencesRequest {
   // Business preferences entity.
-  commons.org.BusinessPreferences business_preferences = 1;
+  api.commons.org.BusinessPreferences business_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -356,7 +356,7 @@ message GetScorecardsPreferencesRequest {
 // Response for GetScorecardsPreferences
 message GetScorecardsPreferencesResponse {
   // Scorecards preferences entity.
-  commons.org.ScorecardsPreferences scorecards_preferences = 1;
+  api.commons.org.ScorecardsPreferences scorecards_preferences = 1;
 }
 
 // Request for UpdateScorecardsPreferences
@@ -364,7 +364,7 @@ message UpdateScorecardsPreferencesRequest {
   // Org ID.
   string org_id = 1;
   // Scorecards preferences entity.
-  commons.org.ScorecardsPreferences scorecards_preferences = 2;
+  api.commons.org.ScorecardsPreferences scorecards_preferences = 2;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 3;
@@ -382,7 +382,7 @@ message GetVoiceAnalyticsPreferencesRequest {
 // Response for the GetVoiceAnalyticsPreferences RPC.
 message GetVoiceAnalyticsPreferencesResponse {
   // Voice analytics preferences entity.
-  commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+  api.commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
 }
 
 // Request for the ListVoiceAnalyticsPreferences RPC.
@@ -391,13 +391,13 @@ message ListVoiceAnalyticsPreferencesRequest {}
 // Response for the ListVoiceAnalyticsPreferences RPC.
 message ListVoiceAnalyticsPreferencesResponse {
   // List of voice analytics preferences.
-  repeated commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+  repeated api.commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
 }
 
 // Request for the UpdateVoiceAnalyticsPreferences RPC.
 message UpdateVoiceAnalyticsPreferencesRequest {
   // Voice analytics preferences entity.
-  commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
+  api.commons.org.VoiceAnalyticsPreferences voice_analytics_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -415,13 +415,13 @@ message GetEndOfDayPreferencesRequest {
 // Response for the GetEndOfDayPreferences RPC.
 message GetEndOfDayPreferencesResponse {
   // EndOfDay preferences entity.
-  commons.org.EndOfDayPreferences end_of_day_preferences = 1;
+  api.commons.org.EndOfDayPreferences end_of_day_preferences = 1;
 }
 
 // Request for the UpdateEndOfDayPreferences RPC.
 message UpdateEndOfDayPreferencesRequest {
   // End-of-day preferences entity.
-  commons.org.EndOfDayPreferences end_of_day_preferences = 1;
+  api.commons.org.EndOfDayPreferences end_of_day_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -439,13 +439,13 @@ message GetFilterPreferencesRequest {
 // Response for the GetFilterPreferences RPC.
 message GetFilterPreferencesResponse {
   // Filter preferences entity.
-  commons.org.FilterPreferences filter_preferences = 1;
+  api.commons.org.FilterPreferences filter_preferences = 1;
 }
 
 // Request for the UpdateFilterPreferences RPC.
 message UpdateFilterPreferencesRequest {
   // Filter preferences entity.
-  commons.org.FilterPreferences filter_preferences = 1;
+  api.commons.org.FilterPreferences filter_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -463,13 +463,13 @@ message GetRecordingPreferencesRequest {
 // Response for the GetRecordingPreferences RPC.
 message GetRecordingPreferencesResponse {
   // Recording preferences entity.
-  commons.org.RecordingPreferences recording_preferences = 1;
+  api.commons.org.RecordingPreferences recording_preferences = 1;
 }
 
 // Request for the UpdateRecordingPreferences RPC.
 message UpdateRecordingPreferencesRequest {
   // Recording preferences entity.
-  commons.org.RecordingPreferences recording_preferences = 1;
+  api.commons.org.RecordingPreferences recording_preferences = 1;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
@@ -494,7 +494,7 @@ message GetAdminClientPreferencesRequest {
 // Response for the GetAdminClientPreferences RPC.
 message GetAdminClientPreferencesResponse {
   // Admin client preferences entity.
-  commons.org.AdminClientPreferences admin_client_preferences = 1;
+  api.commons.org.AdminClientPreferences admin_client_preferences = 1;
 }
 
 // Request for the UpdateAdminClientPreferences RPC.
@@ -503,7 +503,7 @@ message UpdateAdminClientPreferencesRequest {
   string org_id = 1;
 
   // Admin client preferences entity.
-  commons.org.AdminClientPreferences admin_client_preferences = 2;
+  api.commons.org.AdminClientPreferences admin_client_preferences = 2;
 
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;

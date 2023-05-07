@@ -16,13 +16,13 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/types.proto";
+import "api/commons/types.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 // A service for creating and reading learning material
 service Learn {

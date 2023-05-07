@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
-import "commons/communication.proto";
-import "commons/compliance.proto";
-import "commons/enums.proto";
+import "api/commons/acd.proto";
+import "api/commons/communication.proto";
+import "api/commons/compliance.proto";
+import "api/commons/enums.proto";
 import "google/api/annotations.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/empty.proto";
@@ -13,7 +13,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Compliance {
   rpc RuleAutoComplete(RuleAutoCompleteReq) returns (RuleAutoCompleteRes) {
@@ -464,7 +464,7 @@ message ProcessOutboundCallReq {
   // The id of the caller associated with this process request
   int64 source_id = 5;
   // The call type of the caller associated with this process request
-  commons.CallType.Enum source_field = 6;
+  api.commons.CallType.Enum source_field = 6;
   // The caller id being called from
   string caller_id = 7;
 }
@@ -504,7 +504,7 @@ message CreateScrubListReq {
 
   // payload
   repeated string list = 10;
-  commons.ContentType content_type = 11;
+  api.commons.ContentType content_type = 11;
   string country_code = 12;
   repeated ScrubEntryDetails scrub_entry_details = 13;
 }
@@ -519,7 +519,7 @@ message AddScrubListEntriesReq {
   repeated string list = 10;
 
   // content_type represents the type of entries are stored in scrub_entry_details field (phone number, sms, email ...)
-  commons.ContentType content_type = 11;
+  api.commons.ContentType content_type = 11;
 
   // country calling code defined by ITU-T in E.164 standard w/o the + sign in front
   // this field is relevant if the scrub_entry_details list contains phone numbers
@@ -562,7 +562,7 @@ message ScrubListsRes {
 message ScrubListRes {
   string list_id = 1;
   bool read_only = 2;
-  commons.ContentType content_type = 3;
+  api.commons.ContentType content_type = 3;
 
   int64 entries_added = 4;
   repeated string invalid_entries = 5;
@@ -588,7 +588,7 @@ message ScrubEntry {
   google.protobuf.StringValue content = 11;
   google.protobuf.Timestamp expiration_date = 12;
   google.protobuf.StringValue result = 13;
-  commons.ContentType type = 14;
+  api.commons.ContentType type = 14;
   google.protobuf.StringValue country_code = 15;
 
   // audit
@@ -635,7 +635,7 @@ message GetRuleSetByNameReq {
 }
 
 message AssignRuleSetReq {
-  commons.CommType comm_type = 1;
+  api.commons.CommType comm_type = 1;
   string comm_id = 2;
   string rule_set_id = 3;
 }
@@ -689,9 +689,9 @@ message RuleSet {
 }
 
 message Rule {
-  commons.Verb verb = 1;
-  commons.Entity entity = 2;
-  commons.SubEntity sub_entity = 3;
+  api.commons.Verb verb = 1;
+  api.commons.Entity entity = 2;
+  api.commons.SubEntity sub_entity = 3;
   repeated Selector selectors = 4;
 }
 
@@ -713,7 +713,7 @@ message Selector {
 
 // Expressions/Selectors
 message HolidayExp {
-  commons.Month month = 1;
+  api.commons.Month month = 1;
   int64 day = 2;
   string name = 3;
 }
@@ -724,17 +724,17 @@ message TimeExp {
 }
 
 message WeekdayExp {
-  commons.Weekday.Enum day = 1;
+  api.commons.Weekday.Enum day = 1;
   string text = 2;
 }
 
 message MonthExp {
-  commons.Month month = 1;
+  api.commons.Month month = 1;
   string text = 2;
 }
 
 message DateExp {
-  commons.Month month = 1;
+  api.commons.Month month = 1;
   int64 day = 2;
   int64 year = 3;
 }
@@ -754,7 +754,7 @@ message LocationExp {
 }
 
 message PhoneTypeExp {
-  commons.PhoneType phone_type = 1;
+  api.commons.PhoneType phone_type = 1;
 }
 
 message MetaFieldExp {
@@ -762,14 +762,14 @@ message MetaFieldExp {
 }
 
 message PluginExp {
-  commons.PluginType type = 1;
+  api.commons.PluginType type = 1;
   bool tcn_strict = 4; // true/false deny on errors
 
   // gryphon
   string license_id = 2;
   string reference_key = 3;
   string from_number = 5;
-  commons.Environment env = 6;
+  api.commons.Environment env = 6;
 
   // tcn_consent
   string profile = 7;
@@ -778,7 +778,7 @@ message PluginExp {
   // consent topic
   string topic = 9;
   // consent absent action (deny/allow if consent doesn't exist)
-  commons.ConsentAbsentAction absent_action = 11;
+  api.commons.ConsentAbsentAction absent_action = 11;
 
   // rnd
   // date of last contact
@@ -806,7 +806,7 @@ message ProcessScrubListUploadReq {
   string list_id = 4;
 
   // payload
-  commons.ContentType content_type = 10;
+  api.commons.ContentType content_type = 10;
   string notification_message = 11;
   string country_code = 12;
 }
@@ -848,7 +848,7 @@ message Scenario {
   string name = 6;
 }
 message ScenarioData {
-  commons.CommType comm_type = 1;
+  api.commons.CommType comm_type = 1;
   string phone_number = 2;
   string country_code = 3 [deprecated = true];
   string email = 4;
@@ -862,7 +862,7 @@ message ScenarioData {
   string county = 12;
   string city = 13;
   string province = 14;
-  commons.PhoneType phone_type = 15;
+  api.commons.PhoneType phone_type = 15;
   // time_zone uses the iana timezone format. Defaults to utc
   string time_zone = 16;
   repeated string holidays = 17;
@@ -965,7 +965,7 @@ message CreateConsentProfileReq {
   string profile_name = 10;
   bool disabled = 11;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 12 [deprecated = true];
+  api.commons.CommType channel = 12 [deprecated = true];
 
   // auditing
   string created_by = 50;
@@ -988,7 +988,7 @@ message CreateConsentReq {
   google.protobuf.Timestamp expire = 12;
   string referring_url = 13;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [deprecated = true];
+  api.commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -998,7 +998,7 @@ message CreateConsentReq {
   // proof of consent (pdf, voice recording etc) this will be filename which can be retrieved via matrix-fts
   string proof = 19;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 20;
+  repeated api.commons.Weekday.Enum condition_days_of_the_week = 20;
   string condition_time_of_day_from = 21;
   string condition_time_of_day_to = 22;
   google.protobuf.Timestamp condition_from = 23;
@@ -1007,8 +1007,8 @@ message CreateConsentReq {
   // Consent Conditions
   repeated ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
-  commons.ContentType content_type = 27;
-  commons.Channel channel_type = 28;
+  api.commons.ContentType content_type = 27;
+  api.commons.Channel channel_type = 28;
 }
 
 message CreateConsentRes {
@@ -1023,7 +1023,7 @@ message ConsentProfile {
   bool disabled = 11;
   repeated Consent consents = 12;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [deprecated = true];
+  api.commons.CommType channel = 13 [deprecated = true];
 
   // auditing
   google.protobuf.Timestamp created_on = 50;
@@ -1046,7 +1046,7 @@ message Consent {
   google.protobuf.Timestamp expire = 13;
   string referring_url = 14;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [deprecated = true];
+  api.commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -1056,7 +1056,7 @@ message Consent {
   // proof of consent (pdf, voice recording etc) this will be filename which can be retrieved via matrix-fts
   string proof = 19;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 20 [deprecated = true];
+  repeated api.commons.Weekday.Enum condition_days_of_the_week = 20 [deprecated = true];
   string condition_time_of_day_from = 21 [deprecated = true];
   string condition_time_of_day_to = 22 [deprecated = true];
   google.protobuf.Timestamp condition_from = 23 [deprecated = true];
@@ -1065,8 +1065,8 @@ message Consent {
   // Consent Conditions
   repeated ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
-  commons.ContentType content_type = 27;
-  commons.Channel channel_type = 28;
+  api.commons.ContentType content_type = 27;
+  api.commons.Channel channel_type = 28;
 }
 
 // ConsentCondition defines conditions
@@ -1078,7 +1078,7 @@ message ConsentCondition {
   int64 consent_id = 2;
 
   // Days of week the condition is applicable to
-  repeated commons.Weekday.Enum days_of_the_week = 10;
+  repeated api.commons.Weekday.Enum days_of_the_week = 10;
   // Time of day condition starts
   string time_of_day_from = 11;
   // Time of day condition ends
@@ -1104,7 +1104,7 @@ message UpdateConsentReq {
   google.protobuf.Timestamp expire = 13;
   string referring_url = 14;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 15 [deprecated = true];
+  api.commons.CommType channel = 15 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 16;
   // notate revocation (reason)
@@ -1114,7 +1114,7 @@ message UpdateConsentReq {
   // proof of consent (pdf, voice recording etc) this will be filename which can be retrieved via matrix-fts
   string proof = 19;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 20;
+  repeated api.commons.Weekday.Enum condition_days_of_the_week = 20;
   string condition_time_of_day_from = 21;
   string condition_time_of_day_to = 22;
   google.protobuf.Timestamp condition_from = 23;
@@ -1123,8 +1123,8 @@ message UpdateConsentReq {
   // Consent Conditions
   repeated ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
-  commons.ContentType content_type = 27;
-  commons.Channel channel_type = 28;
+  api.commons.ContentType content_type = 27;
+  api.commons.Channel channel_type = 28;
 }
 
 message ExpireConsentReq {
@@ -1137,9 +1137,9 @@ message RevokeConsentReq {
   google.protobuf.Timestamp revoked = 3;
   string consent_profile_id = 4;
   string content = 5;
-  commons.Channel channel_type = 6;
+  api.commons.Channel channel_type = 6;
   string revoked_reason = 7;
-  commons.ContentType content_type = 8;
+  api.commons.ContentType content_type = 8;
 }
 
 message EnableConsentProfileReq {
@@ -1158,7 +1158,7 @@ message ListConsentProfile {
   int64 count = 3;
   bool disabled = 4;
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 5 [deprecated = true];
+  api.commons.CommType channel = 5 [deprecated = true];
 }
 
 message ListConsentProfilesRes {
@@ -1247,21 +1247,21 @@ message ConsentByContent {
   bool disabled = 12;
 
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [deprecated = true];
+  api.commons.CommType channel = 13 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 14;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 15;
+  repeated api.commons.Weekday.Enum condition_days_of_the_week = 15;
   string condition_time_of_day_from = 16;
   string condition_time_of_day_to = 17;
   google.protobuf.Timestamp condition_from = 18;
   google.protobuf.Timestamp condition_to = 19;
   string notes = 20;
   // content_type (call, email, sms, account number)
-  commons.ContentType content_type = 21;
+  api.commons.ContentType content_type = 21;
   // Consent Conditions
   repeated ConsentCondition conditions = 22;
-  commons.Channel channel_type = 23;
+  api.commons.Channel channel_type = 23;
 }
 
 message SearchConsentByContentRes {
@@ -1272,7 +1272,7 @@ message GetConsentByProfileAndContentReq {
   string profile_name = 2;
   string content = 3;
   string profile_id = 4;
-  commons.ContentType content_type = 5;
+  api.commons.ContentType content_type = 5;
 }
 
 message GetConsentByProfileAndContentRes {
@@ -1287,21 +1287,21 @@ message GetConsentByProfileAndContentRes {
   bool disabled = 12;
 
   // channel (email, sms, phone, etc)
-  commons.CommType channel = 13 [deprecated = true];
+  api.commons.CommType channel = 13 [deprecated = true];
   // topic (future payment vs payment reminder vs account reminders vs receipts)
   string topic = 14;
   // consent conditions
-  repeated commons.Weekday.Enum condition_days_of_the_week = 15;
+  repeated api.commons.Weekday.Enum condition_days_of_the_week = 15;
   string condition_time_of_day_from = 16;
   string condition_time_of_day_to = 17;
   google.protobuf.Timestamp condition_from = 18;
   google.protobuf.Timestamp condition_to = 19;
   string notes = 20;
   // content_type (call, email, sms, account number)
-  commons.ContentType content_type = 21;
+  api.commons.ContentType content_type = 21;
   // Consent Conditions
   repeated ConsentCondition conditions = 22;
-  commons.Channel channel_type = 23;
+  api.commons.Channel channel_type = 23;
   // notate revocation (reason)
   string revoked_reason = 24;
   // notate grant reason
@@ -1318,7 +1318,7 @@ message GetConsentByContentReq {
   // id of consent profile
   string profile_id = 4;
   // consent channel
-  commons.Channel channel_type = 5;
+  api.commons.Channel channel_type = 5;
 }
 
 message GetConsentByContentRes {

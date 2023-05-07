@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "annotations/perms/license.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/perms.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option java_package = "com.tcn.matrix.api.commons.org";
+
+// PermiissionGroup defines the permission group entity.
+message PermissionGroup {
+  // Unique id for this permission group.
+  string permission_group_id = 1;
+  // Organization this permission group belongs to.
+  string org_id = 2;
+  // Name to identify by.
+  string name = 3;
+  // Brief description of this group of permissions.
+  string description = 4;
+  // List of permissions in this group.
+  repeated api.commons.auth.Permission permissions = 5;
+  // Restricts users from modifying this group.
+  bool read_only = 6;
+}
+
+// P3PermissionGroup entity.
+// This was migrated from permissions_group from skunk
+// and is requested by backoffice as the source of permissions.
+message P3PermissionGroup {
+  // Unique Id for this entity.
+  string p3_permission_group_id = 1;
+  // Owning org.
+  string org_id = 2;
+  // Owning org region.
+  string region_id = 3;
+
+  // Display name for this group.
+  string name = 5;
+  // More detailed description for this group.
+  string description = 6;
+  // List of permissions associated with this group.
+  repeated api.commons.Permission permissions = 7;
+}
+
+// License defines the structure of organization license assignments.
+message License {
+  // Application containing licenses.
+  annotations.perms.Application app = 1;
+  // Individual cards for the application.
+  repeated Card cards = 2;
+
+  message Card {
+    // Card type.
+    annotations.perms.Card type = 1;
+    // List of permissions and features.
+    repeated Permission permissions = 2;
+  }
+
+  message Permission {
+    api.commons.auth.Permission permission = 1;
+    // Whether this permission is enabled in the license.
+    bool enabled = 2;
+    // List of features granted by the permission.
+    repeated string features = 3;
+  }
+}

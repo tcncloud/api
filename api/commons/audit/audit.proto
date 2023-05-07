@@ -1,0 +1,203 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "api/commons/audit/asm_events.proto";
+import "api/commons/audit/event_types.proto";
+import "api/commons/audit/events.proto";
+import "api/commons/audit/omnichannel_events.proto";
+import "api/commons/audit/scorecards_events.proto";
+import "api/commons/audit/tickets_events.proto";
+import "api/commons/audit/vana_events.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.audit;audit";
+option java_package = "com.tcn.matrix.api.commons.audit";
+
+// This represents a generic audit event that is sent to the audit service
+message AuditEvent {
+  // Org ID
+  string org_id = 1;
+  // Region ID
+  string region_id = 2;
+  // Cluster ID
+  string cluster_id = 3;
+
+  // Timestamp when this event has been generated
+  google.protobuf.Timestamp event_time = 4;
+
+  // this is an UUID so we can deduplicate at consumer side
+  string audit_id = 5;
+
+  // Application-specific identifier.
+  // All aplications that generate audit events must have a unique numerical ID assigned within a specific event class
+  // Vana 200 Omni 300 Asm 400 ....
+  // for each event type. (see event_types.proto)
+  EventType event_type = 10;
+
+  // Actual event payload. This is application specific
+  oneof event {
+    /// Dummy Event class 100
+    DummyEvent _dummy_event = 100;
+
+    /// Voice Analytics Events 200
+    VanaFlagEvent vana_flag_event = 200;
+    VanaFlagReviewEvent vana_flag_review_event = 201;
+    VanaBillingReportEvent vana_billing_report_event = 202;
+    VanaFlagSummaryEvent vana_flag_summary_event = 203;
+
+    /// Omnichannel Events class 300
+    OmnichannelCreateProjectEvent omnichannel_create_project_event = 300;
+    OmnichannelCreateCampaignEvent omnichannel_create_campaign_event = 301;
+    OmnichannelDailyProjectReportEvent omnichannel_daily_project_report_event = 302;
+    OmnichannelDailyConversationReportEvent omnichannel_daily_conversation_report_event = 303;
+    // agent assign conversation event
+    OmnichannelAgentAssignConversationEvent omnichannel_agent_assign_conversation_event = 305;
+    // agent unassign conversation event
+    OmnichannelAgentUnassignConversationEvent omnichannel_agent_unassign_conversation_event = 306;
+    // agent reassign conversation event
+    OmnichannelAgentReassignConversationEvent omnichannel_agent_reassign_conversation_event = 307;
+    // T10 event
+    OmnichannelT10Event omnichannel_t10_event = 308;
+    // customer sent a text message event
+    OmnichannelCustomerTextMessageEvent omnichannel_customer_text_Message_event = 309;
+    // agent sent a text message event
+    OmnichannelAgentTextMessageEvent omnichannel_agent_text_message_event = 310;
+    // finish wrap up event
+    OmnichannelFinishWrapUpEvent omnichannel_finish_wrap_up_event = 311;
+    // conversation closes and moves to wrap up event
+    OmnichannelBeginWrapUpEvent omnichannel_begin_wrap_up_event = 312;
+    // t11 timer went off event
+    OmnichannelT11Event omnichannel_t11_event = 313;
+    // create conversation when customer sends initial message and T1 starts
+    OmnichannelCreateConversationEvent omnichannel_create_conversation_event = 314;
+    // agent suspended the conversation event
+    OmnichannelAgentSuspendEvent omnichannel_agent_suspend_event = 315;
+    // close conversation
+    OmnichannelCloseConversationEvent omnichannel_close_conversation_event = 322;
+    // manager sent a text message event
+    OmnichannelManagerTextMessageEvent omnichannel_manager_text_message_event = 332;
+    //update campaign event
+    OmnichannelUpdateCampaignEvent omnichannel_update_campaign_event = 330;
+    //set conversation collected data details
+    OmnichannelSetConversationCollectedDataEvent omnichannel_set_conversation_collected_data_event = 331;
+    //complete campaign event
+    OmnichannelCompleteCampaignEvent omnichannel_complete_campaign_event = 348;
+    //archive campaign event
+    OmnichannelArchiveCampaignEvent omnichannel_archive_campaign_event = 333;
+    //pause campaign event
+    OmnichannelPauseCampaignEvent omnichannel_pause_campaign_event = 334;
+    //resume campaign event
+    OmnichannelResumeCampaignEvent omnichannel_resume_campaign_event = 335;
+    //start campaign event
+    OmnichannelStartCampaignEvent omnichannel_start_campaign_event = 336;
+
+    //schedule module event
+    OmnichannelScheduleModuleEvent omnichannel_schedule_module_event = 337;
+    //start module event
+    OmnichannelStartModuleEvent omnichannel_start_module_event = 338;
+    //pause module event
+    OmnichannelPauseModuleEvent omnichannel_pause_module_event = 339;
+    //resume module event
+    OmnichannelResumeModuleEvent omnichannel_resume_module_event = 340;
+    //error module event
+    OmnichannelErrorModuleEvent omnichannel_error_module_event = 341;
+    //success module event
+    OmnichannelSuccessModuleEvent omnichannel_success_module_event = 342;
+    //fail module event
+    OmnichannelFailModuleEvent omnichannel_fail_module_event = 343;
+    //complete module event
+    OmnichannelCompleteModuleEvent omnichannel_complete_module_event = 344;
+    //archive module event
+    OmnichannelArchiveModuleEvent omnichannel_archive_module_event = 345;
+    //update module event
+    OmnichannelUpdateModuleEvent omnichannel_update_module_event = 346;
+    //  SmsMessageSent module event
+    OmnichannelSmsMessageSentModuleEvent omnichannel_add_sms_message_sent_module_event = 347;
+    // ModuleInitialReply
+    OmnichannelModuleInitialReplyEvent omnichannel_module_initial_reply_event = 349;
+    // a task message was sent for a campaign
+    OmnichannelTaskMessageSentEvent omnichannel_task_message_sent_event = 350;
+    // a connected inbox poll event
+    OmnichannelConnectedInboxPollEvent omnichannel_connected_inbox_poll_event = 351;
+    // an event for when a connected inbox is created
+    OmnichannelConnectedInboxCreatedEvent omnichannel_connected_inbox_created_event = 352;
+    // an event for when the message units for an agent omni message were calculated
+    OmnichannelAgentMessageUnitsEvent omnichannel_agent_message_units_event = 353;
+    // an event for when the message units for a manager omni message were calculated
+    OmnichannelManagerMessageUnitsEvent omnichannel_manager_message_units_event = 354;
+    // an event for when the message units for a customer omni message were calculated
+    OmnichannelCustomerMessageUnitsEvent omnichannel_customer_message_units_event = 355;
+    // an event for when the message units for a system omni message were calculated
+    OmnichannelSystemMessageUnitsEvent omnichannel_system_message_units_event = 356;
+
+    /// Asm events 400
+    // agent logged into asm event
+    AsmAgentLoginEvent asm_agent_login_event = 400;
+    // agent opens voice event
+    AsmOpenVoiceEvent asm_open_voice_event = 401;
+    // agent logs into omni event
+    AsmOpenOmniAgentEvent asm_open_omni_agent_event = 402;
+    // agent activates conversation event
+    AsmActivateConversationEvent asm_activate_conversation_event = 403;
+    // agent deactivates a conversation event
+    AsmDeactivateConversationEvent asm_deactivate_conversation_event = 404;
+    // agent's state changed event
+    AsmAgentStateChangedEvent asm_agent_state_changed_event = 405;
+    // agent logged out of asm event
+    AsmAgentLogoutEvent asm_agent_logout_event = 406;
+    // asm pause event
+    AsmPauseEvent asm_pause_event = 407;
+    // asm resume event
+    AsmResumeEvent asm_resume_event = 408;
+
+    // Scorecards events class 500
+    // question library question created
+    ScorecardsCreateQuestionEvent scorecards_create_question_event = 500;
+    // question library question updated
+    ScorecardsUpdateQuestionEvent scorecards_update_question_event = 501;
+    // question library question deleted
+    ScorecardsDeleteQuestionEvent scorecards_delete_question_event = 502;
+    // scorecard library scorecard created
+    ScorecardsCreateScorecardEvent scorecards_create_scorecard_event = 503;
+    // scorecard library scorecard updated
+    ScorecardsUpdateScorecardEvent scorecards_update_scorecard_event = 504;
+    // scorecard library scorecard deleted
+    ScorecardsDeleteScorecardEvent scorecards_delete_scorecard_event = 505;
+    // scorecard library scorecard cloned
+    ScorecardsCloneScorecardEvent scorecards_clone_scorecard_event = 506;
+    // evaluation library evaluation created
+    ScorecardsCreateEvaluationEvent scorecards_create_evaluation_event = 507;
+    // evaluation library evaluation deleted
+    ScorecardsDeleteEvaluationEvent scorecards_delete_evaluation_event = 508;
+    // section library section created
+    ScorecardsCreateSectionEvent scorecards_create_section_event = 509;
+    // section library section updated
+    ScorecardsUpdateSectionEvent scorecards_update_section_event = 510;
+    // section library section deleted
+    ScorecardsDeleteSectionEvent scorecards_delete_section_event = 511;
+    // category library category created
+    ScorecardsCreateCategoryEvent scorecards_create_category_event = 512;
+    // category library category updated
+    ScorecardsUpdateCategoryEvent scorecards_update_category_event = 513;
+    // category library category deleted
+    ScorecardsDeleteCategoryEvent scorecards_delete_category_event = 514;
+    // evaluation question created
+    ScorecardsCreateEvaluationQuestionEvent scorecards_create_evaluation_question_event = 515;
+    // evaluation question updated
+    ScorecardsUpdateEvaluationQuestionEvent scorecards_update_evaluation_question_event = 516;
+    // evaluation question deleted
+    ScorecardsDeleteEvaluationQuestionEvent scorecards_delete_evaluation_question_event = 517;
+    // scorecard question library scorecard question created
+    ScorecardsCreateScorecardQuestionEvent scorecards_create_scorecard_question_event = 518;
+    // scorecard question library scorecard question updated
+    ScorecardsUpdateScorecardQuestionEvent scorecards_update_scorecard_question_event = 519;
+    // scorecard question library scorecard question deleted
+    ScorecardsDeleteScorecardQuestionEvent scorecards_delete_scorecard_question_event = 520;
+    // auto evaluation library auto evaluation created
+    ScorecardsCreateAutoEvaluationEvent scorecards_create_auto_evaluation_event = 521;
+    //Tickets Events
+    // EDIT update event
+    TicketEvent ticket_event = 601;
+  }
+}

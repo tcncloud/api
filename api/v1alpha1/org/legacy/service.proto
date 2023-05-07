@@ -17,7 +17,7 @@ syntax = "proto3";
 package api.v1alpha1.org.legacy;
 
 import "annotations/authz.proto";
-import "commons/types.proto";
+import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "api/v1alpha1/org/legacy/entities.proto";
 

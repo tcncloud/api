@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package api.commons;
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+enum EmailResult {
+  EMAIL_RESULT_UNKNOWN = 0;
+  EMAIL_TASK_WAITING = 8600; //, "EMAIL_TASK_WAITING","Waiting","WTG", "Email Task is ready to be sent"),
+  EMAIL_TASK_PROCESSING = 8700; //, "EMAIL_TASK_PROCESSING","Sending","PRC", "Email Task is sent to gateway"),
+  EMAIL_TASK_DNC = 8710; //, "EMAIL_TASK_DNC","Do Not Call","DNC", "Email has been scrubbed because it is on EMAIL DNC list."),
+  EMAIL_TASK_INVALID = 8720; //, "EMAIL_TASK_INVALID", "Invalid","INV", "Email task has been flagged for having an invalid destination number."),
+  EMAIL_TASK_ATTACHMENT_ERROR = 8730; //, "EMAIL_TASK_ATTACHMENT_ERROR", "Attachment Error", "ATT", "Email task has been cancelled due to attachment file error"),
+  EMAIL_TASK_CANCELLED = 8740; //,"EMAIL_TASK_CANCELLED", "Cancelled","CNC","Email Task is cancelled"),
+  EMAIL_TASK_QUEUED = 8800; //, "EMAIL_TASK_QUEUED", "Queued", "QED","Email Task is queued in provider"),
+  EMAIL_TASK_DELIVERED = 8900; //, "EMAIL_TASK_DELIVERED","Delivered","DLV", "Message has been successfully delivered to the receiving server."),
+  EMAIL_TASK_DROPPED = 8910; //, "EMAIL_TASK_DROPPED","Dropped","DRP", "You may see the following drop reasons: Invalid SMTPAPI header, Spam Content (if spam checker app enabled), Unsubscribed Address, Bounced Address, Spam Reporting Address, Invalid, Recipient List over Package Quota"),
+  EMAIL_TASK_DEFERRED = 8920; //, "EMAIL_TASK_DEFERRED","Deferred","DFR", "Recipient’s email server temporarily rejected message."),
+  EMAIL_TASK_BOUNCED = 8930; //, "EMAIL_TASK_BOUNCED","Bounced","BNC", "Receiving server could not or would not accept message."),
+  EMAIL_TASK_OPENED = 8940; //, "EMAIL_TASK_OPENED","Opened","OPN", "Recipient has opened the HTML message."),
+  EMAIL_TASK_CLICKED = 8950; //, "EMAIL_TASK_CLICKED","Clicked","CLK", "Recipient clicked on a link within the message.");,
+  EMAIL_TASK_UNSUBSCRIBED = 8960; // "EMAIL_TASK_UNSUBSCRIBED","Unsubscribed","USB", "Recipient clicked on the 'Opt Out of All Emails' link"),
+  EMAIL_TASK_MARKED_AS_SPAM = 8970; // "EMAIL_TASK_MARKED_AS_SPAM","Marked As Spam","SPM", "Recipient marked message as spam.");
+  EMAIL_TASK_BLOCKED = 8980; //"EMAIL_TASK_BLOCKED","Recipient marked message as blocked.");
+}
+
+enum EmailStatus {
+  EMAIL_STATUS_UNKKNOWN = 0;
+  EMAIL_PREPARING = 8000; // "EMAIL_PREPARING", "Email group is being prepared for scheduling"),
+  EMAIL_SCHEDULED = 8100; // "EMAIL_SCHEDULED", "Email group is currently waiting for scheduler"),
+  EMAIL_RESUME = 8150; // "EMAIL_RESUME", "Email group is ready to restart after being paused"),
+  EMAIL_RUNNING = 8200; // "EMAIL_RUNNING", "Email group is currently being executed"),
+  EMAIL_COMPLETED = 8300; // "EMAIL_COMPLETED", "Email group has been executed"),
+  EMAIL_CANCELLED = 8310; // "EMAIL_CANCELLED", "Email group has been cancelled"),
+  EMAIL_CANCELLED_ADMIN = 8320; // "EMAIL_CANCELLED_ADMIN", "Email group has been cancelled by admin"),
+  EMAIL_SUMMED_COMPLETED = 8400; //"EMAIL_SUMMED_COMPLETED", "Email group has been executed and is summed"),
+  EMAIL_SUMMED_CANCELLED = 8410; //"EMAIL_SUMMED_CANCELLED", "Email group has been cancelled and is summed"),
+  EMAIL_SUMMED_CANCELLED_ADMIN = 8420; //"EMAIL_SUMMED_CANCELLED_ADMIN", "Email group has been cancelled by the admin and is summed"),
+  EMAIL_PAUSED = 8500; // "EMAIL_PAUSED", "Email group has been signaled to pause until further notice");
+}
+
+enum EmailIBGroupStatus {
+  IB_EMAIL_GROUP_UNKNOWN = 0;
+  IB_EMAIL_GROUP_PREPARING = 10000; //Inbound Email Group is being prepared for scheduler
+  IB_EMAIL_GROUP_SCHEDULED = 10010; //Inbound Email Group is waiting for scheduler
+  IB_EMAIL_GROUP_RUNNING = 10020; //Inbound Email group is currently being executed
+  IB_EMAIL_GROUP_PAUSED = 10030; //Inbound Email group has been signaled to pause calls until further notice
+  IB_EMAIL_GROUP_RESUME = 10040; //Inbound Email group is ready to restart after being paused
+  IB_EMAIL_GROUP_RUNNING_WITH_ERROR = 10041; //Inbound Email group running but with errors
+  IB_EMAIL_GROUP_ERROR_STANDBY = 10042; //Inbound Email group ris stopped because it hit a consecutive error limit
+  IB_EMAIL_GROUP_COMPLETED = 10050; //Inbound Email group has been executed
+  IB_EMAIL_GROUP_CANCELLED_USER = 10060; //Inbound Email group has been cancelled by user
+  IB_EMAIL_GROUP_CANCELLED_ADMIN = 10070; //Inbound Email group has been cancelled by admin
+  IB_EMAIL_GROUP_SUMMED_COMPLETED = 10150; //Inbound Email group has been executed and is summed
+  IB_EMAIL_GROUP_SUMMED_CANCELLED_USER = 10160; //Inbound Email group has been cancelled by the user and is summed
+  IB_EMAIL_GROUP_SUMMED_CANCELLED_ADMIN = 10170; //Inbound Email group has been cancelled by the admin and is summed
+}
+
+enum EmailIBReplyStatus {
+  IB_EMAIL_REPLY_UNKNOWN = 0;
+  IB_EMAIL_REPLY_RECEIVED = 12000; //Inbound Email reply received successfully
+  IB_EMAIL_AGENT_REPLY_SENDING = 12010; //Inbound Email while agent sending reply
+  IB_EMAIL_AGENT_REPLY_SENDING_FAILED = 12020; //Inbound Email failed while agent sending reply
+  IB_EMAIL_AGENT_REPLY_INVALID = 12030; //Inbound Email Reply has been flagged for having an invalid destination
+  IB_EMAIL_AGENT_REPLY_SENT = 12040; //Inbound Email agent reply queued/sent successfully
+  IB_EMAIL_AGENT_REPLY_DELIVERED = 12050; //Inbound Email agent reply delivered successfully
+  IB_EMAIL_AGENT_REPLY_DROPPED = 12060; //Inbound Email agent reply dropped with reasons: Invalid SMTPAPI header, Spam Content (if spam checker app enabled), Unsubscribed Address, Bounced Address, Spam Reporting Address, Invalid, Recipient List over Package Quota
+  IB_EMAIL_AGENT_REPLY_DEFERRED = 12070; //Inbound Email agent reply "Deferred", "DFR" because Recipient’s email server temporarily rejected message
+  IB_EMAIL_AGENT_REPLY_BOUNCED = 12080; //Inbound Email agent reply "Bounced","BNC", "Receiving server could not or would not accept message
+  IB_EMAIL_AGENT_REPLY_OPENED = 12090; //Inbound Email agent reply "Opened","OPN", "Recipient has opened the HTML message.
+  IB_EMAIL_AGENT_REPLY_CLICKED = 12100; //Inbound Email agent reply "Clicked","CLK", "Recipient clicked on a link within the message.,
+  IB_EMAIL_AGENT_REPLY_UNSUBSCRIBED = 12110; //Inbound Email agent reply "Unsubscribed","USB", "Recipient clicked on the 'Opt Out of All Emails' link
+  IB_EMAIL_AGENT_REPLY_MARKED_AS_SPAM = 12120; // Inbound Email agent reply "Marked As Spam","SPM", "Recipient marked message as spam.
+  IB_EMAIL_AGENT_REPLY_BLOCKED = 12130; //Inbound Email agent reply recipient marked message as blocked.
+  IB_EMAIL_REPLY_DNC = 12140; //Inbound Email Reply has been scrubbed because it is on EMAIL DNC list
+  IB_EMAIL_REPLY_CANCELLED = 12150; //Inbound Email Reply has been cancelled
+}
+
+enum EmailIBGroupEvent {
+  IB_EMAIL_GROUP_EVENT_PREPARED = 0; // when the system is getting things ready for the inbound group
+  IB_EMAIL_GROUP_EVENT_SCHEDULED = 1; // when the inbound group is scheduled
+  IB_EMAIL_GROUP_EVENT_STARTED = 2; // when the manager starts the inbound group
+  IB_EMAIL_GROUP_EVENT_RUNNING = 3; // each time a poller runs a cycle for the inbound group
+  IB_EMAIL_GROUP_EVENT_STOPPED = 4; // when the manager stops the inbound group
+  IB_EMAIL_GROUP_EVENT_PAUSED = 5; // when the poller stops because of error or if the ui sets pause
+  IB_EMAIL_GROUP_EVENT_RESUME = 6; // when the ui resumes
+  IB_EMAIL_GROUP_EVENT_CANCELLED = 7; // when the ui stops
+  IB_EMAIL_GROUP_EVENT_MESSAGE_RECEIVED = 8; // each time we get a message for a group
+  IB_EMAIL_GROUP_EVENT_LOGIN_ERROR = 9; // each time we have an error because of logging in
+  IB_EMAIL_GROUP_EVENT_FETCH_ERROR = 10; // when we fail to fetch messages ? - not sure about this one yet
+  IB_EMAIL_GROUP_EVENT_STANDBY_ERROR = 11; // reached max number of consecutive errors logging into email acct
+  IB_EMAIL_GROUP_EVENT_COMPLETED = 12; // when the inbound group is marked as completed by the manager
+}
+
+enum EmailIBReplyType {
+  REPLY_UNKNOWN = 0;
+  EXISTING_CONV = 1; // Received reply to existing conversation
+  OUTBOUND_REPLY = 2; // Received reply to outbound task
+  AGENT_REPLY = 3; // Its a reply by an agent
+  INBOUND_PURE = 4; // Its a pure inbound since no match found to any existing conversation
+  OUTBOUND_TASK = 5; // copy outbound task details to reply table
+  OUTBOUND_PURE = 6; // Its a reply to pure outbound msg
+}

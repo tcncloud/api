@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package api.v1alpha1.soundboard;
 
-import "commons/auth/perms.proto";
-import "commons/org.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/org.proto";
 import "google/protobuf/timestamp.proto";
 
 // SoundboardDetails is the core entity which contains metadata for soundboard
@@ -14,7 +14,7 @@ message SoundboardDetails {
   // Name of audio file (does not include path), e.g. 'file.wav'.
   string file_name = 2;
   // Audio file format of soundboard (.wav or .mp3).
-  commons.RecordingFileType file_type = 3;
+  api.commons.RecordingFileType file_type = 3;
   // Soundboard title.
   string title = 4;
   // Soundboard description.

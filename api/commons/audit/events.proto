@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+option go_package = "github.com/tcncloud/api/api.commons.audit;audit";
+option java_package = "com.tcn.matrix.api.commons.audit";
+
+message DummyEvent {
+  string message = 1;
+}

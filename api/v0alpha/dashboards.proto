@@ -3,14 +3,14 @@ syntax = "proto3";
 package api.v0alpha;
 
 import "annotations/authz.proto";
-import "commons/auth/perms.proto";
-import "commons/org.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/org.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Dashboards {
   // CreateDashboard creates a dashboard and associated panels
@@ -305,7 +305,7 @@ message HistoricConfig {
     TimeSpan.Range time_span_range = 3;
   }
   // The default time zone to view the historic data by
-  commons.TimeZone time_zone = 4;
+  api.commons.TimeZone time_zone = 4;
 }
 
 // Real Time Dashboard type

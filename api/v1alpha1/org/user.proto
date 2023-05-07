@@ -2,18 +2,18 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/org.proto";
-import "commons/org/labels.proto";
-import "commons/org/permissions.proto";
-import "commons/org/trusts.proto";
-import "commons/org/user.proto";
-import "commons/perms.proto";
-import "commons/user.proto";
+import "api/commons/org.proto";
+import "api/commons/org/labels.proto";
+import "api/commons/org/permissions.proto";
+import "api/commons/org/trusts.proto";
+import "api/commons/org/user.proto";
+import "api/commons/perms.proto";
+import "api/commons/user.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Request message for the CreateUser rpc.
 message CreateUserRequest {
@@ -43,7 +43,7 @@ message CreateUserRequest {
   // The caller ids the new user will have.
   repeated string caller_ids = 12;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 13;
+  api.commons.OperatorApplications default_app = 13;
   // The caller id for the user.
   string user_caller_id = 14;
   // The id of the agent profile group the user will belong to.
@@ -51,7 +51,7 @@ message CreateUserRequest {
   // A list of labels to assign to the user
   repeated string label_ids = 16;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 17;
+  api.commons.TimeZoneWrapper time_zone_override = 17;
   // The hunt group that the created user will belong to.
   int64 hunt_group_sid = 18;
 }
@@ -126,17 +126,17 @@ message GetMyUserResponse {
   // An object with the hunt group fields required for the call
   HuntGroup hunt_group = 5;
   // A list of the labels associated with the user
-  repeated commons.org.Label labels = 6;
+  repeated api.commons.org.Label labels = 6;
   // A list of the skills associated with the user
-  repeated commons.org.Skill skills = 7;
+  repeated api.commons.org.Skill skills = 7;
   // A list of the permission groups the user belongs to
-  repeated commons.org.PermissionGroup permission_groups = 8;
+  repeated api.commons.org.PermissionGroup permission_groups = 8;
   // The user's p3 permission group
-  commons.org.P3PermissionGroup p3_permission_group = 9;
+  api.commons.org.P3PermissionGroup p3_permission_group = 9;
   // An object with the agent profile group fields required for the call
   AgentProfileGroup agent_profile_group = 10;
   // A list of the trusts assigned to the user.
-  repeated commons.org.Trust trusts = 11;
+  repeated api.commons.org.Trust trusts = 11;
 }
 
 // Request message for GetUser.
@@ -172,17 +172,17 @@ message GetUserResponse {
   // The name of the user's organization
 
   // User TimeZone with wrapper for nullable timezone.
-  commons.TimeZoneWrapper time_zone_override = 4;
+  api.commons.TimeZoneWrapper time_zone_override = 4;
   // An object with the hunt group fields required for the call
   HuntGroup hunt_group = 5;
   // A list of the labels associated with the user
-  repeated commons.org.Label labels = 6;
+  repeated api.commons.org.Label labels = 6;
   // A list of the skills associated with the user
-  repeated commons.org.Skill skills = 7;
+  repeated api.commons.org.Skill skills = 7;
   // A list of the permission groups the user belongs to
-  repeated commons.org.PermissionGroup permission_groups = 8;
+  repeated api.commons.org.PermissionGroup permission_groups = 8;
   // The user's p3 permission group
-  commons.org.P3PermissionGroup p3_permission_group = 9;
+  api.commons.org.P3PermissionGroup p3_permission_group = 9;
   // An object with the agent profile group fields required for the call
   AgentProfileGroup agent_profile_group = 10;
   // name of users organization
@@ -204,13 +204,13 @@ message GetUserResponse {
   // a users array of caller ids
   repeated string caller_ids = 19;
   // default application that is selected when signed in
-  commons.OperatorApplications default_app = 20;
+  api.commons.OperatorApplications default_app = 20;
   // Login Sid of the user
   int64 login_sid = 21;
   // Agent Sid
   int64 agent_sid = 22;
   // A list of trusts the user has been assigned.
-  repeated commons.org.Trust trusts = 23;
+  repeated api.commons.org.Trust trusts = 23;
   // user's email
   string email = 24;
   // user's default region
@@ -262,17 +262,17 @@ message GetUserByOrgIdResponse {
   // An object with the hunt group fields required for the call
   HuntGroup hunt_group = 5;
   // A list of the labels associated with the user
-  repeated commons.org.Label labels = 6;
+  repeated api.commons.org.Label labels = 6;
   // A list of the skills associated with the user
-  repeated commons.org.Skill skills = 7;
+  repeated api.commons.org.Skill skills = 7;
   // A list of the permission groups the user belongs to
-  repeated commons.org.PermissionGroup permission_groups = 8;
+  repeated api.commons.org.PermissionGroup permission_groups = 8;
   // The user's p3 permission group
-  commons.org.P3PermissionGroup p3_permission_group = 9;
+  api.commons.org.P3PermissionGroup p3_permission_group = 9;
   // An object with the agent profile group fields required for the call
   AgentProfileGroup agent_profile_group = 10;
   // A list of trusts the user has been assigned.
-  repeated commons.org.Trust trusts = 21;
+  repeated api.commons.org.Trust trusts = 21;
 }
 
 // Request message for listAgents rpc.
@@ -301,7 +301,7 @@ message ListAgentsResponse {
     // The agents's username
     string username = 5;
     // A list of the skills associated with the agent
-    repeated commons.org.Skill skills = 6;
+    repeated api.commons.org.Skill skills = 6;
     // Whether or not the agent is disabled.
     bool login_disabled = 7;
     // An object with the hunt group fields required for the call
@@ -314,7 +314,7 @@ message ListAgentsResponse {
     // A list of the trust ids the user has been assigned.
     repeated string trust_ids = 11;
     // A list of the (neo)permission groups the user belongs to
-    repeated commons.org.PermissionGroup permission_groups = 12;
+    repeated api.commons.org.PermissionGroup permission_groups = 12;
   }
 
   // List of returned agents with masked data.
@@ -362,7 +362,7 @@ message ListUsersByOrgIdRequest {
   // Filter by org ID.
   string org_id = 1;
   // Filter by the user's archived status.
-  commons.UserArchivedStateFilter archived_filter = 2;
+  api.commons.UserArchivedStateFilter archived_filter = 2;
 }
 
 // Response message for the ListsUsersByOrgId rpc.
@@ -407,7 +407,7 @@ message ListUsersByRegionRequest {
   // Return a list of only user agents (users whose default app is agent). When this is false all users are returned.
   bool agent = 2;
   // Filter by the user's archived status.
-  commons.UserArchivedStateFilter archived_filter = 3;
+  api.commons.UserArchivedStateFilter archived_filter = 3;
 }
 
 // Response message for the ListsUserByRegion rpc.
@@ -450,9 +450,9 @@ message UpdateMyUserRequest {
   // The caller ids the updated user will have.
   repeated string caller_ids = 2;
   // User TimeZone with wrapper for nullable timezone.
-  commons.TimeZoneWrapper time_zone_override = 3;
+  api.commons.TimeZoneWrapper time_zone_override = 3;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 4;
+  api.commons.OperatorApplications default_app = 4;
   // Mask to filter fields on organization entities in response.
   repeated string field_mask = 10;
 }
@@ -471,13 +471,13 @@ message UpdateUserRequest {
   // The partner agent id the updated user will have.
   string partner_agent_id = 4;
   // User TimeZone with wrapper for nullable timezone.
-  commons.TimeZoneWrapper time_zone_override = 5;
+  api.commons.TimeZoneWrapper time_zone_override = 5;
   // The linkback numbers the updated user will have.
   repeated string linkback_numbers = 6;
   // The caller ids the updated user will have.
   repeated string caller_ids = 7;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 8;
+  api.commons.OperatorApplications default_app = 8;
   // Whether the updated user will require a password reset.
   bool password_reset_required = 9;
   // The agent profile group id the updated user will have.
@@ -725,14 +725,14 @@ message GetUserSessionDataResponse {
     // is not delgated this will be nil.
     google.protobuf.StringValue connection_id = 24;
     // User TimeZone with wrapper for nullable timezone
-    commons.TimeZoneWrapper time_zone_override = 25;
+    api.commons.TimeZoneWrapper time_zone_override = 25;
     // UserSettings
     // List of permission groups ids the user is a member of
     repeated string permission_group_ids = 26;
     // List of trust ids the user has been assigned.
     repeated string trust_ids = 27;
     // default_app for a user
-    commons.OperatorApplications default_application = 28;
+    api.commons.OperatorApplications default_application = 28;
     // User caller id
     string user_caller_id = 29;
     // users assigned agent profile group
@@ -750,9 +750,9 @@ message GetUserSessionDataResponse {
   // The user's organizations's name
   string org_name = 2;
   // List of legacy P3 permissions.
-  repeated commons.Permission p3_permissions = 3;
+  repeated api.commons.Permission p3_permissions = 3;
   // A list of the permission groups the user belongs to
-  repeated commons.org.PermissionGroup permission_groups = 4;
+  repeated api.commons.org.PermissionGroup permission_groups = 4;
   // A list of the labels associated with the user
-  repeated commons.org.Label labels = 5;
+  repeated api.commons.org.Label labels = 5;
 }

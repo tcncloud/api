@@ -1,0 +1,322 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+message RecordField {
+  string name = 1;
+  RecordType type = 2;
+}
+
+enum CronType {
+  CRON_TYPE_LMS = 0;
+  CRON_TYPE_JOURNEY = 1;
+}
+
+enum EnrichmentType {
+  ENRICHMENT_TYPE_OR = 0;
+  ENRICHMENT_TYPE_XOR = 1;
+  ENRICHMENT_TYPE_AND = 2;
+  ENRICHMENT_TYPE_JOIN = 3;
+  ENRICHMENT_TYPE_NOT = 4;
+}
+
+enum PrimarySource {
+  PRIMARY_SOURCE_LMS = 0;
+  PRIMARY_SOURCE_CJS = 1;
+}
+
+enum DedupKeyPolicy {
+  KEEP_FIRST = 0;
+  KEEP_LAST = 1;
+  KEEP_ALL = 2;
+}
+
+enum RunType {
+  RUN_TYPE_ENABLED = 0;
+  RUN_TYPE_DISABLED = 1;
+  RUN_TYPE_TEST = 2;
+}
+
+enum ConsentActionType {
+  CONSENT_ACTION_TYPE_ADD = 0;
+  CONSENT_ACTION_TYPE_REVOKE = 1;
+}
+
+enum RecordType {
+  RECORD_TYPE_ALL = 0;
+  RECORD_TYPE_STRING = 1;
+  RECORD_TYPE_NUMBER = 2;
+  RECORD_TYPE_BOOL = 3;
+  RECORD_TYPE_PHONE = 4;
+  RECORD_TYPE_CURRENCY = 5;
+  RECORD_TYPE_ENRICHED_PHONE = 6;
+  RECORD_TYPE_ENRICHED_ZIP = 18;
+  RECORD_TYPE_POSTAL_CODE = 7;
+  RECORD_TYPE_EMAIL = 8;
+  RECORD_TYPE_DATETIME_NOW = 9;
+  RECORD_TYPE_DATETIME_TIMESTAMP = 10;
+  RECORD_TYPE_DATETIME_DATE = 11;
+  RECORD_TYPE_DATETIME_MONTH_AND_DAY = 12;
+  RECORD_TYPE_DATETIME_TIME_OF_DAY = 13;
+  RECORD_TYPE_REPEATED_RECORDS = 15;
+  RECORD_TYPE_RECORD_MAP = 16;
+  RECORD_TYPE_ERROR = 17;
+  RECORD_TYPE_SOCIAL = 19;
+  RECORD_TYPE_DATE_OF_BIRTH = 20;
+  RECORD_TYPE_FULL_NAME = 21;
+  RECORD_TYPE_ACCOUNT_NUMBER = 22;
+  RECORD_TYPE_STRUCT_VALUE = 23;
+}
+
+enum FieldType {
+  FIELD_TYPE_STRING = 0;
+  FIELD_TYPE_NUMBER = 1;
+  FIELD_TYPE_BOOLEAN = 2;
+  FIELD_TYPE_PHONE = 3;
+  FIELD_TYPE_CURRENCY = 4;
+  FIELD_TYPE_EMAIL = 5;
+  FIELD_TYPE_DATETIME_NOW = 6;
+  FIELD_TYPE_DATETIME_TIMESTAMP = 7;
+  FIELD_TYPE_DATETIME_DATE = 8;
+  FIELD_TYPE_DATETIME_MONTH_AND_DAY = 9;
+  FIELD_TYPE_DATETIME_TIME_OF_DAY = 10;
+  FIELD_TYPE_POSTAL_CODE = 12;
+  FIELD_TYPE_ENRICHED_PHONE = 13;
+  FIELD_TYPE_ENRICHED_ZIP = 14;
+  FIELD_TYPE_SOCIAL = 15;
+  FIELD_TYPE_DATE_OF_BIRTH = 16;
+  FIELD_TYPE_FULL_NAME = 17;
+  FIELD_TYPE_ACCOUNT_NUMBER = 18;
+  FIELD_TYPE_ERROR = 19;
+  FIELD_TYPE_STRUCT_VALUE = 20;
+}
+
+enum FileFormat {
+  FILE_FORMAT_CSV = 0;
+  FILE_FORMAT_CUSTOM_DELIM = 1;
+  FILE_FORMAT_FIXED_FORMAT = 2;
+  FILE_FORMAT_TAB = 3;
+  FILE_FORMAT_JSON = 4;
+}
+
+enum PipelineElementStatusType {
+  PIPELINE_ELEMENT_STATUS_TYPE_INITIALIZED = 0;
+  PIPELINE_ELEMENT_STATUS_TYPE_RUNNING = 1;
+  PIPELINE_ELEMENT_STATUS_TYPE_STOPPED = 2;
+  PIPELINE_ELEMENT_STATUS_TYPE_FAILED = 3;
+}
+
+enum EntrypointType {
+  ENTRYPOINT_TYPE_NON = 0;
+  ENTRYPOINT_TYPE_API = 1;
+  ENTRYPOINT_TYPE_SFTP = 2;
+}
+
+enum DuplicatePolicyType {
+  DUPLICATE_POLICY_TYPE_KEEP_RECORD_DISCARD_NUMBER = 0;
+  DUPLICATE_POLICY_TYPE_ALLOW_RECORD_KEEP_NUMBER = 1;
+  DUPLICATE_POLICY_TYPE_DISCARD_RECORD = 2;
+  DUPLICATE_POLICY_TYPE_DUPLICATE_LIST = 3;
+}
+
+enum AbsentPolicyType {
+  ABSENT_POLICY_TYPE_KEEP = 0;
+  ABSENT_POLICY_TYPE_DISCARD = 1;
+}
+
+enum DialOrderType {
+  DIAL_ORDER_TYPE_FIRST = 0;
+  DIAL_ORDER_TYPE_NATURAL = 1;
+  DIAL_ORDER_TYPE_CUSTOM = 2;
+}
+
+enum ExportType {
+  EXPORT_TYPE_FILENAME = 0;
+  EXPORT_TYPE_SFTP = 1;
+}
+
+enum SortOrder {
+  SORT_ORDER_ASCENDING = 0;
+  SORT_ORDER_DESCENDING = 1;
+}
+
+enum CompareType {
+  COMPARE_TYPE_STRING = 0;
+  COMPARE_TYPE_NUMBER = 1;
+  COMPARE_TYPE_BOOL = 2;
+}
+enum CompareOperator {
+  COMPARE_OPERATOR_EQUAL_TO = 0;
+  COMPARE_OPERATOR_GREATER = 1;
+  COMPARE_OPERATOR_GREATER_EQUAL = 2;
+  COMPARE_OPERATOR_LESS = 3;
+  COMPARE_OPERATOR_LESS_EQUAL = 4;
+  COMPARE_OPERATOR_STARTS_WITH = 5;
+  COMPARE_OPERATOR_ENDS_WITH = 6;
+  COMPARE_OPERATOR_CONTAINS = 7;
+}
+enum ChainOperator {
+  CHAIN_OPERATOR_AND = 0;
+  CHAIN_OPERATOR_OR = 1;
+}
+
+enum DeDupActions {
+  DE_DUP_ACTIONS_KEEP_FIRST = 0;
+  DE_DUP_ACTIONS_KEEP_BOTH = 3;
+  DE_DUP_ACTIONS_KEEP_LAST = 4;
+  DE_DUP_ACTIONS_KEEP_NEITHER = 5;
+}
+
+// ::DEPRECATED FOR EXCHANGES::  use ConstructedFilename instead
+message FilePattern {
+  FilePatternType type = 1;
+  string directory = 2;
+  // For GLOB type
+  string filename = 3;
+
+  // For CONSTRUCTED type
+  repeated string prefixes = 4;
+  string date_format = 5;
+  string suffix = 6;
+  string file_extension = 7;
+  // True if date string occurs at beginning of filename
+  bool date_prefix = 8;
+  // Day to use for date
+  RelativeDay day_to_use = 9;
+}
+
+// Represents a filename that we will construct using the original uploaded name
+// prefix, date in "date_format" format, and extension
+// filename = date + prefix + original_filename + suffix + ext
+message ConstructedFilename {
+  // This is the name part that is sandwiched between prefix and suffix.
+  // If this is nil, we will use the original uploaded filename.
+  // if this is not nil (including empty string) we will use the nested 'value'
+  // field as the filename.
+  google.protobuf.StringValue override_filename = 3;
+  // prefix is prepended to the filename (or override_filename)
+  string prefix = 4;
+  // format string like: YYYY-MM-DDhhmmss
+  string date_format = 5;
+  // suffix is appeneded to the filename (or override_filename)
+  // suffix will go before the extension, even if the original filename has an
+  // extension included
+  string suffix = 6;
+  // extension to add to the file, (if none already exists as part of the
+  // original filename)
+  string file_extension = 7;
+  // If 0 (default) date is positioned very first (before prefix)
+  // note that before/after filename reference the same position if
+  // 'use_empty_filename' is set
+  DatePosition date_position = 8;
+  // Day to use for date
+  RelativeDay day_to_use = 9;
+}
+
+// where the date should be in position to the prefix, suffix and filename
+// for ConstructedFilename messages.
+// NOTE: Originally file defaulted to AFTER_FILENAME, this would change it to be
+// before the prefix
+enum DatePosition {
+  DATE_POSITION_FIRST = 0;
+  DATE_POSITION_BEFORE_FILENAME = 1;
+  DATE_POSITION_AFTER_FILENAME = 2;
+  DATE_POSITION_LAST = 3;
+}
+
+enum RelativeDay {
+  RELATIVE_DAY_TODAY = 0;
+  RELATIVE_DAY_YESTERDAY = 1;
+  RELATIVE_DAY_LAST_FRIDAY = 2;
+}
+
+enum FilePatternType {
+  FILE_PATTERN_TYPE_GLOB = 0;
+  FILE_PATTERN_TYPE_CONSTRUCTED = 1;
+  // used with the FilePattern object, suggests to use the original filename
+  // if it is known.
+  // the filename options for the CONSTRUCTED file pattern type all still apply.
+  FILE_PATTERN_TYPE_ORIGINAL = 2;
+}
+
+// Used with a format string, and string date value to get a matrix/lms/DateTime
+// proto
+enum DateTimePrecision {
+  DATETIME_PRECISION_NOW = 0;
+  DATETIME_PRECISION_TIMESTAMP = 1;
+  DATETIME_PRECISION_DATE = 2;
+  DATETIME_PRECISION_MONTH_AND_DAY = 3;
+  DATETIME_PRECISION_TIME_OF_DAY = 4;
+}
+
+enum HttpVerb {
+  HTTP_VERB_GET = 0;
+  HTTP_VERB_POST = 1;
+}
+
+enum ComplianceListType {
+  COMPLIANCE_LIST_TYPE_SCRUB = 0;
+  COMPLIANCE_LIST_TYPE_CONSENT = 1;
+}
+
+enum EventState {
+  // state does not apply
+  EVENT_STATE_NONE = 0;
+  // event will start processing on external system
+  EVENT_STATE_KICKOFF = 1;
+  // event will checkup on what was started during the kickoff
+  EVENT_STATE_CHECK = 2;
+  // event will handle the records and send them downstream
+  EVENT_STATE_PROCESS = 3;
+  // event will do any remaining work needed to cleanup external system
+  EVENT_STATE_CLEANUP = 4;
+}
+
+message PaginationTerminator {
+  // the key we are checking
+  string key = 1;
+  // negate the results of the operation check.
+  // cases that we would have returned true, we instead return false, and vice versa
+  bool negate = 2;
+  // the operation we apply to key, if true, wee terminate the paginated http request
+  oneof op {
+    // if true terminate if the key exists.
+    // if false terminate if the key does not exist.
+    bool exists_check = 3;
+    // terminate if the number value the key points to is greater than this
+    double num_greater_than = 4;
+    // terminate if the number value the key points to is less than this
+    double num_less_than = 5;
+    // terminate if the number value the key points to is equal to this
+    double num_equals = 6;
+    // terminate if the number of records in the array key points is less than this.
+    // if key points to a non array, it has a count of 0
+    int64 count_less_than = 7;
+    // terminate if the str value the key points to equals this
+    string str_equals = 8;
+    // terminate if the str value the key points to contains this
+    string str_contains = 9;
+    // termintae if the bool value key points equals this
+    bool bool_equals = 10;
+  }
+}
+
+message Expiration {
+  // units can be weeks, days, or hours
+  TimeUnit units = 1;
+  // max 1 year
+  int64 quantity = 2;
+}
+
+enum TimeUnit {
+  //DEFAULT is decided by SURL (no quantity needed)
+  DEFAULT = 0;
+  TIME_WEEKS = 1;
+  TIME_DAYS = 2;
+  TIME_HOURS = 3;
+}

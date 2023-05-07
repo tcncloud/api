@@ -3,15 +3,15 @@ syntax = "proto3";
 package api.v1alpha1.project;
 
 import "annotations/authz.proto";
-import "commons/omnichannel.proto";
-import "commons/project.proto";
-import "commons/types.proto";
+import "api/commons/omnichannel.proto";
+import "api/commons/project.proto";
+import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.project;project";
-option java_package = "com.tcn.api.v1alpha1.project";
+option java_package = "com.tcn.matrix.api.v1alpha1.project";
 
 // Service for interacting with TCN's Project API system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -325,7 +325,7 @@ message Project {
   // project description
   string description = 3;
   // project status
-  commons.ProjectStatus status = 4;
+  api.commons.ProjectStatus status = 4;
   // creation date
   google.protobuf.Timestamp date_created = 5;
 }
@@ -387,7 +387,7 @@ message CreateCannedMessageReq {
   // allows html
   bool allows_html = 5;
   // attachments
-  repeated commons.OmniAttachment attachments = 6;
+  repeated api.commons.OmniAttachment attachments = 6;
 }
 
 //canned message creation details
@@ -409,7 +409,7 @@ message CannedMessage {
   // allows html
   bool allows_html = 8;
   // attachments
-  repeated commons.OmniAttachment attachments = 9;
+  repeated api.commons.OmniAttachment attachments = 9;
 }
 
 // request used to get a list of CannedMessages
@@ -436,7 +436,7 @@ message UpdateCannedMessageReq {
   // allows html
   bool allows_html = 6;
   // attachments
-  repeated commons.OmniAttachment attachments = 7;
+  repeated api.commons.OmniAttachment attachments = 7;
 }
 
 //request to get canned message by id
@@ -505,7 +505,7 @@ message CannedMessageWithGroup {
   // allows html
   bool allows_html = 12;
   // attachments
-  repeated commons.OmniAttachment attachments = 13;
+  repeated api.commons.OmniAttachment attachments = 13;
   // generated canned message sid
   int64 canned_message_sid = 14;
 }

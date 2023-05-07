@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "api/commons/acd.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.audit;audit";
+option java_package = "com.tcn.matrix.api.commons.audit";
+
+///
+/// This file contains event from Class 200
+/// Vana events
+///
+
+// VanaFlagEvent represents a flag occurrence in voice analytics.
+// It summarizes a set of transcripts flagged over an interval.
+message VanaFlagEvent {
+  // Required. User is not allowed to see flag sid.
+  string flag_name = 1;
+
+  // Required. Used for matching user notification settings.
+  int64 flag_sid = 2;
+
+  // Required. Link to voice analytics page that shows reported transcripts.
+  string url = 3;
+
+  // Required. Number of transcripts that were flagged.
+  int64 num_transcripts = 4;
+
+  // Required. Flag priority.
+  int32 priority = 5;
+}
+
+// VanaFlagReviewEvent represents a flag that needs review in voice analytics.
+// It summarizes a set of transcripts that need review.
+message VanaFlagReviewEvent {
+  // Required. User is not allowed to see flag sid.
+  string flag_name = 1;
+
+  // Required. Used for matching user notification settings.
+  int64 flag_sid = 2;
+
+  // Required. Link to voice analytics page that shows reported transcripts.
+  string url = 3;
+
+  // Required. Number of transcripts that were flagged.
+  int64 num_transcripts = 4;
+
+  // Required. Flag priority.
+  int32 priority = 5;
+}
+
+// VanaBillingReportEvent represents a billing report in voice analytics.
+// It gives a csv to a billing report of transcripts that occured that billing period.
+message VanaBillingReportEvent {
+  // Required. Report data start time.
+  google.protobuf.Timestamp start_time = 1;
+
+  // Required. Report data end time.
+  google.protobuf.Timestamp end_time = 2;
+
+  // Required. Report download url.
+  string url = 3;
+}
+
+// VanaFlagSummaryEvent is the summary of the flagging process.
+// It shows what transcripts were flagged.
+message VanaFlagSummaryEvent {
+  // Required. Report data start time.
+  google.protobuf.Timestamp start_time = 1;
+
+  // Required. Report data end time.
+  google.protobuf.Timestamp end_time = 2;
+
+  // Required. Flag Summaries
+  repeated FlagSummary flag_summaries = 3;
+
+  // FlagSummary is an overview of the flags in the transcript.
+  message FlagSummary {
+    int64 transcript_sid = 1;
+    repeated int64 flag_sids = 2;
+  }
+}

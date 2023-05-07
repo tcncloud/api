@@ -14,7 +14,7 @@ import "api/v1alpha1/scorecards/scorecard_question.proto";
 import "api/v1alpha1/scorecards/section.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-option java_package = "com.tcn.api.v1alpha1.scorecards";
+option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 service Scorecards {
   // CreateScorecard creates a new scorecard

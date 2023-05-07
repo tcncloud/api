@@ -3,13 +3,13 @@ syntax = "proto3";
 package api.v1alpha1.callqueue;
 
 import "annotations/authz.proto";
-import "commons/call.proto";
-import "commons/sms.proto";
+import "api/commons/call.proto";
+import "api/commons/sms.proto";
 import "google/api/annotations.proto";
 import "api/v0alpha/p3api.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.callqueue;callqueue";
-option java_package = "com.tcn.api.v1alpha1.callqueue";
+option java_package = "com.tcn.matrix.api.v1alpha1.callqueue";
 
 service CallQueue {
   // Returns either a preview record or preview call from one of multiple queues,
@@ -131,12 +131,12 @@ message DequeuePreviewRecordOrCallReq {
 
 message DequeuePreviewRecordOrCallRes {
   string queue_name = 1;
-  commons.SimpleCallData call = 2;
-  commons.SimpleRecordData record = 3;
+  api.commons.SimpleCallData call = 2;
+  api.commons.SimpleRecordData record = 3;
 }
 
 message EnqueuePreviewRecordReq {
-  commons.SimpleRecordData record = 1;
+  api.commons.SimpleRecordData record = 1;
   string queue_name = 2;
 }
 
@@ -151,7 +151,7 @@ message DequeueScrubbedCallForPreviewRecordReq {
 }
 
 message DequeueScrubbedCallForPreviewRecordRes {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
 }
 
 message ClearPreviewRecordReturnQueueReq {}
@@ -159,7 +159,7 @@ message ClearPreviewRecordReturnQueueReq {}
 message ClearPreviewRecordReturnQueueRes {}
 
 message EnqueuePreviewDialCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
   string queue_name = 2;
 }
 
@@ -170,11 +170,11 @@ message ClearManualDialQueueReq {}
 message ClearManualDialQueueRes {}
 
 message ProcessManualDialCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
 }
 
 message ProcessManualDialCallRes {
-  commons.SimpleCallData scrubbed_call = 1;
+  api.commons.SimpleCallData scrubbed_call = 1;
 }
 
 message DequeueCallForManualApprovalReq {
@@ -184,45 +184,45 @@ message DequeueCallForManualApprovalReq {
 }
 
 message DequeueCallForManualApprovalRes {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
   string queue = 2;
   v0alpha.GetClientInfoDataRes client_info = 3;
   v0alpha.GetClientInfoDisplayTemplateRes client_info_template = 4;
 }
 
 message EnqueueManuallyApprovedCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
 }
 
 message EnqueueManuallyApprovedCallRes {}
 
 message EnqueueManuallyRejectedCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
 }
 
 message EnqueueManuallyRejectedCallRes {}
 
 message RequeueManuallyApprovedCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
   string queue_name = 2;
 }
 
 message RequeueManuallyApprovedCallRes {}
 
 message EnqueueManuallyApprovedSmsReq {
-  commons.SimpleSmsMamData sms = 1;
+  api.commons.SimpleSmsMamData sms = 1;
 }
 
 message EnqueueManuallyApprovedSmsRes {}
 
 message EnqueueManuallyRejectedSmsReq {
-  commons.SimpleSmsMamData sms = 1;
+  api.commons.SimpleSmsMamData sms = 1;
 }
 
 message EnqueueManuallyRejectedSmsRes {}
 
 message RequeueManuallyApprovedSmsReq {
-  commons.SimpleSmsMamData sms = 1;
+  api.commons.SimpleSmsMamData sms = 1;
   string queue_name = 2;
 }
 
@@ -233,6 +233,6 @@ message DequeueSmsMamForManualApprovalReq {
 }
 
 message DequeueSmsMamForManualApprovalRes {
-  commons.SimpleSmsMamData sms = 1;
+  api.commons.SimpleSmsMamData sms = 1;
   string queue = 2;
 }

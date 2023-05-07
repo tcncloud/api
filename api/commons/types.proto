@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+// Common types that will be used across the system
+
+message Empty {}
+
+// nullable Int32
+message Int32Nullable {
+  bool is_null = 1;
+  int32 value = 2;
+}
+
+// nullable Int64
+message Int64Nullable {
+  bool is_null = 1;
+  int64 value = 2;
+}
+
+message SomeSidAndDateCompare {
+  int64 some_sid = 1;
+  google.protobuf.Timestamp date_greater = 2;
+  google.protobuf.Timestamp date_less = 3;
+}
+
+// if you want to use repeated fields in query parameters use these
+// these messages have type mappings in go/conversion/arrays.go
+message Int64ArraySql {
+  repeated int64 values = 1;
+}
+
+message Int32ArraySql {
+  repeated int32 values = 1;
+}
+
+message StringArraySql {
+  repeated string values = 2;
+}
+
+message BoolArraySql {
+  repeated bool values = 1;
+}
+
+message Int32ValueArraySql {
+  repeated google.protobuf.Int32Value values = 1;
+}
+
+// wraps int64 values so they can be null, but also adds the JS_STRING
+// tag so that data isn't lost when using snowflake ids
+message Int64Id {
+  int64 value = 1 [jstype = JS_STRING];
+}

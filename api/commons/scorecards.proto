@@ -1,0 +1,334 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "api/commons/acd.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+// TODO: Enum names are not very intuitive; improve.
+
+// Evaluation is how a scorecard gets evaluated.
+// It is not a boolean because it might grow (i.e. MIXED).
+enum EvaluationType {
+  EVALUATE_MANUAL = 0; // a person must fill out (score) the scorecard
+  EVALUATE_AUTO = 1; // the system fills out (scores) the scorecard
+}
+
+// ScoreType is how the score is calculated.
+// It is not a boolean because it might grow (i.e. OTHER).
+enum ScoreType {
+  SCORE_SIMPLE_SUM = 0; // score is total awarded points / total possible points
+  SCORE_WEIGHTED_SUM = 1; // score is sum of each section (simple sum) * section weight
+  SCORE_EVEN_WEIGHTED_SUM = 2; // weighted sum where weights are expected to be even (+/-1)
+}
+
+// FailType is how affect the scoring of the scorecard.
+// Some answer options have points, which add to the score.
+// Other options have fail types which are applied, when chosen.
+enum FailType {
+  FAIL_QUESTION = 0; // default. fail the question
+  FAIL_SECTION = 1; // fail the scorecard's section
+  FAIL_SCORECARD = 2; // fail the entire scorecard
+}
+
+// ScorecardState is state of the scorecard, which
+// determines if, or how, it can be used.
+enum ScorecardState {
+  // Default. All scorecards start as draft.
+  // User must change to not draft in order to use.
+  SCORECARD_IS_DRAFT = 0;
+
+  // Scorecard is no longer a draft, but has not been used.
+  // Updates are allowed.
+  SCORECARD_IS_READY = 1;
+
+  // Scorecard is in use and cannot be edited.
+  // The system marks as in use on first use.
+  // UI cannot update to, or from, this state.
+  SCORECARD_IS_IN_USE = 2;
+
+  // Scorecard is a template and is read-only.
+  // Scorecards cannot be updated to, or from, this state.
+  SCORECARD_IS_TEMPLATE = 3;
+
+  // Scorecard is disabled and cannot be used for scoring.
+  // Can only be reached from, or updated to, READY.
+  SCORECARD_IS_READY_DISABLED = 4;
+
+  // Scorecard is disabled and cannot be used for scoring.
+  // Can only be reached from, or updated to, IN_USE.
+  SCORECARD_IS_IN_USE_DISABLED = 5;
+}
+
+// EvaluationState is enum to describe where the scorecard is in the state of the evaluation
+enum EvaluationState {
+  // Default.  All evaluations will begin in progress.
+  EVALUATION_IN_PROGRESS = 0;
+
+  // Evaluation is completed.
+  // Agent passed the scorecard.
+  EVALUATION_PASSED = 1;
+
+  // Evaluation is completed.
+  // Agent failed the scorecard.
+  EVALUATION_FAILED = 2;
+}
+
+// TimeFilter allows optional filtering by timestamp
+// Multple fields are ANDed together.
+message TimeFilter {
+  google.protobuf.Timestamp eq = 1; // must match timestamp exactly
+  google.protobuf.Timestamp gte = 2; // must be greater than or equal to timestamp
+  google.protobuf.Timestamp lte = 3; // must be less than or equal to timestamp
+  google.protobuf.Timestamp gt = 4; // must be greater than timestamp
+  google.protobuf.Timestamp lt = 5; // must be less than timestamp
+}
+
+// Category wraps a set of skills (or labels).
+// A scorecard can only be used to evaluate calls
+// with the same skill(s) as its category.
+message Category {
+  int64 category_id = 1; // unique id of the category
+  string author_id = 3; // user who created the category
+  string title = 4; // title, or name, of the category
+  string description = 5; // description of category (i.e. purpose and use)
+  repeated int64 skill_profiles = 6; // skill_profiles ids related to category
+  int32 version = 7; // current version of the category
+  repeated CallType.Enum call_types = 10; // call types supported by the category
+  bool is_system = 11; // whether a category is a system category (read only)
+}
+
+// Evaluation represents a evaluated scorecard.
+// A Evaluation represents a single call and single agent that has been evaluated.
+message Evaluation {
+  int64 evaluation_id = 2; // unique id of the evaluation scorecard
+  int64 scorecard_id = 3; // id of evaluated scorecard
+
+  string scorer_id = 4; // user_id of person performing evaluation
+  int64 call_sid = 6; // sid of the call being evaluated
+
+  double score = 7; // calculated score as percentage to two decimal places
+  api.commons.EvaluationState evaluation_state = 8; // state of the current evaluation.
+
+  repeated EvaluationSection evaluation_sections = 9;
+  google.protobuf.Timestamp completed_at = 10; // time evaluation was completed
+
+  string agent_user_id = 13; // user_id of the agent being evaluated
+  api.commons.CallType.Enum call_type = 14; // call type of call being evaluated
+  int64 transcript_sid = 15; // optional - transcript sid associated with evaluation
+
+  repeated CustomField custom_fields = 17; // Custom key-value fields.
+
+  // CustomField represents a custom key-value pair defined by users.
+  message CustomField {
+    string key = 1; // Keys are defined on scorecard.
+    string field = 2; // Each field MUST be populated on scoring.
+  }
+}
+
+// EvaluationSection is collection of evaluation questions in a section
+message EvaluationSection {
+  int64 evaluation_section_id = 2; // unique id of evaluation section
+  int64 evaluation_id = 3; // unique id of evaluation
+  int64 section_id = 4; // unique id of section
+  int32 points = 5; // amount of points scored
+  int32 possible_points = 6; // amount of points possible
+  int32 sort_order = 7; // order number of evaluation section
+  google.protobuf.Timestamp deleted_at = 8; // time evaluation section was deleted at
+  google.protobuf.Timestamp created_at = 9; // time evaluation section was created at
+  repeated EvaluationQuestion evaluation_questions = 10; // array of evaluation questions in a section
+  repeated AutoEvaluationQuestion auto_evaluation_questions = 11; // array of auto evaluation questions in a section
+}
+
+// EvaluationQuestion is a question in an evaluation
+message EvaluationQuestion {
+  int64 evaluation_question_id = 2; // unique id of evaluation question
+  int64 evaluation_id = 3; // unique id of evaluation
+  int64 scorecard_question_id = 4; // unique id of scorecard question
+  bool skipped = 5; // if question was skipped
+  int64 points = 6; // total points awarded to question
+  repeated Answer answers = 7; // answers selected
+  int64 evaluation_section_id = 8; // unique id of evaluation section
+  string comment = 9; // comment on the evaluation question
+  int32 sort_order = 10; // order number of evaluation question
+
+  // Answer represents an answer option of an evaluation question
+  message Answer {
+    string answer_option = 1; // answer option to display to the user
+
+    // two results are possible: award points or fail
+    oneof result {
+      uint32 points = 2; // points to award if option selected
+      FailType fail_type = 3; // how to fail if option selected (e.g. fail section)
+    }
+  }
+}
+
+// AutoEvaluation is an auto evaluation
+message AutoEvaluation {
+  int64 auto_evaluation_id = 2; // unique id of the auto evaluation
+  int64 scorecard_id = 3; // id of evaluated scorecard
+  int64 call_sid = 4; // sid of the call being evaluated
+  string agent_user_id = 5; // user_id of the agent being evaluated
+  repeated AutoEvaluationSection auto_evaluation_sections = 6;
+  google.protobuf.Timestamp completed_at = 7; // time evaluation was completed
+  google.protobuf.Timestamp deleted_at = 8; // time evaluation was deleted
+  CallType.Enum call_type = 9; // call type of call being evaluated
+  int64 transcript_sid = 10; // optional - transcript sid associated with evaluation
+  bool expression_matched = 11; // whether the expression was matched or not
+  RiskLevel risk_level = 12; // The risk level of the evaluation
+}
+
+// AutoEvaluationQuestion is an auto question in an evaluation.
+message AutoEvaluationQuestion {
+  int64 auto_evaluation_question_id = 2; // unique id of auto evaluation question.
+  int64 auto_evaluation_id = 3; // unique id of evaluation.
+  int64 auto_evaluation_section_id = 4; // unique id of evaluation section.
+  int64 auto_question_id = 5; // unique id of auto question.
+  repeated int64 flagged = 6; // a subset of flag sids found.
+  bool passed = 7; // whether the auto question evaluation was passed/failed.
+  int32 sort_order = 8; // order number of auto evaluation question.
+  RiskLevel risk_level = 11; // The risk level of the evaluation question.
+}
+
+// AutoEvaluationSection is an auto Section in an evaluation.
+message AutoEvaluationSection {
+  int64 auto_evaluation_section_id = 2; // unique id of auto evaluation section
+  int64 auto_evaluation_id = 3; // unique id of auto evaluation
+  int64 section_id = 4; // unique id of section
+  int32 sort_order = 5; // order number of evaluation section
+  google.protobuf.Timestamp deleted_at = 6; // time evaluation section was deleted at
+  google.protobuf.Timestamp created_at = 7; // time evaluation section was created at
+  repeated AutoEvaluationQuestion auto_evaluation_questions = 8; // array of auto evaluation questions in a section
+  RiskLevel risk_level = 9; // The risk level of the evaluation section
+}
+
+// Question is a question in the Question Library.
+// It is not to be confused with ScorecardQuestion, which represents
+// a question inside of a scorecard.
+message Question {
+  int64 question_id = 2; // unique question id
+  string author_id = 3; // the creator of the question
+  string question = 4; // the question to display
+  string description = 5; // extra info or context for the question
+  repeated api.commons.Category categories = 6; // the categories associated with the question
+}
+
+// ScorecardQuestion represents a question inside of a scorecard.
+message ScorecardQuestion {
+  int64 scorecard_question_id = 2; // unique id of the scorecard question
+  string question = 3; // question to display
+  string description = 4; // optional; additional info about question
+  int64 question_id = 5; // optional; library question id
+  bool allow_skip = 6; // question can be excluded from scoring (allow n/a)
+  repeated Answer answers = 7; // the answer options with point values
+  MultiSelect multi_select = 8; // single-select if nil; otherwise multiselect
+  int64 scorecard_id = 9; // question belongs to scorecard
+  int64 section_id = 10; // question belongs to scorecard section
+  int32 version = 11; // current version of scorecard question
+  int32 sort_order = 12; // order number of scorecard question
+
+  // Answer are all the possible answers for a scorecard question.
+  message Answer {
+    string answer_option = 1; // answer option to display to the user
+
+    // two results are possible: award points or fail
+    oneof result {
+      uint32 points = 2; // points to award if option selected
+      FailType fail_type = 3; // how to fail if option selected (e.g. fail section)
+    }
+  }
+
+  // MultiSelect sets parameters for multi-select answer types.
+  message MultiSelect {
+    // Maximum points to award to the question.
+    // If not set, maximum points is sum of all answer options.
+    int64 max_points = 1;
+  }
+}
+
+// Section represents a section of a scorecard (template).
+message Section {
+  int64 section_id = 2; // unique section id
+  int64 scorecard_id = 3; // scorecard to which section belongs
+  string title = 4; // section title or name
+  string description = 5; // extra context about the section
+  uint32 weight = 6; // used for scorecards with weighted scoring
+  repeated ScorecardQuestion questions = 7; // the questions in the section
+  int32 version = 8; // current version of the section
+  int32 sort_order = 9; // order number of section
+  repeated AutoQuestion auto_questions = 11; // the auto questions in the section
+}
+
+// Scorecard represents a scorecard (template).
+// A scorecard can be used to score a call.
+message Scorecard {
+  int64 scorecard_id = 2; // unique id of the scorecard
+  string author_id = 3; // user_id of the scorecard creator
+  string title = 4; // title, or name, of scorecard
+  string description = 5; // description of scorecard (i.e. purpose and use)
+  double pass_score = 6; // percentage to two decimal places between (0 or 1?) and 100
+  ScoreType score_type = 7; // how a score is calculated (i.e. simple sum)
+  EvaluationType evaluation_type = 8; // how the scorecard gets evaluated (i.e. manual)
+
+  bool allow_feedback = 10; // default false (disable agent feedback)
+  bool distribute_weights = 11; // FE only; if true, weights are evenly distributed and locked
+
+  Category category = 12; // sets the required agent skills
+  repeated Section sections = 13; // logical groupings of questions
+  int32 version = 14; // current version of the scorecard
+
+  ScorecardState state = 15; // determines how a scorecard can be used
+  bool is_ad_hoc = 16 [deprecated = true]; // Deprecated. Use Ad Hoc category.
+  repeated string custom_field_keys = 19; // Optional. Set of unique keys for custom key-value fields.
+}
+
+// AutoQuestion represents an automatically scored question.
+message AutoQuestion {
+  int64 auto_question_id = 2; // unique id of the auto question.
+  int64 flag_sid = 3; // Deprecated. Use FlagExpr.
+  int64 scorecard_id = 5; // auto question belongs to scorecard.
+  int64 auto_section_id = 6; // auto question belongs to auto section.
+  int32 sort_order = 7; // order number of auto question.
+
+  // Boolean expression of which flags to match
+  FlagExpr flag_expression = 10;
+  string question = 11; // The question to display.
+  string description = 12; // Optional. Extra info about question.
+  int64 question_id = 13; // Optional. Library question id.
+  RiskLevel risk_level = 14; // The risk level of the evaluation question.
+
+  // FlagExpr defines a boolean expression of filters.
+  message FlagExpr {
+    // Optional. Boolean and operator.
+    repeated FlagExpr and = 1;
+
+    // Optional. Boolean or operator.
+    repeated FlagExpr or = 2;
+
+    // Optional. Flag to match.
+    Flag flag = 3;
+
+    // Optional. Boolean not operator.
+    FlagExpr not = 4;
+
+    // Filter defines a filter.
+    message Flag {
+      // Required. Filter sid.
+      int64 flag_sid = 1;
+    }
+  }
+}
+
+// RiskLevel is an assigned risk level in an evaluation.
+enum RiskLevel {
+  RISK_LEVEL_NONE = 0;
+  RISK_LEVEL_LOW = 1;
+  RISK_LEVEL_MEDIUM = 2;
+  RISK_LEVEL_HIGH = 3;
+}

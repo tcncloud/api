@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package api.commons.auth;
+
+option go_package = "github.com/tcncloud/api/api.commons.auth;auth";
+option java_package = "com.tcn.matrix.api.commons.auth";
+
+// AuthClaims is a proto mapping of the JWT Claims
+message AuthClaims {
+  // AUTH0 user_id
+  string auth0_user_id = 1;
+
+  // ORG user_id
+  string org_user_id = 2;
+
+  // ORG ID
+  string org_id = 3;
+
+  // API key used in this request for API-based endpoints
+  string api_key = 4;
+
+  // ORG Region ID
+  string region_id = 5;
+
+  // ??
+  string name = 6;
+
+  // Impersonation information
+  string impersonate = 7;
+
+  // P3 Client SID from "client" table
+  int64 client_sid = 1000;
+  // P3 Agent SID from "agent" table
+  int64 agent_sid = 1001;
+  // Mapped to agent_sid
+  int64 login_sid = 1002;
+
+  // ActiveOrgId is the org being used in behalf of for the api call
+  string active_org_id = 1100;
+}
+
+// AuthenticatedUser is a proto serialized version of AuthUser. It can be used to pass all AuthUser information towards the backends
+//
+message AuthenticatedUser {
+  // JWT Claims
+  AuthClaims claims = 1;
+}

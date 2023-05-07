@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics;
 
-import "commons/vanalytics.proto";
+import "api/commons/vanalytics.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-option java_package = "com.tcn.api.v1alpha1.vanalytics";
+option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 message Uint32Expr {
   oneof where {
@@ -43,7 +43,7 @@ message Moment {
 
   // Optional. Dynamic time period to match which
   // defaults to today.
-  commons.Interval interval = 2;
+  api.commons.Interval interval = 2;
 }
 
 message TimestampRange {

@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.sentinel;
 
-import "commons/logging.proto";
+import "api/commons/logging.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.sentinel;sentinel";
-option java_package = "com.tcn.api.v1alpha1.sentinel";
+option java_package = "com.tcn.matrix.api.v1alpha1.sentinel";
 
 message SentinelEvent {
   oneof event {
@@ -24,7 +24,7 @@ message LogEvent {
   string stack_trace = 7;
   google.protobuf.Timestamp timestamp = 8;
   map<string, string> metadata = 9;
-  commons.Level severity = 10;
+  api.commons.Level severity = 10;
 }
 
 message SendEventsReq {

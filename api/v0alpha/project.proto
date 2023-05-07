@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/omnichannel.proto";
-import "commons/project.proto";
+import "api/commons/omnichannel.proto";
+import "api/commons/project.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 // Service for interacting with TCN's Project API system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -200,7 +200,7 @@ message Project {
   // project description
   string description = 3;
   // project status
-  commons.ProjectStatus status = 4;
+  api.commons.ProjectStatus status = 4;
   // creation date
   google.protobuf.Timestamp date_created = 5;
 }
@@ -258,7 +258,7 @@ message CreateCannedMessageReq {
   // allows html
   bool allows_html = 5;
   // attachments
-  repeated commons.OmniAttachment attachments = 6;
+  repeated api.commons.OmniAttachment attachments = 6;
 }
 
 //canned message creation details
@@ -280,7 +280,7 @@ message CannedMessage {
   // allows html
   bool allows_html = 8;
   // attachments
-  repeated commons.OmniAttachment attachments = 9;
+  repeated api.commons.OmniAttachment attachments = 9;
 }
 
 // request used to get a list of CannedMessages
@@ -307,7 +307,7 @@ message UpdateCannedMessageReq {
   // allows html
   bool allows_html = 6;
   // attachments
-  repeated commons.OmniAttachment attachments = 7;
+  repeated api.commons.OmniAttachment attachments = 7;
 }
 
 //request to get canned message by id
@@ -376,7 +376,7 @@ message CannedMessageWithGroup {
   // allows html
   bool allows_html = 12;
   // attachments
-  repeated commons.OmniAttachment attachments = 13;
+  repeated api.commons.OmniAttachment attachments = 13;
 }
 
 // request used to get a list of CannedMessageGroups

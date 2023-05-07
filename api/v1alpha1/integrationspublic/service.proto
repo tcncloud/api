@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package api.v1alpha1.integrationspublic;
 
-import "commons/public/integrations.proto";
+import "api/commons/public/integrations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.integrationspublic;integrationspublic";
-option java_package = "com.tcn.api.v1alpha1.integrationspublic";
+option java_package = "com.tcn.matrix.api.v1alpha1.integrationspublic";
 
 service IntegrationsPublic {
   rpc GetLinkData(GetLinkDataReq) returns (GetLinkDataRes) {
@@ -55,7 +55,7 @@ message Value {
   // what type of data value we *want* to validate as.
   // a value does *not* have to match the validation enum.
   // a value that does not match its validation enum is just invalid.
-  commons.public.Validation validation = 8;
+  api.commons.public.Validation validation = 8;
 }
 
 // represents the individual parts of a string, where some of the parts are
@@ -121,16 +121,16 @@ message GetLinkDataRes {
   // styling info
   PortalConfig portal_config = 4;
   // how the user verifies identity for this portal
-  commons.public.VerificationFlow verification = 5;
+  api.commons.public.VerificationFlow verification = 5;
   // how the user retrieves invoice for this portal
-  commons.public.InvoiceFlow invoice = 6;
+  api.commons.public.InvoiceFlow invoice = 6;
   // all the accepted payment flows for this portal
-  repeated commons.public.PaymentFlow payments = 7;
+  repeated api.commons.public.PaymentFlow payments = 7;
 
   message FieldNames {
-    commons.public.Flow flow = 8;
+    api.commons.public.Flow flow = 8;
     repeated string field_names = 9;
-    repeated commons.public.FieldDefinition fields = 10;
+    repeated api.commons.public.FieldDefinition fields = 10;
   }
   repeated FieldNames flow_forms = 9;
   // text that appears on one of the portal pages
@@ -178,14 +178,14 @@ message GetInvoiceRes {
   double amount_due = 2;
   string amount_due_key = 3;
   // the parsed data
-  commons.public.Invoices invoices = 4;
+  api.commons.public.Invoices invoices = 4;
 }
 message SubmitPaymentReq {
   PortalLinkId entity = 1;
   string session_id = 2;
 
   map<string, Value> payment_fields = 3;
-  commons.public.PaymentFlow payment_flow = 4;
+  api.commons.public.PaymentFlow payment_flow = 4;
 }
 message SubmitPaymentRes {
   map<string, Value> fields = 1;
@@ -207,5 +207,5 @@ message GetReceiptRes {
   // field in the response that represents the amount charged
   string amount_paid_key = 5;
   // flow name, type and options used
-  commons.public.PaymentFlow payment_flow = 6;
+  api.commons.public.PaymentFlow payment_flow = 6;
 }

@@ -15,7 +15,7 @@ import "api/v1alpha1/vanalytics/flag_transcript_filter.proto";
 import "api/v1alpha1/vanalytics/transcript.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
-option java_package = "com.tcn.api.v1alpha1.vanalytics";
+option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 service Vanalytics {
   // Audit audits the used transcription audio time for a client. The window

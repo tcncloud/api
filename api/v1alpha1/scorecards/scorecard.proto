@@ -2,40 +2,40 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
-import "commons/scorecards.proto";
+import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-option java_package = "com.tcn.api.v1alpha1.scorecards";
+option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 // CreateScorecardRequest is the request to create a scorecard.
 message CreateScorecardRequest {
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 }
 
 // CreateScorecardResponse contains the scorecard that was created.
 message CreateScorecardResponse {
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 }
 
 // ListScorecardsRequest is the request for listing scorecards by certain criteria.
 message ListScorecardsRequest {
   repeated string author_ids = 2; // Optional. Results include any of the authors
   repeated int64 category_ids = 3; // Optional. Results include any of the categories listed.
-  repeated commons.ScorecardState states = 4; // Optional. Results include scorecard in any of the given states.
+  repeated api.commons.ScorecardState states = 4; // Optional. Results include scorecard in any of the given states.
 
   // TODO: Spec out the phrase/keyword option(s)
 }
 
 // ListScorecardsResponse includes a list of scorecards.
 message ListScorecardsResponse {
-  repeated commons.Scorecard scorecards = 1;
+  repeated api.commons.Scorecard scorecards = 1;
 }
 
 // UpdateScorecardRequest is the request for updating a scorecard.
 message UpdateScorecardRequest {
   // Required.
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 
   // Required. Valid paths: [title, description, pass_score, score_type,
   // evaluation_type, allow_feedback, distribute_weights, category.category_id].
@@ -45,7 +45,7 @@ message UpdateScorecardRequest {
 
 // UpdateScorecardResponse returns the updated scorecard.
 message UpdateScorecardResponse {
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 }
 
 // DeleteScorecardRequest is the request to delete a scorecard.
@@ -55,7 +55,7 @@ message DeleteScorecardRequest {
 
 // DeleteScorecardResponse contains the deleted scorecard.
 message DeleteScorecardResponse {
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 }
 
 // GetScorecardRequest is the request for getting a scorecard.
@@ -66,5 +66,5 @@ message GetScorecardRequest {
 
 // GetScorecardResponse contains a scorecard.
 message GetScorecardResponse {
-  commons.Scorecard scorecard = 1;
+  api.commons.Scorecard scorecard = 1;
 }

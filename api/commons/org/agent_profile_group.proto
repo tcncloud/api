@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "api/commons/omnichannel.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option java_package = "com.tcn.matrix.api.commons.org";
+
+message AgentProfileGroup {
+  string id = 1;
+  string org_id = 2;
+  string name = 3;
+  repeated PriorityGroup priority_groups = 4;
+  // last time agent profile group was updated
+  google.protobuf.Timestamp last_updated = 5;
+
+  bool default_group = 10;
+}
+
+// PriorityGroup is a type and threshold in array for AgentProfileGroup
+message PriorityGroup {
+  // threshold for the priority group
+  int32 threshold = 1;
+  // channel type for the priority group
+  api.commons.ChannelType channel_type = 2;
+}

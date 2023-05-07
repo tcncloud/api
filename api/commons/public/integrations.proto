@@ -1,0 +1,970 @@
+syntax = "proto3";
+
+package api.commons.public;
+
+option go_package = "github.com/tcncloud/api/api.commons.public;public";
+option java_package = "com.tcn.matrix.api.commons.public";
+
+// all supported integrations
+enum IntegrationType {
+  INTEGRATION_TYPE_UNKNOWN = 0;
+  INTEGRATION_TYPE_BRAINTREE = 100;
+  INTEGRATION_TYPE_RELATIENT = 200;
+  INTEGRATION_TYPE_CYBERSOURCE = 300;
+  INTEGRATION_TYPE_CIRCPRO = 400;
+  INTEGRATION_TYPE_AUTHORIZENET = 500;
+  INTEGRATION_TYPE_EXPITRANS = 600;
+  INTEGRATION_TYPE_AXIAMEDFUSION = 700;
+  INTEGRATION_TYPE_INSTAMED = 800;
+  INTEGRATION_TYPE_USAEPAY = 900;
+  INTEGRATION_TYPE_EZIDEBIT = 1000;
+  INTEGRATION_TYPE_BAMBORA = 1100;
+  INTEGRATION_TYPE_REPAY = 1200;
+  INTEGRATION_TYPE_AXIA = 1300;
+  INTEGRATION_TYPE_SECURETRADING = 1400;
+  INTEGRATION_TYPE_PAYMENTVISION = 1500;
+  INTEGRATION_TYPE_INTERPROSE = 1600;
+  INTEGRATION_TYPE_DALLASNEWS = 1700;
+  INTEGRATION_TYPE_PAYWAY = 1800;
+  INTEGRATION_TYPE_BILLINGTREE = 1900;
+  INTEGRATION_TYPE_EXPERIAN = 2000;
+  INTEGRATION_TYPE_NEWSCYCLE = 2100;
+  INTEGRATION_TYPE_TRUSTCOMMERCE = 2200;
+  INTEGRATION_TYPE_VANTIV = 2300;
+  INTEGRATION_TYPE_JOURNEY = 2400;
+  INTEGRATION_TYPE_ATHENAHEALTH = 2500;
+  INTEGRATION_TYPE_BRAINWORKS = 2600;
+  INTEGRATION_TYPE_OSGCONNECT = 2700;
+  INTEGRATION_TYPE_NTVB = 2800;
+  INTEGRATION_TYPE_ELAVON = 2900;
+  INTEGRATION_TYPE_GLOBALPAYMENTS = 3000;
+  INTEGRATION_TYPE_PAY_SCOUT = 3100;
+  INTEGRATION_TYPE_I2C = 3200;
+  INTEGRATION_TYPE_OPAYO = 3300;
+  INTEGRATION_TYPE_SHIFT4 = 3400;
+}
+
+// all supported methods that can be called prefixed with the integration_type
+// name.
+enum RequestMethod {
+  REQUEST_METHOD_UNKNOWN = 0;
+  REQUEST_METHOD_BRAINTREE_CREDITSALE = 101;
+  REQUEST_METHOD_BRAINTREE_BANKSALE = 102;
+
+  REQUEST_METHOD_RELATIENT_GETPATIENTBALANCE = 201;
+  REQUEST_METHOD_RELATIENT_GETPATIENTCCTOKENS = 202;
+  REQUEST_METHOD_RELATIENT_POSTPATIENTTOKEN = 203;
+  REQUEST_METHOD_RELATIENT_POSTPATIENTBALANCE = 204;
+  REQUEST_METHOD_RELATIENT_GETPATIENT = 205;
+  REQUEST_METHOD_RELATIENT_POSTBALANCEBYID = 206;
+
+  REQUEST_METHOD_CYBERSOURCE_CREDITPAYMENT = 301;
+  REQUEST_METHOD_CYBERSOURCE_ECHECKPAYMENT = 302;
+
+  REQUEST_METHOD_CIRCPRO_PHONELOOKUPWITHBUNDLE = 401;
+  REQUEST_METHOD_CIRCPRO_PHONELOOKUP = 402;
+  REQUEST_METHOD_CIRCPRO_VACATIONRESTARTINQUIRY = 403;
+  REQUEST_METHOD_CIRCPRO_COMPLAINTINQUIRY = 404;
+  REQUEST_METHOD_CIRCPRO_ACCOUNTINQUIRY = 405;
+  REQUEST_METHOD_CIRCPRO_ACCOUNTINQUIRYWITHTAX = 406;
+  REQUEST_METHOD_CIRCPRO_ACCOUNTINQUIRYWITHTAXBUNDLE = 407;
+  REQUEST_METHOD_CIRCPRO_COMPLAINTCODES = 408;
+  REQUEST_METHOD_CIRCPRO_COMPLAINTUPDATE = 409;
+  REQUEST_METHOD_CIRCPRO_VACATIONUPDATE = 410;
+  REQUEST_METHOD_CIRCPRO_RESTARTUPDATE = 411;
+  REQUEST_METHOD_CIRCPRO_LAW_IMMEDIATEPAYMENT = 412;
+  REQUEST_METHOD_CIRCPRO_LAW_UPDATEDATAWITHPAC = 413;
+  REQUEST_METHOD_CIRCPRO_LAW_GETCUSTOMERS = 414;
+
+  REQUEST_METHOD_AUTHORIZENET_CHARGECREDITCARD = 501;
+  REQUEST_METHOD_AUTHORIZENET_DEBITBANKACCOUNT = 502;
+  REQUEST_METHOD_AUTHORIZENET_CREATECUSTOMERPAYMENTPROFILE = 503;
+  REQUEST_METHOD_AUTHORIZENET_PAYPALTRANSACTION = 504;
+  REQUEST_METHOD_AUTHORIZENET_GOOGLEPAYTRANSACTION = 505;
+  REQUEST_METHOD_AUTHORIZENET_APPLEPAYTRANSACTION = 506;
+  REQUEST_METHOD_AUTHORIZENET_PAYPALAUTHCAPTURE = 507;
+
+  REQUEST_METHOD_EXPITRANS_CCTRANSACTION = 601;
+  REQUEST_METHOD_EXPITRANS_ACHTRANSACTION = 602;
+
+  REQUEST_METHOD_AXIAMEDFUSION_CCTRANSACTION = 701;
+  REQUEST_METHOD_AXIAMEDFUSION_ACHTRANSACTION = 702;
+  REQUEST_METHOD_AXIAMEDFUSION_CARDVERIFY = 703;
+
+  REQUEST_METHOD_INSTAMED_PAYMENTSALE = 801;
+  REQUEST_METHOD_INSTAMED_VOIDPAYMENT = 802;
+
+  REQUEST_METHOD_USAEPAY_SUBMITCCPAYMENTS = 901;
+  REQUEST_METHOD_USAEPAY_SUBMITACHPAYMENTS = 902;
+
+  REQUEST_METHOD_EZIDEBIT_SUBMITCCPAYMENTS = 1001;
+  REQUEST_METHOD_EZIDEBIT_SUBMITACHPAYMENTS = 1002;
+
+  REQUEST_METHOD_BAMBORA_SUBMITCCPAYMENTS = 1101;
+  REQUEST_METHOD_BAMBORA_SUBMITACHPAYMENTS = 1102;
+
+  REQUEST_METHOD_REPAY_STORECARD = 1201;
+  REQUEST_METHOD_REPAY_PAYMENTTOKEN = 1202;
+  REQUEST_METHOD_REPAY_ACHPAYMENTTOKEN = 1203;
+
+  REQUEST_METHOD_AXIA_SUBMITSALEREQUESTBYCC = 1301;
+  REQUEST_METHOD_AXIA_SUBMITSALEREQUESTBYCHECK = 1302;
+
+  REQUEST_METHOD_SECURETRADING_SENDPAYMENT = 1401;
+
+  REQUEST_METHOD_PAYMENTVISION_SUBMITCARDSALEREQUESTBYCC = 1501;
+  REQUEST_METHOD_PAYMENTVISION_SUBMITCARDSALEREQUESTBYACH = 1502;
+
+  REQUEST_METHOD_INTERPROSE_LOOKUPACCOUNT = 1601;
+  REQUEST_METHOD_INTERPROSE_SUBMITCARDSALEREQUESTBYCC = 1602;
+  REQUEST_METHOD_INTERPROSE_SUBMITCARDSALEREQUESTBYACH = 1603;
+  REQUEST_METHOD_INTERPROSE_LOOKUPPAYMENTID = 1604;
+  REQUEST_METHOD_INTERPROSE_LOOKUPACCOUNTBYFORMID = 1605;
+
+  REQUEST_METHOD_DALLASNEWS_SEARCHBYPHONE = 1701;
+  REQUEST_METHOD_DALLASNEWS_SEARCHBYZIPSTREET = 1702;
+  REQUEST_METHOD_DALLASNEWS_SEARCHBY = 1703;
+  REQUEST_METHOD_DALLASNEWS_CREATEVACATION = 1704;
+  REQUEST_METHOD_DALLASNEWS_GETVACATION = 1705;
+  REQUEST_METHOD_DALLASNEWS_GETVACATIONDAYSBETWEEN = 1706;
+  REQUEST_METHOD_DALLASNEWS_GETVACATIONWITHCUTOFF = 1707;
+  REQUEST_METHOD_DALLASNEWS_DELETEVACATION = 1708;
+  REQUEST_METHOD_DALLASNEWS_ADDCOMPLAINT = 1709;
+  REQUEST_METHOD_DALLASNEWS_UPDATEPHONENUMBER = 1710;
+  REQUEST_METHOD_DALLASNEWS_STOPACCOUNT = 1711;
+  REQUEST_METHOD_DALLASNEWS_CCPAYMENTTOKEN = 1712;
+  REQUEST_METHOD_DALLASNEWS_ACHPAYMENTTOKEN = 1713;
+
+  REQUEST_METHOD_PAYWAY_SUBMITCARDSALEREQUEST = 1801;
+  REQUEST_METHOD_PAYWAY_CREATETOKENREQUEST = 1802;
+  REQUEST_METHOD_PAYWAY_SUBMITACHSALEREQUEST = 1803;
+
+  REQUEST_METHOD_BILLINGTREE_SUBMITCARDSALEREQUEST = 1901;
+
+  REQUEST_METHOD_EXPERIAN_CC_PAYMENT_REQUEST = 2001;
+  REQUEST_METHOD_EXPERIAN_CC_PAYMENTPLANREQUEST = 2002;
+  REQUEST_METHOD_EXPERIAN_BALANCEREQUEST = 2003;
+  REQUEST_METHOD_EXPERIAN_ACH_PAYMENT_REQUEST = 2004;
+  REQUEST_METHOD_EXPERIAN_ACH_PAYMENTPLANREQUEST = 2005;
+
+  REQUEST_METHOD_NEWSCYCLE_LOGIN = 2101;
+  REQUEST_METHOD_NEWSCYCLE_SEARCHPAGE = 2102;
+  REQUEST_METHOD_NEWSCYCLE_BILLINGINFO = 2103;
+  REQUEST_METHOD_NEWSCYCLE_SERVICEERRORINFO = 2104;
+  REQUEST_METHOD_NEWSCYCLE_SERVICEERRORTRANS = 2105;
+  REQUEST_METHOD_NEWSCYCLE_STOPINFO = 2106;
+  REQUEST_METHOD_NEWSCYCLE_STOPTRANS = 2107;
+  REQUEST_METHOD_NEWSCYCLE_RENEWINFO = 2108;
+  REQUEST_METHOD_NEWSCYCLE_AUTORENEWINFO = 2109;
+  REQUEST_METHOD_NEWSCYCLE_AUTOTRAN = 2110;
+  REQUEST_METHOD_NEWSCYCLE_PAYINFO = 2111;
+  REQUEST_METHOD_NEWSCYCLE_PAYTRAN = 2112;
+
+  REQUEST_METHOD_TRUSTCOMMERCE_CREDITSALE = 2201;
+  REQUEST_METHOD_TRUSTCOMMERCE_ACHSALE = 2202;
+
+  REQUEST_METHOD_VANTIV_CREDITSALE = 2301;
+  REQUEST_METHOD_VANTIV_ACHSALE = 2302;
+
+  REQUEST_METHOD_JOURNEY_LATEST = 2401;
+
+  REQUEST_METHOD_ATHENAHEALTH_GETPATIENTS = 2501;
+  REQUEST_METHOD_ATHENAHEALTH_GETPATIENTSWITHID = 2502;
+  REQUEST_METHOD_ATHENAHEALTH_CCPAYMENT = 2503;
+
+  REQUEST_METHOD_BRAINWORKS_GETCUSTOMERSBYPHONE = 2601;
+  REQUEST_METHOD_BRAINWORKS_GETSUSPENDS = 2602;
+  REQUEST_METHOD_BRAINWORKS_GETCUSTOMERBYCUSTIDV2 = 2603;
+  REQUEST_METHOD_BRAINWORKS_GETCOMPLAINTS = 2604;
+  REQUEST_METHOD_BRAINWORKS_GETCODESORTYPES = 2605;
+  REQUEST_METHOD_BRAINWORKS_STOPSUSPENDS = 2606;
+  REQUEST_METHOD_BRAINWORKS_STARTSUSPENDS = 2607;
+  REQUEST_METHOD_BRAINWORKS_SENDCOMPLAINT = 2608;
+  REQUEST_METHOD_BRAINWORKS_GETCUSTOMERBYCUSTID = 2609;
+
+  REQUEST_METHOD_OSGCONNECT_CCPAYMENTS = 2701;
+  REQUEST_METHOD_OSGCONNECT_ACHPAYMENTS = 2702;
+  REQUEST_METHOD_OSGCONNECT_VALIDATEACCOUNTNO = 2703;
+
+  REQUEST_METHOD_NTVB_CREDIT_MISSED_DELIVERY = 2801;
+  REQUEST_METHOD_NTVB_CUSTOMER_SEARCH = 2802;
+  REQUEST_METHOD_NTVB_END_CALL = 2803;
+  REQUEST_METHOD_NTVB_INTEGRATION_DEFINITION = 2804;
+  REQUEST_METHOD_NTVB_MISSED_DELIVERY = 2805;
+  REQUEST_METHOD_NTVB_REMOVE_AUTORENEWAL = 2806;
+  REQUEST_METHOD_NTVB_RENEW_SUBSCRIPTION = 2807;
+  REQUEST_METHOD_NTVB_RENEWAL_OFFERS = 2808;
+  REQUEST_METHOD_NTVB_SET_AUTORENEWAL = 2809;
+  REQUEST_METHOD_NTVB_START_INCOMING_CALL = 2810;
+  REQUEST_METHOD_NTVB_START_OUTGOING_CALL = 2811;
+  REQUEST_METHOD_NTVB_SUBSCRIPTION_INFO = 2812;
+  REQUEST_METHOD_NTVB_VACATION_STOP = 2813;
+  REQUEST_METHOD_NTVB_AUTHTEST = 2814;
+
+  REQUEST_METHOD_ELAVON_CREDIT_CARD_SALE = 2901;
+  REQUEST_METHOD_ELAVON_ADD_RECURRING = 2902;
+  REQUEST_METHOD_ELAVON_DCC_RESPONSE = 2903;
+  REQUEST_METHOD_ELAVON_DELETE_RECURRING = 2904;
+  REQUEST_METHOD_ELAVON_UPDATE_RECURRING = 2905;
+  REQUEST_METHOD_ELAVON_HEALTH_CARE_CC_SALE = 2906;
+  REQUEST_METHOD_ELAVON_ADD_INSTALLMENT = 2907;
+  REQUEST_METHOD_ELAVON_UPDATE_INSTALLMENT = 2908;
+  REQUEST_METHOD_ELAVON_DELETE_INSTALLMENT = 2909;
+  REQUEST_METHOD_ELAVON_MCC_CREDIT_CARD_SALE = 2910;
+
+  REQUEST_METHOD_GLOBALPAYMENTS_CARDSALE = 3001;
+  REQUEST_METHOD_GLOBALPAYMENTS_GET_TRANSACTION_BY_ID = 3002;
+  REQUEST_METHOD_GLOBALPAYMENTS_LIST_TRANSACTIONS = 3003;
+  REQUEST_METHOD_GLOBALPAYMENTS_REFUND_SALE = 3004;
+  REQUEST_METHOD_GLOBALPAYMENTS_REVERSE_SALE_OR_REFUND = 3005;
+
+  REQUEST_METHOD_PAY_SCOUT_CREDIT_CARD_SALE = 3101;
+  REQUEST_METHOD_PAY_SCOUT_ECHECK_SALE = 3102;
+
+  REQUEST_METHOD_I2C_ECHO = 3201;
+  REQUEST_METHOD_I2C_BALANCE_INQUIRY = 3202;
+  REQUEST_METHOD_I2C_VERIFY_USER = 3203;
+  REQUEST_METHOD_I2C_SEARCH_CUSTOMER = 3204;
+  REQUEST_METHOD_I2C_MAKE_PAYMENT = 3205;
+  REQUEST_METHOD_I2C_GET_CARDHOLDER_PROFILE = 3206;
+  REQUEST_METHOD_I2C_GET_CARDHOLDER_STATEMENT = 3207;
+  REQUEST_METHOD_I2C_GET_CARDHOLDER_BALANCE = 3208;
+  REQUEST_METHOD_I2C_GET_CREDITPAYMENT_INFO = 3209;
+  REQUEST_METHOD_I2C_TRANSACTION_HISTORY = 3210;
+
+  REQUEST_METHOD_OPAYO_CCPAYMENTS = 3301;
+
+  REQUEST_METHOD_SHIFT4_CCPAYMENTS = 3401;
+}
+
+enum TransactionType {
+  TRANSACTION_TYPE_PAYMENT = 0;
+  TRANSACTION_TYPE_DATA_INQUIRY = 1;
+  TRANSACTION_TYPE_ACCOUNT_VERIFY = 2;
+}
+
+enum RequestSource {
+  REQUEST_SOURCE_IVR = 0;
+  REQUEST_SOURCE_EMAIL = 1;
+  REQUEST_SOURCE_WEB = 2;
+  REQUEST_SOURCE_SMS = 3;
+  REQUEST_SOURCE_CHAT = 4;
+  REQUEST_SOURCE_LMS = 5;
+}
+
+enum TransactionResult {
+  TRANSACTION_RESULT_SUCCESS = 0;
+  TRANSACTION_RESULT_FAILED = 1;
+}
+
+// supported types of values when sending a request or response.
+enum ValueType {
+  VALUE_TYPE_UNKNOWN = 0;
+  VALUE_TYPE_NUMBER = 1;
+  VALUE_TYPE_BOOL = 2;
+  VALUE_TYPE_MAP = 3;
+  VALUE_TYPE_ARRAY = 4;
+  VALUE_TYPE_INT = 5;
+  VALUE_TYPE_STRING = 6;
+  VALUE_TYPE_TIME = 7;
+  VALUE_TYPE_COMPOSITE_VAL = 8;
+}
+
+enum Visibility {
+  VISIBILITY_INVISIBLE = 0; // no one can see this field yet
+  VISIBILITY_UNRESTRICTED = 1; // this field shows up everywhere
+  VISIBILITY_RUNTIME = 100; // only visible when processing the integration method
+  VISIBILITY_BY_METHOD = 150; //these fields are editable on a plugin instance but only when a specific method is selected.
+  VISIBILITY_PLUGIN = 200; // a field that isn't specific to an individual user
+}
+
+// CompareOperation represents a comparison that can be done on on 'Value'
+// structs
+enum CompareOperation {
+  // equal to ==
+  COMPARE_OPERATION_EQ = 0;
+  // greater than >
+  COMPARE_OPERATION_GT = 1;
+  // less than <
+  COMPARE_OPERATION_LT = 2;
+  // greater or equal >=
+  COMPARE_OPERATION_GE = 3;
+  // less or equal <=
+  COMPARE_OPERATION_LE = 4;
+  // !=
+  COMPARE_OPERATION_NE = 5;
+}
+
+// FlowFieldLoc catagorizes the location a flow will look for fields
+enum FlowFieldLoc {
+  // ANY means the flow doesn't require the field to be in a specific spot.
+  FFL_ANY = 0;
+  // means the flow checks the PortalLink data for the field.
+  // This is the data sent when creating the url
+  FFL_LINK = 1;
+  // means the flow checks the PluginInstance data for the field
+  FFL_PLUGIN_INST = 2;
+  // means the field needs to be in the user submitted form
+  FFL_SUBMIT = 3;
+}
+
+// Validation is an enum that appears on FieldDefinition.
+// it is a hint of what the value should look like for the user,
+// and usually applies to VALUE_TYPE_STRING fields.
+enum Validation {
+  // the value can be literally anything that matches the ValueType
+  VALIDATION_NONE = 0;
+
+  // values that are 100 < x < 200 are credit card/account fields,
+  // user identity, and user location type fields.
+
+  // the value must be a credit card number.
+  VALIDATION_CREDITCARD = 101;
+  // the value must be len() == 3, and all three characters must be digits
+  VALIDATION_CVC = 102;
+  // value must be a two digit month.
+  VALIDATION_MONTH_2_DIGIT = 103;
+  // value must be a 4 digit yearn
+  VALIDATION_YEAR_4_DIGIT = 104;
+  // value must be last 4 digits of ssn
+  VALIDATION_LAST_4_SSN = 105;
+  // value must be a US zip code.
+  VALIDATION_US_ZIP = 106;
+
+  // values that are 200 < x < 300 are number-like fields
+
+  // value must be an integer with no '.' or fraction value
+  VALIDATION_INTEGER = 201;
+  // value must be a float with a '.' and at least 1 decimal spot, but unlimited
+  // maximum decimal spots
+  VALIDATION_FLOAT = 202;
+  // the value should be formatted with a $ and to 2 decimal spots, even if
+  // there fraction value
+  VALIDATION_CURRENCY_USD = 203;
+
+  // values that are 300 < x < 400 are datetime fields.
+  // Datetime fields should use the 'FieldDefinition.format' string
+  // if a specific format is needed, otherwise it isn't format specific
+
+  // value must be any date
+  VALIDATION_DATE = 301;
+  // value must be a date of birth.
+  // This rules out future dates, and dates in the distant past.
+  VALIDATION_DOB = 302;
+
+  // values that are 400 < x < 500 are misc fields
+
+  // value must be a boolean string
+  VALIDATION_BOOL = 401;
+  // value must match a provided regular expression.
+  // regular expression must be specified using 'FieldDefintion.format'.
+  // The default regular expression is '.*' (match anything).
+  VALIDATION_REGEX = 402;
+}
+
+enum InvoiceDisplayType {
+  UNSPECIFIED = 0;
+
+  AMOUNT_DUE = 1;
+  SERVICE_DATE = 2;
+  INVOICE_NUMBER = 3;
+
+  ITEM_QUANTITY = 4;
+  ITEM_NAME = 5;
+  ITEM_DESCRIPTION = 6;
+  ITEM_AMOUNT = 7;
+
+  // if InvoiceDisplayType is greater than 100, then IDT mod 100 will give you the same type of
+  // info for all InvoiceDisplayType values.
+  // so 1 = account number, 2 = first name, 3 = last name, etc
+  PAYOR_ACCOUNT_NUMBER = 101;
+  PAYOR_FIRST_NAME = 102;
+  PAYOR_LAST_NAME = 103;
+  PAYOR_DATE_OF_BIRTH = 104;
+  PAYOR_SSN_R4 = 105;
+  PAYOR_CELL_PHONE = 106;
+  PAYOR_HOME_PHONE = 107;
+  PAYOR_WORK_PHONE = 108;
+  PAYOR_ZIP_CODE = 109;
+
+  PATIENT_ACCOUNT_NUMBER = 201;
+  PATIENT_FIRST_NAME = 202;
+  PATIENT_LAST_NAME = 203;
+  PATIENT_DATE_OF_BIRTH = 204;
+  PATIENT_SSN_R4 = 205;
+  PATIENT_CELL_PHONE = 206;
+  PATIENT_HOME_PHONE = 207;
+  PATIENT_WORK_PHONE = 208;
+  PATIENT_ZIP_CODE = 209;
+}
+
+message Invoices {
+  repeated InvoiceField top_level_fields = 1;
+  repeated Invoice invoices = 2;
+}
+
+message Invoice {
+  repeated InvoiceField top_level_fields = 1;
+  repeated Item items = 2;
+}
+
+message Item {
+  repeated InvoiceField fields = 1;
+}
+
+message InvoiceField {
+  InvoiceDisplayType item_type = 1;
+  string name = 2;
+  string display_name = 3;
+  string value = 4;
+}
+
+message InvoiceTemplate {
+  // top level of the invoice
+  repeated FieldDefinition account_fields = 1;
+  // if this level contains repeated fields, then we have an account with multiple invoices.
+  // most often this will only contain non-repeated fields, and we will just have the one invoice.
+  // a repeated field is a field name that has a '#' in the name.
+  // example: "detail.result.#._calculatedPatientResponsiblity"
+  // If there is only 1 invoice, this array will only have 1 item in it
+  repeated InvoiceDescription invoice_descriptions = 3;
+}
+
+message InvoiceDescription {
+  // if this level contains repeated fields, then we have an account with multiple invoices.
+  // most often this will only contain non-repeated fields, and we will just have the one invoice.
+  // a repeated field is a field name that has a '#' in the name.
+  // example: "detail.result.#._calculatedPatientResponsiblity"
+  repeated FieldDefinition invoice_description_fields = 1;
+  // the group of descriptions for each item in the invoice.
+  // this can be empty, or have multiple items in it.
+  repeated LineItemGroup line_items = 2;
+}
+message LineItemGroup {
+  // all fields reference a description of a single item on an invoice
+  repeated FieldDefinition line_item_fields = 1;
+}
+
+enum FieldSource {
+  // we don't have a source for the field
+  FIELD_SOURCE_NONE = 0;
+  // we provide the field in the data when creating the link
+  FIELD_SOURCE_LINK = 1;
+  // we provide the field through the verification process's
+  // integration_config, or journey collection (whichever is chosen)
+  FIELD_SOURCE_VERIFICATION_DATA = 2;
+  // we provide the field through the verification process's
+  // api calls. By default this means the verifications api output fields
+  FIELD_SOURCE_VERIFICATION_API = 3;
+  // we provide the field through the invoice process's
+  // integration_config, or journey collection (whichever is chosen)
+  FIELD_SOURCE_INVOICE_DATA = 4;
+  // we provide the field through the verification process's
+  // api calls. By default this means the invoice api output fields
+  // for v1 profiles this isn't possible unless the user is using  custom
+  // payment link config
+  FIELD_SOURCE_INVOICE_API = 5;
+  // we provide the field through the payment process's
+  // integration_config, or journey collection (whichever is chosen)
+  FIELD_SOURCE_PAYMENT_DATA = 6;
+  // we provide the field through the payment process's
+  // api calls. By default this means the payment process's request payload's
+  // final call for v1 profiles this isn't possible unless the user is using
+  // custom payment_link_config
+  FIELD_SOURCE_PAYMENT_API = 7;
+  // we provide the field through the payment process's
+  // payment form.  This only applies to custom payment_link_configs, since
+  // there isn't a way to alter the payment form in v1 payment profiles.
+  FIELD_SOURCE_PAYMENT_FORM = 8;
+}
+message ListOfStrings {
+  repeated string values = 1;
+}
+
+// must match the numbers in the Flow message's "value" oneof
+enum FlowType {
+  FLOW_TYPE_UNKNOWN = 0;
+  FLOW_TYPE_INVOICE = 1;
+  FLOW_TYPE_PAYMENT = 2;
+  FLOW_TYPE_VERIFICATION = 3;
+  FLOW_TYPE_EXECUTE = 4;
+}
+
+message Flow {
+  oneof value {
+    InvoiceFlow invoice_flow = 1;
+    PaymentFlow payment_flow = 2;
+    VerificationFlow verification_flow = 3;
+    ExecuteFlow execute_flow = 4;
+  }
+}
+message InvoiceFlow {
+  string plugin_instance_id = 1;
+  oneof value {
+    InvoiceExperianQueryBalance experian_query_balance = 2;
+    // InvoiceAuthorizeNetAuthorizedTransactionIdLookup authorize_net_authoirze_transaction_id_lookup = 9;
+    InvoiceAuthorizeNetLinkData authorize_net_link_data = 10;
+    InvoiceAuthorizeNetCustomHttp authorize_net_custom_http = 11;
+    InvoiceJourney journey = 12;
+    InvoiceDynamicJourney dynamic_journey = 13;
+  }
+  // the template of how the fields map on an invoice
+  InvoiceTemplate invoice_template = 3;
+}
+message PaymentFlow {
+  string plugin_instance_id = 1;
+  oneof value {
+    PaymentExperianCC experian_cc = 2;
+    PaymentExperianACH experian_ach = 3;
+    PaymentAuthorizeNetCC authorize_net_cc = 4;
+    PaymentAuthorizeNetACH authorize_net_ach = 5;
+    PaymentAuthorizeNetPaypal authorize_net_paypal = 6;
+    PaymentAuthorizeNetApplePay authorize_net_apple_pay = 7;
+    PaymentAuthorizeNetGooglePay authorize_net_google_pay = 8;
+  }
+  // the fields the user will use for the payment form
+  // must be a subset of fields that is enough data to make the api call.
+  // These fields are provided to allow display name, and helper text to be edited.
+  // on the payment screen form.
+  repeated FieldDefinition payment_fields = 20;
+}
+message VerificationFlow {
+  string plugin_instance_id = 1;
+  oneof value {
+    VerificationExperianQueryBalance experian_query_balance = 2;
+    VerificationExperianLinkData experian_link_data = 3;
+    VerificationExperianZipDob experian_zip_dob = 4;
+    VerificationAuthorizeNetCustomerProfile authorize_net_customer_profile = 6;
+    VerificationAuthorizeNetLinkData authorize_net_link_data = 7;
+    VerificationJourney journey = 12;
+  }
+  // the fields the user must verify for this flow.
+  // must conform to the list of fields returned from the flow
+  repeated FieldDefinition verification_fields = 20;
+}
+
+// FieldDefinition defines a field name, and type that is used in integrations.
+// This lets the UI make forms for the getting the field's value from the user
+message FieldDefinition {
+  // the name the backend and front end should when setting data about a field
+  string name = 1;
+  // the name the backend server might use as the field name.
+  string alt_name = 2;
+  // the name the front end should use on the form.
+  string display_name = 6;
+  ValueType field_type = 3;
+  // what the field should validate as,
+  //and how the front end should present the field to the user
+  Validation validation_type = 4;
+  // The datetime formats allowed to use for date types.
+  // if left blank, a default set of formats will be accepted
+  repeated string formats = 5;
+  // if this field is used on an invoice, what type of item should it be?
+  InvoiceDisplayType invoice_type = 7;
+  // the helper text of the field. This is the text that helps explain the label name
+  HelperText helper_text = 8;
+}
+
+// HelperText contains the text that explains a field definition on a form, and any other display options
+message HelperText {
+  string text = 1;
+}
+
+// ExecuteFlows run exactly one integration method, and allow user submitted values to be merged with
+// the plugin instance data (like payment flows). Unlike payment flows, there doesn't have to be an
+// invoice step defined, and the amount paid can be anything.
+// Each member of the oneof value must have a proto number that matches a RequestMethod number
+message ExecuteFlow {
+  string plugin_instance_id = 1;
+  oneof value {
+    ExecuteBraintreeCreditSale braintree_credit_sale = 101;
+    ExecuteBraintreeBankSale braintree_bank_sale = 102;
+
+    ExecuteRelatientGetPatientBalance relatient_get_patient_balance = 201;
+    ExecuteRelatientGetPatientCcTokens relatient_get_patient_cc_tokens = 202;
+    ExecuteRelatientPostPatientToken relatient_post_patient_token = 203;
+    ExecuteRelatientPostPatientBalance relatient_post_patient_balance = 204;
+    ExecuteRelatientGetPatient relatient_get_patient = 205;
+    ExecuteRelatientPostBalanceById relatient_post_balance_by_id = 206;
+
+    ExecuteCybersourceCreditPayment cybersource_credit_payment = 301;
+    ExecuteCybersourceEcheckPayment cybersource_echeck_payment = 302;
+
+    ExecuteCircproPhoneLookupWithBundle circpro_phone_lookup_with_bundle = 401;
+    ExecuteCircproPhoneLookup circpro_phone_lookup = 402;
+    ExecuteCircproVacationRestartInquiry circpro_vacation_restart_inquiry = 403;
+    ExecuteCircproComplaintInquiry circpro_complaint_inquiry = 404;
+    ExecuteCircproAccountInquiry circpro_account_inquiry = 405;
+    ExecuteCircproAccountInquiryWithTax circpro_account_inquiry_with_tax = 406;
+    ExecuteCircproAccountInquiryWithTaxBundle circpro_account_inquiry_with_tax_bundle = 407;
+    ExecuteCircproComplaintCodes circpro_complaint_codes = 408;
+    ExecuteCircproComplaintUpdate circpro_complaint_update = 409;
+    ExecuteCircproVacationUpdate circpro_vacation_update = 410;
+    ExecuteCircproRestartUpdate circpro_restart_update = 411;
+    ExecuteCircproLawImmediatePayment circpro_law_immediate_payment = 412;
+    ExecuteCircproLawUpdateDataWithPac circpro_law_update_data_with_pac = 413;
+    ExecuteCircproLawGetCustomers circpro_law_get_customers = 414;
+
+    ExecuteAuthorizenetChargeCreditCard authorizenet_charge_credit_card = 501;
+    ExecuteAuthorizenetDebitBankAccount authorizenet_debit_bank_account = 502;
+    ExecuteAuthorizenetCreateCustomerPaymentProfile authorizenet_create_customer_payment_profile = 503;
+    ExecuteAuthorizenetPaypalTransaction authorizenet_paypal_transaction = 504;
+    ExecuteAuthorizenetGooglePayTransaction authorizenet_google_pay_transaction = 505;
+    ExecuteAuthorizenetApplePayTransaction authorizenet_apple_pay_transaction = 506;
+    ExecuteAuthorizenetPayPalAuthCapture authorizenet_pay_pal_auth_capture = 507;
+
+    ExecuteExpitransCcTransaction expitrans_cc_transaction = 601;
+    ExecuteExpitransAchTransaction expitrans_ach_transaction = 602;
+
+    ExecuteAxiamedfusionCcTransaction axiamedfusion_cc_transaction = 701;
+    ExecuteAxiamedfusionAchTransaction axiamedfusion_ach_transaction = 702;
+    ExecuteAxiamedfusionCardVerify axiamedfusion_card_verify = 703;
+
+    ExecuteInstamedPaymentSale instamed_payment_sale = 801;
+    ExecuteInstamedVoidPayment instamed_void_payment = 802;
+
+    ExecuteUsaepaySubmitCcPayments usaepay_submit_cc_payments = 901;
+    ExecuteUsaepaySubmitAchPayments usaepay_submit_ach_payments = 902;
+
+    ExecuteEzidebitSubmitCcPayments ezidebit_submit_cc_payments = 1001;
+    ExecuteEzidebitSubmitAchPayments ezidebit_submit_ach_payments = 1002;
+
+    ExecuteBamboraSubmitCcPayments bambora_submit_cc_payments = 1101;
+    ExecuteBamboraSubmitAchPayments bambora_submit_ach_payments = 1102;
+
+    ExecuteRepayStoreCard repay_store_card = 1201;
+    ExecuteRepayPaymentToken repay_payment_token = 1202;
+    ExecuteRepayAchPaymentToken repay_ach_payment_token = 1203;
+
+    ExecuteAxiaSubmitSaleRequestByCc axia_submit_sale_request_by_cc = 1301;
+    ExecuteAxiaSubmitSaleRequestByCheck axia_submit_sale_request_by_check = 1302;
+
+    ExecuteSecuretradingSendPayment securetrading_send_payment = 1401;
+
+    ExecutePaymentVisionSubmitCardSaleRequestByCc payment_vision_submit_card_sale_request_by_cc = 1501;
+    ExecutePaymentVisionSubmitCardSaleRequestByAch payment_vision_submit_card_sale_request_by_ach = 1502;
+
+    ExecuteInterproseLookupAccount interprose_lookup_account = 1601;
+    ExecuteInterproseSubmitCardSaleRequestByCc interprose_submit_card_sale_request_by_cc = 1602;
+    ExecuteInterproseSubmitCardSaleRequestByAch interprose_submit_card_sale_request_by_ach = 1603;
+    ExecuteInterproseLookupPaymentId interprose_lookup_payment_id = 1604;
+    ExecuteInterproseLookupAccountByFormId interprose_lookup_account_by_form_id = 1605;
+
+    ExecuteDallasnewsSearchByPhone dallasnews_search_by_phone = 1701;
+    ExecuteDallasnewsSearchByZipStreet dallasnews_search_by_zip_street = 1702;
+    ExecuteDallasnewsSearchBy dallasnews_search_by = 1703;
+    ExecuteDallasnewsCreateVacation dallasnews_create_vacation = 1704;
+    ExecuteDallasnewsGetVacation dallasnews_get_vacation = 1705;
+    ExecuteDallasnewsGetVacationDaysBetween dallasnews_get_vacation_days_between = 1706;
+    ExecuteDallasnewsGetVacationWithCutoff dallasnews_get_vacation_with_cutoff = 1707;
+    ExecuteDallasnewsDeleteVacation dallasnews_delete_vacation = 1708;
+    ExecuteDallasnewsAddComplaint dallasnews_add_complaint = 1709;
+    ExecuteDallasnewsUpdatePhoneNumber dallasnews_update_phone_number = 1710;
+    ExecuteDallasnewsStopAccount dallasnews_stop_account = 1711;
+    ExecuteDallasnewsCcPaymentToken dallasnews_cc_payment_token = 1712;
+    ExecuteDallasnewsAchPaymentToken dallasnews_ach_payment_token = 1713;
+
+    ExecutePaywaySubmitCardSaleRequest payway_submit_card_sale_request = 1801;
+    ExecutePaywayCreateTokenRequest payway_create_token_request = 1802;
+    ExecutePaywaySubmitACHSaleRequest payway_submit_ach_sale_request = 1803;
+
+    ExecuteBillingtreeSubmitCardSaleRequest billingtree_submit_card_sale_request = 1901;
+
+    ExecuteExperianCcPaymentRequest experian_cc_payment_request = 2001;
+    ExecuteExperianCcPaymentPlanRequest experian_cc_payment_plan_request = 2002;
+    ExecuteExperianBalancerequest experian_balancerequest = 2003;
+    ExecuteExperianAchPaymentRequest experian_ach_payment_request = 2004;
+    ExecuteExperianAchPaymentPlanRequest experian_ach_payment_plan_request = 2005;
+
+    ExecuteNewscycleLogin newscycle_login = 2101;
+    ExecuteNewscycleSearchPage newscycle_search_page = 2102;
+    ExecuteNewscycleBillingInfo newscycle_billing_info = 2103;
+    ExecuteNewscycleServiceErrorInfo newscycle_service_error_info = 2104;
+    ExecuteNewscycleServiceErrorTrans newscycle_service_error_trans = 2105;
+    ExecuteNewscycleStopInfo newscycle_stop_info = 2106;
+    ExecuteNewscycleStopTrans newscycle_stop_trans = 2107;
+    ExecuteNewscycleRenewInfo newscycle_renew_info = 2108;
+    ExecuteNewscycleAutoRenewInfo newscycle_auto_renew_info = 2109;
+    ExecuteNewscycleAutoTran newscycle_auto_tran = 2110;
+    ExecuteNewscyclePayInfo newscycle_pay_info = 2111;
+    ExecuteNewscyclePayTran newscycle_pay_tran = 2112;
+
+    ExecuteTrustcommerceCreditSale trustcommerce_credit_sale = 2201;
+    ExecuteTrustcommerceAchSale trustcommerce_ach_sale = 2202;
+
+    ExecuteVantivCreditSale vantiv_credit_sale = 2301;
+    ExecuteVantivAchSale vantiv_ach_sale = 2302;
+
+    ExecuteJourneyLatest journey_latest = 2401;
+
+    ExecuteAthenahealthGetPatients athenahealth_get_patients = 2501;
+    ExecuteAthenahealthGetPatientsWithId athenahealth_get_patients_with_id = 2502;
+    ExecuteAthenahealthCcPayment athenahealth_cc_payment = 2503;
+
+    ExecuteBrainworksGetCustomersByPhone brainworks_get_customers_by_phone = 2601;
+    ExecuteBrainworksGetSuspends brainworks_get_suspends = 2602;
+    ExecuteBrainworksGetCustomerByCustIdV2 brainworks_get_customer_by_cust_id_v2 = 2603;
+    ExecuteBrainworksGetComplaints brainworks_get_complaints = 2604;
+    ExecuteBrainworksGetCodesOrTypes brainworks_get_codes_or_types = 2605;
+    ExecuteBrainworksStopSuspends brainworks_stop_suspends = 2606;
+    ExecuteBrainworksStartSuspends brainworks_start_suspends = 2607;
+    ExecuteBrainworksSendComplaint brainworks_send_complaint = 2608;
+    ExecuteBrainworksGetCustomerByCustId brainworks_get_customer_by_cust_id = 2609;
+
+    ExecuteOsgconnectCcPayments osgconnect_cc_payments = 2701;
+    ExecuteOsgconnectAchPayments osgconnect_ach_payments = 2702;
+    ExecuteOsgconnectValidateAccountNo osgconnect_validate_account_no = 2703;
+
+    ExecuteNtvbCreditMissedDelivery ntvb_credit_missed_delivery = 2801;
+    ExecuteNtvbCustomerSearch ntvb_customer_search = 2802;
+    ExecuteNtvbEndCall ntvb_end_call = 2803;
+    ExecuteNtvbIntegrationDefinition ntvb_integration_definition = 2804;
+    ExecuteNtvbMissedDelivery ntvb_missed_delivery = 2805;
+    ExecuteNtvbRemoveAutorenewal ntvb_remove_autorenewal = 2806;
+    ExecuteNtvbRenewSubscription ntvb_renew_subscription = 2807;
+    ExecuteNtvbRenewalOffers ntvb_renewal_offers = 2808;
+    ExecuteNtvbSetAutorenewal ntvb_set_autorenewal = 2809;
+    ExecuteNtvbStartIncomingCall ntvb_start_incoming_call = 2810;
+    ExecuteNtvbStartOutgoingCall ntvb_start_outgoing_call = 2811;
+    ExecuteNtvbSubscriptionInfo ntvb_subscription_info = 2812;
+    ExecuteNtvbVacationStop ntvb_vacation_stop = 2813;
+    ExecuteNtvbAuthtest ntvb_authtest = 2814;
+
+    ExecuteElavonCreditCardSale elavon_credit_card_sale = 2901;
+    ExecuteElavonAddRecurring elavon_add_recurring = 2902;
+    ExecuteElavonDccResponse elavon_dcc_response = 2903;
+    ExecuteElavonDeleteRecurring elavon_delete_recurring = 2904;
+    ExecuteElavonUpdateRecurring elavon_update_recurring = 2905;
+    ExecuteElavonHealthCareCCSale elavon_health_care_cc_sale = 2906;
+    ExecuteElavonAddInstallment elavon_add_installment = 2907;
+    ExecuteElavonUpdateInstallment elavon_update_installment = 2908;
+    ExecuteElavonDeleteInstallment elavon_delete_installment = 2909;
+    ExecuteElavonMccCreditCardSale elavon_mcc_credit_card_sale = 2910;
+
+    ExecuteGlobalPaymentsCardSale globalPayments_card_sale = 3001;
+    ExecuteGlobalPaymentsGetTransactionByID globalPayments_get_transaction_by_id = 3002;
+    ExecuteGlobalPaymentsListTransactions globalPayments_list_transactions = 3003;
+    ExecuteGlobalPaymentsRefundSale globalPayments_refund_sale = 3004;
+    ExecuteGlobalPaymentsReverseSaleOrRefund globalPayments_reverse_sale_or_refund = 3005;
+
+    ExecutePayScoutCreditCardSale payscout_credit_sale = 3101;
+    ExecutePayScoutEcheckSale payscout_echeck_sale = 3102;
+
+    ExecuteI2cEcho i2c_echo = 3201;
+    ExecuteI2cBalanceInquiry i2c_balance_inquiry = 3202;
+    ExecuteI2cVerifyUser i2c_verify_user = 3203;
+    ExecuteI2cSearchCustomer i2c_search_customer = 3204;
+    ExecuteI2cMakePayment i2c_make_payment = 3205;
+    ExecuteI2cGetCardholderProfile i2c_get_cardholder_profile = 3206;
+    ExecuteI2cGetCardholderStatement i2c_get_cardholder_statement = 3207;
+    ExecuteI2cGetCardholderBalance i2c_get_cardholder_balance = 3208;
+    ExecuteI2cGetCreditPaymentInfo i2c_get_creditpayment_info = 3209;
+    ExecuteI2cTransactionHistory i2c_transaction_history = 3210;
+
+    ExecuteOpayoCcPayments opayo_cc_payment = 3301;
+
+    ExecuteShift4CcPayments shift4_cc_payment = 3401;
+  }
+}
+
+// invoice flows
+message InvoiceExperianQueryBalance {}
+message InvoiceAuthorizeNetAuthorizedTransactionIdLookup {}
+message InvoiceAuthorizeNetLinkData {}
+message InvoiceAuthorizeNetCustomHttp {}
+message InvoiceJourney {}
+message InvoiceDynamicJourney {
+  repeated string match_fields = 1;
+  string total_field = 2;
+  map<string, ListOfStrings> journey_fields = 3;
+}
+
+// verification flows
+message VerificationExperianQueryBalance {}
+message VerificationExperianLinkData {}
+message VerificationExperianZipDob {}
+message VerificationAuthorizeNetCustomerProfile {}
+message VerificationAuthorizeNetLinkData {}
+message VerificationJourney {
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string date_of_birth_field = 1 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string last_name_field = 2 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string first_name_field = 3 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string zip_field = 4 [deprecated = true];
+  //Deprecated
+  // only used if the VerificationFlow this belongs to is empty
+  string last4_ssn = 5 [deprecated = true];
+}
+
+// payment flows
+message PaymentExperianCC {}
+message PaymentExperianACH {}
+
+message PaymentAuthorizeNetCC {}
+message PaymentAuthorizeNetACH {}
+message PaymentAuthorizeNetPaypal {}
+message PaymentAuthorizeNetApplePay {}
+message PaymentAuthorizeNetGooglePay {}
+
+// execute flows
+message ExecuteBraintreeCreditSale {}
+message ExecuteBraintreeBankSale {}
+message ExecuteRelatientGetPatientBalance {}
+message ExecuteRelatientGetPatientCcTokens {}
+message ExecuteRelatientPostPatientToken {}
+message ExecuteRelatientPostPatientBalance {}
+message ExecuteRelatientGetPatient {}
+message ExecuteRelatientPostBalanceById {}
+message ExecuteCybersourceCreditPayment {}
+message ExecuteCybersourceEcheckPayment {}
+message ExecuteCircproPhoneLookupWithBundle {}
+message ExecuteCircproPhoneLookup {}
+message ExecuteCircproVacationRestartInquiry {}
+message ExecuteCircproComplaintInquiry {}
+message ExecuteCircproAccountInquiry {}
+message ExecuteCircproAccountInquiryWithTax {}
+message ExecuteCircproAccountInquiryWithTaxBundle {}
+message ExecuteCircproComplaintCodes {}
+message ExecuteCircproComplaintUpdate {}
+message ExecuteCircproVacationUpdate {}
+message ExecuteCircproRestartUpdate {}
+message ExecuteCircproLawImmediatePayment {}
+message ExecuteCircproLawUpdateDataWithPac {}
+message ExecuteCircproLawGetCustomers {}
+message ExecuteAuthorizenetChargeCreditCard {}
+message ExecuteAuthorizenetDebitBankAccount {}
+message ExecuteAuthorizenetCreateCustomerPaymentProfile {}
+message ExecuteAuthorizenetPaypalTransaction {}
+message ExecuteAuthorizenetGooglePayTransaction {}
+message ExecuteAuthorizenetApplePayTransaction {}
+message ExecuteAuthorizenetPayPalAuthCapture {}
+message ExecuteExpitransCcTransaction {}
+message ExecuteExpitransAchTransaction {}
+message ExecuteAxiamedfusionCcTransaction {}
+message ExecuteAxiamedfusionAchTransaction {}
+message ExecuteAxiamedfusionCardVerify {}
+message ExecuteInstamedPaymentSale {}
+message ExecuteInstamedVoidPayment {}
+message ExecuteUsaepaySubmitCcPayments {}
+message ExecuteUsaepaySubmitAchPayments {}
+message ExecuteEzidebitSubmitCcPayments {}
+message ExecuteEzidebitSubmitAchPayments {}
+message ExecuteBamboraSubmitCcPayments {}
+message ExecuteBamboraSubmitAchPayments {}
+message ExecuteRepayStoreCard {}
+message ExecuteRepayPaymentToken {}
+message ExecuteRepayAchPaymentToken {}
+message ExecuteAxiaSubmitSaleRequestByCc {}
+message ExecuteAxiaSubmitSaleRequestByCheck {}
+message ExecuteSecuretradingSendPayment {}
+message ExecutePaymentVisionSubmitCardSaleRequestByCc {}
+message ExecutePaymentVisionSubmitCardSaleRequestByAch {}
+message ExecuteInterproseLookupAccount {}
+message ExecuteInterproseSubmitCardSaleRequestByCc {}
+message ExecuteInterproseSubmitCardSaleRequestByAch {}
+message ExecuteInterproseLookupPaymentId {}
+message ExecuteInterproseLookupAccountByFormId {}
+message ExecuteDallasnewsSearchByPhone {}
+message ExecuteDallasnewsSearchByZipStreet {}
+message ExecuteDallasnewsSearchBy {}
+message ExecuteDallasnewsCreateVacation {}
+message ExecuteDallasnewsGetVacation {}
+message ExecuteDallasnewsGetVacationDaysBetween {}
+message ExecuteDallasnewsGetVacationWithCutoff {}
+message ExecuteDallasnewsDeleteVacation {}
+message ExecuteDallasnewsAddComplaint {}
+message ExecuteDallasnewsUpdatePhoneNumber {}
+message ExecuteDallasnewsStopAccount {}
+message ExecuteDallasnewsCcPaymentToken {}
+message ExecuteDallasnewsAchPaymentToken {}
+message ExecutePaywaySubmitCardSaleRequest {}
+message ExecutePaywayCreateTokenRequest {}
+message ExecutePaywaySubmitACHSaleRequest {}
+message ExecuteBillingtreeSubmitCardSaleRequest {}
+message ExecuteExperianCcPaymentRequest {}
+message ExecuteExperianCcPaymentPlanRequest {}
+message ExecuteExperianBalancerequest {}
+message ExecuteExperianAchPaymentRequest {}
+message ExecuteExperianAchPaymentPlanRequest {}
+message ExecuteNewscycleLogin {}
+message ExecuteNewscycleSearchPage {}
+message ExecuteNewscycleBillingInfo {}
+message ExecuteNewscycleServiceErrorInfo {}
+message ExecuteNewscycleServiceErrorTrans {}
+message ExecuteNewscycleStopInfo {}
+message ExecuteNewscycleStopTrans {}
+message ExecuteNewscycleRenewInfo {}
+message ExecuteNewscycleAutoRenewInfo {}
+message ExecuteNewscycleAutoTran {}
+message ExecuteNewscyclePayInfo {}
+message ExecuteNewscyclePayTran {}
+message ExecuteTrustcommerceCreditSale {}
+message ExecuteTrustcommerceAchSale {}
+message ExecuteVantivCreditSale {}
+message ExecuteVantivAchSale {}
+message ExecuteJourneyLatest {}
+message ExecuteAthenahealthGetPatients {}
+message ExecuteAthenahealthGetPatientsWithId {}
+message ExecuteAthenahealthCcPayment {}
+message ExecuteBrainworksGetCustomersByPhone {}
+message ExecuteBrainworksGetSuspends {}
+message ExecuteBrainworksGetCustomerByCustIdV2 {}
+message ExecuteBrainworksGetComplaints {}
+message ExecuteBrainworksGetCodesOrTypes {}
+message ExecuteBrainworksStopSuspends {}
+message ExecuteBrainworksStartSuspends {}
+message ExecuteBrainworksSendComplaint {}
+message ExecuteBrainworksGetCustomerByCustId {}
+message ExecuteOsgconnectCcPayments {}
+message ExecuteOsgconnectAchPayments {}
+message ExecuteOsgconnectValidateAccountNo {}
+message ExecuteNtvbCreditMissedDelivery {}
+message ExecuteNtvbCustomerSearch {}
+message ExecuteNtvbEndCall {}
+message ExecuteNtvbIntegrationDefinition {}
+message ExecuteNtvbMissedDelivery {}
+message ExecuteNtvbRemoveAutorenewal {}
+message ExecuteNtvbRenewSubscription {}
+message ExecuteNtvbRenewalOffers {}
+message ExecuteNtvbSetAutorenewal {}
+message ExecuteNtvbStartIncomingCall {}
+message ExecuteNtvbStartOutgoingCall {}
+message ExecuteNtvbSubscriptionInfo {}
+message ExecuteNtvbVacationStop {}
+message ExecuteNtvbAuthtest {}
+message ExecuteElavonCreditCardSale {}
+message ExecuteElavonAddRecurring {}
+message ExecuteElavonDccResponse {}
+message ExecuteElavonUpdateRecurring {}
+message ExecuteElavonDeleteRecurring {}
+message ExecuteElavonMccCreditCardSale {}
+message ExecuteElavonHealthCareCCSale {}
+message ExecuteElavonAddInstallment {}
+message ExecuteElavonDeleteInstallment {}
+message ExecuteElavonUpdateInstallment {}
+message ExecuteGlobalPaymentsCardSale {}
+message ExecuteGlobalPaymentsGetTransactionByID {}
+message ExecuteGlobalPaymentsListTransactions {}
+message ExecuteGlobalPaymentsRefundSale {}
+message ExecuteGlobalPaymentsReverseSaleOrRefund {}
+message ExecutePayScoutCreditCardSale {}
+message ExecutePayScoutEcheckSale {}
+message ExecuteI2cEcho {}
+message ExecuteI2cBalanceInquiry {}
+message ExecuteI2cVerifyUser {}
+message ExecuteI2cSearchCustomer {}
+message ExecuteI2cMakePayment {}
+message ExecuteI2cGetCardholderProfile {}
+message ExecuteI2cGetCardholderStatement {}
+message ExecuteI2cGetCardholderBalance {}
+message ExecuteI2cGetCreditPaymentInfo {}
+message ExecuteI2cTransactionHistory {}
+message ExecuteOpayoCcPayments {}
+message ExecuteShift4CcPayments {}

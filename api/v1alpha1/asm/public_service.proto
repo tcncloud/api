@@ -17,19 +17,19 @@ syntax = "proto3";
 package api.v1alpha1.asm;
 
 import "annotations/authz.proto";
-import "commons/acd.proto";
-import "commons/asm.proto";
-import "commons/omnichannel.proto";
+import "api/commons/acd.proto";
+import "api/commons/asm.proto";
+import "api/commons/omnichannel.proto";
 import "google/api/annotations.proto";
 import "api/v1alpha1/asm/service.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.asm;asm";
-option java_package = "com.tcn.api.v1alpha1.asm";
+option java_package = "com.tcn.matrix.api.v1alpha1.asm";
 
 service Asm {
   // Streams back status updates for the given asm session
   // only the asm session sid filter is allowed
-  rpc StreamAgentState(StreamAgentStateReq) returns (stream commons.StreamAgentStateRes) {
+  rpc StreamAgentState(StreamAgentStateReq) returns (stream api.commons.StreamAgentStateRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asm/streamagentstate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -41,7 +41,7 @@ service Asm {
     };
   }
   // Streams back statuses for the desired filter
-  rpc ManagerStreamAgentState(ManagerStreamAgentStateReq) returns (stream commons.AgentState) {
+  rpc ManagerStreamAgentState(ManagerStreamAgentStateReq) returns (stream api.commons.AgentState) {
     option (google.api.http).post = "/api/v1alpha1/asm/asm/managerstreamagentstate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -155,7 +155,7 @@ service Asm {
   }
 
   // Set queue details
-  rpc GetQueuesDetails(GetQueuesDetailsReq) returns (commons.GetQueuesDetailsRes) {
+  rpc GetQueuesDetails(GetQueuesDetailsReq) returns (api.commons.GetQueuesDetailsRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asm/getqueuesdetails";
     option (google.api.http).body = "*";
     option (annotations.authz) = {

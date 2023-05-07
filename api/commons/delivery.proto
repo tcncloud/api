@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package api.commons;
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+enum TransferStatus {
+  TRANSFER_STATUS_WAITING = 0;
+  TRANSFER_STATUS_RUNNING = 1;
+  TRANSFER_STATUS_DONE_SUCCESS = 2;
+  TRANSFER_STATUS_DONE_PARTIAL_FAILURE = 3;
+  TRANSFER_STATUS_DONE_TOTAL_FAILURE = 4;
+}
+
+// TODO
+message Encryption {
+  //oneof encryption_type {
+  //}
+}

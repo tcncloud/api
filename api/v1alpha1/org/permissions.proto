@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/auth/perms.proto";
-import "commons/org.proto";
-import "commons/org/labels.proto";
-import "commons/org/permissions.proto";
-import "commons/org/user.proto";
-import "commons/perms.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/org.proto";
+import "api/commons/org/labels.proto";
+import "api/commons/org/permissions.proto";
+import "api/commons/org/user.proto";
+import "api/commons/perms.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Request message for the GetPermissions RPC.
 message GetPermissionsRequest {}
@@ -18,13 +18,13 @@ message GetPermissionsRequest {}
 // Response message for the GetPermissions RPC.
 message GetPermissionsResponse {
   // List of permissions for the user.
-  repeated commons.auth.Permission permissions = 1;
+  repeated api.commons.auth.Permission permissions = 1;
   // List of legacy P3 permissions.
-  repeated commons.Permission p3_permissions = 2;
+  repeated api.commons.Permission p3_permissions = 2;
   // User entity.
-  commons.org.User user = 3;
+  api.commons.org.User user = 3;
   // Default operator application for user.
-  commons.OperatorApplications default_app = 4;
+  api.commons.OperatorApplications default_app = 4;
 }
 
 // Request message for the GetUserPermissions RPC.
@@ -33,9 +33,9 @@ message GetUserPermissionsRequest {}
 // Response message for the GetUserPermissions RPC.
 message GetUserPermissionsResponse {
   // List of permissions for the user.
-  repeated commons.auth.Permission permissions = 1;
+  repeated api.commons.auth.Permission permissions = 1;
   // A list of the labels associated with the user
-  repeated commons.org.Label labels = 2;
+  repeated api.commons.org.Label labels = 2;
 }
 
 // Request message for the CreatePermissionGroup RPC.
@@ -44,7 +44,7 @@ message CreatePermissionGroupRequest {
   // Description of permission group
   string description = 2;
   // Permissions to include in new permission group
-  repeated commons.auth.Permission permissions = 3;
+  repeated api.commons.auth.Permission permissions = 3;
 }
 
 // Response message for the CreatePermissionGroup RPC.
@@ -62,13 +62,13 @@ message UpdatePermissionGroupRequest {
   // Description of permission group
   string description = 3;
   // Permissions to include in new permission group
-  repeated commons.auth.Permission permissions = 4;
+  repeated api.commons.auth.Permission permissions = 4;
 }
 
 // Response message for the UpdatePermissionGroup RPC.
 message UpdatePermissionGroupResponse {
   // Updated permission group.
-  commons.org.PermissionGroup permission_group = 1;
+  api.commons.org.PermissionGroup permission_group = 1;
 }
 
 // Request message for the DeletePermissionGroup RPC.
@@ -86,7 +86,7 @@ message ListPermissionGroupsRequest {}
 // Response message for the GetPermissions RPC.
 message ListPermissionGroupsResponse {
   // Permission groups in caller's organization
-  repeated commons.org.PermissionGroup permission_groups = 1;
+  repeated api.commons.org.PermissionGroup permission_groups = 1;
 }
 
 // Request message for the GetPermissions RPC.
@@ -98,7 +98,7 @@ message ListPermissionGroupsByOrgIdRequest {
 // Response message for the GetPermissions RPC.
 message ListPermissionGroupsByOrgIdResponse {
   // Permission groups in specified organization
-  repeated commons.org.PermissionGroup permission_groups = 1;
+  repeated api.commons.org.PermissionGroup permission_groups = 1;
 }
 
 // Request message for the AssignUsersPermissionGroup RPC.
@@ -149,7 +149,7 @@ message InitDefaultPermissionGroupsRequest {}
 // Response message for the InitDefaultPermissionGroups RPC.
 message InitDefaultPermissionGroupsResponse {
   // The list of default permission groups.
-  repeated commons.org.PermissionGroup default_permission_groups = 1;
+  repeated api.commons.org.PermissionGroup default_permission_groups = 1;
 }
 
 // Request message for the GetAccountOwnerGroup RPC.
@@ -161,7 +161,7 @@ message GetAccountOwnerGroupRequest {
 // Response message for the GetAccountOwnerGroup RPC.
 message GetAccountOwnerGroupResponse {
   // Permission groups in specified organization
-  commons.org.PermissionGroup permission_group = 1;
+  api.commons.org.PermissionGroup permission_group = 1;
 }
 
 // Request message for the GetLicenses RPC.
@@ -173,7 +173,7 @@ message GetLicensesRequest {
 // Response message for the GetLicenses RPC.
 message GetLicensesResponse {
   // List of licenses organization is authorized for.
-  repeated commons.org.License licenses = 1;
+  repeated api.commons.org.License licenses = 1;
 }
 
 // Request message for the GetOrgLicenses RPC.
@@ -185,7 +185,7 @@ message GetOrgLicensesRequest {
 // Response message for the GetOrgLicenses RPC.
 message GetOrgLicensesResponse {
   // List of licenses organization is authorized for.
-  repeated commons.org.License licenses = 1;
+  repeated api.commons.org.License licenses = 1;
 }
 
 // Request message for the UpdateLicenses RPC.
@@ -193,9 +193,9 @@ message UpdateLicensesRequest {
   // Org ID to update the assigned licenses for.
   string org_id = 1;
   // Permissions to add to license.
-  repeated commons.auth.Permission added_licenses = 2;
+  repeated api.commons.auth.Permission added_licenses = 2;
   // Permissions to revoke from license.
-  repeated commons.auth.Permission revoked_licenses = 3;
+  repeated api.commons.auth.Permission revoked_licenses = 3;
 }
 
 // Response message for the UpdateLicenses RPC.
@@ -206,7 +206,7 @@ message RemovePermissionFromAllPermissionGroupsRequest {
   // Org ID to remove the permission from.
   string org_id = 1;
   // Permission to remove from all permission groups.
-  commons.auth.Permission permission = 2;
+  api.commons.auth.Permission permission = 2;
 }
 
 // Response message for the RemovePermissionFromAllPermissionGroupsRequest RPC.

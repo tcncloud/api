@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
+import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Acs {
   rpc CreateScript(CreateScriptRequest) returns (CreateScriptResponse) {
@@ -506,7 +506,7 @@ message DeleteRuleResponse {
 
 message GetScriptRequest {
   int64 call_id = 3;
-  commons.CallType.Enum call_type = 4;
+  api.commons.CallType.Enum call_type = 4;
   string scheduled_callback_id = 5;
 }
 

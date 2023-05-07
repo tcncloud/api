@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/ana.proto";
-import "commons/ana_charts.proto";
+import "api/commons/ana.proto";
+import "api/commons/ana_charts.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
-// import "commons/types.proto";
+// import "api/commons/types.proto";
 
 service Ana {
   // gets all visualizations for a specific client
@@ -272,7 +272,7 @@ message AnaAccount {
   int64 p3_client_sid = 2;
   google.protobuf.Timestamp registration_date = 3;
   double price_per_doc = 4;
-  commons.AnaTimeZone ana_time_zone = 5;
+  api.commons.AnaTimeZone ana_time_zone = 5;
   string home_dashboard = 6;
   bool adoptable = 7;
   string default_time_filter = 8;
@@ -357,10 +357,10 @@ message Quick {
 
 message Relative {
   int64 to_quantity_time = 1;
-  commons.FilterBy to_filter_by = 2;
+  api.commons.FilterBy to_filter_by = 2;
   bool to_round = 3;
   int64 from_quantity_time = 4;
-  commons.FilterBy from_filter_by = 5;
+  api.commons.FilterBy from_filter_by = 5;
   bool from_round = 6;
 }
 
@@ -396,13 +396,13 @@ message GetVisibilityReq {}
 message GetTimeZoneReq {}
 
 message SetTimeZoneReq {
-  commons.AnaTimeZone ana_time_zone = 2;
+  api.commons.AnaTimeZone ana_time_zone = 2;
 }
 
 message SetTimeZoneRes {}
 
 message TimeZone {
-  commons.AnaTimeZone ana_time_zone = 1;
+  api.commons.AnaTimeZone ana_time_zone = 1;
 }
 
 message CopyChartsAndDashboardsRes {
@@ -591,7 +591,7 @@ message Datapoint {
 
 // get a list of datapoints filtered by type
 message GetDatapointsReq {
-  commons.Tag type = 1;
+  api.commons.Tag type = 1;
   string group_id = 2;
 }
 
@@ -612,30 +612,30 @@ message NewDatapoint {
     Date date = 9;
   }
   string datapoint_id = 10;
-  repeated commons.Tag tags = 11;
+  repeated api.commons.Tag tags = 11;
 
   message Float {
-    commons.NumericAggregation aggregation = 1;
+    api.commons.NumericAggregation aggregation = 1;
     oneof operand {
       string datapoint = 2;
       float constant = 5;
     }
-    commons.Operation operation = 3;
+    api.commons.Operation operation = 3;
     float percentile = 4;
   }
 
   message String {
-    commons.NonNumericAggregation aggregation = 1;
+    api.commons.NonNumericAggregation aggregation = 1;
     string prepend = 2;
     string append = 3;
   }
 
   message Bool {
-    commons.NonNumericAggregation aggregation = 1;
+    api.commons.NonNumericAggregation aggregation = 1;
   }
 
   message Date {
-    commons.NumericAggregation aggregation = 1;
+    api.commons.NumericAggregation aggregation = 1;
     string format = 2;
     float percentile = 3;
   }
@@ -670,13 +670,13 @@ message Filter {
   reserved 4;
   google.protobuf.Timestamp time_from = 1;
   google.protobuf.Timestamp time_to = 2;
-  commons.AnaTimeZone time_zone = 3;
+  api.commons.AnaTimeZone time_zone = 3;
   string filter_id = 5;
   repeated string org_ids = 6;
 }
 
 message GetFiltersReq {
-  commons.Tag tag = 1;
+  api.commons.Tag tag = 1;
 }
 
 message NewFilter {
@@ -694,10 +694,10 @@ message CreateFilterReq {
     Simple simple = 2;
   }
   string label = 3;
-  repeated commons.Tag tags = 4;
+  repeated api.commons.Tag tags = 4;
 
   message Compound {
-    commons.CompoundFilterJoin join = 1;
+    api.commons.CompoundFilterJoin join = 1;
     string left_filter_id = 2;
     string right_filter_id = 3;
   }
@@ -718,22 +718,22 @@ message Comparison {
 
   message String {
     string value = 1;
-    commons.StringComparison comparison = 2;
+    api.commons.StringComparison comparison = 2;
   }
 
   message Float {
     float value = 1;
-    commons.FloatComparison comparison = 2;
+    api.commons.FloatComparison comparison = 2;
   }
 
   message Bool {
     bool value = 1;
-    commons.BoolComparison comparison = 2;
+    api.commons.BoolComparison comparison = 2;
   }
 
   message Date {
     google.protobuf.Timestamp value = 1;
-    commons.DateComparison comparison = 2;
+    api.commons.DateComparison comparison = 2;
   }
 }
 
@@ -761,7 +761,7 @@ message Order {
 message Grouping {
   oneof format {
     string datapoint_id = 1;
-    commons.TimeScope time_scope = 2;
+    api.commons.TimeScope time_scope = 2;
   }
 }
 
@@ -815,7 +815,7 @@ message Value {
 
 // message GetDataTimeIncrementReq {
 //   repeated string datapoint_ids = 1;
-//   commons.TimeScope time_scope = 2;
+//   api.commons.TimeScope time_scope = 2;
 //   Filter filter = 4;
 // }
 
@@ -841,7 +841,7 @@ message Chart {
   string title = 3;
   ChartDetails chart_details = 4;
   string root_id = 5;
-  commons.ChartDisplayLabels display_labels = 6;
+  api.commons.ChartDisplayLabels display_labels = 6;
 }
 
 message ChartDetails {
@@ -874,7 +874,7 @@ message ChartDetails {
 message SingleValueChart {
   string data_point_id = 1;
   string label = 2;
-  commons.SuffixChoices suffix = 3;
+  api.commons.SuffixChoices suffix = 3;
   bool show_label = 4;
 }
 
@@ -909,7 +909,7 @@ message RadarFixedInnerChart {
 message BarChart {
   string field_data_point_id = 1;
   string grouping_data_point_id = 2;
-  commons.BarChartOrientation orientation = 3;
+  api.commons.BarChartOrientation orientation = 3;
   Threshold threshold = 4;
   string x_label = 5;
   string y_label = 6;
@@ -918,7 +918,7 @@ message BarChart {
 
 message BulletChart {
   string field_data_point_id = 1;
-  commons.ChartOrientation orientation = 2;
+  api.commons.ChartOrientation orientation = 2;
   Threshold threshold = 3;
   string legend = 4;
 }
@@ -974,7 +974,7 @@ message ScatterChart {
 
 message TimeHistogramChart {
   string data_point_id = 1;
-  commons.TimeScope time_scope = 2;
+  api.commons.TimeScope time_scope = 2;
   Threshold threshold = 3;
 }
 
@@ -1021,24 +1021,24 @@ message SpeedometerChart {
 message LineChart {
   string field_data_point_id = 1;
   string grouping_data_point_id = 2;
-  commons.ChartOrientation orientation = 3;
+  api.commons.ChartOrientation orientation = 3;
   Threshold threshold = 4;
-  commons.LineChartStep step = 5;
+  api.commons.LineChartStep step = 5;
 }
 
 message SplineChart {
   string field_data_point_id = 1;
   string grouping_data_point_id = 2;
-  commons.ChartOrientation orientation = 3;
+  api.commons.ChartOrientation orientation = 3;
   Threshold threshold = 4;
 }
 
 message AreaChart {
   string field_data_point_id = 1;
   string grouping_data_point_id = 2;
-  commons.ChartOrientation orientation = 3;
+  api.commons.ChartOrientation orientation = 3;
   Threshold threshold = 4;
-  commons.AreaChartChoice area_type = 5;
+  api.commons.AreaChartChoice area_type = 5;
 }
 
 message TableChart {
@@ -1075,7 +1075,7 @@ message PackedBubbleChart {
   string field_data_point_id = 1;
   string field_label = 2;
   repeated PackedBubbleGroupingValue grouping_values = 3;
-  commons.PackedBubbleChoice packed_choice = 4;
+  api.commons.PackedBubbleChoice packed_choice = 4;
 }
 
 message PackedBubbleGroupingValue {
@@ -1095,7 +1095,7 @@ message SunburstGroupingValue {
 message CreateChartReq {
   string title = 1;
   ChartDetails chart_details = 2;
-  commons.ChartDisplayLabels display_labels = 3;
+  api.commons.ChartDisplayLabels display_labels = 3;
 }
 
 message CreateChartRes {
@@ -1227,7 +1227,7 @@ message GetRecommendedTimeFiltersRes {
 }
 
 message TimeFilterEventReq {
-  commons.TimeFilterType time_filter_type = 1;
+  api.commons.TimeFilterType time_filter_type = 1;
   string time_filter_name = 2;
   RecommendedDashPageReq dash_page_type = 3;
 }
@@ -1266,7 +1266,7 @@ message ExportOptions {
 
 message CsvOptions {
   bool fixed_width = 1;
-  commons.CsvQuoteType csv_quote_type = 2;
+  api.commons.CsvQuoteType csv_quote_type = 2;
   bool include_headers = 3;
 }
 
@@ -1301,7 +1301,7 @@ message EmailDelivery {
 message DataSelection {
   oneof data_selection_type {
     string chart_id = 1;
-    commons.CustomDataSeleciton custom = 2;
+    api.commons.CustomDataSeleciton custom = 2;
     TableDataPoints table_data_points = 3;
   }
   repeated string filter_ids = 10;
@@ -1371,7 +1371,7 @@ message Export {
   string export_job_id = 1;
   string title = 2;
   google.protobuf.Timestamp run_time = 3;
-  commons.ExportStatus status = 4;
+  api.commons.ExportStatus status = 4;
 }
 
 message DownloadExportReq {

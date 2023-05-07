@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package api.v1alpha1.integrations;
 
-import "commons/public/integrations.proto";
+import "api/commons/public/integrations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 // our entities are located here, entities should probably be in own file
 import "api/v1alpha1/integrations/service.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.integrations;integrations";
-option java_package = "com.tcn.api.v1alpha1.integrations";
+option java_package = "com.tcn.matrix.api.v1alpha1.integrations";
 
 service PortalManagerApi {
   rpc UpsertPortalConfig(UpsertPortalConfigReq) returns (UpsertPortalConfigRes) {
@@ -284,9 +284,9 @@ message CreatePortalLinksRes {
 message ListFlowFieldNamesReq {
   message Entity {
     // the single flow we are interested in checking
-    commons.public.Flow flow = 3;
+    api.commons.public.Flow flow = 3;
     // the location the flow will check for fields
-    commons.public.FlowFieldLoc loc = 4;
+    api.commons.public.FlowFieldLoc loc = 4;
   }
   Entity entity = 5;
 }
@@ -298,20 +298,20 @@ message ListFlowFieldNamesRes {
 
 // for listing fields on the given verification flow
 message ListAvailableVerificationFieldsReq {
-  commons.public.VerificationFlow verification = 1;
+  api.commons.public.VerificationFlow verification = 1;
 }
 
 // the available fields for the verification flow
 message ListAvailableVerificationFieldsRes {
-  repeated commons.public.FieldDefinition verification_fields = 2;
+  repeated api.commons.public.FieldDefinition verification_fields = 2;
 }
 
 // for listing fields on the given payment flow
 message ListAvailablePaymentFieldsReq {
-  commons.public.PaymentFlow payment = 1;
+  api.commons.public.PaymentFlow payment = 1;
 }
 
 // the available fields for the payment flow
 message ListAvailablePaymentFieldsRes {
-  repeated commons.public.FieldDefinition payment_fields = 2;
+  repeated api.commons.public.FieldDefinition payment_fields = 2;
 }

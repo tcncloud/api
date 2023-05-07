@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package api.commons;
+
+option go_package = "github.com/tcncloud/api/commons;commons";
+option java_package = "com.tcn.matrix.api.commons";
+
+// REMOVE IF I FORGET
+message DLFSDef {
+  int64 vfs_id = 1;
+  bool incremental = 10;
+  // More to come I'm sure
+}
+
+message DLFSDefs {
+  repeated DLFSDef defs = 1;
+}

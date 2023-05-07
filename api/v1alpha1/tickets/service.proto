@@ -8,7 +8,7 @@ import "api/v1alpha1/tickets/project.proto";
 import "api/v1alpha1/tickets/ticket.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.tickets;tickets";
-option java_package = "com.tcn.api.v1alpha1.tickets";
+option java_package = "com.tcn.matrix.api.v1alpha1.tickets";
 
 // Tickets service is the public api for the tickets service., for public integrations to manage tickets / customer service requests. Can be used by any authorized frontend-app.
 service Tickets {

@@ -1,0 +1,672 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "api/commons/country.proto";
+import "api/commons/org.proto";
+
+option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option java_package = "com.tcn.matrix.api.commons.org";
+
+// HuntGroupSettings contains all of the hunt group settings.
+message HuntGroupSettings {
+  // General Hunt group settings.
+  GeneralSettings general_settings = 1;
+  // Communication compliance hunt group settings.
+  CommunicationSettings communication_settings = 2;
+  // Schedule callback Hunt group settings.
+  CallbackSettings callback_settings = 3;
+  // Preview dial Hunt group settings.
+  PreviewDialSettings preview_dial_settings = 4;
+  // Manual Dial hunt group settings.
+  ManualDialSettings manual_dial_settings = 5;
+  // Transfer Call hunt group settings.
+  TransferCallSettings transfer_call_settings = 6;
+  // Number History hunt group settings.
+  NumberHistorySettings number_history_settings = 7;
+}
+
+// GeneralSettings is an entity containing a section of the hunt group settings
+// for the hunt group manager.
+message GeneralSettings {
+  // MAIN SETTINGS
+
+  // Displays browser window tab information. `UseAdvancedGatewayTitle`
+  bool enable_agent_gateway_title_bar = 1;
+  // Default agent phone number dialing into IVR system. `AgentDialInNumber`
+  string default_agent_dial_in = 2;
+  // Requires secondary confirmation to end call. `DisconnectConvirmation`
+  bool require_end_call_confirmation = 3;
+  // Enables authorization and whitelist by IP. `UseIpBasedAuth`
+  bool enable_authorization_by_ip = 4;
+  // Whitelisted IPs. `AllowedIps`
+  repeated string authorized_ip_addresses = 5;
+
+  // AGENT PAUSE SETTINGS
+
+  // Initial agent status. `Initial Agent Status`
+  api.commons.InitialAgentStatus initial_agent_status = 100;
+  // Enable agents to pause calls. `Allow Agent Pause`
+  bool enable_agent_pause = 101;
+  // Pause option sets per hunt group. `Use Agent Pause Codes`
+  PauseOptionSet agent_pause_option_set = 102;
+  // Default agent pause code. `Default Agent Pause Code`
+  string default_agent_pause_option = 103;
+  // Enable agents to switch between pause options. `Agent Pause Reset`
+  bool enable_pause_option_reset = 104;
+
+  // Pause option set properties.
+  message PauseOptionSet {
+    // Whether pause option sets will be enabled.
+    bool enabled = 1;
+    // The sid of the agent pause code set.
+    // xml_client_property_sid where property_key = 'Agent Pause Codes'
+    int64 set_sid = 2;
+  }
+
+  // VOICE/CALL RECORDING SETTINGS
+
+  // Display recording indicator. `Display Recording Indicator`
+  bool display_recording_indicator = 200;
+  // Enable pausing of agent call recording. `Enable Recording Pause`
+  bool enable_call_recording_pause = 201;
+  // Require call recording pause confirmation. `Recording Pause Confirmation`
+  bool call_recording_pause_confirmation = 202;
+  // Call recording delay in seconds. `Recording Delay`
+  int64 call_recording_delay = 203;
+  // Automatically pauses recording when starting hold.
+  // `Pause Recording on Hold`
+  bool enable_pause_recording_on_hold = 204;
+
+  // SCREEN RECORDING SETTINGS
+
+  // Enable envision agent screen recording. `Use Agent Screen Recording`
+  bool enable_envision_screen_recording = 300;
+
+  // HOLD SETTINGS
+
+  // Enable agent simple hold. `Allow Agent Hold`
+  bool enable_agent_simple_hold = 400;
+  // Enable agent multi-accept hold. `Allow Agent Hold`
+  bool enable_agent_multi_accept = 401;
+  // Automatically pause agent after multi-accept hold. `AutoPauseOnMultiHold`
+  bool pause_agent_after_multi_accept = 402;
+  // Agent hold queue monitoring.
+  HoldQueueMonitoring hold_queue_monitoring = 403;
+
+  // Hold queue monitoring options.
+  message HoldQueueMonitoring {
+    // Whether hold queue monitoring is enabled. `Hold Queue Monitoring`
+    bool enabled = 1;
+    // Agent routing. `HQM Agent Routing`
+    api.commons.AgentRouting agent_routing = 2;
+    // Hunt group required to route to. `HQM Required Hunt Group Routing`
+    int64 required_hunt_group_routing = 3;
+    // Hunt group preferred to route to. `HQM Preferred Hunt Group Routing`
+    int64 preferred_hunt_group_routing = 4;
+  }
+
+  // DISPLAY SETTINGS
+
+  // Whether to display the machine-deliver button on the UI.
+  bool display_machine_deliver = 500;
+  // Whether to display the call's linkback Hunt Group in the data panel.
+  bool display_linkback_hunt_group = 501;
+  // Whether to display SIP header data in the data panel.
+  bool display_sip_header_data = 502;
+  // Whether to display the IVR navigation (Keys Pressed) in the data panel.
+  bool display_ivr_navigation_keys = 503;
+  // Whether to display Data Collect data in the data panel.
+  bool display_data_collect_data = 504;
+  // Whether to display the Data Dip'ed data in the data panel.
+  DataDipDataDisplay display_data_dipped_data = 505;
+  // Payment Integration data display
+  IntegrationDataDisplay integration_data_display = 506;
+  // Whether to display the Journey Integration returned data in the data panel.
+  JourneyDataDisplay journey_data_display = 507;
+  // Whether and what call history statistics to display in the UI.
+  api.commons.AgentCallHistoryScope agent_call_history_scope = 508;
+  // Agent Login Gui Statistics display and template
+  AgentLoginGuiStatisticsDisplay agent_login_gui_statistics_display = 509;
+  // Phone / Postal Metadata display
+  PhoneZipMetadataDisplay phone_zip_metadata_display = 510;
+  // Whether to display the call and agent skills to the agent ` Display Skills`
+  bool display_skills = 511;
+  // Whether to display Web Links to the agent ` Display Web Links`
+  bool display_web_links = 512;
+
+  // Data Dip data display options.
+  message DataDipDataDisplay {
+    // Whether to display the Data Dipped data in the data panel.
+    bool display_data_dip_data = 1;
+    // The keys of the Data Dipped data key/value pairs.
+    repeated string data_dip_display_keys = 2;
+  }
+
+  // Payment Integration data display options.
+  message IntegrationDataDisplay {
+    // Whether to display the Payment Integration returned data in the
+    // data panel.
+    bool display_integration_data = 1;
+    // The keys of the Payment Integration data key/value pairs.
+    repeated string integration_display_keys = 2;
+  }
+
+  // Journey Integration data display options.
+  message JourneyDataDisplay {
+    // Whether to display the Journey Integration returned data in the
+    // data panel.
+    bool display_journey_data = 1;
+    // The keys of the Journey Integration data key/value pairs.
+    repeated string journey_display_keys = 2;
+  }
+
+  // Agent Login GUI Statistics display and template.
+  message AgentLoginGuiStatisticsDisplay {
+    // Whether to allow the display of general agent statistics to the UI.
+    bool display_agent_login_gui_statistics = 1;
+    // The ID (XML Client Property Sid) of the agent login gui statistics
+    // template.
+    int64 agent_login_gui_statistics_template = 2;
+  }
+
+  // Phone / Postal Metadata display options.
+  message PhoneZipMetadataDisplay {
+    // Whether to display the Phone / Postal Metadata related to the call's
+    // phone number.
+    bool display_phone_zip_metadata = 1;
+    // The keys of the Phone / Postal Metadata for display in the UI.
+    repeated api.commons.PhonePostalDisplayOptions phone_zip_metadata_keys = 2;
+  }
+
+  // REASSIGNMENT SETTINGS
+
+  // Enable agent to reassign hunt groups. `Agent Skills Reassignment`
+  bool enable_agent_hunt_group_reassignment = 600;
+  // Limited available hunt groups. `Hunt Group Reassignment Disallowed`
+  DisallowedHuntGroups disallowed_hunt_groups = 601;
+
+  // Available hunt group options.
+  message DisallowedHuntGroups {
+    // Whether to limit available hunt groups for agents.
+    bool enabled = 1;
+    // The list of hunt groups that are available to choose from.
+    repeated int64 hunt_groups = 2;
+  }
+
+  // MANUAL APPROVAL SETTINGS
+
+  // Enable manual approval of calls. `Allow Manual Approval`
+  bool enable_manual_approval_of_calls = 700;
+  // Require manual approval number confirmation. `MAC Number Confirmation`
+  bool require_manual_approval_number = 701;
+  // Enable manual approval of SMS. `Allow Manual Approval For Messaging`
+  bool enable_manual_approval_of_sms = 702;
+  // Require manual approval number confirmation for SMS.
+  // `MAM Number Confirmation`
+  bool require_manual_approval_number_sms = 703;
+
+  // MISCELLANEOUS SETTINGS
+
+  // Alphanumeric keypad properties. `Alphanumeric Keypad`
+  AlphanumericKeypad alphanumeric_keypad = 800;
+  // Enable queued call desktop notifications. `Allow Queued Call Notifications`
+  bool enable_call_desktop_notifications = 801;
+  // Inbound natural language compliance metadata.
+  // `Optional Inbound Compliance Metadata`
+  // `Required Inbound Compliance Metadata`
+  InboundComplianceMetadata inbound_compliance_metadata = 802;
+  // Whether to allow the agent to intercom with other agents.
+  // `AllowAgentIntercom`
+  bool enable_agent_intercom = 803;
+
+  // Alphanumeric keypad options.
+  message AlphanumericKeypad {
+    // Whether keypad delimiting is enabled.
+    bool enabled = 1;
+    // Character to delimit with.
+    api.commons.AlphanumericKeypadDelimiter delimiter = 2;
+  }
+
+  // Inbound natural compiance metadata options.
+  message InboundComplianceMetadata {
+    // Whether compliance metadata is used.
+    bool enabled = 1;
+    // List of optional contact field description metadata.
+    // List of contact_field_description_sids
+    repeated int64 optional_data = 2;
+    // List of required contact field description metadata.
+    // List of contact_field_description_sids
+    repeated int64 required_data = 3;
+  }
+}
+
+// CommunicationSettings is an entity containing the hunt group settings for the
+// communication compliance section of the hunt group manager.
+message CommunicationSettings {
+  // MAIN SETTINGS
+
+  // Enable the ability to add valuess from the compliance scrub list.
+  // `doAllowAddDncl`
+  bool enable_scrub_list_adding = 1;
+  // Hunt group compliance scrub lists. `Hunt Group Compliance Scrub Lists`
+  repeated string scrub_lists = 2;
+  // Enable the ability to remove values from the compliance scrub lists.
+  // `doAllowRemoveDncl`
+  bool enable_scrub_list_removal = 3;
+  // List of compliance scrub lists which can be removed.
+  // `Hunt Group Compliance Scrub Lists Removal Allowed`
+  repeated string scrub_lists_removal_allowed = 4;
+  // Select compliance default country. `Default DNCL Country`
+  api.commons.Country compliance_default_country = 5;
+  // Display DNCL options in wrap up. `Display DNCL Options In Wrapup`
+  bool display_options_in_wrapup = 6;
+
+  // EXPIRATION SETTINGS
+
+  // Default inbound scrub list expiration. `defaultIBCallDnclExpiration`
+  ScrubListExpiration inbound_scrub_list_expiration = 100;
+  // Default manual scrub list expiration. `defaultMDCallDnclExpiration`
+  ScrubListExpiration manual_scrub_list_expiration = 101;
+  // Default outbound scrub list expiration. `defaultOBCallExpiration`
+  ScrubListExpiration outbound_scrub_list_expiration = 102;
+  // Default preview scrub list expiration. `defaultPRCallDnclExpiration`
+  ScrubListExpiration preview_scrub_list_expiration = 103;
+
+  // Scrub list expiration properties.
+  message ScrubListExpiration {
+    // Default call DNCL/scrub list expiration time.
+    api.commons.CommunicationExpiration default_expiration = 1;
+    // Enable limiting scrub list expiration choices.
+    bool limit_expiration = 2;
+    // List of possible expiration times to choose from.
+    repeated api.commons.CommunicationExpiration limited_expirations = 3;
+  }
+
+  // AUTO ADDITION SETTINGS
+
+  // Automate manually dialed number scrub list. `Manual Dial Auto Dncl Add`
+  bool automate_manually_dialed_scrub_list = 200;
+  // Automate preview dialed number scrub list. `Preview Dial Auto Dncl Add`
+  bool automate_preview_dialed_scrub_list = 201;
+  // Automate response rules. `AgentDispositionConditionalDncl`
+  AutomateResponseRules automate_response_rules = 202;
+  // Enable automatic addition of call data to scrub lists.
+  // `Call Data Scrub Lists Info`
+  AutomateScrubListCallData automate_scrub_list_call_data = 203;
+
+  // Automate response rules properties.
+  message AutomateResponseRules {
+    // Whether automated response rules are enabled.
+    bool enabled = 1;
+    // Sid associated with response rule.
+    // xml_client_property_sid where property_key =
+    // 'AgentDispositionConditionalDncl'
+    int64 rule_sid = 2;
+  }
+
+  // Automate response rules properties.
+  message AutomateScrubListCallData {
+    // Whether automatic additional of call data to scrub lists is enabled.
+    bool enabled = 1;
+    // List of scrub list call data fields which will automatically be added.
+    repeated ScrubListDataField scrub_list_data_fields = 2;
+
+    // Scrub list data field properties.
+    message ScrubListDataField {
+      // Scrub list sid.
+      string scrub_list = 1;
+      // Call data field sid.
+      int64 call_data_field = 2;
+    }
+  }
+}
+
+// CallbackSettings is an entity containing the hunt group settings for the
+// scheduled callbacks section of the hunt group manager.
+message CallbackSettings {
+  // MAIN SETTINGS
+
+  // Enable callback scheduling. `Allow Callback Scheduling`
+  bool enable_callback_scheduling = 1;
+  // Default callback routing. `Default Callback Routing`
+  DefaultRouting default_callback_routing = 2;
+
+  // Default callback routing properties.
+  message DefaultRouting {
+    // Default callback routing option (agent, skill set, none).
+    api.commons.DefaultCallbackRouting routing_mode = 1;
+    // Agent to callback to.
+    int64 agent_sid = 2;
+    // Agent skillsets to callback to.
+    repeated int64 agent_skillsets = 3;
+    // Hunt Groups selected by default
+    repeated int64 hunt_group_sids = 4;
+  }
+
+  // Enable callback calling ` Allow Scheduled Callback Calling`
+  bool enable_callback_calling = 3;
+  // Enable automatic callback retrieval `Callbacks Retrieval Mode`
+  bool enable_automatic_retrieval = 4;
+  // Indicates whether and how to limit callback routing.
+  // `Callback Routing Disallowed`
+  CallbackRoutingDisallowed callback_routing_disallowed = 5;
+
+  // Control which skills may be used when selecting routing.
+  message CallbackRoutingDisallowed {
+    // Indicates whether callback routing should be limited.
+    bool use_routing_limiting = 1;
+    // Prohibited Agent Sids
+    repeated int64 agent_sids = 2;
+    // Prohibited Hunt Group Sids
+    repeated int64 hunt_group_sids = 3;
+    // Prohibited agent skill sids
+    repeated int64 agent_skill_sids = 4;
+  }
+
+  // Enable caller ID customization. 'Scheduled Callback Editable Caller ID'
+  bool enable_customizable_caller_id = 6;
+  // Default scheduled callback caller ID.
+  // `Scheduled Callback Default Caller ID`
+  string default_caller_id = 7;
+  // Enable viewing the Scheduled Callback calendar.
+  // `Allow Scheduled Callback Calendar`
+  bool enable_callback_calendar = 8;
+}
+
+// PreviewDialSettings is an entity containing the hunt group settings for the
+// Preview Dial section of the hunt group manager.
+message PreviewDialSettings {
+  // Enable cancelling of Preview Dialing.  `AllowPreviewDialCancel`
+  bool enable_preview_dial_cancel = 1;
+  // Enable automatic pausing when cancelling a Preview Dial call.
+  // `AutoPauseOnPreviewDial`
+  bool enable_auto_pause_on_cancel = 2;
+  // Indicates when queued preview dial calls should no longer be presented
+  // to agents.
+  // `Preview Dial Call Time-out`
+  int64 timeout_minutes = 3;
+  // Indicates if agents must confirm numbers before calling.
+  // `Preview Dial Confirmation`
+  bool require_number_confirmation = 4;
+  // The name of the Call Queue Configuration (folder name).
+  // `PreviewQueueConfig`
+  string preview_queue_config = 5;
+}
+
+// ManualDialSettings is an entity containing the hunt group settings for the
+// Manual Dial section of the hunt group settings manager.
+message ManualDialSettings {
+  // Allow the agent to make manual dial calls.
+  bool enable_manual_dial = 1;
+  // ACD queue configuration folder name.
+  string queue_configuration_name = 2;
+  // The default setting for recording manual dial calls.
+  HuntGroupOrgDefaultCustom default_call_recording = 3;
+  // Determines whether to scrub cell phone calls.
+  HuntGroupOrgDefaultCustom cell_phone_scrub = 4;
+  // Determines whether to scrub calls by time zone.
+  HuntGroupOrgDefaultCustom time_zone_restriction = 5;
+  // Determines whether to allow or require collection of ZIP/postal
+  // for compliance.
+  ManualDialTimeZoneValidation time_zone_validation_postal_code = 6;
+  // Use Natural Language Compliance and rule set.
+  NaturalLanguageComplianceScrub natural_compliance_scrub = 7;
+  // Allow agent to override scrub options
+  ScrubOverride scrub_override = 8;
+  // Allow toll-free white list for manual dial calls.
+  bool enable_whitelist = 9;
+  // The default selected country for outbound number.
+  api.commons.Country default_outbound_country = 10;
+  // Determines whether to display the country select menu to the agent.
+  bool display_outbound_country_selection = 11;
+  // Determines whether to display the outbound number phone book to the agent.
+  bool display_outbound_number_phone_book = 12;
+  // Indicates the default Country to use with the caller ID number.
+  // `Manual Dial Default Caller ID Country`
+  api.commons.Country default_caller_id_country = 13;
+  // Determines whether to display the caller ID country select menu to
+  // the agent.
+  // `Manual Dial Display Caller ID Country Select`
+  bool display_caller_id_country_selection = 14;
+  // Determines whether to display the caller ID phone book to the agent.
+  // `Manual Dial Display Phone Book`
+  bool display_caller_id_phone_book = 15;
+  // Determines whether the agent may customize/edit the caller ID.
+  // `Manual Dial Editable Caller ID`
+  bool enable_customizable_caller_id = 16;
+  // Indicates the default number to use as the caller ID.
+  // `Manual Dial Default Caller ID`
+  DefaultCallerId default_caller_id = 17;
+  // Determines whether to allow the use of caller ID buckets in the agent app.
+  // `Manual Dial Caller Id Bucket Enabled`
+  bool enable_caller_id_bucket = 18;
+  // Indicates which caller ID bucket to use.
+  // `Manual Dial Random Caller Id Bucket`
+  int64 random_caller_id_bucket = 19;
+  // Determines whether to automatically select a random caller ID.
+  // `Manual Dial Random Caller Id Enabled`
+  bool automate_random_caller_id = 20;
+  // Determines whether to mask the caller ID from the agent.
+  // `Mask Manual Dial Caller ID`
+  bool enable_mask_caller_id = 21;
+  // Determines whether to enable SIP addresses as an optional outbound
+  // number and/or caller ID format.
+  // `Enable SIP Address`
+  bool enable_sip_address = 22;
+  // Manual Dial natural language compliance metadata.
+  // `Optional Inbound Compliance Metadata`
+  // `Required Inbound Compliance Metadata`
+  NaturalLanguageComplianceMetadata natural_language_compliance_metadata = 23;
+  // Application scope; disabled, standard calls, scheduled callbacks or all.
+  ManualDialDataDipScope data_dip_scope = 24;
+  // The ID of the data dip config to execute.
+  int64 data_dip_config_sid = 25;
+  // The action to take if data dip execution fails.
+  ManualDialDataDipHandling data_dip_result_handling = 26;
+  // Map data dip values to manual dial call values.
+  repeated DataDipIntegrationMapping data_dip_integration_mappings = 27;
+  // The action to take if the integration mapping fails.
+  ManualDialDataDipHandling data_dip_integration_handling = 28;
+
+  // Allow the agent to override scrub settings.
+  message ScrubOverride {
+    // Allow the agent to override DNCL scrubbing.
+    bool enable_dncl_override = 1;
+    // Allow the agent to override cell phone scrubbing.
+    bool enable_cell_scrub_override = 2;
+    // Allow the agent to override the global time zone scrubbing.
+    bool enable_time_zone_scrub_override = 3;
+    // Allow the agent to override Natural Language Compliance scrubbing.
+    bool natural_compliance_override = 4;
+  }
+
+  // DefaultCallerId: custom or "Agent Caller ID" and number (if needed).
+  message DefaultCallerId {
+    // Describes how the field is used; none, custom or agent caller ID.
+    DefaultManualDialCallerId usage = 1;
+    // The caller ID (if needed).
+    string custom_caller_id = 2;
+  }
+
+  // Describes a mapping of return keys to manual dial values.
+  message DataDipIntegrationMapping {
+    // Mapping type; manual dial number, caller ID or field description.
+    ManualDialDataDipIntegration mapping_type = 1;
+    // The key of the data dipped data to map to the manual call data.
+    string data_dip_return_key = 2;
+    // The contact field description to map to when it is the type.
+    int64 contact_field_description_sid = 3;
+  }
+}
+
+// Use Natural Language Compliance and rule set ID.
+message NaturalLanguageComplianceScrub {
+  // Org default or enabled or disabled.
+  HuntGroupOrgDefaultCustom compliance_scrub = 1;
+  // The ID of the Natural Language Compliance rule set.
+  string rule_set_id = 2;
+}
+
+// Manual Dial natural compiance metadata options.
+message NaturalLanguageComplianceMetadata {
+  // Whether compliance metadata is used.
+  bool enabled = 1;
+  // List of optional contact field description metadata.
+  // List of contact_field_description_sids
+  repeated int64 optional_data = 2;
+  // List of required contact field description metadata.
+  // List of contact_field_description_sids
+  repeated int64 required_data = 3;
+}
+
+// Caller ID Bucket Data includes bucket name and the related XML property SID.
+message CallerIdBucketData {
+  // XML client property sid.
+  int64 xml_client_property_sid = 1;
+  // Name of the caller ID bucket.
+  string bucket_name = 2;
+}
+
+// TransferCallSettings is an entity containing the hunt group settings for the
+// Transfer Call section of the hunt group settings manager.
+message TransferCallSettings {
+  // Allow the agent to make transfer calls.
+  bool enable_transfer = 1;
+  // Allowed hand-off types for transfer calls.
+  HandOffTypes hand_off_types = 2;
+  // Indicates start, stop or keep current recording status on transfer.
+  TransferRecordingStatus recording_status = 3;
+  // Indicates type of allowed transfer types.
+  TransferTypes transfer_types = 4;
+  // Indicates whether or not to display.
+  bool display_transfer_number_phone_book = 5;
+  // Indicates whether to allow the agent to edit the transfer number.
+  bool enable_transfer_number_editing = 6;
+  // The default transfer number prepopulated in the text box.
+  string default_transfer_number = 7;
+  // Transfer numbers which will initiate recording the call.
+  repeated string start_recording_numbers = 8;
+  // Transfer numbers which will stop recording the call.
+  repeated string stop_recording_numbers = 9;
+  // The default country to use with the transfer number.
+  api.commons.Country transfer_number_country = 10;
+  // Indicate whether to display the country select menu.
+  bool display_transfer_country_selection = 11;
+  // Indicate whether to display the caller ID phone book.
+  bool display_caller_id_phone_book = 12;
+  // Indicates whether to allow the agent to edit the caller ID.
+  bool enable_caller_id_editing = 13;
+  // The default caller ID prepopulated in the text box.
+  DefaultCallerId default_caller_id = 14;
+  // The default country to use with the caller ID.
+  api.commons.Country caller_id_country = 15;
+  // Indicates whether to display the caller ID country select menu.
+  bool display_caller_id_country_selection = 16;
+  // Indicates whether to display agent transfer filtering to the agent.
+  bool display_agent_transfer_filtering = 17;
+  // Indicates whether to filter agents by default.
+  bool default_agent_transfer_filtering = 18;
+  // Indicates whether to limit transferring to agents in the same hunt group.
+  bool enable_hunt_group_filtering = 19;
+  // The name of the Requeue Transfer Queue Configuration.
+  RequeueQueueConfiguration requeue_queue_config = 20;
+  // Disallow specific agent skills for requeue transfer routing.
+  RequeueTransferDisallowed requeue_transfer_disallowed = 21;
+  // Disallow specific PBX extensions for PBX transfers.
+  PbxTransferDisallowed pbx_transfer_disallowed = 22;
+  // Allow agent to override scrub decisions.
+  bool enable_scrub_override = 23;
+  // Indicates whether to apply the whitelist to transfer call scrubbing.
+  bool enable_whitelist = 24;
+  // Whether and what NLC compliance rule to apply.
+  NaturalLanguageComplianceScrub natural_compliance_scrub = 25;
+  // Transfer call natural language compliance metadata.
+  // `Optional Transfer Compliance Metadata`
+  // `Required Transfer Compliance Metadata`
+  NaturalLanguageComplianceMetadata natural_language_compliance_metadata = 26;
+
+  // HandOffTypes indicates which Hand-off types the agent may use.
+  message HandOffTypes {
+    bool enable_conference = 1;
+    bool enable_warm = 2;
+    bool enable_cold = 3;
+  }
+
+  // TransferTypes indicates which transfer types the agent may use.
+  message TransferTypes {
+    bool enable_agent_transfer = 1;
+    bool enable_open_transfer = 2;
+    bool enable_requeue_transfer = 3;
+    bool enable_pbx_extension_transfer = 4;
+    bool enable_voicemail_transfer = 5;
+  }
+
+  // RequeueTransferDisallowed if enabled, prohibits skills/hunt groups.
+  message RequeueTransferDisallowed {
+    bool enable = 1;
+    repeated int64 agent_skill_sids = 2;
+    repeated int64 hunt_group_sids = 3;
+  }
+
+  // PbxTransferDisallowed if enabled, prohibits these extensions.
+  message PbxTransferDisallowed {
+    bool enable = 1;
+    repeated string extensions = 2;
+  }
+
+  // RequeueQueueConfiguration indicates which config to use on transfer.
+  message RequeueQueueConfiguration {
+    RequeueTransferQueueConfig usage = 1;
+    string custom_name = 2;
+  }
+
+  // DefaultCallerId indicates custom or 3rd party and number (if needed).
+  message DefaultCallerId {
+    DefaultTransferCallerId usage = 1;
+    string custom_caller_id = 2;
+  }
+}
+
+// NumberHistorySettings is an entity containing the hunt group settings for the
+// Number History section of the hunt group settings manager.
+message NumberHistorySettings {
+  // Allow the agent to access number history search.
+  bool enable_search = 1;
+  // Allow the export of the number history report.
+  bool enable_report_download = 2;
+  // Allow the export of the number history related call recordings.
+  bool enable_recordings_download = 3;
+  // Allow the agent to edit number history related agent call responses.
+  bool enable_agent_response_editing = 4;
+}
+
+// Sets of rules that manage automatically adding responses to the DNCL
+message AgentResponseAutoRuleSet {
+  // The ID of the ruleset
+  int64 ruleset_sid = 1;
+  // The name of the ruleset
+  string name = 2;
+  // The description of the ruleset
+  string description = 3;
+  // This country should be from the allowed list
+  api.commons.Country country = 4;
+  // List of Agent Call Responses with comparitors and durations
+  repeated AutoResponseChoice responses = 5;
+}
+
+// An Agent Call Response with comparitors and duration
+message AutoResponseChoice {
+  // The name of the agent call response
+  string agent_call_response = 1;
+  // List of comparitors with duration
+  repeated AgentResponseComparitors comparitors = 2;
+}
+
+// A list of agent entries and duration to use to determine addition to DNCL
+message AgentResponseComparitors {
+  // Value is a string option that will compare against the agent response
+  string value = 1;
+  // Expiration is expressed in number of hours
+  int64 expiration = 2;
+}

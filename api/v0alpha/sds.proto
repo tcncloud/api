@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
+import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Sds {
   // Gets the agent_response_data field for a document in the mongodb calls collection.
@@ -37,23 +37,23 @@ service Sds {
 
 message GetAgentResponseDataReq {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
 }
 
 message GetAgentResponseDataRes {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   map<string, string> responses = 3;
 }
 
 message GetCallReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 }
 
 message UpdateVoicemailBoxReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
   string pbx_extension = 4;
 }
 
@@ -62,7 +62,7 @@ message UpdateVoicemailBoxRes {}
 message CallObject {
   string oid = 1;
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 
   int64 updated = 10;
   map<string, bool> skills = 11;
@@ -88,7 +88,7 @@ message CallObject {
 
 message UpdateAgentResponseDataReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
   map<string, string> responses = 4;
 }
 

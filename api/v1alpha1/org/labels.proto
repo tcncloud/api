@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/auth/perms.proto";
-import "commons/labels.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/labels.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // Label is an entity message.
 message Label {
@@ -82,7 +82,7 @@ message LabelAssignment {
   // The ID of the label.
   string label_id = 1;
   // type of entity being labelled.
-  commons.EntityType type = 2;
+  api.commons.EntityType type = 2;
   // id of the entity being labelled.
   string entity_id = 3;
 
@@ -122,7 +122,7 @@ message GetAssignmentCountsRequest {
 
 // Response message for the GetASsignmentCounts RPC.
 message GetAssignmentCountsResponse {
-  // The key is the int32 value of the commons.EntityType enum.
+  // The key is the int32 value of the api.commons.EntityType enum.
   // The value is the count of all assignments belonging to the
   // type.
   map<int32, int64> counts = 1;
@@ -133,7 +133,7 @@ message GetAssignableLabelsRequest {
   // The given permission is used as the required permission
   // for this RPC. It is also used to return a list of
   // attached labels to the permission for the current user.
-  commons.auth.Permission permission = 1;
+  api.commons.auth.Permission permission = 1;
 }
 
 // Response message for the GetAssignableLabels RPC.

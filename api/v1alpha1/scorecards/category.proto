@@ -2,30 +2,30 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
-import "commons/acd.proto";
-import "commons/scorecards.proto";
+import "api/commons/acd.proto";
+import "api/commons/scorecards.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
-option java_package = "com.tcn.api.v1alpha1.scorecards";
+option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
 
 // CreateCategoryRequest is request to create a category.
 message CreateCategoryRequest {
-  commons.Category category = 1; // Required.
+  api.commons.Category category = 1; // Required.
 }
 
 // CreateCategoryResponse returns the created category.
 message CreateCategoryResponse {
-  commons.Category category = 1;
+  api.commons.Category category = 1;
 }
 
 // ListCategoriesRequest is the request to list categories by some criteria.
 message ListCategoriesRequest {
   repeated string author_ids = 2; // Optional. Returns categories by any author.
   repeated int64 skill_profiles = 3; // Optional. Returns categories with any skill.
-  repeated commons.CallType.Enum call_types = 4; // Optional. Returns categories with any call type.
+  repeated api.commons.CallType.Enum call_types = 4; // Optional. Returns categories with any call type.
   CategoryType category_type = 5; // Required. Returns categories matching type.
 
   enum CategoryType {
@@ -37,13 +37,13 @@ message ListCategoriesRequest {
 
 // ListCategoriesResponse returns a list of categories.
 message ListCategoriesResponse {
-  repeated commons.Category categories = 1;
+  repeated api.commons.Category categories = 1;
 }
 
 // UpdateCategoryRequest is the request to update a category by id.
 message UpdateCategoryRequest {
   // Required.
-  commons.Category category = 1;
+  api.commons.Category category = 1;
 
   // Required. Valid paths: [title, description].
   google.protobuf.FieldMask update_mask = 2;
@@ -51,7 +51,7 @@ message UpdateCategoryRequest {
 
 // UpdateCategoryResponse returns the updated category.
 message UpdateCategoryResponse {
-  commons.Category category = 1;
+  api.commons.Category category = 1;
 }
 
 // DeleteCategoryRequest is request to delete a category by id.
@@ -61,7 +61,7 @@ message DeleteCategoryRequest {
 
 // DeleteCategoryResponse returns the deleted category.
 message DeleteCategoryResponse {
-  commons.Category category = 1;
+  api.commons.Category category = 1;
 }
 
 // GetCategoryRequest is request to get a category by id.
@@ -72,7 +72,7 @@ message GetCategoryRequest {
 
 // GetCategoryResponse returns the category.
 message GetCategoryResponse {
-  commons.Category category = 1;
+  api.commons.Category category = 1;
 }
 
 // SampleCallsByCategoryRequest is a request to get some sample calls for evaluating
@@ -94,7 +94,7 @@ message SampleCallsByCategoryResponse {
 // SampleAgentCall is an Agent Call returned by SampleCallsByCategory
 message SampleAgentCall {
   int64 call_sid = 1; // id of the call
-  commons.CallType.Enum call_type = 2; // call type - i.e. manual, inbound, etc.
+  api.commons.CallType.Enum call_type = 2; // call type - i.e. manual, inbound, etc.
   google.protobuf.Timestamp call_start = 3; // timestamp of call start
   google.protobuf.Duration call_duration = 4; // duration of call
   google.protobuf.Duration speech = 5; // amount of speech in call

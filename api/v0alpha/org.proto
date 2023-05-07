@@ -2,25 +2,25 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/ana.proto";
-import "commons/audit/event_types.proto";
-import "commons/auth/perms.proto";
-import "commons/country.proto";
-import "commons/lms.proto";
-import "commons/logging.proto";
-import "commons/notifications.proto";
-import "commons/omnichannel.proto";
-import "commons/org.proto";
-import "commons/org/trusts.proto";
-import "commons/org_preferences.proto";
-import "commons/perms.proto";
+import "api/commons/ana.proto";
+import "api/commons/audit/event_types.proto";
+import "api/commons/auth/perms.proto";
+import "api/commons/country.proto";
+import "api/commons/lms.proto";
+import "api/commons/logging.proto";
+import "api/commons/notifications.proto";
+import "api/commons/omnichannel.proto";
+import "api/commons/org.proto";
+import "api/commons/org/trusts.proto";
+import "api/commons/org_preferences.proto";
+import "api/commons/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service Org {
   // Registers a new organization
@@ -1444,7 +1444,7 @@ message GetOrganizationProfileResponse {
   string region_id = 5;
   string CRM_ID = 6;
   string billing_id = 8;
-  commons.TimeZone timezone = 10;
+  api.commons.TimeZone timezone = 10;
 
   google.protobuf.Timestamp add_date = 14;
   // map of region_id to array of api_endpoints
@@ -1526,7 +1526,7 @@ message UserDescription {
   bool delegated = 166;
 
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 167;
+  api.commons.TimeZoneWrapper time_zone_override = 167;
   // The email of the user. empty if none set
   string email = 168;
 
@@ -1535,7 +1535,7 @@ message UserDescription {
   string hunt_group_name = 170; // hunt group name
 
   // Trusts assigned to the user.
-  repeated commons.org.Trust trusts = 200;
+  repeated api.commons.org.Trust trusts = 200;
 }
 
 message ListOrganizationUserDescriptionsRequest {}
@@ -1641,7 +1641,7 @@ message UserDetails {
   repeated string caller_ids = 17;
   int64 login_sid = 18;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 19;
+  api.commons.OperatorApplications default_app = 19;
   string user_caller_id = 20;
   int64 hunt_group_sid = 21;
   string hunt_group_name = 22;
@@ -1658,12 +1658,12 @@ message UserDetails {
   // Delegated login users are from connected login managements like Azure or Okta
   bool delegated = 31;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 32;
+  api.commons.TimeZoneWrapper time_zone_override = 32;
   // email of the user. empty if none set
   string email = 34;
 
   // Trusts assigned to the user.
-  repeated commons.org.Trust trusts = 200;
+  repeated api.commons.org.Trust trusts = 200;
 }
 
 message AgentUser {
@@ -1694,7 +1694,7 @@ message AgentUser {
   // whether or not the user has the AGENT permission
   bool has_agent_perm = 101;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 102;
+  api.commons.TimeZoneWrapper time_zone_override = 102;
   // The email of the agent. Empty if none set.
   string email = 103;
   // A list of labels assigned to the user
@@ -1743,7 +1743,7 @@ message PriorityGroup {
   // threshold for the priority group
   int32 threshold = 2;
   // channel type for the priority group
-  commons.ChannelType channel_type = 3;
+  api.commons.ChannelType channel_type = 3;
 }
 
 message GetAgentProfileGroupRequest {
@@ -1795,12 +1795,12 @@ message UpdateUserRequest {
   string last_name = 12;
   string partner_agent_id = 4;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 16;
+  api.commons.TimeZoneWrapper time_zone_override = 16;
   repeated string linkback_numbers = 6;
   repeated string caller_ids = 7;
   string user_name = 8;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 9;
+  api.commons.OperatorApplications default_app = 9;
   string user_caller_id = 10;
   bool password_reset_required = 13;
   string agent_profile_group_id = 14;
@@ -1826,7 +1826,7 @@ message Country {
   int64 country_code = 106;
   repeated string region_codes = 108;
   // The enum value associated with the country.
-  commons.Country country = 109;
+  api.commons.Country country = 109;
 }
 
 message GetCountriesListRequest {}
@@ -1867,7 +1867,7 @@ message User {
   // is not delgated this will be nil.
   google.protobuf.StringValue connection_id = 166;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 167;
+  api.commons.TimeZoneWrapper time_zone_override = 167;
 
   // A list of labels assigned to the user
   repeated Label label_entities = 171;
@@ -1881,15 +1881,15 @@ message GetPermissionsResponse {
   reserved 3;
   User user = 1;
   // List of permissions this user has.
-  repeated commons.auth.Permission permissions = 2;
+  repeated api.commons.auth.Permission permissions = 2;
   string ui_log_level = 4;
   string org_name = 5;
-  commons.Level log_level = 6;
+  api.commons.Level log_level = 6;
   // List of legacy permissions.
-  repeated commons.Permission p3_permissions = 7;
+  repeated api.commons.Permission p3_permissions = 7;
   string org_default_region_id = 8;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 9;
+  api.commons.OperatorApplications default_app = 9;
 }
 
 message UpdateUserDisabledRequest {
@@ -1970,7 +1970,7 @@ message PermissionGroup {
   // Brief description of this group of permissions.
   string description = 4;
   // List of permissions in this group.
-  repeated commons.auth.Permission permissions = 5;
+  repeated api.commons.auth.Permission permissions = 5;
   // Restricts users from modifying this group.
   bool read_only = 6;
 }
@@ -1990,7 +1990,7 @@ message CreatePermissionGroupRequest {
   // Short description about this permission group.
   string description = 2;
   // List of permissions included in the group.
-  repeated commons.auth.Permission permissions = 3;
+  repeated api.commons.auth.Permission permissions = 3;
 }
 
 // The response for api.v0alpha.CreatePermissionGroup.
@@ -2091,7 +2091,7 @@ message P3PermissionGroup {
   string permission_group_id = 1;
   string name = 2;
   string description = 3;
-  repeated commons.Permission permissions = 4;
+  repeated api.commons.Permission permissions = 4;
   // return sid for visibility on skunk permission group
   int64 permission_group_sid = 6;
 }
@@ -2099,7 +2099,7 @@ message P3PermissionGroup {
 message CreateP3PermissionGroupRequest {
   string name = 4;
   string description = 5;
-  repeated commons.Permission permissions = 6;
+  repeated api.commons.Permission permissions = 6;
 }
 
 message CreateP3PermissionGroupResponse {
@@ -2112,7 +2112,7 @@ message UpdateP3PermissionGroupRequest {
   string permission_group_id = 2;
   string name = 3;
   string description = 4;
-  repeated commons.Permission permissions = 5;
+  repeated api.commons.Permission permissions = 5;
 }
 
 message UpdateP3PermissionGroupResponse {
@@ -2166,7 +2166,7 @@ message RegisterOrganizationRequest {
   // allowed_countries is used to initialize the organization's
   // allowed countries preference.
   // This field is optional.
-  repeated commons.Country allowed_countries = 2;
+  repeated api.commons.Country allowed_countries = 2;
   // Required. The id of new organization's parent account.
   string p3_parent_account = 3;
 }
@@ -2178,10 +2178,10 @@ message Organization {
   bool is_manual_only_account = 3;
   // Requried. Must match one of the timezones returned by
   // api.v0alpha.GetTimezones.
-  commons.ClientSkin backoffice_theme = 16;
+  api.commons.ClientSkin backoffice_theme = 16;
   string contract_number = 17; // DEPRECATED. Use CRM_ID.
   string CRM_ID = 18;
-  commons.TimeZone time_zone_enum = 19;
+  api.commons.TimeZone time_zone_enum = 19;
   // Required
   string name = 20;
 }
@@ -2197,7 +2197,7 @@ message UpdateOrganizationRequest {
   // organization id
   string org_id = 1;
   // organizations time zone
-  commons.TimeZone time_zone = 4;
+  api.commons.TimeZone time_zone = 4;
   // organizations name
   string name = 5;
 
@@ -2269,7 +2269,7 @@ message AddPermissionToAccountOwnerPermissionGroupRequest {
   // id for which organization to add permission to default Account Owner Group.
   string org_id = 1;
   // Permission to be added.
-  repeated commons.auth.Permission permissions = 3;
+  repeated api.commons.auth.Permission permissions = 3;
 }
 
 // The response for org.Org.AddPermissionToAccountOwnerPermissionGroup
@@ -2284,7 +2284,7 @@ message RevokePermissionToAccountOwnerPermissionGroupRequest {
   // id for which organization to revoke permission to default Account Owner Group.
   string org_id = 1;
   // Permission to be revoked.
-  repeated commons.auth.Permission permissions = 3;
+  repeated api.commons.auth.Permission permissions = 3;
 }
 
 // The response for org.Org.RevokePermissionToAccountOwnerPermissionGroup
@@ -2298,7 +2298,7 @@ message AddPermissionToOrgDefaultGroupRequest {
   // id for which organization to add permission to default Super group.
   string org_id = 1;
   // Permission to be added.
-  commons.auth.Permission permission = 2;
+  api.commons.auth.Permission permission = 2;
 }
 
 // The response for org.Org.AddPermissionToOrgDefaultGroup
@@ -2312,7 +2312,7 @@ message RemovePermissionFromOrgDefaultGroupRequest {
   // id for which organization to remove permission from default Super group.
   string org_id = 1;
   // Permission to be removed.
-  commons.auth.Permission permission = 2;
+  api.commons.auth.Permission permission = 2;
 }
 
 // The response for org.Org.RemovePermissionFromOrgDefaultGroup
@@ -2357,10 +2357,10 @@ message UpdateOrganizationPreferencesResponse {}
 
 // Wrapper OrganizationPreferences object for get response and update request
 message OrganizationPreferences {
-  repeated commons.Country allowed_countries = 10; // List of country enums that the organization uses.
-  commons.Country default_country = 11; // Default country for organization
-  commons.TimeZone time_zone = 12; // Organization's time zone
-  commons.DisplayLanguage display_language = 13; // Default organization display language
+  repeated api.commons.Country allowed_countries = 10; // List of country enums that the organization uses.
+  api.commons.Country default_country = 11; // Default country for organization
+  api.commons.TimeZone time_zone = 12; // Organization's time zone
+  api.commons.DisplayLanguage display_language = 13; // Default organization display language
 }
 
 // Request for GetAgentPreferences
@@ -2437,14 +2437,14 @@ message ContactPreferences {
   // DefaultEmailColumn sets the DefaultEmailColumn oneof
   string default_email_column = 15;
   // DefaultDuplicateHandling sets a string choice for duplicate numbers
-  commons.DefaultDuplicateHandling default_duplicate_handling = 17;
+  api.commons.DefaultDuplicateHandling default_duplicate_handling = 17;
 }
 
 // Contact Import Template type used for default_contact_import_format preference
 message ImportFormat {
   oneof format { // Either custom or standard format
     CustomImportFormat custom = 1; // Client-defined import format
-    commons.StandardImportFormat standard = 2; // Standard import format enum
+    api.commons.StandardImportFormat standard = 2; // Standard import format enum
   }
 }
 
@@ -2555,7 +2555,7 @@ message DashboardPreferences {
   bool default_descending_sort = 5; // Agent dashboard sort direction; false for ascending, true for descending.
   int64 table_template_sid = 6; // xml_client_property_sid associated with the agent dashboard table template property.
   IncludedCallTypes default_call_types = 7; // Which call types are enabled in the agents dashboard
-  commons.AgentInfoSortBy default_info_sort_by_value = 8; // Agent info dashboard order-by parameter
+  api.commons.AgentInfoSortBy default_info_sort_by_value = 8; // Agent info dashboard order-by parameter
   BargeInFiltering default_barge_in_filtering = 9; // Barge-in agent filter, controls hunt-group and agent status parameters
 }
 
@@ -2619,7 +2619,7 @@ message DashboardQueuePreferences {
   bool default_descending_sort = 13; // Default table sort direction. 'false' for descending, 'true' for ascending.
   int64 default_agent_skills_filter = 14; // Default skills filter.  Holds a regional sid pointing to the filter in the xml_client_property table.  Default is no filtering ('-1').
   int64 default_info_table_template = 15; // Default table template. Holds a regional sid pointing to the filter in the xml_client_property table.  Default is no filtering ('0').
-  commons.QueueInfoSortBy default_info_sort_by_value = 16; // Default Queue/Hold Info Sort-By Value
+  api.commons.QueueInfoSortBy default_info_sort_by_value = 16; // Default Queue/Hold Info Sort-By Value
 }
 
 //
@@ -2656,14 +2656,14 @@ message PhonePreferences {
   bool override_linkback_recording = 15; // Determines whether broadcast templates may set to record linkbacks individually.
   int64 caller_id_cfd_sid = 16; // The 'sid' of the Caller ID field description to use as default.
   DialOrder default_dial_order = 17; // The dial order of a contact record.  Default 'First Number Only'.
-  commons.AnsweringMachineDetection answering_machine_detection = 18; // Which type of answering machine detection to use.
+  api.commons.AnsweringMachineDetection answering_machine_detection = 18; // Which type of answering machine detection to use.
   bool linkback_recording = 19; // Determines whether linkback recording is enabled.
 }
 
 // Dial Order holds either a type enum, or one or more Contact Field Description fields for custom order.
 message DialOrder {
   oneof type {
-    commons.DialOrderType standard_order = 1; // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
+    api.commons.DialOrderType standard_order = 1; // FIRST_NUMBER_ONLY, NATURAL_ORDER.  (CUSTOM_DIAL_ORDER should not be set here but indicated by setting a CustomDialOrder below).
     CustomDialOrder custom_order = 2; // Defines a "Custom Order" using one or more Contact Field Descriptions.
   }
 }
@@ -2758,7 +2758,7 @@ message BroadcastPreferences {
   bool display_follow_the_sun = 3; // Display follow the sun field
   bool follow_the_sun = 4; // East to west scheduling
   bool sequence_terminator_override = 5; // Allow override for sequence terminator
-  commons.BroadcastTemplateOrdering broadcast_template_ordering = 6; // Broadcast schedule template ordering
+  api.commons.BroadcastTemplateOrdering broadcast_template_ordering = 6; // Broadcast schedule template ordering
   repeated string email_from_addresses = 7; // Choices of emails returned from sending a broadcast
   bool start_time_enabled = 8; // Broadcast start time enabled
   BroadcastTime default_start_time = 9; // Sets the default broadcast start time
@@ -2770,7 +2770,7 @@ message BroadcastPreferences {
 message BroadcastTime {
   int32 hours = 1; // [0-23] hour in 24-hour time
   int32 minutes = 2; // [0-59] minute
-  commons.TimeZone timezone = 3; // Timezone to start/stop at
+  api.commons.TimeZone timezone = 3; // Timezone to start/stop at
 }
 
 // Request for GetSchedulePreferences
@@ -2797,7 +2797,7 @@ message UpdateSchedulePreferencesResponse {}
 message SchedulePreferences {
   bool display_schedule_by_time_zone = 1; // Display campaign schedule by time zone
   bool use_schedule_by_time_zone = 2; // Whether or not by defualt campaigns are scheduled by time zone
-  commons.ScheduleByTimeZoneScope schedule_by_time_zone_scope = 3; // Schedule by time zone scope
+  api.commons.ScheduleByTimeZoneScope schedule_by_time_zone_scope = 3; // Schedule by time zone scope
   bool display_schedule_as_paused = 4; // Display "schedule as paused" field
   bool schedule_as_paused = 5; // Schedule paused by default
   int64 default_completion_threshold = 6; // Default completion threshold
@@ -2861,7 +2861,7 @@ message UpdateBusinessPreferencesResponse {}
 // Wrapper BusinessPreferences object for get response and update request
 message BusinessPreferences {
   int32 weeks_of_data = 1; // Default number of weeks shown in business intelligence analytics visualizer
-  commons.AnaTimeZone time_zone = 2; // Time zone for business intelligence
+  api.commons.AnaTimeZone time_zone = 2; // Time zone for business intelligence
   bool multi_client_access = 3; // Controls adoption for multi-client access
   bool custom_visualizations = 4; // Controls custom reports visualization
   string time_filter = 5; // Default time filter in custom dashboard and visualizations
@@ -3070,7 +3070,7 @@ message FilterPreferences {
 // Report filter type, standard or custom
 message ReportFilter {
   oneof choice {
-    commons.StandardReportFilter standard = 1; // Standard report filter (enum)
+    api.commons.StandardReportFilter standard = 1; // Standard report filter (enum)
     int64 custom = 2; // Custom report filter sid (XML client property)
   }
 }
@@ -3141,7 +3141,7 @@ message RecordingPreferences {
   RecordingsFileNamingConvention file_name_convention = 11; // Controls file naming conventions for recordings
   bool zip_convention_enabled = 12; // Controls whether custom file name convention is used (for *.zip)
   RecordingsZipFileNamingConvention zip_file_name_convention = 13; // Controls file naming conventions for compressed recordings
-  commons.RecordingFileType export_file_type = 14; // Export audio recordings as either .mp3 or .wav
+  api.commons.RecordingFileType export_file_type = 14; // Export audio recordings as either .mp3 or .wav
 }
 
 // Call recordings file name convention
@@ -3210,7 +3210,7 @@ message AdminClientPreferences {
   repeated string whitelist_domains = 7; // List of whitelisted domains
   string callbacks_service_id = 8; // Scheduled callbacks service ID
   bool agent_screen_recording = 9; // Agent screen recording enabled
-  repeated commons.Country allowed_countries = 11; // List of country enums that the organization uses.
+  repeated api.commons.Country allowed_countries = 11; // List of country enums that the organization uses.
 }
 
 //
@@ -3259,13 +3259,13 @@ message GetBackofficeThemePreferenceRequest {
 
 // Response for GetBackofficeThemePreference
 message GetBackofficeThemePreferenceResponse {
-  commons.ClientSkin backoffice_theme = 1; // Backoffice theme enum
+  api.commons.ClientSkin backoffice_theme = 1; // Backoffice theme enum
 }
 
 // Request for EditBackofficeThemePreference
 message EditBackofficeThemePreferenceRequest {
   string org_id = 1;
-  commons.ClientSkin backoffice_theme = 2; // Backoffice theme enum
+  api.commons.ClientSkin backoffice_theme = 2; // Backoffice theme enum
 }
 
 // Response for EditBackofficeThemePreference
@@ -3314,7 +3314,7 @@ message WebLinkBaseOption {
   }
 
   message AgentField {
-    commons.AgentFieldOption option = 1;
+    api.commons.AgentFieldOption option = 1;
   }
 
   message DataKeyField {
@@ -3336,7 +3336,7 @@ message WebLinkBaseOption {
   }
 
   message PhoneField {
-    commons.PhoneFieldOption option = 1;
+    api.commons.PhoneFieldOption option = 1;
   }
 
   message SipHeaderData {
@@ -3344,7 +3344,7 @@ message WebLinkBaseOption {
   }
 
   message PostalField {
-    commons.PostalFieldOption option = 1;
+    api.commons.PostalFieldOption option = 1;
   }
 }
 
@@ -3421,7 +3421,7 @@ message AgentTriggerTemplate {
     oneof pause_code_type {
       // this field is an xml_client_property_sid in skunk.
       int64 custom_pause_code_sid = 2;
-      commons.AutomaticSystemCode automatic_system_code = 3;
+      api.commons.AutomaticSystemCode automatic_system_code = 3;
     }
     oneof result {
       // Valid AdvanceStatusType Values: WAITING
@@ -3514,7 +3514,7 @@ message AgentTriggerTemplate {
   }
 
   message AdvanceStatus {
-    commons.AdvanceStatusType status_type = 3;
+    api.commons.AdvanceStatusType status_type = 3;
   }
 
   message DisplayMessage {
@@ -3743,13 +3743,13 @@ message CreateUserRequest {
   repeated string linkback_numbers = 16;
   repeated string caller_ids = 17;
   // Default app the user starts on
-  commons.OperatorApplications default_app = 19;
+  api.commons.OperatorApplications default_app = 19;
   string user_caller_id = 20;
   string agent_profile_group_id = 21;
   // A list of labels to assign to the user
   repeated string labels = 22;
   // User TimeZone with wrapper for nullable timezone
-  commons.TimeZoneWrapper time_zone_override = 23;
+  api.commons.TimeZoneWrapper time_zone_override = 23;
 }
 
 message CreateUserResponse {
@@ -3904,12 +3904,12 @@ message QueueConfig {
   // general configs:
   int64 callback_timeout_minutes = 12;
   bool number_update = 13;
-  commons.InboundOverrideOption inbound_override = 14;
+  api.commons.InboundOverrideOption inbound_override = 14;
 
   // IntercomConnection is only editable from the default
   // tab of the account default config. This will
   // eventually be removed.
-  commons.IntercomConnection intercom_connection = 17;
+  api.commons.IntercomConnection intercom_connection = 17;
 
   message AnnouncementMixing {
     // nil fields will use default config settings.
@@ -3921,7 +3921,7 @@ message QueueConfig {
     Config any = 5;
 
     message Config {
-      commons.AnnouncementMixingOption option = 1;
+      api.commons.AnnouncementMixingOption option = 1;
     }
   }
 
@@ -4064,7 +4064,7 @@ message QueueConfig {
         Optionless voicemail = 3;
         Optionless queued_callback = 4;
         // the value of this field is the IVR/Script event.
-        commons.DigitWrapper trigger_ivr = 5;
+        api.commons.DigitWrapper trigger_ivr = 5;
         Skills add_skills = 6;
         Skills drop_skills = 7;
       }
@@ -4077,7 +4077,7 @@ message QueueConfig {
         Optionless voicemail = 3;
         Optionless queued_callback = 4;
         // the value of this field is the IVR/Script event.
-        commons.DigitWrapper trigger_ivr = 5;
+        api.commons.DigitWrapper trigger_ivr = 5;
       }
     }
   }
@@ -4259,7 +4259,7 @@ message UpdateP3UserNameResponse {}
 
 message GetQueueConfigSoundReq {
   string config = 1;
-  commons.ConfigSound sound = 2;
+  api.commons.ConfigSound sound = 2;
 }
 
 message GetQueueConfigSoundRes {
@@ -4268,7 +4268,7 @@ message GetQueueConfigSoundRes {
 
 message SetQueueConfigSoundReq {
   string config = 1;
-  commons.ConfigSound sound = 2;
+  api.commons.ConfigSound sound = 2;
   string file_name = 3;
 }
 
@@ -4282,8 +4282,8 @@ message SetAllQueueConfigSoundsFromSourceReq {
   }
 
   message DefaultProfile {
-    commons.SoundLanguage language = 1;
-    commons.SoundGender gender = 2;
+    api.commons.SoundLanguage language = 1;
+    api.commons.SoundGender gender = 2;
   }
 }
 
@@ -4336,7 +4336,7 @@ message OrgBillingSettings {
   PhoneBillingRates default = 4;
   // The given billing rates will be used for the region instead
   // of the system defaults (or the org default if default is not nil).
-  // Key: commons.Country as int32
+  // Key: api.commons.Country as int32
   map<int32, BillingRegionMap> country_region_overrides = 8;
   // If agent_rates is nil the AgentBillingRates fields from
   // the system default will be used.
@@ -4415,7 +4415,7 @@ message GetOrgBillingSettingsResponse {
   // country_default_regions contains the billing data for regions
   // that belong to the orgs allowed countries that don't
   // have custom overrides.
-  // Key: commons.Country as int32
+  // Key: api.commons.Country as int32
   map<int32, BillingRegionMap> country_default_regions = 3;
 }
 
@@ -4433,7 +4433,7 @@ message AddOrgBillingOverrideRequest {
   string org_id = 1;
   string region = 2;
   PhoneBillingRates rates = 3;
-  commons.Country country = 4;
+  api.commons.Country country = 4;
 }
 
 // Response message for the AddOrgBillingOverride rpc.
@@ -4443,7 +4443,7 @@ message AddOrgBillingOverrideResponse {}
 message RemoveOrgBillingOverrideRequest {
   string org_id = 1;
   string region = 2;
-  commons.Country country = 3;
+  api.commons.Country country = 3;
 }
 
 // Response message for the RemoveOrgBillingOverride rpc.
@@ -4478,7 +4478,7 @@ message UpdateP3UserSidsResponse {}
 message AuthConnectionSettings {
   // provider is the type of auth0 connection.
   // NONE means the org doesn't have a connection setup.
-  commons.IdentityProvider provider = 2;
+  api.commons.IdentityProvider provider = 2;
   // issuer_url is the url provided by the identity provider
   // used to get authorization tokens.
   string issuer_url = 3;
@@ -4585,8 +4585,8 @@ message UserSubscription {
   // Used by matrix-notify.
   // It receives an event on an event type and
   // uses it to look up the targets for that event type.
-  // e.g. commons.audit.EventType_DUMMY_APPLICAION_DID_SOMETHING
-  commons.audit.EventType event_type = 2;
+  // e.g. api.commons.audit.EventType_DUMMY_APPLICAION_DID_SOMETHING
+  api.commons.audit.EventType event_type = 2;
 
   // Required.
   string user_id = 3;
@@ -4602,7 +4602,7 @@ message UserSubscription {
 
   // Optional.
   // If set, user only notified for events that match ALL filters.
-  repeated commons.FieldValueFilter filters = 4;
+  repeated api.commons.FieldValueFilter filters = 4;
 
   // -------------------- Deliver Methods --------------------
   message Room303 {
@@ -4696,7 +4696,7 @@ message ListOrgSubscriptionsRequest {
 
   // Optional.
   // Used by matrix-notify to get settings in bulk for a particular event type.
-  commons.audit.EventType event_type = 2;
+  api.commons.audit.EventType event_type = 2;
 }
 
 // Response for listing subscriptions for multiple users.
@@ -4848,5 +4848,5 @@ message GenericStatisticFormatRule {
   // Timezone id.
   string timezone_id_string = 6;
   // Time Zone Enum
-  commons.TimeZone time_zone_enum = 7;
+  api.commons.TimeZone time_zone_enum = 7;
 }

@@ -16,11 +16,11 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
+import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 // Service for interacting with TCN's Agent Call Distribution system.
 // Accessing all of the methods require an authenticated user with the correct
@@ -316,7 +316,7 @@ message AgentGetStatusRequest {
 
 message AgentGetStatusReply {
   int64 status = 2;
-  commons.AgentStatus.Enum status_desc = 3;
+  api.commons.AgentStatus.Enum status_desc = 3;
   bool paused = 4;
   string queue = 5;
   int64 current_session_id = 6;
@@ -327,7 +327,7 @@ message AgentGetStatusReply {
   bool agent_peer_is_lost_call = 11;
   bool disabled = 12;
   bool keep_alive_succeeded = 13;
-  repeated commons.TransferMember transfer_members = 14;
+  repeated api.commons.TransferMember transfer_members = 14;
   bool agent_is_muted = 15;
 }
 
@@ -338,7 +338,7 @@ message AgentGetConnectedPartyRequest {
 
 message AgentGetConnectedPartyReply {
   int64 call_id = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 }
 
 message AgentIntercomRequest {
@@ -413,7 +413,7 @@ message AgentDisconnectReply {}
 
 message AgentSessionEventReq {
   int64 agent_session_sid = 3;
-  commons.AgentSessionLogActionKey.Enum action_key = 10;
+  api.commons.AgentSessionLogActionKey.Enum action_key = 10;
   string action_value = 11;
 }
 
@@ -423,7 +423,7 @@ message CallerRequeueRequest {
   string new_config_folder = 3;
   map<string, bool> skills = 4;
   bool replace_skills = 5;
-  commons.ReplaceConfig.Enum replace_config = 6;
+  api.commons.ReplaceConfig.Enum replace_config = 6;
   int64 session_sid = 7;
   // the voicemail extesion to use for the caller
   string voicemail_box = 8;
@@ -552,14 +552,14 @@ message AgentGetCallFromHoldReply {}
 
 message AgentGetSpecificCallFromHoldRequest {
   int64 call_id = 3;
-  commons.CallType.Enum call_type = 4;
+  api.commons.CallType.Enum call_type = 4;
   int64 session_sid = 5;
 }
 
 message AgentGetSpecificCallFromHoldReply {}
 
 message AgentPutCallOnHoldRequest {
-  commons.HoldType hold_type = 1;
+  api.commons.HoldType hold_type = 1;
   int64 session_sid = 2;
 }
 
@@ -574,7 +574,7 @@ message AgentStatusDetails {
   int64 sid = 1;
   int64 current_session_id = 2;
   int64 status = 3;
-  commons.AgentStatus.Enum status_desc = 4;
+  api.commons.AgentStatus.Enum status_desc = 4;
   // The users id
   string user_id = 5;
 }
@@ -607,7 +607,7 @@ message AgentPBXApproveCallReply {}
 
 message GetCallerLostPeerRequest {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
 }
 
 message GetCallerLostPeerReply {
@@ -617,7 +617,7 @@ message GetCallerLostPeerReply {
 
 message CallerGetRawEventRequest {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
 }
 
 message CallerGetRawEventReply {
@@ -632,7 +632,7 @@ message CallerEvent {
 
 message PeerAgentWithCallerRequest {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   int64 session_sid = 3;
 }
 
@@ -669,7 +669,7 @@ message WarmCallerTransferStartReq {
   // the sid for the destination caller
   int64 call_sid = 2;
   // the type for the destination caller
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
   // whether or not we should mute current caller ro not
   bool caller_hold = 4;
 }
@@ -742,7 +742,7 @@ message PlayDTMFRequest {
   // the session sid for the agent
   int64 session_sid = 1;
   // the dtmf tone to play
-  repeated commons.DTMFDigit dtmf_digits = 2;
+  repeated api.commons.DTMFDigit dtmf_digits = 2;
 }
 
 // message used in response to playing a dtmf tone in an agent's conference

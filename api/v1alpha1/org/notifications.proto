@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package api.v1alpha1.org;
 
-import "commons/audit/event_types.proto";
-import "commons/notifications.proto";
+import "api/commons/audit/event_types.proto";
+import "api/commons/notifications.proto";
 import "google/protobuf/field_mask.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 // -------------------- Subscriptions --------------------
 
@@ -23,8 +23,8 @@ message UserSubscription {
   // Used by matrix-notify.
   // It receives an event on a event type and
   // uses it to look up the targets for that event type.
-  // e.g. commons.audit.EventType_DUMMY_EVENT_DID_SOMETHING
-  commons.audit.EventType event_type = 2;
+  // e.g. api.commons.audit.EventType_DUMMY_EVENT_DID_SOMETHING
+  api.commons.audit.EventType event_type = 2;
 
   // Required.
   string user_id = 3;
@@ -37,7 +37,7 @@ message UserSubscription {
 
   // Optional.
   // If set, user only notified for events that match ALL filters.
-  repeated commons.FieldValueFilter filters = 4;
+  repeated api.commons.FieldValueFilter filters = 4;
 
   // Optional. Updates must specify current version or be rejected.
   int64 version = 5;
@@ -189,7 +189,7 @@ message ListOrgSubscriptionsRequest {
 
   // Optional.
   // Used by matrix-notify to get settings in bulk for a particular event type.
-  commons.audit.EventType event_type = 2;
+  api.commons.audit.EventType event_type = 2;
 }
 
 // Response for listing subscriptions for multiple users.

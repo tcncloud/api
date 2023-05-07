@@ -2,19 +2,19 @@ syntax = "proto3";
 
 package api.v0alpha;
 
-import "commons/acd.proto";
-import "commons/broadcasts.proto";
-import "commons/call.proto";
-import "commons/omnichannel.proto";
-import "commons/p3api.proto";
-import "commons/task.proto";
-import "commons/wfm.proto";
+import "api/commons/acd.proto";
+import "api/commons/broadcasts.proto";
+import "api/commons/call.proto";
+import "api/commons/omnichannel.proto";
+import "api/commons/p3api.proto";
+import "api/commons/task.proto";
+import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
-option java_package = "com.tcn.api.v0alpha";
+option java_package = "com.tcn.matrix.api.v0alpha";
 
 service P3Api {
   rpc GetAgentHuntGroup(GetAgentHuntGroupReq) returns (HuntGroup) {
@@ -745,7 +745,7 @@ message HuntGroup {
   string name = 3;
   google.protobuf.StringValue description = 4;
   google.protobuf.Timestamp modify_date = 5;
-  commons.HuntGroupType.Enum type = 6;
+  api.commons.HuntGroupType.Enum type = 6;
   int64 agent_count = 7;
 }
 
@@ -816,7 +816,7 @@ message AgentSession {
   google.protobuf.Int64Value agent_sid = 9;
   google.protobuf.Int32Value status = 10;
   google.protobuf.BoolValue softphone_user = 11;
-  commons.AgentDialIn.Enum agent_dial_in = 12;
+  api.commons.AgentDialIn.Enum agent_dial_in = 12;
   google.protobuf.StringValue agent_callerid = 13;
   google.protobuf.StringValue agent_dialed_number = 14;
   google.protobuf.StringValue worker = 15;
@@ -852,27 +852,27 @@ message Agent {
 
 message GetClientInfoDataReq {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   int64 task_sid = 4;
 }
 
 message GetClientInfoDataRes {
   string phone_number = 1;
   string caller_id = 2;
-  repeated commons.ClientInfoDataRow rows = 3;
+  repeated api.commons.ClientInfoDataRow rows = 3;
   int64 country_sid = 4;
 }
 
 message GetClientInfoDisplayTemplateReq {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   int64 hunt_group_sid = 4;
 }
 
 message GetClientInfoDisplayTemplateRes {
   bool display_all_fields = 1;
-  commons.DialedNumberFieldSettings dialed_number_settings = 2;
-  repeated commons.ClientInfoDisplayTemplateRow rows = 3;
+  api.commons.DialedNumberFieldSettings dialed_number_settings = 2;
+  repeated api.commons.ClientInfoDisplayTemplateRow rows = 3;
 }
 
 message ListAgentStatisticsDataReq {
@@ -953,7 +953,7 @@ message PhoneBookStandardNumber {
   // The phone number types determines where this phone book is used.
   // It can be any combination of Caller ID, Outbound, and Transfer, separated by a colon.
   // For example -> Caller ID:Outbound:Transfer would be all three.
-  repeated commons.PhoneBookPhoneNumberType phone_number_types = 2;
+  repeated api.commons.PhoneBookPhoneNumberType phone_number_types = 2;
   bool white_list = 3;
 }
 
@@ -966,7 +966,7 @@ message PhoneBookSIPURI {
   // The sip types determines where this phone book is used.
   // It can be Outbound, Transfer, or both separated by a colon.
   // For example -> Outbound:Transfer
-  repeated commons.PhoneBookSIPType sip_types = 3;
+  repeated api.commons.PhoneBookSIPType sip_types = 3;
 }
 
 // Request message for the ListClientPhoneBookEntries RPC
@@ -1073,7 +1073,7 @@ message TriggerDetails {
   string trigger_desc = 2;
   int64 trigger_status = 3;
   int64 trigger_duration = 4;
-  repeated commons.CallType.Enum call_types = 5;
+  repeated api.commons.CallType.Enum call_types = 5;
   repeated TriggerParameters trigger_parameters = 6;
 }
 
@@ -1124,7 +1124,7 @@ message EmailResponse {
 message MailMergeData {
   reserved 1;
   int64 call_sid = 4;
-  commons.CallType.Enum call_type = 5;
+  api.commons.CallType.Enum call_type = 5;
   string scheduled_callback_id = 6;
 }
 
@@ -1151,7 +1151,7 @@ message DNCL {
 
 message AgentLoggingData {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   string action_value_suffix = 3;
 }
 
@@ -1205,7 +1205,7 @@ message HuntGroupAgentSettings {
   bool display_skills = 32; // determines if agent can see skills
 
   // Array of interruptable call states (manual, preview, both manual and preview)
-  repeated commons.InterruptedPeeringStatus interrupt_peering = 33;
+  repeated api.commons.InterruptedPeeringStatus interrupt_peering = 33;
 }
 
 message AgentStatisticsSettings {
@@ -1495,7 +1495,7 @@ message ManualApprovalSettings {
 message ListHuntGroupWebLinksReq {
   int64 hunt_group_sid = 1;
   int64 call_sid = 4;
-  commons.CallType.Enum call_type = 5;
+  api.commons.CallType.Enum call_type = 5;
   // the following fields should only be set when the call_sid from the request is from a retrieved scheduled callback.
   // used to get the callback details to replace them in the web links parameters (if any match).
   string service_id = 7;
@@ -1538,7 +1538,7 @@ message ListAgentCallHistoryRes {
   message Entry {
     int64 call_sid = 1;
     string schedule_time = 2;
-    commons.CallType.Enum call_type = 3;
+    api.commons.CallType.Enum call_type = 3;
     string phone_number = 4;
     string caller_id = 5;
     int32 result = 6;
@@ -1580,7 +1580,7 @@ message GetCampaignCompletionStatusRes {
 
 message GetLostPeerInfoReq {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
 }
 
 message GetLostPeerInfoRes {
@@ -1635,7 +1635,7 @@ message ListAgentQueueAndOnHoldCallDataRes {
     // caller_id used when the call was placed.
     string caller_id = 3;
     // call type of the found call.
-    commons.CallType.Enum call_type = 4;
+    api.commons.CallType.Enum call_type = 4;
     // timestamp indicating when the call started.
     google.protobuf.Timestamp start_date = 5;
     // timestamp indicating when the call was put on hold (only set when call is a hold call).
@@ -1645,7 +1645,7 @@ message ListAgentQueueAndOnHoldCallDataRes {
     // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
     bool agent_specific = 8;
     // queued notification type of the call.
-    commons.QueuedNotificationType queued_notification_type = 9;
+    api.commons.QueuedNotificationType queued_notification_type = 9;
   }
 
   // calls that were queued and have a matching subset of the agent_skills from the request.
@@ -1666,9 +1666,9 @@ message SaveAgentCallResponsesReq {
   int64 call_sid = 1;
   int64 agent_session_sid = 2;
   repeated AgentCallResponseDetails agent_call_response_details = 3;
-  commons.CallType.Enum call_type = 4;
+  api.commons.CallType.Enum call_type = 4;
   // will create an agent response for the given compliance metadata (not required).
-  repeated commons.SimpleKeyValue compliance_metadata = 5;
+  repeated api.commons.SimpleKeyValue compliance_metadata = 5;
 }
 
 message SaveAgentCallResponsesRes {}
@@ -1676,7 +1676,7 @@ message SaveAgentCallResponsesRes {}
 message AgentCallLog {
   int64 agent_call_log_sid = 1;
   google.protobuf.Int64Value call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
   google.protobuf.Timestamp action_date = 4;
   google.protobuf.StringValue action_key = 5;
   google.protobuf.StringValue action_value = 6;
@@ -1747,7 +1747,7 @@ message AgentCallActivityDetails {
   google.protobuf.Int64Value transfer_duration = 15;
   google.protobuf.Int64Value wrap_up_duration = 16;
   google.protobuf.Int64Value agent_call_sid = 17;
-  commons.HuntGroupType.Enum hunt_group_type = 18;
+  api.commons.HuntGroupType.Enum hunt_group_type = 18;
 }
 
 message GetConditionalDNCLRulesReq {}
@@ -1757,7 +1757,7 @@ message GetConditionalDNCLRulesRes {
 }
 
 message ManualDialStartReq {
-  commons.SimpleCallData simple_call_data = 1;
+  api.commons.SimpleCallData simple_call_data = 1;
   reserved 3;
   int64 hunt_group_sid = 6;
   int64 agent_session_sid = 7;
@@ -1766,10 +1766,10 @@ message ManualDialStartReq {
 message ManualDialStartRes {}
 
 message ListExtendedCallHistoryReq {
-  commons.CallHistorySearchType.Enum search_type = 4;
-  repeated commons.CallType.Enum call_types = 5;
+  api.commons.CallHistorySearchType.Enum search_type = 4;
+  repeated api.commons.CallType.Enum call_types = 5;
   string customer_number = 6;
-  commons.CallHistorySearchScope.Enum search_scope = 7;
+  api.commons.CallHistorySearchScope.Enum search_scope = 7;
   int64 call_sid = 8;
   string caller_id = 9;
 }
@@ -1779,7 +1779,7 @@ message ListExtendedCallHistoryRes {
   // The groupSid
   int64 group_sid = 1;
   // The callType, based on the CallType enum.
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
   // The callSid
   int64 call_sid = 3;
   // The customerNumber
@@ -1819,7 +1819,7 @@ message ListWhiteListPhoneBooksReq {
   // Whether to include the phone number types
   bool include_null_phone_number_types = 4;
   // The list of ways to order phone books.
-  repeated commons.ListPhoneBookOrderBy.Enum order_bys = 5;
+  repeated api.commons.ListPhoneBookOrderBy.Enum order_bys = 5;
 }
 
 // Response message for the ListWhiteListPhoneBooks RPC
@@ -1836,7 +1836,7 @@ message UpdateAgentCallResponseValueReq {
 message UpdateAgentCallResponseValueRes {}
 
 message PlacePreviewDialCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
   int64 hunt_group_sid = 4;
   int64 agent_session_sid = 5;
 }
@@ -1844,7 +1844,7 @@ message PlacePreviewDialCallReq {
 message PlacePreviewDialCallRes {}
 
 message CancelPreviewDialCallReq {
-  commons.SimpleCallData call = 1;
+  api.commons.SimpleCallData call = 1;
   int64 agent_session_sid = 2;
   bool report_scrub_override = 3;
 }
@@ -1861,7 +1861,7 @@ message DownloadRecordingRes {
 
 message DownloadCallRecordingReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 }
 
 // The request when multiple call recordings are downloaded.
@@ -1871,7 +1871,7 @@ message DownloadCallRecordingsReq {
     // The callSid
     int64 call_sid = 1;
     // The callType, based on the CallType enum.
-    commons.CallType.Enum call_type = 2;
+    api.commons.CallType.Enum call_type = 2;
   }
 
   // The CallParams, repeated for each call
@@ -1908,7 +1908,7 @@ message AgentDispositionConditionalDncl {
 
 message UpdateTaskStatusReq {
   int64 task_sid = 2;
-  commons.TaskStatus status = 3;
+  api.commons.TaskStatus status = 3;
 }
 
 message Nil {} // Could use the google protobuf empty instead
@@ -2004,7 +2004,7 @@ message CallerIdInfo {
 }
 
 message SaveLastCallResponseReq {
-  commons.CallType.Enum call_type = 1;
+  api.commons.CallType.Enum call_type = 1;
   int64 call_sid = 2;
   string response_name = 3;
 }
@@ -2027,7 +2027,7 @@ message GetCallDetailsRes {
 
 message ListAgentCallLogsByCallSidAndTypeReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 }
 
 message ListAgentCallLogsByCallSidAndTypeRes {
@@ -2042,7 +2042,7 @@ message ContactFieldDataRow {
 
 message GetCallDataReq {
   int64 call_sid = 1;
-  commons.CallType.Enum call_type = 2;
+  api.commons.CallType.Enum call_type = 2;
 }
 
 message GetCallDataRes {
@@ -2126,7 +2126,7 @@ message CompareExpression {
 
 message ListAgentCallResponseValuesReq {
   int64 call_sid = 2;
-  commons.CallType.Enum call_type = 3;
+  api.commons.CallType.Enum call_type = 3;
 }
 
 message ListAgentCallResponseValuesRes {
@@ -2389,11 +2389,11 @@ message AgentProfile {
 // for method RecalculateBilling. The month field is
 // an enum that can either be 0: the current month or
 // 1: the previous month. The types field is a list of
-// billing types (as defined by commons.RecalculateBillingType)
+// billing types (as defined by api.commons.RecalculateBillingType)
 // that will be updated for recalculation.
 message RecalculateBillingReq {
-  commons.RecalculateBillingMonth month = 1;
-  repeated commons.RecalculateBillingType types = 2;
+  api.commons.RecalculateBillingMonth month = 1;
+  repeated api.commons.RecalculateBillingType types = 2;
   string org_id = 3;
 }
 
@@ -2406,7 +2406,7 @@ message RecalculateBillingRes {
   repeated Result results = 1;
 
   message Result {
-    commons.RecalculateBillingType type = 1;
+    api.commons.RecalculateBillingType type = 1;
     oneof result_type {
       int64 updated = 2;
       string error_message = 3;
@@ -2425,7 +2425,7 @@ message ListOutboundBroadcastTemplateDataRes {
     // name of the template (as shown in back office)
     string template_name = 2;
     // type of template (will be either STANDARD or LAYERED)
-    commons.TemplateType.Enum template_type = 3;
+    api.commons.TemplateType.Enum template_type = 3;
     // date that the template was last modified
     google.protobuf.Timestamp modify_date = 4;
   }
@@ -2650,7 +2650,7 @@ message ListSkillsReq {
   // all skill types. The PBX SkillType is not
   // supported and will cause an error if present.
   // Should use AGENT_PBX or HUNT_GROUP_PBX.
-  repeated commons.SkillType.Enum type_filters = 1;
+  repeated api.commons.SkillType.Enum type_filters = 1;
 }
 
 message ListSkillsRes {
@@ -2662,7 +2662,7 @@ message P3Skill {
   string p3_id = 2;
   string name = 3;
   string description = 4;
-  commons.SkillType.Enum type = 5;
+  api.commons.SkillType.Enum type = 5;
 }
 
 // Request message for listing schedule rules (ListScheduleRules).
@@ -2687,5 +2687,5 @@ message ListSmsNumbersReq {}
 // Response message for listing sms numbers
 message ListSmsNumbersRes {
   // list of sms numbers
-  repeated commons.SmsNumber sms_numbers = 1;
+  repeated api.commons.SmsNumber sms_numbers = 1;
 }

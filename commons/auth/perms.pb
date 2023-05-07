@@ -1,1 +1,0 @@
-/Users/tom/dev/tcn/m/neo/plz-out/gen/protos/commons/auth/perms.pb

@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.org;
 
 import "annotations/authz.proto";
-import "commons/auth/perms.proto";
+import "api/commons/auth/perms.proto";
 import "google/api/annotations.proto";
 import "api/v1alpha1/org/agent_profile_group.proto";
 import "api/v1alpha1/org/huntgroup.proto";
@@ -17,7 +17,7 @@ import "api/v1alpha1/org/trusts.proto";
 import "api/v1alpha1/org/user.proto";
 
 option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
-option java_package = "com.tcn.api.v1alpha1.org";
+option java_package = "com.tcn.matrix.api.v1alpha1.org";
 
 service Org {
   // ORGANIZATION
