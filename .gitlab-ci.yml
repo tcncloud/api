@@ -2,8 +2,11 @@ stages:
   - test
   - build
 
-
+.test:
+  before_script:
+    - export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
 lint:
+  extends: .test
   stage: test
   tags:
     - linux-amd64 
@@ -12,6 +15,7 @@ lint:
   script:
     - buf check lint
 format:
+  extends: .test
   stage: test
   image: bufbuild/buf:latest
   tags:
@@ -21,6 +25,7 @@ format:
     - if [ -n "$d" ]; then echo "$d"; exit 1; fi
 
 breaking_changes:
+  extends: .test
   stage: test
   image: bufbuild/buf:latest
   tags:
@@ -32,6 +37,7 @@ breaking_changes:
     - buf breaking --against-input '.git#branch=main,ref=HEAD~1'
 
 build:outpb: 
+  extends: .test
   stage: build
   image: bufbuild/buf:latest
   tags:
@@ -45,6 +51,7 @@ build:outpb:
     expire_in: "1 hour"
 
 build:go:
+  extends: .test
   stage: build
   image: bufbuild/buf:latest
   tags:
@@ -61,6 +68,7 @@ build:go:
     - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
 
 build:go:tags:
+  extends: .test
   stage: build
   image: bufbuild/buf:latest
   tags:
