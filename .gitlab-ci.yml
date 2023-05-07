@@ -1,0 +1,68 @@
+stages:
+  - test
+  - build
+
+
+lint:
+  stage: test
+  image: bufbuild/buf:latest
+  allow_failure: true
+  script:
+    - buf check lint
+format:
+  stage: test
+  image: bufbuild/buf:latest
+  script:
+    - d=$(buf format -d)
+    - if [ -n "$d" ]; then echo "$d"; exit 1; fi
+
+breaking_changes:
+  stage: test
+  image: bufbuild/buf:latest
+  allow_failure: true
+  only:
+    - master
+  script:
+    - buf breaking --against-input '.git#branch=main,ref=HEAD~1'
+
+build:outpb: 
+  stage: build
+  image: bufbuild/buf:latest
+  script:
+    - buf build -o out.pb
+  artifacts:
+    paths:
+      - out.pb
+    when: on_success
+    expire_in: "1 hour"
+
+build:go:
+  stage: build
+  image: bufbuild/buf:latest
+  only:
+    - master
+  script:
+    - git clone "https://github.com/tcncloud/api-go.git" "api-go"
+    - buf generate --template buf.go.gen.yaml 
+    - cd api-go
+    - git config user.name "Florin Stan"
+    - git config user.email "597933+namtzigla@users.noreply.github.com"
+    - git add .
+    - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
+    
+build:go:tags:
+  stage: build
+  image: bufbuild/buf:latest
+  only:
+    - tags
+  script:
+    - git clone "https://github.com/tcncloud/api-go.git" "api-go"
+    - buf generate --template buf.go.gen.yaml 
+    - cd api-go
+    - git config user.name "Florin Stan"
+    - git config user.email "597933+namtzigla@users.noreply.github.com"
+    - git add .
+    - (git commit -a -m "$CI_COMMIT_MESSAGE" && git push --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go) || echo "nothing to commit"
+    - git tag -a "$CI_COMMIT_TAG" -m "$CI_COMMIT_TAG"
+    - git push --tags --set-upstream https://namtzigla:$GITHUB_API_GO_TOKEN@github.com/tcncloud/api-go 
+        
