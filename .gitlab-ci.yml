@@ -7,7 +7,6 @@ stages:
   tags:
     - linux-amd64
   before_script:
-    - export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
     - go install github.com/bufbuild/buf/cmd/buf@latest
 lint:
   extends: .base
