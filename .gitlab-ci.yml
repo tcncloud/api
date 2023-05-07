@@ -1,4 +1,4 @@
 include:
-  - project: "tcnapi/api-ci"
+  - project: "tcnpublic/api-ci"
     ref: master
     file: api-gitlab-ci.yml
