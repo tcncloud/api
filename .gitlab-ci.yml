@@ -37,13 +37,14 @@ check-npm-packages-version:
   only:
     - tags
   script:
-    - TCN_VERSION=$(node -p "require('./package.json').version")
-    - TCN_CONNECT_ES_VERSION=$(node -p "require('./tcnapi-connect-es/package.json').version")
-    - TCN_GRPC_WEB_VERSION=$(node -p "require('./tcnapi-grpc-web/package.json').version")
-    - VERSION=$(echo $CI_COMMIT_TAG | sed 's/v//g')
-    - if [ "$TCN_VERSION" != "$VERSION" ]; then echo "Version mismatch root package: $TCN_VERSION != $VERSION"; exit 1; fi
-    - if [ "$TCN_CONNECT_ES_VERSION" != "$VERSION" ]; then echo "Version mismatch tcnapi-connect-es package: $TCN_CONNECT_ES_VERSION != $VERSION"; exit 1; fi
-    - if [ "$TCN_GRPC_WEB_VERSION" != "$VERSION" ]; then echo "Version mismatch tcnapi-grpc-web package: $TCN_GRPC_WEB_VERSION != $VERSION"; exit 1; fi
+    - |
+      TCN_VERSION=$(node -p "require('./package.json').version")
+      TCN_CONNECT_ES_VERSION=$(node -p "require('./tcnapi-connect-es/package.json').version")
+      TCN_GRPC_WEB_VERSION=$(node -p "require('./tcnapi-grpc-web/package.json').version")
+      VERSION=$(echo $CI_COMMIT_TAG | sed 's/v//g')
+      if [ "$TCN_VERSION" != "$VERSION" ]; then echo "Version mismatch root package: $TCN_VERSION != $VERSION"; exit 1; fi
+      if [ "$TCN_CONNECT_ES_VERSION" != "$VERSION" ]; then echo "Version mismatch tcnapi-connect-es package: $TCN_CONNECT_ES_VERSION != $VERSION"; exit 1; fi
+      if [ "$TCN_GRPC_WEB_VERSION" != "$VERSION" ]; then echo "Version mismatch tcnapi-grpc-web package: $TCN_GRPC_WEB_VERSION != $VERSION"; exit 1; fi
 
 build:outpb: 
   extends: .base
