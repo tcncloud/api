@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum AgentInfo {
   AGENT_INFO_ACTIVE_AGENTS = 0;
   AGENT_INFO_IN_CONFERENCE_AGENTS = 1;

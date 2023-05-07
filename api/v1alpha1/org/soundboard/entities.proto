@@ -5,9 +5,6 @@ package api.v1alpha1.soundboard;
 import "api/commons/org.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/org/soundboard;soundboard";
-option java_package = "com.tcn.matrix.api.v1alpha1.org.soundboard";
-
 // SoundboardDetails is the core entity which contains metadata for soundboard
 // audio files, along with their identifiers.
 message SoundboardDetails {

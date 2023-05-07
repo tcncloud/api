@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum BroadcastTemplateOrdering {
   BY_NAME_ASC = 0;
   BY_NAME_DESC = 1;

@@ -4,9 +4,6 @@ package api.v1alpha1.scorecards;
 
 import "api/commons/scorecards.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/scorecards;scorecards";
-option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
-
 // GetAutoEvaluationRequest is the request to get an auto evaluation
 message GetAutoEvaluationRequest {
   int64 auto_evaluation_id = 2; // Required - unique id of auto evalution to get.

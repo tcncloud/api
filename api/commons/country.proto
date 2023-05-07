@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // This enum list corresponds to the list of ISO 3166 country codes.
 // https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 // Some of the countries listed in the above link are just aliases

@@ -4,9 +4,6 @@ package api.commons.org;
 
 import "api/commons/labels.proto";
 
-option go_package = "github.com/tcncloud/api-go/api/commons/org;org";
-option java_package = "com.tcn.matrix.api.commons.org";
-
 // Label is an entity message.
 message Label {
   reserved 4, 5;

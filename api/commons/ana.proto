@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum AnaTimeZone {
   ANA_TIME_ZONE_UNKNOWN = 0;
   ANA_TIME_ZONE_AMERICA_ANCHORAGE = 1;

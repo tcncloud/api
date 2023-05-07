@@ -5,9 +5,6 @@ package api.v1alpha1.cfg;
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/cfg;cfg";
-option java_package = "com.tcn.matrix.api.v1alpha1.cfg";
-
 // Service for interacting with TCN's configuration system.
 // Accessing all of the methods requires an authenticated user with
 // the correct permissions.

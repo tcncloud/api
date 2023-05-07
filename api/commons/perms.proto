@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // extract from skunk:
 // ﻿  select '  ' || upper(replace(permissions_key, ' ', '_')) || ' = ' || permissions_sid || ';' || '\t\t\t// ' || coalesce(description, '') from permissions order by permissions_sid;
 

@@ -8,9 +8,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 service Dashboards {
   // CreateDashboard creates a dashboard and associated panels
   rpc CreateDashboard(CreateDashboardRequest) returns (CreateDashboardResponse) {

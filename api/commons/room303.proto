@@ -4,9 +4,6 @@ package api.commons;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum RoomType {
   // Direct Message types - can be muliple users in a direct message
   ROOM_TYPE_DIRECT = 0;

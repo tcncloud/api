@@ -5,9 +5,6 @@ package api.v1alpha1.tickets;
 import "api/commons/audit/audit.proto";
 import "api/commons/tickets.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/tickets;tickets";
-option java_package = "com.tcn.matrix.api.v1alpha1.tickets";
-
 // EnableProjectReq - Details of project to be enabled in the ticketing system
 message EnableProjectReq {
   // project seq id of project to be enabled

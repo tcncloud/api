@@ -5,9 +5,6 @@ package api.v1alpha1.scorecards;
 import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/scorecards;scorecards";
-option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";
-
 // GetScorecardQuestionRequest is the request to get a scorecard question.
 message GetScorecardQuestionRequest {
   int64 scorecard_question_id = 2; // Required - unique id of scorecard question to get.

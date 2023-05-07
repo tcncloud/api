@@ -5,9 +5,6 @@ package api.v1alpha1.org;
 import "api/commons/auth/perms.proto";
 import "api/commons/org/trusts.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/org;org";
-option java_package = "com.tcn.matrix.api.v1alpha1.org";
-
 // Request message for the CreateTrust RPC.
 message CreateTrustRequest {
   // Org ID of the org recieving the trust.

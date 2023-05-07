@@ -13,9 +13,6 @@ import "api/v1alpha1/vanalytics/transcript.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/vanalytics;vanalytics";
-option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
-
 service Vanalytics {
   // Audit audits the used transcription audio time for a client. The window
   // of time to audit can be widened or narrowed using the request since and

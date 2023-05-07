@@ -20,9 +20,6 @@ import "annotations/authz.proto";
 import "api/v1alpha1/org/legacy/entities.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/org/legacy;legacy";
-option java_package = "com.tcn.matrix.api.v1alpha1.org.legacy";
-
 service OrgLegacy {
   // Registers a new organization
   rpc RegisterOrganization(RegisterOrganizationRequest) returns (RegisterOrganizationResponse) {

@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // FieldValueFilter resents a field mask and value to match on.
 // For now we are only supporting string matching.
 message FieldValueFilter {

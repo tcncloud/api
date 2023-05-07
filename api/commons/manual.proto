@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum ManualDialGroupStatus {
   MDG_UNKNOWN = 0;
   MDG_PREPARE = 6000; // "MDG_PREPARE", "Manual Dial Group is being prepared for scheduler"),

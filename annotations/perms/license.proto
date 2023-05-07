@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package annotations.perms;
 
-option go_package = "github.com/tcncloud/api-go/annotations/perms;perms";
-option java_package = "com.tcn.matrix.api.annotations.perms";
-
 // Application contains license/permission application name constants.
 enum Application {
   APPLICATION_UNSPECIFIED = 0;

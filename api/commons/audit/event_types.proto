@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons.audit;
 
-option go_package = "github.com/tcncloud/api-go/api/commons/audit;audit";
-option java_package = "com.tcn.matrix.api.commons.audit";
-
 // This enum will hold all application classes and sub-classes
 // Classes are encoded as hundreds (100, 200...) and sub-classes are the class ID + 0..99.
 //

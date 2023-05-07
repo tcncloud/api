@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum CallResult {
   CALL_RESULT_UNKNOWN = 0; // it's here only b/c protobuf requires it ... do never use it!
 

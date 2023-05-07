@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons.auth;
 
-option go_package = "github.com/tcncloud/api-go/api/commons/auth;auth";
-option java_package = "com.tcn.matrix.api.commons.auth";
-
 // AuthClaims is a proto mapping of the JWT Claims
 message AuthClaims {
   // AUTH0 user_id

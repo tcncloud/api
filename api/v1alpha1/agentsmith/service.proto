@@ -6,9 +6,6 @@ import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/agentsmith;agentsmith";
-option java_package = "com.tcn.matrix.api.v1alpha1.agentsmith";
-
 // AgentSmith is the Public API for the AgentSmith service. This service provides the methods for public integrations
 // to follow agents and/or create virtual agents.
 service AgentSmith {

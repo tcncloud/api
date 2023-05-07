@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum TimeZone {
   TIME_ZONE_AMERICA_PUERTO_RICO = 0; // America/Puerto_Rico
   TIME_ZONE_AMERICA_NEW_YORK = 1; // America/New_York

@@ -23,9 +23,6 @@ import "api/commons/omnichannel.proto";
 import "api/v1alpha1/asm/service.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/asm;asm";
-option java_package = "com.tcn.matrix.api.v1alpha1.asm";
-
 service Asm {
   // Streams back status updates for the given asm session
   // only the asm session sid filter is allowed

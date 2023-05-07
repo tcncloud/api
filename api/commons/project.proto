@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum ProjectStatus {
   PROJECT_STATUS_UNKNOWN = 0;
   PROJECT_STATUS_OPEN = 17000; //Project status is Open

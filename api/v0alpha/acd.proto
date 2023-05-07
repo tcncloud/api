@@ -19,9 +19,6 @@ package api.v0alpha;
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 // Service for interacting with TCN's Agent Call Distribution system.
 // Accessing all of the methods require an authenticated user with the correct
 // permissions.

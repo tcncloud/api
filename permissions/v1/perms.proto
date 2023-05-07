@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.commons.auth;
+package permissions.v1;
 
 import "annotations/perms/tcn.proto";
 

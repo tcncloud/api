@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum TaskStatus {
   TASK_UNKNOWN = 0;
   TASK_SCHEDULED = 2100; // "TASK_SCHEDULED", "Task is waiting for scheduler"),

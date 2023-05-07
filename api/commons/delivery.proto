@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum TransferStatus {
   TRANSFER_STATUS_WAITING = 0;
   TRANSFER_STATUS_RUNNING = 1;

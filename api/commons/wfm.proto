@@ -4,9 +4,6 @@ package api.commons;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // Represents the skill types that a client's skills can be.
 message SkillType {
   enum Enum {

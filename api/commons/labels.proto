@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // EntityType is used to determine what type of Entity
 // a label is assigned to.
 // The values of these enums MUST match up with the core.EntityType

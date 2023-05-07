@@ -6,9 +6,6 @@ package api.commons;
 // import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 // Ticket - Fields for Ticket creation, List tickets and view ticket
 message Ticket {
   // The snowflake id of a ticket row

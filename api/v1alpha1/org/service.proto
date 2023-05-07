@@ -15,9 +15,6 @@ import "api/v1alpha1/org/trusts.proto";
 import "api/v1alpha1/org/user.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/org;org";
-option java_package = "com.tcn.matrix.api.v1alpha1.org";
-
 service Org {
   // ORGANIZATION
 

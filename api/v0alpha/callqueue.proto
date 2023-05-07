@@ -7,9 +7,6 @@ import "api/commons/sms.proto";
 import "api/v0alpha/p3api.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 service CallQueue {
   // Returns either a preview record or preview call from one of multiple queues,
   // it also returns a field for the queue name so record/call can be enqueued back to the same queue.

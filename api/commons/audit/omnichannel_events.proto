@@ -6,9 +6,6 @@ import "api/commons/omnichannel.proto";
 import "api/commons/project.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api-go/api/commons/audit;audit";
-option java_package = "com.tcn.matrix.api.commons.audit";
-
 ///
 /// This file contains event from Class 300
 /// Omnichannel events

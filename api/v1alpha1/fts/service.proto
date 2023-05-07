@@ -5,9 +5,6 @@ package api.v1alpha1.fts;
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/fts;fts";
-option java_package = "com.tcn.matrix.api.v1alpha1.fts";
-
 service FtsApi {
   rpc GetUploadFileUrl(GetUploadFileUrlReq) returns (GetUploadFileUrlRes) {
     option (google.api.http).post = "/api/v1alpha1/fts/upload_url";

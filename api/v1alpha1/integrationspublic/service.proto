@@ -6,9 +6,6 @@ import "api/commons/public/integrations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v1alpha1/integrationspublic;integrationspublic";
-option java_package = "com.tcn.matrix.api.v1alpha1.integrationspublic";
-
 service IntegrationsPublic {
   rpc GetLinkData(GetLinkDataReq) returns (GetLinkDataRes) {
     option (google.api.http).post = "/api/v1alpha1/integrationspublic/getlinkdata";

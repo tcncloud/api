@@ -6,9 +6,6 @@ import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 service Sds {
   // Gets the agent_response_data field for a document in the mongodb calls collection.
   rpc GetAgentResponseData(GetAgentResponseDataReq) returns (GetAgentResponseDataRes) {

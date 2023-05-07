@@ -8,9 +8,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 // Service for interacting with TCN's Omni API system.
 // Accessing all of the methods require an authenticated user with the correct
 // permissions.

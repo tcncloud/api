@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum InsightPermissionType {
   INSIGHT_PERMISSION_TYPE_COMMON_LIBRARY = 0;
   INSIGHT_PERMISSION_TYPE_ORG = 1;

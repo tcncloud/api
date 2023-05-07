@@ -19,9 +19,6 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 service Org {
   // Registers a new organization
   rpc RegisterOrganization(RegisterOrganizationRequest) returns (RegisterOrganizationResponse) {

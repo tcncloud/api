@@ -5,9 +5,6 @@ package api.v0alpha;
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
-option java_package = "com.tcn.matrix.api.v0alpha";
-
 service Vmds {
   rpc GetVoicemailMetadata(GetVoicemailMetadataReq) returns (stream GetVoicemailMetadataRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmetadata";

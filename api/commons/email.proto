@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-option go_package = "github.com/tcncloud/api-go/api/commons;commons";
-option java_package = "com.tcn.matrix.api.commons";
-
 enum EmailResult {
   EMAIL_RESULT_UNKNOWN = 0;
   EMAIL_TASK_WAITING = 8600; //, "EMAIL_TASK_WAITING","Waiting","WTG", "Email Task is ready to be sent"),
