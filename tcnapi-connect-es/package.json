@@ -1,0 +1,20 @@
+{
+  "name": "@tcn/tcnapi-connect-es",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rm -rf lib/ && npm run build:esm",
+    "build:esm": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "@bufbuild/protobuf": "^1.2.0",
+    "@bufbuild/buf": "^1.15.0-1",
+    "google-protobuf": "^3.21.2"
+  },
+  "dependencies": {}
+}
