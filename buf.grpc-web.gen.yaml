@@ -1,0 +1,21 @@
+version: v1
+plugins:
+   - name: ts
+     out: tcnapi-grpc-web/src/
+     opt:
+       - long_type_string
+       - service=grpc-web
+       - binary
+     path: node_modules/.bin/protoc-gen-ts
+     strategy: all
+  # - plugin: ts
+  #   out: tcnapi-grpc-web/
+  #   opt:
+  #     - service=grpc-web
+  #     - binary
+   - plugin: buf.build/protocolbuffers/js
+     out: tcnapi-grpc-web/src/
+     opt:
+       - import_style=commonjs
+
+
