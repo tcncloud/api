@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package api.commons.audit;
 
-import "api/commons/acd.proto";
 import "api/commons/asm.proto";
 import "api/commons/omnichannel.proto";
 

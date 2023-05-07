@@ -3,7 +3,6 @@ syntax = "proto3";
 package api.v1alpha1.scorecards;
 
 import "api/commons/scorecards.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api-go/v1alpha1/scorecards;scorecards";
 option java_package = "com.tcn.matrix.api.v1alpha1.scorecards";

@@ -3,7 +3,6 @@ syntax = "proto3";
 package api.v0alpha;
 
 import "api/commons/sms.proto";
-import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";

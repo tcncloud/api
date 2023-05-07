@@ -3,8 +3,6 @@ syntax = "proto3";
 package api.commons;
 
 import "api/commons/acd.proto";
-import "google/protobuf/duration.proto";
-import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/tcncloud/api-go/commons;commons";

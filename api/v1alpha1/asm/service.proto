@@ -21,7 +21,6 @@ import "api/commons/asm.proto";
 import "api/commons/auth/user.proto";
 import "api/commons/event.proto";
 import "api/commons/omnichannel.proto";
-import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";

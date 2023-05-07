@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/tcncloud/api-go/commons;commons";
 option java_package = "com.tcn.matrix.api.commons";

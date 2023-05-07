@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package api.v1alpha1.soundboard;
 
-import "api/commons/auth/perms.proto";
 import "api/commons/org.proto";
 import "google/protobuf/timestamp.proto";
 

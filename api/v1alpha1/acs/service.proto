@@ -4,7 +4,6 @@ package api.v1alpha1.acs;
 
 import "annotations/authz.proto";
 import "api/commons/acd.proto";
-import "api/commons/auth/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 

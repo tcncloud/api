@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-import "api/commons/acd.proto";
 import "api/commons/chat.proto";
 import "api/commons/enums.proto";
 import "api/commons/lms.proto";
