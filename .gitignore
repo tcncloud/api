@@ -5,3 +5,7 @@ tcnapi-grpc-web/node_modules/*
 node_modules
 package-lock.json
 api-go
+.metals
+*.java
+*.js?
+*.ts?
