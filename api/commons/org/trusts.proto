@@ -6,7 +6,7 @@ import "api/commons/auth/perms.proto";
 import "api/commons/org/labels.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api/api/commons/org;org";
+option go_package = "github.com/tcncloud/api-go/api/commons/org;org";
 option java_package = "com.tcn.matrix.api.commons.org";
 
 // Trust is the entity message for trusts.

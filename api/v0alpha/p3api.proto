@@ -13,7 +13,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option go_package = "github.com/tcncloud/api-go/v0alpha;v0alpha";
 option java_package = "com.tcn.matrix.api.v0alpha";
 
 service P3Api {

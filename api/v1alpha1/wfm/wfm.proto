@@ -22,7 +22,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/wfm;wfm";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/wfm;wfm";
 option java_package = "com.tcn.matrix.api.v1alpha1.wfm";
 
 // WFM is responsible for call prediction and call volume calculations based on call skills and other parameters.

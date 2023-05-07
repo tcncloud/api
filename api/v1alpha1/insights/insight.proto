@@ -5,7 +5,7 @@ package api.v1alpha1.insights;
 import "api/commons/insights.proto";
 import "google/protobuf/field_mask.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/insights;insights";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/insights;insights";
 option java_package = "com.tcn.matrix.api.v1alpha1.insights";
 
 // Insight is a data handling entity used to process data

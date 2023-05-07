@@ -7,7 +7,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/commons;commons";
+option go_package = "github.com/tcncloud/api-go/commons;commons";
 option java_package = "com.tcn.matrix.api.commons";
 
 // TODO: Enum names are not very intuitive; improve.

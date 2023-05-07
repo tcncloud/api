@@ -5,7 +5,7 @@ package api.commons.org;
 import "api/commons/country.proto";
 import "api/commons/org.proto";
 
-option go_package = "github.com/tcncloud/api/api/commons/org;org";
+option go_package = "github.com/tcncloud/api-go/api/commons/org;org";
 option java_package = "com.tcn.matrix.api.commons.org";
 
 // HuntGroupSettings contains all of the hunt group settings.

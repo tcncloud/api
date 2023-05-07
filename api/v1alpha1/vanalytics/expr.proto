@@ -5,7 +5,7 @@ package api.v1alpha1.vanalytics;
 import "api/commons/vanalytics.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/vanalytics;vanalytics";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/vanalytics;vanalytics";
 option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 message Uint32Expr {

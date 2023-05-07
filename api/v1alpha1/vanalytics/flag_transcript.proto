@@ -5,7 +5,7 @@ package api.v1alpha1.vanalytics;
 import "api/v1alpha1/vanalytics/flag.proto";
 import "api/v1alpha1/vanalytics/transcript.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/vanalytics;vanalytics";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/vanalytics;vanalytics";
 option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics";
 
 // [CREATE] ====================================================================

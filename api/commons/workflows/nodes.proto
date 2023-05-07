@@ -5,7 +5,7 @@ package api.commons.workflows;
 import "api/commons/workflows/example.proto";
 import "api/commons/workflows/omni.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.workflows;workflows";
+option go_package = "github.com/tcncloud/api-go/api.commons.workflows;workflows";
 option java_package = "com.tcn.matrix.api.commons.workflows";
 
 // A node is a single step in a flow

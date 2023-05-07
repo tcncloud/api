@@ -8,7 +8,7 @@ import "api/commons/auth/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/acs;acs";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/acs;acs";
 option java_package = "com.tcn.matrix.api.v1alpha1.acs";
 
 service Acs {

@@ -5,7 +5,7 @@ package api.v1alpha1.fts;
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/fts;fts";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/fts;fts";
 option java_package = "com.tcn.matrix.api.v1alpha1.fts";
 
 service FtsApi {

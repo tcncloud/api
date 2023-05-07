@@ -5,7 +5,7 @@ package api.v1alpha1.vanalytics.notifier;
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/vanalytics/notifier;notifier";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/vanalytics/notifier;notifier";
 option java_package = "com.tcn.matrix.api.v1alpha1.vanalytics.notifier";
 
 service Notifier {

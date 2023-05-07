@@ -26,7 +26,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/asm;asm";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/asm;asm";
 option java_package = "com.tcn.matrix.api.v1alpha1.asm";
 
 service AsmApi {

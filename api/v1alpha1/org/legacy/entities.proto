@@ -18,7 +18,7 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/tcncloud/api/v1alpha1/org/legacy;legacy";
+option go_package = "github.com/tcncloud/api-go/v1alpha1/org/legacy;legacy";
 option java_package = "com.tcn.matrix.api.v1alpha1.org.legacy";
 
 // GET AGENT QUICK VIEW PREFERENCES

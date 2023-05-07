@@ -5,7 +5,7 @@ package api.commons.audit;
 import "api/commons/acd.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.audit;audit";
+option go_package = "github.com/tcncloud/api-go/api.commons.audit;audit";
 option java_package = "com.tcn.matrix.api.commons.audit";
 
 ///
