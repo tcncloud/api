@@ -8,3 +8,8 @@ lint:
     - DEFAULT
 deps:
   - buf.build/googleapis/googleapis
+build:
+  excludes:
+    - node_modules
+    - tcnapi-connect-es
+    - tcnapi-grpc-web
