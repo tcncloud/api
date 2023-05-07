@@ -6,7 +6,7 @@ import "annotations/perms/license.proto";
 import "api/commons/auth/perms.proto";
 import "api/commons/perms.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option go_package = "github.com/tcncloud/api/api/commons/org;org";
 option java_package = "com.tcn.matrix.api.commons.org";
 
 // PermiissionGroup defines the permission group entity.

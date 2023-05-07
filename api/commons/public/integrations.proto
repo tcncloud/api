@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.commons.public;
 
-option go_package = "github.com/tcncloud/api/api.commons.public;public";
+option go_package = "github.com/tcncloud/api/api/commons/public;public";
 option java_package = "com.tcn.matrix.api.commons.public";
 
 // all supported integrations

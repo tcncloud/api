@@ -4,7 +4,7 @@ package api.commons.auth;
 
 import "annotations/perms/tcn.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.auth;auth";
+option go_package = "github.com/tcncloud/api/api/commons/auth;auth";
 option java_package = "com.tcn.matrix.api.commons.auth";
 
 // Permission enum contains the permissions to be used for access control.

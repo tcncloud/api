@@ -9,7 +9,7 @@ import "api/commons/org.proto";
 import "api/commons/org_preferences.proto";
 import "google/protobuf/field_mask.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option go_package = "github.com/tcncloud/api/api/commons/org;org";
 option java_package = "com.tcn.matrix.api.commons.org";
 
 //

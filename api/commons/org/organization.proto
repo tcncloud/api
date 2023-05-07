@@ -5,7 +5,7 @@ package api.commons.org;
 import "api/commons/org.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/tcncloud/api/api.commons.org;org";
+option go_package = "github.com/tcncloud/api/api/commons/org;org";
 option java_package = "com.tcn.matrix.api.commons.org";
 
 // Organization contains the basic properties for an organization.
