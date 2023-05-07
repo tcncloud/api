@@ -1,0 +1,1002 @@
+syntax = "proto3";
+
+package api.v1alpha1.integrations;
+
+import "commons/public/integrations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.integrations;integrations";
+option java_package = "com.tcn.api.v1alpha1.integrations";
+
+service Integrations {
+  // combine rquest parameters with the config parameters and run the integration method
+  rpc Process(ProcessReq) returns (ProcessRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/process";
+    option (google.api.http).body = "*";
+  }
+
+  // get an integration transaction
+  rpc GetIntegrationTransaction(GetIntegrationTransactionReq) returns (IntegrationTransaction) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransaction";
+    option (google.api.http).body = "*";
+  }
+  rpc GetIntegrationTransactionReport(GetIntegrationTransactionReportReq) returns (GetIntegrationTransactionReportRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransactionreport";
+    option (google.api.http).body = "*";
+  }
+  rpc GetIntegrationTransactionReportData(GetIntegrationTransactionReportDataReq) returns (GetIntegrationTransactionReportDataRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransactionreportdata";
+    option (google.api.http).body = "*";
+  }
+  // GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
+  rpc GetAggregatedMetadata(GetAggregatedMetadataReq) returns (GetAggregatedMetadataRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getaggregatemetadata";
+    option (google.api.http).body = "*";
+  }
+  // GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
+  rpc GetPortalLinksByDateRange(GetPortalLinksByDateRangeReq) returns (GetPortalLinksByDateRangeRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getportallinksbydaterange";
+    option (google.api.http).body = "*";
+  }
+  // search integration transactions
+  //rpc SearchIntegrationTransactions(SearchIntegrationTransactionsReq) returns (SearchIntegrationTransactionsRes) {
+  //  option (google.api.http).post = "/api/v1alpha1/integrations/searchintegrationtransactions";
+  //  option (google.api.http).body = "*";
+  //}
+
+  // create a integration config
+  rpc CreateIntegrationConfig(IntegrationConfig) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/createintegrationconfig";
+    option (google.api.http).body = "*";
+  }
+
+  // get an integration config
+  rpc GetIntegrationConfig(GetIntegrationConfigReq) returns (IntegrationConfig) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationconfig";
+    option (google.api.http).body = "*";
+  }
+
+  // update an integration config
+  rpc UpdateIntegrationConfig(UpdateIntegrationConfigReq) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/udpateintegrationconfig";
+    option (google.api.http).body = "*";
+  }
+
+  // delete an integration config
+  rpc DeleteIntegrationConfig(DeleteIntegrationConfigReq) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/deleteintegrationconfig";
+    option (google.api.http).body = "*";
+  }
+
+  // list all supported integrations
+  rpc ListIntegrations(Empty) returns (IntegrationInfos) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listintegrations";
+    option (google.api.http).body = "*";
+  }
+
+  // lists all the names of the configs for an org's integration type
+  rpc ListIntegrationConfigNames(ListIntegrationConfigNamesReq) returns (ListIntegrationConfigNamesRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listintegrationconfignames";
+    option (google.api.http).body = "*";
+  }
+  rpc ListJourneyConfigs(ListJourneyConfigsReq) returns (IntegrationConfigs) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listjourneyconfigs";
+    option (google.api.http).body = "*";
+  }
+  rpc ListNonJourneyConfigs(ListNonJourneyConfigsReq) returns (IntegrationConfigs) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listnonjourneyconfigs";
+    option (google.api.http).body = "*";
+  }
+  // TODO all services looking for payment portal configs should be using the
+  // PortalManagerApi service in this same packages
+  // CLUDG for the payment portal configs
+  rpc CreatePortalConfig(PortalConfig) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/createportalconfig";
+    option (google.api.http).body = "*";
+  }
+  // TODO better signature
+  // rpc ListPortalConfigs(ListPortalConfigsReq) returns (ListPortalConfigsRes);
+  rpc ListPortalConfigs(ListPortalConfigsReq) returns (PortalConfigs) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listportalconfigs";
+    option (google.api.http).body = "*";
+  }
+  rpc UpdatePortalConfig(PortalConfig) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/updateportalconfig";
+    option (google.api.http).body = "*";
+  }
+  // TODO better signature
+  // rpc GetPortalConfig(GetPortalConfigReq) returns (GetPortalConfigRes);
+  rpc GetPortalConfig(GetPortalConfigReq) returns (PortalConfig) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getportalconfig";
+    option (google.api.http).body = "*";
+  }
+  // TODO better signature
+  // rpc DeletePortalConfig(DeletePortalConfigReq) returns (DeletePortalConfigRes);
+  rpc DeletePortalConfig(DeletePortalConfigReq) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/deleteportalconfig";
+    option (google.api.http).body = "*";
+  }
+  // TODO deprecate
+  rpc UpdatePortalLogo(UpdatePortalLogoReq) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/updateportallogo";
+    option (google.api.http).body = "*";
+  }
+  // TODO deprecate
+  rpc GetPortalLogo(GetPortalLogoReq) returns (Logo) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getportallogo";
+    option (google.api.http).body = "*";
+  }
+  // TODO deprecate. use CreatePortalLinks on the PortalManagerApi
+  // pulls the payment_link_config
+  // creates an integration config for each set of data, and generates a url for the specific user
+  rpc CreatePaymentPortalLinks(CreatePaymentPortalLinksReq) returns (CreatePaymentPortalLinksRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/createpaymentportallinks";
+    option (google.api.http).body = "*";
+  }
+  // takes a year in YYYY format and returns the summary of transaction for that year
+  rpc Summary(SummaryReq) returns (SummaryRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/summary";
+    option (google.api.http).body = "*";
+  }
+  // Lists integration templates that use the passed in integration config
+  rpc ListIntegrationTemplatesByConfig(ListIntegrationTemplatesByConfigReq) returns (ListIntegrationTemplatesByConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/integrationtemplatesbyconfig";
+    option (google.api.http).body = "*";
+  }
+}
+
+message ListJourneyConfigsReq {}
+message ListNonJourneyConfigsReq {}
+
+message IntegrationConfigs {
+  repeated IntegrationConfig values = 1;
+}
+
+message GetIntegrationConfigReq {
+  commons.public.IntegrationType integration_id = 3;
+  string name = 4;
+  // if this exists, we will do GetIntegrationConfigById, otherwise we will do GetIntegrationConfigByName
+  string id = 5;
+}
+
+message UpdateIntegrationConfigReq {
+  // if this exists, we will do UpdateIntegrationConfigById, otherwise we will do UpdateIntegrationConfigByName
+  string id = 3;
+  commons.public.IntegrationType integration_id = 4;
+  string name = 5;
+  string description = 7;
+  Values params = 9;
+}
+
+message DeleteIntegrationConfigReq {
+  commons.public.IntegrationType integration_id = 4;
+  string name = 5;
+  // if this exists we will delete by id, otherwise we delete by integration_id and name
+  string id = 6;
+}
+
+message ProcessReq {
+  // an identifier for this request so we do not do duplicate calls
+  // if a IntegrationsApi.Process() call times out, but doesn't fail
+  // you can call IntegrationsApi.Process() again with the same request_id.
+  // The second call will just return the result of the previous timed out call
+  // instead of processing the request a second time.
+  string request_id = 8;
+  // the id of handler we want to trigger
+  commons.public.IntegrationType integration_id = 3;
+  // which integration config is going to be triggered
+  commons.public.RequestMethod method_id = 4;
+  string config_name = 5;
+  // if this exists, we will fetch the integration by id
+  // otherwise we will get the integration by config_name (legecy)
+  string config_id = 9;
+  // parameters used for this request. These are combined with the parameters stored in the config
+  map<string, Value> params = 6;
+  // can be left nil, used for verification requests
+  repeated Condition conds = 7;
+}
+
+message ProcessRes {
+  // whether we were successful or the bool result the operation returned.
+  bool result = 1;
+  // contains the response value from the transaction. This could be an amount for payments
+  // an object from inquiries, or it could be nil
+  map<string, Value> data = 2;
+  // integration name that was called
+  string integration = 3;
+  // method that was called
+  string method = 4;
+  // ID of thing we inserted into the db
+  // If this is only empty if we fail to insert a transaction (which will return an error) or
+  // the transaction is pending. This happens if we call IntegrationsApi.Process() with the same request_id
+  // twice, with the first call timing out.
+  string transaction_id = 5;
+}
+
+message IntegrationInfos {
+  repeated IntegrationInfo values = 1;
+}
+
+// IntegrationInfo describes one of our payment sub-services
+// it is used in static structures in integrations/adapters/integrations go packages
+message IntegrationInfo {
+  // the pretty name of this integration. Ex: 'BrainTree'
+  string name = 1;
+  // identifies which integration handler this is
+  commons.public.IntegrationType integration_id = 2;
+  // describes this integration
+  string description = 3;
+  // what methods are available for this integration
+  repeated MethodInfo methods = 4;
+  // the plugin fields for this integration.
+  // These fields should be set on the plugin level and not the runtime.
+  // key is a value starting at commons.public.Visiblity.VISIBILITY_GROUP
+  // and ending at 99 more than that value, or parameters marked VISIBILITY_ANYWHERE
+  map<int32, Parameter> group_params = 5;
+}
+
+// something callable by a user when given the required parameters
+// it is used in static structures in integrations/adapters/integrations go packages
+
+message MethodInfo {
+  // the pretty name of the method
+  string name = 1;
+  // identifies which method this is
+  commons.public.RequestMethod method_id = 2;
+  // what type of method call this is: PAYMENT, INQUIRY, or VERIFY
+  commons.public.TransactionType tx_type = 3;
+  // what types of fields can/must be sent with the data when calling the method
+  repeated Parameter params = 4;
+  // the url we contact
+  string url = 5;
+  // the expected response map will have these values
+  // none of these should be required, and none should have a default value
+  repeated Parameter response = 6;
+  // fields specific to this method that should come over during the runtime
+  // key will be a value starting at commnos.public.Visiblity.VISIBILITY_RUNTIME
+  // and ending at 99 more than that value, or parameeters marked VISIBLITY_ANYWHERE
+  map<int32, Parameter> runtime_params = 7;
+}
+
+// Parameter is describes a key/value pair that needs to be on the requeset object
+// it is used in static structures in integrations/adapters/integrations go packages
+message Parameter {
+  // name of parameter. This will be the key of the field in the request payload
+  string name = 1;
+  // the type of the field. The value of the key value pair needs to be this type in the request payload
+  // right now this will be STRING, NUMBER, BOOL
+  commons.public.ValueType param_type = 2;
+  // if the field must appear in the request payload or not
+  bool required = 3;
+  // what is used if the value is not provided
+  Value default_value = 4;
+  // some names are really ugly, display names are what the user should be shown
+  string display_name = 5;
+  // means we won't be storing in the database (and there is no way to override)
+  bool sensitive = 6;
+  // whether this value can be stored in an integration config.
+  // If true, we do not allow the value to be put in the config, the value can only
+  // be received during processing.
+  // true values should be filtered on the front end
+  bool runtime_param = 7;
+  // tool tip info about the param
+  string helper_text = 8;
+  // means the parameter is not allowed to be editted in the template builder.
+  // template builder can use this to field to make the parameter read_only on the ui.
+  // integration_config builder ui can ignore this field.
+  // usually fields that are template_locked are ones that require extra work to
+  // get an appropriate value for. like "collection_id"
+  bool template_locked = 9;
+  // what type of data value we accept
+  commons.public.Validation validation = 10;
+}
+
+message Empty {}
+
+message GetIntegrationTransactionReq {
+  string integration_transaction_id = 1;
+}
+
+// get a summary of all the aggregated data between two dates
+message GetAggregatedMetadataReq {
+  google.protobuf.Timestamp start = 3;
+  google.protobuf.Timestamp end = 4;
+  commons.public.RequestMethod method_id = 5;
+}
+
+// the metadata values. All values should be numbers or dates
+message GetAggregatedMetadataRes {
+  int32 views = 1;
+  int32 verify_attempts = 2;
+  int32 verify_successes = 3;
+  int32 payment_attempts = 4;
+  int32 payment_successes = 5;
+  double payment_amount = 6;
+  repeated string fields = 7;
+}
+
+// GetIntegrationTransactionReportReq gives summarizes the IntegrationTrasactions between two dates
+message GetIntegrationTransactionReportReq {
+  google.protobuf.Timestamp start = 3;
+  google.protobuf.Timestamp end = 4;
+  // field names we want to group the data by
+  repeated string group_by = 5;
+}
+
+message IntegrationTransactionReportRow {
+  commons.public.IntegrationType integration_id = 5; // integration used
+  string integration_name = 17;
+  commons.public.RequestMethod method_id = 6; // external service method
+  string method_name = 18;
+  commons.public.TransactionType transaction_type = 7; // payment, data inquiry, etc.
+  commons.public.RequestSource request_source = 8; // email/web/sms/ivr/chat
+  // name of the flow that was ran.
+  // two flows can have the same method_id but have different flow_names due to
+  // the payment portal and ivr portal using same methods, but different flows.
+  // group by this to get rid of ivr data in the text2pay results
+  string flow_name = 20;
+  string campaign_type = 22;
+  // the key value pairs for the 'group_by_fields' passed to the request
+  map<string, string> group_by_values = 23;
+
+  // aggregate results
+  double revenue = 10;
+  // date => amount collected subtotals for this row.
+  // if the transaction collected = 0 it is not included as an entry.
+  // date format for the key is RFC339: "YYYY-MM-DDThh:mm:ss". It will always be in UTC.
+  map<string, double> revenue_subtotals = 19;
+  int64 success_count = 11;
+  int64 failure_count = 12;
+  int64 total_count = 13;
+  // DD-MM-YYYY format of highest traffic day
+  string highest_traffic_date = 15;
+  // DD-MM-YYYY format of lowest traffic day
+  string lowest_traffic_date = 16;
+  // views, verification, invoice, and payment attempts, etc
+  map<string, int64> count_metrics = 24;
+  // the names of the fields uploaded to portal link, and sent for enriching portal link campaign info
+  // to get these values, you must make a separate api call
+  repeated string fields = 25;
+}
+
+message GetIntegrationTransactionReportRes {
+  repeated IntegrationTransactionReportRow values = 1;
+}
+
+// Lists the integration transactions that match a flow and campaign
+message GetIntegrationTransactionReportDataReq {
+  google.protobuf.Timestamp start = 3;
+  google.protobuf.Timestamp end = 4;
+  // which field_names:value we want to see that was in the last request's group_by
+  map<string, string> group_by = 5;
+  int32 page_size = 7;
+  int32 page_num = 8;
+  commons.public.IntegrationType integration_id = 9;
+  int64 search_after_sid = 10;
+}
+message GetIntegrationTransactionReportDataRow {
+  map<string, int64> count_metrics = 1;
+  map<string, string> link_data = 2;
+  google.protobuf.Timestamp date = 3;
+  double payment_amount = 4;
+}
+message GetIntegrationTransactionReportDataRes {
+  repeated GetIntegrationTransactionReportDataRow entities = 1;
+  int64 last_transaction_sid = 2;
+}
+
+message SearchIntegrationTransactionsReq {
+  // optional search parameters
+  google.protobuf.Timestamp start_date = 8;
+  google.protobuf.Timestamp end_date = 9;
+  IntegrationType integration_type = 10;
+  RequestMethod request_method = 11;
+  TransactionType transaction_type = 12;
+  RequestSource request_source = 13;
+  TransactionResult result = 14;
+  string task_id = 15;
+}
+
+message SearchIntegrationTransactionsRes {
+  repeated IntegrationTransaction transactions = 1;
+}
+
+message IntegrationType {
+  commons.public.IntegrationType integration_id = 1;
+}
+
+message RequestMethod {
+  commons.public.RequestMethod method_id = 1;
+}
+
+message TransactionType {
+  commons.public.TransactionType transaction_type = 1;
+}
+
+message RequestSource {
+  commons.public.RequestSource request_source = 1;
+}
+
+message TransactionResult {
+  commons.public.TransactionResult result = 1;
+}
+
+// used to list all the config names that we have for an integration handler
+message ListIntegrationConfigNamesReq {
+  commons.public.IntegrationType integration_id = 4;
+}
+
+message ListIntegrationConfigNamesRes {
+  commons.public.IntegrationType integration_id = 3;
+  repeated string names = 4;
+}
+
+message GetPaymentLinkConfigReq {
+  // the pk of payment_link_config table that contains method we will be creating links for
+  string id = 3;
+}
+
+// is just the primary key of the config
+message DeletePaymentLinkConfigReq {
+  string id = 3;
+}
+
+// wrapper message so it can be stored in database correctly
+message Logo {
+  bytes value = 1;
+}
+
+// LETS MOVE THIS TO portals.proto WHERE IT BELONGS
+message ListPortalConfigsReq {
+  PortalConfigId entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  int32 page_size = 3;
+  int32 page = 4;
+}
+
+// LETS MOVE THIS TO portals.proto WHERE IT BELONGS
+message GetPortalConfigReq {
+  PortalConfigId entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  // DEPRECATED only here because integrations service needs it
+  string id = 3;
+}
+
+// LETS MOVE THIS TO portals.proto WHERE IT BELONGS
+message DeletePortalConfigReq {
+  PortalConfigId entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  // DEPRECATED only here because integrations service needs it
+  string id = 3;
+}
+message UpdatePortalLogoReq {
+  // id of portal_config
+  string id = 3;
+  // is the logo used in the corner of the payment portal screen
+  bytes logo = 4;
+}
+message GetPortalLogoReq {
+  // id of portal_config
+  string id = 3;
+}
+
+message RefreshLinkReq {
+  // the integration_config.name for this link that we generated and encoded in the url
+  string link_id = 3;
+}
+message RefreshLinkRes {
+  // when the new link will expire
+  google.protobuf.Timestamp new_expiry = 1;
+}
+
+// same as PaymentPortalLinkConfigDB, but with nicer field types
+message PaymentLinkConfig {
+  // the pk of payment_link_config table that contains method we will be creating links for
+  string id = 19;
+  string name = 3;
+  string description = 4;
+  // the journey collection that will enrich the link data
+  string collection_id = 5 [deprecated = true];
+  // which integration will be used in the links
+  commons.public.IntegrationType integration_id = 6 [deprecated = true];
+  // the verification method. This is used if there is no collection_id to enrich link data
+  commons.public.RequestMethod verification_method_id = 7 [deprecated = true];
+  commons.public.RequestMethod invoice_method_id = 8 [deprecated = true];
+  // which method will be called when a payment portal link is process
+  commons.public.RequestMethod payment_method_id = 9 [deprecated = true];
+  // journey names and method parameter names might not match one to one
+  // the keys of this mapping are journey keys
+  // the values are method parameter name the key maps to
+  // if we encounter a key that is unknown for the method, integrations checks the name mapping
+  // for an alternative key name
+  map<string, string> name_mapping = 10;
+  // these fields will be used to verify customer identity
+  repeated string verification_fields = 11 [deprecated = true];
+  // name of the payment portal config that contains all the details for a payment portal screen shown to the user.
+  // (visible to link receiver)
+  // these don't affect usability of the service, meaning the backend doesn't require any of this info
+  string payment_portal_id = 12;
+  google.protobuf.Timestamp created_on = 14;
+  // how many days till link expires
+  int32 expiry_days = 15;
+  // whether we are allowed to refresh links
+  bool links_refreshable = 16;
+  // how many hours a refreshed link is good for
+  // 24 == 1 day
+  // 2.5 == 2 hours 30 minutes
+  // defaults to 1.0
+  double refresh_link_valid_hours = 17;
+  // how many times we will allow a link to refresh
+  int32 max_refresh_times = 18;
+  // how we identify the link holder's identity.
+  VerificationRequest verification_request = 20;
+  // happens directly after the verification request to provide the user a description of the items
+  // that need payment, and their amounts
+  InvoiceRequest invoice_request = 21;
+  // the set of payments the user can choose from. A valid config needs at least one,
+  // but can list as many as they want for the user to pick from.
+  // only one PaymentRequest will be processed
+  repeated PaymentRequest payment_requests = 22;
+  map<string, Value> base_data = 23;
+  // a marshalled PaymentTemplates proto message
+  PaymentLinkConfigTemplates templates = 24;
+  // the name of the profile used to generate this profile
+  string payment_profile_name = 25;
+}
+
+message PaymentLinkConfigTemplates {
+  // template string like: "{{name}} thanks for paying {{amount}}"
+  // it shows up on the receipt text sent after payment is taken
+  // values are populated from what values we know from verification, or in the integration_config
+  // so the link designer should not use data that will not be given to tcn at some point to validate a user.
+  string receipt_sms_template = 1;
+  // text shows up as from this phone number
+  string receipt_sms_source_phone = 2;
+  // shows up in the email body, is a template string like above
+  string receipt_email_template = 3;
+  // email shows up as from this address
+  string receipt_email_from_addr = 4;
+  // template string for the receipt shown in the ui
+  string receipt_template = 5;
+  // template string for the invoice shown in the ui
+  string invoice_template = 6;
+}
+
+// VerificationRequest processes verifies
+// the 'verification_fields' match in both an input payload, and the response
+message VerificationRequest {
+  // the set of actions that need to happen to get a payload that can be used to verify against the verification_fields
+  // the verification handler in the service will always populate this with a request containing
+  // the integration_config_id data and static data from the user
+  // each result will be given as a request the result of all previous responses, so order matters.
+  repeated Request verification_requests = 1;
+  // the fields to verify against
+  repeated Parameter verification_fields = 2;
+}
+message PaymentRequest {
+  // the field names the user is expected to fill out for this payment
+  // the ui should display the parameter's display_name but send to the server the parameter name
+  repeated Parameter payment_fields = 5;
+  // set of actions that need to happen to get a payload that can be used for the payment_request
+  // the payment handler in the service will always populate this with a request containing
+  // the integration_config_id data, but if that is not enough data for the payment the user is allowed to list out more requests here.
+  // the results of all these method calls will be merged into one payload that is given to the payment_request.
+  // each result will be given as a request the result of all previous responses, so order matters.
+  repeated Request payment_request_payload = 1;
+  // the request to perform
+  Request payment_request = 2;
+  // a name for this request to show to the user.  "cc_payment", "ACH Payment" or something else
+  string name = 3;
+  // a description of this request to show to the user
+  string description = 4;
+}
+message InvoiceRequest {
+  // set of actions that need to happen to get a payload that can be used for the invoice_request
+  // the verification handler in the service will always populate this with a request with the data used in verifiation
+  // but if that is not enough data for the payment the user is allowed to list out more requests here.
+  // the results of all these method calls will be merged into one payload that is given to the invoice_request.
+  // each result will be given as a request the result of all previous responses, so order matters.
+  repeated Request invoice_request_payload = 2;
+  Request invoice_request = 3;
+  // removes these keys from the response so they are not shown to the user
+  repeated string filter_response_keys = 4;
+}
+message Request {
+  oneof val {
+    // look up the values from this journey collection
+    string journey_collection_id = 3;
+    // call this method to get the data
+    MethodCall method_call = 4;
+    // look up data from this config
+    string config_id = 5;
+  }
+  // add in this static data
+  map<string, Value> static_data = 6;
+  // rename the keys to the values in the response from 'val'
+  map<string, string> rename_response_keys = 7;
+  // reassigns the names in key to be the value's validation
+  map<string, Validation> reassign_validations = 8;
+}
+
+// This type only exists because typescript can't handle
+// a map with an enum as a value from another packages
+// map<string, commons.public.Validation>
+message Validation {
+  commons.public.Validation enum = 1;
+}
+
+message MethodCall {
+  commons.public.IntegrationType integration_id = 1;
+  commons.public.RequestMethod method_id = 2;
+}
+
+message PortalConfigs {
+  repeated PortalConfig values = 1;
+}
+message ListPaymentLinkConfigsReq {}
+message PaymentLinkConfigs {
+  repeated PaymentLinkConfig values = 1;
+}
+message ListLinksReq {}
+
+message CreatePaymentPortalLinksReq {
+  // the pk of link_config table that contains method we will be creating links for
+  string link_config_id = 3;
+  // when the link expires. blank means it never expires
+  google.protobuf.Timestamp expiry = 4;
+  // each index represents one map of user data we need a link for
+  // should contain the sms/email id that is going to use this link at "_task_id"
+  repeated Task user_data = 5;
+}
+
+message CreatePaymentPortalLinksRes {
+  // each url maps to the same index on the request.user_data
+  repeated string urls = 1;
+}
+
+message SummaryReq {
+  // a num in YYYY format
+  int32 year = 3;
+}
+
+message SummaryRes {
+  CalendarSummary year_summary = 1;
+  repeated CalendarSummary month_summaries = 2;
+  repeated CalendarSummary week_summaries = 3;
+}
+
+message CalendarSummary {
+  // calendar_num is in either YYYY, MM, or WW format
+  int32 calendar_num = 1;
+  TransactionSummary summary = 2;
+  // an array of "pairs" with the integration type and it's transaction summary
+  repeated IntegrationTypeSummary type_summaries = 3;
+}
+
+message IntegrationTypeSummary {
+  commons.public.IntegrationType integration_type = 1;
+  TransactionSummary integration_summary = 2;
+}
+
+message TransactionSummary {
+  int64 total_transactions_attempted = 1;
+  int64 total_transactions_completed = 2;
+  int64 total_transactions_failed = 3;
+  double total_amount_collected = 4;
+  double avg_amount_collected = 5;
+}
+
+message ListIntegrationTemplatesByConfigReq {
+  string integration_config_name = 2;
+}
+
+message ListIntegrationTemplatesByConfigRes {
+  repeated IntegrationTemplateInfo integration_templates = 1;
+}
+
+message IntegrationTemplateInfo {
+  int64 broadcast_template_sid = 1;
+  string template_name = 2;
+}
+
+// DEPRECATED
+message CopyPaymentLinkConfigReq {
+  string id = 3;
+}
+
+// DEPRECATED
+message CopyPaymentLinkConfigRes {
+  string new_name = 1;
+}
+
+// DEPRECATED
+message ProfileName {
+  string name = 1;
+}
+
+// DEPRECATED
+message PaymentProfiles {
+  repeated PaymentProfile values = 1;
+}
+
+// DEPRECATED
+message PaymentProfile {
+  string verification = 8;
+  string invoice = 9;
+  repeated string payments = 10;
+}
+
+// DEPRECATED
+message UnknownField {
+  // the name of the field we are missing to make a complete payment link config
+  string name = 1;
+  // by default matches name
+  // this is the name the user wants the field displayed as
+  string display_name = 5;
+  // the reason we need this field.
+  // will point to an api call, or form that is listing the field as required
+  string reason_needed = 2;
+  // all the sources that are possible this field could come from
+  // it is not allowed to give a provided field with a FieldSource
+  // not in this list
+  repeated commons.public.FieldSource potential_sources = 3;
+  // all the fields in here will be potential fields we could use from api calls, or config look ups
+  // THIS COULD BE LEFT BLANK IF THE SERVER HAS NO SUGGESTIONS
+  // none of these suggestions have to be used, the user can just "write in" a ProvidedField
+  repeated ProvidedField suggested_fields = 4;
+}
+
+// DEPRECATED
+message ProvidedField {
+  // the name of the field as it was asked for in UnknownField.
+  // This is the field the *server* is looking for, so it *must* be a field
+  // that was in the UnknownField list on the Profile
+  string name = 1;
+  // by default matches name
+  // this is the name the user wants the field displayed as
+  string display_name = 6;
+  // what name the field will be called in the original location
+  // 'alt_name' can be left blank if it is the same as 'name'
+  string alt_name = 2;
+  // what source provides this field?
+  //  - provided info uploaded when creating the link
+  //  - provided by the verification/invoice/payment config/journey data source
+  //  - provided by the verification/invoice/payment api call
+  commons.public.FieldSource provided_by = 3;
+  // here for future use.
+  int32 provided_by_details_num = 4;
+  // here for future use
+  string provided_by_details_str = 5;
+}
+
+message Values {
+  map<string, Value> values = 1;
+}
+
+// kind of like a json value, but we don't support circular references
+message Value {
+  oneof val {
+    string str_val = 1;
+    double num_val = 2;
+    bool bool_val = 3;
+    google.protobuf.Timestamp time_val = 4;
+    CompositeVal comp_val = 6;
+    int64 int_val = 7;
+  }
+  // whether this value should be allowed to be stored
+  bool sensitive = 5;
+  // what type of data value we *want* to validate as.
+  // a value does *not* have to match the validation enum.
+  // a value that does not match its validation enum is just invalid.
+  commons.public.Validation validation = 8;
+}
+
+// represents either a field name whose value needs to be looked up in the payload
+// or a static string value
+message FieldOrStr {
+  oneof val {
+    string field = 1;
+    string str_val = 2;
+  }
+}
+
+// represents the individual parts of a string, where some of the parts are
+// fields in the payload, and other parts are static strings
+// CompositeVal cannot handle circular references. Meaning you cannot have two
+// values that contain fields of each other in the same payload.
+// Fields that are not found when built into a string will throw an error
+message CompositeVal {
+  repeated FieldOrStr parts = 1;
+}
+message Condition {
+  // json path to the result ex: path.to.the.0.result
+  string key = 1;
+  // what operation we are confirming
+  commons.public.CompareOperation op = 2;
+  // we support comparing strings, numbers and bools
+  Value value = 3;
+}
+
+message IntegrationConfig {
+  string id = 1;
+  commons.public.IntegrationType integration_id = 4;
+  string name = 6;
+  string description = 7;
+  Values params = 9;
+  bool deleted = 10;
+  google.protobuf.Timestamp created_on = 11;
+  // alternative names that map to parameter names.
+  MapString alias = 13;
+  // these conditions will be checked on the integration's response. If any evaluate to false, the integration method will fail
+  Conditions conds = 14;
+  commons.public.RequestMethod method_id = 15;
+}
+
+message IntegrationTransaction {
+  string integration_transaction_id = 1;
+  string task_id = 4;
+  commons.public.IntegrationType integration_id = 5; // integration used
+  commons.public.RequestMethod method_id = 6; // external service method
+  commons.public.TransactionType transaction_type = 7; // payment, data inquiry, etc.
+  commons.public.RequestSource request_source = 8; // email/web/sms/ivr/chat
+  commons.public.TransactionResult result = 9; // success/failure
+  double amount_collected = 10;
+  Values request_data = 11;
+  Values response_data = 12; // response from external service
+  google.protobuf.Timestamp created_on = 13;
+  string config_name = 14;
+  Conditions conds = 15;
+}
+
+message MapString {
+  map<string, string> values = 1;
+}
+
+message Conditions {
+  repeated Condition values = 1;
+}
+
+message Task {
+  // the data used to fetch info about this task when the user clicks on a link
+  map<string, Value> values = 1;
+  // the sms_id, email_id, etc that can be used to identify what generated this link
+  string task_id = 2;
+  // the type of the source for this link. ex: Email, Sms, Chat
+  commons.public.RequestSource src = 3;
+}
+
+// PORTALS //
+
+message PortalConfigId {
+  string id = 3;
+}
+
+// all these things will show up on the portal screen to the receiver of
+// the link contact info should look like the company who is using the portal
+// (not tcn)
+message PortalConfig {
+  // reserved names: receipt_sms_template, receipt_email_template,
+  // receipt_sms_source_phone, receipt_email_from_addr
+  reserved 9 to 12;
+  string id = 21;
+  string name = 22;
+  string description = 23;
+  // link to pull up a chat with customer service
+  string chat_client_link = 2;
+  string contact_email = 3;
+  string contact_phone = 4;
+  string postal_code = 5;
+  string city = 6;
+  string state = 7;
+  string company_name = 8;
+  // is the logo used in the corner of the portal screen
+  bytes logo = 13;
+  // is the primary color used for the portal screen
+  string primary_color = 14;
+  // accent color used on the portal screen
+  string secondary_color = 15;
+  string street_address = 19;
+}
+
+message PortalLinkId {
+  string id = 3;
+}
+message PortalLink {
+  string id = 3;
+  string portal_id = 4;
+  // DONT USE
+  string plugin_instance_id = 5 [deprecated = true];
+  string portal_config_id = 6;
+  string task_id = 7;
+  map<string, Value> data = 8;
+  map<string, Value> metadata = 9;
+  google.protobuf.Timestamp last_edited = 10;
+}
+
+message PortalId {
+  string id = 3;
+}
+message Portal {
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  string portal_config_id = 6;
+  repeated string plugin_inst_ids = 7;
+  PortalType ptype = 8;
+  google.protobuf.Timestamp last_edited = 9;
+}
+
+message PortalText {
+  string verification_header = 1;
+  string verification_footer = 2;
+  string payment_header = 3;
+  string payment_footer = 4;
+  string receipt_header = 5;
+  string receipt_footer = 6;
+  string invoice_header = 7;
+  string invoice_footer = 8;
+}
+message PortalType {
+  oneof data {
+    PaymentPortal payment_portal = 1;
+    // contains info needed for ivr payment
+    IVRPortal ivr_portal = 2;
+  }
+}
+message PaymentPortal {
+  commons.public.VerificationFlow verification = 8;
+  commons.public.InvoiceFlow invoice = 9;
+  repeated commons.public.PaymentFlow payments = 10;
+  PortalText portal_text = 20;
+}
+
+message IVRPortal {}
+
+message PluginInstanceId {
+  string id = 3;
+}
+message PluginInstance {
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  // the plugin type name/label. Ex: 'Experian Payments'
+  string plugin_definition = 6;
+  Values data = 7;
+  Values metadata = 10;
+  google.protobuf.Timestamp last_edited = 9;
+  commons.public.RequestMethod method_id = 12;
+}
+
+// PortalLinkTransactionRow is all the metrics about a portal link,
+// and how it was used in any integration transactions.
+message PortalLinkTransactionRow {
+  // all this from the PortalLink.Metadata map
+  int32 views = 1;
+  int32 verify_attempts = 2;
+  int32 verify_successes = 3;
+  int32 payment_attempts = 4;
+  int32 payment_successes = 5;
+  double payment_amount = 6;
+  google.protobuf.Timestamp date = 7;
+
+  // from PortalLink.Data map
+  map<string, Value> link_data = 8;
+}
+
+// GetPortalLinksByDateRangeReq gives a paginated view of portal links
+message GetPortalLinksByDateRangeReq {
+  string org_id = 1;
+  string region_id = 2;
+  google.protobuf.Timestamp start = 3;
+  google.protobuf.Timestamp end = 4;
+  int32 page_size = 5;
+  int32 page_num = 6;
+  commons.public.RequestMethod method_id = 7;
+}
+
+// GetPortalLinksByDateRangeRes returns a page of data
+message GetPortalLinksByDateRangeRes {
+  repeated PortalLinkTransactionRow rows = 2;
+}

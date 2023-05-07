@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
+
+// [LIST] ======================================================================
+
+// ListFlagSnapshotsRequest is a request for listing flag snapshots.
+message ListFlagSnapshotsRequest {
+  // Optional. The number of snapshots to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The order by which snapshots will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "flag_snapshot_sid desc".
+  // Supported order by includes:
+  //   + (flag_snapshot_sid desc)
+  //   + (flag_snapshot_sid)
+  string order_by = 3;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 4;
+
+  // Optional. List of flag_snapshots to filter on.
+  repeated int64 flag_snapshot_sids = 5;
+
+  // Optional. mask contains a list of fields to be returned. Possible paths include
+  // flag_snapshot_sid, flag_sid, name, review_group_id, notify_group_id, create_time,
+  // version, and priority. If no mask is provided it defaults to using all paths.
+  google.protobuf.FieldMask mask = 6;
+
+  // Optional. Transcript sid to filter on.
+  int64 transcript_sid = 7;
+}
+
+// ListFlagSnapshotsResponse is a response for listing flag snapshots.
+message ListFlagSnapshotsResponse {
+  // Token to retrieve the next page of snapshots, or empty if there are no
+  // more snapshots in the list.
+  string next_page_token = 1;
+
+  // List of flag snapshots.
+  repeated FlagSnapshot flag_snapshots = 2;
+}
+
+// [RESOURCE] ==================================================================
+
+// FlagSnapshot is a resource in the Vanalytics API.
+message FlagSnapshot {
+  // Output only. The unique id of this flag.
+  int64 flag_snapshot_sid = 1;
+
+  // Output only. The unique id of this flag.
+  int64 flag_sid = 2;
+
+  // Required. The name of this flag. Must be non empty and unique across all
+  // flags within an organization.
+  string name = 4;
+
+  // Optional. The org permission group id which users must have in order to
+  // to review flagged transcripts. When not provided flagged transcripts will
+  // not require review.
+  string review_group_id = 5;
+
+  // Optional. The notify group id for this flag.
+  string notify_group_id = 6;
+
+  // Optional. The priority of the flag. Defaults to 0.
+  int32 priority = 7;
+
+  // Output only. The version of this flag.
+  int64 version = 8;
+
+  // Output only. The timestamp when this flag snapshot was created. Assigned by the
+  // server.
+  google.protobuf.Timestamp create_time = 9;
+
+  // Output only. Determines whether this flag must be reviewed.
+  bool must_review = 10;
+
+  // Output only. Determines whether this flag must be notified.
+  bool must_notify = 11;
+}

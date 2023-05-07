@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.v1alpha1.sentinel;
+
+import "commons/logging.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.sentinel;sentinel";
+option java_package = "com.tcn.api.v1alpha1.sentinel";
+
+message SentinelEvent {
+  oneof event {
+    LogEvent log_event = 1;
+  }
+}
+
+message LogEvent {
+  string trace_id = 3;
+  // the browsers session id
+  string session_id = 4;
+  string message = 5;
+  // the browsers current uri
+  string location = 6;
+  string stack_trace = 7;
+  google.protobuf.Timestamp timestamp = 8;
+  map<string, string> metadata = 9;
+  commons.Level severity = 10;
+}
+
+message SendEventsReq {
+  repeated SentinelEvent events = 1;
+}
+
+message SendEventsRes {}

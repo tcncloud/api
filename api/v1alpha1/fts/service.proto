@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package api.v1alpha1.fts;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.fts;fts";
+option java_package = "com.tcn.api.v1alpha1.fts";
+
+service FtsApi {
+  rpc GetUploadFileUrl(GetUploadFileUrlReq) returns (GetUploadFileUrlRes) {
+    option (google.api.http).post = "/api/v1alpha1/fts/upload_url";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+}
+
+message GetUploadFileUrlReq {
+  string prefix = 1;
+}
+
+message GetUploadFileUrlRes {
+  string url = 1;
+  // identifier so we can get this file back at a later point
+  string id = 3;
+}

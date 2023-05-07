@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "api/v1alpha1/vanalytics/flag.proto";
+import "api/v1alpha1/vanalytics/transcript.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
+
+// [CREATE] ====================================================================
+
+// CreateFlagTranscriptRequest is a request for creating a flag transcript.
+message CreateFlagTranscriptRequest {
+  // Required. The transcript sids to be flagged.
+  repeated int64 transcript_sids = 1;
+
+  // Required. The flag for flagging the transcripts.
+  Flag flag = 2;
+}
+
+// CreateFlagTranscriptResponse is a response for creating a flag transcript.
+message CreateFlagTranscriptResponse {}
+
+// [SEARCH] ====================================================================
+
+// SearchFlagTranscriptsRequest is a request for searching flagged transcripts.
+message SearchFlagTranscriptsRequest {
+  // Optional. The number of hits to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 3;
+
+  // Optional. Filter by flag sid.
+  FlagSid flag_sid = 5;
+
+  // Optional. Filters transcripts by review status.
+  FlagReviewStatus flag_review_status = 6;
+
+  // Optional. Filter by notify group id.
+  NotifyGroupId notify_group_id = 7;
+
+  // Optional. Filter by review group id.
+  ReviewGroupId review_group_id = 8;
+
+  // Optional. Filter where transript sid >= start transcript sid.
+  int64 start_transcript_sid = 10;
+
+  // Optional. Filter where transript sid <= end transcript sid.
+  int64 end_transcript_sid = 11;
+
+  // Optional. The order by which flag transcripts will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "transcript_sid".
+  // Supported order by includes:
+  //   + (transcript_sid)
+  //   + (transcript_sid desc)
+  //   + (create_time, transcript_sid)
+  //   + (create_time desc, transcript_sid desc)
+  //   + (audio_time, transcript_sid)
+  //   + (audio_time desc, transcript_sid desc)
+  string order_by = 12;
+
+  // FlagSid filtering.
+  message FlagSid {
+    // Required. The flag sids to filter by.
+    repeated int64 filter = 1;
+
+    // Optional. Minimum number of flags sids within the filter that must be
+    // matched on each flagged transcript. All flag sids must be matched when
+    // (match <= 0) or (match >= len(filter)).
+    int32 match = 2;
+  }
+
+  // NotifyGroupId filtering.
+  message NotifyGroupId {
+    // Optional. When true include, when false exclude, transcripts which are
+    // flagged with an undefined notify group id.
+    bool is_null = 1;
+
+    // Optional. The notify group ids to filter by.
+    repeated string filter = 2;
+
+    // Optional. Minimum number of notify group ids within the filter that must
+    // be matched on each flagged transcript. All notify group ids must be
+    // matched when (match <= 0) or (match >= len(filter)).
+    int32 match = 3;
+  }
+
+  // ReviewGroupId filtering.
+  message ReviewGroupId {
+    // Optional. When true include, when false exclude, transcripts which are
+    // flagged with an undefined review group id.
+    bool is_null = 1;
+
+    // Optional. The review group ids to filter by.
+    repeated string filter = 2;
+
+    // Optional. Minimum number of review group ids within the filter that must
+    // be matched on each flagged transcript. All review group ids must be
+    // matched when (match <= 0) or (match >= len(filter)).
+    int32 match = 3;
+  }
+}
+
+// FlagReviewStatus is an enum for the review status of a flagged transcript.
+enum FlagReviewStatus {
+  ANY = 0;
+  TODO = 1;
+  DONE = 2;
+  NONE = 3;
+}
+
+// SearchFlagTranscriptsResponse is a response for searching flagged transcripts.
+message SearchFlagTranscriptsResponse {
+  // Token to retrieve the next page of transcripts, or empty if there are no
+  // more transcripts in the list.
+  string next_page_token = 1;
+
+  // List of hits.
+  repeated Hit hits = 2;
+
+  // Total number of hits in query.
+  uint64 total = 3;
+
+  // Hits for searching flag transcripts.
+  message Hit {
+    // Transcript that is flaggged.
+    Transcript transcript = 1;
+    // List of flag_snapshot_sids that the transcript is flagged with.
+    repeated int64 flag_snapshot_sids = 2;
+    // Map of review statuses. If it exists in the map and has value true it has
+    // been reviewed. If it exists in the map and has value false it needs to be
+    // reviewed. If it does not exist in the map then it does not require review.
+    map<int64, bool> reviewed = 3;
+    // List of flag_sids that the transcript is flagged with.
+    repeated int64 flag_sids = 4;
+  }
+}

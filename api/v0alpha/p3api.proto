@@ -1,0 +1,2691 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/acd.proto";
+import "commons/broadcasts.proto";
+import "commons/call.proto";
+import "commons/omnichannel.proto";
+import "commons/p3api.proto";
+import "commons/task.proto";
+import "commons/wfm.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service P3Api {
+  rpc GetAgentHuntGroup(GetAgentHuntGroupReq) returns (HuntGroup) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getagenthuntgroup";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetAgentSession(GetAgentSessionReq) returns (AgentSession) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getagentsession";
+    option (google.api.http).body = "*";
+  }
+
+  // removing to use asm create session
+  // rpc CreateAgentSession(CreateAgentSessionReq) returns (AgentSession) {
+  //   option (google.api.http).post = "/api/v0alpha/p3api/createagentsession";
+  //   option (google.api.http).body = "*";
+  // }
+
+  // Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+  // Skills will be returned as a value pair (name, level).
+  // For agent skills, the name of each skill will be the agent_skill_sid.
+  // All other skills' names (hunt group and PBX) will be given special formats.
+  // The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+  rpc GetAgentSkills(GetAgentSkillsReq) returns (GetAgentSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getagentskills";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new agent skill as defined by the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the client_sid or name in the request is invalid.
+  rpc CreateAgentSkill(CreateAgentSkillReq) returns (CreateAgentSkillRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createagentskill";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an agent skill as defined by the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the agent_skill_sid or name in the request is invalid.
+  rpc UpdateAgentSkill(UpdateAgentSkillReq) returns (UpdateAgentSkillRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentskill";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes the agent skill with the agent_skill_sid given on the request.
+  // Errors:
+  //    - grpc.InvalidArgument: the agent_skill_sid in the request is invalid.
+  rpc DeleteAgentSkill(DeleteAgentSkillReq) returns (DeleteAgentSkillRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deleteagentskill";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns a list of agent skills for the given client sid.
+  // DEPRECATED. Use ListSkills
+  rpc ListAgentSkills(ListAgentSkillsReq) returns (ListAgentSkillsRes);
+
+  // Returns a list of skills for the current agent.
+  rpc ListSkillsForCurrentAgent(ListSkillsForCurrentAgentReq) returns (ListSkillsForCurrentAgentRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listskillsforcurrentagent";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns a list of skills filtered by types given on
+  // the request message field type_filter. Leaving the type_filter
+  // field empty will return all types of skills.
+  rpc ListSkills(ListSkillsReq) returns (ListSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listskills";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an agents assigned skills as defined by the skills list on
+  // the request message.
+  // Errors:
+  //    - grpc.InvalidArgument: the user_id on the request is invalid.
+  rpc UpdateAgentSkills(UpdateAgentSkillsReq) returns (UpdateAgentSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentskills";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetCurrentAgent(GetCurrentAgentReq) returns (Agent) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcurrentagent";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetClientInfoData(GetClientInfoDataReq) returns (GetClientInfoDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getclientinfodata";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateReq) returns (GetClientInfoDisplayTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListAgentStatisticsData(ListAgentStatisticsDataReq) returns (ListAgentStatisticsDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentstatisticsdata";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all agent and hunt group PBX extensions that the requested agent has.
+  rpc ListPBXExtensions(ListPBXExtensionsReq) returns (ListPBXExtensionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listpbxextensions";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists every agent extension for the current client
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.Internal: unexpected error getting pbx_extensions
+  rpc ListAgentExtensions(ListAgentExtensionsReq) returns (ListAgentExtensionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentextensions";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists every hunt group extension for the current client
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.Internal: unexpected error getting pbx_extensions
+  rpc ListHuntGroupExtensions(ListHuntGroupExtensionsReq) returns (ListHuntGroupExtensionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupextensions";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new extension as defined by the request message
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request has missing or invalid fields.
+  //    - grpc.Internal: An unexpected error occurred while saving the extension.
+  rpc CreateExtension(CreateExtensionReq) returns (CreateExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createextension";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a pbx_extension with the given pbx_extension_sid.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request had invalid or missing fields.
+  rpc DeleteExtension(DeleteExtensionReq) returns (DeleteExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deleteextension";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an extension as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: The request had invalid or missing fields.
+  //    - grpc.Internal: An unexpected error occured updating the extension.
+  rpc UpdateExtension(UpdateExtensionReq) returns (UpdateExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateextension";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdatePBXExtension(UpdatePBXExtensionReq) returns (UpdatePBXExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatepbxextension";
+    option (google.api.http).body = "*";
+  }
+
+  rpc CreateDNCLNumbers(CreateDNCLNumbersReq) returns (CreateDNCLNumbersRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/creatednclnumbers";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets the campaign or huntgroup script for the given agent's current hunt
+  // group. If no script is found, it gets the hunt group responses for the
+  // agent's current hunt group. It also does a mail merge with the found script
+  // or responses (if able).
+  rpc GetScriptOrResponses(GetScriptOrResponsesReq) returns (GetScriptOrResponsesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getscriptorresponses";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetHuntGroupAgentSettings(GetHuntGroupAgentSettingsReq) returns (HuntGroupAgentSettings) {
+    option (google.api.http).post = "/api/v0alpha/p3api/gethuntgroupagentsettings";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns a list of weblinks for the hunt group in the request.
+  // It replaces any parameters of a given weblink with the call data of the call sid and type from the request message or with the callback details (if a scheduled_callback_id is given).
+  rpc ListHuntGroupWebLinks(ListHuntGroupWebLinksReq) returns (ListHuntGroupWebLinksRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupweblinks";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetHuntGroupPauseCodes(GetHuntGroupPauseCodesReq) returns (GetHuntGroupPauseCodesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/gethuntgrouppausecodes";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the call history of the requested agent for the past day or
+  // session_sid, depending on the filter parameter.
+  rpc ListAgentCallHistory(ListAgentCallHistoryReq) returns (ListAgentCallHistoryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentcallhistory";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all client phone book entries.
+  // Required Permissions:
+  //  AGENT_MANAGER
+  rpc ListClientPhoneBookEntries(ListClientPhoneBookEntriesReq) returns (ListClientPhoneBookEntriesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listclientphonebookentries";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists all hunt group phone book entries.
+  // Required Permissions:
+  //  AGENT_MANAGER
+  rpc ListHuntGroupPhoneBookEntries(ListHuntGroupPhoneBookEntriesReq) returns (ListHuntGroupPhoneBookEntriesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupphonebookentries";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new phone_book as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
+  //    - grpc.Internal: unexpected error occurred when saving the phone book.
+  rpc CreatePhoneBookEntry(CreatePhoneBookEntryReq) returns (CreatePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createphonebookentry";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates an existing phone_book as defined by the request message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  // Errors:
+  //    - grpc.InvalidArgument: the fields on the request are missing or invalid.
+  //    - grpc.Internal: unexpected error occurred when saving the phone book.
+  rpc UpdatePhoneBookEntry(UpdatePhoneBookEntryReq) returns (UpdatePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatephonebookentry";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes the phone_book with the phone_book_sid given on the reques message.
+  // Required Permissions:
+  //    AGENT_MANAGER
+  rpc DeletePhoneBookEntry(DeletePhoneBookEntryReq) returns (DeletePhoneBookEntryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deletephonebookentry";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists caller_id, outbound and transfer phone books for the requesting client and given hunt group sid.
+  // Entries will be ordered by entry_name and phone_number.
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the client_sid or hunt_group_sid in the request are invalid.
+  //   - grpc.Internal: unexpected error occurred when retrieving the phone books.
+  rpc ListPhoneBooks(ListPhoneBooksReq) returns (ListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listphonebooks";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListAgentTriggers(ListAgentTriggersReq) returns (ListAgentTriggersRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagenttriggers";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets all running broadcasts (task groups) for the requesting agent and hunt_group_sid in the request.
+  // Calculates the percentage of completed tasks for each of those task groups.
+  // Calculates the overall task completion percentage of all matching task groups.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request is invalid.
+  rpc GetCampaignCompletionStatus(GetCampaignCompletionStatusReq) returns (GetCampaignCompletionStatusRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcampaigncompletionstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Uses lost peer call sid and call type from the request to get information about lost call
+  // gets the name and hunt group of the agent that was connected to that call and all types of skills the call has.
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the call_sid in the request in invalid.
+  //   - grpc.NotFound: the call sid provided wasn't previously connected to any agent.
+  rpc GetLostPeerInfo(GetLostPeerInfoReq) returns (GetLostPeerInfoRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getlostpeerinfo";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets all the available Disposition Keys
+  //
+  // Required permissions:
+  //   NONE
+  rpc GetDispositionKeys(GetDispositionKeysReq) returns (GetDispositionKeysRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getdispositionkeys";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetReadyAgents(GetReadyAgentsReq) returns (GetReadyAgentsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getreadyagents";
+    option (google.api.http).body = "*";
+  }
+
+  // Returns lists with call data of calls that were:
+  // Placed on multihold by the requesting agent.
+  // Queued, are ready to be handled and require a subset of the agent_skills provided.
+  // Placed in the Hold Queue Monitor, haven't been picked up yet and require a subset of the agent_skills provided.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the agent_session_sid provided in the request is invalid.
+  rpc ListAgentQueueAndOnHoldCallData(ListAgentQueueAndOnHoldCallDataReq) returns (ListAgentQueueAndOnHoldCallDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentqueueandonholdcalldata";
+    option (google.api.http).body = "*";
+  }
+
+  rpc SaveAgentCallResponses(SaveAgentCallResponsesReq) returns (SaveAgentCallResponsesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/saveagentcallresponses";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListAgentTransferOptions(ListAgentTransferOptionsReq) returns (ListAgentTransferOptionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagenttransferoptions";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateAgentCallResponseValue(UpdateAgentCallResponseValueReq) returns (UpdateAgentCallResponseValueRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentcallresponsevalue";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetIntercomPeerInfo(GetIntercomPeerInfoReq) returns (GetIntercomPeerInfoRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getintercompeerinfo";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the requesting user's org response evaluators.
+  rpc ListOrgResponseEvaluators(ListOrgResponseEvaluatorsReq) returns (ListOrgResponseEvaluatorsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listorgresponseevaluators";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetQueueConfigurationOptionsArray(GetQueueConfigurationOptionsArrayReq) returns (GetQueueConfigurationOptionsArrayRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getqueueconfigurationoptionsarray";
+    option (google.api.http).body = "*";
+  }
+
+  // Get the rules for conditionally adding a number to the DNCL depending on
+  // responses or scripts
+  rpc GetConditionalDNCLRules(GetConditionalDNCLRulesReq) returns (GetConditionalDNCLRulesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getconditionaldnclrules";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ManualDialStart(ManualDialStartReq) returns (ManualDialStartRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/manualdialstart";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListExtendedCallHistory(ListExtendedCallHistoryReq) returns (stream ListExtendedCallHistoryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listextendedcallhistory";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListWhiteListPhoneBooks(ListWhiteListPhoneBooksReq) returns (ListWhiteListPhoneBooksRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listwhitelistphonebooks";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadCallRecording(DownloadCallRecordingReq) returns (DownloadRecordingRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecording";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadCallRecordings(DownloadCallRecordingsReq) returns (DownloadRecordingRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecordings";
+    option (google.api.http).body = "*";
+  }
+
+  rpc PlacePreviewDialCall(PlacePreviewDialCallReq) returns (PlacePreviewDialCallRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/placepreviewdialcall";
+    option (google.api.http).body = "*";
+  }
+
+  rpc CancelPreviewDialCall(CancelPreviewDialCallReq) returns (CancelPreviewDialCallRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/cancelpreviewdialcall";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateTaskStatus(UpdateTaskStatusReq) returns (Nil) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatetaskstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // removed and done by asm end session
+  // rpc UpdateWebLogoutTime(UpdateWebLogoutTimeReq) returns (Nil) {
+  //   option (google.api.http).post = "/api/v0alpha/p3api/saveweblogouttime";
+  //   option (google.api.http).body = "*";
+  // }
+
+  // ListCallbackRoutingAgents returns a list of agents that are allowed to make a callback.
+  rpc ListCallbackRoutingAgents(ListCallbackRoutingAgentsReq) returns (ListCallbackRoutingAgentsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingagents";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListCallbackRoutingSkills(ListCallbackRoutingSkillsReq) returns (ListCallbackRoutingSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingskills";
+    option (google.api.http).body = "*";
+  }
+
+  rpc HandleRecordingDelay(HandleRecordingDelayReq) returns (HandleRecordingDelayRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/handlerecordingdelay";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateAgentAssignedHuntGroup(UpdateAgentAssignedHuntGroupReq) returns (UpdateAgentAssignedHuntGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagentassignedhuntgroup";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetCallData(GetCallDataReq) returns (GetCallDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcalldata";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListHuntGroups(ListHuntGroupsReq) returns (ListHuntGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listHuntGroups";
+    option (google.api.http).body = "*";
+  }
+
+  // List the hunt groups an agent within a given hunt group can reassign
+  // themselves to. The reassignment hunt groups can optionally be limited by a
+  // hunt group setting. If a hunt group does not allow reassignment, the
+  // returned list will be empty.
+  rpc ListReassignmentHuntGroups(ListReassignmentHuntGroupsReq) returns (ListReassignmentHuntGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listreassignmenthuntgroups";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetOrgAgentSettings(GetOrgAgentSettingsReq) returns (GetOrgAgentSettingsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getorgagentsettings";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists caller id numbers with their associated region codes for the given
+  // bucket
+  rpc ListCallerIdsFromBucket(ListCallerIdsFromBucketReq) returns (ListCallerIdsFromBucketRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcalleridsfrombucket";
+    option (google.api.http).body = "*";
+  }
+
+  rpc SaveLastCallResponse(SaveLastCallResponseReq) returns (SaveLastCallResponseRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/savelastcallresponse";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListAgentCallLogsByCallSidAndType(ListAgentCallLogsByCallSidAndTypeReq) returns (ListAgentCallLogsByCallSidAndTypeRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentcalllogsbycallsidandtype";
+    option (google.api.http).body = "*";
+  }
+
+  // Lists the keys and values of the latest responses for the given call_sid,
+  // call_type and agent_sid
+  rpc ListAgentCallResponseValues(ListAgentCallResponseValuesReq) returns (ListAgentCallResponseValuesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentcallresponsevalues";
+    option (google.api.http).body = "*";
+  }
+
+  // Get contact schema details based on contact group sid
+  rpc GetContactSchemaByContactGroup(GetContactSchemaByContactGroupReq) returns (ContactSchema) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcontactschemabycontactgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // List contact group details based on client sid from contact_group table
+  rpc ListContactGroupDetailsByClientSid(ListContactGroupDetailsByClientSidReq) returns (ListContactGroupDetailsByClientSidRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactgroupdetailsbyclientsid";
+    option (google.api.http).body = "*";
+  }
+
+  // Get contact group details based on contact group sid from contact_group
+  // table
+  rpc GetContactGroupDetails(GetContactGroupReq) returns (ContactGroup) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcontactgroupdetails";
+    option (google.api.http).body = "*";
+  }
+
+  // Get contact group size based on contacts size
+  rpc GetContactGroupSize(GetContactGroupReq) returns (GetContactGroupSizeRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getcontactgroupsize";
+    option (google.api.http).body = "*";
+  }
+
+  // Create contact field description details
+  rpc CreateContactFieldDescription(CreateContactFieldDescriptionReq) returns (CreateContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createcontactfielddescription";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete contact field description details
+  rpc DeleteContactFieldDescription(DeleteContactFieldDescriptionReq) returns (DeleteContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deletecontactfielddescription";
+    option (google.api.http).body = "*";
+  }
+
+  // List contact field desc details from contact_field_description table
+  rpc ListContactFieldDescriptions(ListContactFieldDescriptionsReq) returns (ListContactFieldDescriptionsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptions";
+    option (google.api.http).body = "*";
+  }
+
+  // List contact field description details based on contact group sid
+  rpc ListContactFieldDescriptionsByCGSid(ListContactFieldDescriptionsByCGSidReq) returns (ListContactFieldDescriptionsByCGSidRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptionsbycgsid";
+    option (google.api.http).body = "*";
+  }
+
+  // List contactImportTemplates based on client_sid from
+  // contact_import_template table
+  rpc ListContactImportTemplates(ListContactImportTemplatesReq) returns (ListContactImportTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcontactimporttemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates task data for a preview record to finished and logs an agent
+  // session event
+  rpc UpdatePreviewRecordToFinished(UpdatePreviewRecordToFinishedReq) returns (UpdatePreviewRecordToFinishedRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatepreviewrecordtofinished";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the requesting agent's hunt_group_sid.
+  rpc UpdateAgentHuntGroup(UpdateAgentHuntGroupReq) returns (UpdateAgentHuntGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updateagenthuntgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates every given user's hunt_group_sid.
+  // Required Permissions:
+  //    AGENT_MANAGEMENT
+  // Errors:
+  //    - grpc.Internal: an error occurred while interacting with the database.
+  //    - grpc.InvalidArgument: the hunt_group_sid or the user id list is empty or contains an invalid value.
+  rpc MultiAgentHuntGroupAssignment(MultiAgentHuntGroupAssignmentReq) returns (MultiAgentHuntGroupAssignmentRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/multiagenthuntgroupassignment";
+    option (google.api.http).body = "*";
+  }
+
+  // GetAgentProfile returns an agent profile.
+  rpc GetAgentProfile(GetAgentProfileReq) returns (AgentProfile) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getagentprofile";
+    option (google.api.http).body = "*";
+  }
+
+  // RecalculateBilling updates statuses for every billing type given on the
+  // request message for either the current or previous month.
+  // Only data that has already been summed for billing will have it's
+  // status updated.
+  // Required Permissions:
+  //  EDIT_BILLING
+  rpc RecalculateBilling(RecalculateBillingReq) returns (RecalculateBillingRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/recalculatebilling";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets information of the requesting client's broadcast templates (template_number, name, type, modify_date)
+  // It reports if each found template is either STANDARD or LAYERED.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   NONE
+  rpc ListOutboundBroadcastTemplateData(ListOutboundBroadcastTemplateDataReq) returns (ListOutboundBroadcastTemplateDataRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listoutboundbroadcasttemplatedata";
+    option (google.api.http).body = "*";
+  }
+
+  // Assign every skill to every agent with the given aptitude.
+  // Errors:
+  //    - grpc.Invalid: the aptitude field is invalid.
+  rpc MultiAgentSkillAssignment(MultiAgentSkillAssignmentReq) returns (MultiAgentSkillAssignmentRes);
+
+  // Unassigns every given skill from every given user.
+  // Errors:
+  //    - grpc.InvalidArgument:
+  //        - the user_ids list is empty or contains an empty string.
+  //        - one or more of the user_ids does not belong to the client.
+  //    - grpc.Internal: an error occurred while deleting the skill assignments.
+  rpc MultiAgentSkillUnassignment(MultiAgentSkillUnassignmentReq) returns (MultiAgentSkillUnassignmentRes);
+
+  // List of agent hunt groups based on client sid
+  // that have manually approved messages enabled
+  rpc ListMAMAgentHuntGroupsByClientSid(ListMAMAgentHuntGroupsByClientSidReq) returns (ListMAMAgentHuntGroupsByClientSidRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listmamagenthuntgroupsbyclientsid";
+    option (google.api.http).body = "*";
+  }
+
+  // List every tts voice
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.Internal: an error was returned while trying to retrieve the entity
+  rpc ListTtsVoices(ListTtsVoicesReq) returns (ListTtsVoicesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listttsvoices";
+    option (google.api.http).body = "*";
+  }
+
+  // Create a new tts voice
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.InvalidArgument: the actual_name or port field on the request is invalid.
+  //    - grpc.Internal: an error was returned while trying to insert the new tts voice.
+  rpc CreateTtsVoice(CreateTtsVoiceReq) returns (CreateTtsVoiceRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createttsvoice";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a tts voice with the given tts_voice_sid.
+  // Required Permissions:
+  //    TCN_ADMIN_SETTINGS
+  // Errors:
+  //    - grpc.InvalidArgument: the tts_voice_sid field on the request is invalid.
+  //    - grpc.Internal: an error was returned while trying to remove the tts voice.
+  rpc DeleteTtsVoice(DeleteTtsVoiceReq) returns (DeleteTtsVoiceRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deletettsvoice";
+    option (google.api.http).body = "*";
+  }
+
+  // List of account custom data keys based on client sid
+  // Required Permissions:
+  //   ORG_VIEW
+  // Errors:
+  //    - grpc.Internal: an error was returned while trying to retrieve the entity
+  rpc ListCustomDataKeys(ListCustomDataKeysReq) returns (ListCustomDataKeysRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcustomdatakeys";
+    option (google.api.http).body = "*";
+  }
+
+  // Creates a new Data Key as defined by the request message
+  // the client_properties_sid should not be set, this is assigned on the backend
+  // Required Permission:
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The custom_data_key field was not set
+  //    - grpc.Internal: error creating custom data key
+  rpc CreateCustomDataKey(CreateCustomDataKeyReq) returns (CreateCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/createcustomdatakey";
+    option (google.api.http).body = "*";
+  }
+
+  // Deletes a Custom Data Key with the sid given on the request message.
+  // Required Permission:
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The client_properties_sid field is invalid.
+  //    - grpc.NotFound: no custom data key was deleted for the client_properties_sid.
+  //    - grpc.Internal: an error occurred while trying to remove the custom data key.
+  rpc DeleteCustomDataKey(DeleteCustomDataKeyReq) returns (DeleteCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/deletecustomdatakey";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a custom data key with the client_properties_sid and data key
+  // given on the request
+  // Required Permissions;
+  //   ORG_EDIT
+  // Errors:
+  //    - grpc.InvalidArgument: The client_properties_sid was empty or the data key was not set
+  //    - grpc.Internal: error updating custom data key, more than 1 custom data key records affected
+  //    - grpc.NotFound: no matching custom data key found
+  rpc UpdateCustomDataKey(UpdateCustomDataKeyReq) returns (UpdateCustomDataKeyRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatecustomdatakey";
+    option (google.api.http).body = "*";
+  }
+
+  // Get Activity logs for given users and by specified time range
+  // Required Permissions;
+  //   CUSTOMER_SUPPORT
+  rpc GetActivityLogHistory(GetActivityLogHistoryReq) returns (stream GetActivityLogHistoryRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getactivityloghistory";
+    option (google.api.http).body = "*";
+  }
+
+  // List agent and queue table template properties by client sid
+  rpc ListTableTemplateProperties(ListTableTemplatePropertiesReq) returns (ListTableTemplatePropertiesRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listtabletemplateproperties";
+    option (google.api.http).body = "*";
+  }
+
+  // List agent skills filters by client sid
+  rpc ListAgentSkillsFilters(ListAgentSkillsFiltersReq) returns (ListAgentSkillsFiltersRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentskillsfilters";
+    option (google.api.http).body = "*";
+  }
+
+  // List Schedule Rules
+  rpc ListScheduleRules(ListScheduleRulesRequest) returns (ListScheduleRulesResult) {
+    option (google.api.http).post = "/api/v0alpha/org/compliance/list";
+    option (google.api.http).body = "*";
+  }
+
+  // List custom report filters by client sid
+  rpc ListCustomReportFilters(ListCustomReportFiltersReq) returns (ListCustomReportFiltersRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listcustomreportfilters";
+    option (google.api.http).body = "*";
+  }
+
+  // List sms numbers by client sid
+  rpc ListSmsNumbers(ListSmsNumbersReq) returns (ListSmsNumbersRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listsmsnumbers";
+    option (google.api.http).body = "*";
+  }
+}
+
+message GetAgentHuntGroupReq {
+  int64 hunt_group_sid = 1;
+}
+
+message HuntGroup {
+  int64 hunt_group_sid = 1;
+  int64 client_sid = 2;
+  string name = 3;
+  google.protobuf.StringValue description = 4;
+  google.protobuf.Timestamp modify_date = 5;
+  commons.HuntGroupType.Enum type = 6;
+  int64 agent_count = 7;
+}
+
+message GetAgentSkillsReq {
+  reserved 3;
+  // id of the hunt group that will be used to get the hunt group skills (including PBX skills).
+  int64 hunt_group_sid = 4;
+}
+
+message GetAgentSkillsRes {
+  reserved 1;
+  // skills found for the given parameters, will be value pairs (name, level).
+  map<string, int64> skills = 2;
+}
+
+message CreateAgentSkillReq {
+  string name = 1;
+  string description = 2;
+}
+
+message CreateAgentSkillRes {}
+
+message UpdateAgentSkillReq {
+  int64 agent_skill_sid = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message UpdateAgentSkillRes {}
+
+message DeleteAgentSkillReq {
+  int64 agent_skill_sid = 1;
+}
+
+message DeleteAgentSkillRes {}
+
+message ListAgentSkillsReq {}
+
+message ListAgentSkillsRes {
+  repeated AgentSkill skills = 1;
+}
+
+// Request message for the ListSkillsForCurrentAgent RPC.
+message ListSkillsForCurrentAgentReq {}
+
+// Response message for the ListSkillsForCurrentAgent RPC.
+message ListSkillsForCurrentAgentRes {
+  // The returned list of skills belonging to the current agent.
+  repeated AgentSkill skills = 1;
+}
+
+message GetAgentSessionReq {
+  int64 agent_session_sid = 1;
+}
+
+// removing to use asm create session
+// message CreateAgentSessionReq { int64 hunt_group_sid = 1; }
+
+message AgentSession {
+  int64 agent_session_sid = 1;
+  google.protobuf.Timestamp web_login_time = 2;
+  google.protobuf.Timestamp web_logout_time = 3;
+  google.protobuf.Timestamp ivr_login_time = 4;
+  google.protobuf.Timestamp ivr_logout_time = 5;
+  google.protobuf.Int32Value ivr_duration = 6;
+  google.protobuf.Int32Value ivr_billed_duration = 7;
+  google.protobuf.DoubleValue cost = 8;
+  google.protobuf.Int64Value agent_sid = 9;
+  google.protobuf.Int32Value status = 10;
+  google.protobuf.BoolValue softphone_user = 11;
+  commons.AgentDialIn.Enum agent_dial_in = 12;
+  google.protobuf.StringValue agent_callerid = 13;
+  google.protobuf.StringValue agent_dialed_number = 14;
+  google.protobuf.StringValue worker = 15;
+  google.protobuf.Int64Value hunt_group_sid = 16;
+  google.protobuf.Int32Value wait_duration = 17;
+  google.protobuf.Int32Value pause_duration = 18;
+  google.protobuf.Int32Value transfer_duration = 19;
+  google.protobuf.Int32Value wrap_up_duration = 20;
+  google.protobuf.Int32Value talk_duration = 21;
+  google.protobuf.Int32Value manual_duration = 22;
+  google.protobuf.Int32Value preview_duration = 23;
+  google.protobuf.Int32Value hold_duration = 24;
+}
+
+message GetCurrentAgentReq {}
+
+message Agent {
+  int64 agent_sid = 1;
+  int64 client_sid = 2;
+  int64 agent_profile_sid = 3;
+  string web_login = 4;
+  google.protobuf.Int64Value agent_id = 7;
+  google.protobuf.Int64Value agent_pin = 8;
+  google.protobuf.Timestamp add_date = 9;
+  google.protobuf.Timestamp modify_date = 10;
+  google.protobuf.StringValue callback_number = 11;
+  google.protobuf.StringValue callback_extension = 12;
+  google.protobuf.Int64Value hunt_group_sid = 13;
+  google.protobuf.StringValue subscriber_username = 14;
+  google.protobuf.StringValue partner_agent_id = 15;
+  google.protobuf.Timestamp last_password_change_date = 16;
+}
+
+message GetClientInfoDataReq {
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+  int64 task_sid = 4;
+}
+
+message GetClientInfoDataRes {
+  string phone_number = 1;
+  string caller_id = 2;
+  repeated commons.ClientInfoDataRow rows = 3;
+  int64 country_sid = 4;
+}
+
+message GetClientInfoDisplayTemplateReq {
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+  int64 hunt_group_sid = 4;
+}
+
+message GetClientInfoDisplayTemplateRes {
+  bool display_all_fields = 1;
+  commons.DialedNumberFieldSettings dialed_number_settings = 2;
+  repeated commons.ClientInfoDisplayTemplateRow rows = 3;
+}
+
+message ListAgentStatisticsDataReq {
+  int64 hunt_group_sid = 3;
+  int64 session_sid = 4;
+}
+
+message StatisticsData {
+  google.protobuf.Int64Value agent_session_count = 1;
+  google.protobuf.Int64Value ivr_duration = 2;
+  google.protobuf.Int64Value agent_wait_duration = 3;
+  google.protobuf.Int64Value call_wait_duration = 4;
+  google.protobuf.Int64Value hold_duration = 5;
+  google.protobuf.Int64Value manual_duration = 6;
+  google.protobuf.Int64Value pause_duration = 7;
+  google.protobuf.Int64Value preview_duration = 8;
+  google.protobuf.Int64Value suspended_duration = 9;
+  google.protobuf.Int64Value talk_duration = 10;
+  google.protobuf.Int64Value transfer_duration = 11;
+  google.protobuf.Int64Value wrap_up_duration = 12;
+  string agent_name = 13;
+  string hunt_group_name = 14;
+  int64 call_count = 15;
+  google.protobuf.Timestamp web_login_time = 16;
+  int64 agent_sid = 17;
+  int64 hunt_group_sid = 18;
+}
+
+message StatisticsColumnDefinition {
+  string header_label = 1;
+  string statistic_id = 2;
+  string tool_tip = 3;
+}
+
+message ListAgentStatisticsDataRes {
+  repeated StatisticsData statistics_data = 1;
+  repeated StatisticsColumnDefinition shown_columns = 2;
+}
+
+// A phone book
+message PhoneBook {
+  // The entry type, either 'Hunt Group' or 'Client"
+  string entry_type = 2;
+  // The entry name
+  string entry_name = 3;
+  // Entry type will be 'Hunt Group' if this field is set.
+  // Otherwise the entry type will be 'Client'.
+  google.protobuf.Int64Value hunt_group_sid = 5;
+  // The phone number
+  string phone_number = 6;
+  // The phone number type determines where this phone book is used.
+  // It can be any combination of Caller ID, Outbound, and Transfer, separated by a colon.
+  // For example -> Caller ID:Outbound:Transfer would be all three.
+  google.protobuf.StringValue phone_number_type = 7;
+  // Whether the phone number is displayed to the agent or not. The entry name will always be displayed.
+  bool phone_number_hidden = 8;
+}
+
+// An entry that is associted with a phone book.
+message PhoneBookEntry {
+  // The sid that matches this phone book entry to a specific phone book.
+  int64 phone_book_sid = 1;
+  // The entry name
+  string entry_name = 2;
+  // Whether the phone book entry is a standard number or a SIP URI.
+  oneof phone_book_entry {
+    PhoneBookStandardNumber standard = 3;
+    PhoneBookSIPURI sip_uri = 4;
+  }
+  // Whether the phone number is displayed to the agent or not. The entry name will always be displayed.
+  bool phone_number_hidden = 5;
+}
+
+// A standard phone number
+message PhoneBookStandardNumber {
+  // The phone number
+  string phone_number = 1;
+  // The phone number types determines where this phone book is used.
+  // It can be any combination of Caller ID, Outbound, and Transfer, separated by a colon.
+  // For example -> Caller ID:Outbound:Transfer would be all three.
+  repeated commons.PhoneBookPhoneNumberType phone_number_types = 2;
+  bool white_list = 3;
+}
+
+// A SIP URI
+message PhoneBookSIPURI {
+  // The part of the SIP URI before the @ symbol
+  string sip_uri_left = 1;
+  // The part of the SIP URI after the @ symbol
+  string sip_uri_right = 2;
+  // The sip types determines where this phone book is used.
+  // It can be Outbound, Transfer, or both separated by a colon.
+  // For example -> Outbound:Transfer
+  repeated commons.PhoneBookSIPType sip_types = 3;
+}
+
+// Request message for the ListClientPhoneBookEntries RPC
+message ListClientPhoneBookEntriesReq {}
+
+// Response message for the ListClientPhoneBookEntries RPC
+message ListClientPhoneBookEntriesRes {
+  // The list of phone book entries
+  repeated PhoneBookEntry phone_book_entries = 1;
+  // This field is not set, since the entry type is 'Client'.
+  int64 hunt_group_sid = 2;
+}
+
+// Request message for the ListHuntGroupPhoneBookEntries RPC
+message ListHuntGroupPhoneBookEntriesReq {
+  // Required to specify which Hunt Group entries are requested
+  int64 hunt_group_sid = 1;
+}
+
+// Response message for the ListHuntGroupPhoneBookEntries RPC
+message ListHuntGroupPhoneBookEntriesRes {
+  // The list of phone book entries
+  repeated PhoneBookEntry phone_book_entries = 1;
+  // This field is set, since the entry type is 'Hunt Group"
+  int64 hunt_group_sid = 2;
+}
+
+// Request message for the CreatePhoneBookEntry RPC
+message CreatePhoneBookEntryReq {
+  // Entry type will be 'Hunt Group' if this field is set.
+  // Otherwise the entry type will be 'Client'.
+  int64 hunt_group_sid = 1;
+  // The entry name
+  string entry_name = 2;
+  // Whether the phone book entry is a standard number or a SIP URI.
+  oneof phone_book_entry {
+    PhoneBookStandardNumber standard = 3;
+    PhoneBookSIPURI sip_uri = 4;
+  }
+  // Whether the phone number is displayed to the agent or not. The entry name will always be displayed.
+  bool phone_number_hidden = 5;
+}
+
+// Response message for the CreatePhoneBookEntry RPC
+message CreatePhoneBookEntryRes {}
+
+// Request message for the UpdatePhoneBookEntry RPC
+message UpdatePhoneBookEntryReq {
+  // The sid that matches this phone book entry to a specific phone book.
+  int64 phone_book_sid = 1;
+  // Entry type will be 'Hunt Group' if this field is set.
+  // Otherwise the entry type will be 'Client'.
+  int64 hunt_group_sid = 2;
+  // The entry name
+  string entry_name = 3;
+  // Whether the phone book entry is a standard number or a SIP URI.
+  oneof phone_book_entry {
+    PhoneBookStandardNumber standard = 4;
+    PhoneBookSIPURI sip_uri = 5;
+  }
+  // Whether the phone number is displayed to the agent or not. The entry name will always be displayed.
+  bool phone_number_hidden = 6;
+}
+
+// Response message for the UpdatePhoneBookEntry RPC
+message UpdatePhoneBookEntryRes {}
+
+// Request message for the DeletePhoneBookEntry RPC
+message DeletePhoneBookEntryReq {
+  // The sid that matches this phone book entry to a specific phone book.
+  int64 phone_book_sid = 1;
+}
+
+// Response message for the DeletePhoneBookEntry RPC
+message DeletePhoneBookEntryRes {}
+
+// Request message for the ListPhoneBooks RPC
+message ListPhoneBooksReq {
+  // id of the hunt group that 'Hunt Group' entry types will have.
+  int64 hunt_group_sid = 2;
+}
+
+// Response message for the ListPhoneBooks RPC
+message ListPhoneBooksRes {
+  // Phone books with the caller id phone number type
+  repeated PhoneBook caller_id_phone_books = 1;
+  // Phone books with the outbound phone number type
+  repeated PhoneBook outbound_phone_books = 2;
+  // Phone books with the transfer phone number type
+  repeated PhoneBook transfer_phone_books = 3;
+}
+
+message ListAgentTriggersReq {
+  int64 hunt_group_sid = 1;
+}
+
+message TriggerParameters {
+  string action_key = 1;
+  string action_string = 2;
+}
+
+message TriggerDetails {
+  string trigger_name = 1;
+  string trigger_desc = 2;
+  int64 trigger_status = 3;
+  int64 trigger_duration = 4;
+  repeated commons.CallType.Enum call_types = 5;
+  repeated TriggerParameters trigger_parameters = 6;
+}
+
+message ListAgentTriggersRes {
+  repeated TriggerDetails trigger_details = 1;
+}
+
+message PBXExtension {
+  int64 pbx_extension_sid = 1;
+  string pbx_extension = 2;
+  int64 join_sid = 4;
+  string join_type = 5;
+  string email_subject = 6;
+  string email_body = 7;
+  string email_addresses = 8;
+  bool agent_access = 9;
+}
+
+message ListPBXExtensionsReq {}
+
+message ListPBXExtensionsRes {
+  message AgentExtension {
+    string pbx_extension = 1;
+    string greeting_location = 2;
+    EmailResponse email = 3;
+    string agent_name = 4;
+    bool has_greeting = 5;
+  }
+
+  message HuntGroupExtension {
+    string pbx_extension = 1;
+    string greeting_location = 2;
+    EmailResponse email = 3;
+    string hunt_group_name = 4;
+    bool has_greeting = 5;
+  }
+
+  repeated AgentExtension agent_extensions = 1;
+  repeated HuntGroupExtension hunt_group_extensions = 2;
+}
+
+message EmailResponse {
+  string subject = 1;
+  string body = 2;
+  repeated string addresses = 3;
+}
+
+message MailMergeData {
+  reserved 1;
+  int64 call_sid = 4;
+  commons.CallType.Enum call_type = 5;
+  string scheduled_callback_id = 6;
+}
+
+message HuntGroupResponse {
+  int64 hunt_group_response_sid = 1;
+  google.protobuf.Int64Value hunt_group_sid = 2;
+  google.protobuf.StringValue type = 3;
+  repeated string options = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.StringValue description = 6;
+  google.protobuf.Int32Value order = 7;
+  google.protobuf.BoolValue required = 8;
+  google.protobuf.StringValue default_value = 9;
+  ManualDialSettings manual_dial = 10;
+}
+
+message DNCL {
+  google.protobuf.Int64Value country_sid = 11;
+
+  google.protobuf.StringValue dncl_notes = 100;
+  google.protobuf.StringValue dncl_number = 101;
+  google.protobuf.Timestamp expiration_date = 102;
+}
+
+message AgentLoggingData {
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+  string action_value_suffix = 3;
+}
+
+message CreateDNCLNumbersReq {
+  repeated DNCL dncls = 1;
+  AgentLoggingData agent_logging_data = 3;
+}
+
+message CreateDNCLNumbersRes {
+  int64 success_count = 1;
+  int64 invalid_count = 2;
+  int64 failure_count = 3; // can be extrapolated
+}
+
+message GetHuntGroupAgentSettingsReq {
+  int64 hunt_group_sid = 1;
+}
+
+message HuntGroupAgentSettings {
+  bool keypad_enabled = 1;
+  string keypad_delimiter = 2;
+  AgentStatisticsSettings statistics = 3;
+  bool end_call_confirmation = 5;
+  PauseSettings pause = 6;
+  HoldQueueMonitorSettings hqm = 7;
+  ManualDialSettings manual_dial = 8;
+  TransferSettings transfer = 9;
+  PreviewDialSettings preview_dial = 10;
+  PhoneNumberActivitySettings phone_number_activity = 11;
+  DnclSettings dncl = 12;
+  AgentHoldSettings hold = 13;
+  ManualApprovalSettings manual_approval = 14;
+  bool display_linkback_huntgroup = 15;
+  ScheduleCallBackSettings schedule_callback = 16;
+  reserved 17;
+  RecordingSettings recording = 18;
+  bool display_phone_zip_metadata = 19;
+  repeated string phone_zip_metadata_keys = 20;
+  bool display_machine_deliver = 21;
+  bool allow_agent_intercom = 22;
+  DisplayDataSettings display_data_settings = 23;
+  bool allow_change_hunt_group = 24;
+  bool agent_screen_recording = 25;
+  repeated ComplianceMetadata inbound_compliance_metadata = 26;
+  bool notify_queued_calls = 27;
+  bool display_journey_retrieved_data = 28;
+  repeated string limit_journey_retrieved_data = 29;
+  // initial agent status
+  int64 initial_agent_status = 30;
+  bool display_web_links = 31; // determines if agent can see web links
+  bool display_skills = 32; // determines if agent can see skills
+
+  // Array of interruptable call states (manual, preview, both manual and preview)
+  repeated commons.InterruptedPeeringStatus interrupt_peering = 33;
+}
+
+message AgentStatisticsSettings {
+  enum HistoryFilter {
+    TODAY = 0;
+    SESSION = 1;
+  }
+
+  bool show_statistics = 1;
+  bool show_call_history = 2;
+  HistoryFilter filter_call_history = 3;
+}
+
+message PauseSettings {
+  bool allow_agent_pause = 1;
+  bool allow_agent_pause_reset = 2;
+  bool use_agent_pause_codes = 3;
+  string default_agent_pause_code = 4;
+  // recording pause confirmationl -
+  bool recording_pause_confirmation = 5;
+}
+
+message PhoneNumberActivitySettings {
+  bool allow_phone_number_activity = 1;
+  bool allow_export_phone_number_activity = 2;
+  bool allow_pna_recordings_download = 3;
+  bool allow_pna_edit_responses = 4;
+}
+
+message PreviewDialSettings {
+  reserved 1;
+  bool require_confirmation = 2;
+  int64 timeout_minutes = 3;
+  bool allow_cancel = 4;
+  bool pause_on_cancel = 5;
+}
+
+message HoldQueueMonitoringAgentRouting {
+  enum Enum {
+    UNKNOWN = 0;
+    ORIGINAL_AGENT_REQUIRED = 1;
+    ORIGINAL_AGENT_PREFERRED = 2;
+    ANY_AGENT = 3;
+  }
+}
+
+message HoldQueueMonitorSettings {
+  bool monitor = 1;
+  int64 required_group = 2;
+  int64 preferred_group = 3;
+  HoldQueueMonitoringAgentRouting.Enum agent_routing = 4;
+}
+
+message ComplianceMetadata {
+  string name = 1;
+  bool required = 2;
+}
+
+message ManualDialSettings {
+  enum ZipCodeValidation {
+    FALSE = 0;
+    TRUE = 1;
+    REQUIRED = 2;
+  }
+  bool enabled = 1;
+  bool show_outbound_phone_book = 2;
+  bool show_caller_id_phone_book = 3;
+  bool has_custom_caller_id = 4;
+  string default_caller_id = 5;
+  int64 default_country_sid = 6;
+  bool show_country_selector = 7;
+  bool timezone_restrictions = 8;
+  bool scrub_cell_phones = 9;
+  reserved 10; // custom calling rules
+  bool call_recording = 11;
+  bool agent_override_cell = 12;
+  bool agent_override_ccr = 13;
+  bool agent_override_dncl = 14;
+  bool agent_override_timezone = 15;
+  reserved 16;
+  bool use_white_list = 17;
+  bool use_random_caller_id = 18;
+  int64 random_caller_id_bucket = 19;
+  int64 default_caller_id_country_sid = 20;
+  bool display_caller_id_country_select = 21;
+  reserved 22;
+  bool use_caller_id_bucket = 23;
+  bool agent_override_natural_compliance = 24;
+  string natural_compliance_rule_set_name = 25;
+  repeated ComplianceMetadata compliance_metadata = 26;
+  bool enable_metadata = 27;
+  ZipCodeValidation use_timezone_validation_zip = 28;
+  bool enable_sip_address = 30; // enable/disable the SIP address
+  bool mask_manual_dial_caller_id = 31; // mask/unmask the caller id for buckets and statically set caller ids
+  // Manual Dial Data Dip Settings
+  string enable_manual_dial_data_dip = 32;
+  // Data dip url id
+  int64 manual_dial_data_dip_config = 33;
+  // Configuration on which action to take on data dip failure
+  ManualDialDataDipHandling.Enum manual_dial_data_dip_result_handling = 34;
+  // Configuration for which Manual Dial Data Dip Parameters to replace
+  map<string, string> data_dip_manual_dial_integration = 35;
+  // Configuration for which action to take on data dip parameter replacement failure
+  ManualDialDataDipHandling.Enum data_dip_manual_dial_integration_handling = 36;
+}
+
+// Manual Dial Data Dip Configuration actions
+message ManualDialDataDipHandling {
+  enum Enum {
+    NONE = 0;
+    CANCEL = 1;
+    NOTIFY_AND_CANCEL = 2;
+    NOTIFY_AND_ALLOW_CALL = 3;
+    CALL_WITH_ORIGINAL_VALUES = 4;
+  }
+}
+
+// scrub list ids and field values used in lookup
+message ScrubListsAutoAdd {
+  // Scrub list ID
+  string scrub_list = 1;
+  // Field ID to be added to scrub list
+  string field_id = 2;
+  // Field name/value used to find calldata with same name/key
+  string field_name = 3;
+}
+
+// ScrubListsExpirationLimits - expiration time options when adding  entry to scrub list
+message ScrubListsExpirationLimits {
+  // expiration limit options for outbound calls
+  repeated int64 outbound_expiration_limit = 1;
+  // expiration limit options for inbound calls
+  repeated int64 inbound_expiration_limit = 2;
+  // expiration limit options for manual dial calls
+  repeated int64 manual_dial_expiration_limit = 3;
+  // expiration limit options for preview dial calls
+  repeated int64 preview_dial_expiration_limit = 4;
+}
+
+message DnclSettings {
+  bool allow_dncl_add = 1;
+  bool manual_dial_auto_dncl_add = 2;
+  bool preview_dial_auto_dncl_add = 3;
+  bool agent_responses_auto_dncl_add = 4;
+  reserved 5;
+  int64 default_manual_dncl_expire_hours = 6;
+  int64 default_preview_dncl_expire_hours = 7;
+  int64 default_dncl_country = 8;
+  int64 default_outbound_dncl_expire_hours = 9;
+  int64 default_inbound_dncl_expire_hours = 10;
+  // list of scrub lists to add dncls to
+  repeated string hunt_group_compliance_scrub_lists = 11;
+  // scrub list ids and field values used in lookup
+  repeated ScrubListsAutoAdd scrub_lists_auto_add_options = 12;
+  // Should Show DNCL Options in Agent Voice Wrapup state
+  bool display_dncl_options_in_wrapup = 13;
+  // allows agent to remove scrub list entries
+  bool allow_dncl_remove = 14;
+  // scrub list ids used in lookup for allowed entry removal
+  repeated string hunt_group_compliance_scrub_lists_removal_allowed = 15;
+  // expiration time options when adding  entry to scrub list
+  ScrubListsExpirationLimits scrub_lists_expiration_limits = 16;
+}
+
+message TransferSettings {
+  bool allowed = 1;
+  bool show_filtering = 2;
+  RequeueTransferQueueConfigType.Enum requeue_type = 3;
+  repeated TransferSettingsType.Enum type = 4;
+  int64 default_country_sid = 5;
+  bool show_country_selector = 6;
+  bool has_custom_transfer_number = 7;
+  string default_transfer_number = 8;
+  bool has_custom_caller_id = 9;
+  string default_caller_id = 10;
+  bool show_transfers_phone_book = 11;
+  bool show_caller_id_phone_book = 12;
+  repeated TransferSettingsHandOffType.Enum hand_off_type = 13;
+  RecordingStatus.Enum recording_status = 14;
+  int64 default_caller_id_country_sid = 15;
+  bool show_caller_id_country_selector = 16;
+  repeated string start_record_transfer_targets = 17;
+  repeated string stop_record_transfer_targets = 18;
+  bool default_filtering_include_all_online_agents = 19;
+  string requeue_type_custom_value = 20;
+  bool agent_transfer_hunt_group_filter = 21; // limit agent transfers to agents in hunt group
+  // Determines what should happen with the recording status on agent transfers
+  RecordingStatus.Enum agent_transfer_recording_status = 22;
+  // Determines what should happen with the recording status on requeue transfers
+  RecordingStatus.Enum requeue_transfer_recording_status = 23;
+  // Determines what should happen with the recording status on open transfers
+  RecordingStatus.Enum open_transfer_recording_status = 24;
+
+  // Compliance Settings for call transfers
+  bool natural_compliance_override = 25;
+  string transfer_natural_compliance_rule_set_name = 26;
+  repeated ComplianceMetadata compliance_metadata = 27;
+  bool call_whitelist = 28;
+}
+
+message RecordingSettings {
+  bool display_indicator = 1;
+  bool enable_pause = 2;
+  bool enable_delay = 3;
+  int64 delay = 4;
+  bool pause_recording_on_hold = 32; // determines if the recording will pause while the agent is on hold
+}
+
+message SimpleHuntGroup {
+  int64 hunt_group_sid = 1;
+  string hunt_group_name = 2;
+}
+
+message DisplayDataSettings {
+  DisplayDataDip display_data_dip = 1;
+  repeated string display_data_dip_keys = 2;
+  bool display_data_collect = 3;
+  bool display_ivr_navigation = 4;
+  bool display_sip_header_data = 5;
+
+  enum DisplayDataDip {
+    NONE = 0;
+    ALL = 1;
+    LIMITED = 2;
+  }
+}
+
+message RequeueTransferQueueConfigType {
+  enum Enum {
+    UNKNOWN = 0;
+    DEFAULT = 1;
+    CURRENT = 2;
+    CUSTOM = 3;
+  }
+}
+
+message RecordingStatus {
+  enum Enum {
+    UNKNOWN = 0;
+    KEEP_RECORDING = 1;
+    STOP_RECORDING = 2;
+    START_RECORDING = 3;
+  }
+}
+
+message TransferSettingsType {
+  enum Enum {
+    UNKNOWN = 0;
+    AGENT = 1;
+    OPEN = 2;
+    REQUEUE = 3;
+    VOICE_MAIL = 4;
+    PBX_EXTENSION = 5;
+  }
+}
+
+message TransferSettingsHandOffType {
+  enum Enum {
+    UNKNOWN = 0;
+    CONFERENCE = 1;
+    WARM = 2;
+    COLD = 3;
+  }
+}
+
+message AgentHoldSettings {
+  AllowedHoldType.Enum allowed = 1;
+  bool auto_pause_on_multi_hold = 2;
+}
+
+message AllowedHoldType {
+  enum Enum {
+    NONE = 0;
+    SIMPLE = 1;
+    MULTI = 2;
+    BOTH = 3;
+  }
+}
+
+message ManualApprovalSettings {
+  bool allowed = 1;
+  bool confirm = 2;
+  bool sms_allowed = 3;
+  bool sms_number_confirmation = 4;
+}
+
+message ListHuntGroupWebLinksReq {
+  int64 hunt_group_sid = 1;
+  int64 call_sid = 4;
+  commons.CallType.Enum call_type = 5;
+  // the following fields should only be set when the call_sid from the request is from a retrieved scheduled callback.
+  // used to get the callback details to replace them in the web links parameters (if any match).
+  string service_id = 7;
+  string scheduled_callback_id = 8;
+  int64 session_sid = 9; // current session
+  // this field should only be set on the request when the ui is in a "preview call" state when dealing with
+  // preview calls
+  bool isInitialPreview = 10;
+}
+
+message ListHuntGroupWebLinksRes {
+  repeated WebLink web_links = 1;
+}
+
+message WebLink {
+  string display_name = 1;
+  string description = 2;
+  string link_url = 3;
+  bool is_js_link = 4;
+  repeated string tooltip_missing_fields = 6;
+  int64 hunt_group_parameter_sid = 7;
+}
+
+message GetHuntGroupPauseCodesReq {
+  int64 hunt_group_sid = 1;
+}
+
+message GetHuntGroupPauseCodesRes {
+  string name = 1;
+  string description = 2;
+  repeated string pause_codes = 3;
+}
+
+message ListAgentCallHistoryReq {
+  int64 session_sid = 1;
+  AgentStatisticsSettings.HistoryFilter history_filter = 2;
+}
+
+message ListAgentCallHistoryRes {
+  message Entry {
+    int64 call_sid = 1;
+    string schedule_time = 2;
+    commons.CallType.Enum call_type = 3;
+    string phone_number = 4;
+    string caller_id = 5;
+    int32 result = 6;
+    int32 duration = 7;
+  }
+  repeated Entry history = 1;
+}
+
+message GetCampaignCompletionStatusReq {
+  // hunt group id that the requesting agent is assigned to, used to check for task groups running for that hunt group.
+  int64 hunt_group_sid = 3;
+}
+
+message GetCampaignCompletionStatusRes {
+  message TaskGroupCompletionStatus {
+    // id of the running task group.
+    int64 task_group_sid = 1;
+    // name of the running task group.
+    string name = 2;
+    // percentage of task completed for the given task group.
+    int32 percent_complete = 3;
+    // total tasks for a single task group
+    int32 total_tasks = 4;
+    // total tasks completed for a single task group
+    int32 total_tasks_completed = 5;
+  }
+
+  // indicates if any running task groups (broadcasts) were found.
+  bool broadcasts_exist = 1;
+  // percentage of completion of tasks for found matching task groups.
+  int32 percent_complete = 2;
+  // info of all the matching running task groups.
+  map<int64, TaskGroupCompletionStatus> completion_status = 3;
+  // total tasks for all task groups
+  int32 total_tasks = 4;
+  // total tasks completed for all task groups
+  int32 total_tasks_completed = 5;
+}
+
+message GetLostPeerInfoReq {
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+}
+
+message GetLostPeerInfoRes {
+  int64 former_agent_sid = 1;
+  string former_agent_name = 2;
+  string former_hunt_group_name = 3;
+  repeated string hunt_groups = 4;
+  repeated string agents = 5;
+  repeated string agent_skills = 6;
+  repeated string pbx_extensions = 7;
+}
+
+message GetDispositionKeysReq {}
+message GetDispositionKeysRes {
+  repeated string values = 1;
+}
+
+message GetScriptOrResponsesReq {
+  MailMergeData data = 1;
+}
+
+message GetScriptOrResponsesRes {
+  HuntGroupScript scripts = 1;
+  repeated HuntGroupResponse responses = 2;
+}
+
+message GetReadyAgentsReq {}
+
+message GetReadyAgentsRes {
+  repeated AgentsByAgentSidShort ready_agents = 1;
+}
+
+message AgentsByAgentSidShort {
+  int64 agent_sid = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+message ListAgentQueueAndOnHoldCallDataReq {
+  // current session id of the requesting agent.
+  int64 agent_session_sid = 3;
+  // list of skills (skill names) to use for matching queued calls, only calls that require a matching subset of agent_skills will be returned.
+  repeated string agent_skills = 4;
+}
+
+message ListAgentQueueAndOnHoldCallDataRes {
+  message CallData {
+    // id of the found call.
+    int64 call_sid = 1;
+    // number dialed when the call was placed.
+    string phone_number = 2;
+    // caller_id used when the call was placed.
+    string caller_id = 3;
+    // call type of the found call.
+    commons.CallType.Enum call_type = 4;
+    // timestamp indicating when the call started.
+    google.protobuf.Timestamp start_date = 5;
+    // timestamp indicating when the call was put on hold (only set when call is a hold call).
+    google.protobuf.Timestamp hold_date = 6;
+    // formatted skills that the call requires.
+    repeated string skills = 7;
+    // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
+    bool agent_specific = 8;
+    // queued notification type of the call.
+    commons.QueuedNotificationType queued_notification_type = 9;
+  }
+
+  // calls that were queued and have a matching subset of the agent_skills from the request.
+  repeated CallData agent_queue_calls = 1;
+  // calls that were placed on multi-hold by the requesting agent.
+  repeated CallData on_hold_calls = 2;
+  // calls that were placed in the Hold Queue Monitor, are still on hold by the destination (hold music is being played by the other party) and have a matching subset of the agent_skills from the request.
+  repeated CallData hqm_calls = 3;
+}
+
+message AgentCallResponseDetails {
+  string key = 1;
+  string value = 2;
+  int64 order = 3;
+}
+
+message SaveAgentCallResponsesReq {
+  int64 call_sid = 1;
+  int64 agent_session_sid = 2;
+  repeated AgentCallResponseDetails agent_call_response_details = 3;
+  commons.CallType.Enum call_type = 4;
+  // will create an agent response for the given compliance metadata (not required).
+  repeated commons.SimpleKeyValue compliance_metadata = 5;
+}
+
+message SaveAgentCallResponsesRes {}
+
+message AgentCallLog {
+  int64 agent_call_log_sid = 1;
+  google.protobuf.Int64Value call_sid = 2;
+  commons.CallType.Enum call_type = 3;
+  google.protobuf.Timestamp action_date = 4;
+  google.protobuf.StringValue action_key = 5;
+  google.protobuf.StringValue action_value = 6;
+}
+
+message AgentSkill {
+  int64 agent_skill_sid = 1;
+  string name = 2;
+  google.protobuf.StringValue description = 3;
+}
+
+message ListAgentTransferOptionsReq {}
+
+message ListAgentTransferOptionsRes {
+  repeated Agent agent_info = 1;
+  repeated HuntGroup hunt_group = 2;
+  repeated PBXExtension pbx_extensions = 3;
+  repeated AgentSkill agent_skills = 4;
+  repeated AgentsByAgentSidShort agent_profile = 5;
+}
+
+message GetIntercomPeerInfoReq {
+  int64 agent_session_sid = 3;
+}
+
+message GetIntercomPeerInfoRes {
+  int64 peer_sid = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+message ListOrgResponseEvaluatorsReq {}
+
+message ListOrgResponseEvaluatorsRes {
+  repeated ResponseEvaluator evaluators = 1;
+}
+
+message ResponseEvaluator {
+  string name = 1;
+  string description = 2;
+  string regular_expression = 3;
+  int64 xml_client_property_sid = 4;
+}
+
+message GetQueueConfigurationOptionsArrayReq {
+  string localized_account_default_string = 2;
+}
+
+message GetQueueConfigurationOptionsArrayRes {
+  repeated string filenames = 1;
+}
+
+message AgentCallActivityDetails {
+  int64 agent_sid = 1;
+  google.protobuf.StringValue agent_name = 2;
+  google.protobuf.Int64Value agent_session_sid = 3;
+  google.protobuf.Int64Value hunt_group_sid = 4;
+  google.protobuf.StringValue hunt_group_name = 5;
+  google.protobuf.DoubleValue agent_call_cost = 6;
+  google.protobuf.Int64Value agent_wait_duration = 7;
+  google.protobuf.Int64Value call_wait_duration = 8;
+  google.protobuf.Int64Value hold_duration = 9;
+  google.protobuf.Int64Value manual_duration = 10;
+  google.protobuf.Int64Value pause_duration = 11;
+  google.protobuf.Int64Value preview_duration = 12;
+  google.protobuf.Int64Value suspended_duration = 13;
+  google.protobuf.Int64Value talk_duration = 14;
+  google.protobuf.Int64Value transfer_duration = 15;
+  google.protobuf.Int64Value wrap_up_duration = 16;
+  google.protobuf.Int64Value agent_call_sid = 17;
+  commons.HuntGroupType.Enum hunt_group_type = 18;
+}
+
+message GetConditionalDNCLRulesReq {}
+
+message GetConditionalDNCLRulesRes {
+  repeated AgentDispositionConditionalDncl.DispositionRulesTable disposition_rules = 1;
+}
+
+message ManualDialStartReq {
+  commons.SimpleCallData simple_call_data = 1;
+  reserved 3;
+  int64 hunt_group_sid = 6;
+  int64 agent_session_sid = 7;
+}
+
+message ManualDialStartRes {}
+
+message ListExtendedCallHistoryReq {
+  commons.CallHistorySearchType.Enum search_type = 4;
+  repeated commons.CallType.Enum call_types = 5;
+  string customer_number = 6;
+  commons.CallHistorySearchScope.Enum search_scope = 7;
+  int64 call_sid = 8;
+  string caller_id = 9;
+}
+
+// The response for ListExtendedCallHistory
+message ListExtendedCallHistoryRes {
+  // The groupSid
+  int64 group_sid = 1;
+  // The callType, based on the CallType enum.
+  commons.CallType.Enum call_type = 2;
+  // The callSid
+  int64 call_sid = 3;
+  // The customerNumber
+  string customer_number = 4;
+  // The phone number
+  string phone = 5;
+  // The date
+  string date = 6;
+  // The result
+  int32 result = 7;
+  // The length of the call
+  int32 length = 8;
+  // The cost of the call
+  google.protobuf.DoubleValue cost = 9;
+  // The keys
+  google.protobuf.StringValue keys = 10;
+  // The callDetails
+  GetCallDetailsRes call_details = 11;
+  // The linkbackLength
+  int32 linkback_length = 12;
+  // If the call is recorded
+  bool is_call_recorded = 13;
+  // The filename of the recording
+  string recording_filename = 14;
+  // The startDate is the chosen Timescale value (1 day, 2 days, etc.) as a time stamp based on the current date.
+  // For example, if today is 05/13/22 and the Timescale value is 7 days, it will be the time stamp value of 05/06/22.
+  google.protobuf.Timestamp start_date = 15;
+  // The country sid on the group, which is for the destination phone number
+  int64 country_sid = 16;
+}
+
+// Request message for the ListWhiteListPhoneBooks RPC
+message ListWhiteListPhoneBooksReq {
+  // Entry type will be 'Hunt Group' if this field is set.
+  // Otherwise the entry type will be 'Client'.
+  int64 hunt_group_sid = 2;
+  // Whether to include the phone number types
+  bool include_null_phone_number_types = 4;
+  // The list of ways to order phone books.
+  repeated commons.ListPhoneBookOrderBy.Enum order_bys = 5;
+}
+
+// Response message for the ListWhiteListPhoneBooks RPC
+message ListWhiteListPhoneBooksRes {
+  // The list of phone books
+  repeated PhoneBook white_list_phone_books = 1;
+}
+
+message UpdateAgentCallResponseValueReq {
+  int64 response_id = 1;
+  string value = 2;
+}
+
+message UpdateAgentCallResponseValueRes {}
+
+message PlacePreviewDialCallReq {
+  commons.SimpleCallData call = 1;
+  int64 hunt_group_sid = 4;
+  int64 agent_session_sid = 5;
+}
+
+message PlacePreviewDialCallRes {}
+
+message CancelPreviewDialCallReq {
+  commons.SimpleCallData call = 1;
+  int64 agent_session_sid = 2;
+  bool report_scrub_override = 3;
+}
+
+message CancelPreviewDialCallRes {}
+
+// The response when a recording is downloaded.
+message DownloadRecordingRes {
+  // The url of the recording
+  string url = 1;
+  // The filename of the recording
+  string filename = 2;
+}
+
+message DownloadCallRecordingReq {
+  int64 call_sid = 2;
+  commons.CallType.Enum call_type = 3;
+}
+
+// The request when multiple call recordings are downloaded.
+message DownloadCallRecordingsReq {
+  // The CallParams for a call recording.
+  message CallParams {
+    // The callSid
+    int64 call_sid = 1;
+    // The callType, based on the CallType enum.
+    commons.CallType.Enum call_type = 2;
+  }
+
+  // The CallParams, repeated for each call
+  repeated CallParams call_params = 2;
+
+  // The htmlFileName (Name of the file that shows the html of a call recording and gets downloaded with every recording).
+  string html_file_name = 3;
+  // The content that goes inside the htmlFileName file.
+  string html_file_content = 4;
+  // GroupSid is an int if there is only one call recording in the zip file. Otherwise it is nil.
+  google.protobuf.Int64Value group_sid = 5;
+  // StartDate is the chosen Timescale value (1 day, 2 days, etc.) as a time stamp based on the current date.
+  // For example, if today is 05/13/22 and the Timescale value is 7 days, it will be the time stamp value of 05/06/22.
+  google.protobuf.Timestamp start_date = 6;
+}
+
+message AgentDispositionConditionalDncl {
+  message DispositionRulesTable {
+    string disposition_key = 1;
+    reserved 2;
+    repeated DispositionExpirationTable disposition_expiration_table = 3;
+  }
+
+  message DispositionExpirationTable {
+    string disposition_value = 1;
+    int64 integer = 2;
+  }
+
+  string name = 1;
+  string description = 2;
+  int64 country_sid = 3;
+  repeated DispositionRulesTable disposition_rules_table = 4;
+}
+
+message UpdateTaskStatusReq {
+  int64 task_sid = 2;
+  commons.TaskStatus status = 3;
+}
+
+message Nil {} // Could use the google protobuf empty instead
+
+// removed and done by asm end session
+// message UpdateWebLogoutTimeReq { int64 agent_session_sid = 1; }
+
+// ListCallbackRoutingAgentsReq requires a hunt_group_sid to filter agents by.
+message ListCallbackRoutingAgentsReq {
+  // HuntGroupSid to filter agents by
+  int64 hunt_group_sid = 2;
+}
+
+// ListCallbackRoutingAgentsRes returns a list of agents that are allowed to do callbacks.
+message ListCallbackRoutingAgentsRes {
+  // A list of agents that are allowed to do callbacks
+  repeated AgentsByAgentSidShort agent_short = 1;
+}
+
+message ListCallbackRoutingSkillsReq {
+  int64 hunt_group_sid = 2;
+}
+
+message ListCallbackRoutingSkillsRes {
+  repeated AgentSkill agent_skills = 1;
+}
+
+message HandleRecordingDelayReq {
+  int64 hunt_group_sid = 3;
+  int64 agent_session_sid = 4;
+}
+
+message HandleRecordingDelayRes {}
+
+message ScheduleCallBackSettings {
+  bool allow_callback_scheduling = 1;
+  bool allow_scheduled_callback_calling = 2;
+  bool allow_automatic_callback_retrieval_mode = 3;
+  bool allow_default_callback_routing = 4;
+  reserved 5;
+  string callbacks_retrieval_mode_settings = 6;
+  reserved 7;
+  string default_callback_routing_settings = 8;
+  string callbacks_service_id = 9;
+  bool has_custom_caller_id = 10; // agent can edit caller id in scheduled callbacks
+  string default_caller_id = 11; // default caller id for scheduled callbacks
+  bool allow_scheduled_callback_calendar = 12; // agent can view the scheduled callback calendar
+}
+
+message UpdateAgentAssignedHuntGroupReq {
+  int64 hunt_group_sid = 3;
+  map<string, int64> skills = 4;
+  bool replace_skills = 5;
+}
+
+message UpdateAgentAssignedHuntGroupRes {}
+
+message ListHuntGroupsReq {}
+
+message ListHuntGroupsRes {
+  repeated HuntGroup hunt_group = 1;
+}
+
+message ListReassignmentHuntGroupsReq {
+  int64 hunt_group_sid = 2;
+}
+
+message ListReassignmentHuntGroupsRes {
+  repeated SimpleHuntGroup hunt_groups = 1;
+}
+
+message GetOrgAgentSettingsReq {}
+
+message GetOrgAgentSettingsRes {
+  reserved 4;
+  string default_time_zone = 1;
+  int64 default_softphone_volume_in = 2;
+  int64 default_softphone_volume_out = 3;
+  bool linkback_recording = 5;
+}
+
+message ListCallerIdsFromBucketReq {
+  int64 bucket_number = 2;
+}
+
+message ListCallerIdsFromBucketRes {
+  repeated CallerIdInfo caller_id_info = 1;
+}
+
+message CallerIdInfo {
+  string number = 1;
+  string region_code = 2;
+}
+
+message SaveLastCallResponseReq {
+  commons.CallType.Enum call_type = 1;
+  int64 call_sid = 2;
+  string response_name = 3;
+}
+
+message SaveLastCallResponseRes {}
+
+message AgentCallResponse {
+  int64 agent_call_response_sid = 1;
+  google.protobuf.Int64Value agent_call_sid = 2;
+  google.protobuf.StringValue key = 3;
+  google.protobuf.StringValue value = 4;
+  google.protobuf.Int32Value order = 5;
+}
+
+message GetCallDetailsRes {
+  repeated ContactFieldDataRow contact_field_data = 1;
+  repeated AgentCallActivityDetails agent_call_activity_details = 2;
+  repeated AgentCallResponse agent_call_responses = 3;
+}
+
+message ListAgentCallLogsByCallSidAndTypeReq {
+  int64 call_sid = 2;
+  commons.CallType.Enum call_type = 3;
+}
+
+message ListAgentCallLogsByCallSidAndTypeRes {
+  repeated AgentCallLog agent_call_logs = 1;
+}
+
+message ContactFieldDataRow {
+  string field_label = 1;
+  string field_value = 2;
+  bool is_phone = 3;
+}
+
+message GetCallDataReq {
+  int64 call_sid = 1;
+  commons.CallType.Enum call_type = 2;
+}
+
+message GetCallDataRes {
+  map<string, string> ivr_data = 1;
+  map<string, string> phone_enhanced_data = 2;
+  map<string, string> data_collect_data = 3;
+  map<string, string> data_dip_data = 4;
+  string caller_id_name = 5;
+  string linkback_hunt_group = 6;
+  map<string, string> sip_header_data = 7;
+  map<string, string> queued_callback_data = 8;
+  map<string, string> journey_retrieved_data = 9;
+  map<string, string> integration_data = 10;
+}
+
+message UpdatePBXExtensionReq {
+  string pbx_extension = 2;
+  string email_subject = 3;
+  string email_body = 4;
+  string email_addresses = 5;
+}
+
+message UpdatePBXExtensionRes {}
+
+message HuntGroupScript {
+  string name = 1;
+  string description = 2;
+  bool auto_script_progression = 3;
+  string script_category = 4;
+  repeated Act act = 5;
+}
+
+message Act {
+  repeated Disposition disposition = 1;
+  repeated Verbiage verbiage = 2;
+  int64 default_conditional_navigation_target = 3;
+  repeated ConditionalNavigation conditional_navigation = 4;
+  int64 page_arrival_recording_control = 5;
+  int64 page_exit_recording_control = 6;
+}
+
+message Disposition {
+  bool required = 1;
+  int64 order = 2;
+  string type = 3;
+  string header = 4;
+  string prompt = 5;
+  string defaultValue = 6;
+  repeated string response_options = 7;
+  bool bypass_auto_script_progression = 8;
+}
+
+message Verbiage {
+  int64 order = 1;
+  string header = 2;
+  string body = 3;
+}
+
+message ConditionalNavigation {
+  ComplexBooleanExpressionList complex_boolean_expression_list = 1;
+  int64 target_act_index = 2;
+}
+
+message ComplexBooleanExpressionList {
+  repeated ComplexBooleanExpression complex_boolean_expression = 1;
+}
+
+message ComplexBooleanExpression {
+  CompareExpressionList compare_expression_list = 1;
+}
+
+message CompareExpressionList {
+  repeated CompareExpression simple_compare_expression = 1;
+}
+
+message CompareExpression {
+  string operator_type = 1;
+  string value_key = 2;
+  string compare_value = 3;
+}
+
+message ListAgentCallResponseValuesReq {
+  int64 call_sid = 2;
+  commons.CallType.Enum call_type = 3;
+}
+
+message ListAgentCallResponseValuesRes {
+  message Response {
+    string key = 1;
+    string value = 2;
+  }
+  repeated Response responses = 1;
+}
+
+message ContactSchema {
+  int64 contact_schema_sid = 1;
+  int64 contact_group_sid = 2;
+  google.protobuf.Int32Value dfc_sid01 = 5;
+  google.protobuf.Int32Value dfc_sid02 = 6;
+  google.protobuf.Int32Value dfc_sid03 = 7;
+  google.protobuf.Int32Value dfc_sid04 = 8;
+  google.protobuf.Int32Value dfc_sid05 = 9;
+  google.protobuf.Int32Value dfc_sid06 = 10;
+  google.protobuf.Int32Value dfc_sid07 = 11;
+  google.protobuf.Int32Value dfc_sid08 = 12;
+  google.protobuf.Int32Value dfc_sid09 = 13;
+  google.protobuf.Int32Value dfc_sid10 = 14;
+  google.protobuf.Int32Value dfc_sid11 = 15;
+  google.protobuf.Int32Value dfc_sid12 = 16;
+  google.protobuf.Int32Value dfc_sid13 = 17;
+  google.protobuf.Int32Value dfc_sid14 = 18;
+  google.protobuf.Int32Value dfc_sid15 = 19;
+  google.protobuf.Int32Value dfc_sid16 = 20;
+  google.protobuf.Int32Value dfc_sid17 = 21;
+  google.protobuf.Int32Value dfc_sid18 = 22;
+  google.protobuf.Int32Value dfc_sid19 = 23;
+  google.protobuf.Int32Value dfc_sid20 = 24;
+  google.protobuf.Int32Value dfc_sid21 = 25;
+  google.protobuf.Int32Value dfc_sid22 = 26;
+  google.protobuf.Int32Value dfc_sid23 = 27;
+  google.protobuf.Int32Value dfc_sid24 = 28;
+  google.protobuf.Int32Value dfc_sid25 = 29;
+  google.protobuf.Int32Value dfc_sid26 = 30;
+  google.protobuf.Int32Value dfc_sid27 = 31;
+  google.protobuf.Int32Value dfc_sid28 = 32;
+  google.protobuf.Int32Value dfc_sid29 = 33;
+  google.protobuf.Int32Value dfc_sid30 = 34;
+}
+
+message GetContactSchemaByContactGroupReq {
+  int64 contact_group_sid = 2;
+}
+
+message ContactFieldDescription {
+  int32 contact_field_description_sid = 1;
+  string field_name = 3;
+  bool is_phone = 4;
+  google.protobuf.StringValue display_format_string = 5;
+}
+
+message ContactGroup {
+  int64 contact_group_sid = 1;
+  google.protobuf.StringValue name = 4;
+  int64 country_sid = 5;
+  google.protobuf.Timestamp last_updated = 6;
+  google.protobuf.StringValue sha_digest = 7;
+}
+
+message GetContactGroupReq {
+  int64 contact_group_sid = 1;
+}
+
+message GetContactGroupSizeRes {
+  int64 contact_group_size = 1;
+}
+
+message ListContactGroupDetailsByClientSidReq {}
+
+message ListContactGroupDetailsByClientSidRes {
+  repeated ContactGroup contact_group = 1;
+}
+
+message CreateContactFieldDescriptionReq {
+  string field_name = 1;
+  bool is_phone = 2;
+  google.protobuf.StringValue display_format_string = 3;
+}
+
+message CreateContactFieldDescriptionRes {}
+
+message DeleteContactFieldDescriptionReq {
+  int32 contact_field_description_sid = 1;
+}
+
+message DeleteContactFieldDescriptionRes {}
+
+message ListContactFieldDescriptionsReq {}
+
+message ListContactFieldDescriptionsRes {
+  repeated ContactFieldDescription contact_field_description = 1;
+}
+
+message ListContactFieldDescriptionsByCGSidReq {
+  int64 contact_group_sid = 2;
+}
+
+message ListContactFieldDescriptionsByCGSidRes {
+  repeated ContactFieldDescription contact_field_description = 1;
+}
+
+// Request for ListTableTemplateProperties
+message ListTableTemplatePropertiesReq {}
+
+// Response for ListTableTemplateProperties
+message ListTableTemplatePropertiesRes {
+  repeated TableTemplateProperty agent_table_templates = 1; // List of AgentStatusDashboardTemplates belonging to client
+  repeated TableTemplateProperty queue_table_templates = 2; // List of QueueHoldInfoDashboardTemplates belonging to client
+}
+
+// TableTemplate property
+message TableTemplateProperty {
+  int64 xml_client_property_sid = 1; // Property sid for table template
+  string name = 2; // Template name
+}
+
+// Request for ListAgentSkillsFilters
+message ListAgentSkillsFiltersReq {}
+
+// Response for ListAgentSkillsFilters
+message ListAgentSkillsFiltersRes {
+  repeated AgentSkillsFilter agent_skills_filters = 1; // List of agent skills filters
+}
+
+// AgentSkillsFilter property
+message AgentSkillsFilter {
+  int64 xml_client_property_sid = 1; // xml sid associated with skill
+  string name = 2; // Filter name
+}
+
+// Request for ListCustomReportFilters
+message ListCustomReportFiltersReq {}
+
+// Response for ListCustomReportFilters
+message ListCustomReportFiltersRes {
+  repeated CustomReportFilterProperty custom_report_filters = 1; // List of custom report filters
+}
+
+// CustomReportFilter property
+message CustomReportFilterProperty {
+  int64 xml_client_property_sid = 1; // xml sid associated with report filter
+  string name = 2; // Filter name
+}
+
+message ContactImportTemplate {
+  // column not null
+  int64 contact_import_template_sid = 1;
+  string name = 2;
+  string description = 3;
+  google.protobuf.StringValue delimiter = 5;
+  google.protobuf.StringValue quote = 6;
+  bool is_fixed_width = 7;
+  google.protobuf.Int32Value dfc_sid01 = 8;
+  google.protobuf.Int32Value dfc_sid02 = 9;
+  google.protobuf.Int32Value dfc_sid03 = 10;
+  google.protobuf.Int32Value dfc_sid04 = 11;
+  google.protobuf.Int32Value dfc_sid05 = 12;
+  google.protobuf.Int32Value dfc_sid06 = 13;
+  google.protobuf.Int32Value dfc_sid07 = 14;
+  google.protobuf.Int32Value dfc_sid08 = 15;
+  google.protobuf.Int32Value dfc_sid09 = 16;
+  google.protobuf.Int32Value dfc_sid10 = 17;
+  google.protobuf.Int32Value dfc_sid11 = 18;
+  google.protobuf.Int32Value dfc_sid12 = 19;
+  google.protobuf.Int32Value dfc_sid13 = 20;
+  google.protobuf.Int32Value dfc_sid14 = 21;
+  google.protobuf.Int32Value dfc_sid15 = 22;
+  google.protobuf.Int32Value dfc_sid16 = 23;
+  google.protobuf.Int32Value dfc_sid17 = 24;
+  google.protobuf.Int32Value dfc_sid18 = 25;
+  google.protobuf.Int32Value dfc_sid19 = 26;
+  google.protobuf.Int32Value dfc_sid20 = 27;
+  google.protobuf.Int32Value dfc_sid21 = 28;
+  google.protobuf.Int32Value dfc_sid22 = 29;
+  google.protobuf.Int32Value dfc_sid23 = 30;
+  google.protobuf.Int32Value dfc_sid24 = 31;
+  google.protobuf.Int32Value dfc_sid25 = 32;
+  google.protobuf.Int32Value dfc_sid26 = 33;
+  google.protobuf.Int32Value dfc_sid27 = 34;
+  google.protobuf.Int32Value dfc_sid28 = 35;
+  google.protobuf.Int32Value dfc_sid29 = 36;
+  google.protobuf.Int32Value dfc_sid30 = 37;
+  google.protobuf.Int32Value field_length01 = 38;
+  google.protobuf.Int32Value field_length02 = 39;
+  google.protobuf.Int32Value field_length03 = 40;
+  google.protobuf.Int32Value field_length04 = 41;
+  google.protobuf.Int32Value field_length05 = 42;
+  google.protobuf.Int32Value field_length06 = 43;
+  google.protobuf.Int32Value field_length07 = 44;
+  google.protobuf.Int32Value field_length08 = 45;
+  google.protobuf.Int32Value field_length09 = 46;
+  google.protobuf.Int32Value field_length10 = 47;
+  google.protobuf.Int32Value field_length11 = 48;
+  google.protobuf.Int32Value field_length12 = 49;
+  google.protobuf.Int32Value field_length13 = 50;
+  google.protobuf.Int32Value field_length14 = 51;
+  google.protobuf.Int32Value field_length15 = 52;
+  google.protobuf.Int32Value field_length16 = 53;
+  google.protobuf.Int32Value field_length17 = 54;
+  google.protobuf.Int32Value field_length18 = 55;
+  google.protobuf.Int32Value field_length19 = 56;
+  google.protobuf.Int32Value field_length20 = 57;
+  google.protobuf.Int32Value field_length21 = 58;
+  google.protobuf.Int32Value field_length22 = 59;
+  google.protobuf.Int32Value field_length23 = 60;
+  google.protobuf.Int32Value field_length24 = 61;
+  google.protobuf.Int32Value field_length25 = 62;
+  google.protobuf.Int32Value field_length26 = 63;
+  google.protobuf.Int32Value field_length27 = 64;
+  google.protobuf.Int32Value field_length28 = 65;
+  google.protobuf.Int32Value field_length29 = 66;
+  google.protobuf.Int32Value field_length30 = 67;
+  int32 template_number = 68;
+  google.protobuf.BoolValue exclude_first_row = 69;
+}
+
+message ListContactImportTemplatesReq {}
+
+message ListContactImportTemplatesRes {
+  repeated ContactImportTemplate contact_import_template = 1;
+}
+
+message UpdatePreviewRecordToFinishedReq {
+  int64 agent_session_sid = 3;
+  int64 task_sid = 4;
+}
+
+message UpdatePreviewRecordToFinishedRes {}
+
+message UpdateAgentHuntGroupReq {
+  int64 hunt_group_sid = 3;
+  string user_id = 4;
+}
+
+message UpdateAgentHuntGroupRes {}
+
+message MultiAgentHuntGroupAssignmentReq {
+  repeated string user_ids = 1;
+  int64 hunt_group_sid = 2;
+}
+
+message MultiAgentHuntGroupAssignmentRes {}
+
+message GetAgentProfileReq {
+  int64 agent_sid = 2;
+}
+
+// AgentProfile represents an agent profile.
+message AgentProfile {
+  string first_name = 2;
+  string last_name = 3;
+}
+
+// RecalculateBillingReq represents the request message
+// for method RecalculateBilling. The month field is
+// an enum that can either be 0: the current month or
+// 1: the previous month. The types field is a list of
+// billing types (as defined by commons.RecalculateBillingType)
+// that will be updated for recalculation.
+message RecalculateBillingReq {
+  commons.RecalculateBillingMonth month = 1;
+  repeated commons.RecalculateBillingType types = 2;
+  string org_id = 3;
+}
+
+// RecalculateBillingRes represents the response message for
+// method RecalculateBilling. The field results contains a list of
+// BillingResults with an entry for each billing type given on the request message.
+// Each result message will contain the count of updated records for a type
+// or an error message.
+message RecalculateBillingRes {
+  repeated Result results = 1;
+
+  message Result {
+    commons.RecalculateBillingType type = 1;
+    oneof result_type {
+      int64 updated = 2;
+      string error_message = 3;
+    }
+  }
+}
+
+// Request message for the ListOutboundBroadcastTemplateData RPC.
+message ListOutboundBroadcastTemplateDataReq {}
+
+// Response message for the ListOutboundBroadcastTemplateData RPC.
+message ListOutboundBroadcastTemplateDataRes {
+  message Data {
+    // number of the template (not to be confused with the template id)
+    int64 template_number = 1;
+    // name of the template (as shown in back office)
+    string template_name = 2;
+    // type of template (will be either STANDARD or LAYERED)
+    commons.TemplateType.Enum template_type = 3;
+    // date that the template was last modified
+    google.protobuf.Timestamp modify_date = 4;
+  }
+
+  // List of outbound broadcast templates found for the requesting client,
+  // each entry will contain the data one of the templates found.
+  repeated Data templates = 1;
+}
+
+// Request message for the MultiAgentSkillAssignment RPC.
+message MultiAgentSkillAssignmentReq {
+  reserved 1;
+  repeated string user_ids = 2;
+  repeated SkillUpdate skills = 3;
+}
+
+// Response message for the MultiAgentSkillAssignment RPC.
+message MultiAgentSkillAssignmentRes {}
+
+// Response message for the MultiAgentSkillUnassignment RPC.
+message MultiAgentSkillUnassignmentReq {
+  repeated string user_ids = 1;
+  repeated int64 skill_sids = 2;
+}
+
+// Response message for the MultiAgentSkillUnassignment RPC.
+message MultiAgentSkillUnassignmentRes {}
+
+// Request message for the ListMAMAgentHuntGroupsByClientSid RPC.
+message ListMAMAgentHuntGroupsByClientSidReq {}
+
+// Response message for the ListMAMAgentHuntGroupsByClientSid RPC.
+message ListMAMAgentHuntGroupsByClientSidRes {
+  repeated HuntGroup hunt_group = 1;
+}
+
+// Request message for the UpdateAgentSkills RPC.
+message UpdateAgentSkillsReq {
+  string user_id = 1;
+  repeated SkillUpdate skills = 2;
+}
+
+// Entity message for UpdateAgentSkillsReq message
+message SkillUpdate {
+  int64 skill_sid = 1;
+  int64 level = 2;
+}
+
+// Response message for the UpdateAgentSkills RPC.
+message UpdateAgentSkillsRes {}
+
+// Request message for the ListTtsVoices RPC.
+message ListTtsVoicesReq {}
+
+// Response message for the ListTtsVoices RPC.
+message ListTtsVoicesRes {
+  repeated TtsVoice voices = 1;
+}
+
+// Entity message for ListTtsVoice RPC.
+message TtsVoice {
+  int64 tts_voice_sid = 1;
+  string display_name = 2;
+  string actual_name = 3;
+  int64 port = 4;
+}
+
+// Request message for the CreateTtsVoice RPC.
+message CreateTtsVoiceReq {
+  string actual_name = 1; // required
+  string display_name = 2;
+  int64 port = 3;
+}
+
+// Response message for the CreateTtsVoice RPC.
+message CreateTtsVoiceRes {}
+
+// Request message for the DeleteTtsVoice RPC.
+message DeleteTtsVoiceReq {
+  int64 tts_voice_sid = 1;
+}
+
+// Response message for the DeleteTtsVoice RPC.
+message DeleteTtsVoiceRes {}
+
+// Entitiy message for ListCustomDataKeys
+message CustomDataKey {
+  string name = 1;
+  string value = 2;
+  // client_properties_sid is generated from CreateCustomDataKey RPC
+  int64 client_properties_sid = 3;
+}
+
+// Request message for the ListCustomDataKeys RPC
+message ListCustomDataKeysReq {}
+
+// Response message for the ListCustomDataKeys RPC
+message ListCustomDataKeysRes {
+  repeated CustomDataKey data_keys = 1;
+}
+
+// Request message for the CreateCustomDataKey RPC
+message CreateCustomDataKeyReq {
+  CustomDataKey data_key = 1;
+}
+
+// Response message for the CreateCustomDataKey RPC
+message CreateCustomDataKeyRes {}
+
+// Request message for DeleteCustomDataKey RPC
+message DeleteCustomDataKeyReq {
+  int64 client_properties_sid = 1;
+}
+
+// Response message for DeleteCustomDataKey RPC
+message DeleteCustomDataKeyRes {}
+
+// Request message for the UpdateCustomDataKey RPC
+message UpdateCustomDataKeyReq {
+  CustomDataKey dataKey = 1;
+}
+
+// Response message for the UpdateCustomDataKey RPC
+message UpdateCustomDataKeyRes {}
+
+message Extension {
+  reserved 6;
+  int64 pbx_extension_sid = 1;
+  string extension_number = 2; // 3 numerical digits
+  oneof extension_type {
+    Agent agent = 3;
+    HuntGroup hunt_group = 4;
+  }
+  bool agent_access = 5;
+  Email email = 7;
+  string greeting = 8;
+  bool has_greeting = 9;
+  // unheard_messages is the count of all of the unheard
+  // voicemail messages for the extension.
+  int32 unheard_messages = 10;
+  // total_messages is the count of every voicemail message
+  // for the extension (heard + unheard).
+  int32 total_messages = 11;
+
+  message Agent {
+    reserved 1;
+    // The first_name & last_name fields will be set during
+    // CreateExtension and UpdateExtension. If these fields are
+    // set for those calls they will be overwritten.
+    string first_name = 2;
+    string last_name = 3;
+    string user_id = 4;
+  }
+
+  message HuntGroup {
+    int64 hunt_group_sid = 1;
+    // The hunt_group_name field will be set during CreateExtension
+    // and UpdateExtension. If this field is set for those calls it
+    // will be overwritten.
+    string hunt_group_name = 2;
+  }
+
+  message Email {
+    string subject = 1;
+    string body = 2;
+    repeated string addresses = 3;
+    bool attach_vm = 4;
+  }
+}
+
+message ListAgentExtensionsReq {}
+
+message ListAgentExtensionsRes {
+  repeated Extension extensions = 1;
+}
+
+message ListHuntGroupExtensionsReq {}
+
+message ListHuntGroupExtensionsRes {
+  repeated Extension extensions = 1;
+}
+
+message CreateExtensionReq {
+  Extension extension_message = 1;
+}
+
+message CreateExtensionRes {}
+
+message UpdateExtensionReq {
+  Extension extension_message = 1;
+}
+
+message UpdateExtensionRes {}
+
+message DeleteExtensionReq {
+  int64 pbx_extension_sid = 1;
+}
+
+message DeleteExtensionRes {}
+
+message GetActivityLogHistoryReq {
+  int32 day_filter = 1;
+  string user_name = 2;
+  string org_id = 4;
+}
+
+message GetActivityLogHistoryRes {
+  repeated ActivityLog activity_logs = 1;
+}
+
+message ActivityLog {
+  google.protobuf.StringValue user_name = 1;
+  google.protobuf.StringValue origination_ip = 2;
+  google.protobuf.StringValue action_date = 3;
+  google.protobuf.StringValue action = 4;
+  google.protobuf.StringValue notes = 5;
+}
+
+message ListSkillsReq {
+  // Filters the response to only contain skills with the
+  // given types. Leaving this field empty will return
+  // all skill types. The PBX SkillType is not
+  // supported and will cause an error if present.
+  // Should use AGENT_PBX or HUNT_GROUP_PBX.
+  repeated commons.SkillType.Enum type_filters = 1;
+}
+
+message ListSkillsRes {
+  repeated P3Skill skills = 1;
+}
+
+message P3Skill {
+  string region = 1;
+  string p3_id = 2;
+  string name = 3;
+  string description = 4;
+  commons.SkillType.Enum type = 5;
+}
+
+// Request message for listing schedule rules (ListScheduleRules).
+message ListScheduleRulesRequest {}
+
+// Response message for listing schedule rules (ListScheduleRules).
+message ListScheduleRulesResult {
+  repeated ScheduleRule schedule_rules = 1; // Rules that define when calls may be executed.  This mimicks the 'schedule_rule' table in Skunk.
+}
+
+// Schedule Rule after the Skunk database
+message ScheduleRule {
+  int64 schedule_rule_sid = 1; // The 'sid' for the rule in the Skunk table.
+  google.protobuf.Int64Value client_sid = 2; // The 'sid' for the related 'client' table in Skunk.
+  google.protobuf.StringValue name = 3; // The name of the rule.
+  google.protobuf.StringValue rule_time_zone = 4; // The time zone the rule is to be applied to.
+}
+
+// Request message for listing sms numbers
+message ListSmsNumbersReq {}
+
+// Response message for listing sms numbers
+message ListSmsNumbersRes {
+  // list of sms numbers
+  repeated commons.SmsNumber sms_numbers = 1;
+}

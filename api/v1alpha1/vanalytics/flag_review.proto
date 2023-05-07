@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
+
+// [CREATE] ====================================================================
+
+// CreateFlagReviewRequest is a request for creating a flag review.
+message CreateFlagReviewRequest {
+  // FlagReview resource to create.
+  FlagReview flag_review = 1;
+}
+
+// BulkCreateFlagReviewRequest is a request for creating many flag reviews.
+message BulkCreateFlagReviewRequest {
+  // Optional. The ID of the flag for the flag reviews. When not provided
+  // all deleted flags will be given a review.
+  int64 flag_sid = 1;
+
+  // Optional. Any notes written for the flag reviews.
+  string notes = 2;
+}
+
+// BulkCreateFlagReviewResponse is a response for creating many flag reviews.
+message BulkCreateFlagReviewResponse {}
+
+// [LIST] ======================================================================
+
+// ListFlagReviewsRequest is a request for listing reviews on a transcript.
+message ListFlagReviewsRequest {
+  // Optional. The number of reviews to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The order by which reviews will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "flag_review_sid desc".
+  // Supported order by includes:
+  //   + (flag_review_sid desc)
+  //   + (flag_review_sid)
+  string order_by = 3;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 4;
+
+  // Optional. The transcript sid to look for reviews on.
+  int64 transcript_sid = 5;
+}
+
+// ListFlagReviewsResponse is a response for listing reviews on a transcript.
+message ListFlagReviewsResponse {
+  // Token to retrieve the next page of reviews, or empty if there are no
+  // more reviews in the list.
+  string next_page_token = 1;
+
+  // List of flag reviews.
+  repeated FlagReview flag_reviews = 2;
+}
+
+// [RESOURCE] ==================================================================
+
+// FlagReview resource in the Vanalytics API. It represents a flag review
+// for transcripts that have been flagged.
+message FlagReview {
+  // Output only. The unique id of this flag review.
+  int64 flag_review_sid = 1;
+
+  // Required. The transcript_sid of the reviewed transcript.
+  int64 transcript_sid = 2;
+
+  // DEPRECATED. Use flag_snapshot_sid instead.
+  int64 flag_sid = 3 [deprecated = true];
+
+  // Output only. The timestamp when this flag review was created. Assigned by the
+  // server.
+  google.protobuf.Timestamp create_time = 4;
+
+  // Optional. Any notes written for the flag review.
+  string notes = 5;
+
+  // The ID of the flag snapshot for this flag review.
+  int64 flag_snapshot_sid = 8;
+}

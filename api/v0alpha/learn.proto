@@ -1,0 +1,187 @@
+// Copyright (c) 2019, TCN Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/types.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+// A service for creating and reading learning material
+service Learn {
+  rpc Exist(ExistReq) returns (ExistRes);
+  rpc Content(ContentReq) returns (ContentRes);
+  rpc ContentEditorData(ContentEditorDataReq) returns (ContentEditorDataRes);
+  rpc Update(UpdateReq) returns (UpdateRes);
+  // exports multiple pages of the learning center markdown as PDF
+  rpc ExportMany(ExportManyReq) returns (ExportRes);
+  // upload url for static images
+  rpc StoreStaticImage(StoreStaticImageReq) returns (StoreStaticImageRes);
+  // search content in learning pages
+  rpc SearchContent(SearchContentReq) returns (SearchRes);
+  // upload dynamic learning image screenshot
+  rpc UploadDynamicScreenshot(UploadDynamicScreenshotReq) returns (UploadDynamicScreenshotRes);
+  // get standalone articles from learning pages
+  rpc Standalone(StandaloneReq) returns (StandaloneRes);
+}
+
+message ExistReq {
+  string url = 1;
+  string locale = 2;
+}
+message ExistRes {
+  bool exist = 1;
+}
+
+message ContentReq {
+  string url = 1;
+  string locale = 2;
+}
+message ContentRes {
+  string content = 1;
+  // The last time this learning content was edited.
+  google.protobuf.Timestamp last_edited_timestamp = 2;
+  // List containing static file links from parsing markdown
+  repeated LearnImage images = 3;
+}
+
+message ContentEditorDataReq {
+  string url = 1;
+  string locale = 2;
+}
+
+message ContentEditorDataRes {
+  // The user who edited the content last. This is only visible to users with the Permission_PERMISSION_LEARN_EDIT permission.
+  string last_edited_user = 1;
+}
+
+message UpdateReq {
+  string url = 1;
+  string locale = 2;
+  string content = 3;
+
+  // commit message
+  string message = 12;
+}
+
+message UpdateRes {}
+
+// request to export multiple pages of the learning center markdown to PDF
+message ExportManyReq {
+  // url identifiers for the whole book containing all the pages
+  repeated string url = 1;
+  // locale used for the markdown contents
+  string locale = 2;
+  // header image content
+  string content = 3;
+}
+
+// response to export the pages of the learning center markdown to PDF
+message ExportRes {
+  // generated pdf contents to be downloaded from url
+  string download_url = 1;
+}
+
+// request to upload url for static images
+message StoreStaticImageReq {
+  // LearnImage
+  LearnImage image = 1;
+}
+
+// request for LearnImage
+message LearnImage {
+  // unique name of the image
+  string uuid = 1;
+  // image content
+  string content = 2;
+  // download image url
+  string download_url = 3;
+}
+
+// response to upload url for static images
+message StoreStaticImageRes {
+  // updated LearnImage details
+  LearnImage image = 1;
+}
+
+// request to search content in learning pages
+message SearchContentReq {
+  // search for the specific content in markdown contents
+  string search_content = 1;
+  // locale used for the markdown contents
+  string locale = 2;
+  // field mask to filter apps that are accessible to be searched
+  google.protobuf.FieldMask field_mask = 5;
+}
+
+// response to search in learning pages
+message SearchRes {
+  // matched urls
+  repeated LearnSearchDetails search_details = 1;
+}
+
+// search response details
+message LearnSearchDetails {
+  // matched storage bucket
+  string name = 1;
+  // matched markdown content
+  string content = 2;
+}
+
+// upload dynamic learning image screenshot request
+message UploadDynamicScreenshotReq {
+  // learn id name
+  string data_learn_id = 1;
+  // current version
+  int64 version = 2;
+  // locale used for the markdown contents
+  string locale = 3;
+  // image content
+  string content = 4;
+}
+
+// upload dynamic learning image screenshot response
+message UploadDynamicScreenshotRes {
+  // learn id name
+  string data_learn_id = 1;
+  // download url
+  string download_url = 2;
+}
+
+// request to get standalone articles
+message StandaloneReq {
+  // locale used for the markdown contents
+  string locale = 1;
+}
+
+// standalone articles
+message StandaloneRes {
+  repeated LearnStandaloneDetails standalone_details = 1;
+}
+
+// response to get standalone articles
+message LearnStandaloneDetails {
+  // storage bucket
+  string name = 1;
+  // markdown content
+  string content = 2;
+  // The last time this learning content was edited.
+  google.protobuf.Timestamp last_edited_timestamp = 3;
+}

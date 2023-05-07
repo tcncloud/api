@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package api.v1alpha1.tickets;
+
+import "commons/audit/audit.proto";
+import "commons/tickets.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.tickets;tickets";
+option java_package = "com.tcn.api.v1alpha1.tickets";
+
+// EnableProjectReq - Details of project to be enabled in the ticketing system
+message EnableProjectReq {
+  // project seq id of project to be enabled
+  int64 project_sid = 1 [jstype = JS_STRING];
+  // Project code to be set
+  string project_code = 2;
+  // Project title pulled from Omni
+  string project_title = 3;
+  // Is project enabled for ticketing
+  bool is_active = 4;
+}
+
+// EnableProjectRes - Indicates result of the project enable request
+message EnableProjectRes {
+  // result of project mapped to ticket was successful
+  bool success = 1;
+}
+
+// ListEnabledProjectsReq - Request to list enabled projects in ticketing system
+message ListEnabledProjectsReq {}
+
+//ListEnabledProjectsRes - Response wraps list of projects enabled for ticketing system
+message ListEnabledProjectsRes {
+  // enabled projects list
+  repeated commons.TicketProject projects = 1;
+}
+
+// ListTicketAuditLogReq -
+message ListTicketAuditLogReq {
+  // ticket_sid  scoping filter
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+}
+
+// ListTicketAuditLogRes -
+message ListTicketAuditLogRes {
+  // the retrieved audit events
+  repeated commons.audit.AuditEvent events = 1;
+}

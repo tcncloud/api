@@ -1,0 +1,55 @@
+// Copyright (c) 2019, TCN Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/logging.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+// A service for internal observability utilities.
+// service UIEventLogging {
+service Sentinel {
+  // Send a json blob of ui events and logs.
+  rpc SendEvents(SendEventsReq) returns (SendEventsRes) {}
+}
+
+message SentinelEvent {
+  oneof event {
+    LogEvent log_event = 1;
+  }
+}
+
+message LogEvent {
+  string trace_id = 3;
+  // the browsers session id
+  string session_id = 4;
+  string message = 5;
+  // the browsers current uri
+  string location = 6;
+  string stack_trace = 7;
+  google.protobuf.Timestamp timestamp = 8;
+  map<string, string> metadata = 9;
+  commons.Level severity = 10;
+}
+
+message SendEventsReq {
+  repeated SentinelEvent events = 1;
+}
+
+message SendEventsRes {}

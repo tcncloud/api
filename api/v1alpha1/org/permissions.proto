@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package api.v1alpha1.org;
+
+import "commons/auth/perms.proto";
+import "commons/org.proto";
+import "commons/org/labels.proto";
+import "commons/org/permissions.proto";
+import "commons/org/user.proto";
+import "commons/perms.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
+
+// Request message for the GetPermissions RPC.
+message GetPermissionsRequest {}
+
+// Response message for the GetPermissions RPC.
+message GetPermissionsResponse {
+  // List of permissions for the user.
+  repeated commons.auth.Permission permissions = 1;
+  // List of legacy P3 permissions.
+  repeated commons.Permission p3_permissions = 2;
+  // User entity.
+  commons.org.User user = 3;
+  // Default operator application for user.
+  commons.OperatorApplications default_app = 4;
+}
+
+// Request message for the GetUserPermissions RPC.
+message GetUserPermissionsRequest {}
+
+// Response message for the GetUserPermissions RPC.
+message GetUserPermissionsResponse {
+  // List of permissions for the user.
+  repeated commons.auth.Permission permissions = 1;
+  // A list of the labels associated with the user
+  repeated commons.org.Label labels = 2;
+}
+
+// Request message for the CreatePermissionGroup RPC.
+message CreatePermissionGroupRequest {
+  string name = 1;
+  // Description of permission group
+  string description = 2;
+  // Permissions to include in new permission group
+  repeated commons.auth.Permission permissions = 3;
+}
+
+// Response message for the CreatePermissionGroup RPC.
+message CreatePermissionGroupResponse {
+  // The permission group that was just created.
+  string permission_group_id = 1;
+}
+
+// Request message for the UpdatePermissionGroup RPC.
+message UpdatePermissionGroupRequest {
+  // Id of the permission group to be updated.
+  string permission_group_id = 1;
+  // Name of permission group
+  string name = 2;
+  // Description of permission group
+  string description = 3;
+  // Permissions to include in new permission group
+  repeated commons.auth.Permission permissions = 4;
+}
+
+// Response message for the UpdatePermissionGroup RPC.
+message UpdatePermissionGroupResponse {
+  // Updated permission group.
+  commons.org.PermissionGroup permission_group = 1;
+}
+
+// Request message for the DeletePermissionGroup RPC.
+message DeletePermissionGroupRequest {
+  // Id of the permission group to be deleted.
+  string permission_group_id = 1;
+}
+
+// Response message for the DeletePermissionGroup RPC.
+message DeletePermissionGroupResponse {}
+
+// Request message for the GetPermissions RPC.
+message ListPermissionGroupsRequest {}
+
+// Response message for the GetPermissions RPC.
+message ListPermissionGroupsResponse {
+  // Permission groups in caller's organization
+  repeated commons.org.PermissionGroup permission_groups = 1;
+}
+
+// Request message for the GetPermissions RPC.
+message ListPermissionGroupsByOrgIdRequest {
+  // Id of organization to get permission groups for
+  string org_id = 1;
+}
+
+// Response message for the GetPermissions RPC.
+message ListPermissionGroupsByOrgIdResponse {
+  // Permission groups in specified organization
+  repeated commons.org.PermissionGroup permission_groups = 1;
+}
+
+// Request message for the AssignUsersPermissionGroup RPC.
+message AssignUsersPermissionGroupRequest {
+  // Required. The ID of the permission group that is being assigned.
+  string permission_group_id = 1;
+  // Required. The IDs of the users the permission group is being assigned to.
+  repeated string assign_user_ids = 2;
+}
+
+// Response message for the AssignUsersPermissionGroup RPC.
+message AssignUsersPermissionGroupResponse {}
+
+// Request message for the RevokeUsersPermissionGroup RPC.
+message RevokeUsersPermissionGroupRequest {
+  // Required. The ID of the permission group that is being revoked.
+  string permission_group_id = 1;
+  // Required. The IDs of the users the permission group is being revoked from.
+  repeated string revoke_user_ids = 2;
+}
+
+// Response message for the RevokeUsersPermissionGroup RPC.
+message RevokeUsersPermissionGroupResponse {}
+
+// Request message for the AssignAccountOwnerPermissionToUser RPC.
+message AssignAccountOwnerPermissionToUserRequest {
+  // User which will be assigned the account owner permissions.
+  string user_id = 1;
+}
+
+// Response message for the AssignAccountOwnerPermissionToUser RPC.
+message AssignAccountOwnerPermissionToUserResponse {}
+
+// Request message for the RevokeAccountOwnerPermissionFromUser RPC.
+message RevokeAccountOwnerPermissionFromUserRequest {
+  // User which will be revoked the account owner permissions.
+  string user_id = 1;
+  // The organization which the target user belongs to
+  string org_id = 2;
+}
+
+// Response message for the RevokeAccountOwnerPermissionFromUser RPC.
+message RevokeAccountOwnerPermissionFromUserResponse {}
+
+// Request message for the InitDefaultPermissionGroups RPC.
+message InitDefaultPermissionGroupsRequest {}
+
+// Response message for the InitDefaultPermissionGroups RPC.
+message InitDefaultPermissionGroupsResponse {
+  // The list of default permission groups.
+  repeated commons.org.PermissionGroup default_permission_groups = 1;
+}
+
+// Request message for the GetAccountOwnerGroup RPC.
+message GetAccountOwnerGroupRequest {
+  // Id of organization to get account owner group for
+  string org_id = 1;
+}
+
+// Response message for the GetAccountOwnerGroup RPC.
+message GetAccountOwnerGroupResponse {
+  // Permission groups in specified organization
+  commons.org.PermissionGroup permission_group = 1;
+}
+
+// Request message for the GetLicenses RPC.
+message GetLicensesRequest {
+  // Org ID to retrieve the assigned licenses for.
+  string org_id = 1;
+}
+
+// Response message for the GetLicenses RPC.
+message GetLicensesResponse {
+  // List of licenses organization is authorized for.
+  repeated commons.org.License licenses = 1;
+}
+
+// Request message for the GetOrgLicenses RPC.
+message GetOrgLicensesRequest {
+  // This request does not expect an org id
+  // since it will be retrieved from the token.
+}
+
+// Response message for the GetOrgLicenses RPC.
+message GetOrgLicensesResponse {
+  // List of licenses organization is authorized for.
+  repeated commons.org.License licenses = 1;
+}
+
+// Request message for the UpdateLicenses RPC.
+message UpdateLicensesRequest {
+  // Org ID to update the assigned licenses for.
+  string org_id = 1;
+  // Permissions to add to license.
+  repeated commons.auth.Permission added_licenses = 2;
+  // Permissions to revoke from license.
+  repeated commons.auth.Permission revoked_licenses = 3;
+}
+
+// Response message for the UpdateLicenses RPC.
+message UpdateLicensesResponse {}
+
+// Request message for the RemovePermissionFromAllPermissionGroupsRequest RPC.
+message RemovePermissionFromAllPermissionGroupsRequest {
+  // Org ID to remove the permission from.
+  string org_id = 1;
+  // Permission to remove from all permission groups.
+  commons.auth.Permission permission = 2;
+}
+
+// Response message for the RemovePermissionFromAllPermissionGroupsRequest RPC.
+message RemovePermissionFromAllPermissionGroupsResponse {}

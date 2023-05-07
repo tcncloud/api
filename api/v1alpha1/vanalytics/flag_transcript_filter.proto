@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "google/protobuf/field_mask.proto";
+import "api/v1alpha1/vanalytics/filter_snapshot.proto";
+import "api/v1alpha1/vanalytics/flag_snapshot.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
+
+// [LIST] ======================================================================
+
+// ListFlagTranscriptFiltersRequest is a request for listing flag transcript filters.
+message ListFlagTranscriptFiltersRequest {
+  // Required. The target transcript sid.
+  int64 transcript_sid = 2;
+
+  // Optional. Flag snapshot fields to include in response. All when empty.
+  google.protobuf.FieldMask flag_snapshot_mask = 3;
+
+  // Optional. Filter snapshot fields to include in response. All when empty.
+  google.protobuf.FieldMask filter_snapshot_mask = 4;
+}
+
+// ListFlagTranscriptFiltersResponse is a response for listing flag transcript filters.
+message ListFlagTranscriptFiltersResponse {
+  repeated FlagTranscriptFilter flag_transcript_filters = 1;
+}
+
+// [RESOURCE] ==================================================================
+
+// Flag transcript filter resource.
+message FlagTranscriptFilter {
+  // FlagSnapshot which flagged target transcript.
+  FlagSnapshot flag_snapshot = 1;
+
+  // FilterSnapshot which filtered target transcript.
+  FilterSnapshot filter_snapshot = 2;
+}

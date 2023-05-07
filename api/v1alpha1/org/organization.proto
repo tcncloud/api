@@ -1,0 +1,246 @@
+syntax = "proto3";
+
+package api.v1alpha1.org;
+
+import "commons/country.proto";
+import "commons/org.proto";
+import "commons/org/organization.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
+
+// CreateOrganizationRequest request for creating a new organization.
+message CreateOrganizationRequest {
+  // The organization name.
+  string name = 1;
+  // Salesforce ID used for integrations.
+  string crm_id = 2;
+  // Organization's time zone.
+  commons.TimeZone time_zone = 3;
+  // Whether account is manual only.
+  bool is_manual_only_account = 4;
+  // Backoffice UI theme/skin.
+  commons.ClientSkin backoffice_theme = 5;
+
+  // Allowed countries is used to initialize the organization's list of allowed
+  // countries preference. This field is optional.
+  repeated commons.Country allowed_countries = 6;
+  // The ID of new organization's parent account.
+  string p3_parent_account = 7;
+}
+
+// CreateOrganizationResponse response after creating a new organization.
+message CreateOrganizationResponse {
+  // Generated UUID for the organization.
+  string org_id = 1;
+}
+
+// GetOrganizationRequest request to get users organization
+message GetOrganizationRequest {}
+
+// GetOrganizationResponse a single organization
+message GetOrganizationResponse {
+  // Organization filtered by field masks
+  commons.org.Organization organization = 1;
+}
+
+// GetOrganizationByIdRequest request to get single organization by given id
+message GetOrganizationByIdRequest {
+  // OrgID filter
+  string org_id = 1;
+}
+
+// GetOrganizationByIdResponse a single organization from given org id
+message GetOrganizationByIdResponse {
+  // Organization
+  commons.org.Organization organization = 1;
+}
+
+// Request for the ListOrganizations RPC, filtered by region.
+message ListOrganizationsRequest {
+  // Identifier to list organizations.
+  oneof identifier {
+    // No filter (get all global organizations).
+    bool global = 1;
+    // Filter by region.
+    string region_id = 2;
+  }
+
+  // Get only archived or unarchived organizations.
+  bool archived = 3;
+}
+
+// Response for the ListOrganizations RPC, returning all organizations.
+message ListOrganizationsResponse {
+  // Organizations filtered by identifier.
+  repeated OrganizationDetails organization_details = 1;
+}
+
+// Wrapper for associating non entity fields with an Organization
+message OrganizationDetails {
+  // Organization core entity.
+  commons.org.Organization organization = 1;
+  // Date the last broadcast was scheduled.
+  google.protobuf.Timestamp last_scheduled_date = 2;
+}
+
+// ConvertOrgToManualRequest request to convert a single organization
+// to manual only by org id.
+message ConvertOrgToManualRequest {
+  // Org id to convert to manual
+  string org_id = 1;
+}
+
+// ConvertOrgToManualRequest response for converting an organization to manual.
+message ConvertOrgToManualResponse {}
+
+// ListOwnedOrgsRequest request for listing p3 owned orgs for a specific org id.
+// Org id is that of the calling user.
+message ListOwnedOrgsRequest {}
+
+// ListOwnedOrgsRequest response listing orgs owned by the requested org id.
+message ListOwnedOrgsResponse {
+  // List of orgs owned by requested org id.
+  repeated OrganizationDetails organization_details = 1;
+}
+
+// UpdateOrganizationRequest request to update the mutable fields
+// on the Organization entity using the provided field mask.
+message UpdateOrganizationRequest {
+  // Id of organization to update.
+  string org_id = 1;
+  // TimeZone to set.
+  commons.TimeZone time_zone = 2;
+  // BillingId to set.
+  string billing_id = 3;
+  // Name to set.
+  string name = 4;
+
+  // Update the P3 owning org
+  string p3_owner_id = 5;
+
+  // Status of being archived to set
+  bool archived = 6;
+
+  repeated string field_mask = 10;
+}
+
+// UpdateOrganizationResponse response for updating an organization
+// returns the organization.
+message UpdateOrganizationResponse {
+  commons.org.Organization organization = 1;
+}
+
+// The request for ArchiveOrganization
+message ArchiveOrganizationRequest {
+  // Required. Archives the specified organization
+  string org_id = 1;
+}
+
+// The response for ArchiveOrganization
+message ArchiveOrganizationResponse {}
+
+// The request for UnArchiveOrganization
+message UnArchiveOrganizationRequest {
+  // Required. Unarchives the specified organization
+  string org_id = 1;
+}
+
+// The response for UnArchiveOrganization
+message UnArchiveOrganizationResponse {}
+
+// ListOrganizationsGloballyRequest request to list all organizations globally - gets archived and unarchived
+message ListAllOrganizationsGloballyRequest {}
+
+// Response for the ListAllOrganizationsGlobally RPC, returning all organizations globally - gets archived and unarchived
+message ListAllOrganizationsGloballyResponse {
+  message OrganizationDetails {
+    // An organization's globally unique identifier.
+    string org_id = 1;
+    // The organization name.
+    string name = 2;
+    // First enabled region's clientSid; will be deprecated for
+    // enabled_regions map.
+    int64 client_sid = 3;
+    // Billing_prefix + clientSid. Used for integrations and billing.
+    string billing_id = 4;
+    // Default region org was first enbabled for.
+    string region_id = 5;
+    // Date of organization creation.
+    google.protobuf.Timestamp add_date = 6;
+    // Date the last broadcast was scheduled.
+    // last_scheduled_date has three different states.
+    // 1. the field is a valid timestamp
+    // 2. the field is a zero value timestamp. This
+    //    means the organization is in the current region
+    //    but does not have a last scheduled date.
+    // 3. the field is nil. This means the organization
+    //    does not belong to the current region.
+    google.protobuf.Timestamp last_scheduled_date = 7;
+    // Whether the organization is archived.
+    bool archived = 8;
+  }
+
+  // Organizations filtered by identifier.
+  repeated OrganizationDetails organization_details = 1;
+}
+
+// ListOrganizationsByRegionRequest request to list organizations in the given region - only gets unarchived
+message ListOrganizationsByRegionRequest {
+  // The region to get organizations in
+  string region_id = 1;
+}
+
+// Response for the ListOrganizationsByRegion RPC, lists organizations in the given region - only gets unarchived
+message ListOrganizationsByRegionResponse {
+  message OrganizationDetails {
+    // An organization's globally unique identifier.
+    string org_id = 1;
+    // The organization name.
+    string name = 2;
+    // First enabled region's clientSid; will be deprecated for
+    // enabled_regions map.
+    int64 client_sid = 3;
+    // Billing_prefix + clientSid. Used for integrations and billing.
+    string billing_id = 4;
+    // Default region org was first enbabled for.
+    string region_id = 5;
+    // Date of organization creation.
+    google.protobuf.Timestamp add_date = 6;
+    // Date the last broadcast was scheduled.
+    // last_scheduled_date has three different states.
+    // 1. the field is a valid timestamp
+    // 2. the field is a zero value timestamp. This
+    //    means the organization is in the current region
+    //    but does not have a last scheduled date.
+    // 3. the field is nil. This means the organization
+    //    does not belong to the current region.
+    google.protobuf.Timestamp last_scheduled_date = 7;
+  }
+
+  // Organizations filtered by identifier.
+  repeated OrganizationDetails organization_details = 1;
+}
+
+// Request for the ListArchivedOrganizations RPC, returning archived organizations in the current region.
+message ListArchivedOrganizationsRequest {}
+
+// Response for the ListArchivedOrganizations RPC, returning archived organizations in the current region.
+message ListArchivedOrganizationsResponse {
+  message OrganizationDetails {
+    // An organization's globally unique identifier.
+    string org_id = 1;
+    // The organization name.
+    string name = 2;
+    // Billing_prefix + clientSid. Used for integrations and billing.
+    string billing_id = 3;
+    // Date of organization creation.
+    google.protobuf.Timestamp add_date = 4;
+    // Date the last broadcast was scheduled.
+    google.protobuf.Timestamp last_scheduled_date = 5;
+  }
+
+  // Organizations filtered by identifier.
+  repeated OrganizationDetails organization_details = 1;
+}

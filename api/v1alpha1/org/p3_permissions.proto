@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package api.v1alpha1.org;
+
+import "commons/org/permissions.proto";
+import "commons/perms.proto";
+import "google/protobuf/field_mask.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
+
+// Request message for the CreateP3PermissionGroup RPC.
+message CreateP3PermissionGroupRequest {
+  // Display name for this group
+  string name = 1;
+  // More detailed description for this group
+  string description = 2;
+  // List of permissions associated with this group
+  repeated commons.Permission permissions = 3;
+}
+
+// Response message for the CreateP3PermissionGroup RPC.
+message CreateP3PermissionGroupResponse {
+  // The newly created P3PermissionGroup
+  string p3_permission_group_id = 1;
+}
+
+// Request message for the UpdateP3PermissionGroup RPC.
+message UpdateP3PermissionGroupRequest {
+  // The Id of the P3PermissionGroup to be updated
+  string p3_permission_group_id = 1;
+  // P3 permission group values to update.
+  // The mutable fields are: name, description, permissions.
+  commons.org.P3PermissionGroup p3_permission_group = 3;
+  // Field mask for selecting which fields to update.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response message for the UpdateP3PermissionGroup RPC.
+message UpdateP3PermissionGroupResponse {
+  // The updated P3PermissionGroup
+  commons.org.P3PermissionGroup p3_permission_group = 1;
+}
+
+// Request message for the UpdateP3PermissionGroupByOrgId RPC.
+message UpdateP3PermissionGroupByOrgIdRequest {
+  // The Id of the P3PermissionGroup to be updated
+  string p3_permission_group_id = 1;
+  // Org Id is the org this group belongs to.
+  string org_id = 2;
+  // P3 permission group values to update.
+  // The mutable fields are: name, description, permissions.
+  commons.org.P3PermissionGroup p3_permission_group = 3;
+  // Field mask for selecting which fields to update.
+  google.protobuf.FieldMask field_mask = 10;
+}
+
+// Response message for the UpdateP3PermissionGroupByOrgId RPC.
+message UpdateP3PermissionGroupByOrgIdResponse {
+  // The updated P3PermissionGroup
+  commons.org.P3PermissionGroup p3_permission_group = 1;
+}
+
+// Request message for the DeleteP3PermissionGroup RPC.
+message DeleteP3PermissionGroupRequest {
+  // The Id of the P3PermissionGroup to be deleted
+  string p3_permission_group_id = 1;
+}
+
+// Response message for the DeleteP3PermissionGroup RPC.
+message DeleteP3PermissionGroupResponse {}
+
+// Request message for the AssignUsersP3PermissionGroup RPC.
+message AssignUsersP3PermissionGroupRequest {
+  // The Id of the P3PermissionGroup to be assigned
+  string p3_permission_group_id = 1;
+  // List of users to assign this group to
+  repeated string user_ids = 2;
+}
+
+// Response message for the AssignUsersP3PermissionGroup RPC.
+message AssignUsersP3PermissionGroupResponse {
+  // List of users that were assigned the group
+  repeated string user_ids = 1;
+}
+
+// Request message for the RevokeUsersP3PermissionGroup RPC.
+message RevokeUsersP3PermissionGroupRequest {
+  // List of users having P3PermissionGroup revoked
+  repeated string user_ids = 1;
+}
+
+// Response message for the RevokeUsersP3PermissionGroup RPC.
+message RevokeUsersP3PermissionGroupResponse {
+  // List of users that had permissions revoked
+  repeated string user_ids = 1;
+}
+
+// Request message for the ListP3PermissionGroups RPC.
+message ListP3PermissionGroupsRequest {
+  // Org's Id to list P3PermissionGroups for.
+  // Passing in Org Id requires PERMISSION_CUSTOMER_SUPPORT,
+  // otherwise it is taken off the user token and requires PERMISSION_ORG_VIEW.
+  string org_id = 1;
+}
+
+// Response message for the ListP3PermissionGroups RPC.
+message ListP3PermissionGroupsResponse {
+  // List of P3PermissionGroups for the requested org
+  repeated commons.org.P3PermissionGroup p3_permission_groups = 1;
+}

@@ -1,0 +1,1103 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/omnichannel.proto";
+import "commons/types.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+// Service for interacting with TCN's Omni API system.
+// Accessing all of the methods require an authenticated user with the correct
+// permissions.
+service OmniApi {
+  // archive a campaign
+  rpc ArchiveCampaign(ArchiveCampaignReq) returns (ArchiveCampaignRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/archivecampaign";
+    option (google.api.http).body = "*";
+  }
+
+  // Create Omni Campaign defined by CreateOmniCampaign message
+  // for the name, skill, Hours of operations, and description.
+  // the method will return newly created OmniCampaign for this client
+  // Required Permission:
+  //      OMNI_BOSS
+  rpc CreateCampaign(CreateCampaignReq) returns (commons.OmniCampaign) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createcampaign";
+    option (google.api.http).body = "*";
+  }
+
+  //Get campaign defined by GetChatCampaignById.
+  rpc GetCampaignById(GetCampaignByIdReq) returns (commons.OmniCampaign) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getcampaignbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // List campaigns defined by ListCampaignsReq.
+  // The method will return a ListCampaignsReq entity that will contain
+  // all the campaigns within the specified filter.
+  rpc ListCampaigns(ListCampaignsReq) returns (ListCampaignsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcampaigns";
+    option (google.api.http).body = "*";
+  }
+
+  // pause a campaign
+  rpc PauseCampaign(PauseCampaignReq) returns (PauseCampaignRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/pausecampaign";
+    option (google.api.http).body = "*";
+  }
+
+  // resume a campaign
+  rpc ResumeCampaign(ResumeCampaignReq) returns (ResumeCampaignRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/resumecampaign";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates a campaign
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc UpdateCampaign(UpdateCampaignReq) returns (UpdateCampaignRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatecampaign";
+    option (google.api.http).body = "*";
+  }
+
+  // update campaign pacing - speed up/slow down a campaign
+  rpc UpdateCampaignPacingSpeed(UpdateCampaignPacingSpeedReq) returns (UpdateCampaignPacingSpeedRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatecampaignpacingspeed";
+    option (google.api.http).body = "*";
+  }
+
+  // Get the text message for an off-loaded text message payload. Used
+  // only for managers/agents/users. It is not for customers.
+  rpc GetOffLoadedTextMessage(GetOffLoadedTextMessageReq) returns (GetOffLoadedTextMessageRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getoffloadedtextmessage";
+    option (google.api.http).body = "*";
+  }
+
+  // Get a stream of new conversation message for a given conversation. Used
+  // only for managers. It is not for customers.
+  rpc ManagerListMessages(ManagerListMessagesReq) returns (stream commons.OmniMessage) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/managerlistmessages";
+    option (google.api.http).body = "*";
+  }
+
+  // Get a stream of conversation message for a given conversation. Used
+  // only for agents/users. It is not for customers.
+  rpc ListMessages(ListMessagesReq) returns (stream commons.OmniMessage) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listmessages";
+    option (google.api.http).body = "*";
+  }
+
+  // Send a chat message
+  rpc SendOmniMessage(SendOmniMessageReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/sendomnimessage";
+    option (google.api.http).body = "*";
+  }
+
+  // Send a chat message
+  rpc ManagerSendOmniMessage(SendOmniMessageReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/managersendomnimessage";
+    option (google.api.http).body = "*";
+  }
+
+  // lists all conversation and assigned users for a given date range.
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc ManagerListConversations(ListConversationsReq) returns (ListConversationsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listconversations";
+    option (google.api.http).body = "*";
+  }
+
+  // Experimental API
+  rpc SuggestResponse(SuggestResponseReq) returns (SuggestResponseRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/suggestresponse";
+    option (google.api.http).body = "*";
+  }
+
+  // Create a disposition
+  rpc CreateDisposition(CreateDispositionReq) returns (CreateDispositionRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createdisposition";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteDisposition - delete an existing disposition
+  rpc DeleteDisposition(DeleteDispositionReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/deletedisposition";
+    option (google.api.http).body = "*";
+  }
+
+  // ListDispositions - lists all dispositions
+  rpc ListDispositions(ListDispositionsReq) returns (ListDispositionsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listdispositions";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateDisposition - update an existing disposition
+  rpc UpdateDisposition(UpdateDispositionReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatedisposition";
+    option (google.api.http).body = "*";
+  }
+
+  // ListCustomUnsubscribeLinks - retrieves all the custom unsubscribe links
+  rpc ListCustomUnsubscribeLinks(commons.Empty) returns (ListCustomUnsubscribeLinksRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcustomunsubscribelinks";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateUnsubscribeLink - creates a new unsubscribe link
+  rpc CreateCustomUnsubscribeLink(commons.OmniCustomUnsubscribeLink) returns (CreateCustomUnsubscribeLinkRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createcustomunsubscribelink";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateCustomUnsubscribeLink - update custom unsubscribe link details
+  rpc UpdateCustomUnsubscribeLink(UpdateCustomUnsubscribeLinkReq) returns (UpdateCustomUnsubscribeLinkRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatecustomunsubscribelink";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
+  rpc DeleteCustomUnsubscribeLink(DeleteCustomUnsubscribeLinkReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/deletecustomunsubscribelink";
+    option (google.api.http).body = "*";
+  }
+
+  // ListContactLists - retrieves all the contact lists
+  rpc ListContactLists(ListContactListsReq) returns (ListContactListsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcontactlists";
+    option (google.api.http).body = "*";
+  }
+
+  // GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc GetAvailableHeaders(GetAvailableHeadersReq) returns (GetAvailableHeadersRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getavailableheaders";
+    option (google.api.http).body = "*";
+  }
+
+  // GetTask - retrieves a task using the provided criteria
+  // Required permissions:
+  //    OMNI_AGENT
+  rpc GetTask(GetTaskReq) returns (commons.OmniTask) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/gettask";
+    option (google.api.http).body = "*";
+  }
+
+  // ListTasks - retrieves tasks using the provided criteria
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc ListTasks(ListTasksReq) returns (ListTasksRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listtasks";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateConnectedInbox - create a new connected inbox
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc CreateConnectedInbox(commons.ConnectedInbox) returns (CreateConnectedInboxRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createconnectedinbox";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteConnectedInboxBySid - deletes a connected inbox given it's identifier
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc DeleteConnectedInboxBySid(DeleteConnectedInboxBySidReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/deleteconnectedinboxbysid";
+    option (google.api.http).body = "*";
+  }
+
+  // GetConnectedInboxBySid - retrieves a connected inbox given it's identifier
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc GetConnectedInboxBySid(GetConnectedInboxBySidReq) returns (commons.ConnectedInbox) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getconnectedinboxbysid";
+    option (google.api.http).body = "*";
+  }
+  //Perform sendgrid account check to make sure all the account settings are valid defined by SendgridAccountByClientReq message.
+  // The method will return a SendgridAccountByClientRes message/entity that will
+  // contain the result true/false verifying account settings with sendgrid for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc PerformSendgridAccountChecks(SendgridAccountByClientReq) returns (SendgridAccountByClientRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/performsendgridaccountchecks";
+    option (google.api.http).body = "*";
+  }
+
+  // ListConnectedInboxes - retrieves all the connected inboxes for the organization
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc ListConnectedInboxes(ListConnectedInboxesReq) returns (ListConnectedInboxesRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listconnectedinboxes";
+    option (google.api.http).body = "*";
+  }
+
+  // TestConnectedInbox - check if connected inbox login works for a specified email_address,
+  // username, password, server_name, and server_port (other fields from ConnectedInbox are ignored).
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc TestConnectedInbox(commons.ConnectedInbox) returns (TestConnectedInboxRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/testconnectedinbox";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateConnectedInbox - update a connected inbox
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc UpdateConnectedInbox(UpdateConnectedInboxReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updateconnectedinbox";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateVerifiedEmail.  this will create a new verified email
+  // Required permissions
+  //      OMNI_BOSS
+  rpc CreateVerifiedEmail(commons.VerifiedEmail) returns (CreateVerifiedEmailRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createverifiedemail";
+    option (google.api.http).body = "*";
+  }
+
+  // Send email notification defined by SendEmailNotificationReq message for the specified
+  // subject, message and array of to email addresses.
+  // The method will return a stream of SendEmailNotificationRes messages
+  // containing result true/false after notified by email for the client_sid.
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc SendEmailNotification(SendEmailNotificationReq) returns (SendEmailNotificationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/sendemailnotification";
+    option (google.api.http).body = "*";
+  }
+  // Delete verify email record based on verified email id defined by
+  // DeleteVerifiedEmailReq for the specified client.
+  // This method will return a DeleteVerifiedEmailRes message/entity.
+  // DeleteVerifiedEmail - deletes a verified email record using the given identifier
+  // Required permissions
+  //      OMNI_BOSS
+  rpc DeleteVerifiedEmail(DeleteVerifiedEmailReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/deleteverifiedemail";
+    option (google.api.http).body = "*";
+  }
+
+  // Get the verified email details based on verified email id defined by
+  // GetVerifiedEmailByIdReq for the specified client.
+  // This method will return an OmniVerifiedEmail message/entity.
+  // Required permissions
+  //      OMNI_BOSS
+  rpc GetVerifiedEmailBySid(GetVerifiedEmailBySidReq) returns (commons.VerifiedEmail) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getverifiedemailbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // List all the verified emails and their details defined by
+  // ListVerifiedEmailsReq for the specified client.
+  // This method will return a ListVerifiedEmailsRes message/entity.
+  // Required permissions
+  //      OMNI_BOSS
+  rpc ListVerifiedEmails(ListVerifiedEmailsReq) returns (ListVerifiedEmailsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listverifiedemails";
+    option (google.api.http).body = "*";
+  }
+
+  // Resend verify email record based on verified email id defined by
+  // ResendVerifiedEmailReq for the specified client.
+  // This method will return a ResendVerifiedEmailRes message/entity.
+  // Required permissions
+  //      OMNI_BOSS
+  rpc ResendVerifiedEmail(ResendVerifiedEmailReq) returns (ResendVerifiedEmailRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/resendverifiedemail";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates verified email description
+  rpc UpdateVerifiedEmail(UpdateVerifiedEmailReq) returns (commons.Empty) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updateverifiedemail";
+    option (google.api.http).body = "*";
+  }
+
+  // GetPendingGoogleXOAuth2Data - retrieves the pending oauth data required to finish creating a connected inbox
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc GetPendingGoogleXOAuth2Data(GetPendingGoogleXOAuth2DataReq) returns (GetPendingGoogleXOAuth2DataRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getpendinggooglexoauth2data";
+    option (google.api.http).body = "*";
+  }
+
+  // Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
+  rpc SendFeedbackEmail(SendFeedbackEmailReq) returns (SendFeedbackEmailRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/sendfeedbackemail";
+    option (google.api.http).body = "*";
+  }
+
+  // GetOmniAttachment - retrieves the omni attachment details based on the request
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc GetOmniAttachment(GetOmniAttachmentReq) returns (commons.OmniAttachment) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getomniattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // Create a task with a given contat list .
+  rpc CreateTasks(CreateTasksReq) returns (CreateTasksRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createTasks";
+    option (google.api.http).body = "*";
+  }
+
+  // CreateSignature - creates a new message signature
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc CreateSignature(CreateSignatureReq) returns (CreateSignatureRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createsignature";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteSignature - deletes a message signature
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc DeleteSignature(DeleteSignatureReq) returns (DeleteSignatureRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/deletesignature";
+    option (google.api.http).body = "*";
+  }
+
+  // ListSignatures - retrieves the signatures created by the organization
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc ListSignatures(ListSignaturesReq) returns (ListSignaturesRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listsignatures";
+    option (google.api.http).body = "*";
+  }
+
+  // UpdateSignature - updates a message signature
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc UpdateSignature(UpdateSignatureReq) returns (UpdateSignatureRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatesignature";
+    option (google.api.http).body = "*";
+  }
+}
+
+message SuggestResponseReq {
+  string conversation_id = 1;
+}
+
+message SuggestResponseRes {
+  string suggested_response = 1;
+}
+
+// CreateCampaignReq - request to create an omni campaign
+message CreateCampaignReq {
+  // the campaign to create
+  commons.OmniCampaign campaign = 1;
+  // the modules to create on the campaign
+  repeated CampaignModule modules = 2;
+
+  // CampaignModule - information required to create an omni campaign module
+  message CampaignModule {
+    // the module to create
+    commons.OmniCampaignModule module = 1;
+    // the data source for outbound contacts (only applicable if outbound module)
+    oneof data_source {
+      ContactListsDataSource omni_contact_list = 100; // TODO: make plural
+    }
+  }
+}
+
+// ContactListsDataSource - data source for getting contacts from one or more contact lists
+message ContactListsDataSource {
+  // the contact lists to retrieve contacts from TODO: rename contact_lists
+  repeated ContactListDataSource contact_lists_data_source = 1;
+}
+
+// ContactListDataSource  - contains information to retrieve data from a contact list
+message ContactListDataSource {
+  // the contact list identifier
+  int64 contact_list_sid = 1 [jstype = JS_STRING];
+}
+
+// ListCampaignsReq - request to list all campaigns using a given filter
+message ListCampaignsReq {
+  // the statuses to select by when listing campaigns (if empty, selects all)
+  repeated commons.OmniCampaignStatus statuses = 1;
+  // field mask for selecting extra campaign module details (if empty, does not select any details)
+  google.protobuf.FieldMask field_mask = 2;
+
+  // the filter to select by
+  oneof filter {
+    ByIds by_ids = 100;
+    ByProject by_project = 101;
+    ByTime by_time = 102;
+    ByUnsubscribeLink by_unsubscribe_link = 103;
+    ByConnectedInbox by_connected_inbox = 104;
+    ByVerifiedEmail by_verified_email = 105;
+    BySmsNumber by_sms_number = 106;
+  }
+
+  // ByConnectedInbox - filter to list campaigns by the provided connected inbox
+  message ByConnectedInbox {
+    // connected inbox identifier
+    int64 inbox_sid = 1 [jstype = JS_STRING];
+  }
+
+  // ByIds - filter to list campaigns by ids
+  message ByIds {
+    // campaign ids to search for
+    repeated int64 campaign_sids = 1 [jstype = JS_STRING];
+  }
+
+  // ByProject - filter to list campaigns by project
+  message ByProject {
+    // project identifier
+    int64 project_sid = 1 [jstype = JS_STRING];
+  }
+
+  // ByTime - filter to list running campaigns by scheduled_start_time
+  message ByTime {
+    // time to search from
+    google.protobuf.Timestamp search_from = 1;
+    // time to search to
+    google.protobuf.Timestamp search_to = 2;
+  }
+
+  // ByUnsubscribeLink - filter to list campaigns using the provided unsubscribe link
+  message ByUnsubscribeLink {
+    // custom unsubscribe link identifier
+    int64 link_sid = 1 [jstype = JS_STRING];
+  }
+
+  // ByVerifiedEmail - filter to list campaigns by the verified email
+  message ByVerifiedEmail {
+    // verified email identifier
+    int64 email_sid = 1 [jstype = JS_STRING];
+  }
+
+  // BySmsNumber - filter the list of campaigns by the Sms Number
+  message BySmsNumber {
+    // sms number
+    string number = 1;
+  }
+}
+
+// ListCampaignsRes - result of listing filtered campaigns
+message ListCampaignsRes {
+  // the listed campaigns
+  repeated commons.OmniCampaign campaigns = 1;
+  // associated modules
+  repeated commons.OmniCampaignModule modules = 2;
+}
+
+// Request to get a campaign by it's id
+message GetCampaignByIdReq {
+  // the campaign id
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+}
+
+// Request to retrieve an off-loaded text message payload
+message GetOffLoadedTextMessageReq {
+  // Required. The off-loaded location of the text message payload;
+  // this is generated by the omni service when creating
+  // an OmniOffLoadedTextMessage payload for an OmniMessage.
+  string location = 1;
+}
+
+// Result of retrieving an off-loaded text message payload
+message GetOffLoadedTextMessageRes {
+  // the text message, containing Urls.
+  string message = 1;
+}
+
+message ManagerListMessagesReq {
+  // TimeStamp
+  google.protobuf.Timestamp timestamp = 2;
+  // User_id
+  string user_id = 3;
+  // live flag
+  bool live = 4;
+  // channel type
+  commons.ChannelType channel_type = 5;
+  oneof filter {
+    // select messages by the given conversation sid
+    ByConversationSid by_conversation_sid = 101;
+    // select message by the given task sid
+    ByTaskSid by_task_sid = 102;
+  }
+
+  // filter used to get messages by conversation sid
+  message ByConversationSid {
+    // the conversation identifier
+    int64 conversation_sid = 1 [jstype = JS_STRING];
+  }
+
+  // filter used to get messages by task sid
+  message ByTaskSid {
+    // the task identifier
+    int64 task_sid = 1 [jstype = JS_STRING];
+  }
+}
+
+message ListMessagesReq {
+  // timestamp
+  google.protobuf.Timestamp timestamp = 2;
+  // live flag
+  bool live = 5;
+  // channel type
+  commons.ChannelType channel_type = 6;
+  oneof filter {
+    // select messages by the given conversation sid
+    ByConversationSid by_conversation_sid = 101;
+  }
+
+  message ByConversationSid {
+    // the conversation identifier
+    int64 conversation_sid = 1 [jstype = JS_STRING];
+  }
+}
+
+message ChatMessageUserInformation {
+  string user_id = 1;
+  string name = 2;
+}
+
+message SendOmniMessageReq {
+  // the id of the conversation this message belongs to
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+  // the message
+  commons.OmniMessagePayload payload = 3;
+  // the id of the chat campaign
+  int64 campaign_sid = 4 [jstype = JS_STRING];
+  // a unique id created by the client to ensure it doesn't send the same message twice
+  string ui_reference_id = 5;
+  // channel type
+  commons.ChannelType channel_type = 6;
+}
+
+// Request to update a campaign
+message UpdateCampaignReq {
+  // the campaign to update
+  commons.OmniCampaign campaign = 1;
+  // the identifier of the user who initiated the request
+  string user_id = 2;
+  // list of all fields being updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// UpdateCampaignRes - result of updating a campaign
+message UpdateCampaignRes {
+  // the identifier for the ghost notification
+  string notifier_id = 1;
+}
+
+// ListConversationsReq - request to get conversations
+message ListConversationsReq {
+  // the channel types to list conversations for
+  repeated commons.ChannelType channel_types = 1;
+  // field mask to filter what is returned by each row
+  google.protobuf.FieldMask field_mask = 2;
+  // list of conversation status that we want returned, if empty return everything.
+  repeated commons.ConversationStatus statuses = 3;
+  // the filter for determining what rows to pull
+  oneof filter {
+    // list conversations by time
+    ByTime by_time = 100;
+    // list conversations by assigned user
+    ByAssignedUser by_assigned_user = 101;
+  }
+
+  // message filter to list conversations by time
+  message ByTime {
+    // start time for filtering conversations
+    google.protobuf.Timestamp start_time = 1;
+    // stop time for filtering conversations
+    google.protobuf.Timestamp end_time = 2;
+    // Optional. The number of listconversation to include in a single response. When not provided this defaults to 100.
+    uint32 page_size = 4;
+    //Optional. When provided all other request fields are ignored.
+    string page_token = 5;
+  }
+
+  // message filter to list conversations by assigned user
+  message ByAssignedUser {
+    // the assigned user
+    string user_id = 1;
+    // the statuses of the conversations to retrieve, or empty if retrieving everything : deprecated because we moved to the main request.
+    repeated commons.ConversationStatus statuses = 2 [deprecated = true];
+    // Optional. The number of listconversation to include in a single response. When not provided this defaults to 100.
+    uint32 page_size = 4;
+    //Optional. When provided all other request fields are ignored.
+    string page_token = 5;
+  }
+}
+
+// ListConversationsRes - list of conversations satisfying the request parameters
+message ListConversationsRes {
+  // list of conversations for the dashboard
+  repeated commons.OmniConversation conversations = 1;
+  // Token to retrieve the next page of tasks, or empty if there are no more pages
+  //Only returned if using the ByTime or ByAssignedUser filters
+  string next_page_token = 2;
+}
+
+// CreateDispositionReq - request to create a disposition
+message CreateDispositionReq {
+  // the string of the disposition to create
+  string disposition = 1;
+}
+
+// CreateDispositionRes - result of creating a disposition
+message CreateDispositionRes {
+  // the unique id of the created disposition
+  int64 disposition_sid = 1 [jstype = JS_STRING];
+}
+
+// DeleteDispositionReq - request to delete a disposition
+message DeleteDispositionReq {
+  // the disposition to delete
+  commons.Disposition disposition = 1;
+}
+
+// ListDispositionsReq - request to list dispositions
+message ListDispositionsReq {}
+
+// ListDispositionsRes - result to listing dispositions
+message ListDispositionsRes {
+  // the listed dispositions
+  repeated commons.Disposition dispositions = 1;
+}
+
+// UpdateDispositionReq - request to update disposition
+message UpdateDispositionReq {
+  // the disposition identifier
+  int64 disposition_sid = 1 [jstype = JS_STRING];
+  // the updated disposition string
+  string disposition = 2;
+}
+
+// ListCustomUnsubscribeLinksRes - result to listing custom unsubscribe links
+message ListCustomUnsubscribeLinksRes {
+  // the listed custom unsubscribe links
+  repeated commons.OmniCustomUnsubscribeLink custom_unsubscribe_links = 1;
+}
+
+// CreateUnsubscribeLinkRes - result to creating unsubscribe link
+message CreateCustomUnsubscribeLinkRes {
+  // custom unsubscribe link sid
+  int64 custom_unsubscribe_link_sid = 1 [jstype = JS_STRING];
+  // validation of link url
+  bool validated = 2;
+}
+
+// Request to update unsubscribe link details
+message UpdateCustomUnsubscribeLinkReq {
+  // custom unsubscribe link sid
+  int64 custom_unsubscribe_link_sid = 1 [jstype = JS_STRING];
+  // link name
+  string link_name = 2;
+  // link url
+  string link_url = 3;
+  // link description
+  string description = 4;
+}
+
+// Response to update unsubscribe link details
+message UpdateCustomUnsubscribeLinkRes {
+  // validation of link url
+  bool validated = 1;
+  // when the url was last validated
+  google.protobuf.Timestamp date_validated = 2;
+}
+
+// Request to delete unsubscribe link details
+message DeleteCustomUnsubscribeLinkReq {
+  // custom unsubscribe link sid
+  int64 custom_unsubscribe_link_sid = 1 [jstype = JS_STRING];
+}
+
+// Request to pause a campaign
+message PauseCampaignReq {
+  // the campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // the campaign's channel type
+  commons.ChannelType channel_type = 2;
+  // the campaign direction
+  commons.OmniCampaignDirection campaign_direction = 3;
+}
+
+// Response to pause a campaign
+message PauseCampaignRes {
+  //send back ghost notifier referenceID
+  string reference_id = 1;
+}
+
+// Request to resume a campaign
+message ResumeCampaignReq {
+  // the campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // the campaign's channel type
+  commons.ChannelType channel_type = 2;
+  // the campaign direction
+  commons.OmniCampaignDirection campaign_direction = 3;
+}
+
+// Response to resume a campaign
+message ResumeCampaignRes {
+  //send back ghost notifier referenceID
+  string reference_id = 1;
+}
+
+// Request to archive a campaign
+message ArchiveCampaignReq {
+  // the campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // the campaign's channel type
+  commons.ChannelType channel_type = 2;
+  // the campaign direction
+  commons.OmniCampaignDirection campaign_direction = 3;
+}
+
+// Response to archive a campaign
+message ArchiveCampaignRes {
+  // send back ghost notifier referenceID
+  string reference_id = 1;
+}
+
+// Request to update pacing speed for a campaign
+// Pacing speed updates are possible only for outbound campaigns like Email|SMS (not for CHAT)
+message UpdateCampaignPacingSpeedReq {
+  // the campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // the campaign's channel type
+  commons.ChannelType channel_type = 2;
+  // the campaign direction
+  commons.OmniCampaignDirection campaign_direction = 3;
+  // sends per hour
+  int64 sends_per_hour = 4;
+  //the campaignModules identifier
+  int64 campaign_module_sid = 5 [jstype = JS_STRING];
+}
+
+// Response to update pacing speed for a campaign
+message UpdateCampaignPacingSpeedRes {
+  //send back ghost notifier referenceID
+  string reference_id = 1;
+}
+
+// ListContactListsReq - request to list contact lists
+message ListContactListsReq {
+  // field mask to filter what is returned by each row
+  google.protobuf.FieldMask field_mask = 2;
+  // the filter to select by
+  oneof filter {
+    // select contact lists by project id
+    ByProject by_project = 100;
+  }
+
+  // ByProject - filter to list campaigns by project
+  message ByProject {
+    // project identifier
+    int64 project_sid = 1 [jstype = JS_STRING];
+  }
+}
+
+// ListContactListsRes - result to listing contact lists
+message ListContactListsRes {
+  // the listed contact lists
+  repeated commons.ContactList contact_lists = 1;
+}
+
+// GetAvailableHeadersReq - request to retrieve all available headers for contact lists
+message GetAvailableHeadersReq {}
+
+// GetAvailableHeadersRes - response containing all available contact list headers
+message GetAvailableHeadersRes {
+  // the available contact list headers
+  repeated HeaderGroup headers = 1;
+}
+
+// HeaderGroup - represents a group of headers for a contact list
+message HeaderGroup {
+  // the name of this group
+  string name = 1;
+  // the headers provided by this group
+  repeated string headers = 2;
+}
+
+// GetTaskReq - request to retrieve a task
+message GetTaskReq {
+  // field mask for selecting optional details
+  google.protobuf.FieldMask field_mask = 1;
+  // the filter to use when retrieving a task
+  oneof filter {
+    ByConversation by_conversation = 100;
+  }
+
+  // ByConversation - retrieves the task the conversation was created from
+  message ByConversation {
+    // the conversation identifier
+    int64 conversation_sid = 1 [jstype = JS_STRING];
+  }
+}
+
+// ListTasksReq - request to list tasks
+message ListTasksReq {
+  // field mask for selecting optional details
+  google.protobuf.FieldMask field_mask = 1;
+  // the filter to use when retrieving tasks
+  oneof filter {
+    ByCampaign by_campaign = 100;
+  }
+
+  // ByCampaign - retrieve tasks for the specified campaign
+  message ByCampaign {
+    // Required. The campaign identifier.
+    int64 campaign_sid = 1 [jstype = JS_STRING];
+    // Optional. The number of tasks to include in a single response. When  not provided
+    // this defaults to 100.
+    uint32 page_size = 2;
+    // Optional. The next_page_token returned from a previous List request, if any.
+    // When provided all other request fields are ignored.
+    string page_token = 3;
+  }
+}
+
+// ListTasksRes - result of listing tasks
+message ListTasksRes {
+  // Token to retrieve the next page of tasks, or empty if there are
+  // no more tasks in the list.
+  string next_page_token = 1;
+  // The list of tasks.
+  repeated commons.OmniTask tasks = 2;
+}
+
+// CreateConnectedInboxRes - result of creating a new connected inbox
+message CreateConnectedInboxRes {
+  // the generated connected inbox identifier
+  int64 connected_inbox_sid = 1 [jstype = JS_STRING];
+}
+
+// DeleteConnectedInboxBySidReq - request to delete a connected inbox
+message DeleteConnectedInboxBySidReq {
+  // connected inbox identifier
+  int64 connected_inbox_sid = 1 [jstype = JS_STRING];
+}
+
+// GetConnectedInboxBySid - request to retrieve a connected inbox
+message GetConnectedInboxBySidReq {
+  // connected inbox identifier
+  int64 connected_inbox_sid = 1 [jstype = JS_STRING];
+}
+
+// SendgridAccountByClientReq -
+message SendgridAccountByClientReq {}
+
+// SendgridAccountByClientRes -
+message SendgridAccountByClientRes {
+  // retult -
+  bool result = 1;
+}
+
+// ListConnectedInboxesReq - request to list the connected inboxes for an organization
+message ListConnectedInboxesReq {
+  // what fields should be returned on the associated campaigns (if no field mask: no associated campaigns; if empty field mask, empty campaigns)
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// ListConnectedInboxesRes - result to listing an organization's connected inboxes
+message ListConnectedInboxesRes {
+  // the listed connected inboxes
+  repeated ListConnectedInbox connected_inboxes = 1;
+
+  // ListConnectedInbox - a wrapper for a listed connected inbox containing the inbox and a list of it's associated campaigns
+  message ListConnectedInbox {
+    // the listed connected inbox
+    commons.ConnectedInbox connected_inbox = 1;
+    // the associated campaigns
+    repeated commons.OmniCampaign campaigns = 2;
+  }
+}
+
+// TestConnectedInboxRes - result of testing a connected inbox login
+message TestConnectedInboxRes {
+  // whether the test was a success
+  bool success = 1;
+  // test-specific details
+  string details = 2;
+}
+
+// UpdateConnectedInboxReq - request to update a connected inbox
+message UpdateConnectedInboxReq {
+  // the connected inbox to update with the specified fields updated
+  commons.ConnectedInbox connected_inbox = 1;
+  // the fields to update
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// creates verified email
+message CreateVerifiedEmailRes {
+  // generated identifier field
+  int64 verified_email_sid = 1 [jstype = JS_STRING];
+}
+
+// request to send email notification
+message SendEmailNotificationReq {
+  // email subject
+  string subject = 2;
+  // data
+  string data = 3;
+  // email message
+  string message = 4;
+  // to email addresses
+  repeated string to_email_address_arr = 5;
+}
+
+// response to email notification
+message SendEmailNotificationRes {}
+
+//request to delete verified email
+// GetVerifiedEmailBySidReq -
+message GetVerifiedEmailBySidReq {
+  // verified_email_id
+  int64 verified_email_sid = 1 [jstype = JS_STRING];
+}
+
+// DeleteVerifiedEmailReq - request to delete verified email
+message DeleteVerifiedEmailReq {
+  // verified email identifier
+  int64 verified_email_sid = 1 [jstype = JS_STRING];
+}
+
+// request to list verified email
+message ListVerifiedEmailsReq {}
+
+// response to list verified email
+message ListVerifiedEmailsRes {
+  // list of verified emails
+  repeated commons.VerifiedEmail verified_emails = 1;
+}
+
+//request to resend verified email
+message ResendVerifiedEmailReq {
+  // verified_email_sid
+  int64 verified_email_sid = 1 [jstype = JS_STRING];
+}
+
+//response to resend verified email
+message ResendVerifiedEmailRes {}
+
+//request to update verified email description
+message UpdateVerifiedEmailReq {
+  int64 verified_email_sid = 1 [jstype = JS_STRING];
+  string description = 2;
+}
+
+// GetPendingGoogleXOAuth2DataReq - request to get pending GoogleXOAuth2 data
+message GetPendingGoogleXOAuth2DataReq {
+  // token identifying the GoogleXOAuth2 data
+  string identification_token = 1;
+}
+
+// GetPendingGoogleXOAuth2DataRes - result of getting pending GoogleXOAuth2 data
+message GetPendingGoogleXOAuth2DataRes {
+  // the GoogleXOAuth2 email address
+  string email_address = 1;
+}
+
+// request to send feedback notifications
+message SendFeedbackEmailReq {
+  // from email address
+  string from_email = 1;
+  //email description
+  string description = 2;
+  // session id
+  string session_id = 3;
+  // email screenshot
+  string screenshot = 4;
+}
+
+// response to send feedback notifications
+message SendFeedbackEmailRes {}
+
+// request to get attachment details
+message GetOmniAttachmentReq {
+  // flag to include attachment download url or not
+  bool include_download_url = 1;
+  // the filter to select by
+  oneof filter {
+    // filter by attachment sid
+    ByOmniAttachmentSid by_omni_attachment_sid = 100;
+  }
+  // ByOmniAttachmentSid - filter to get attachment details by sid
+  message ByOmniAttachmentSid {
+    // the attachment file identifier
+    int64 omni_attachment_sid = 1 [jstype = JS_STRING];
+  }
+}
+
+// CreateTasksReq - create tasks per a contact list
+message CreateTasksReq {
+  // campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign module identifier
+  int64 campaign_module_sid = 2 [jstype = JS_STRING];
+  // what data to use when creating tasks
+  oneof data_source {
+    ContactListDataSource contact_list_data_source = 100;
+  }
+}
+
+// CreateTasksRes -
+message CreateTasksRes {
+  // ghost notifier reference identifier
+  string reference_id = 1;
+}
+
+// CreateSignatureReq - request to create a new message signature
+message CreateSignatureReq {
+  // the signature text to create
+  string signature = 1;
+  // the name for the signature
+  string name = 2;
+  // the description for the signature
+  string description = 3;
+}
+
+// CreateSignatureRes - the result of creating a new signature
+message CreateSignatureRes {
+  // the created signature object
+  commons.Signature signature = 1;
+}
+
+// DeleteSignatureReq - request to delete message signature
+message DeleteSignatureReq {
+  // identifier of the signature to delete
+  int64 signature_sid = 1 [jstype = JS_STRING];
+}
+
+// DeleteSignatureReq - result of deleting message signature
+message DeleteSignatureRes {}
+
+// ListSignaturesReq - request to list message signatures
+message ListSignaturesReq {}
+
+// ListSignaturesRes - result of listing message signatures
+message ListSignaturesRes {
+  // the message signatures created by the organization
+  repeated commons.Signature signatures = 1;
+}
+
+// UpdateSignatureReq - request to update a message signature
+message UpdateSignatureReq {
+  // the signature details to update
+  commons.Signature signature = 1;
+  // the field mask to update with
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// UpdateSignatureRes - response to updating a message signature
+message UpdateSignatureRes {
+  // the updated signature
+  commons.Signature signature = 1;
+}

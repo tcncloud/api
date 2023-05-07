@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package v1alpha1.idp;
-
-option go_package = "github.com/tcncloud/api/v1alpha1.idp;idp";
-option java_package = "com.tcn.api.v1alpha1.idp";

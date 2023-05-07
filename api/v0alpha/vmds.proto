@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/acd.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service Vmds {
+  rpc GetVoicemailMetadata(GetVoicemailMetadataReq) returns (stream GetVoicemailMetadataRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmetadata";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetVoicemailMessageCount(GetVoicemailCountReq) returns (GetVoicemailCountRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmessagecount";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DeleteVoicemail(DeleteVoicemailReq) returns (DeleteVoicemailRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/deletevoicemail";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DeleteGreeting(DeleteGreetingReq) returns (DeleteGreetingRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/deletegreeting";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateUploadName(UpdateUploadNameReq) returns (UpdateUploadNameRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/updateuploadname";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateVoicemailFlagRead(UpdateVoicemailFlagReadReq) returns (UpdateVoicemailFlagReadRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/updatevoicemailflagread";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadMessage(DownloadMessageReq) returns (DownloadMessageRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/downloadmessage";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadMessages(DownloadMessagesReq) returns (DownloadMessagesRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/downloadmessages";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadGreetingForExtension(DownloadGreetingForExtensionReq) returns (DownloadGreetingForExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/downloadgreetingforextension";
+    option (google.api.http).body = "*";
+  }
+
+  rpc DownloadGreeting(DownloadGreetingReq) returns (DownloadGreetingRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/downloadgreeting";
+    option (google.api.http).body = "*";
+  }
+
+  rpc GetUploadGreetingUrl(GetUploadGreetingUrlReq) returns (GetUploadGreetingUrlRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/getuploadgreetingurl";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ProcessGreetingUpload(ProcessGreetingUploadReq) returns (ProcessGreetingUploadRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/processgreetingupload";
+    option (google.api.http).body = "*";
+  }
+
+  rpc UpdateGreetingForExtension(UpdateGreetingForExtensionReq) returns (UpdateGreetingForExtensionRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/updategreetingforextension";
+    option (google.api.http).body = "*";
+  }
+
+  rpc ListAvailableGreetings(ListAvailableGreetingsReq) returns (ListAvailableGreetingsRes) {
+    option (google.api.http).post = "/api/v0alpha/vmds/listavailablegreetings";
+    option (google.api.http).body = "*";
+  }
+}
+
+message GetVoicemailMetadataReq {
+  repeated string mail_boxes = 2; // extension
+}
+
+message GetVoicemailMetadataRes {
+  string caller_id = 1;
+  string caller_sid = 2;
+  commons.CallType.Enum caller_type = 3;
+  string dialed_number = 4;
+  int32 duration_seconds = 5;
+  bool flag_read = 6;
+  string mail_box = 7;
+  string recording_filename = 9;
+  int32 recording_start = 10;
+}
+
+message DeleteVoicemailReq {
+  string mail_box = 2;
+  string caller_sid = 3;
+  commons.CallType.Enum caller_type = 4;
+}
+
+message DeleteVoicemailRes {}
+
+message DeleteGreetingReq {
+  string filename = 2;
+}
+
+message DeleteGreetingRes {}
+
+message UpdateUploadNameReq {
+  string current_file_name = 1;
+  string new_file_name = 2;
+}
+
+message UpdateUploadNameRes {}
+
+message GetVoicemailCountReq {
+  repeated string mail_boxes = 2;
+}
+
+message GetVoicemailCountRes {
+  int32 total = 1;
+  int32 unheard = 2;
+}
+
+message UpdateVoicemailFlagReadReq {
+  string mail_box = 2;
+  string caller_sid = 3;
+  commons.CallType.Enum caller_type = 4;
+  bool flag_read = 5;
+}
+
+message UpdateVoicemailFlagReadRes {
+  bool flag_read = 1;
+}
+
+message DownloadMessageReq {
+  string mail_box = 2;
+  string caller_sid = 3;
+  commons.CallType.Enum caller_type = 4;
+}
+
+message DownloadMessageRes {
+  string url = 1;
+}
+
+message GetUploadGreetingUrlReq {
+  string pbx_extension = 2;
+  string filename = 3;
+}
+
+message GetUploadGreetingUrlRes {
+  string url = 1;
+}
+
+message DownloadMessagesReq {
+  repeated string mail_boxes = 2;
+  bool unheard_only = 3;
+}
+
+message DownloadMessagesRes {
+  string url = 1;
+}
+
+message DownloadGreetingForExtensionReq {
+  string mail_box = 2;
+}
+
+message DownloadGreetingForExtensionRes {
+  string url = 1;
+}
+
+message DownloadGreetingReq {
+  string filename = 2;
+}
+
+message DownloadGreetingRes {
+  string url = 1;
+}
+
+message ProcessGreetingUploadReq {
+  string pbx_extension = 2;
+  string filename = 3;
+}
+
+message ProcessGreetingUploadRes {}
+
+message UpdateGreetingForExtensionReq {
+  string pbx_extension = 2;
+  string filename = 3;
+}
+
+message UpdateGreetingForExtensionRes {}
+
+message ListAvailableGreetingsReq {}
+
+message ListAvailableGreetingsRes {
+  message FileInfo {
+    string filename = 1;
+    int64 size = 2;
+  }
+  repeated FileInfo greetings = 1;
+}

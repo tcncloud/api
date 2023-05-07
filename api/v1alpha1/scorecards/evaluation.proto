@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package api.v1alpha1.scorecards;
+
+import "commons/scorecards.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.scorecards;scorecards";
+option java_package = "com.tcn.api.v1alpha1.scorecards";
+
+// CreateEvaluationRequest is request to create a new evaluation
+message CreateEvaluationRequest {
+  commons.Evaluation evaluation = 1; // entity to create
+}
+
+// CreateEvaluationResponse is response with created entity
+message CreateEvaluationResponse {
+  commons.Evaluation evaluation = 1; // entity created
+}
+
+// DeleteEvaluationRequest is request to delete an evaluation
+message DeleteEvaluationRequest {
+  int64 evaluation_id = 2; // Required - unique id of evaluation to get
+}
+
+// DeleteEvaluationReponse is response with requested entity
+message DeleteEvaluationResponse {
+  commons.Evaluation evaluation = 1; // entity deleted
+}
+
+// GetEvaluationRequest is request to get an evaluation
+message GetEvaluationRequest {
+  int64 evaluation_id = 2; // Required - unique id of evaluation to get
+}
+
+// GetEvaluationReponse is response with requested entity
+message GetEvaluationResponse {
+  commons.Evaluation evaluation = 1;
+}
+
+// ScoreEvaluationRequest is request to score an evaluation
+message ScoreEvaluationRequest {
+  int64 evaluation_id = 3; // Required - unique id of evaluation to score
+}
+
+// ScoreEvaluationResponse returns the evaluation that was scored
+message ScoreEvaluationResponse {
+  commons.Evaluation evaluation = 1;
+}
+
+// ListEvaluationsRequest is request to get list of evaluations
+message ListEvaluationsRequest {
+  repeated string scorer_id = 2; // optional, list by scorer_id
+  commons.TimeFilter completed_at = 3; // optional, filter completed_at by a specific range
+  repeated int64 category_ids = 4; // optional, list by category_ids
+  repeated string agent_user_ids = 5; // Optional. List by agent user ids.
+  repeated int64 scorecard_ids = 6; // Optional. List by scorecard_ids
+}
+
+// ListEvaluationsResponse returns a list of evaluations
+message ListEvaluationsResponse {
+  repeated commons.Evaluation evaluations = 1;
+}

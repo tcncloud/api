@@ -1,0 +1,387 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "annotations/authz.proto";
+import "commons/auth/perms.proto";
+import "commons/org.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service Dashboards {
+  // CreateDashboard creates a dashboard and associated panels
+  rpc CreateDashboard(CreateDashboardRequest) returns (CreateDashboardResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/CreateDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // GetDashboard retrieves a dashboard by the given ID and orgID and fetches its associated panels
+  rpc GetDashboard(GetDashboardRequest) returns (Dashboard) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/GetDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GetDefaultDashboard(GetDefaultDashboardRequest) returns (Dashboard) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/GetDefaultDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
+    };
+  }
+  // ListDashboards retrieves all dashboard summaries for the given organization
+  rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/ListDashboards";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListProductTypes(ListProductTypesRequest) returns (ListProductTypesResult) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/ListProductTypes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
+    };
+  }
+  // Deletes a given dashboard
+  rpc DeleteDashboard(DeleteDashboardRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/DeleteDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // Sets a dashboard as the user's default
+  rpc SetDefaultDashboard(SetDefaultDashboardRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/SetDefaultDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // UpdateDashboard updates a dashboard
+  rpc UpdateDashboard(UpdateDashboardRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // UpdateDashboardTitleAndDescription updates a dashboards title and description
+  rpc UpdateDashboardTitleAndDescription(UpdateDashboardTitleAndDescriptionRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardTitleAndDescription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // UpdateDashboardView updates a dashboards view with the given view
+  rpc UpdateDashboardView(UpdateDashboardViewRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardView";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+  // UpdateDashboardLayout replaces a dashboards layout with a given layout
+  rpc UpdateDashboardLayout(UpdateDashboardLayoutRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/UpdateDashboardLayout";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+}
+
+// ListDashboardsRequest --  filled in from auth. May include filters in future
+message ListDashboardsRequest {}
+
+// ListDashboardsRes contains an array of dashboard summaries
+message ListDashboardsResponse {
+  repeated DashboardSummary dashboard_summaries = 1;
+}
+
+// Dashboard summary
+message DashboardSummary {
+  // unique ID for this dashboard
+  string dashboard_id = 1;
+  // required dashboard title
+  string title = 2;
+  // optional dashboard description
+  string description = 3;
+  // number of associated panels
+  int32 panel_count = 4;
+}
+
+// GetDefaultDashboardRequest used in GetDefaultDashboard rpc
+message GetDefaultDashboardRequest {}
+
+// SetDefaultDashboardRequest used in SetDefaultDashboard rpc
+message SetDefaultDashboardRequest {
+  // unique ID of dashboard to be set as default
+  string dashboard_id = 1;
+}
+
+message ListProductTypesRequest {}
+
+message ListProductTypesResult {
+  repeated ProductType types = 1;
+}
+
+message ProductType {
+  string name = 1;
+  string id = 2;
+}
+
+// DeleteDashboardRequest used in DeleteDashboard rpc
+message DeleteDashboardRequest {
+  // unique ID of dashboard to be deleted
+  string dashboard_id = 1;
+}
+
+// GetDashboardRequest used in GetDashboard rpc
+message GetDashboardRequest {
+  // unique ID of dashboard to retrieve
+  string dashboard_id = 1;
+}
+
+// CreateDashboardRequest used in the CreateDashboard rpc
+message CreateDashboardRequest {
+  // required dashboard title
+  string title = 1;
+  // optional dashboard description
+  string description = 2;
+  // layout of associated dashboard panels
+  DashboardLayout layout = 3;
+  // the dashboards viewing params
+  DashboardView view = 4;
+  // the type of dashboard, with type specific components
+  DashboardType type = 5;
+}
+
+// CreateDashboardResponse used in the CreateDashboard rpc
+message CreateDashboardResponse {
+  // unique ID of the dashboard created
+  string dashboard_id = 1;
+}
+
+// DashboardLayout contains location information for a dashboards panels
+message DashboardLayout {
+  // location information for each panel
+  repeated DashboardPanel panels = 1;
+}
+
+// location fields subject to change
+message DashboardPanel {
+  // panel_source determines the fields needed to
+  // retrieve the panel data and is used to determine
+  // who to pull the data from
+  PanelSource panel_source = 1;
+  // height of panel
+  int64 row_length = 2;
+  // length of panel
+  int64 column_length = 3;
+  // absolute x position of panel
+  int64 row_start = 4;
+  // absoulute y position of panel
+  int64 column_start = 5;
+}
+
+// PanelSource is used per APP and each message in the oneOf is used to determine what APP to call
+message PanelSource {
+  // added for each new panel type used by multiple teams
+  oneof panel_type {
+    // Used for new BI insights in operator
+    string insight_id = 1;
+    // Used for old insights in BI
+    string legacy_insight_id = 2;
+  }
+}
+
+// Dashboard contains all fields for a dashboard
+message Dashboard {
+  // unique ID for this dashboard
+  string dashboard_id = 1;
+  // required dashboard title
+  string title = 2;
+  // optional dashboard description
+  string description = 3;
+  // layout of associated panels
+  DashboardLayout layout = 4;
+  // viewing params of dashboard
+  DashboardView view = 5;
+  // dashboard type, with type specific components
+  DashboardType type = 6;
+}
+
+// DashboardType, specifies what type of dashboard we are dealing with
+message DashboardType {
+  oneof type {
+    HistoricConfig historic = 6;
+    RealTimeConfig real_time = 7;
+  }
+}
+
+// Historic Dashboard type
+message HistoricConfig {
+  // relative time span
+  reserved 2;
+  // amount of history the dashboard consumes
+  oneof time_span {
+    TimeSpan.Interval time_span_simple = 1;
+    TimeSpan.Range time_span_range = 3;
+  }
+  // The default time zone to view the historic data by
+  commons.TimeZone time_zone = 4;
+}
+
+// Real Time Dashboard type
+// has no time_span, is only concerned with the present
+message RealTimeConfig {}
+
+// UpdateDashboard used for the update RPC
+message UpdateDashboardRequest {
+  // unique ID for this dashboard
+  string dashboard_id = 1;
+  // required dashboard title
+  string title = 2;
+  // optional dashboard description
+  string description = 3;
+  // layout of associated panels
+  DashboardLayout layout = 4;
+  // viewing params of dashboard
+  DashboardView view = 5;
+  // dashboard type, with type specific components
+  DashboardType type = 6;
+}
+
+// UpdateDashboardTitleAndDescriptionResponse used for the update RPC
+message UpdateDashboardTitleAndDescriptionRequest {
+  // unique ID for dashboard to update
+  string dashboard_id = 1;
+  // required new dashboard title
+  string title = 2;
+  // optional new dashboard description
+  string description = 3;
+}
+
+// UpdateDashboardTitleAndDescriptionRequest used for the update RPC
+message UpdateDashboardLayoutRequest {
+  // unique ID for dashboard to update
+  string dashboard_id = 1;
+  // layout of associated panels
+  DashboardLayout layout = 2;
+}
+
+// UpdateDashboardViewRequest  used in the update RPC
+message UpdateDashboardViewRequest {
+  // unique ID of dashboard to update
+  string dashboard_id = 1;
+  // the dashboards viewing params
+  DashboardView view = 2;
+}
+
+// DashboardView contains the viewing parameters that make up the view of a dashboard
+message DashboardView {
+  // time zone for data scoping
+  reserved 1;
+  // list of clients whose data will be viewed
+  repeated string org_ids = 2;
+  // time scope of data, now handled in historic dashboard type
+  reserved 3, 4, 5;
+}
+
+// TimeSpan is used to determine the time scope of data retrieved from the dash
+message TimeSpan {
+  // simple time selection
+  enum Interval {
+    TODAY = 0;
+    YESTERDAY = 1;
+    LAST_30_DAYS = 2;
+    MONTH_TO_DATE = 3;
+    LAST_2_WEEKS = 4;
+    THIS_WEEK = 5;
+    THIS_MONTH = 6;
+    THIS_DAY_LAST_WEEK = 7;
+    PREVIOUS_MONTH = 8;
+  }
+
+  // absolute time range
+  message Range {
+    google.protobuf.Timestamp start = 1;
+    google.protobuf.Timestamp end = 2;
+  }
+}

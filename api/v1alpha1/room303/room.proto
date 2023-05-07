@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package api.v1alpha1.room303;
+
+import "commons/room303.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.room303;room303";
+option java_package = "com.tcn.api.v1alpha1.room303";
+
+message CreateRoomRequest {
+  string name = 1;
+  commons.RoomType type = 2;
+  repeated string members = 3;
+}
+
+// TODO: CreateRoomResponse
+
+message GetRoomRequest {
+  string room_id = 1;
+}
+
+message ListAllRoomsRequest {}
+
+message ListRoomsForMemberRequest {}
+
+message ListRoomsResponse {
+  repeated commons.Room rooms = 1;
+}
+
+message ArchiveRoomRequest {
+  string room_id = 1;
+}

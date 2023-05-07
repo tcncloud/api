@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "google/protobuf/timestamp.proto";
+import "api/v1alpha1/vanalytics/transcript.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.vanalytics;vanalytics";
+option java_package = "com.tcn.api.v1alpha1.vanalytics";
+
+// [RESOURCE] ==================================================================
+
+// Filter snapshot resource.
+message FilterSnapshot {
+  // Output only. The unique id of this filter snapshot.
+  int64 filter_snapshot_sid = 1;
+
+  // Output only. The unique id of this filter.
+  int64 filter_sid = 2;
+
+  // Required. The name of this filter. Must be non empty and unique across all
+  // filters within an organization.
+  string name = 3;
+
+  // The search request to be used to filter transcripts.
+  SearchRequest search_request = 5;
+
+  // Output only. Assigned by the server. The timestamp when this filter was
+  // created.
+  google.protobuf.Timestamp create_time = 6;
+
+  // Output only. The version of this filter.
+  int64 version = 7;
+}

@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package api.v1alpha1.srec;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.srec;srec";
+option java_package = "com.tcn.api.v1alpha1.srec";
+
+service Srec {
+  // ListScreenRecordings returns screen recordings.
+  rpc ListScreenRecordings(ListScreenRecordingsRequest) returns (ListScreenRecordingsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/srec/srec/listscreenrecordings";
+    option (google.api.http).body = "*";
+  }
+
+  // GetScreenRecordingURL returns the screen recording url.
+  rpc GetScreenRecordingURL(GetScreenRecordingURLRequest) returns (GetScreenRecordingURLResponse) {
+    option (google.api.http).post = "/api/v1alpha1/srec/srec/getscreenrecordingurl";
+    option (google.api.http).body = "*";
+  }
+
+  // DeleteScreenRecording deletes a screen recording.
+  rpc DeleteScreenRecording(DeleteScreenRecordingRequest) returns (DeleteScreenRecordingResponse) {
+    option (google.api.http).post = "/api/v1alpha1/srec/srec/deletescreenrecording";
+    option (google.api.http).body = "*";
+  }
+}
+
+// ListScreenRecordingsRequest is a request for listing screen recordings.
+message ListScreenRecordingsRequest {
+  // Optional. The number of screen recordings to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 3;
+}
+
+// ListScreenRecordingsResponse is a response for listing screen recordings.
+message ListScreenRecordingsResponse {
+  // Token to retrieve the next page of screen recordings, or empty if there are no
+  // more screen recordings in the list.
+  string next_page_token = 1;
+
+  // List of screen recordings which contains at most one request page_size.
+  repeated ScreenRecording recordings = 2;
+}
+
+// ScreenRecording is a resource in the SREC API.
+message ScreenRecording {
+  // Output only. The unique id of this screen recording.
+  int64 session_id = 2;
+
+  // Required. The agent first name.
+  string agent_first_name = 3;
+
+  // Required. The agent last name.
+  string agent_last_name = 4;
+
+  // Required. Start time is the start time of the screen recording.
+  google.protobuf.Timestamp start_time = 5;
+
+  // Required. Audio time in milliseconds.
+  uint32 audio_time = 6;
+
+  // Required. Audio bytes of the screen recording.
+  int64 audio_bytes = 7;
+}
+
+// GetScreenRecordingURLRequest is a request for getting a screen recording url.
+message GetScreenRecordingURLRequest {
+  // Required. The session id of this screen recording. Must be non empty.
+  int64 session_id = 2;
+}
+
+// GetScreenRecordingURLResponse is a response for getting a screen recording url.
+message GetScreenRecordingURLResponse {
+  // The url for the screen recording.
+  string url = 1;
+}
+
+// DeleteScreenRecordingRequest is a request for deleting a screen recording.
+message DeleteScreenRecordingRequest {
+  // Required. The unique id of the screen recording to be deleted.
+  int64 session_id = 1;
+}
+
+// DeleteScreenRecordingResponse is a response for deleting a screen recording.
+message DeleteScreenRecordingResponse {}

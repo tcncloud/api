@@ -1,0 +1,219 @@
+syntax = "proto3";
+
+package api.v1alpha1.tickets;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "api/v1alpha1/tickets/project.proto";
+import "api/v1alpha1/tickets/ticket.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.tickets;tickets";
+option java_package = "com.tcn.api.v1alpha1.tickets";
+
+// Tickets service is the public api for the tickets service., for public integrations to manage tickets / customer service requests. Can be used by any authorized frontend-app.
+service Tickets {
+  // Public Method to create a ticket.
+  rpc CreateTicket(CreateTicketReq) returns (CreateTicketRes) {
+    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+  // Public Method to create a ticket.
+  rpc EditTicket(EditTicketReq) returns (EditTicketRes) {
+    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to list tickets
+  rpc ListTickets(ListTicketsReq) returns (ListTicketsRes) {
+    // "/api.v1alpha1.tickets/Tickets/ListTickets".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listtickets";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to assign ticket
+  rpc AssignTicket(AssignTicketReq) returns (AssignTicketRes) {
+    // "/api.v1alpha1.tickets/Tickets/AssignTicket".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Closes the ticket
+  rpc CloseTicket(CloseTicketReq) returns (CloseTicketRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/closeticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to view ticket
+  rpc ViewTicket(ViewTicketReq) returns (ViewTicketRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/viewticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public Method to create a Comment.
+  rpc CreateComment(CreateCommentReq) returns (CreateCommentRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createcomment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to Enable Project for Ticketing system
+  rpc EnableProject(EnableProjectReq) returns (EnableProjectRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/enableproject";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+  // Public method to Edit Comment for Ticketing system
+  /* rpc EditComment (EditCommentReq) returns(EditCommentRes) {
+         option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editcomment";
+         option (google.api.http).body = "*";
+         option (annotations.authz) = {
+         sets: [{permissions: [PERMISSION_TICKETS_APP]}];
+         };
+     }*/
+
+  // Public method to List projects enabled for Ticketing system
+  rpc ListEnabledProjects(ListEnabledProjectsReq) returns (ListEnabledProjectsRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listprojects";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+  // Public Method to create a sla.
+  rpc CreateSLA(CreateSlaReq) returns (CreateSlaRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createsla";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+
+  // Public method to list sla
+  rpc ListSLA(ListSlaReq) returns (ListSlaRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listsla";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+
+  // Public method to update sla
+  rpc UpdateSLA(UpdateSlaReq) returns (UpdateSlaRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/updatesla";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+
+  // Public method to list sla_condition
+  rpc ListSLACondition(ListSlaConditionReq) returns (ListSlaConditionRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listslacondition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+
+  // Public method to list sla_condition
+  rpc ReplyComment(ReplyCommentReq) returns (ReplyCommentRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/replycomment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to List audit log for Ticketing system
+  rpc ListTicketAuditLog(ListTicketAuditLogReq) returns (ListTicketAuditLogRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/auditlog";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+}

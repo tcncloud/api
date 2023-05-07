@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package api.v1alpha1.org;
+
+import "commons/org.proto";
+import "commons/org/huntgroup.proto";
+import "google/protobuf/field_mask.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
+
+// Request message for the GetHuntGroupSettings RPC method.
+message GetHuntGroupSettingsRequest {
+  // Hunt group sid.
+  int64 hunt_group_sid = 1;
+
+  // Field mask containing the fields to retrieve.
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Response message for the GetHuntGroupSettings RPC method.
+message GetHuntGroupSettingsResponse {
+  // Hunt group general settings to be retrieved.
+  commons.org.GeneralSettings general_settings = 1;
+  // Hunt group communication compliance settings to be retrieved.
+  commons.org.CommunicationSettings communication_settings = 2;
+  // Hunt group scheduled callback settings to be retrieved.
+  commons.org.CallbackSettings callback_settings = 3;
+  // Hunt group Preview Dial settings to be retrieved.
+  commons.org.PreviewDialSettings preview_dial_settings = 4;
+  // Hunt group Manual Dial settings to be retrieved.
+  commons.org.ManualDialSettings manual_dial_settings = 5;
+  // Transfer Call hunt group settings.
+  commons.org.TransferCallSettings transfer_call_settings = 6;
+  // Number History hunt group settings.
+  commons.org.NumberHistorySettings number_history_settings = 7;
+}
+
+// Request message for the UpdateHuntGroupSettings RPC method.
+message UpdateHuntGroupSettingsRequest {
+  // Hunt group sid.
+  int64 hunt_group_sid = 1;
+  // Hunt group general settings to be updated.
+  commons.org.GeneralSettings general_settings = 2;
+  // Hunt group communication compliance settings to be updated.
+  commons.org.CommunicationSettings communication_settings = 3;
+  // Hunt group scheduled callback settings to be updated.
+  commons.org.CallbackSettings callback_settings = 4;
+  // Hunt group Preview Dial settings to be updated.
+  commons.org.PreviewDialSettings preview_dial_settings = 5;
+  // Hunt group Manual Dial settings to be updated.
+  commons.org.ManualDialSettings manual_dial_settings = 6;
+  // Transfer Call hunt group settings.
+  commons.org.TransferCallSettings transfer_call_settings = 7;
+  // Number History hunt group settings.
+  commons.org.NumberHistorySettings number_history_settings = 8;
+
+  // Field mask containing the fields to update.
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Response message for the UpdateHuntGroupSettings RPC method.
+message UpdateHuntGroupSettingsResponse {}
+
+// Request messsage for getting the org related list of Caller ID Bucket Data.
+message ListCallerIdBucketsRequest {}
+
+// Response message for getting the org related list of Caller ID Bucket Data.
+message ListCallerIdBucketsResponse {
+  // list of caller ID bucket data.
+  repeated commons.org.CallerIdBucketData caller_id_bucket_data = 1;
+}
+
+// Request messsage for the GetDataDipTemplate RPC method.
+message GetDataDipTemplateRequest {
+  // The ID of the desired template.
+  int64 xml_client_property_sid = 1;
+}
+
+// Response message for the GetDataDipTemplate RPC method.
+message GetDataDipTemplateResponse {
+  // The requested template.
+}
+
+// Request message for ListDataDipTemplates RPC method.
+message ListDataDipTemplatesRequest {
+  // The filter for limiting the returned templates.
+  commons.DataDipTemplateFilterType filter = 1;
+}
+
+// Response message for ListDataDipTemplates RPC method.
+message ListDataDipTemplatesResponse {
+  // list of the organizations templates.
+}
+
+// Request message for creating a Data Dip template.
+message CreateDataDipTemplateRequest {
+  // The new template to persist.
+}
+
+// Response message from creating a Data Dip template.
+message CreateDataDipTemplateResponse {
+  // The ID of the newly persisted template.
+  int64 xml_client_property_sid = 1;
+}
+
+// Request message for the ListAgentResponseAutoRules RPC method.
+message ListAgentResponseAutoRulesRequest {}
+
+// Response message for the ListAgentResponseAutoRules RPC method.
+message ListAgentResponseAutoRulesResponse {
+  // All Agent Response Auto Rule sets for the requested Org
+  repeated commons.org.AgentResponseAutoRuleSet rulesets = 1;
+}
+
+// Request message for the CreateAgentResponseAutoRules RPC method.
+message CreateAgentResponseAutoRulesRequest {
+  // Agent Response Auto Rule set to add
+  commons.org.AgentResponseAutoRuleSet ruleset = 1;
+}
+
+// Response message for the CreateAgentResponseAutoRules RPC method.
+message CreateAgentResponseAutoRulesResponse {}
+
+// Request message for the UpdateAgentResponseAutoRules RPC method.
+message UpdateAgentResponseAutoRulesRequest {
+  // Sid for the Agent Response Rule set to update
+  int64 rulesetSid = 1;
+  // New values for the Agent Response Rule set
+  commons.org.AgentResponseAutoRuleSet ruleset = 2;
+}
+
+// Response message for the UpdateAgentResponseAutoRules RPC method.
+message UpdateAgentResponseAutoRulesResponse {}
+
+// Request message for the DeleteAgentResponseAutoRules RPC method.
+message DeleteAgentResponseAutoRulesRequest {
+  // Sid for the Agent Response Rule set to delete
+  int64 rulesetSid = 1;
+}
+
+// Response message for the DeleteAgentResponseAutoRules RPC method.
+message DeleteAgentResponseAutoRulesResponse {}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service FTS {
+  rpc GetUploadFileUrl(GetUploadFileUrlReq) returns (GetUploadFileUrlRes) {
+    option (google.api.http).post = "/api/v0alpha/fts/upload_url";
+    option (google.api.http).body = "*";
+  }
+}
+
+message GetUploadFileUrlReq {
+  // the optional prefix that will be first part of the generated id on the response
+  string prefix = 5;
+  // "gs_path" is not safe to provide from the front end.
+  // it is generated now by:
+  //
+  // - retrieving the org_id and region
+  // - figuring out through the service that is requesting the url
+  // - the generated (or provided) file_name
+}
+
+message GetUploadFileUrlRes {
+  string url = 1;
+  // "bucket" is not safe to provide to the front end
+  // string bucket = 2;
+  //
+  // identifier so we can get this file back at a later point
+  string id = 3;
+}

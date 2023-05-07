@@ -1,0 +1,1306 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/sms.proto";
+import "commons/types.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+// Service for interacting with TCN's SMS API system.
+// Accessing all of the methods require an authenticated user with the correct
+// permissions.
+service SmsApi {
+  // List Sms Templates  defined by ListSmsTemplatesReq message.
+  // Gets all details belong to the clientsid
+  // The method will return a stream of ListSmsTemplatesRes messages
+  // containing SmsTemplates with SmsIntents
+  // Required permissions: VIEW_SMS
+  rpc ListSmsTemplates(ListSmsTemplatesReq) returns (ListSmsTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmstemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsTemplate defined by CreateSmsTemplateReq message.
+  // The method will return a CreateSmsTemplateRes message that will
+  // contain the newly created values of the sms_template_id
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsTemplate(CreateSmsTemplateReq) returns (CreateSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a SmsTemplate defined by UpdateSmsTemplateReq message for
+  // the specified sms_template_sid
+  // will update the following
+  // sms template fields:
+  //    MessageSid
+  //    SmsTemplateIntentSid
+  // The method will return a UpdateSmsTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateSmsTemplate(UpdateSmsTemplateReq) returns (UpdateSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a SmsTemplate defined by DeleteSmsTemplateReq message for
+  // the specified sms_template_id
+  // The method will return a DeleteSmsTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteSmsTemplate(DeleteSmsTemplateReq) returns (DeleteSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deletesmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets an SmsTemplate defined by GetSmsTemplateBySidReq message for the specified
+  // sms_template_sid.
+  // The method will return a SmsTemplate group.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsTemplateBySid(GetSmsTemplateBySidReq) returns (GetSmsTemplateBySidRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmstemplatebysid";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms IntentTemplates  defined by ListSmsIntentTemplatesReq message.
+  // Gets all details belong to the clientsid
+  // The method will return a stream of ListSmsIntentTemplatesRes messages
+  // containing ActionKey, ActionDetails, ActionTriggers, ActionPriority
+  // Required permissions: VIEW_SMS
+  rpc ListSmsIntentTemplates(ListSmsIntentTemplatesReq) returns (ListSmsIntentTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsintenttemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsIntentTemplate defined by SmsIntentTemplate message.
+  // The method will return a CreateSmsIntentTemplateRes message that will
+  // contain the newly created values of the sms_intent_template_sid
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsIntentTemplate(SmsIntentTemplate) returns (CreateSmsIntentTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmsintenttemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a SmsIntentTemplate defined by SmsIntentTemplate message for
+  // the specified sms_intent_template_sid
+  // will update the following
+  // sms intent template fields:
+  //    ActionKey
+  //    ActionDetails
+  //    ActionTrigger
+  // The method will return a UpdateSmsIntentTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateSmsIntentTemplate(SmsIntentTemplate) returns (UpdateSmsIntentTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsintenttemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a SmsIntentTemplate defined by DeleteSmsIntentTemplateReq message for
+  // the specified sms_intent_template_id
+  // The method will return a DeleteSmsIntentTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteSmsIntentTemplate(DeleteSmsIntentTemplateReq) returns (DeleteSmsIntentTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deletesmsintenttemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets an SmsIntentTemplate group defined by GetSmsIntentTemplateBySidReq message for the specified
+  // sms_intent_template_sid.
+  // The method will return a SmsIntentTemplate group.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsIntentTemplateBySid(GetSmsIntentTemplateBySidReq) returns (SmsIntentTemplate) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmsintenttemplatebysid";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms SourceNumbers  defined by ListSmsSourceNumbersReq message.
+  // Gets all source numbers belong to the clientsid
+  // The method will return a stream of ListSmsSourceNumbersRes messages
+  // containing providername, providertype
+  // Required permissions: VIEW_SMS
+  rpc ListSmsSourceNumbers(ListSmsSourceNumbersReq) returns (ListSmsSourceNumbersRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmssourcenumbers";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsSourceNumber defined by CreateSmsSourceNumberReq message.
+  // The method will return a CreateSmsSourceNumberRes message that will
+  // contain the newly created values of the sms_number_id
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsSourceNumber(CreateSmsSourceNumberReq) returns (CreateSmsSourceNumberRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmssourcenumber";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a SmsSourceNumber defined by UpdateSmsSourceNumberReq message for
+  // the specified sms_number_sid
+  // will update the following
+  // sms number fields:
+  //    CountrySid
+  //    ProviderName
+  //    NumberType
+  // The method will return a UpdateSmsSourceNumberRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateSmsSourceNumber(UpdateSmsSourceNumberReq) returns (UpdateSmsSourceNumberRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmssourcenumber";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a SmsSourceNumber defined by DeleteSmsSourceNumberReq message for
+  // the specified sms_number_id
+  // The method will return a DeleteSmsSourceNumberRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteSmsSourceNumber(DeleteSmsSourceNumberReq) returns (DeleteSmsSourceNumberRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deletesmssourcenumber";
+    option (google.api.http).body = "*";
+  }
+
+  // get sms source number for the particular sid
+  // Gets an SmsSource Number defined by GetSmsSourceNumberBySidReq message for the specified
+  // sms_number_sid.
+  // The method will return a SmsNumbers group.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsSourceNumberBySid(GetSmsSourceNumberBySidReq) returns (SmsNumbers) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmssourcenumberbysid";
+    option (google.api.http).body = "*";
+  }
+
+  // Send sms notification defined by SendSmsNotificationReq message for the specified
+  // message and array of phone num.
+  // The method will return a stream of SendSmsNotificationRes messages
+  // containing result true/false after notified by sms for the client.
+  // Required permissions:
+  //      VIEW_SMS
+  rpc SendSmsNotification(SendSmsNotificationReq) returns (SendSmsNotificationRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/sendsmsnotification";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Group defined by ListSmsGroupByFiltersReq message.
+  // Gets all details belong to the clientsid  with filters
+  // The method will return a stream of ListSmsGroupByFiltersRes messages
+  // containing SmsGroup Info and SMSIntent
+  // Required permissions: VIEW_SMS
+  rpc ListSmsGroupByFilters(ListSmsGroupByFiltersReq) returns (ListSmsGroupByFiltersRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupbyfilters";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Group defined by ListSmsGroupsByGroupSidsReq message.
+  // Gets all details for the array of group sids
+  // The method will return a stream of ListSmsGroupsByGroupSidsRes messages
+  // containing SmsGroup Info and SMSIntent
+  // Required permissions: VIEW_SMS
+  rpc ListSmsGroupsByGroupSids(ListSmsGroupsByGroupSidsReq) returns (ListSmsGroupsByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupsbygroupsids";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Task  defined by ListSmsTasksByGroupSidsReq message.
+  // Gets all details for the array of group sids
+  // The method will return a stream of ListSmsTasksByGroupSidsRes messages
+  // containing delivery status, msg_time, cost
+  // belonging to the smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsTasksByGroupSids(ListSmsTasksByGroupSidsReq) returns (ListSmsTasksByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmstasksbygroupsids";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Group defined by ListSmsGroupByFiltersReq message.
+  // Gets all details belong to the owner path with filters for audit
+  // The method will return a stream of ListSmsGroupByFiltersRes messages
+  // containing SmsGroup Info and SMSIntent
+  // Required permissions: VIEW_SMS
+  rpc ListSmsGroupByFiltersForAudit(ListSmsGroupByFiltersReq) returns (ListSmsGroupByFiltersRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupbyfiltersforaudit";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Group defined by ListSmsGroupsByGroupSidsReq message.
+  // Gets all details for the array of group sids for audit
+  // The method will return a stream of ListSmsGroupsByGroupSidsRes messages
+  // containing SmsGroup Info and SMSIntent
+  // Required permissions: VIEW_SMS
+  rpc ListSmsGroupsByGroupSidsForAudit(ListSmsGroupsByGroupSidsReq) returns (ListSmsGroupsByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupsbygroupsidsforaudit";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Task  defined by ListSmsTasksByGroupSidsReq message.
+  // Gets all details for the array of group sids for audit
+  // The method will return a stream of ListSmsTasksByGroupSidsRes messages
+  // containing delivery status, msg_time, cost
+  // belonging to the smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsTasksByGroupSidsForAudit(ListSmsTasksByGroupSidsReq) returns (ListSmsTasksByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmstasksbygroupsidsforaudit";
+    option (google.api.http).body = "*";
+  }
+
+  // List Sms Task  defined by ListSmsTasksWithDetailedStatusReq message.
+  // Gets all details for the specified sms group sid.
+  // The method will return a stream of ListSmsTasksWithDetailedStatusRes messages
+  // containing delivery status, msg_time, cost
+  // belonging to the smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsTasksWithDetailedStatus(ListSmsTasksWithDetailedStatusReq) returns (ListSmsTasksWithDetailedStatusRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmstaskswithdetailedstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
+  // paused/unpaused/cancel status
+  // The method will return a UpdateSmsGroupRes message with true or false .
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc UpdateSmsGroupStatus(SmsGroupInfo) returns (UpdateSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
+  // pacing
+  // The method will return a UpdateSmsGroupRes message with true or false .
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc UpdateSmsGroupSendsPerMinute(SmsGroupInfo) returns (UpdateSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupsendsperminute";
+    option (google.api.http).body = "*";
+  }
+
+  // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
+  // schedule_time
+  // The method will return a UpdateSmsGroupRes message with true or false .
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc UpdateSmsGroupScheduleTimes(SmsGroupInfo) returns (UpdateSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupscheduletimes";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule Sms group defined by ScheduleSmsReq message for the specified
+  // sms_template_id with initialpace, sourcenumber, contactgroupsid
+  // The method will return a Sms group.
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc ScheduleSms(ScheduleSmsReq) returns (ScheduleSmsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/schedulesms";
+    option (google.api.http).body = "*";
+  }
+
+  // Re-Schedule Sms group defined by ResendUnconnectedSmsReq message for the specified
+  // sms_group_id and start/stop time.
+  // The method will return a Sms group.
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc ResendUnconnectedSms(ResendUnconnectedSmsReq) returns (ResendUnconnectedSmsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/resendunconnectedsms";
+    option (google.api.http).body = "*";
+  }
+
+  // Search SMS activity defined by SmsActivitySearchReq message for
+  // any of the following filters:
+  // ClientSid, ToNumber and FromNumber, FromDate, ToDate, SentOnly
+  // The method will return the Sms Group with Sms Task & Sms Intent Info
+  // Required permissions: VIEW_SMS
+  rpc SmsActivitySearch(SmsActivitySearchReq) returns (SmsActivitySearchRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/smsactivitysearch";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a InboundSmsTemplate defined by CreateInboundSmsTemplateReq message.
+  // The method will return a CreateInboundSmsTemplateRes message that will
+  // contain the newly created values of the inbound_sms_template_id
+  // Required permissions: VIEW_SMS
+  rpc CreateInboundSmsTemplate(CreateInboundSmsTemplateReq) returns (CreateInboundSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createinboundsmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a InboundSmsTemplate defined by UpdateInboundSmsTemplateReq message for
+  // the specified sms_template_id, region_id and org_id
+  // will update the following
+  // inbound sms template fields:
+  //    TemplateId
+  //    SmsTemplateIntentId
+  // The method will return a UpdateInboundSmsTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateInboundSmsTemplate(UpdateInboundSmsTemplateReq) returns (UpdateInboundSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updateinboundsmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a InboundSmsTemplate defined by DeleteInboundSmsTemplateReq message for
+  // the specified inbound_sms_template_id, region_id and org_id
+  // The method will return a DeleteInboundSmsTemplateRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteInboundSmsTemplate(DeleteInboundSmsTemplateReq) returns (DeleteInboundSmsTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deleteinboundsmstemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // List InboundSmsTemplate  defined by ListInboundSmsTemplatesReq message.
+  // Gets all of the Inbound sms template specified according to the filters.
+  // The method will return a stream of ListInboundSmsTemplatesRes messages
+  // containing InboundSmsTemplate, and SMSIntent
+  // belonging to the inbound smstemplate.
+  // Required permissions: VIEW_SMS
+  rpc ListInboundSmsTemplates(ListInboundSmsTemplatesReq) returns (ListInboundSmsTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmstemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets an InboundSmsTemplate group defined by GetInboundSmsTemplateByIdReq message for the specified
+  // inbound_sms_template_id, region_id and org_id.
+  // The method will return a InboundTemplate group.
+  // Required permissions: VIEW_SMS
+  rpc GetInboundSmsTemplateById(GetInboundSmsTemplateByIdReq) returns (GetInboundSmsTemplateByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getinboundsmstemplatebyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a InboundSmsGroup defined by CreateInboundSmsGroupReq message.
+  // The method will return a CreateInboundSmsGroupRes message that will
+  // contain the newly created values of the inbound_sms_group_id
+  // Required permissions: VIEW_SMS
+  rpc CreateInboundSmsGroup(CreateInboundSmsGroupReq) returns (CreateInboundSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createinboundsmsgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a InboundSmsGroup defined by UpdateInboundSmsGroupReq message for
+  // the specified sms_group_id, region_id and org_id
+  // will update the following
+  // inbound sms group fields:
+  //    TemplateId
+  //    SmsNumber
+  // The method will return a UpdateInboundSmsGroupRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateInboundSmsGroup(UpdateInboundSmsGroupReq) returns (UpdateInboundSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updateinboundsmsgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a InboundSmsGroup defined by DeleteInboundSmsGroupReq message for
+  // the specified inbound_sms_group_id, region_id and org_id
+  // The method will return a DeleteInboundSmsGroupRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteInboundSmsGroup(DeleteInboundSmsGroupReq) returns (DeleteInboundSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deleteinboundsmsgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // List InboundSmsGroup  defined by ListInboundSmsGroupsReq message.
+  // Gets all of the Inbound sms group specified according to the filters.
+  // The method will return a stream of ListInboundSmsGroupsRes messages
+  // containing InboundSmsGroup, and SMSIntent
+  // belonging to the inbound smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListInboundSmsGroups(ListInboundSmsGroupsReq) returns (ListInboundSmsGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroups";
+    option (google.api.http).body = "*";
+  }
+
+  // List Active InboundSmsGroup  defined by ListActiveInboundSmsGroupsReq message.
+  // Gets active Inbound sms group specified according to the filters.
+  // The method will return a stream of ListActiveInboundSmsGroupsRes messages
+  // containing InboundSmsGroup, and SMSIntent
+  // belonging to the inbound smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListActiveInboundSmsGroups(ListActiveInboundSmsGroupsReq) returns (ListActiveInboundSmsGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listactiveinboundsmsgroups";
+    option (google.api.http).body = "*";
+  }
+
+  // List InboundSmsGroup  defined by InboundSmsGroupByFiltersReq message.
+  // Gets all of the Inbound sms group specified according to the filters.
+  // The method will return a stream of InboundSmsGroupByFiltersRes messages
+  // containing InboundSmsGroup, and SMSIntent
+  // belonging to the inbound smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListInboundSmsGroupByFilters(ListInboundSmsGroupByFiltersReq) returns (ListInboundSmsGroupByFiltersRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroupbyfilters";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets an InboundSms group defined by GetInboundSmsGroupByIdReq message for the specified
+  // inbound_sms_group_id, region_id and org_id.
+  // The method will return a InboundSms group.
+  // Required permissions: VIEW_SMS
+  rpc GetInboundSmsGroupById(GetInboundSmsGroupByIdReq) returns (GetInboundSmsGroupByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getinboundsmsgroupbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // List InboundSmsGroup  defined by ListInboundSmsGroupsByGroupIdsReq message.
+  // Gets all of the Inbound sms group specified for the groupids array.
+  // The method will return a stream of ListInboundSmsGroupsByGroupIdsRes messages
+  // containing InboundSmsGroup, and SMSIntent
+  // belonging to the inbound smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListInboundSmsGroupsByGroupIds(ListInboundSmsGroupsByGroupIdsReq) returns (ListInboundSmsGroupsByGroupIdsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroupbygroupids";
+    option (google.api.http).body = "*";
+  }
+
+  // Stop an InboundSms group defined by StopInboundSmsGroupReq message for the specified
+  // inbound_sms_group_id, region_id and org_id.
+  // The method will mark the InboundSms group completed.
+  // Required permissions: VIEW_SMS
+  rpc StopInboundSmsGroup(StopInboundSmsGroupReq) returns (StopInboundSmsGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/stopinboundsmsgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule InboundSms group defined by ScheduleInboundSmsReq message for the specified
+  // inbound_sms_template_id and sms_number_sid.
+  // The method will return a InboundSms group.
+  // Required permissions: EXECUTE_SEND_BROADCAST
+  rpc ScheduleInboundSms(ScheduleInboundSmsReq) returns (ScheduleInboundSmsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/scheduleinboundsms";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsConversation defined by CreateSmsConversationReq message.
+  // The method will return a CreateSmsConversationRes message that will
+  // contain the newly created values of the sms_conversation_id
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsConversation(CreateSmsConversationReq) returns (CreateSmsConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // Update a SmsConversation defined by UpdateSmsConversationReq message for
+  // the specified sms_conversation_id, region_id and org_id
+  // will update the following
+  // conversation fields:
+  //    InboundSmsGroupId
+  //    SmsTaskParent
+  // The method will return a UpdateSmsConversationRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc UpdateSmsConversation(UpdateSmsConversationReq) returns (UpdateSmsConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete a SmsConversation defined by DeleteSmsConversationReq message for
+  // the specified sms_conversation_id, region_id and org_id
+  // The method will return a DeleteSmsConversationRes message with true or false .
+  // Required permissions: VIEW_SMS
+  rpc DeleteSmsConversation(DeleteSmsConversationReq) returns (DeleteSmsConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/deletesmsconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // List SmsConversation profiles defined by ListSmsConversationsReq message.
+  // Gets all of the unique sms conversations.
+  // The method will return a stream of ListSmsConversationsRes messages
+  // containing InboundSmsGroupId, and SmsTaskParent
+  // belonging to the smsconversations.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsConversations(ListSmsConversationsReq) returns (ListSmsConversationsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversations";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a SmsConversation defined by GetSmsConversationByIdReq message for the specified
+  // sms_conversation_id, region_id and org_id.
+  // The method will return a SmsConversation.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsConversationById(GetSmsConversationByIdReq) returns (GetSmsConversationByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets SmsMessage defined by GetSmsMessageReq message for the specified
+  // sms_message_sid.
+  // The method will return a SmsMessage.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsMessage(GetSmsMessageReq) returns (GetSmsMessageRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmsmessage";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsConversationAudit defined by SmsConversationAudit message.
+  // The method will return a CreateSmsConversationAuditRes message that will
+  // contain the newly created values of the sms_conversation_audit_id
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsConversationAudit(SmsConversationAudit) returns (CreateSmsConversationAuditRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversationaudit";
+    option (google.api.http).body = "*";
+  }
+
+  // List SmsConversationAudit profiles defined by ListSmsConversationAuditsReq message.
+  // Gets all of the values for sms conversations id.
+  // The method will return a stream of ListSmsConversationAuditsRes messages
+  // containing SmsTaskSid, SmsReceivedReplySid and AgentId
+  // belonging to the smsconversationsaudit.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsConversationAudits(ListSmsConversationAuditsReq) returns (ListSmsConversationAuditsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversationsaudit";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a SmsConversationAudit defined by GetSmsConversationAuditByIdReq message for the specified
+  // sms_conversation_audit_id.
+  // The method will return a SmsConversationAudit.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsConversationAuditById(GetSmsConversationAuditByIdReq) returns (GetSmsConversationAuditByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationauditbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record a SmsConversationAssignedAgent defined by SmsConversationAssignedAgent message.
+  // The method will return a CreateSmsConversationAssignedAgentRes message with true or false
+  // Required permissions: VIEW_SMS
+  rpc CreateSmsConversationAssignedAgent(SmsConversationAssignedAgent) returns (CreateSmsConversationAssignedAgentRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversationassignedagent";
+    option (google.api.http).body = "*";
+  }
+
+  // List SmsConversationAssignedAgent profiles defined by ListSmsConversationAssignedAgentsReq message.
+  // Gets all of the values for sms conversations id.
+  // The method will return a stream of ListSmsConversationAssignedAgentsRes messages
+  // containing Assigned AgentId, Primary Agent, and Notiify
+  // belonging to the smsconversationassignedagent.
+  // Required permissions: VIEW_SMS
+  rpc ListSmsConversationAssignedAgents(ListSmsConversationAssignedAgentsReq) returns (ListSmsConversationAssignedAgentsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversationassignedagents";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a SmsConversationAssignedAgent defined by GetSmsConversationAssignedAgentByIdReq message for the specified
+  // conversation_id & assigned_agent_id
+  // The method will return a SmsConversationAssignedAgent.
+  // Required permissions: VIEW_SMS
+  rpc GetSmsConversationAssignedAgentById(GetSmsConversationAssignedAgentByIdReq) returns (GetSmsConversationAssignedAgentByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationassignedagentbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // List InboundSmsTasks defined by ListInboundSmsTasksByGroupIdsReq message.
+  // Gets all of the Inbound sms tasks for the groupids.
+  // The method will return a stream of ListInboundSmsTasksByGroupIdsRes messages
+  // containing InboundSmsTask
+  // belonging to the inbound smsgroup.
+  // Required permissions: VIEW_SMS
+  rpc ListInboundSmsTasksByGroupIds(ListInboundSmsTasksByGroupIdsReq) returns (ListInboundSmsTasksByGroupIdsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmstasksbygroupids";
+    option (google.api.http).body = "*";
+  }
+
+  // Stop all OutboundSms groups defined by StopAllOutboundSmsGroupsReq message for the specified
+  // array of outbound groups and client_sid.
+  // The method will mark the OutboundSms groups as completed.
+  // Required permissions: VIEW_SMS
+  rpc StopAllOutboundSmsGroups(StopAllOutboundSmsGroupsReq) returns (StopAllOutboundSmsGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/stopalloutboundsmsgroups";
+    option (google.api.http).body = "*";
+  }
+
+  // Stop all InboundSms groups defined by StopAllInboundSmsGroupsReq message for the specified
+  // array of inbound groups, region_id and org_id.
+  // The method will mark the InboundSms groups as completed.
+  // Required permissions: VIEW_SMS
+  rpc StopAllInboundSmsGroups(StopAllInboundSmsGroupsReq) returns (StopAllInboundSmsGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/smsapi/stopallinboundsmsgroups";
+    option (google.api.http).body = "*";
+  }
+}
+
+message ListSmsTemplatesReq {}
+
+message ListSmsTemplatesRes {
+  repeated SmsTemplateWithIntents sms_template_with_intents = 1;
+}
+
+message SmsTemplateWithIntents {
+  SmsTemplate sms_template = 1;
+  repeated SmsIntentTemplate sms_intent_templates = 2;
+}
+
+message SmsTemplate {
+  int64 sms_template_sid = 1;
+  string message = 4;
+  google.protobuf.Timestamp last_updated = 5;
+}
+
+message CreateSmsTemplateReq {
+  string message = 1;
+  repeated int64 sms_intent_template_sid = 2;
+}
+
+message CreateSmsTemplateRes {
+  int64 sms_template_sid = 1;
+}
+
+message UpdateSmsTemplateReq {
+  int64 sms_template_sid = 1;
+  string message = 2;
+  repeated int64 sms_intent_template_sid = 3;
+}
+message UpdateSmsTemplateRes {
+  bool result = 1;
+}
+
+message DeleteSmsTemplateReq {
+  int64 sms_template_sid = 1;
+}
+message DeleteSmsTemplateRes {
+  bool result = 1;
+}
+
+message GetSmsTemplateBySidReq {
+  int64 sms_template_sid = 1;
+}
+
+message GetSmsTemplateBySidRes {
+  SmsTemplate sms_template = 1;
+  repeated SmsIntentTemplate sms_intent_templates = 2;
+}
+
+message SmsIntentTemplate {
+  int64 sms_intent_template_sid = 1;
+  string name = 2;
+  string description = 3;
+  string action_key = 4;
+  string action_detail = 5;
+  string action_trigger = 6;
+  int64 priority = 7;
+  google.protobuf.Timestamp last_updated = 8;
+}
+
+message ListSmsIntentTemplatesReq {}
+
+message ListSmsIntentTemplatesRes {
+  repeated SmsIntentTemplate sms_intent_template = 1;
+}
+
+message UpdateSmsIntentTemplateRes {
+  bool result = 1;
+}
+
+message DeleteSmsIntentTemplateReq {
+  int64 sms_intent_template_sid = 2;
+}
+
+message DeleteSmsIntentTemplateRes {
+  bool result = 1;
+}
+
+message CreateSmsIntentTemplateRes {
+  int64 sms_intent_template_sid = 1;
+}
+
+message GetSmsIntentTemplateBySidReq {
+  int64 sms_intent_template_sid = 2;
+}
+
+message SmsNumbers {
+  int64 sms_number_sid = 1;
+  int64 country_sid = 2;
+  string number = 3;
+  string provider_name = 4;
+  string notes = 5;
+  google.protobuf.StringValue ivr_reference = 6;
+  string client_name = 7;
+  bool isTollFree = 8;
+  string src_number_type = 9;
+  google.protobuf.Timestamp last_updated = 10;
+}
+
+message ListSmsSourceNumbersReq {}
+
+message ListSmsSourceNumbersRes {
+  repeated SmsNumbers sms_numbers = 1;
+}
+
+message UpdateSmsSourceNumberReq {
+  int64 sms_number_sid = 1;
+  int64 country_sid = 2;
+  string number = 3;
+  string provider_name = 4;
+  string notes = 5;
+  string ivr_reference = 6;
+  string src_number_type = 7;
+}
+
+message UpdateSmsSourceNumberRes {
+  bool result = 1;
+}
+
+message DeleteSmsSourceNumberReq {
+  int64 sms_number_sid = 2;
+}
+
+message DeleteSmsSourceNumberRes {
+  bool result = 1;
+}
+
+message CreateSmsSourceNumberReq {
+  int64 country_sid = 1;
+  string number = 2;
+  string provider_name = 3;
+  string notes = 4;
+  string ivr_reference = 5;
+  string src_number_type = 6;
+}
+
+message CreateSmsSourceNumberRes {
+  int64 sms_number_sid = 1;
+}
+
+message GetSmsSourceNumberBySidReq {
+  int64 sms_number_sid = 2;
+}
+
+message SendSmsNotificationReq {
+  string message = 2;
+  repeated string to_phone_num_arr = 3;
+}
+
+message SendSmsNotificationRes {
+  string response = 1;
+}
+
+message ListSmsGroupByFiltersReq {
+  google.protobuf.Timestamp search_from = 2;
+  google.protobuf.Timestamp search_to = 3;
+  string status = 4;
+  string name = 5;
+}
+
+message SmsGroupWithIntents {
+  SmsGroupInfo sms_group_info_res = 1;
+  repeated SmsIntentGroup sms_intent_groups = 2;
+  SmsMamSettings sms_mam_settings = 3;
+}
+
+message ListSmsGroupByFiltersRes {
+  repeated SmsGroupWithIntents sms_group_with_intents = 1;
+}
+
+message ListSmsGroupsByGroupSidsReq {
+  repeated int64 sms_group_sids_arr = 2;
+}
+
+message ListSmsGroupsByGroupSidsRes {
+  repeated SmsGroupWithIntents sms_group_with_intents = 1;
+}
+
+message SmsGroupInfo {
+  int64 sms_group_sid = 1;
+  int64 country_sid = 2;
+  int64 sms_message_sid = 3;
+  string name = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp stop_time = 6;
+  int64 sends_per_minute = 7;
+  int64 status = 8;
+  double total_cost = 9;
+  repeated string caller_ids = 10;
+  string client_name = 11;
+  int64 total_scheduled = 12;
+  int64 total_completed = 13;
+  google.protobuf.StringValue contact_group_sid_str = 14;
+  int64 contact_group_sid = 15;
+  google.protobuf.StringValue phone_num_col = 16;
+  google.protobuf.StringValue use_tz_restrictions = 17;
+  int32 message_count = 18;
+  int32 todays_message_count = 19;
+  google.protobuf.Timestamp date_created = 20;
+}
+
+message ListSmsTasksByGroupSidsReq {
+  repeated int64 sms_group_sids_arr = 2;
+}
+
+message ListSmsTasksByGroupSidsRes {
+  repeated SmsTaskInfoWithReply sms_task_info_with_reply = 1;
+}
+
+message ListSmsTasksWithDetailedStatusReq {
+  int64 sms_group_sid = 2;
+}
+
+message ListSmsTasksWithDetailedStatusRes {
+  repeated SmsTaskInfoWithReply sms_task_info_with_reply = 1;
+}
+
+message SmsTaskInfoWithReply {
+  SmsTaskInfoRes sms_task_info_res = 1;
+  repeated SmsReceivedReplies sms_received_replies = 2;
+}
+
+message SmsTaskInfoRes {
+  int64 sms_task_sid = 1;
+  int64 sms_group_sid = 2;
+  int64 delivery_status = 3;
+  string delivery_status_message = 4;
+  string data = 5;
+  double cost = 6;
+  google.protobuf.StringValue msg_uuid = 7;
+  google.protobuf.Timestamp msg_time = 8;
+  int64 status = 9;
+  google.protobuf.StringValue phone_num_col = 10;
+  int64 units = 11;
+  google.protobuf.Int64Value sms_task_parent = 12;
+  MamAgentResponse mam_agent_response = 13;
+}
+
+message SmsReceivedReplies {
+  int64 sms_received_replies_sid = 1;
+  int64 sms_task_sid = 2;
+  string src_number = 3;
+  string dst_number = 4;
+  string msg_uuid = 5;
+  string received_reply = 6;
+  google.protobuf.Timestamp received_time = 7;
+  string analysis_report = 8;
+  string inbound_sms_group_id = 9;
+  double cost = 10;
+  commons.SMSIBTaskStatus status = 11;
+  int64 units = 12;
+}
+
+message UpdateSmsGroupRes {
+  bool result = 1;
+}
+
+message ScheduleSmsReq {
+  int64 sms_template_sid = 1;
+  int64 initial_pace = 2;
+  string selected_phone_col = 3;
+  string source_number = 4;
+  int64 country_sid = 5;
+  bool timezone_restrictions = 6;
+  string group_name = 7;
+  int64 contact_group_sid = 8;
+  google.protobuf.Timestamp start_time = 9;
+  google.protobuf.Timestamp stop_time = 10;
+  string selected_mam_hunt_group = 11;
+}
+
+message ScheduleSmsRes {
+  int64 sms_group_sid = 1;
+}
+
+message ResendUnconnectedSmsReq {
+  int64 sms_group_sid = 1;
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp stop_time = 3;
+}
+
+message ResendUnconnectedSmsRes {
+  bool result = 1;
+}
+
+message SmsActivitySearchReq {
+  string to_number = 1;
+  string src_number = 2;
+  google.protobuf.Timestamp from_date = 3;
+  google.protobuf.Timestamp to_date = 4;
+  bool entire_history = 5;
+  bool sent_only = 6;
+}
+
+message SmsActivitySearchRes {
+  repeated SmsGroupWithIntents sms_group_with_intents = 1;
+  repeated SmsTaskInfoRes sms_task_info_res = 2;
+}
+
+message InboundSmsTemplate {
+  string inbound_sms_template_id = 1;
+  int64 sms_number_sid = 2;
+  string name = 3;
+  ReportSettings report_settings = 4;
+  google.protobuf.Timestamp last_updated = 5;
+}
+
+message ListInboundSmsTemplatesReq {}
+
+message ListInboundSmsTemplatesRes {
+  repeated InboundSmsTemplateWithIntents inbound_sms_template_with_intents = 1;
+}
+
+message InboundSmsTemplateWithIntents {
+  InboundSmsTemplate inbound_sms_template = 1;
+  repeated SmsIntentTemplate sms_intent_templates = 2;
+}
+
+message UpdateInboundSmsTemplateReq {
+  string inbound_sms_template_id = 1;
+  int64 sms_number_sid = 2;
+  string name = 3;
+  repeated int64 sms_intent_template_sid = 6;
+  ReportSettings report_settings = 7;
+}
+
+message UpdateInboundSmsTemplateRes {
+  bool result = 1;
+}
+
+message DeleteInboundSmsTemplateReq {
+  string inbound_sms_template_id = 1;
+}
+
+message DeleteInboundSmsTemplateRes {
+  bool result = 1;
+}
+
+message CreateInboundSmsTemplateReq {
+  int64 sms_number_sid = 1;
+  string name = 2;
+  repeated int64 sms_intent_template_sid = 5;
+  ReportSettings report_settings = 6;
+}
+
+message CreateInboundSmsTemplateRes {
+  string inbound_sms_template_id = 1;
+}
+
+message GetInboundSmsTemplateByIdReq {
+  string inbound_sms_template_id = 3;
+}
+
+message GetInboundSmsTemplateByIdRes {
+  InboundSmsTemplate inbound_sms_template = 1;
+  repeated SmsIntentTemplate sms_intent_templates = 2;
+}
+
+message InboundSmsGroupWithIntents {
+  InboundSmsGroup inbound_sms_group = 1;
+  repeated SmsIntentTemplate sms_intent_templates = 2;
+}
+
+message InboundSmsGroup {
+  string inbound_sms_group_id = 1;
+  int64 sms_number_sid = 2;
+  string name = 3;
+  commons.SMSIBGroupStatus status = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp stop_time = 6;
+  double total_cost = 7;
+  string inbound_sms_template_id = 8;
+  int32 message_count = 9;
+  int32 todays_message_count = 10;
+  ReportSettings report_settings = 11;
+  google.protobuf.Timestamp date_created = 12;
+}
+
+message ListInboundSmsGroupsReq {}
+
+message ListInboundSmsGroupsRes {
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
+}
+
+message UpdateInboundSmsGroupReq {
+  string inbound_sms_group_id = 1;
+  int64 sms_number_sid = 2;
+  string name = 3;
+  commons.SMSIBGroupStatus status = 6;
+  google.protobuf.Timestamp start_time = 7;
+  google.protobuf.Timestamp stop_time = 8;
+  double total_cost = 9;
+  string inbound_sms_template_id = 10;
+  ReportSettings report_settings = 11;
+}
+
+message UpdateInboundSmsGroupRes {
+  bool result = 1;
+}
+
+message DeleteInboundSmsGroupReq {
+  string inbound_sms_group_id = 1;
+}
+
+message DeleteInboundSmsGroupRes {
+  bool result = 1;
+}
+
+message CreateInboundSmsGroupReq {
+  int64 sms_number_sid = 1;
+  string name = 2;
+  commons.SMSIBGroupStatus status = 5;
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp stop_time = 7;
+  double total_cost = 8;
+  string inbound_sms_template_id = 9;
+  ReportSettings report_settings = 10;
+}
+
+message CreateInboundSmsGroupRes {
+  string inbound_sms_group_id = 1;
+}
+
+message GetInboundSmsGroupByIdReq {
+  string inbound_sms_group_id = 3;
+}
+
+message GetInboundSmsGroupByIdRes {
+  InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
+}
+
+message ListActiveInboundSmsGroupsReq {}
+
+message ListActiveInboundSmsGroupsRes {
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
+}
+
+message ListInboundSmsGroupByFiltersReq {
+  google.protobuf.Timestamp search_from = 3;
+  google.protobuf.Timestamp search_to = 4;
+  string status = 5;
+  string name = 6;
+}
+
+message ListInboundSmsGroupByFiltersRes {
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
+}
+
+message ListInboundSmsGroupsByGroupIdsReq {
+  repeated string inbound_sms_group_ids_arr = 1;
+}
+
+message ListInboundSmsGroupsByGroupIdsRes {
+  repeated InboundSmsGroupWithIntents inbound_sms_group_with_intents = 1;
+}
+
+message ScheduleInboundSmsReq {
+  string inbound_sms_template_id = 1;
+  int64 sms_number_sid = 2;
+  string group_name = 3;
+}
+
+message ScheduleInboundSmsRes {
+  string inbound_sms_group_id = 1;
+}
+
+message StopInboundSmsGroupReq {
+  string inbound_sms_group_id = 1;
+}
+
+message StopInboundSmsGroupRes {
+  bool result = 1;
+}
+
+message SmsConversation {
+  string sms_conversation_id = 1;
+  string inbound_sms_group_id = 2;
+  google.protobuf.Int64Value sms_task_parent = 3;
+  google.protobuf.Timestamp created_on = 4;
+}
+
+message ListSmsConversationsReq {}
+
+message ListSmsConversationsRes {
+  repeated SmsConversation sms_conversations = 1;
+}
+
+message UpdateSmsConversationReq {
+  string sms_conversation_id = 1;
+  string inbound_sms_group_id = 2;
+  google.protobuf.Int64Value sms_task_parent = 3;
+}
+
+message UpdateSmsConversationRes {
+  bool result = 1;
+}
+
+message DeleteSmsConversationReq {
+  string sms_conversation_id = 1;
+}
+
+message DeleteSmsConversationRes {
+  bool result = 1;
+}
+
+message CreateSmsConversationReq {
+  string inbound_sms_group_id = 1;
+  google.protobuf.Int64Value sms_task_parent = 2;
+}
+
+message CreateSmsConversationRes {
+  string sms_conversation_id = 1;
+}
+
+message GetSmsConversationByIdReq {
+  string sms_conversation_id = 1;
+}
+
+message GetSmsConversationByIdRes {
+  SmsConversation sms_conversation = 1;
+}
+
+message ListSmsConversationAuditsReq {
+  string sms_conversation_id = 1;
+}
+
+message ListSmsConversationAuditsRes {
+  repeated SmsConversationAudit sms_conversation_audits = 1;
+}
+
+message CreateSmsConversationAuditRes {
+  string sms_conversation_audit_id = 1;
+}
+
+message GetSmsConversationAuditByIdReq {
+  string sms_conversation_audit_id = 1;
+}
+
+message GetSmsConversationAuditByIdRes {
+  SmsConversationAudit sms_conversation_audit = 1;
+}
+
+message ListSmsConversationAssignedAgentsReq {
+  string sms_conversation_id = 1;
+}
+
+message ListSmsConversationAssignedAgentsRes {
+  repeated SmsConversationAssignedAgent sms_conversation_assigned_agents = 1;
+}
+
+message CreateSmsConversationAssignedAgentRes {
+  bool result = 1;
+}
+
+message GetSmsConversationAssignedAgentByIdReq {
+  string sms_conversation_id = 1;
+  int64 assigned_agent_id = 2;
+}
+
+message GetSmsConversationAssignedAgentByIdRes {
+  SmsConversationAssignedAgent sms_conversation_assigned_agent = 1;
+}
+
+message SmsConversationAudit {
+  string sms_conversation_audit_id = 1;
+  string sms_conversation_id = 2;
+  int64 sms_task_sid = 3;
+  int64 sms_received_replies_sid = 4;
+  int64 action = 5;
+  string description = 6;
+  int64 agent_id = 7;
+  google.protobuf.Timestamp created_on = 8;
+}
+
+message SmsConversationAssignedAgent {
+  string sms_conversation_id = 1;
+  int64 assigned_agent_id = 2;
+  bool primary_agent = 3;
+  bool notify = 4;
+  google.protobuf.Timestamp created_on = 5;
+}
+
+message GetSmsMessageReq {
+  int64 sms_message_sid = 1;
+}
+
+message GetSmsMessageRes {
+  SmsMessage sms_message = 1;
+}
+
+message SmsMessage {
+  int64 sms_message_sid = 1;
+  string message = 2;
+}
+
+message SmsIntentGroup {
+  int64 sms_intent_group_sid = 1;
+  int64 sms_group_sid = 2;
+  string name = 3;
+  string description = 4;
+  string action_key = 5;
+  string action_detail = 6;
+  string action_trigger = 7;
+  int64 priority = 8;
+}
+
+message InboundSmsTask {
+  int64 sms_received_replies_id = 1;
+  string src_number = 2;
+  string dst_number = 3;
+  string msg_id = 4;
+  string received_reply = 5;
+  google.protobuf.Timestamp received_time = 6;
+  string inbound_sms_group_id = 7;
+  double cost = 8;
+  commons.SMSIBTaskStatus status = 9;
+  string analysis_report = 10;
+  int64 units = 11;
+}
+
+message ListInboundSmsTasksByGroupIdsReq {
+  repeated string inbound_sms_group_ids_arr = 3;
+}
+
+message ListInboundSmsTasksByGroupIdsRes {
+  repeated InboundSmsTask inbound_sms_tasks = 1;
+}
+
+message ReportSettings {
+  bool enabled = 1;
+  string delivery_method = 2;
+  int64 report_template_sid = 3;
+  SmsSettings sms_settings = 4;
+  EmailSettings email_settings = 5;
+  FtpSettings ftp_settings = 6;
+  SftpSettings sftp_settings = 7;
+}
+
+message SmsSettings {
+  repeated string phone_numbers = 1;
+  string src_number = 2;
+}
+
+message EmailSettings {
+  string report_type = 1;
+  repeated string email_addresses = 2;
+  string report_format = 3;
+  string from_email_address = 4;
+}
+
+message FtpSettings {
+  string passwd = 1;
+  string username = 2;
+  string report_format = 3;
+  string path = 4;
+  string url = 5;
+}
+
+message SftpSettings {
+  string passwd = 1;
+  string username = 2;
+  string report_format = 3;
+  string path = 4;
+  string authentication_type = 5;
+  string url = 6;
+  string private_key = 7;
+}
+
+message SmsMamSettings {
+  string mam_hg_sid = 1;
+  string mam_hg_name = 2;
+}
+
+message MamAgentResponse {
+  reserved 1;
+  commons.SMSMamStatus status = 2;
+  google.protobuf.Timestamp agent_response_time = 3;
+  string agent_name = 4;
+}
+
+message StopAllOutboundSmsGroupsReq {
+  repeated int64 sms_group_sids_arr = 2;
+}
+
+message StopAllOutboundSmsGroupsRes {
+  bool result = 1;
+}
+
+message StopAllInboundSmsGroupsReq {
+  repeated string inbound_sms_group_ids_arr = 3;
+}
+
+message StopAllInboundSmsGroupsRes {
+  bool result = 1;
+}

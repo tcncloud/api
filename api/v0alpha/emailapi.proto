@@ -1,0 +1,1535 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+import "commons/email.proto";
+import "commons/omnichannel.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v0alpha;v0alpha";
+option java_package = "com.tcn.api.v0alpha";
+
+service EmailApi {
+  // Create/Record email template details defined by CreateEmailTemplateReq message for a specified
+  // email_subject, email_body.
+  // The method will return a CreateEmailTemplateRes message/entity that will
+  // contain the newly created email_template_sid value for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateEmailTemplate(CreateEmailTemplateReq) returns (CreateEmailTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createemailtemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Update email template details defined by UpdateEmailTemplateReq message for a specified
+  // email_template_sid, email_subject, email_body.
+  // The method will return a UpdateEmailTemplateRes message/entity that will
+  // contain the true/false after updating template details for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateEmailTemplate(UpdateEmailTemplateReq) returns (UpdateEmailTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateemailtemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record email template attachment details defined by CreateEmailTemplateAttachmentReq message for a specified
+  // email_template_sid, file_name, file_size, content_type, hash.
+  // The method will return a CreateEmailTemplateAttachmentRes message/entity that will
+  // contain the newly created email_template_attachment_sid, fts storage url and gs_path  for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateEmailTemplateAttachment(CreateEmailTemplateAttachmentReq) returns (CreateEmailTemplateAttachmentRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createemailtemplateattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // Copy/Record email template with attachment details defined by CopyEmailTemplateWithAttachmentsReq message for a specified
+  // email_template_sid and email_body.
+  // The method will return a CopyEmailTemplateWithAttachmentsRes message/entity that will
+  // contain the newly copied email_template_sid value for this client along with attachments
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CopyEmailTemplateWithAttachments(CopyEmailTemplateWithAttachmentsReq) returns (CopyEmailTemplateWithAttachmentsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/copyemailtemplatewithattachments";
+    option (google.api.http).body = "*";
+  }
+
+  // Update email template attachment details defined by UpdateEmailTemplateAttachmentReq message for a specified
+  // email_template_sid, email_template_attachment_sid, file_name, file_size, content_type, hash.
+  // The method will return a UpdateEmailTemplateAttachmentRes message/entity that will
+  // contain the true/false after updating template attachment details for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateEmailTemplateAttachment(UpdateEmailTemplateAttachmentReq) returns (UpdateEmailTemplateAttachmentRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateemailtemplateattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets email template along with attachment details defined by GetEmailTemplateByTemplateSidReq message for a specified
+  // email_template_sid.
+  // The method will return a EmailTemplateWithAttachments message/entity that will
+  // contain the email_template_sid, email_subject, email_body, EmailTemplateAttachmentDetails for this client_sid and email_template_sid
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailTemplateByTemplateSid(GetEmailTemplateByTemplateSidReq) returns (EmailTemplateWithAttachments) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailtemplatebytemplatesid";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of email template along with attachment details defined by GetAllEmailTemplatesReq message.
+  // The method will return a GetAllEmailTemplatesRes message/entity that will
+  // contain the stream of email_template_sid, email_subject, email_body, EmailTemplateAttachmentDetails for this client_sid
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetAllEmailTemplates(GetAllEmailTemplatesReq) returns (GetAllEmailTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getallemailtemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete email template details defined by DeleteEmailTemplateReq message for a specified
+  // email_template_sid.
+  // The method will return a DeleteEmailTemplateRes message/entity that will
+  // contain the true/false after deleting template details for this client_sid and email_template_sid
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DeleteEmailTemplate(DeleteEmailTemplateReq) returns (DeleteEmailTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/deletemailtemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete email template attachments defined by DeleteEmailTemplateAttachmentByIdReq message for a specified
+  // email_template_attachment_sid.
+  // The method will return a DeleteEmailTemplateAttachmentByIdRes message/entity that will
+  // contain the true/false after deleting template attachments for this client_sid and email_template_attachment_sid
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DeleteEmailTemplateAttachmentById(DeleteEmailTemplateAttachmentByIdReq) returns (DeleteEmailTemplateAttachmentByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/deleteemailtemplateattachmentbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Download local inbound file attachment file contents using FTS bucket
+  // defined by DownloadInboundEmailAttachmentReq message for a specified
+  // email_message_reply_id and email_message_reply_attachment_id.
+  // The method will return a DownloadInboundEmailAttachmentRes message/entity that will
+  // contain the url where attachment contents are stored
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DownloadInboundEmailAttachment(DownloadInboundEmailAttachmentReq) returns (DownloadInboundEmailAttachmentRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/downloadinboundemailattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of pure email groups based on search criteria defined by EmailGroupSearchReq message for a specified
+  // by search_from and search_to or by status or by name and any of these combinations
+  // The method will return a EmailGroupSearchRes message/entity that will
+  // contain the stream of EmailGroupSearchDetailsRes results
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc PureEmailGroupSearch(EmailGroupSearchReq) returns (EmailGroupSearchRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/pureemailgroupsearch";
+    option (google.api.http).body = "*";
+  }
+
+  // Retreives a list of email replies for a conversation that come after the given
+  // timestamp. Can set a user_id to get conversations for any user.
+  // Required permissions:
+  //    ??????
+  rpc ManagerListNewEmailMessageReplies(ListNewEmailMessageRepliesReq) returns (ListNewEmailMessageRepliesRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/managerlistnewemailmessagereplies";
+    option (google.api.http).body = "*";
+  }
+
+  // Retreives a list of email replies for a conversation that come after the given
+  // timestamp
+  // Required permissions:
+  //    ??????
+  rpc ListNewEmailMessageReplies(ListNewEmailMessageRepliesReq) returns (ListNewEmailMessageRepliesRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listnewemailmessagereplies";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of email tasks defined by GetEmailTasksByGroupSidsReq message for a specified
+  // array of email_group_sids
+  // The method will return a GetEmailTasksByGroupSidsRes message/entity that will
+  // contain the stream of EmailTaskMstrDetails results
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailTasksByGroupSids(GetEmailTasksByGroupSidsReq) returns (GetEmailTasksByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailtasksbygroupsids";
+    option (google.api.http).body = "*";
+  }
+
+  // Update email group status value defined by EmailGroupStatusReq message for a specified
+  // email_group_sid and status_id.
+  // The method will return a EmailGroupStatusRes message/entity that will
+  // contain the true/false after updating status for this clients email_group_sid and status_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateEmailGroupStatus(EmailGroupStatusReq) returns (EmailGroupStatusRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateemailgroupstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets email message details defined by GetEmailMessageReq message for a specified
+  // email_message_sid.
+  // The method will return a GetEmailMessageRes message/entity that will
+  // contains email_subject and email_body for the email_message_sid
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailMessageDetails(GetEmailMessageReq) returns (GetEmailMessageRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailmessagedetails";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record inbound email template defined by CreateInboundEmailTemplateReq message for a specified
+  //  connected_inbox_id, name.
+  // The method will return a CreateInboundEmailTemplateRes message/entity that will
+  // contain the newly created inbound_email_template_id value for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateInboundEmailTemplate(CreateInboundEmailTemplateReq) returns (CreateInboundEmailTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createinboundemailtemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Update inbound email template details defined by UpdateInboundEmailTemplateReq message for a specified
+  //  inbound_email_template_id, connected_inbox_id, name.
+  // The method will return a UpdateInboundEmailTemplateRes message/entity that will
+  // contain the true/false after updating inbound email template details for inbound_email_template_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateInboundEmailTemplate(UpdateInboundEmailTemplateReq) returns (UpdateInboundEmailTemplateRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateinboundemailtemplate";
+    option (google.api.http).body = "*";
+  }
+
+  // Delete inbound email template details defined by DeleteInboundEmailTemplateByIdReq message for a specified
+  //  inbound_email_template_id.
+  // The method will return a DeleteInboundEmailTemplateByIdRes message/entity that will
+  // contain the true/false after deleting inbound email template details for inbound_email_template_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc DeleteInboundEmailTemplateById(DeleteInboundEmailTemplateByIdReq) returns (DeleteInboundEmailTemplateByIdRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/deleteinboundemailtemplatebyid";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of inbound email template details defined by ListInboundEmailTemplatesReq message
+  // The method will return a ListInboundEmailTemplatesRes message/entity that will
+  // contain the stream of inbound_email_template_id, connected_inbox_id, name.
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListInboundEmailTemplates(ListInboundEmailTemplatesReq) returns (ListInboundEmailTemplatesRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listinboundemailtemplates";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets inbound email template details defined by GetInboundEmailTemplateByIdReq message for a specified
+  // inbound_email_template_id.
+  // The method will return a InboundEmailTemplate message/entity that will
+  // contain the inbound email template details for inbound_email_template_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetInboundEmailTemplateById(GetInboundEmailTemplateByIdReq) returns (InboundEmailTemplate) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getinboundemailtemplatebyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Update inbound email group status details defined by UpdateInboundEmailGroupStatusReq
+  // status. The method will return a UpdateInboundEmailGroupStatusRes message/entity
+  // that will contain the true/false after updating inbound email group details
+  // for this org_id, region_id and inbound_email_group_id Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateInboundEmailGroupStatus(UpdateInboundEmailGroupStatusReq) returns (UpdateInboundEmailGroupStatusRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateinboundemailgroupstatus";
+    option (google.api.http).body = "*";
+  }
+
+  // Stop inbound email group defined by StopInboundEmailGroupReq message for a specified
+  //  inbound_email_group_id.
+  // The method will return a StopInboundEmailGroupRes message/entity that will
+  // contain the true/false after updating inbound email group details for inbound_email_group_id
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc StopInboundEmailGroup(StopInboundEmailGroupReq) returns (StopInboundEmailGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/stopinboundemailgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Stop all InboundEmail groups defined by StopAllInboundEmailGroupsReq message for the specified
+  // array of inbound_email_group_ids
+  // The method will mark the InboundEmail groups as completed.
+  // Required permissions: VIEW_EMAIL
+  rpc StopAllInboundEmailGroups(StopAllInboundEmailGroupsReq) returns (StopInboundEmailGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/stopallinboundemailgroups";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of pure inbound email groups based on search criteria defined by PureInboundEmailGroupSearchReq message for a specified
+  //  by search_from and search_to or by status or by name and any of these combinations
+  // The method will return a PureInboundEmailGroupSearchRes message/entity that will
+  // contain the stream of InboundEmailGroups
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc PureInboundEmailGroupSearch(PureInboundEmailGroupSearchReq) returns (PureInboundEmailGroupSearchRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/pureinboundemailgroupsearch";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of inbound email groups based on search criteria defined by
+  // InboundEmailGroupSearchReq message for a specified by
+  // search_from and search_to or by status or by name and any of these
+  // combinations The method will return a InboundEmailGroupSearchRes
+  // message/entity that will contain the stream of InboundEmailGroups Required
+  // permissions:
+  //      OMNI_BOSS
+  rpc InboundEmailGroupSearch(InboundEmailGroupSearchReq) returns (InboundEmailGroupSearchRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/inboundemailgroupsearch";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of inbound email groups defined by ListInboundEmailGroupsByGroupIdsReq message for a specified
+  // array of inbound email groups
+  // The method will return a ListInboundEmailGroupsByGroupIdsRes message/entity that will
+  // contain the stream of InboundEmailGroup
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListInboundEmailGroupsByGroupIds(ListInboundEmailGroupsByGroupIdsReq) returns (ListInboundEmailGroupsByGroupIdsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listinboundemailgroupsbygroupids";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of inbound email tasks defined by ListInboundEmailTasksByGroupIdsReq message for a specified
+  // array of inbound email groups
+  // The method will return a ListInboundEmailTasksByGroupIdsRes message/entity that will
+  // contain the stream of InboundEmailTaskDetails along with any file attachments
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListInboundEmailTasksByGroupIds(ListInboundEmailTasksByGroupIdsReq) returns (ListInboundEmailTasksByGroupIdsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listinboundemailtasksbygroupids";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of active/running inbound email groups defined by ListActiveInboundEmailGroupsReq message
+  // The method will return a ListActiveInboundEmailGroupsRes message/entity that will
+  // contain the stream of active/running InboundEmailGroups
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListActiveInboundEmailGroups(ListActiveInboundEmailGroupsReq) returns (ListActiveInboundEmailGroupsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listactiveinboundemailgroups";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule Outbound email campaign defined by ScheduleReq message for the specified
+  // email_template_sid, initial_pace, selected_email_col, from_address,
+  // allow_duplicates, group_name, contact_group_sid, start_time, stop_time
+  // The method will return ScheduleRes message/entity that will
+  // contain newly scheduled email_group_sid and email_group_id for this client
+  // Required permissions:
+  //      EXECUTE_SEND_BROADCAST
+  rpc Schedule(ScheduleReq) returns (ScheduleRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/schedule";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule Outbound email campaign defined by ScheduleOutboundEmailGroupReq message for the specified
+  // subject, email message, initial_pace, selected_email_col, from_address,
+  // allow_duplicates, group_name, contact_group_sid, start_time, stop_time
+  // The method will return ScheduleOutboundEmailGroupRes message/entity that will
+  // contain newly scheduled email_group_sid and email_group_id for this client
+  // Required permissions:
+  //      EXECUTE_SEND_BROADCAST
+  rpc ScheduleOutboundEmailGroup(ScheduleOutboundEmailGroupReq) returns (ScheduleOutboundEmailGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/scheduleoutboundemailgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule Pure Inbound email campaign defined by SchedulePureInboundEmailReq message for the specified
+  // inbound_email_template_sid
+  // The method will return SchedulePureInboundEmailRes message/entity that will
+  // contain newly scheduled inbound_email_group_sid for this client
+  // Required permissions:
+  //      EXECUTE_SEND_BROADCAST
+  rpc SchedulePureInboundEmail(SchedulePureInboundEmailReq) returns (SchedulePureInboundEmailRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/schedulepureinboundemail";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record inbound agent email reply defined by CreateEmailMessageAgentReplyReq message for a specified
+  // inbound_email_group_id, to_address, subject, email_conversation_id, agent_sid .
+  // The method will return a EmailMessageReply message/entity that will
+  // contain the newly created email_message_reply data
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateEmailMessageAgentReply(CreateEmailMessageAgentReplyReq) returns (EmailMessageReplyWithAttachments) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createemailmessageagentreply";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Record inbound agent email reply attachment defined by CreateEmailMessageAgentReplyAttachmentReq message for a specified
+  // file_name, file_size and file_type.
+  // The method will return a CreateEmailMessageAgentReplyAttachmentRes message/entity that will
+  // contain the newly created email_message_reply_attachment_id, url_path and gs_path for this client
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc CreateEmailMessageAgentReplyAttachment(CreateEmailMessageAgentReplyAttachmentReq) returns (CreateEmailMessageAgentReplyAttachmentRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createemailmessageagentreplyattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // Sends email message based on email details defined in SendReplyReq specified by
+  // in_reply_to and email_reply_id
+  // The method will return a EmailMessageReplyWithAttachments message/entity that will
+  // contain the email_message_reply data
+  // along with along with attachment details
+  // Required permissions:
+  //      EXECUTE_SEND_BROADCAST
+  rpc SendReply(SendReplyReq) returns (EmailMessageReplyWithAttachments) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/sendreply";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of email groups defined by GetEmailGroupsByGroupSidsReq message for a specified
+  // array of email_group_sids
+  // The method will return a GetEmailGroupsByGroupSidsRes message/entity that will
+  // contain the stream of EmailGroupSearchDetailsRes results
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailGroupsByGroupSids(GetEmailGroupsByGroupSidsReq) returns (GetEmailGroupsByGroupSidsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailgroupsbygroupsids";
+    option (google.api.http).body = "*";
+  }
+
+  // Get outbound email group details defined by GetEmailGroupByGroupSidReq message for a specified
+  // email_group_sid
+  // The method will return a EmailGroupDetailsWithAttachments message/entity that will
+  // contain the outbound email group details
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailGroupByGroupSid(GetEmailGroupByGroupSidReq) returns (EmailGroupDetailsWithAttachments) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailgroupbygroupsid";
+    option (google.api.http).body = "*";
+  }
+
+  // Get outbound email group details defined by GetEmailGroupByGroupIdReq message for a specified
+  // email_group_id
+  // The method will return a EmailGroupDetailsWithAttachments message/entity that will
+  // contain the outbound email group details
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc GetEmailGroupByGroupId(GetEmailGroupByGroupIdReq) returns (EmailGroupDetailsWithAttachments) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getemailgroupbygroupid";
+    option (google.api.http).body = "*";
+  }
+
+  // Schedule Pure OmniLink Inbound email campaign defined by SchedulePureOmniLinkInboundEmailReq message for the specified
+  // connectedInbox and skills
+  // The method will return SchedulePureOmniLinkInboundEmailRes message/entity that will
+  // contain newly scheduled inbound_email_group_sid for this client
+  // Required permissions:
+  //      EXECUTE_SEND_BROADCAST
+  rpc SchedulePureOmniLinkInboundEmail(SchedulePureOmniLinkInboundEmailReq) returns (SchedulePureOmniLinkInboundEmailRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/schedulepureomnilinkinboundemail";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the name, skills, stop time for the inbound email group
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc UpdateInboundEmailGroup(UpdateInboundEmailGroupReq) returns (UpdateInboundEmailGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateinboundemailgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Update email group sendsperminute defined by EmailGroupSendsPerMinuteReq
+  // message for a specified email_group_sid and sends_per_minute.
+  // The method will return a EmailGroupSendsPerMinuteRes message/entity that
+  // will contain the true/false after updating sends_per_minute value for this
+  // clients email_group_sid and sends_per_minute Required permissions:
+  //      OMNI_BOSS
+  rpc UpdateEmailGroupMstrSendsPerMinute(EmailGroupSendsPerMinuteReq) returns (EmailGroupSendsPerMinuteRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateemailgroupmstrsendsperminute";
+    option (google.api.http).body = "*";
+  }
+
+  // Updates the name, start and stop time for the outbound email group
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc UpdateOutboundEmailGroup(UpdateOutboundEmailGroupReq) returns (UpdateOutboundEmailGroupRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/updateoutboundemailgroup";
+    option (google.api.http).body = "*";
+  }
+
+  // Gets a inbound email group details defined by InboundEmailGroupByIdReq
+  // message for the specified inbound_email_group_id, org_id and region_id. The
+  // method will return a InboundEmailGroup message/entity. Required
+  // permissions:
+  //      OMNI_BOSS
+  rpc GetInboundEmailGroupById(InboundEmailGroupByIdReq) returns (InboundEmailGroup) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/getinboundemailgroupbyid";
+    option (google.api.http).body = "*";
+  }
+
+  // Create/Add email message attachment details defined by CreateEmailMessageAttachmentReq
+  // message for the specified client.
+  // This method will return a CreateEmailMessageAttachmentRes message/entity. Required
+  // permissions:
+  //      OMNI_BOSS
+  rpc CreateEmailMessageAttachment(CreateEmailMessageAttachmentReq) returns (CreateEmailMessageAttachmentRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/createemailmessageattachment";
+    option (google.api.http).body = "*";
+  }
+
+  // List all the email message attachments and their details defined by
+  // ListEmailMessageAttachmentsReq for the specified client.
+  // permissions:
+  //      OMNI_BOSS
+  rpc ListEmailMessageAttachments(ListEmailMessageAttachmentsReq) returns (ListEmailMessageAttachmentsRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listemailmessageattachments";
+    option (google.api.http).body = "*";
+  }
+
+  // Unassigns a conversation from the current user and puts it back into the matching pool
+  // Required permissions:
+  //    OMNI_LINK
+  rpc UnassignCurrentUserFromEmailConversation(UnassignCurrentUserFromEmailConversationReq) returns (UnassignUserFromEmailConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/unassigncurrentuserfromemailconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // Listing all email conversations for the dashboard
+  // Required Permissions:
+  //    OMNI_BOSS
+  rpc DashboardEmailConversationSearch(DashboardEmailConversationSearchReq) returns (DashboardEmailConversationSearchRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/dashboardemailconversationsearch";
+    option (google.api.http).body = "*";
+  }
+
+  // ReassignEmailConversation.  unassign current user and assign
+  // new user.
+  // This method will return a ReassignEmailConversationRes
+  // Required permissions
+  //      OMNI_BOSS
+  rpc ReassignEmailConversation(ReassignEmailConversationReq) returns (ReassignEmailConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/reassignemailconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // AssignEmailConversation - allowing the manager from the dashboard to assing a email conversation
+  // before the matcher assigns it.
+  rpc AssignEmailConversation(AssignEmailConversationReq) returns (AssignEmailConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/assignemailconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // Suspends an email conversation
+  rpc SuspendEmailConversation(SuspendEmailConversationReq) returns (SuspendEmailConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/suspendemailconversation";
+    option (google.api.http).body = "*";
+  }
+
+  // List stream of inbound and outbound campaigns defined by ListCampaignsByConnectedInboxIdReq message
+  // The method will return a ListCampaignsByConnectedInboxIdRes message/entity that will
+  // contain the stream of all campaigns along with project details.
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc ListCampaignsByConnectedInboxId(ListCampaignsByConnectedInboxIdReq) returns (ListCampaignsByConnectedInboxIdRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/listcampaignsbyconnectedinboxid";
+    option (google.api.http).body = "*";
+  }
+
+  // Close email conversation defined by CloseEmailConversationReq message
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc CloseEmailConversation(CloseEmailConversationReq) returns (CloseEmailConversationRes) {
+    option (google.api.http).post = "/api/v0alpha/emailapi/closeemailconversation";
+    option (google.api.http).body = "*";
+  }
+}
+
+message CustomUnsubscribeSettingsReq {}
+
+message CustomUnsubscribeSettingsRes {
+  bool email_use_custom_unsubscribe_links = 1;
+  bool email_client_acknowledges_that_they_are_responsible_for_opt_outs = 2;
+  bool email_default_unsubscribe_link = 3;
+}
+
+message CreateEmailTemplateReq {
+  string email_subject = 3;
+  string email_body = 4;
+}
+message CreateEmailTemplateRes {
+  int64 email_template_sid = 1;
+}
+
+message UpdateEmailTemplateReq {
+  int64 email_template_sid = 2;
+  string email_subject = 3;
+  string email_body = 4;
+}
+message UpdateEmailTemplateRes {
+  bool result = 1;
+}
+
+message DeleteEmailTemplateReq {
+  int64 email_template_sid = 2;
+}
+message DeleteEmailTemplateRes {
+  bool result = 1;
+}
+
+message EmailTemplateDetails {
+  int64 email_template_sid = 1;
+  string email_subject = 4;
+  string email_body = 5;
+  google.protobuf.Timestamp last_updated = 6;
+}
+
+message EmailGroupStatusReq {
+  int32 status_id = 3;
+  repeated string email_group_ids = 4;
+}
+message EmailGroupStatusRes {
+  bool result = 1;
+}
+
+message EmailGroupSendsPerMinuteReq {
+  int64 email_group_sid = 2;
+  int32 sends_per_minute = 3;
+}
+message EmailGroupSendsPerMinuteRes {
+  bool result = 1;
+}
+
+message EmailGroupScheduleTimesReq {
+  int64 email_group_sid = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp stop_time = 4;
+}
+message EmailGroupScheduleTimesRes {
+  bool result = 1;
+}
+
+message GetAllCustomUnsubscribeLinksReq {}
+
+message EmailCustomUnsubscribeLink {
+  int64 email_custom_unsubscribe_link_sid = 1;
+  string link_name = 3;
+  string link_url = 4;
+  bool validated = 5;
+  google.protobuf.Timestamp date_validated = 6;
+  google.protobuf.Timestamp last_updated = 7;
+}
+
+message GetAllCustomUnsubscribeLinksRes {
+  repeated EmailCustomUnsubscribeLink email_custom_unsubscribe_link = 1;
+}
+
+message GetAllEmailTemplatesReq {}
+
+message GetAllEmailTemplatesRes {
+  repeated EmailTemplateWithAttachments email_template_with_attachments = 1;
+}
+
+message GetEmailTemplateByTemplateSidReq {
+  int64 email_template_sid = 2;
+}
+
+message EmailTemplateWithAttachments {
+  int64 email_template_sid = 1;
+  string email_subject = 4;
+  string email_body = 5;
+  google.protobuf.Timestamp last_updated = 6;
+  repeated EmailTemplateAttachmentDetails email_template_attachment_details = 7;
+}
+
+message EmailTaskMstrDetails {
+  int64 email_task_sid = 1;
+  int64 email_group_sid = 2;
+  int64 delivery_status = 3;
+  string delivery_status_message = 4;
+  string data = 5;
+  double cost = 6;
+  google.protobuf.StringValue message_id = 7;
+  google.protobuf.Timestamp emailed_time = 8;
+  int64 status = 9;
+  google.protobuf.StringValue email_col_name = 10;
+}
+
+//response for outbound email group search details
+message EmailGroupSearchDetailsRes {
+  // outbound email group id
+  int64 email_group_sid = 1;
+  // outbound email message id
+  int64 email_message_sid = 4;
+  // outbound email group name
+  string name = 5;
+  // outbound email group scheduled start time
+  google.protobuf.Timestamp start_time = 6;
+  // outbound email group scheduled stop time
+  google.protobuf.Timestamp stop_time = 7;
+  // pacing count per miniute
+  int64 sends_per_minute = 8;
+  // outbound email group status
+  commons.EmailStatus status = 9;
+  // total cost for the group
+  double total_cost = 10;
+  // from email address used for the outgoing email
+  string from_address = 11;
+  // stored email address column name
+  google.protobuf.StringValue email_col_name = 12;
+  // total number of scheduled emails for the group
+  int64 total_scheduled = 13;
+  // total number of completed emails for the group
+  int64 total_completed = 14;
+  // contact group sid as a string value
+  google.protobuf.StringValue contact_group_sid_str = 15;
+  // contact group sid number
+  int64 contact_group_sid = 16;
+  // client name
+  string client_name = 17;
+  // creation date
+  google.protobuf.Timestamp date_created = 18;
+  // generated email group id
+  google.protobuf.StringValue email_group_id = 19;
+  //description of the email group
+  string description = 21;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 22;
+}
+
+message EmailGroupSearchReq {
+  google.protobuf.Timestamp search_from = 2;
+  google.protobuf.Timestamp search_to = 3;
+  string status_str = 4;
+  string name = 5;
+}
+
+message EmailGroupSearchRes {
+  repeated EmailGroupSearchDetailsRes email_group_search_details_res = 1;
+}
+
+message GetEmailGroupsByGroupSidsReq {
+  repeated int64 email_group_sids_arr = 2;
+}
+
+message GetEmailGroupsByGroupSidsRes {
+  repeated EmailGroupSearchDetailsRes email_group_search_details_res = 1;
+}
+
+message GetEmailGroupByGroupSidReq {
+  int64 email_group_sid = 2;
+}
+
+message EmailGroupDetailsWithAttachments {
+  // outbound email group id
+  int64 email_group_sid = 1;
+  // outbound email message id
+  int64 email_message_sid = 4;
+  // outbound email group name
+  string name = 5;
+  // outbound email group scheduled start time
+  google.protobuf.Timestamp start_time = 6;
+  // outbound email group scheduled stop time
+  google.protobuf.Timestamp stop_time = 7;
+  // pacing count per miniute
+  int64 sends_per_minute = 8;
+  // outbound email group status
+  commons.EmailStatus status = 9;
+  // total cost for the group
+  double total_cost = 10;
+  // from email address used for the outgoing email
+  string from_address = 11;
+  // stored email address column name
+  google.protobuf.StringValue email_col_name = 12;
+  // total number of scheduled emails for the group
+  int64 total_scheduled = 13;
+  // total number of completed emails for the group
+  int64 total_completed = 14;
+  // contact group sid as a string value
+  google.protobuf.StringValue contact_group_sid_str = 15;
+  // contact group sid number
+  int64 contact_group_sid = 16;
+  // client name
+  string client_name = 17;
+  // creation date
+  google.protobuf.Timestamp date_created = 18;
+  // generated email group id
+  google.protobuf.StringValue email_group_id = 19;
+  //description of the email group
+  string description = 21;
+  //email message subject
+  string email_subject = 22;
+  //email message body contents
+  string email_body = 23;
+  //add all the attachments
+  repeated EmailMessageAttachment email_message_attachments = 24;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 25;
+}
+
+message GetEmailGroupByGroupIdReq {
+  string email_group_id = 2;
+}
+
+message GetEmailTasksByGroupSidsReq {
+  repeated int64 email_group_sids_arr = 2;
+}
+
+message GetEmailTasksByGroupSidsRes {
+  repeated EmailTaskMstrDetails email_task_mstr_details = 1;
+}
+
+message EmailTemplateAttachmentDetails {
+  int64 email_template_attachment_sid = 1;
+  int64 email_template_sid = 2;
+  string file_name = 5;
+  int64 file_size = 6;
+  string content_type = 7;
+  string hash = 8;
+}
+
+message GetAllEmailTemplateAttachmentRes {
+  repeated EmailTemplateAttachmentDetails email_template_attachment_details = 1;
+}
+
+message CreateEmailTemplateAttachmentReq {
+  int64 email_template_sid = 2;
+  string file_name = 4;
+  int64 file_size = 5;
+  string content_type = 6;
+}
+
+message CreateEmailTemplateAttachmentRes {
+  int64 email_template_attachment_sid = 1;
+  string url_path = 2;
+  string gs_path = 3;
+}
+
+message CopyEmailTemplateWithAttachmentsReq {
+  int64 email_template_sid = 3;
+  string email_body = 4;
+}
+message CopyEmailTemplateWithAttachmentsRes {
+  int64 email_template_sid = 1;
+}
+
+message GetEmailMessageReq {
+  int64 email_message_sid = 2;
+}
+
+message GetEmailMessageRes {
+  int64 email_message_sid = 1;
+  string email_subject = 4;
+  string email_body = 5;
+}
+
+message ScheduleReq {
+  int64 email_template_sid = 2;
+  int64 initial_pace = 3;
+  string selected_email_col = 4;
+  string from_address = 5;
+  bool allow_duplicates = 6;
+  string group_name = 7;
+  int64 contact_group_sid = 8;
+  google.protobuf.Timestamp start_time = 9;
+  google.protobuf.Timestamp stop_time = 10;
+  google.protobuf.StringValue project_id = 11;
+  //description of the email group
+  string description = 13;
+}
+
+message ScheduleRes {
+  int64 email_group_sid = 1;
+  string email_group_id = 2;
+}
+
+//request to schedule outbound email group
+message ScheduleOutboundEmailGroupReq {
+  //initial pace
+  int64 initial_pace = 2;
+  //email column
+  string selected_email_col = 3;
+  //from email address
+  string from_address = 4;
+  //flag to allow duplicate emails
+  bool allow_duplicates = 5;
+  //outbound email group name
+  string group_name = 6;
+  //contact group sid
+  int64 contact_group_sid = 7;
+  //start time of the campaign
+  google.protobuf.Timestamp start_time = 8;
+  //stop time of the campaign
+  google.protobuf.Timestamp stop_time = 9;
+  //assigned project id
+  google.protobuf.StringValue project_id = 10;
+  //description of the email group
+  string description = 12;
+  //email subject
+  string email_subject = 13;
+  //email message
+  string email_body = 14;
+  //email attachments
+  repeated int64 email_message_attachment_sids = 15;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 16;
+}
+
+//response to schedule outbound email group
+message ScheduleOutboundEmailGroupRes {
+  //newly created email group sid
+  int64 email_group_sid = 1;
+  //newly created email group id
+  string email_group_id = 2;
+}
+
+message EmailMessageDetails {
+  int64 email_message_sid = 1;
+  string email_subject = 4;
+  string email_body = 5;
+}
+
+message ConnectedInbox {
+  google.protobuf.StringValue connected_inbox_id = 1;
+  string email_address = 4;
+  string username = 5;
+  string password = 6;
+  int64 check_frequency_minutes = 7;
+  string server_name = 8;
+  int64 server_port = 9;
+  google.protobuf.Timestamp last_scheduled_time = 10;
+  google.protobuf.Timestamp last_checked = 11;
+  int64 purge_threshold = 12;
+  google.protobuf.Timestamp last_updated = 13;
+  int32 num_consecutive_failures = 14;
+  google.protobuf.StringValue last_error = 15;
+  google.protobuf.Timestamp standby_error_time = 16;
+  int32 max_message_size = 17;
+  int32 max_messages = 18;
+  int32 message_count = 19;
+  commons.ConnectedInboxAuthenticationType authentication_type = 20;
+}
+
+message CreateInboundEmailTemplateReq {
+  string connected_inbox_id = 1;
+  string name = 4;
+  EmailConversationSkills skills = 6;
+}
+
+message EmailConversationSkills {
+  map<string, bool> skills = 1;
+}
+
+message CreateInboundEmailTemplateRes {
+  google.protobuf.StringValue inbound_email_template_id = 1;
+}
+
+message UpdateInboundEmailTemplateReq {
+  string inbound_email_template_id = 1;
+  string connected_inbox_id = 2;
+  string name = 5;
+  EmailConversationSkills skills = 7;
+}
+
+message UpdateInboundEmailTemplateRes {
+  bool Result = 1;
+}
+
+message DeleteInboundEmailTemplateByIdReq {
+  string inbound_email_template_id = 1;
+}
+
+message DeleteInboundEmailTemplateByIdRes {
+  bool Result = 1;
+}
+
+message InboundEmailTemplate {
+  google.protobuf.StringValue inbound_email_template_id = 1;
+  google.protobuf.StringValue connected_inbox_id = 2;
+  string name = 5;
+  google.protobuf.Timestamp last_updated = 7;
+  EmailConversationSkills skills = 8;
+}
+
+message ListInboundEmailTemplatesReq {}
+
+message ListInboundEmailTemplatesRes {
+  repeated InboundEmailTemplate inbound_email_template = 1;
+}
+
+message GetInboundEmailTemplateByIdReq {
+  string inbound_email_template_id = 3;
+}
+
+message UpdateInboundEmailGroupStatusReq {
+  string inbound_email_group_id = 3;
+  commons.EmailIBGroupStatus status = 4;
+}
+
+message UpdateInboundEmailGroupStatusRes {
+  bool Result = 1;
+}
+
+message StopInboundEmailGroupReq {
+  string inbound_email_group_id = 3;
+}
+
+message StopInboundEmailGroupRes {
+  bool Result = 1;
+}
+
+message StopAllInboundEmailGroupsReq {
+  repeated string inbound_email_group_ids = 3;
+}
+
+message StopAllOutboundEmailGroupsReq {
+  repeated string outbound_email_group_ids = 3;
+}
+
+message StopAllOutboundEmailGroupsRes {
+  bool Result = 1;
+}
+
+message InboundEmailGroup {
+  //inbound email group uuid
+  google.protobuf.StringValue inbound_email_group_id = 1;
+  //connected email inbox server details
+  google.protobuf.StringValue connected_inbox_id = 4;
+  //inbound email group status
+  commons.EmailIBGroupStatus status = 5;
+  //time when inbound email group needs to be started
+  google.protobuf.Timestamp start_time = 6;
+  //time when inbound email group needs to be stopped
+  google.protobuf.Timestamp stop_time = 7;
+  //total group cost
+  double total_cost = 8;
+  //inbound email group name
+  string name = 9;
+  //total email messages count
+  int32 message_count = 10;
+  //inbound email template id
+  google.protobuf.StringValue inbound_email_template_id = 11;
+  //message count for today
+  int32 todays_message_count = 12;
+  //agent conversation skills
+  EmailConversationSkills skills = 15;
+  // description of the inbound email group
+  string description = 16;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 17;
+}
+
+//Pure Inbound email group details
+message PureInboundEmailGroup {
+  //inbound email group uuid
+  google.protobuf.StringValue inbound_email_group_id = 1;
+  //connected email inbox server details
+  google.protobuf.StringValue connected_inbox_id = 4;
+  //inbound email group status
+  commons.EmailIBGroupStatus status = 5;
+  //time when inbound email group needs to be started
+  google.protobuf.Timestamp start_time = 6;
+  //time when inbound email group needs to be stopped
+  google.protobuf.Timestamp stop_time = 7;
+  //total group cost
+  double total_cost = 8;
+  //inbound email group name
+  string name = 9;
+  //total email messages count
+  int32 message_count = 10;
+  //inbound email template id
+  google.protobuf.StringValue inbound_email_template_id = 11;
+  //message count for today
+  int32 todays_message_count = 12;
+  //agent conversation skills
+  EmailConversationSkills skills = 14;
+  // description of the inbound email group
+  string description = 15;
+}
+
+message PureInboundEmailGroupSearchReq {
+  google.protobuf.Timestamp search_from = 3;
+  google.protobuf.Timestamp search_to = 4;
+  string status_str = 5;
+  string name = 6;
+}
+
+message PureInboundEmailGroupSearchRes {
+  repeated PureInboundEmailGroup pure_inbound_email_group = 1;
+}
+
+message InboundEmailGroupSearchReq {
+  google.protobuf.Timestamp search_from = 3;
+  google.protobuf.Timestamp search_to = 4;
+  string status_str = 5;
+  string name = 6;
+}
+
+message InboundEmailGroupSearchRes {
+  repeated InboundEmailGroup inbound_email_group = 1;
+}
+
+message ListInboundEmailGroupsByGroupIdsReq {
+  repeated string inbound_email_group_ids_arr = 3;
+}
+
+message ListInboundEmailGroupsByGroupIdsRes {
+  repeated InboundEmailGroup inbound_email_group = 1;
+}
+
+message InboundEmailTaskDetails {
+  reserved 12;
+  google.protobuf.StringValue email_message_reply_id = 1;
+  string from_address = 2;
+  string to_address = 3;
+  string subject = 4;
+  google.protobuf.Timestamp received_time = 5;
+  string message = 6;
+  google.protobuf.StringValue inbound_email_group_id = 7;
+  double cost = 8;
+  commons.EmailIBReplyStatus status = 9;
+  google.protobuf.StringValue message_id = 11;
+  google.protobuf.StringValue email_conversation_id = 13;
+  string raw_data_location = 14;
+  google.protobuf.Int64Value email_task_sid = 15;
+  commons.EmailIBReplyType reply_type = 16;
+  google.protobuf.Int64Value delivery_status = 17;
+  google.protobuf.StringValue delivery_status_message = 18;
+  repeated EmailMessageReplyAttachment email_message_reply_attachment = 19;
+  google.protobuf.StringValue user_id = 20;
+}
+
+message ListInboundEmailTasksByGroupIdsReq {
+  repeated string inbound_email_group_ids_arr = 3;
+}
+
+message ListInboundEmailTasksByGroupIdsRes {
+  repeated InboundEmailTaskDetails inbound_email_task_details = 1;
+}
+
+message InboundEmailGroupByIdReq {
+  string inbound_email_group_id = 3;
+}
+
+message DownloadInboundEmailAttachmentReq {
+  string email_message_reply_id = 3;
+  string email_message_reply_attachment_id = 4;
+}
+
+message DownloadInboundEmailAttachmentRes {
+  string url = 1;
+  string file_name = 2;
+}
+
+message DeleteEmailTemplateAttachmentByIdReq {
+  int64 email_template_attachment_sid = 2;
+}
+
+message DeleteEmailTemplateAttachmentByIdRes {
+  bool Result = 1;
+}
+
+message UpdateEmailTemplateAttachmentReq {
+  int64 email_template_sid = 3;
+  int64 email_template_attachment_sid = 4;
+  string file_name = 6;
+  int64 file_size = 7;
+  string content_type = 8;
+  string hash = 9;
+}
+
+message UpdateEmailTemplateAttachmentRes {
+  bool Result = 1;
+}
+
+message ListActiveInboundEmailGroupsReq {}
+
+message ListActiveInboundEmailGroupsRes {
+  repeated InboundEmailGroup inbound_email_group = 1;
+}
+
+message EmailMessageReply {
+  reserved 13;
+  google.protobuf.StringValue email_message_reply_id = 1;
+  string from_address = 2;
+  string to_address = 3;
+  string subject = 4;
+  google.protobuf.Timestamp received_time = 5;
+  string message = 6;
+  google.protobuf.Int64Value email_task_sid = 7;
+  google.protobuf.StringValue inbound_email_group_id = 8;
+  commons.EmailIBReplyStatus status = 9;
+  double cost = 10;
+  google.protobuf.StringValue message_id = 12;
+  google.protobuf.StringValue email_conversation_id = 14;
+  string raw_data_location = 15;
+  commons.EmailIBReplyType reply_type = 16;
+  google.protobuf.Int64Value delivery_status = 17;
+  google.protobuf.StringValue delivery_status_message = 18;
+  google.protobuf.StringValue user_id = 19;
+  string name = 20;
+}
+
+message EmailMessageReplyAttachment {
+  google.protobuf.StringValue email_message_reply_attachment_id = 1;
+  google.protobuf.StringValue email_message_reply_id = 4;
+  string file_name = 5;
+  int64 file_size = 6;
+  string content_type = 7;
+  string hash = 8;
+}
+
+message ListEmailMessageReplyAttachmentsByReplyIdReq {
+  string email_message_reply_id = 1;
+}
+
+message ListEmailMessageReplyAttachmentsByReplyIdRes {
+  repeated EmailMessageReplyAttachment email_message_reply_attachment = 1;
+}
+
+message InboundEmailGroupReplyAttachments {
+  EmailMessageReply email_message_reply = 1;
+  repeated EmailMessageReplyAttachment email_message_reply_attachment = 2;
+}
+
+message ListInboundEmailGroupReplyAttachmentsByIdRes {
+  InboundEmailGroup inbound_email_group = 1;
+  repeated InboundEmailGroupReplyAttachments inbound_email_group_reply_attachments = 2;
+}
+
+message SchedulePureInboundEmailReq {
+  string inbound_email_template_id = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp stop_time = 5;
+  string group_name = 6;
+  // description of the inbound email group
+  string description = 7;
+}
+
+message SchedulePureInboundEmailRes {
+  string inbound_email_group_id = 1;
+}
+
+message CreateEmailMessageAgentReplyReq {
+  string to_address = 4;
+  string subject = 5;
+  string content = 6;
+  string inbound_email_group_id = 7;
+  string email_conversation_id = 8;
+  repeated string attachment_ids = 10;
+}
+
+message CreateEmailMessageAgentReplyAttachmentReq {
+  string file_name = 4;
+  int64 file_size = 5;
+  string file_type = 6;
+}
+
+message CreateEmailMessageAgentReplyAttachmentRes {
+  string email_message_reply_attachment_id = 1;
+  string url_path = 2;
+  string gs_path = 3;
+}
+
+message SendReplyReq {
+  string email_message_reply_id = 1;
+  string in_reply_to = 2;
+}
+
+message ListNewEmailMessageRepliesReq {
+  // user_id is overriden unless the call comes from ManagerListNewEmailMessageReplies
+  string user_id = 3;
+  string email_conversation_id = 4;
+  google.protobuf.Timestamp last_timestamp = 5;
+}
+
+message ListNewEmailMessageRepliesRes {
+  repeated EmailMessageReplyWithAttachments email_message_replies_with_attachments = 1;
+}
+
+message EmailMessageReplyWithAttachments {
+  EmailMessageReply email_message_reply = 1;
+  repeated EmailMessageReplyAttachment attachments = 2;
+}
+
+//request to schedule pure inbound email group for omnilink
+message SchedulePureOmniLinkInboundEmailReq {
+  //name of the inbound email group
+  string group_name = 2;
+  //time when inbound email group needs to be started
+  google.protobuf.Timestamp start_time = 3;
+  //time when inbound email group needs to be stopped
+  google.protobuf.Timestamp stop_time = 4;
+  //connected email inbox server details
+  string connected_inbox_id = 5;
+  //agent conversation skills
+  EmailConversationSkills skills = 6;
+  // project id
+  google.protobuf.StringValue project_id = 7;
+  // description of the inbound email group
+  string description = 8;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 9;
+}
+
+//response to schedule pure inbound email group for omnilink
+message SchedulePureOmniLinkInboundEmailRes {
+  //result of generated inbound email group id
+  string inbound_email_group_id = 1;
+}
+
+//request to update inbound email group
+message UpdateInboundEmailGroupReq {
+  //inbound email group id
+  string inbound_email_group_id = 1;
+  //name of the inbound email group
+  string name = 2;
+  //time when inbound email group needs to be stopped
+  google.protobuf.Timestamp stop_time = 3;
+  //agent conversation skills
+  EmailConversationSkills skills = 4;
+  // description of the inbound email group
+  string description = 5;
+  //time when inbound email group needs to be started
+  google.protobuf.Timestamp start_time = 6;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 7;
+}
+
+//response to update inbound email group
+message UpdateInboundEmailGroupRes {}
+
+//request to update outbound email group
+message UpdateOutboundEmailGroupReq {
+  //outbound email group sid
+  int64 email_group_sid = 1;
+  //name of the email group
+  string name = 2;
+  //time when outbound email group needs to be started
+  google.protobuf.Timestamp start_time = 3;
+  //time when outbound email group needs to be stopped
+  google.protobuf.Timestamp stop_time = 4;
+  //description of the email group
+  string description = 6;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 7;
+}
+
+//response to update outbound email group
+message UpdateOutboundEmailGroupRes {}
+
+//request for outbound email message attachment
+message CreateEmailMessageAttachmentReq {
+  // attachment file name
+  string file_name = 1;
+  // attachment file size
+  int64 file_size = 2;
+  // file content type
+  string content_type = 3;
+}
+
+//response for outbound email message attachment
+message CreateEmailMessageAttachmentRes {
+  //newly generated attachment sid
+  int64 email_message_attachment_sid = 1;
+  // url path
+  string url_path = 2;
+  //google storage path
+  string gs_path = 3;
+}
+
+//request to get list of email message attachments
+message ListEmailMessageAttachmentsReq {
+  int64 email_message_sid = 1;
+}
+
+//response to get list of email message attachments
+message ListEmailMessageAttachmentsRes {
+  repeated EmailMessageAttachment email_message_attachments = 1;
+}
+
+message EmailMessageAttachment {
+  int64 email_message_attachment_sid = 1;
+  int64 email_message_sid = 2;
+  string file_name = 3;
+  int64 file_size = 4;
+  string content_type = 5;
+  string hash = 6;
+}
+
+//request to unassign email conversation
+message UnassignCurrentUserFromEmailConversationReq {
+  // email conversation id
+  string email_conversation_id = 1;
+}
+
+// response to unassign email conversation
+message UnassignUserFromEmailConversationRes {}
+
+// get the email conversations for omni dashboard
+message DashboardEmailConversationSearchReq {
+  // start date of the search
+  google.protobuf.Timestamp search_from = 1;
+  // end date for the search
+  google.protobuf.Timestamp search_to = 2;
+}
+
+// DashboardEmailConversationSearchRes
+message DashboardEmailConversationSearchRes {
+  // list of email conversations for the dashboard
+  repeated DashboardEmailConversationResEntry dashboard_email_conversation_res_entrys = 1;
+}
+
+// DashboardEmailConversationResEntry -
+message DashboardEmailConversationResEntry {
+  //EmailConversation
+  EmailConversation email_conversation = 1;
+  //list of agents assigned to conversation
+  repeated EmailConversationAssignedUser email_conversation_assigned_users = 2;
+  // associated campaign name
+  string name = 3;
+}
+
+message EmailConversationAssignedUser {
+  // assignment Type
+  commons.AgentConversationAssignmentType assignment_type = 2;
+  // Notify
+  bool notify = 3;
+  //conversation id
+  string conversation_id = 4;
+  // last updated time
+  google.protobuf.Timestamp assigned_last_updated_time = 5;
+  // assignemnt status
+  commons.AgentConversationAssignmentStatus assignment_status = 6;
+  // name of the agent
+  google.protobuf.StringValue user_name = 7;
+  // id of the agent
+  string user_id = 8;
+}
+
+message EmailConversation {
+  // conversation id
+  google.protobuf.StringValue conversation_id = 1;
+  // org_id
+  string org_id = 2;
+  // region_id
+  string region_id = 3;
+  // Email group id for inbound comapigns
+  google.protobuf.StringValue email_inbound_group_id = 4;
+  // Time of birth
+  google.protobuf.Timestamp conversation_created_time = 5;
+  // Needed skills
+  EmailConversationSkills skills = 6;
+  // Status of the conversaton
+  commons.ConversationStatus conversation_status = 7;
+  // last message time stamp
+  google.protobuf.Timestamp last_message_time = 8;
+  // customer's email
+  string customer_email = 9;
+  // customer's name
+  string customer_name = 10;
+  // Email group id for outbound campaigns
+  google.protobuf.StringValue email_group_id = 11;
+  // sla and timeouts
+  commons.SLATimeouts sla_timeouts = 12;
+}
+
+// ReassignEmailConversationReq - For OMNIBOSS dashbard.
+message ReassignEmailConversationReq {
+  // chat_conversation_id
+  string email_conversation_id = 2;
+  // current user
+  string current_assigned_user = 3;
+  // new_user
+  string new_assigned_user = 4;
+}
+
+// ReassignEmailConversationRes - For OMNIBOSS dashbard.
+message ReassignEmailConversationRes {}
+
+// AssignEmailConversationReq
+message AssignEmailConversationReq {
+  // EmailConversationId
+  string email_conversation_id = 2;
+  // UserId
+  string user_id = 3;
+  // AssignmentType
+  commons.AgentConversationAssignmentType assignment_type = 4;
+}
+
+// AssignEmailConversationRes -
+message AssignEmailConversationRes {
+  //send back ghost notifier referenceID
+  string reference_id = 1;
+}
+
+// request used to suspend an email conversation
+message SuspendEmailConversationReq {
+  // the id of the conversation to be suspended
+  string email_conversation_id = 1;
+}
+
+// response used after suspending an email conversation
+message SuspendEmailConversationRes {}
+
+//request for listing campaigns based on connectedInboxId
+message ListCampaignsByConnectedInboxIdReq {
+  //connected_inbox_id
+  string connected_inbox_id = 1;
+}
+
+//response for listing campaigns based on connectedInboxId
+message ListCampaignsByConnectedInboxIdRes {
+  //connected inbox details
+  ConnectedInbox connected_inbox = 1;
+  //list of inbound_email_campaigns with project details
+  repeated InboundEmailCampaignWithProjectDetails inbound_email_campaigns = 2;
+  //list of outbound_email_campaigns with project details
+  repeated OutboundEmailCampaignWithProjectDetails outbound_email_campaigns = 3;
+}
+
+// inbound email campaign and project details
+message InboundEmailCampaignWithProjectDetails {
+  //campaign id
+  string campaign_id = 1;
+  //campaign name
+  string campaign_name = 2;
+  //campaign status
+  commons.EmailIBGroupStatus status = 3;
+  //project id
+  string project_id = 4;
+  //project name
+  string project_name = 5;
+}
+
+// outbound email campaign and project details
+message OutboundEmailCampaignWithProjectDetails {
+  //campaign id
+  string campaign_id = 1;
+  //campaign sid
+  int64 campaign_sid = 2;
+  //campaign name
+  string campaign_name = 3;
+  // campaign status
+  commons.EmailStatus status = 4;
+  //project id
+  string project_id = 5;
+  //project name
+  string project_name = 6;
+}
+
+//req for closing email conversation
+message CloseEmailConversationReq {
+  //email conversation id
+  string email_conversation_id = 1;
+  //email conversation status
+  commons.ConversationStatus status = 2;
+}
+
+//res for closing email conversation
+message CloseEmailConversationRes {}

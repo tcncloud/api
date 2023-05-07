@@ -1,0 +1,440 @@
+syntax = "proto3";
+
+package api.v1alpha1.delivery;
+
+import "annotations/authz.proto";
+import "commons/delivery.proto";
+import "commons/org.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.delivery;delivery";
+option java_package = "com.tcn.api.v1alpha1.delivery";
+
+service DeliveryApi {
+  rpc CreateTransferConfig(CreateTransferConfigReq) returns (CreateTransferConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createtransferconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc ListTransferConfigs(ListTransferConfigsReq) returns (ListTransferConfigsRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listtransferconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListTransferConfigsByCredentialID(ListTransferConfigsByCredentialIDReq) returns (ListTransferConfigsByCredentialIDRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listtransferconfigsbycredentialid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc UpdateTransferConfig(UpdateTransferConfigReq) returns (UpdateTransferConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/updatetransferconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc DeleteTransferConfig(DeleteTransferConfigReq) returns (DeleteTransferConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/deletetransferconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc GetTransferConfig(GetTransferConfigReq) returns (GetTransferConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/gettransferconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GetTransferConfigByName(GetTransferConfigByNameReq) returns (GetTransferConfigByNameRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/gettransferconfigbyname";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListHistory(ListHistoryReq) returns (ListHistoryRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listhistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListHistoryByTransferConfig(ListHistoryByTransferConfigReq) returns (ListHistoryByTransferConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listhistorybytransferconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListCredentials(ListCredentialsReq) returns (ListCredentialsRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listcredential";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GetCredential(GetCredentialReq) returns (GetCredentialRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/getcredential";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc CreateCredential(CreateCredentialReq) returns (CreateCredentialRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createcredential";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc DeleteCredential(DeleteCredentialReq) returns (DeleteCredentialRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/deletecredential";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc UpdateCredential(UpdateCredentialReq) returns (UpdateCredentialRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/updatecredential";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+}
+
+message CreateTransferConfigReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message CreateTransferConfigRes {
+  ID entity = 1;
+}
+message ListTransferConfigsReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  ListReq list_req = 3;
+}
+message ListTransferConfigsRes {
+  repeated TransferConfig entities = 1;
+}
+message ListTransferConfigsByCredentialIDReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  ID credential_sid = 3;
+  ListReq list_req = 4;
+}
+message ListTransferConfigsByCredentialIDRes {
+  repeated TransferConfig entities = 1;
+}
+message UpdateTransferConfigReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message UpdateTransferConfigRes {
+  ID entity = 1;
+}
+message DeleteTransferConfigReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message DeleteTransferConfigRes {}
+message GetTransferConfigReq {
+  TransferConfig entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message GetTransferConfigRes {
+  TransferConfig entity = 1;
+}
+message GetTransferConfigByNameReq {
+  string name = 1; // obsolete dont use
+  google.protobuf.FieldMask mask = 2;
+  TransferConfig entity = 3;
+}
+message GetTransferConfigByNameRes {
+  TransferConfig entity = 1;
+}
+message ListHistoryReq {
+  History entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  ListReq list_req = 3;
+}
+message ListHistoryRes {
+  repeated History entities = 1;
+}
+message ListHistoryByTransferConfigReq {
+  ListByIDReq entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message ListHistoryByTransferConfigRes {
+  repeated History entities = 1;
+}
+message CreateHistoryReq {
+  History entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message CreateHistoryRes {
+  ID entity = 1;
+}
+message GetHistoryReq {
+  ID entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message GetHistoryRes {
+  History entity = 1;
+}
+
+//entity types
+message TransferConfig {
+  // snowflake id
+  int64 sid = 1 [jstype = JS_STRING];
+  // the name of this config. Must be unique within the org
+  string name = 3;
+  string description = 4;
+  // optional nofitifications to send out when this config is being used
+  // TODO:
+  // bool transfer_start_notification = 5;
+  // bool transfer_end_notification = 6;
+
+  // how many hours the files should live in cloud storage for
+  // must always be > 0
+  int32 ttl = 7;
+
+  Credential credential = 8; // credential_sid stored on table
+  // where we will put the payload if we are triggering a delivery
+  Destination destination = 9; // stored as jsonb
+  // where we will get the payload if we are triggering a retrieval
+  Source source = 10; // stored as jsonb
+  // when the config was last created/edited
+  google.protobuf.Timestamp created_on = 11;
+  google.protobuf.Timestamp last_edited = 12;
+}
+
+message ID {
+  int64 sid = 1 [jstype = JS_STRING];
+}
+message ListReq {
+  // start listing records less than this sid
+  int64 before_sid = 2;
+  // max records to retrieve
+  int64 limit = 3;
+}
+
+message History {
+  int64 sid = 1 [jstype = JS_STRING];
+  string transfer_config_name = 3;
+  int64 transfer_config_sid = 4 [jstype = JS_STRING];
+  // delivery or retrieval
+  string delivery_type = 5;
+  string error = 6;
+  bool success = 7;
+  // when the transaction was first opened
+  google.protobuf.Timestamp created_on = 8;
+  // when upload of deps is finished and we started moving the files
+  google.protobuf.Timestamp transfer_start = 9;
+  // when the record was inserted into the db (delivery ended)
+  google.protobuf.Timestamp transfer_complete = 10;
+  // the application calling for delivery
+  commons.OperatorApplications origin = 11;
+}
+message ListByIDReq {
+  // start listing records less than this sid
+  int64 before_sid = 2;
+  // max records to retrieve
+  int64 limit = 3;
+  // the sid that is in the where clause
+  int64 other_sid = 4;
+}
+
+message Credential {
+  int64 sid = 1 [jstype = JS_STRING];
+  string name = 3;
+  string description = 4;
+
+  CredentialData data = 5; // stored as jsonb
+
+  google.protobuf.Timestamp created_on = 10;
+  google.protobuf.Timestamp last_edited = 11;
+}
+message Destination {
+  commons.Encryption encryption = 1;
+  oneof value {
+    EmailDestination email = 2;
+    Room303Destination room303 = 3;
+    SmsDestination sms = 4;
+    SftpDestination sftp = 5;
+  }
+}
+
+message SftpDestination {
+  // path that will be joined with the filename specified on the attachment.
+  // this is optional.  If not provided the attachments must include the full filepath
+  string base_directory = 2;
+  string address = 3;
+  int32 port = 4;
+}
+
+message Room303Destination {
+  // which room or user to sned the file to
+  string room = 1;
+  // username which sends the message.
+  string username = 2;
+}
+message SmsDestination {
+  // must include country code and area code
+  string destination_phone = 1;
+  // the phone number we want this message to come from
+  string source_phone = 2;
+}
+
+message EmailDestination {
+  // which email we are sending to
+  string to_addr = 1;
+  // additional emails we are sending to
+  repeated string cc_addrs = 2;
+  // which email we want to show up as as from
+  string from_addr = 3;
+}
+
+message CredentialData {
+  oneof data {
+    UserPassword user_password = 1;
+    Password password = 2;
+    SSHKeyPair ssh_key_pair = 3;
+    PGPKeyPair pgp_key_pair = 4;
+    AESPassword aes_password = 5;
+  }
+}
+
+message UserPassword {
+  string username = 1;
+  string password = 2;
+}
+message Password {
+  string password = 1;
+}
+message SSHKeyPair {
+  string public_key = 1;
+  string private_key = 2;
+}
+message PGPKeyPair {
+  string public_key = 1;
+  string private_key = 2;
+}
+message AESPassword {
+  string password = 1;
+}
+
+message Source {
+  commons.Encryption encryption = 1;
+  oneof value {
+    SftpSource sftp = 2;
+  }
+}
+
+message SftpSource {
+  // directory files should be in
+  string directory = 2;
+}
+message GetCredentialReq {
+  Credential entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message GetCredentialRes {
+  Credential credential = 1;
+}
+message ListCredentialsReq {
+  ListReq entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message ListCredentialsRes {
+  Credentials credentials = 1;
+}
+message CreateCredentialReq {
+  Credential entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message CreateCredentialRes {
+  ID entity = 1;
+}
+message DeleteCredentialReq {
+  ID entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message DeleteCredentialRes {}
+message UpdateCredentialReq {
+  Credential entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message UpdateCredentialRes {
+  ID entity = 1;
+}
+message Credentials {
+  repeated Credential entities = 1;
+}

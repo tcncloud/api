@@ -1,0 +1,758 @@
+syntax = "proto3";
+
+package api.v1alpha1.org;
+
+import "commons/org.proto";
+import "commons/org/labels.proto";
+import "commons/org/permissions.proto";
+import "commons/org/trusts.proto";
+import "commons/org/user.proto";
+import "commons/perms.proto";
+import "commons/user.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.org;org";
+option java_package = "com.tcn.api.v1alpha1.org";
+
+// Request message for the CreateUser rpc.
+message CreateUserRequest {
+  // if org_id is set the user will be created for
+  // the given org_id. This requires the CUSTOMER_SUPPORT permission.
+  // if this field is not set it will get the org_id
+  // from the token. This only requires the USER_CREATE permission.
+  string org_id = 1;
+  // The first name for the new user.
+  string first_name = 2;
+  // The last name for the new user.
+  string last_name = 3;
+  // The email for the new user.
+  string email = 4;
+  // The user name of the new user.
+  string user_name = 5;
+  // The password of the new user.
+  string password = 6;
+  // The ids of the permission groups that the new user will have.
+  repeated string permission_group_ids = 7;
+  // The partner agent id of the new user.
+  string partner_agent_id = 9;
+  // The id of the p3 permission group that the new user will have.
+  string p3_permission_group_id = 10;
+  // The linkback numbers the new user will have.
+  repeated string linkback_numbers = 11;
+  // The caller ids the new user will have.
+  repeated string caller_ids = 12;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 13;
+  // The caller id for the user.
+  string user_caller_id = 14;
+  // The id of the agent profile group the user will belong to.
+  string agent_profile_group_id = 15;
+  // A list of labels to assign to the user
+  repeated string label_ids = 16;
+  // User TimeZone with wrapper for nullable timezone
+  commons.TimeZoneWrapper time_zone_override = 17;
+  // The hunt group that the created user will belong to.
+  int64 hunt_group_sid = 18;
+}
+
+// Response message for the CreateUser rpc.
+message CreateUserResponse {
+  // The id of the created user.
+  string user_id = 1;
+}
+
+// Request message for the CreateDelegatedUser rpc.
+message CreateDelegatedUserRequest {
+  // the user id provided by the auth (idp) connection.
+  string auth_user_id = 1;
+  // org_id for which the user will be created for.
+  // generally when org_id is passed, it requires
+  // customer support permission, but this is an
+  // un-authenticated request so it is an exception
+  // which is handled by envoy.
+  string org_id = 2;
+  // the user's email provided by the auth connection.
+  string email = 3;
+  // the username provided by the auth connection.
+  string username = 4;
+  // the user's first name.
+  string first_name = 5;
+  // the user's last name.
+  string last_name = 6;
+  // the user's groups provided by the auth connection.
+  repeated string groups = 7;
+  // the id of the auth connection the user is coming from.
+  string connection_id = 8;
+}
+
+// Response message for the CreateDelegatedUser rpc.
+message CreateDelegatedUserResponse {
+  // The id of the created user.
+  string user_id = 1;
+}
+
+// Request message for GetMyUser.
+message GetMyUserRequest {}
+
+// Response message for GetMyUser.
+message GetMyUserResponse {
+  // Object to contain the hunt group fields
+  message HuntGroup {
+    // The sid of the hunt group the agent is assigned to
+    int64 hunt_group_sid = 1;
+    // The name of the hunt group the agent is assigned to
+    string hunt_group_name = 2;
+  }
+
+  // Object to contain the agent profile group fields
+  message AgentProfileGroup {
+    // The id of the user's agent profile group
+    string agent_profile_group_id = 1;
+    // The name of the user's agent profile group
+    string agent_profile_group_name = 2;
+  }
+
+  // The user ID of the user
+  string user_id = 1;
+  // The ID of the user's organization
+  string org_id = 2;
+  // The agents's username
+  string username = 13;
+  // Whether the user is delegated (sso related)
+  bool delegated = 3;
+  // The name of the user's organization
+  string org_name = 4;
+  // An object with the hunt group fields required for the call
+  HuntGroup hunt_group = 5;
+  // A list of the labels associated with the user
+  repeated commons.org.Label labels = 6;
+  // A list of the skills associated with the user
+  repeated commons.org.Skill skills = 7;
+  // A list of the permission groups the user belongs to
+  repeated commons.org.PermissionGroup permission_groups = 8;
+  // The user's p3 permission group
+  commons.org.P3PermissionGroup p3_permission_group = 9;
+  // An object with the agent profile group fields required for the call
+  AgentProfileGroup agent_profile_group = 10;
+  // A list of the trusts assigned to the user.
+  repeated commons.org.Trust trusts = 11;
+}
+
+// Request message for GetUser.
+message GetUserRequest {
+  // Get by UserId.
+  string user_id = 1;
+}
+
+// Response message for GetUser.
+message GetUserResponse {
+  // Object to contain the hunt group fields
+  message HuntGroup {
+    // The sid of the hunt group the agent is assigned to
+    int64 hunt_group_sid = 1;
+    // The name of the hunt group the agent is assigned to
+    string hunt_group_name = 2;
+  }
+
+  // Object to contain the agent profile group fields
+  message AgentProfileGroup {
+    // The id of the user's agent profile group
+    string agent_profile_group_id = 1;
+    // The name of the user's agent profile group
+    string agent_profile_group_name = 2;
+  }
+
+  // The user ID of the user
+  string user_id = 1;
+  // The ID of the user's organization
+  string org_id = 2;
+  // Whether the user is delegated (sso related)
+  bool delegated = 3;
+  // The name of the user's organization
+
+  // User TimeZone with wrapper for nullable timezone.
+  commons.TimeZoneWrapper time_zone_override = 4;
+  // An object with the hunt group fields required for the call
+  HuntGroup hunt_group = 5;
+  // A list of the labels associated with the user
+  repeated commons.org.Label labels = 6;
+  // A list of the skills associated with the user
+  repeated commons.org.Skill skills = 7;
+  // A list of the permission groups the user belongs to
+  repeated commons.org.PermissionGroup permission_groups = 8;
+  // The user's p3 permission group
+  commons.org.P3PermissionGroup p3_permission_group = 9;
+  // An object with the agent profile group fields required for the call
+  AgentProfileGroup agent_profile_group = 10;
+  // name of users organization
+  string org_name = 11;
+  // users first name
+  string first_name = 12;
+  // The agents's username
+  string username = 13;
+  // users last name
+  string last_name = 14;
+  // if the user is disabled from logging in
+  bool login_disabled = 15;
+  // users partner agent sid
+  string partner_agent_id = 16;
+  // users caller id
+  string user_caller_id = 17;
+  // a users array of linkback numbers
+  repeated string linkback_numbers = 18;
+  // a users array of caller ids
+  repeated string caller_ids = 19;
+  // default application that is selected when signed in
+  commons.OperatorApplications default_app = 20;
+  // Login Sid of the user
+  int64 login_sid = 21;
+  // Agent Sid
+  int64 agent_sid = 22;
+  // A list of trusts the user has been assigned.
+  repeated commons.org.Trust trusts = 23;
+  // user's email
+  string email = 24;
+  // user's default region
+  string default_region = 25;
+  // user's created date
+  google.protobuf.Timestamp created_at = 26;
+  // user's last updated date
+  google.protobuf.Timestamp last_updated = 27;
+  // user's password reset required
+  bool password_reset_required = 28;
+}
+
+// Request message for GetUserByOrgId.
+message GetUserByOrgIdRequest {
+  // Get by UserId.
+  string user_id = 1;
+  // OrgId of the user being requested.
+  string org_id = 2;
+}
+
+// Response message for GetUserByOrgId.
+message GetUserByOrgIdResponse {
+  // Object to contain the hunt group fields
+  message HuntGroup {
+    // The sid of the hunt group the agent is assigned to
+    int64 hunt_group_sid = 1;
+    // The name of the hunt group the agent is assigned to
+    string hunt_group_name = 2;
+  }
+
+  // Object to contain the agent profile group fields
+  message AgentProfileGroup {
+    // The id of the user's agent profile group
+    string agent_profile_group_id = 1;
+    // The name of the user's agent profile group
+    string agent_profile_group_name = 2;
+  }
+
+  // The user ID of the user
+  string user_id = 1;
+  // The ID of the user's organization
+  string org_id = 2;
+  // The agents's username
+  string username = 13;
+  // Whether the user is delegated (sso related)
+  bool delegated = 3;
+  // The name of the user's organization
+  string org_name = 4;
+  // An object with the hunt group fields required for the call
+  HuntGroup hunt_group = 5;
+  // A list of the labels associated with the user
+  repeated commons.org.Label labels = 6;
+  // A list of the skills associated with the user
+  repeated commons.org.Skill skills = 7;
+  // A list of the permission groups the user belongs to
+  repeated commons.org.PermissionGroup permission_groups = 8;
+  // The user's p3 permission group
+  commons.org.P3PermissionGroup p3_permission_group = 9;
+  // An object with the agent profile group fields required for the call
+  AgentProfileGroup agent_profile_group = 10;
+  // A list of trusts the user has been assigned.
+  repeated commons.org.Trust trusts = 21;
+}
+
+// Request message for listAgents rpc.
+message ListAgentsRequest {}
+
+// Response message for listAgents rpc.
+message ListAgentsResponse {
+  // Object for ListAgents to return a list of.
+  message AgentDetails {
+    // Object to contain the hunt group fields
+    message HuntGroup {
+      // The sid of the hunt group the agent is assigned to
+      int64 hunt_group_sid = 1;
+      // The name of the hunt group the agent is assigned to
+      string hunt_group_name = 2;
+    }
+
+    // The user ID of the agent
+    string user_id = 1;
+    // The ID of the agent's organization
+    string org_id = 2;
+    // The agent's first name
+    string first_name = 3;
+    // The agent's last name
+    string last_name = 4;
+    // The agents's username
+    string username = 5;
+    // A list of the skills associated with the agent
+    repeated commons.org.Skill skills = 6;
+    // Whether or not the agent is disabled.
+    bool login_disabled = 7;
+    // An object with the hunt group fields required for the call
+    HuntGroup hunt_group = 8;
+    // Reserving a space for labels
+    reserved "labels";
+    reserved 9;
+    // Whether the agent is delegated (sso related)
+    bool delegated = 10;
+    // A list of the trust ids the user has been assigned.
+    repeated string trust_ids = 11;
+    // A list of the (neo)permission groups the user belongs to
+    repeated commons.org.PermissionGroup permission_groups = 12;
+  }
+
+  // List of returned agents with masked data.
+  repeated AgentDetails agents = 1;
+}
+
+// Request message for listUsers rpc.
+message ListUsersRequest {}
+
+// Response message for listUsers rpc.
+message ListUsersResponse {
+  // Object for ListUsers to return a list of.
+  message UserDetails {
+    // The user ID of the user
+    string user_id = 1;
+    // The ID of the user's organization
+    string org_id = 2;
+    // The user's first name
+    string first_name = 3;
+    // The user's last name
+    string last_name = 4;
+    // The user's username
+    string username = 5;
+    // Whether or not the user is disabled.
+    bool login_disabled = 7;
+    // A list of the (neo)permission group Ids the agent belongs to
+    repeated string permission_group_ids = 9;
+    // Reserving a space for labels
+    reserved "labels";
+    reserved 10;
+    // Whether the user is an account owner
+    bool account_owner = 11;
+    // Whether the user is also an agent
+    bool agent = 12;
+    // A list of the trust ids the user has been assigned.
+    repeated string trust_ids = 13;
+  }
+
+  // List of returned users with masked data.
+  repeated UserDetails users = 1;
+}
+
+// Request message for the ListUsersByOrgId rpc.
+message ListUsersByOrgIdRequest {
+  // Filter by org ID.
+  string org_id = 1;
+  // Filter by the user's archived status.
+  commons.UserArchivedStateFilter archived_filter = 2;
+}
+
+// Response message for the ListsUsersByOrgId rpc.
+message ListUsersByOrgIdResponse {
+  // Object for ListUsersByOrgId to return a list of.
+  message UserDetails {
+    // The user ID of the user
+    string user_id = 1;
+    // The ID of the user's organization
+    string org_id = 2;
+    // The name of the user's organization
+    string org_name = 3;
+    // The user's first name
+    string first_name = 4;
+    // The user's last name
+    string last_name = 5;
+    // The user's username
+    string username = 6;
+    // Whether or not the user is disabled.
+    bool login_disabled = 7;
+    // A list of the (neo)permission group Ids the agent belongs to
+    repeated string permission_group_ids = 8;
+    // Reserving a space for labels
+    reserved "labels";
+    reserved 9;
+    // Whether the user is an account owner
+    bool account_owner = 10;
+    // Whether the user is also an agent
+    bool agent = 11;
+    // A list of the trust ids the user has been assigned.
+    repeated string trust_ids = 12;
+  }
+
+  // List of returned users with masked data.
+  repeated UserDetails users = 1;
+}
+
+// Request message for the ListUsersByRegion rpc.
+message ListUsersByRegionRequest {
+  // Filter by region.
+  string region_id = 1;
+  // Return a list of only user agents (users whose default app is agent). When this is false all users are returned.
+  bool agent = 2;
+  // Filter by the user's archived status.
+  commons.UserArchivedStateFilter archived_filter = 3;
+}
+
+// Response message for the ListsUserByRegion rpc.
+message ListUsersByRegionResponse {
+  // Object for ListUsersByRegion to return a list of.
+  message UserDetails {
+    // The user ID of the user
+    string user_id = 1;
+    // The ID of the user's organization
+    string org_id = 2;
+    // The user's first name
+    string first_name = 3;
+    // The user's last name
+    string last_name = 4;
+    // The user's username
+    string username = 5;
+    // Whether or not the user is disabled.
+    bool login_disabled = 7;
+    // A list of the (neo)permission group Ids the agent belongs to
+    repeated string permission_group_ids = 9;
+    // Reserving a space for labels
+    reserved "labels";
+    reserved 10;
+    // Whether the user is an account owner
+    bool account_owner = 11;
+    // Whether the user is also an agent
+    bool agent = 12;
+    // A list of the trust ids the user has been assigned.
+    repeated string trust_ids = 13;
+  }
+
+  // List of returned users with masked data.
+  repeated UserDetails users = 1;
+}
+
+// Request message for the UpdateMyUser rpc.
+message UpdateMyUserRequest {
+  // The linkback numbers the updated user will have.
+  repeated string linkback_numbers = 1;
+  // The caller ids the updated user will have.
+  repeated string caller_ids = 2;
+  // User TimeZone with wrapper for nullable timezone.
+  commons.TimeZoneWrapper time_zone_override = 3;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 4;
+  // Mask to filter fields on organization entities in response.
+  repeated string field_mask = 10;
+}
+
+// Response message for the UpdateMyUser rpc.
+message UpdateMyUserResponse {}
+
+// Request message for the UpdateUser rpc.
+message UpdateUserRequest {
+  // The user id of the user to be updated
+  string user_id = 1;
+  // The first name the updated user will have.
+  string first_name = 2;
+  // The last name the updated user will have.
+  string last_name = 3;
+  // The partner agent id the updated user will have.
+  string partner_agent_id = 4;
+  // User TimeZone with wrapper for nullable timezone.
+  commons.TimeZoneWrapper time_zone_override = 5;
+  // The linkback numbers the updated user will have.
+  repeated string linkback_numbers = 6;
+  // The caller ids the updated user will have.
+  repeated string caller_ids = 7;
+  // Default app the user starts on
+  commons.OperatorApplications default_app = 8;
+  // Whether the updated user will require a password reset.
+  bool password_reset_required = 9;
+  // The agent profile group id the updated user will have.
+  string agent_profile_group_id = 10;
+  // The username the updated user will have.
+  string username = 11;
+  // The email the updated user will have.
+  string email = 12;
+  // The Agent Caller Id of the user
+  string user_caller_id = 13;
+  // A list of labels to assign to the user
+  repeated string label_ids = 14;
+
+  // Mask to filter fields on organization entities in response.
+  repeated string field_mask = 20;
+}
+
+// Response message for the UpdateUser rpc.
+message UpdateUserResponse {}
+
+// Request message for the UpdateUserLabels rpc.
+message UpdateUserLabelsRequest {
+  // The ID of the user whose labels will be updated.
+  string user_id = 1;
+  // The organization ID of the user
+  string org_id = 2;
+  // Labels to update user to
+  repeated string label_ids = 3;
+}
+
+// Response message for the UpdateUserLabels rpc.
+message UpdateUserLabelsResponse {}
+
+// Request message for the UpdateUserCallerId rpc.
+message UpdateUserCallerIdRequest {
+  // The user id of the user to be updated
+  string user_id = 1;
+  // The caller id for the updated user
+  string user_caller_id = 2;
+}
+
+// Response message for the UpdateUserCallerId rpc.
+message UpdateUserCallerIdResponse {}
+
+// Request message for the UpdateUserDisabled rpc.
+message UpdateUserDisabledRequest {
+  // The user id of the user to be updated
+  string user_id = 1;
+  // Whether the user is able to login
+  bool login_disabled = 2;
+}
+
+// Response message for the UpdateUserDisabled rpc.
+message UpdateUserDisabledResponse {}
+
+// Request message for the UpdateUserDisabledByOrgId rpc.
+message UpdateUserDisabledByOrgIdRequest {
+  // The user id of the user to be updated
+  string user_id = 1;
+  // The organization id of the user to be updated
+  string org_id = 2;
+  // Whether the user is able to login
+  bool login_disabled = 3;
+}
+
+// Response message for the UpdateUserDisabledByOrgId rpc.
+message UpdateUserDisabledByOrgIdResponse {}
+
+// Request message for the GetMyUserPasswordResetLink rpc.
+message GetMyUserPasswordResetLinkRequest {
+  // The time to live (in seconds) of the generated link, defaults to 180 if unset.
+  int64 ttl = 1;
+}
+
+// Response message for the GetMyUserPasswordResetLink rpc.
+message GetMyUserPasswordResetLinkResponse {
+  // The generated password reset link URL.
+  string url = 1;
+}
+
+// Request message for the GetUserPasswordResetLink rpc.
+message GetUserPasswordResetLinkRequest {
+  // The ID of the user whose password will be updated.
+  string user_id = 1;
+  // The time to live (in seconds) of the generated link, defaults to 180 if unset.
+  int64 ttl = 2;
+}
+
+// Response message for the GetUserPasswordResetLink rpc.
+message GetUserPasswordResetLinkResponse {
+  // The generated password reset link URL.
+  string url = 1;
+}
+
+// Request message for the GetUserPasswordResetLinkByOrgId rpc.
+message GetUserPasswordResetLinkByOrgIdRequest {
+  // The ID of the user whose password will be updated.
+  string user_id = 1;
+  // The organization ID of the user
+  string org_id = 2;
+  // The time to live (in seconds) of the generated link, defaults to 180 if unset.
+  int64 ttl = 3;
+}
+
+// Response message for the GetUserPasswordResetLinkByOrgId rpc.
+message GetUserPasswordResetLinkByOrgIdResponse {
+  // The generated password reset link URL.
+  string url = 1;
+}
+
+// This rpc used to be called GetUserBlocked
+// Request message for the GetUserLoginInfo rpc.
+message GetUserLoginInfoRequest {
+  // The ID of the user.
+  string user_id = 1;
+  // The organization ID of the user
+  string org_id = 2;
+}
+
+// Response message for the GetUserLoginInfo rpc.
+message GetUserLoginInfoResponse {
+  // Whether the user is manually blocked in auth0
+  bool blocked = 1;
+  // The last IP the user used to login
+  string last_ip = 2;
+  // The time of the user's latest login
+  google.protobuf.Timestamp last_login = 3;
+  // The time of the user's latest password reset
+  google.protobuf.Timestamp last_password_reset = 4;
+  // The number of times the user has logged in
+  int64 logins_count = 5;
+  // The time the user was created in auth0
+  google.protobuf.Timestamp created_at = 6;
+  // The last time the user was updated in auth0
+  google.protobuf.Timestamp updated_at = 7;
+  // Whether the user has specific IPs which are blocked
+  bool has_blocked_ips = 8;
+}
+
+// Request message for the GetUserEmailVerified rpc.
+message GetUserEmailVerifiedRequest {
+  // The ID of the user to be checked.
+  string user_id = 1;
+}
+
+// Response message for the GetUserEmailVerified rpc.
+message GetUserEmailVerifiedResponse {
+  // Whether the user's email is verified
+  bool email_verified = 1;
+}
+
+// Request message for the GetUserEmailVerifiedByOrgId rpc.
+message GetUserEmailVerifiedByOrgIdRequest {
+  // The ID of the user to be checked.
+  string user_id = 1;
+  // The organization ID of the user.
+  string org_id = 2;
+}
+
+// Response message for the GetUserEmailVerifiedByOrgId rpc.
+message GetUserEmailVerifiedByOrgIdResponse {
+  // Whether the user's email is verified
+  bool email_verified = 1;
+}
+
+// Request message for the SendUserEmailVerification rpc.
+message SendUserEmailVerificationRequest {
+  // The ID of the user to be verified.
+  string user_id = 1;
+}
+
+// Response message for the SendUserEmailVerification rpc.
+message SendUserEmailVerificationResponse {}
+
+// Request message for the SendUserEmailVerificationByOrgId rpc.
+message SendUserEmailVerificationByOrgIdRequest {
+  // The ID of the user to be verified.
+  string user_id = 1;
+  // The organization ID of the user.
+  string org_id = 2;
+}
+
+// Response message for the SendUserEmailVerificationByOrgId rpc.
+message SendUserEmailVerificationByOrgIdResponse {}
+
+// Request message for the GetUserSessionData rpc.
+message GetUserSessionDataRequest {}
+
+// Response message for the GetUserSessionData rpc.
+message GetUserSessionDataResponse {
+  message User {
+    // The ID of the user
+    string user_id = 1;
+    // The ID of the org the user belongs to.
+    string org_id = 2;
+    // The Username of the user.
+    string username = 3;
+    // The ID of the p3 permission group the user has.
+    string p3_permission_group_id = 4;
+    // The User's partner agent id.
+    string partner_agent_id = 8;
+
+    // The entity object used in the region_sid_map.
+    message RegionSids {
+      // The login sid for the region.
+      int64 login_sid = 1;
+      // THe agent sid for the region.
+      int64 agent_sid = 2;
+      // THe client sid for the region.
+      int64 client_sid = 3;
+    }
+    // The user's regional sids. The key of the map is a region id.
+    map<string, RegionSids> region_sid_map = 10;
+    // region_id of a the user's default region
+    string default_region = 11;
+
+    // payload
+    string api_key = 12;
+    // The User's email.
+    string email = 13;
+
+    // Whether or not the user is disabled.
+    bool login_disabled = 14;
+
+    // login preferences
+    repeated string caller_ids = 15;
+    repeated string linkback_numbers = 16;
+
+    string auth_user_id = 17;
+
+    bool enable_mfa = 18;
+
+    // The user's first name.
+    string first_name = 19;
+    // The user's last name.
+    string last_name = 20;
+    // The date/time the user was created.
+    google.protobuf.Timestamp created = 21;
+    // The date/time the user was last updated.
+    google.protobuf.Timestamp last_updated = 22;
+    // Whether or not the user must reset their password on next login.
+    bool password_reset_required = 23;
+    // connection id is the id of the auth connection that the
+    // user is coming from if it is a delgated user. If the user
+    // is not delgated this will be nil.
+    google.protobuf.StringValue connection_id = 24;
+    // User TimeZone with wrapper for nullable timezone
+    commons.TimeZoneWrapper time_zone_override = 25;
+    // UserSettings
+    // List of permission groups ids the user is a member of
+    repeated string permission_group_ids = 26;
+    // List of trust ids the user has been assigned.
+    repeated string trust_ids = 27;
+    // default_app for a user
+    commons.OperatorApplications default_application = 28;
+    // User caller id
+    string user_caller_id = 29;
+    // users assigned agent profile group
+    string agent_profile_group_id = 30;
+
+    // a bool signalling whether or not the user is also an agent
+    bool agent = 31;
+    // a bool to determine whether or not user is account owner
+    bool account_owner = 32;
+  }
+
+  // The user the data is about
+  User user = 1;
+
+  // The user's organizations's name
+  string org_name = 2;
+  // List of legacy P3 permissions.
+  repeated commons.Permission p3_permissions = 3;
+  // A list of the permission groups the user belongs to
+  repeated commons.org.PermissionGroup permission_groups = 4;
+  // A list of the labels associated with the user
+  repeated commons.org.Label labels = 5;
+}

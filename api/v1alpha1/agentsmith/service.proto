@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package api.v1alpha1.agentsmith;
+
+import "annotations/authz.proto";
+import "commons/auth/perms.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/tcncloud/api/v1alpha1.agentsmith;agentsmith";
+option java_package = "com.tcn.api.v1alpha1.agentsmith";
+
+// AgentSmith is the Public API for the AgentSmith service. This service provides the methods for public integrations
+// to follow agents and/or create virtual agents.
+service AgentSmith {
+  // FollowAgent method find an agent identified by user_id or asm_session_id and return a stream of events
+  // associated with the current session of the user and long as the session lives regardless if the agent is
+  // using the omni interface or neo interface.
+  // When the agent is in a voice session one of the first messages received will be AgentVoiceStartEvent that
+  // contains a sip dial url that can be used to connect to the agent's voice session.
+  rpc FollowAgent(FollowAgentReq) returns (stream FollowAgentRes) {
+    option (google.api.http).post = "/api/v1alpha1/agentsmith/agentsmith/followagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+}
+
+// FollowAgentReq is the request for the FollowAgent method.
+message FollowAgentReq {
+  // the agent could be identified by user_id or asm_session_id
+  oneof id {
+    // user_id of the given agent that can be obtain from ...
+    string user_id = 1;
+    // asm_session_sid of the given agent that can be obtain from ...
+    int64 asm_session_sid = 2;
+  }
+}
+
+// FollowAgentRes is the response for the FollowAgent method. Each message is an event associated with the
+// agent session and represents a change in the state of the agent session.
+message FollowAgentRes {
+  // the timestamp of the event
+  google.protobuf.Timestamp ts = 1;
+
+  // the event type
+  oneof event {
+    // A generic state change event that has been triggered in the agent interface
+    AgentStateChangeEvent agent_state_change = 10;
+    // The voice agent session start event
+    AgentVoiceStartEvent agent_voice_start = 11;
+    // the voice agent session end event
+    AgentVoiceEndEvent agent_voice_end = 12;
+    // the agent session end event that is triggered when the agent session is closed. After this event the connection
+    // will be closed by the server.
+    AgentSessionEndEvent agent_session_end = 13;
+  }
+}
+
+// AgentStateChangeEvent is the event that is triggered when the agent state changes in the agent interface.
+message AgentStateChangeEvent {
+  // the old state of the agent
+  AgentState old_state = 1;
+  // the new state of the agent
+  AgentState new_state = 2;
+  //  state definition
+  oneof state_details {
+    EmptyState empty = 10;
+    // TBD - in the works
+  }
+}
+
+// EmptyState is a debugging state (for now)
+message EmptyState {}
+
+// AgentState is the state of the agent
+enum AgentState {
+  // TBD - in the works
+  UNKNOWN = 0; // TODO should we even have an unknown state? just use unavailable?
+  UNAVAILABLE = 1;
+  IDLE = 2;
+  READY = 3;
+  HUNGUP = 4;
+  DESTROYED = 5;
+  PEERED = 6;
+  PAUSED = 7;
+  WRAPUP = 8;
+  PREPARING_AFTER_IDLE = 10;
+}
+
+// AgentVoiceStartEvent is the event that is triggered when the agent starts a voice session.
+message AgentVoiceStartEvent {
+  // the sip dial url that can be used to connect to the agent's voice session.
+  string sip_dial_url = 1;
+  // TBD
+}
+
+// AgentVoiceEndEvent is the event that is triggered when the agent ends a voice session.
+message AgentVoiceEndEvent {}
+
+// AgentSessionEndEvent is the event that is triggered when the agent session is closed.
+message AgentSessionEndEvent {}
