@@ -4,25 +4,21 @@ stages:
 
 .base:
   image: golang:latest
+  tags:
+    - linux-amd64
   before_script:
     - export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
     - go install github.com/bufbuild/buf/cmd/buf@latest
 lint:
   extends: .base
   stage: test
-  tags:
-    - linux-amd64 
-  image: bufbuild/buf:latest
   allow_failure: true
   script:
     - buf lint
-
+    
 format:
   extends: .base
   stage: test
-  image: bufbuild/buf:latest
-  tags:
-    - linux-amd64 
   script:
     - d=$(buf format -d)
     - if [ -n "$d" ]; then echo "$d"; exit 1; fi
@@ -30,9 +26,6 @@ format:
 breaking_changes:
   extends: .base
   stage: test
-  image: bufbuild/buf:latest
-  tags:
-    - linux-amd64 
   allow_failure: true
   only:
     - master
@@ -42,9 +35,6 @@ breaking_changes:
 build:outpb: 
   extends: .base
   stage: build
-  image: bufbuild/buf:latest
-  tags:
-    - linux-amd64 
   script:
     - buf build -o out.pb
   artifacts:
@@ -56,9 +46,6 @@ build:outpb:
 build:go:
   extends: .base
   stage: build
-  image: bufbuild/buf:latest
-  tags:
-    - linux-amd64 
   only:
     - master
   script:
@@ -73,9 +60,6 @@ build:go:
 build:go:tags:
   extends: .base
   stage: build
-  image: bufbuild/buf:latest
-  tags:
-    - linux-amd64 
   only:
     - tags
   script:
