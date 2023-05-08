@@ -3,7 +3,6 @@ syntax = "proto3";
 package api.commons.audit;
 
 import "api/commons/omnichannel.proto";
-import "api/commons/project.proto";
 import "google/protobuf/wrappers.proto";
 
 ///
