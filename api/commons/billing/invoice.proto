@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package api.commons.billing;
+
+import "google/protobuf/timestamp.proto";
+
+// Product - represents a billed product. A product should show up only
+// once in a monthly invoice.
+enum Product {
+  PRODUCT_UNSPECIFIED = 0;
+  PRODUCT_OTHER = 1;
+
+  PRODUCT_AGENT_SEATS = 100;
+
+  PRODUCT_EMAILS_SENT = 200;
+  PRODUCT_EMAILS_RECEIVED = 201;
+  PRODUCT_SMS_SENT = 202;
+  PRODUCT_SMS_RECEIVED = 203;
+  PRODUCT_CHAT_SENT = 204;
+  PRODUCT_CHAT_RECEIVED = 205;
+
+  PRODUCT_OMNI = 300;
+
+  PRODUCT_VANA = 400;
+
+  PRODUCT_COMPLIANCE = 500;
+}
+
+// Invoice - a collection of products with their total rated amount for
+// a selected month or month-to-date.
+message Invoice {
+  // The items forming the invoice, where a product type
+  // should show up only once in this list.
+  repeated InvoiceItem items = 1;
+}
+
+// InvoiceItem -
+message InvoiceItem {
+  // The unique identifier for this invoice item
+  int64 invoice_item_sid = 1;
+  // The product this item contains the total for
+  Product product = 2;
+  // The total amount billed for the product
+  double amount = 3;
+  // time the invoice item was created
+  google.protobuf.Timestamp date_created = 4;
+  // time the invoice item was last modified
+  google.protobuf.Timestamp date_modified = 5;
+}

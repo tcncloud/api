@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package api.v1alpha1.billing;
+
+import "annotations/authz.proto";
+import "api/commons/billing/detail.proto";
+import "api/commons/billing/invoice.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// CreateBillingPlanReq - request to create a billing plan for an organization
+message CreateBillingPlanReq {
+  // Required. the billing plan to create
+  api.commons.billing.Plan billing_plan = 1;
+}
+
+// CreateBillingPlanRes - result of creating a billing plan; contains the
+// created billing plan
+message CreateBillingPlanRes {
+  // the created billing plan
+  api.commons.billing.Plan billing_plan = 1;
+}
+
+// GetBillingPlanReq - request to get an organization's billing plan
+message GetBillingPlanReq {
+}
+
+// GetBillingPlanRes - result of retrieving an organization's billing plan
+message GetBillingPlanRes {
+  // the billing plan
+  api.commons.billing.Plan billing_plan = 1;
+}
+
+// UpdateBillingPlanReq - request to update a billing plan.
+message UpdateBillingPlanReq {
+  // Required. the updates to perform on the billing plan
+  repeated UpdateReq updates = 1;
+
+  // UpdateReq - request to update a single billing detail
+  message UpdateReq {
+    // Required. the billing detail to update
+    api.commons.billing.Detail billing_detail = 1;
+    // Required. the mask of fields to update for the billing detail
+    repeated string fields = 2;
+  }
+}
+
+// UpdateBillingPlanRes - result of updating a billing plan; contains
+// only the details that were provided in the request
+message UpdateBillingPlanRes {
+  // the updated billing plan
+  api.commons.billing.Plan billing_plan = 1;
+}
+
+// DeleteBillingDetailsReq - request to delete billing details
+message DeleteBillingDetailsReq {
+  // the identifiers of the billing details to delete
+  repeated int64 billing_detail_sids = 1;
+}
+
+// DeleteBillingDetailsRes - result of deleting billing details
+message DeleteBillingDetailsRes {
+}
+
+// GetInvoiceReq - request to get an invoice
+message GetInvoiceReq {
+  // Optional. the date of the invoice to retrieve. If not specified,
+  // will return the invoice associated with the current billing cycle.
+  // Otherwise, it will return the invoice associated with the billing
+  // cycle that contains the specified date.
+  google.protobuf.Timestamp invoice_date = 1;
+}
+
+// GetInvoiceRes - result of retrieving an invoice
+message GetInvoiceRes {
+  // the invoice for the organization
+  api.commons.billing.Invoice invoice = 1;
+}
