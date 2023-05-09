@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package api.commons.billing;
+
+import "api/commons/audit/event_types.proto";
+import "api/commons/billing/modules/modules.proto";
+import "google/protobuf/timestamp.proto";
+
+// Plan - a collection of details belongind to a single organization.
+message Plan {
+  // all the details that make up this billing plan, where each
+  // detail defines how to configure a particular rating module.
+  repeated Detail details = 1;
+}
+
+// Detail - all the data required to configure a rating module
+message Detail {
+  // billing detail identifier
+  int64 billing_detail_sid = 1;
+  // event type this billing detail is associated with
+  api.commons.audit.EventType event_type = 2;
+  // the type of configuration for this detail
+  DetailConfigType config_type = 3;
+  // the configuration details for this detail
+  DetailConfig config = 4;
+  // the time the detail was created
+  google.protobuf.Timestamp date_created = 5;
+  // the time the detail was last modified
+  google.protobuf.Timestamp date_modified = 6;
+  // the time the detail was deleted (if applicable)
+  google.protobuf.Timestamp deleted_on = 7;
+}
+
+// DetailConfig - contains the data specific to the rating module,
+// so that it may rate events correctly
+message DetailConfig {
+  oneof config {
+    billing.modules.BasicConfig agent_seats_config = 2;
+
+    // omni configs
+    billing.modules.BasicConfig agent_text_message_chat_config = 100;
+    billing.modules.BasicConfig agent_text_message_email_message_config = 101;
+    billing.modules.BasicAmountConfig agent_text_message_email_size_config = 102;
+    billing.modules.BasicConfig agent_text_message_sms_config = 103;
+    billing.modules.BasicConfig task_message_sent_email_message_config = 104;
+    billing.modules.BasicAmountConfig task_message_sent_email_size_config = 105;
+    billing.modules.BasicConfig task_message_sent_sms_config = 106;
+    billing.modules.BasicConfig connected_inbox_poll_config = 107;
+    billing.modules.BasicConfig manager_text_message_chat_config = 108;
+    billing.modules.BasicConfig manager_text_message_email_message_config = 109;
+    billing.modules.BasicAmountConfig manager_text_message_email_size_config = 110;
+    billing.modules.BasicConfig manager_text_message_sms_config = 111;
+    billing.modules.BasicConfig customer_text_message_chat_config = 112;
+    billing.modules.BasicConfig customer_text_message_email_message_config = 113;
+    billing.modules.BasicAmountConfig customer_text_message_email_size_config = 114;
+    billing.modules.BasicConfig customer_text_message_sms_config = 115;
+    billing.modules.BasicAmountConfig agent_text_message_chat_size_config = 116;
+    billing.modules.BasicAmountConfig manager_text_message_chat_size_config = 117;
+    billing.modules.BasicAmountConfig customer_text_message_chat_size_config = 118;
+    billing.modules.BasicConfig connected_inbox_created_config = 119;
+    billing.modules.BasicAmountConfig agent_text_message_sms_size_config = 120;
+    billing.modules.BasicAmountConfig manager_text_message_sms_size_config = 121;
+    billing.modules.BasicAmountConfig customer_text_message_sms_size_config = 122;
+    billing.modules.BasicAmountConfig task_message_sent_sms_size_config = 123;
+    billing.modules.BasicConfig agent_chat_message_units_config = 124;
+    billing.modules.BasicConfig agent_email_message_units_config = 125;
+    billing.modules.BasicConfig agent_sms_message_units_config = 126;
+    billing.modules.BasicConfig manager_chat_message_units_config = 127;
+    billing.modules.BasicConfig manager_email_message_units_config = 128;
+    billing.modules.BasicConfig manager_sms_message_units_config = 129;
+    billing.modules.BasicConfig customer_chat_message_units_config = 130;
+    billing.modules.BasicConfig customer_email_message_units_config = 131;
+    billing.modules.BasicConfig customer_sms_message_units_config = 132;
+    billing.modules.BasicConfig system_chat_message_units_config = 133;
+    billing.modules.BasicConfig system_email_message_units_config = 134;
+    billing.modules.BasicConfig system_sms_message_units_config = 135;
+
+    // compliance configs
+    billing.modules.BasicConfig compliance_rnd_query_config = 200;
+    billing.modules.BasicConfig compliance_rnd_query_cached_config = 201;
+  }
+}
+
+// DetailConfigType - the types of billing detail configurations available
+enum DetailConfigType {
+  DETAIL_CONFIG_TYPE_UNSPECIFIED = 0;
+  DETAIL_CONFIG_TYPE_NOOP = 1;
+
+  DETAIL_CONFIG_TYPE_AGENT_SEATS = 2;
+
+  // omni config types
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_CHAT = 100;
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_EMAIL_MESSAGE = 101;
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_EMAIL_SIZE = 102;
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_SMS = 103;
+  DETAIL_CONFIG_TYPE_TASK_MESSAGE_SENT_EMAIL_MESSAGE = 104;
+  DETAIL_CONFIG_TYPE_TASK_MESSAGE_SENT_EMAIL_SIZE = 105;
+  DETAIL_CONFIG_TYPE_TASK_MESSAGE_SENT_SMS = 106;
+  DETAIL_CONFIG_TYPE_CONNECTED_INBOX_POLL = 107;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_CHAT = 108;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_EMAIL_MESSAGE = 109;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_EMAIL_SIZE = 110;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_SMS = 111;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_CHAT = 112;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_EMAIL_MESSAGE = 113;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_EMAIL_SIZE = 114;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_SMS = 115;
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_CHAT_SIZE = 116;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_CHAT_SIZE = 117;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_CHAT_SIZE = 118;
+  DETAIL_CONFIG_TYPE_CONNECTED_INBOX_CREATED = 119;
+  DETAIL_CONFIG_TYPE_AGENT_TEXT_MESSAGE_SMS_SIZE = 120;
+  DETAIL_CONFIG_TYPE_MANAGER_TEXT_MESSAGE_SMS_SIZE = 121;
+  DETAIL_CONFIG_TYPE_CUSTOMER_TEXT_MESSAGE_SMS_SIZE = 122;
+  DETAIL_CONFIG_TYPE_TASK_MESSAGE_SENT_SMS_SIZE = 123;
+  DETAIL_CONFIG_TYPE_AGENT_CHAT_MESSAGE_UNITS = 124;
+  DETAIL_CONFIG_TYPE_AGENT_EMAIL_MESSAGE_UNITS = 125;
+  DETAIL_CONFIG_TYPE_AGENT_SMS_MESSAGE_UNITS = 126;
+  DETAIL_CONFIG_TYPE_MANAGER_CHAT_MESSAGE_UNITS = 127;
+  DETAIL_CONFIG_TYPE_MANAGER_EMAIL_MESSAGE_UNITS = 128;
+  DETAIL_CONFIG_TYPE_MANAGER_SMS_MESSAGE_UNITS = 129;
+  DETAIL_CONFIG_TYPE_CUSTOMER_CHAT_MESSAGE_UNITS = 130;
+  DETAIL_CONFIG_TYPE_CUSTOMER_EMAIL_MESSAGE_UNITS = 131;
+  DETAIL_CONFIG_TYPE_CUSTOMER_SMS_MESSAGE_UNITS = 132;
+  DETAIL_CONFIG_TYPE_SYSTEM_CHAT_MESSAGE_UNITS = 133;
+  DETAIL_CONFIG_TYPE_SYSTEM_EMAIL_MESSAGE_UNITS = 134;
+  DETAIL_CONFIG_TYPE_SYSTEM_SMS_MESSAGE_UNITS = 135;
+
+  // compliance config types
+  BillingDetailConfigType_COMPLIANCE_RND_QUERY = 200;
+  BillingDetailConfigType_COMPLIANCE_RND_QUERY_CACHED = 201;
+}

@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package api.v1alpha1.billing;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/billing/entities.proto";
+import "google/api/annotations.proto";
+
+// Billing service for handling billing requests.
+service Billing {
+  // CreateBillingPlan - saves the provided billing plan, and returns the saved
+  // plan. However, in an organization's Billing Plan there can only ever be
+  // one billing detail with a specific config type and event type.
+  rpc CreateBillingPlan(CreateBillingPlanReq) returns (CreateBillingPlanRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/createbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{
+        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
+      }];
+    };
+  };
+
+  // GetBillingPlan - returns the billing plan for the provided organization.
+  rpc GetBillingPlan(GetBillingPlanReq) returns (GetBillingPlanRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/getbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{
+        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
+      }];
+    };
+  };
+
+  // UpdateBillingPlan - updates the provided billing plan and it's details.
+  // If some details are not provided, they will be left as is. However, if
+  // deletion is desired, the DeleteBillingDetails method should be used. The
+  // billing plan still follows the constraint of only having one billing detail
+  // with a specific config type and event type, and so if the request contains
+  // more than one billing detail with a config type and event type, the request
+  // is malformed and will result in potentially unexpected behavior.
+  rpc UpdateBillingPlan(UpdateBillingPlanReq) returns (UpdateBillingPlanRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/updatebillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{
+        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
+      }];
+    };
+  }
+
+  // DeleteBillingDetails - deletes the provided billing details. If the billing
+  // details do not exist, this won't do anything.
+  rpc DeleteBillingDetails(DeleteBillingDetailsReq) returns (DeleteBillingDetailsRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/deletebillingdetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{
+        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
+      }];
+    };
+  }
+
+  // GetInvoice - returns the invoice for the organization. If a date is
+  // provided, this will return the invoice for the organization that
+  // corresponds to the billing cycle that contains the provided date. If
+  // no date is provided, this will return the invoice as it currently
+  // stands for the current billing cycle.
+  rpc GetInvoice(GetInvoiceReq) returns (GetInvoiceRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/getinvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{
+        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_TCN_BILLING];
+      }];
+    };
+  }
+}
