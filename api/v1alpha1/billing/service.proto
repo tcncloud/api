@@ -15,22 +15,32 @@ service Billing {
     option (google.api.http).post = "/api/v1alpha1/billing/createbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{
-        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
-      }];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_BILLING_EDIT
+          ];
+        }
+      ];
     };
-  };
+  }
 
   // GetBillingPlan - returns the billing plan for the provided organization.
   rpc GetBillingPlan(GetBillingPlanReq) returns (GetBillingPlanRes) {
     option (google.api.http).post = "/api/v1alpha1/billing/getbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{
-        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
-      }];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_BILLING_EDIT
+          ];
+        }
+      ];
     };
-  };
+  }
 
   // UpdateBillingPlan - updates the provided billing plan and it's details.
   // If some details are not provided, they will be left as is. However, if
@@ -43,9 +53,14 @@ service Billing {
     option (google.api.http).post = "/api/v1alpha1/billing/updatebillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{
-        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
-      }];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_BILLING_EDIT
+          ];
+        }
+      ];
     };
   }
 
@@ -55,9 +70,14 @@ service Billing {
     option (google.api.http).post = "/api/v1alpha1/billing/deletebillingdetails";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{
-        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_BILLING_EDIT];
-      }];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_BILLING_EDIT
+          ];
+        }
+      ];
     };
   }
 
@@ -70,9 +90,14 @@ service Billing {
     option (google.api.http).post = "/api/v1alpha1/billing/getinvoice";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{
-        permissions: [PERMISSION_CUSTOMER_SUPPORT, PERMISSION_TCN_BILLING];
-      }];
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING
+          ];
+        }
+      ];
     };
   }
 }

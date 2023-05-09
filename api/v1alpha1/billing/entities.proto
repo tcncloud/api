@@ -22,8 +22,7 @@ message CreateBillingPlanRes {
 }
 
 // GetBillingPlanReq - request to get an organization's billing plan
-message GetBillingPlanReq {
-}
+message GetBillingPlanReq {}
 
 // GetBillingPlanRes - result of retrieving an organization's billing plan
 message GetBillingPlanRes {
@@ -59,8 +58,7 @@ message DeleteBillingDetailsReq {
 }
 
 // DeleteBillingDetailsRes - result of deleting billing details
-message DeleteBillingDetailsRes {
-}
+message DeleteBillingDetailsRes {}
 
 // GetInvoiceReq - request to get an invoice
 message GetInvoiceReq {
