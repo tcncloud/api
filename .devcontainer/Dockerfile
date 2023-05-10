@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu
 # Install the xz-utils package
 RUN apt update 
 RUN apt install -y wget curl xz-utils build-essential \
-    python3 python3-pip python3-venv git git-lfs fd-find \
+    python3 python3-pip python3-venv python3-poetry git git-lfs fd-find \
     openjdk-8-jdk-headless
 
 ## install GOLANG
