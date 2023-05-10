@@ -1,14 +1,10 @@
 {
     "name": "@tcn/tcnapi-grpc-web",
     "private": false,
-    "version": "1.5.0",
+    "version": "1.5.1",
     "files": [
         "src/**/*"
     ],
-    "scripts": {
-        "build": "rm -rf lib/ && npm run build:esm",
-        "build:esm": "tsc"
-    },
     "devDependencies": {
         "@bufbuild/buf": "^1.15.0-1",
         "typescript": "^5.0.4"
