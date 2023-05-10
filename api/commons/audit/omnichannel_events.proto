@@ -492,7 +492,7 @@ message OmnichannelSystemMessageUnitsEvent {
 // OmniChannelAgentMessageSentEvent -
 message OmnichannelPaymentLinkSentEvent {
   // the message sent
-  commons.OmniMessage message = 1;
+  api.commons.OmniMessage message = 1;
   // the payment link
   string link = 2;
 }
