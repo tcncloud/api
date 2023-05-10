@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "google/protobuf/timestamp.proto";
+
+// ComplianceRndQueryEvent - whenever a call is made to the reassigned numbers database service
+message ComplianceRndQueryEvent {
+  string org_id = 1;
+  string phone_number = 2;
+  string result = 3;
+  google.protobuf.Timestamp date_last_contact = 4;
+}

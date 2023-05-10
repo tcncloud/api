@@ -184,4 +184,10 @@ enum EventType {
   TICKET_EDIT_EVENT = 601;
   // close event
   TICKET_CLOSE_EVENT = 602;
+
+  // Compliance Events
+  // rnd query event
+  COMPLIANCE_RND_QUERY_EVENT = 700;
+  // rnd query cached event
+  COMPLIANCE_RND_QUERY_CACHED_EVENT = 701;
 }
