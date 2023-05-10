@@ -120,8 +120,8 @@ message OmniCampaignModuleConfig {
   repeated OmniAttachment attachments = 17;
   // Optional. compliance rule set to use for this campaign
   google.protobuf.StringValue compliance_rule_set_id = 18;
-  // Payment Portal Sids
-  repeated int64 payment_portal_sids = 19;
+  // Payment Portal Ids
+  repeated string payment_portal_ids = 19;
 }
 
 // SmsNumber
@@ -691,6 +691,8 @@ message OmniConversation {
     string support_email = 2;
     // campaign shorten url
     bool campaign_shorten_url = 3;
+    // payment portal ids
+    repeated string payment_portal_ids = 4;
   }
 }
 
@@ -820,6 +822,7 @@ enum OmniSenderType {
   OMNI_SENDER_TYPE_CUSTOMER = 1;
   OMNI_SENDER_TYPE_SYSTEM = 2;
   OMNI_SENDER_TYPE_MANAGER = 3;
+  OMNI_SENDER_TYPE_FLOW = 4;
 }
 
 // ContactList -
