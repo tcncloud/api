@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons.audit;
 
 import "api/commons/audit/asm_events.proto";
+import "api/commons/audit/compliance_events.proto";
 import "api/commons/audit/event_types.proto";
 import "api/commons/audit/events.proto";
 import "api/commons/audit/omnichannel_events.proto";
@@ -196,5 +197,11 @@ message AuditEvent {
     //Tickets Events
     // EDIT update event
     TicketEvent ticket_event = 601;
+
+    // Compliance events
+    // compliance rnd query event
+    ComplianceRndQueryEvent compliance_rnd_query_event = 700;
+    // compliance rnd query cached event
+    ComplianceRndQueryEvent compliance_rnd_query_cached_event = 701;
   }
 }
