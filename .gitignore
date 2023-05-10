@@ -10,3 +10,12 @@ api-go
 *.go
 *.py
 *.py?
+pytcnapi
+*.py
+*.py?
+*.java
+*.js
+*.js?
+*.ts
+*.ts?
+node_modules
