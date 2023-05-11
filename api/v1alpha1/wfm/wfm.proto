@@ -16,11 +16,11 @@ syntax = "proto3";
 
 package api.v1alpha1.wfm;
 
-import "api/commons/org.proto";
-import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
+import "api/commons/wfm.proto";
+import "api/commons/org.proto";
 
 // WFM is responsible for call prediction and call volume calculations based on call skills and other parameters.
 service WFM {
@@ -32,6 +32,11 @@ service WFM {
   rpc ListSkillProfiles(ListSkillProfilesReq) returns (ListSkillProfilesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listskillprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]},
+      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+    };
+
   }
 
   // Updates the @name, and averages of a skill profile that has the given @skill_profile_sid.
@@ -45,6 +50,9 @@ service WFM {
   rpc UpdateSkillProfile(UpdateSkillProfileReq) returns (UpdateSkillProfileRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates the @proficiencies for the given skill profile's skills that belong the org sending the request.
@@ -56,6 +64,9 @@ service WFM {
   rpc UpdateSkillProfileProficiencies(UpdateSkillProfileProficienciesReq) returns (UpdateSkillProfileProficienciesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileproficiencies";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Get a skill profile that has the given @skill_profile_sid.
@@ -71,6 +82,9 @@ service WFM {
   rpc GetSkillProfile(GetSkillProfileReq) returns (GetSkillProfileRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Resyncs the skill profiles of the org sending the request.
@@ -79,9 +93,13 @@ service WFM {
   //   NONE
   // Errors:
   //   - grpc.Internal: error occurs when creating the new skills and skill profiles.
-  rpc ResyncSkillProfiles(ResyncSkillProfilesReq) returns (ResyncSkillProfilesRes) {
+  rpc ResyncSkillProfiles(ResyncSkillProfilesReq) returns (ResyncSkillProfilesRes){
     option (google.api.http).post = "/api/v1alpha1/wfm/resyncskillprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]},
+      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+    };
   }
 
   // Gets the last date of a skill profile resync for the org seding the request.
@@ -93,6 +111,10 @@ service WFM {
   rpc GetLastSkillProfileResyncDate(GetLastSkillProfileResyncDateReq) returns (GetLastSkillProfileResyncDateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getlastskillprofileresyncdate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]},
+      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+    };
   }
 
   // Tries to create an entry for the given forecasting parameters for the org sending the request.
@@ -105,6 +127,9 @@ service WFM {
   rpc UpsertForecastingParameters(UpsertForecastingParametersReq) returns (UpsertForecastingParametersRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastingparameters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the forecasting parameters for the org sending the request.
@@ -116,6 +141,9 @@ service WFM {
   rpc GetForecastingParameters(GetForecastingParametersReq) returns (GetForecastingParametersRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getforecastingparameters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the historical data for the org sending the request and the given @skill_profile_sid.
@@ -133,6 +161,9 @@ service WFM {
   rpc ListHistoricalData(ListHistoricalDataReq) returns (ListHistoricalDataRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Tries to create an entry for the given @delta for the org sending the request.
@@ -145,6 +176,9 @@ service WFM {
   rpc UpsertHistoricalDataDelta(UpsertHistoricalDataDeltaReq) returns (UpsertHistoricalDataDeltaRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadelta";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Tries to create entries for the given @deltas.
@@ -158,6 +192,9 @@ service WFM {
   rpc UpsertHistoricalDataDeltas(UpsertHistoricalDataDeltasReq) returns (UpsertHistoricalDataDeltasRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadeltas";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets all the skills that the org sending the request has.
@@ -169,6 +206,9 @@ service WFM {
   rpc ListSkills(ListSkillsReq) returns (ListSkillsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds and returns a call profile template for the org sending the request and the given @skill_profile_sid.
@@ -186,6 +226,9 @@ service WFM {
   rpc BuildCallProfileTemplateForSkillProfile(BuildCallProfileTemplateForSkillProfileReq) returns (BuildCallProfileTemplateForSkillProfileRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildcallprofiletemplateforskillprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
@@ -199,6 +242,9 @@ service WFM {
   rpc CreateInactiveSkillProfileMapping(CreateInactiveSkillProfileMappingReq) returns (CreateInactiveSkillProfileMappingRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createinactiveskillprofilemapping";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets a list of enums that represent all of the forecaster types that are currently available for use
@@ -206,9 +252,12 @@ service WFM {
   //  NONE
   // Errors:
   //  -grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
-  rpc GetAvailableRegressionForecasterModelTypes(GetAvailableRegressionForecasterModelTypesReq) returns (GetAvailableRegressionForecasterModelTypesRes) {
+  rpc GetAvailableRegressionForecasterModelTypes (GetAvailableRegressionForecasterModelTypesReq) returns (GetAvailableRegressionForecasterModelTypesRes){
     option (google.api.http).post = "/api/v1alpha1/wfm/getavailableregressionforecastermodeltypes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
@@ -219,9 +268,12 @@ service WFM {
   //   - grpc.NotFound: the skill profile is not found for the org.
   //   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
   //				            the given @inactive_skill_profile_sid is of an active skill profile.
-  rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes) {
+  rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes){
     option (google.api.http).post = "/api/v1alpha1/wfm/disconnectinactiveskillprofilemapping";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
@@ -235,6 +287,9 @@ service WFM {
   rpc DeleteHistoricalDataDeltas(DeleteHistoricalDataDeltasReq) returns (DeleteHistoricalDataDeltasRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletehistoricaldatadeltas";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the top N skill profiles with the highest calls_count for org sending the request where N is @max_number_of_profiles.
@@ -248,6 +303,9 @@ service WFM {
   rpc ListTopSkillProfiles(ListTopSkillProfilesReq) returns (ListTopSkillProfilesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listtopskillprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the total number of skill profiles associated with the org sending the request.
@@ -258,6 +316,9 @@ service WFM {
   rpc GetSkillProfilesCount(GetSkillProfilesCountReq) returns (GetSkillProfilesCountRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofilescount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds a profile forecast using the provided @call_profile_template.
@@ -273,6 +334,9 @@ service WFM {
   rpc BuildProfileForecastByInterval(BuildProfileForecastByIntervalReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyinterval";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds a profile forecast using the provided @call_profile_template.
@@ -289,6 +353,9 @@ service WFM {
   rpc BuildProfileForecastByIntervalWithStats(BuildProfileForecastByIntervalWithStatsReq) returns (stream BuildProfileForecastByIntervalWithStatsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyintervalwithstats";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -306,6 +373,9 @@ service WFM {
   rpc UpsertProfileForecast(UpsertProfileForecastReq) returns (UpsertProfileForecastRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertprofileforecast";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given @call_profile_template for the org sending the request.
@@ -317,6 +387,9 @@ service WFM {
   rpc CreateCallProfileTemplate(CreateCallProfileTemplateReq) returns (CreateCallProfileTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createcallprofiletemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a call profile template for the requesting org that has the given @call_profile_template_sid.
@@ -328,6 +401,9 @@ service WFM {
   rpc DeleteCallProfileTemplate(DeleteCallProfileTemplateReq) returns (DeleteCallProfileTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletecallprofiletemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates an entry for the @regression_template for the requesting org.
@@ -339,6 +415,9 @@ service WFM {
   rpc CreateRegressionTemplate(CreateRegressionTemplateReq) returns (CreateRegressionTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createregressiontemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a regression template for the requesting org that has the given @regression_template_sid.
@@ -350,6 +429,9 @@ service WFM {
   rpc DeleteRegressionTemplate(DeleteRegressionTemplateReq) returns (DeleteRegressionTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteregressiontemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets all the regression templates that the org sending the request has.
@@ -360,6 +442,9 @@ service WFM {
   rpc ListRegressionTemplates(ListRegressionTemplatesReq) returns (ListRegressionTemplatesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listregressiontemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the forecast data intervals for the given @skill_profile_sid.
@@ -371,6 +456,9 @@ service WFM {
   rpc ListForecastIntervalsForSkillProfile(ListForecastIntervalsForSkillProfileReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervalsforskillprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Generates a regression forecast using the provided @regression_template.
@@ -386,6 +474,9 @@ service WFM {
   rpc BuildRegressionForecastByInterval(BuildRegressionForecastByIntervalReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyinterval";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
@@ -398,9 +489,12 @@ service WFM {
   // Errors:
   //   - grpc.Invalid: the @regression_template in the request is invalid.
   //   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
-  rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq) returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
+  rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq)returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyintervalwithstats";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the call profile templates that the org sending the request has.
@@ -411,6 +505,9 @@ service WFM {
   rpc ListCallProfileTemplates(ListCallProfileTemplatesReq) returns (ListCallProfileTemplatesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcallprofiletemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds a regression forecast for the org using the given @regression_template and saves the resulting intervals in the db.
@@ -425,6 +522,9 @@ service WFM {
   rpc UpsertRegressionForecast(UpsertRegressionForecastReq) returns (UpsertRegressionForecastRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertregressionforecast";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Tries to create an entry for the given @delta for the org sending the request.
@@ -437,6 +537,9 @@ service WFM {
   rpc UpsertForecastDataDelta(UpsertForecastDataDeltaReq) returns (UpsertForecastDataDeltaRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadelta";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Tries to create entries for the given @deltas.
@@ -449,6 +552,9 @@ service WFM {
   rpc UpsertForecastDataDeltas(UpsertForecastDataDeltasReq) returns (UpsertForecastDataDeltasRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadeltas";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes forecast data intervals/deltas based on the parameters provided.
@@ -465,6 +571,9 @@ service WFM {
   rpc DeleteForecastIntervals(DeleteForecastIntervalsReq) returns (DeleteForecastIntervalsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteforecastintervals";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Retrieves the history for all the skill profiles of the requesting org.
@@ -478,6 +587,9 @@ service WFM {
   rpc ListHistoricalDataForAllSkillProfiles(ListHistoricalDataForAllSkillProfilesReq) returns (ListHistoricalDataForAllSkillProfilesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldataforallskillprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Converts the given @profile_tod and @profile_woms to a ProfileDOW and ProfileMOY.
@@ -489,6 +601,9 @@ service WFM {
   rpc BuildDOWAndMOYProfiles(BuildDOWAndMOYProfilesReq) returns (BuildDOWAndMOYProfilesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/builddowandmoyprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Calculates and returns the averages in the training data for the given @skill_profile_sid.
@@ -504,6 +619,9 @@ service WFM {
   rpc CalculateTrainingDataAveragesForSkillProfile(CalculateTrainingDataAveragesForSkillProfileReq) returns (CalculateTrainingDataAveragesForSkillProfileRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/calculatetrainingdataaveragesforskillprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
@@ -522,7 +640,12 @@ service WFM {
   rpc UpdateSkillProfileAveragesUsingHistoricalData(UpdateSkillProfileAveragesUsingHistoricalDataReq) returns (UpdateSkillProfileAveragesUsingHistoricalDataRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileaveragesusinghistoricaldata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]},
+      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+    };
   }
+
 
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
@@ -543,6 +666,9 @@ service WFM {
   rpc UpdateCallCenterNode(UpdateCallCenterNodeReq) returns (UpdateCallCenterNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatecallcenternode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given client @node for the org sending the request and @parent_sid in the node.
@@ -559,6 +685,9 @@ service WFM {
   rpc CreateClientNode(CreateClientNodeReq) returns (CreateClientNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createclientnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a client node for the org sending the request that has the given @client_node_sid and @schedule_scenario_sid.
@@ -574,6 +703,9 @@ service WFM {
   rpc UpdateClientNode(UpdateClientNodeReq) returns (UpdateClientNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateclientnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given location @node for the org sending the request and parent @client_node_sid.
@@ -590,6 +722,9 @@ service WFM {
   rpc CreateLocationNode(CreateLocationNodeReq) returns (CreateLocationNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createlocationnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a location node corresponding to the given @location_node_sid and org sending the request with the provided parameters.
@@ -605,6 +740,9 @@ service WFM {
   rpc UpdateLocationNode(UpdateLocationNodeReq) returns (UpdateLocationNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatelocationnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given program @node for the org sending the request and parent @location_node_sid.
@@ -621,6 +759,9 @@ service WFM {
   rpc CreateProgramNode(CreateProgramNodeReq) returns (CreateProgramNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createprogramnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -636,6 +777,9 @@ service WFM {
   rpc UpdateProgramNode(UpdateProgramNodeReq) returns (UpdateProgramNodeRes) {
     option (google.api.http).post = "/api/v1alpha/wfm/updateprogramnode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given @constraint_rule for the org sending the request.
@@ -654,6 +798,9 @@ service WFM {
   rpc CreateConstraintRule(CreateConstraintRuleReq) returns (CreateConstraintRuleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createconstraintrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates the constraint rule corresponding for given @contraint_rule_sid for the org sending the request with the provided parameters.
@@ -674,6 +821,9 @@ service WFM {
   rpc UpdateConstraintRule(UpdateConstraintRuleReq) returns (UpdateConstraintRuleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateconstraintrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a constraint rule with the coresponding @constraint_rule_sid for the org sending the request.
@@ -687,6 +837,9 @@ service WFM {
   rpc DeleteConstraintRule(DeleteConstraintRuleReq) returns (DeleteConstraintRuleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteconstraintrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given @non_skill_activity for the org sending the request.
@@ -701,7 +854,11 @@ service WFM {
   rpc CreateNonSkillActivity(CreateNonSkillActivityReq) returns (CreateNonSkillActivityRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createnonskillactivity";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
+
 
   // Updates a non skill activity that has the given @non_skill_activity_sid with the given values.
   // Required permissions:
@@ -713,6 +870,9 @@ service WFM {
   rpc UpdateNonSkillActivity(UpdateNonSkillActivityReq) returns (UpdateNonSkillActivityRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatenonskillactivity";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
@@ -724,6 +884,9 @@ service WFM {
   rpc ListNonSkillActivityAssociations(ListNonSkillActivityAssociationsReq) returns (ListNonSkillActivityAssociationsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listnonskillactivityassociations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the candidate scheduling activities for a constraint or placement rule, inherited through given @parent_of_rule for @schedule_scenario_sid for the org making the request.
@@ -740,6 +903,9 @@ service WFM {
   rpc ListCandidateSchedulingActivities(ListCandidateSchedulingActivitiesReq) returns (ListCandidateSchedulingActivitiesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcandidateschedulingactivities";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates an agent group with the provided parameters.
@@ -755,6 +921,9 @@ service WFM {
   rpc CreateAgentGroup(CreateAgentGroupReq) returns (CreateAgentGroupRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createagentgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
@@ -771,6 +940,9 @@ service WFM {
   rpc UpdateAgentGroup(UpdateAgentGroupReq) returns (UpdateAgentGroupRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateagentgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
@@ -786,6 +958,9 @@ service WFM {
   rpc UpdateWFMAgent(UpdateWFMAgentReq) returns (UpdateWFMAgentRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatewfmagent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists all wfm agents for the org sending the request.
@@ -800,6 +975,9 @@ service WFM {
   rpc ListAllWFMAgents(ListAllWFMAgentsReq) returns (ListAllWFMAgentsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listallwfmagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists all candidate wfm agents for the org sending the request and given @agent_group_sid.
@@ -813,6 +991,9 @@ service WFM {
   rpc ListCandidateWFMAgents(ListCandidateWFMAgentsReq) returns (ListCandidateWFMAgentsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcandidatewfmagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists all wfm agents who are not grouped with any agent group for the given org sending the request that were created at or after the given @created_after_datetime.
@@ -827,6 +1008,9 @@ service WFM {
   rpc ListUngroupedWFMAgents(ListUngroupedWFMAgentsReq) returns (ListUngroupedWFMAgentsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listungroupedwfmagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
@@ -838,6 +1022,9 @@ service WFM {
   rpc ListWFMAgentsAssociatedWithAgentGroup(ListWFMAgentsAssociatedWithAgentGroupReq) returns (ListWFMAgentsAssociatedWithAgentGroupRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listwfmagentsassociatedwithagentgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
@@ -851,6 +1038,9 @@ service WFM {
   rpc CreateWFMAgentMemberships(CreateWFMAgentMembershipsReq) returns (CreateWFMAgentMembershipsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createwfmagentmemberships";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
@@ -863,6 +1053,9 @@ service WFM {
   rpc DeleteWFMAgentMemberships(DeleteWFMAgentMembershipsReq) returns (DeleteWFMAgentMembershipsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletewfmagentmemberships";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
@@ -877,6 +1070,9 @@ service WFM {
   rpc BuildAgentDiagnostics(BuildAgentDiagnosticsReq) returns (BuildAgentDiagnosticsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildagentdiagnostics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a shift template for the org sending the request with the provided parameters
@@ -893,6 +1089,9 @@ service WFM {
   rpc CreateShiftTemplate(CreateShiftTemplateReq) returns (CreateShiftTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createshifttemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a shift template for the given @shift_template_sid and org sending the request with the provided parameters.
@@ -909,6 +1108,9 @@ service WFM {
   rpc UpdateShiftTemplate(UpdateShiftTemplateReq) returns (UpdateShiftTemplateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshifttemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
@@ -920,6 +1122,9 @@ service WFM {
   rpc ListShiftTemplatesBySids(ListShiftTemplatesBySidsReq) returns (ListShiftTemplatesBySidsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshifttemplatesbysids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds and returns the diagnostics for the shift template associated with the given @shift_template_sid for the org sending the request.
@@ -931,6 +1136,9 @@ service WFM {
   rpc BuildShiftTemplateDiagnostics(BuildShiftTemplateDiagnosticsReq) returns (BuildShiftTemplateDiagnosticsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildshifttemplatediagnostics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a placement rule for org sending the request with the provided parameters.
@@ -947,6 +1155,9 @@ service WFM {
   rpc CreatePlacementRule(CreatePlacementRuleReq) returns (CreatePlacementRuleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createplacementrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a placement rule corresponding with the given @placement_rule_sid for the org sending the request with the provided parameters.
@@ -963,6 +1174,9 @@ service WFM {
   rpc UpdatePlacementRule(UpdatePlacementRuleReq) returns (UpdatePlacementRuleRes) {
     option (google.api.http).post = "/api/v1alpha/wfm/updateplacementrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a placement rule with the coresponding @placement_rule_sid for the org sending the request.
@@ -976,6 +1190,9 @@ service WFM {
   rpc DeletePlacementRule(DeletePlacementRuleReq) returns (DeletePlacementRuleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteplacementrule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates an open times pattern for the org sending the request with the provided parameters.
@@ -990,6 +1207,9 @@ service WFM {
   rpc CreateOpenTimesPattern(CreateOpenTimesPatternReq) returns (CreateOpenTimesPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createopentimespattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates an open times pattern for the given @open_times_pattern_sid and org sending the request with the provided parameters.
@@ -1004,6 +1224,9 @@ service WFM {
   rpc UpdateOpenTimesPattern(UpdateOpenTimesPatternReq) returns (UpdateOpenTimesPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateopentimespattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes an open times pattern with the coresponding @open_times_pattern_sid for the org sending the request.
@@ -1016,6 +1239,9 @@ service WFM {
   rpc DeleteOpenTimesPattern(DeleteOpenTimesPatternReq) returns (DeleteOpenTimesPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteopentimespattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
@@ -1031,6 +1257,9 @@ service WFM {
   rpc GetOpenTimesBitmaps(GetOpenTimesBitmapsReq) returns (GetOpenTimesBitmapsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getopentimesbitmaps";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates an agent availability pattern for the org sending the request with the provided parameters.
@@ -1045,6 +1274,9 @@ service WFM {
   rpc CreateAgentAvailabilityPattern(CreateAgentAvailabilityPatternReq) returns (CreateAgentAvailabilityPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createagentavailabilitypattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates an agent availability pattern for the given @agent_availability_pattern_sid and org sending the request with the provided parameters.
@@ -1056,9 +1288,12 @@ service WFM {
   //   - grpc.Invalid: one or more fields in the @agent_availability_pattern have invalid values.
   //   - grpc.Internal: error occurs when updating the agent avilability pattern.
   //   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent availability pattern.
-  rpc UpdateAgentAvailabilityPattern(UpdateAgentAvailabilityPatternReq) returns (UpdateAgentAvailabilityPatternRes) {
+  rpc UpdateAgentAvailabilityPattern(UpdateAgentAvailabilityPatternReq) returns (UpdateAgentAvailabilityPatternRes){
     option (google.api.http).post = "/api/v1alpha1/wfm/updateagentavailabilitypattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes an agent availability pattern with the coresponding @agent_availability_pattern_sid for the org sending the request.
@@ -1071,6 +1306,9 @@ service WFM {
   rpc DeleteAgentAvailabilityPattern(DeleteAgentAvailabilityPatternReq) returns (DeleteAgentAvailabilityPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteagentavailabilitypattern";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the inherited, own, and resulting bitmaps for the agent availability patterns of @entities_to_check for @schedule_scenario_sid and the org sending the request.
@@ -1088,6 +1326,9 @@ service WFM {
   rpc GetAvailabilityBitmaps(GetAvailabilityBitmapsReq) returns (GetAvailabilityBitmapsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getavailabilitybitmaps";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Upserts an association for the given @non_skill_activity_sid to the given @node.
@@ -1106,6 +1347,9 @@ service WFM {
   rpc UpsertNonSkillActivityAssociation(UpsertNonSkillActivityAssociationReq) returns (UpsertNonSkillActivityAssociationRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertnonskillactivityassociation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates skill proficiencies for the org sending the request with the provided parameters.
@@ -1123,6 +1367,9 @@ service WFM {
   rpc CreateSkillProficiencies(CreateSkillProficienciesReq) returns (CreateSkillProficienciesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createskillproficiencies";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates skill proficiencies corresponding to the given @skill_proficiency_sids and org sending the request with the provided parameters.
@@ -1140,6 +1387,9 @@ service WFM {
   rpc UpdateSkillProficiencies(UpdateSkillProficienciesReq) returns (UpdateSkillProficienciesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillproficiencies";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a skill proficiency with the corresponding @skill_proficiency_sid for the org sending the request.
@@ -1152,6 +1402,9 @@ service WFM {
   rpc DeleteSkillProficiency(DeleteSkillProficiencyReq) returns (DeleteSkillProficiencyRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteskillproficiency";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Copies the existing scenario with the @scenario_sid_to_copy for the org sending the request using the provided parameters.
@@ -1166,6 +1419,9 @@ service WFM {
   rpc CopyScenario(CopyScenarioReq) returns (CopyScenarioRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/copyscenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a new schedule scenario for the org sending the request with the provided parameters.
@@ -1179,9 +1435,12 @@ service WFM {
   // Errors:
   //   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
   //   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
-  rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes) {
+  rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes){
     option (google.api.http).post = "/api/v1alpha1/wfm/createschedulescenariowithnodes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
@@ -1197,6 +1456,9 @@ service WFM {
   rpc UpdateScheduleScenario(UpdateScheduleScenarioReq) returns (UpdateScheduleScenarioRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateschedulescenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity parameter.
@@ -1211,6 +1473,9 @@ service WFM {
   rpc ListConfigEntities(ListConfigEntitiesReq) returns (ListConfigEntitiesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listconfigentities";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
@@ -1223,6 +1488,9 @@ service WFM {
   rpc DeleteShiftInstances(DeleteShiftInstancesReq) returns (DeleteShiftInstancesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteshiftinstances";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds and returns the diagnostics and @nodes_checked for the @node_to_check for @schedule_scenario_sid and the org sending the request.
@@ -1236,6 +1504,9 @@ service WFM {
   rpc BuildNodeDiagnostics(BuildNodeDiagnosticsReq) returns (BuildNodeDiagnosticsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildnodediagnostics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds and returns the global diagnostics and @nodes_checked for the @schedule_scenario_sid and the org sending the request.
@@ -1248,6 +1519,9 @@ service WFM {
   rpc BuildGlobalDiagnostics(BuildGlobalDiagnosticsReq) returns (BuildGlobalDiagnosticsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildglobaldiagnostics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the published schedule for the corresponding @datetime_range for the org sending the request.
@@ -1267,6 +1541,9 @@ service WFM {
   rpc GetPublishedSchedule(GetPublishedScheduleReq) returns (GetPublishedScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the required calls intervals for the published schedule for the corresponding @viewing_range, for the org sending the request.
@@ -1279,6 +1556,9 @@ service WFM {
   rpc GetPublishedScheduleRequiredCalls(GetPublishedScheduleRequiredCallsReq) returns (GetPublishedScheduleRequiredCallsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedulerequiredcalls";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the required calls intervals for the specified draft schedule for the corresponding @viewing_range, for the org sending the request.
@@ -1291,6 +1571,9 @@ service WFM {
   rpc GetDraftScheduleRequiredCalls(GetDraftScheduleRequiredCallsReq) returns (GetDraftScheduleRequiredCallsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedulerequiredcalls";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a draft schedule for the org sending the request with the provided parameters.
@@ -1305,6 +1588,9 @@ service WFM {
   rpc CreateDraftSchedule(CreateDraftScheduleReq) returns (CreateDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createdraftschedule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
@@ -1314,6 +1600,9 @@ service WFM {
   rpc BuildDraftSchedule(BuildDraftScheduleReq) returns (BuildDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/builddraftschedule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
@@ -1327,7 +1616,13 @@ service WFM {
   //   - grpc.Invalid: the parameters in the @req are invalid..
   //   - grpc.NotFound: @draft_schedule_sid doesn't exist.
   //   - grpc.Internal: error occurs when publishing the draft schedule.
-  rpc PublishDraftSchedule(PublishDraftScheduleReq) returns (PublishDraftScheduleRes);
+  rpc PublishDraftSchedule(PublishDraftScheduleReq) returns (PublishDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/publishdraftschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
+  }
 
   // Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
   // The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
@@ -1346,6 +1641,9 @@ service WFM {
   rpc GetDraftSchedule(GetDraftScheduleReq) returns (GetDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the draft schedules whose scheduling_range overlaps the given @datetime_range for the org sending the request.
@@ -1358,6 +1656,9 @@ service WFM {
   rpc ListDraftSchedules(ListDraftSchedulesReq) returns (ListDraftSchedulesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listdraftschedules";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
@@ -1371,6 +1672,9 @@ service WFM {
   rpc DeleteDraftSchedule(DeleteDraftScheduleReq) returns (DeleteDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletedraftschedule";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates a shift instance for the org sending the request with the provided parameters.
@@ -1382,6 +1686,9 @@ service WFM {
   rpc CreateShiftInstance(CreateShiftInstanceReq) returns (CreateShiftInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstance";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Swaps a list of shift instances to have a different @wfm_agent_sid.
@@ -1393,6 +1700,9 @@ service WFM {
   rpc SwapShiftInstances(SwapShiftInstancesReq) returns (SwapShiftInstancesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Updates a shift instance for the org sending the request with the provided parameters.
@@ -1404,6 +1714,9 @@ service WFM {
   rpc UpdateShiftInstance(UpdateShiftInstanceReq) returns (UpdateShiftInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstance";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists shift segments for the specified shift instances for the org sending the request.
@@ -1418,6 +1731,9 @@ service WFM {
   rpc ListShiftSegmentsByShiftInstanceSids(ListShiftSegmentsByShiftInstanceSidsReq) returns (ListShiftSegmentsByShiftInstanceSidsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshiftsegmentsbyshiftinstancesids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Creates the given @scheduling_target for the org making the request.
@@ -1432,6 +1748,9 @@ service WFM {
   rpc SetSchedulingTarget(SetSchedulingTargetReq) returns (SetSchedulingTargetRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/setschedulingtarget";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the @own_scheduling_target, @inherited_scheduling_target, and @resulting_scheduling_target for the given @node_selector and the org making the request.
@@ -1444,6 +1763,9 @@ service WFM {
   rpc GetSchedulingTarget(GetSchedulingTargetReq) returns (GetSchedulingTargetRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getschedulingtarget";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Deletes the scheduling target of the corresponding @node_selector for the org sending the request.
@@ -1456,6 +1778,9 @@ service WFM {
   rpc DeleteSchedulingTarget(DeleteSchedulingTargetReq) returns (DeleteSchedulingTargetRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteschedulingtarget";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
@@ -1470,6 +1795,9 @@ service WFM {
   rpc GetPerformanceMetrics(GetPerformanceMetricsReq) returns (GetPerformanceMetricsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getperformancemetrics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 
   // Lists the required calls intervals for the given @node_selector over the given @datetime_range for the org making the request.
@@ -1482,6 +1810,9 @@ service WFM {
   rpc ListRequiredCallsIntervals(ListRequiredCallsIntervalsReq) returns (ListRequiredCallsIntervalsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listrequiredcallsintervals";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+    };
   }
 }
 
@@ -1491,7 +1822,7 @@ message Skill {
   // ID of the skill profile skill.
   int64 skill_sid = 1;
   // type of the skill.
-  api.commons.SkillType.Enum client_skill_type = 2;
+  commons.SkillType.Enum client_skill_type = 2;
   // skill name.
   string name = 3;
   // approximate date that the skill was deleted, if absent, the skill has not been deleted.
@@ -1641,7 +1972,7 @@ message GetLastSkillProfileResyncDateRes {
 message UpsertForecastingParametersReq {
   reserved 1, 2;
   // parameters used for forecasts and training data samples.
-  api.commons.ForecastingParameters forecasting_parameters = 3;
+  commons.ForecastingParameters forecasting_parameters = 3;
 }
 
 // Response message for the UpsertForecastingParameters RPC.
@@ -1653,13 +1984,13 @@ message GetForecastingParametersReq {}
 // Response message for the GetForecastingParameters RPC.
 message GetForecastingParametersRes {
   // parameters used for forecasts and training data samples.
-  api.commons.ForecastingParameters forecasting_parameters = 1;
+  commons.ForecastingParameters forecasting_parameters = 1;
 }
 
 // Message type specifying an interval of calls linked to a skill profile used for historical the forecaster
 message HistoricalDataInterval {
   // time that this interval starts at.
-  google.protobuf.Timestamp start_datetime = 1;
+   google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile that this interval belongs to.
   int64 skill_profile_sid = 2;
 
@@ -1744,17 +2075,17 @@ message CallProfileTemplate {
   // Name of the template.
   string name = 2;
   // call profile for total calls
-  api.commons.CallProfileGroupCalls total_calls_profile = 3;
+  commons.CallProfileGroupCalls total_calls_profile = 3;
   // call profile for total abandoned calls
-  api.commons.CallProfileGroupCalls total_abandoned_calls_profile = 4;
+  commons.CallProfileGroupCalls total_abandoned_calls_profile = 4;
   // call profile for ASA
-  api.commons.CallProfileGroupAvgs average_speed_of_answer_profile = 5;
+  commons.CallProfileGroupAvgs average_speed_of_answer_profile = 5;
   // call profile for AHT
-  api.commons.CallProfileGroupAvgs average_handle_time_profile = 6;
+  commons.CallProfileGroupAvgs average_handle_time_profile = 6;
   // call profile for ACW
-  api.commons.CallProfileGroupAvgs average_after_call_work_profile = 7;
+  commons.CallProfileGroupAvgs average_after_call_work_profile = 7;
   // call profile for ATAB
-  api.commons.CallProfileGroupAvgs average_time_to_abort_profile = 8;
+  commons.CallProfileGroupAvgs average_time_to_abort_profile = 8;
   // Fixed average for speed of answer
   float fixed_average_speed_of_answer = 9;
   // Fixed average for handle time
@@ -1794,9 +2125,9 @@ message CreateInactiveSkillProfileMappingRes {}
 message GetAvailableRegressionForecasterModelTypesReq {}
 
 // Response message for the GetAvailableRegressionForecasterModelTypes RPC.
-message GetAvailableRegressionForecasterModelTypesRes {
+message GetAvailableRegressionForecasterModelTypesRes  {
   // List of all the available forecaster types currently available.
-  repeated api.commons.RegressionForecasterModelTypes model_types = 1;
+  repeated commons.RegressionForecasterModelTypes model_types = 1;
 }
 
 // Request message for the DisconnectInactiveSkillProfileMapping RPC.
@@ -1842,7 +2173,7 @@ message GetSkillProfilesCountRes {
 }
 
 // Request message for the BuildProfileForecastByInterval RPC
-message BuildProfileForecastByIntervalReq {
+message BuildProfileForecastByIntervalReq{
   // Template to use to generate the profile forecast.
   CallProfileTemplate call_profile_template = 1;
   // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
@@ -1856,7 +2187,7 @@ message BuildProfileForecastByIntervalReq {
 // Message type specifying calls in an interval for a specific skill profile
 message CallDataByInterval {
   // Start time of the interval.
-  google.protobuf.Timestamp start_datetime = 1;
+  google.protobuf.Timestamp  start_datetime = 1;
   // ID of the skill profile to forecast for (not set in profile forecasts).
   int64 skill_profile_sid = 2;
   // the number of calls in this interval with this skill profile (answered + unanswered).
@@ -1881,7 +2212,7 @@ message CallDataByInterval {
 }
 
 // Request message for the BuildProfileForecastByIntervalWithStats RPC
-message BuildProfileForecastByIntervalWithStatsReq {
+message BuildProfileForecastByIntervalWithStatsReq{
   // Template to use to generate the profile forecast.
   CallProfileTemplate call_profile_template = 1;
   // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
@@ -1925,7 +2256,7 @@ message CreateCallProfileTemplateReq {
 }
 
 // Response message for the CreateCallProfileTemplate RPC
-message CreateCallProfileTemplateRes {}
+message CreateCallProfileTemplateRes{}
 
 // Request message for the DeleteCallProfileTemplate RPC
 message DeleteCallProfileTemplateReq {
@@ -1934,7 +2265,7 @@ message DeleteCallProfileTemplateReq {
 }
 
 // Response message for the DeleteCallProfileTemplate RPC
-message DeleteCallProfileTemplateRes {}
+message DeleteCallProfileTemplateRes{}
 
 // Message type specifying the parameters for a regression forecast
 message RegressionTemplate {
@@ -1943,7 +2274,7 @@ message RegressionTemplate {
   // Name of the regression template.
   string name = 2;
   // Selected algorithmic method to be used
-  api.commons.RegressionForecasterModelTypes model_type = 3;
+  commons.RegressionForecasterModelTypes model_type = 3;
   // Number of weeks of training data to exclude when building a forecast.
   int32 exclude_call_data_for_n_weeks = 4;
   // Number of weeks in the past to emphasize;
@@ -1956,7 +2287,7 @@ message RegressionTemplate {
   // Whether or not to exclude intervals with no calls.
   bool exclude_intervals_with_no_calls = 8;
   // Processing type for the averages.
-  api.commons.RegressionForecasterAvgsProcessingType avgs_processing_type = 9;
+  commons.RegressionForecasterAvgsProcessingType avgs_processing_type = 9;
   // Whether or not to include seasonality.
   bool include_seasonality = 10;
   // Whether or not to include trend.
@@ -1991,7 +2322,7 @@ message ListRegressionTemplatesRes {
 }
 
 // Request message for the BuildRegressionForecastByInterval RPC
-message BuildRegressionForecastByIntervalReq {
+message BuildRegressionForecastByIntervalReq{
   // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
   // optional
   float average_speed_of_answer_in_seconds = 1;
@@ -2096,7 +2427,7 @@ message UpsertRegressionForecastReq {
 }
 
 // Response message for the UpsertRegressionForecast RPC
-message UpsertRegressionForecastRes {}
+message UpsertRegressionForecastRes {};
 
 // Request message for the UpsertForecastDataDelta RPC
 message UpsertForecastDataDeltaReq {
@@ -2133,7 +2464,7 @@ message DeleteForecastIntervalsReq {
     // sids of the intervals/deltas to be deleted
     repeated int64 sids = 1;
   }
-  oneof delete_param {
+    oneof delete_param{
     // ID of the skill profile of which to delete the intervas/deltas.
     int64 skill_profile_sid = 1;
     // Wrapper for SIDs of intervals to be deleted
@@ -2144,7 +2475,7 @@ message DeleteForecastIntervalsReq {
 }
 
 // Response message for the DeleteForecastIntervals RPC
-message DeleteForecastIntervalsRes {}
+message DeleteForecastIntervalsRes {};
 
 // Request message for the ListHistoricalDataForAllSkillProfiles RPC
 message ListHistoricalDataForAllSkillProfilesReq {}
@@ -2153,14 +2484,14 @@ message ListHistoricalDataForAllSkillProfilesReq {}
 message ListHistoricalDataForAllSkillProfilesRes {
   // History intervals sorted by @start_datetime.
   repeated HistoricalDataInterval history = 1;
-}
+};
 
 // Request message for the BuildDOWAndMOYProfiles RPC
 message BuildDOWAndMOYProfilesReq {
   // ProfileTOD to use to build the ProfileDOW and ProfileMOY
-  api.commons.ProfileTOD profile_tod = 1;
+  commons.ProfileTOD profile_tod = 1;
   // ProfileWOMS to use to build the ProfileDOW and ProfileMOY
-  api.commons.ProfileWOMS profile_woms = 2;
+  commons.ProfileWOMS profile_woms = 2;
   // Indicates if the @profile_tod and @profile_woms belongs to the average fields of a call profile template.
   bool is_average_profile = 3;
 }
@@ -2168,9 +2499,9 @@ message BuildDOWAndMOYProfilesReq {
 // Response message for the BuildDOWAndMOYProfiles RPC
 message BuildDOWAndMOYProfilesRes {
   // Generated ProfileDOW from the request parameters.
-  api.commons.ProfileDOW profile_dow = 1;
+  commons.ProfileDOW profile_dow = 1;
   // Generated ProfileMOY from the request parameters.
-  api.commons.ProfileMOY profile_moy = 2;
+  commons.ProfileMOY profile_moy = 2;
 }
 
 // Request message for the CalculateTrainingDataAveragesForSkillProfile RPC
@@ -2195,7 +2526,7 @@ message UpdateSkillProfileAveragesUsingHistoricalDataReq {
   // The datetime range of the training data to use to calculate the averages, if a nil range is given the following range is used:
   // @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
   // If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
-  api.commons.DatetimeRange datetime_range = 2;
+  commons.DatetimeRange datetime_range = 2;
   // If true, it will exclude skill profiles that have manual averages in them from the calculation (even if those skill profiles are in @skill_profile_sids).
   // Otherwise they will be included in the calculation.
   bool exclude_skill_profiles_with_manual_averages = 3;
@@ -2240,7 +2571,7 @@ message CallCenterNode {
   // Datetime that the node was set to inactive, if not set then the node is currently active.
   google.protobuf.Timestamp datetime_set_to_inactive = 4;
   // Call Center TimeZone
-  api.commons.TimeZone time_zone_val = 5;
+  commons.TimeZone time_zone_val = 5;
   // ID of the schedule scenario that the call center node belongs to.
   int64 schedule_scenario_sid = 6;
   // client nodes that are children of call center node
@@ -2283,7 +2614,7 @@ message ClientNode {
   // Datetime that the node was set to inactive, if not set then the node is currently active.
   google.protobuf.Timestamp datetime_set_to_inactive = 5;
   // Client TimeZone
-  api.commons.TimeZone time_zone_val = 6;
+  commons.TimeZone time_zone_val = 6;
   // ID of the schedule scenario that the client node belongs to.
   int64 schedule_scenario_sid = 7;
   // Location Nodes associated with @program_node_sid.
@@ -2337,7 +2668,7 @@ message LocationNode {
   // Datetime that the node was set to inactive, if not set then the node is currently active.
   google.protobuf.Timestamp datetime_set_to_inactive = 5;
   // Timezone of this node.
-  api.commons.TimeZone time_zone_val = 6;
+  commons.TimeZone time_zone_val = 6;
   // Indicates whether on not the @shrinkage_value is a percentage (true=percentage, false=agents).
   bool shrinkage_is_percentage = 7;
   // Value of the shrinkage.
@@ -2433,8 +2764,8 @@ message CreateProgramNodeRes {
 
 // Request message for the UpdateProgramNode RPC
 message UpdateProgramNodeReq {
-  // Program node to update.
-  ProgramNode program_node = 1;
+    // Program node to update.
+    ProgramNode program_node = 1;
 }
 
 // Response messsage for the UpdateProgramNode RPC
@@ -2444,7 +2775,7 @@ message ParentEntity {
   // ID of a parent entity
   int64 parent_sid = 1;
   // Type of entity that the @parent_sid will reference.
-  api.commons.ConfigEntityType parent_type = 2;
+  commons.ConfigEntityType parent_type = 2;
 }
 
 message ConstraintRule {
@@ -2459,23 +2790,23 @@ message ConstraintRule {
   // Ammount of time that the rule will be applied for.
   int32 val_count = 5;
   // Measuring unit to be used by @val_count.
-  api.commons.ConstraintTimeUnit val_unit = 6;
+  commons.ConstraintTimeUnit val_unit = 6;
   // Specifies often @val_count will be repeated.
   int32 per_count = 7;
   // Measuring unit to be used by @per_count.
-  api.commons.ConstraintTimeUnit per_unit = 8;
+  commons.ConstraintTimeUnit per_unit = 8;
   // Priority value, higher value means higher priority.
   int32 priority = 9;
   // Whether or not the rule has infinite priority
   bool is_priority_infinite = 10;
   // The type that this rule whill be.
-  api.commons.ConstraintRuleType rule_type = 11;
+  commons.ConstraintRuleType rule_type = 11;
   // Refers to a skill_proficiency_sid if @rule_type is MIN_SKILL_LEVEL, and otherwise refers to a scheduling_activity.
   int64 target_sid = 12;
   // ID of the schedule scenario that the constraint rule belongs to.
   int64 schedule_scenario_sid = 13;
   // Entity associated with @target_sid.
-  oneof member_target_entity {
+  oneof member_target_entity{
     // The scheduling_activity associated with @target_sid.
     SchedulingActivity scheduling_activity = 14;
     // The skill_proficienct associated with @target_sid.
@@ -2563,15 +2894,15 @@ message UpdateNonSkillActivityReq {
 message UpdateNonSkillActivityRes {}
 
 // Request message for the ListNonSkillActivityAssociations RPC
-message ListNonSkillActivityAssociationsReq {
+message ListNonSkillActivityAssociationsReq{
   // Entity to check for relationships with the non skill activities.
   ParentEntity associated_entity = 1;
   // Type of relationship between non skill activity and the @associated_entity.
-  api.commons.ConfigRelationshipType relationship_type = 2;
+  commons.ConfigRelationshipType relationship_type = 2;
 }
 
 // Response message for the ListNonSkillActivityAssociations RPC
-message ListNonSkillActivityAssociationsRes {
+message ListNonSkillActivityAssociationsRes{
   // ID of the non skill activities found to have the @relationship_type with the @associated_entity in the request.
   repeated int64 non_skill_activity_sids = 1;
 }
@@ -2590,7 +2921,7 @@ message SchedulingActivity {
 }
 
 // Request message for the ListCandidateSchedulingActivitiesReq RPC
-message ListCandidateSchedulingActivitiesReq {
+message ListCandidateSchedulingActivitiesReq{
   // The parent who the rule will inherit candidate scheduling activities from.
   // May be any node, an agent_group, or shift template.
   // To get candidate scheduling activities for rules belonging to a wfm agent, @parent_of_rule should be the agent group the wfm agent belongs to.
@@ -2600,7 +2931,7 @@ message ListCandidateSchedulingActivitiesReq {
 }
 
 // Response message for the ListCandidateSchedulingActivitiesRes RPC
-message ListCandidateSchedulingActivitiesRes {
+message ListCandidateSchedulingActivitiesRes{
   repeated SchedulingActivity scheduling_activities = 1;
 }
 
@@ -2641,9 +2972,9 @@ message CreateAgentGroupRes {
 }
 
 // Request message for the UpdateAgentGroup RPC
-message UpdateAgentGroupReq {
-  // AgentGroup to update
-  AgentGroup agent_group = 1;
+message UpdateAgentGroupReq{
+    // AgentGroup to update
+    AgentGroup agent_group = 1;
 }
 
 // Response message for the UpdateAgentGroup RPC
@@ -2698,7 +3029,7 @@ message ListAllWFMAgentsRes {
   // List of all wfm agents that belong to the org sending the request.
   repeated WFMAgent wfm_agents = 1;
   // Represents a list of agent groups which are associated with an agent.
-  message AgentGroupsByAgent {
+  message AgentGroupsByAgent{
     repeated AgentGroup agent_groups = 1;
   }
   // Correlating list of agent groups that the agent with the same index is a member of.
@@ -2736,19 +3067,19 @@ message ListUngroupedWFMAgentsRes {
 }
 
 // Request message for the ListWFMAgentsAssociatedWithAgentGroup RPC
-message ListWFMAgentsAssociatedWithAgentGroupReq {
+message ListWFMAgentsAssociatedWithAgentGroupReq{
   // ID of the agent group that the wfm agents have a membership with.
   int64 agent_group_sid = 1;
 }
 
 // Response message for the ListWFMAgentsAssociatedWithAgentGroup RPC
-message ListWFMAgentsAssociatedWithAgentGroupRes {
+message ListWFMAgentsAssociatedWithAgentGroupRes{
   // ID of the wfm agents found to have a relationship with the @agent_group_sid in the request.
   repeated int64 wfm_agent_sids = 1;
 }
 
 // Request message for the BuildAgentDiagnostics RPC
-message BuildAgentDiagnosticsReq {
+message BuildAgentDiagnosticsReq{
   // ID of the wfm agent to build diagnostics for.
   int64 wfm_agent_sid = 1;
   // ID of the schedule scenario that the wfm agent belongs to.
@@ -2759,7 +3090,7 @@ message BuildAgentDiagnosticsReq {
 }
 
 // Response message for the BuildAgentDiagnostics RPC
-message BuildAgentDiagnosticsRes {
+message BuildAgentDiagnosticsRes{
   // Diagnostics built for the given req.
   // Will only contain one element if build for a single @wfm_agent_sid.
   // Will contain one element for each WFM agent if build for an @agent_group_sid.a
@@ -2767,7 +3098,7 @@ message BuildAgentDiagnosticsRes {
 }
 
 // Request message for the CreateWFMAgentMemberships RPC
-message CreateWFMAgentMembershipsReq {
+message CreateWFMAgentMembershipsReq{
   // ID of the wfm agents to create the association of.
   repeated int64 wfm_agent_sids = 1;
   // ID of the agent group to that the agents associate with.
@@ -2777,10 +3108,10 @@ message CreateWFMAgentMembershipsReq {
 }
 
 // Response message for CreateWFMAgentMemberships RPC
-message CreateWFMAgentMembershipsRes {}
+message CreateWFMAgentMembershipsRes{}
 
 // Request message for the DeleteWFMAgentMemberships RPC
-message DeleteWFMAgentMembershipsReq {
+message DeleteWFMAgentMembershipsReq{
   // ID of the wfm agents to delete the association of.
   repeated int64 wfm_agent_sids = 1;
   // ID of the agent group to that the agents associate with.
@@ -2788,7 +3119,7 @@ message DeleteWFMAgentMembershipsReq {
 }
 
 // Response message for DeleteWFMAgentMemberships RPC
-message DeleteWFMAgentMembershipsRes {}
+message DeleteWFMAgentMembershipsRes{}
 
 // DOW Placement
 message DOWPlacement {
@@ -2797,10 +3128,10 @@ message DOWPlacement {
   // Minute in the day for the placement to end.
   int32 end_minute = 2;
   // The type of placement.
-  api.commons.DOWPlacementType placement_type = 3;
+  commons.DOWPlacementType placement_type = 3;
   // The day of the week that the placement belongs to.
   // Each week always starts on Sunday.
-  api.commons.DayOfWeek day_of_week = 4;
+  commons.DayOfWeek day_of_week = 4;
   // The week number, specifying which week of the template the placement belongs to.
   // The first week should be set to 0.
   int32 week_number = 5;
@@ -2846,7 +3177,7 @@ message ShiftTemplate {
 }
 
 // Request message for the CreateShiftTemplate RPC
-message CreateShiftTemplateReq {
+message CreateShiftTemplateReq{
   // Shift template to create, the @shift_template_sid doesn't need to be set since it won't be used
   ShiftTemplate shift_template = 1;
 }
@@ -2858,7 +3189,7 @@ message CreateShiftTemplateRes {
 }
 
 // Request message for the UpdateShiftTemplate RPC
-message UpdateShiftTemplateReq {
+message UpdateShiftTemplateReq{
   // Shift template to update
   ShiftTemplate shift_template = 1;
 }
@@ -2867,7 +3198,7 @@ message UpdateShiftTemplateReq {
 message UpdateShiftTemplateRes {}
 
 // Request message for the ListShiftTemplatesBySids RPC
-message ListShiftTemplatesBySidsReq {
+message ListShiftTemplatesBySidsReq{
   // IDs of the shift templates to list.
   repeated int64 shift_template_sids = 1;
 }
@@ -2879,7 +3210,7 @@ message ListShiftTemplatesBySidsRes {
 }
 
 // Request message for BuildShiftTemplateDiagnostics RPC
-message BuildShiftTemplateDiagnosticsReq {
+message BuildShiftTemplateDiagnosticsReq{
   // ID of the shift template to build diagnostics for.
   int64 shift_template_sid = 1;
   // ID of the schedule scenario that the shift template belongs to.
@@ -2887,7 +3218,7 @@ message BuildShiftTemplateDiagnosticsReq {
 }
 
 // Response message for BuildShiftTemplateDiagnostics RPC
-message BuildShiftTemplateDiagnosticsRes {
+message BuildShiftTemplateDiagnosticsRes{
   // Diagnostic reports for the shift template associated with @shift_template_sid.
   repeated Diagnostic diagnostics = 1;
 }
@@ -2913,7 +3244,7 @@ message PlacementRule {
 }
 
 // Request message for the CreatePlacementRule RPC
-message CreatePlacementRuleReq {
+message CreatePlacementRuleReq{
   // Placement rule to create, the @placement_rule_sid doesn't need to be set since it won't be used
   PlacementRule placement_rule = 1;
 }
@@ -2925,13 +3256,13 @@ message CreatePlacementRuleRes {
 }
 
 // Request message for the UpdatePlacementRule RPC
-message UpdatePlacementRuleReq {
-  // Placement rule to update.
-  PlacementRule placement_rule = 1;
+message UpdatePlacementRuleReq{
+    // Placement rule to update.
+    PlacementRule placement_rule = 1;
 }
 
 // Response message for the UpdatePlacementRule RPC
-message UpdatePlacementRuleRes {}
+message UpdatePlacementRuleRes{}
 
 // Request message for the DeletePlacementRule RPC
 message DeletePlacementRuleReq {
@@ -2947,26 +3278,26 @@ message DatetimePattern {
   message WeekMap {
     message WeekMapDOW {
       // Which day of the week the entity represents.
-      api.commons.DayOfWeek day_of_week = 1;
+      commons.DayOfWeek day_of_week = 1;
       // Which minute the entity starts at.
       int32 start_minute_in_day = 2;
       // Which minute the entity ends at.
       int32 end_minute_in_day = 3;
       // Value that this day of the week has.
-      api.commons.OptionTypes value = 4;
+      commons.OptionTypes value = 4;
     }
 
     // Datetime range of the week map.
-    api.commons.DatetimeRange datetime_range = 1;
+    commons.DatetimeRange datetime_range = 1;
     // Days of the week that the week map has.
     repeated WeekMapDOW day_maps = 2;
   }
 
   message CalendarItem {
     // Datetime range of the calendar item.
-    api.commons.DatetimeRange datetime_range = 1;
+    commons.DatetimeRange datetime_range = 1;
     // Value that this calendar item has.
-    api.commons.OptionTypes value = 2;
+    commons.OptionTypes value = 2;
   }
 
   // All week maps that the pattern has.
@@ -2988,7 +3319,7 @@ message OpenTimesPattern {
 }
 
 // Request message for the CreateOpenTimesPattern RPC
-message CreateOpenTimesPatternReq {
+message CreateOpenTimesPatternReq{
   // Open times pattern to create, the @open_times_pattern_sid doesn't need to be set since it won't be used.
   OpenTimesPattern open_times_pattern = 1;
 }
@@ -3026,21 +3357,21 @@ message GetOpenTimesBitmapsReq {
   // Whether or not to include inactive nodes. Will need to be set to true if @node_to_check or any of it's parents are inactive.
   bool include_inactive = 3;
   // Datetime range that bitmaps will cover when generated for @node_to_check.
-  api.commons.DatetimeRange datetime_range = 4;
+  commons.DatetimeRange datetime_range = 4;
 }
 
 // Response message for the GetOpenTimesBitmaps RPC
-message GetOpenTimesBitmapsRes {
+message GetOpenTimesBitmapsRes{
   // Map of open times options inherited from parent nodes.
-  repeated api.commons.OpenTimesOption inherited_bitmap = 1;
+  repeated commons.OpenTimesOption inherited_bitmap = 1;
   // Map of open times options belonging to the node being checked.
-  repeated api.commons.OpenTimesOption own_bitmap = 2;
+  repeated commons.OpenTimesOption own_bitmap = 2;
   // Map of open times options resulting from combining the inherited and own bitmap.
-  repeated api.commons.OpenTimesOption resulting_bitmap = 3;
+  repeated commons.OpenTimesOption resulting_bitmap = 3;
 }
 
 // Represents and Agent Availability Pattern
-message AgentAvailabilityPattern {
+message AgentAvailabilityPattern{
   // ID of this pattern.
   int64 agent_availability_pattern_sid = 1;
   // Parent entity of this pattern.
@@ -3052,19 +3383,19 @@ message AgentAvailabilityPattern {
 }
 
 // Request message for the AgentAvailabilityPattern RPC
-message CreateAgentAvailabilityPatternReq {
+message CreateAgentAvailabilityPatternReq{
   // AgentAvailabilityPattern to be created, the @agent_availability_pattern_sid doesn't need to be set since it won't be used.
   AgentAvailabilityPattern agent_availability_pattern = 1;
 }
 
 // Response message for the AgentAvailabilityPattern RPC
-message CreateAgentAvailabilityPatternRes {
+message CreateAgentAvailabilityPatternRes{
   // ID of the newly create agent availability pattern.
   int64 agent_availability_pattern_sid = 1;
 }
 
 // Request message for the UpdateAgentAvailabilityPattern RPC
-message UpdateAgentAvailabilityPatternReq {
+message UpdateAgentAvailabilityPatternReq{
   // Agent availability pattern to update.
   AgentAvailabilityPattern agent_availability_pattern = 1;
 }
@@ -3079,22 +3410,22 @@ message DeleteAgentAvailabilityPatternReq {
 }
 
 // Response message for the DeleteAgentAvailabilityPattern RPC
-message DeleteAgentAvailabilityPatternRes {}
+message DeleteAgentAvailabilityPatternRes{}
 
 // Contains a set of bitmaps for an entity.
-message AvailabilityBitmapSet {
+message AvailabilityBitmapSet{
   // Map of availability options belonging to the node being checked.
-  repeated api.commons.AvailabilityOption own_bitmap = 1;
+  repeated commons.AvailabilityOption own_bitmap = 1;
   // Map of availability options inherited from parent nodes.
-  repeated api.commons.AvailabilityOption inherited_bitmap = 2;
+  repeated commons.AvailabilityOption inherited_bitmap = 2;
   // Map of availability options resulting from combining the inherited and own bitmap.
-  repeated api.commons.AvailabilityOption resulting_bitmap = 3;
+  repeated commons.AvailabilityOption resulting_bitmap = 3;
   // Entity that the bitmaps belong to.
   ParentEntity parent_entity = 4;
 }
 
 // Request message for the GetAvailabilityBitmaps RPC
-message GetAvailabilityBitmapsReq {
+message GetAvailabilityBitmapsReq{
   // The entities that @bitmaps will be associated with.
   // Must be nodes, wfm agents, and agent groups only. For agent groups, bitmaps will be returned for each of the groups member agents,
   repeated ParentEntity entities_to_check = 1;
@@ -3103,29 +3434,29 @@ message GetAvailabilityBitmapsReq {
   // Whether or not to include inactive nodes. Will need to be set to true if @entities_to_check or any of it's parents are inactive.
   bool include_inactive = 3;
   // Datetime range that bitmaps will cover when generated for @entities_to_check.
-  api.commons.DatetimeRange datetime_range = 4;
+  commons.DatetimeRange datetime_range = 4;
 }
 
 // Response message for the GetAvailabilityBitmaps RPC
-message GetAvailabilityBitmapsRes {
+message GetAvailabilityBitmapsRes{
   // Requested bitmaps, with a pointer to the entity that the bitmaps belong.
   repeated AvailabilityBitmapSet bitmaps = 1;
 }
 
 // Request message for the UpsertNonSkillActivityAssociation RPC
-message UpsertNonSkillActivityAssociationReq {
+message UpsertNonSkillActivityAssociationReq{
   // ID of the non skill activity to upsert the association of.
   int64 non_skill_activity_sid = 1;
   // Node that the non skill activity will be associated with.
   ParentEntity node = 2;
   // Type of association that the non skill activity will have with the @node.
-  api.commons.ConfigRelationshipType association_type = 3;
+  commons.ConfigRelationshipType association_type = 3;
   // ID of the schedule scenario that this non skill activity belongs to.
   int64 schedule_scenario_sid = 4;
 }
 
 // Response message for the UpsertNonSkillActivityAssociation RPC
-message UpsertNonSkillActivityAssociationRes {
+message UpsertNonSkillActivityAssociationRes{
   // Pair of parent entities, used to relate two entities.
   message EntityMapping {
     // When possible, the parent entity of the pair.
@@ -3167,7 +3498,7 @@ message SkillProficiency {
 }
 
 // Request message for the CreateSkillProficiencies RPC
-message CreateSkillProficienciesReq {
+message CreateSkillProficienciesReq{
   // Skill proficiencies to create, the @skill_proficiency_sid's don't need to be set since they won't be used.
   repeated SkillProficiency proficiencies = 1;
   // ID of the schedule scenario that the @parent_entity in each @proficiency belongs to.
@@ -3187,7 +3518,7 @@ message UpdateSkillProficienciesReq {
 message UpdateSkillProficienciesRes {}
 
 // Request message for the DeleteSkillProficiency RPC
-message DeleteSkillProficiencyReq {
+message DeleteSkillProficiencyReq{
   // ID of skill proficiency to delete.
   int64 skill_proficiency_sid = 1;
 }
@@ -3213,7 +3544,7 @@ message ScheduleScenario {
   // ID of scenario that this scenario was copied from (if applicable).
   google.protobuf.Int64Value copied_from_scenario_sid = 7;
   // Datetime range that schedules will cover when built using this schedule scenario.
-  api.commons.DatetimeRange schedule_range = 8;
+  commons.DatetimeRange schedule_range = 8;
 }
 
 // Request message for the CopyScenario RPC
@@ -3241,7 +3572,7 @@ message CreateScheduleScenarioWithNodesReq {
   // Name for the created call center node.
   string call_center_node_name = 2;
   // Description for the created call center node.
-  string call_center_node_description = 3;
+  string call_center_node_description= 3;
   // Name for the created client node.
   string client_node_name = 4;
   // Description for the created client node.
@@ -3249,13 +3580,13 @@ message CreateScheduleScenarioWithNodesReq {
   // Name for the created location node.
   string location_node_name = 6;
   // Description for the location center node.
-  string location_node_description = 7;
+  string location_node_description= 7;
   // Name for the created program node.
   string program_node_name = 8;
   // Description for the created program node.
   string program_node_description = 9;
   // TimeZoneVal is the desired timezone for the created nodes.
-  api.commons.TimeZone time_zone_val = 10;
+  commons.TimeZone time_zone_val = 10;
 }
 
 // Response message for the CreateScheduleScenarioWithNodes RPC
@@ -3266,7 +3597,7 @@ message CreateScheduleScenarioWithNodesRes {
 
 // Request message for the UpdateScheduleScenario RPC
 message UpdateScheduleScenarioReq {
-  ScheduleScenario scheduleScenario = 1;
+    ScheduleScenario scheduleScenario = 1;
 }
 
 // Request message for the UpdateScheduleScenario RPC
@@ -3275,7 +3606,7 @@ message UpdateScheduleScenarioRes {}
 // Request message for the ListConfigEntities RPC
 message ListConfigEntitiesReq {
   // Entity type of the entities to retrieve.
-  api.commons.ConfigEntityType entity_type = 1;
+ commons.ConfigEntityType entity_type = 1;
   // Entity that the entities to return will belong to.
   ParentEntity belongs_to_entity = 2;
   // Indicates whether or not to retrieve inactive entities (true=active and inactive, false=active only).
@@ -3310,8 +3641,8 @@ message ListConfigEntitiesRes {
   }
   // Group containing Shift Templates.
   message ShiftTemplateEntities {
-    // Shift Templates.
-    repeated ShiftTemplate entities = 1;
+      // Shift Templates.
+      repeated ShiftTemplate entities = 1;
   }
   // Group of WFM Agents.
   message WFMAgentEntities {
@@ -3320,8 +3651,8 @@ message ListConfigEntitiesRes {
   }
   // Group containing Placement Rules.
   message PlacementRuleEntities {
-    // Placement Rules.
-    repeated PlacementRule entities = 1;
+      // Placement Rules.
+      repeated PlacementRule entities = 1;
   }
   // Group containing Constraint Rules.
   message ConstraintRuleEntities {
@@ -3398,15 +3729,15 @@ message ListConfigEntitiesRes {
 }
 
 // Message type specifying the parameters of a diagnostic
-message Diagnostic {
+message Diagnostic{
   // The diagnostic level describes the class of the diagnostic message.
-  api.commons.DiagnosticLevel level = 1;
+  commons.DiagnosticLevel level = 1;
   // A code to describe the diagnostic when possible. Default value of General when a more specific code is not available.
-  api.commons.DiagnosticCode code = 2;
+  commons.DiagnosticCode code = 2;
   // The message detailing the diagnostic.
   string message = 3;
   // The entity that the diagnostic was built in reference to.
-  ParentEntity source_entity = 4;
+  ParentEntity source_entity= 4;
 }
 
 // Represents a group of diagnostics for a single entity
@@ -3418,7 +3749,7 @@ message Diagnostics {
 }
 
 // Request message for the DeleteShiftInstances RPC
-message DeleteShiftInstancesReq {
+message DeleteShiftInstancesReq{
   // IDs of shift instances to delete.
   repeated int64 shift_instance_sids = 1;
 }
@@ -3427,7 +3758,7 @@ message DeleteShiftInstancesReq {
 message DeleteShiftInstancesRes {}
 
 // Request message for the BuildNodeDiagnostics RPC
-message BuildNodeDiagnosticsReq {
+message BuildNodeDiagnosticsReq{
   // The node that @diagnostics will be associated with.
   ParentEntity node_to_check = 1;
   // ID of the schedule scenario that @node_to_check belongs to.
@@ -3435,7 +3766,7 @@ message BuildNodeDiagnosticsReq {
 }
 
 // Response message for the BuildNodeDiagnostics RPC
-message BuildNodeDiagnosticsRes {
+message BuildNodeDiagnosticsRes{
   // Set of diagnostic reports for the given @node_to_check.
   repeated Diagnostic diagnostics = 1;
   // Set of all nodes checked during the diagnostics.
@@ -3443,14 +3774,14 @@ message BuildNodeDiagnosticsRes {
 }
 
 // Request message for the BuildGlobalDiagnostics RPC
-message BuildGlobalDiagnosticsReq {
+message BuildGlobalDiagnosticsReq{
   // ID of the schedule scenario to get diagnostics for.
   int64 schedule_scenario_sid = 1;
 }
 
 // Response message for the BuildGlobalDiagnostics RPC
-message BuildGlobalDiagnosticsRes {
-  // Set of diagnostic reports for the given @schedule_scenario_sid.
+message BuildGlobalDiagnosticsRes{
+   // Set of diagnostic reports for the given @schedule_scenario_sid.
   repeated Diagnostic diagnostics = 1;
   // Set of all nodes checked during the diagnostics.
   repeated ParentEntity nodes_checked = 2;
@@ -3484,7 +3815,7 @@ message DraftSchedule {
   // Datetime range over which this draft schedule spans.
   // Is the range used when copying shifts from published schedule.
   // Also used when publishing shifts from the draft to the published schedule.
-  api.commons.DatetimeRange datetime_range = 6;
+  commons.DatetimeRange datetime_range = 6;
   // ID of the user who originally drafted the schedule.
   string created_by_user_id = 7;
   // The following field is only return of List requests of the entity.
@@ -3495,9 +3826,9 @@ message DraftSchedule {
 }
 
 // Represents a performance metric
-message PerformanceMetric {
+message PerformanceMetric{
   // Datetime range over which the metrics were determined.
-  api.commons.DatetimeRange date_range = 1;
+  commons.DatetimeRange date_range = 1;
   // The total calls required over the @date_range, as determined by the forecast.
   int32 total_calls_required = 2;
   // The total calls the the schedule is likely to address with the current shift instances.
@@ -3515,7 +3846,7 @@ message PerformanceMetric {
   // Width of each interval in minutes.
   int32 interval_width_in_minutes = 9;
   // The type of metric being reported.
-  api.commons.PerformanceMetricType metric_type = 10;
+  commons.PerformanceMetricType metric_type = 10;
   // One value will be set between @fte_intervals and @service_level_intervals, depending on @metric_type.
   // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_intervals
   // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
@@ -3526,7 +3857,7 @@ message PerformanceMetric {
 }
 
 // Represents a service level interval.
-message ServiceLevelInterval {
+message ServiceLevelInterval{
   // The start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // The service level achieved as a percent value, ranging from 0.0 to 1.0
@@ -3534,7 +3865,7 @@ message ServiceLevelInterval {
 }
 
 // Represents an fte required vs achieved interval.
-message FTERequiredVsAchievedInterval {
+message FTERequiredVsAchievedInterval{
   // The start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // Number of required calls in the interval.
@@ -3553,7 +3884,7 @@ message RequiredCallsInterval {
 }
 
 // Represents a shift instance
-message ShiftInstance {
+message ShiftInstance{
   // ID of the shift instance.
   int64 shift_instance_sid = 1;
   // The start time for this shift instance
@@ -3573,7 +3904,7 @@ message ShiftInstance {
   // ID for the wfm agent that is scheduled to this shift.
   int64 wfm_agent_sid = 8;
   // Type of schedule that this shift instance belongs to.
-  api.commons.ScheduleType schedule_type = 9;
+  commons.ScheduleType schedule_type = 9;
 
   // The following field is only returned in List requests of the entity.
   // The ordered set of shift segments for this shift instance.
@@ -3605,7 +3936,7 @@ message ShiftSegment {
 // Request message for the GetPublishedSchedule RPC
 message GetPublishedScheduleReq {
   // Date range to of the published to return.
-  api.commons.DatetimeRange datetime_range = 1;
+  commons.DatetimeRange datetime_range = 1;
   // Set to true to include shift instances.
   bool include_shift_instances = 2;
   // Set to true to include shift template in each of the returned shift instances.
@@ -3634,7 +3965,7 @@ message GetPublishedScheduleRes {
 // Request message for the GetPublishedScheduleRequiredCalls RPC
 message GetPublishedScheduleRequiredCallsReq {
   // Date range to return.
-  api.commons.DatetimeRange viewing_range = 1;
+  commons.DatetimeRange viewing_range = 1;
   // Width of each interval in minutes.
   int32 interval_width_in_minutes = 2;
 }
@@ -3652,7 +3983,7 @@ message GetDraftScheduleRequiredCallsReq {
   // Id of the draft schedule.
   int64 draft_schedule_sid = 1;
   // Date range to return.
-  api.commons.DatetimeRange viewing_range = 2;
+  commons.DatetimeRange viewing_range = 2;
   // Width of each interval in minutes.
   int32 interval_width_in_minutes = 3;
 }
@@ -3672,7 +4003,7 @@ message CreateDraftScheduleReq {
   // Description of the draft schedule.
   string description = 2;
   // Range to retrieve shift instances and segments from the published schedule to use for this draft schedule.
-  api.commons.DatetimeRange scheduling_range = 3;
+  commons.DatetimeRange scheduling_range = 3;
 }
 
 // Response message for the CreateDraftSchedule RPC
@@ -3689,7 +4020,7 @@ message BuildDraftScheduleReq {
   int64 schedule_scenario_sid = 2;
   // Datetime range to set for the schedule scenario used to make the draft schedule.
   // If left blank, the current scheduling range for the scenario will be used
-  api.commons.DatetimeRange schedule_scenario_scheduling_range = 3;
+  commons.DatetimeRange schedule_scenario_scheduling_range = 3;
   // The node that the shifts should be associated with.
   ParentEntity node_selector = 4;
   // Set to true to include shift instances.
@@ -3713,7 +4044,7 @@ message BuildDraftScheduleRes {
   // The built draft schedule.
   DraftSchedule draft_schedule = 1;
   // Set of diagnostic reports for the given @draft_schedule_sid.
-  repeated Diagnostic diagnostics = 2;
+ repeated Diagnostic diagnostics = 2;
 }
 
 // Request message for the PublishDraftSchedule RPC
@@ -3723,7 +4054,7 @@ message PublishDraftScheduleReq {
   // Node that the shift instances will belong to.
   ParentEntity node_selector = 2;
   // Date range to of the drafts to publish.
-  api.commons.DatetimeRange datetime_range = 3;
+  commons.DatetimeRange datetime_range = 3;
   // Include fields determine what the returned published schedule will include
   // Set to true to include shift instances.
   bool include_shift_instances = 4;
@@ -3758,7 +4089,7 @@ message GetDraftScheduleReq {
   int64 draft_schedule_sid = 1;
   // Datetime range to set for the schedule scenario used to make the draft schedule.
   // If left blank, the current scheduling range for the scenario will be used
-  api.commons.DatetimeRange datetime_range = 2;
+  commons.DatetimeRange datetime_range = 2;
   // Set to true to include shift instances.
   bool include_shift_instances = 3;
   // Set to true to include shift template in each of the returned shift instances.
@@ -3788,7 +4119,7 @@ message GetDraftScheduleRes {
 message ListDraftSchedulesReq {
   // Date range to of the drafts to return.
   // If left blank, then all draft schedules for the org will be returned.
-  api.commons.DatetimeRange datetime_range = 1;
+  commons.DatetimeRange datetime_range = 1;
 }
 
 // Response message for the ListDraftSchedules RPC
@@ -3798,7 +4129,7 @@ message ListDraftSchedulesRes {
 }
 
 // Request message for the DeleteDraftSchedule RPC
-message DeleteDraftScheduleReq {
+message DeleteDraftScheduleReq{
   // ID of draft schedule to delete.
   int64 draft_schedule_sid = 1;
 }
@@ -3822,7 +4153,7 @@ message CreateShiftInstanceReq {
   // create a new unassigned WfmAgent for the shift instance.
   google.protobuf.Int64Value wfm_agent_sid = 6;
   // Metric types for the shift instance.
-  repeated api.commons.PerformanceMetricType metric_types = 7;
+  repeated commons.PerformanceMetricType metric_types = 7;
 }
 
 // Response message for the CreateShiftInstance RPC
@@ -3864,7 +4195,7 @@ message UpdateShiftInstanceReq {
   // create a new unassigned WfmAgent for the shift instance.
   google.protobuf.Int64Value wfm_agent_sid = 5;
   // Types of metrics.
-  repeated api.commons.PerformanceMetricType metric_types = 6;
+  repeated commons.PerformanceMetricType metric_types = 6;
 }
 
 // Response message for the UpdateShiftInstance RPC
@@ -3894,7 +4225,7 @@ message ListShiftSegmentsByShiftInstanceSidsRes {
 // Represents a Performance Metric Parameter.
 message PerformanceMetricParameter {
   // The type of metric.
-  api.commons.PerformanceMetricType metric_type = 1;
+  commons.PerformanceMetricType metric_type = 1;
   // Number of seconds allowed to answer a call if the @metric_type is set to SERVICE_LEVEL_ANALYSIS.
   // If @metric_type is not SERVICE_LEVEL_ANALYSIS then this field must be set to nil.
   google.protobuf.Int64Value service_level_target_duration_seconds = 2;
@@ -3903,11 +4234,11 @@ message PerformanceMetricParameter {
 // Request message for the GetPerformanceMetrics RPC.
 message GetPerformanceMetricsReq {
   // The schedule that the performance metric should be associated with.
-  api.commons.ScheduleSelector schedule_selector = 1;
+  commons.ScheduleSelector schedule_selector = 1;
   // The origin node that the performance metrics should be associated with.
   ParentEntity node_selector = 2;
   // The datetime range over which the metrics will be collected.
-  api.commons.DatetimeRange datetime_range = 3;
+  commons.DatetimeRange datetime_range = 3;
   // Parameters to get metrics for.
   repeated PerformanceMetricParameter metric_params = 4;
   // The number of minutes to consolidate each metric interval into.
@@ -3925,7 +4256,7 @@ message SchedulingTarget {
   // ID of the scheduling target.
   int64 scheduling_target_sid = 1;
   // Target type for the @node to override the inherited value.
-  api.commons.SchedulingTargetType scheduling_target_type = 2;
+  commons.SchedulingTargetType scheduling_target_type = 2;
   // Target percentage for scheduling.
   float scheduling_target_percentage = 3;
   // Number of seconds allowed to answer call for the scheduling if @scheduling_target_type is set to SERVICE_LEVEL.
@@ -3977,18 +4308,18 @@ message DeleteSchedulingTargetReq {
 message DeleteSchedulingTargetRes {}
 
 // Request message for the ListRequiredCallsIntervals RPC.
-message ListRequiredCallsIntervalsReq {
+message ListRequiredCallsIntervalsReq{
   // The that the required call intervals will be associated with.
   ParentEntity node_selector = 1;
   // The datetime range across which required call intervals will be collected.
-  api.commons.DatetimeRange datetime_range = 2;
+  commons.DatetimeRange datetime_range = 2;
   // The number of minutes to consolidate each metric interval into.
   // Must be a multiple of 5.
   int32 interval_width_in_minutes = 3;
 }
 
 // Response message for the ListRequiredCallsIntervals RPC.
-message ListRequiredCallsIntervalsRes {
+message ListRequiredCallsIntervalsRes{
   // The width of each interval in minutes.
   int32 interval_width_in_minutes = 1;
   // Requested required call intervals.
