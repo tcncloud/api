@@ -1,6 +1,10 @@
 node_modules
 package-lock.json
 api-go
+tcnapi-jdk8
+tcnapi-connect-es
+tcnapi-grpc-web
+pytcnapi
 .metals
 *.java
 *.js
@@ -10,12 +14,3 @@ api-go
 *.go
 *.py
 *.py?
-pytcnapi
-*.py
-*.py?
-*.java
-*.js
-*.js?
-*.ts
-*.ts?
-node_modules
