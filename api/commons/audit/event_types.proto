@@ -110,6 +110,8 @@ enum EventType {
   OMNICHANNEL_CUSTOMER_MESSAGE_UNITS = 355;
   // omnichannel system message units were calculated
   OMNICHANNEL_SYSTEM_MESSAGE_UNITS = 356;
+  // omnichannel payment link was sent
+  OMNICHANNEL_PAYMENT_LINK_SENT = 357;
 
   // ASM
   // agent logs into asm
