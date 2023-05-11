@@ -128,6 +128,8 @@ message AuditEvent {
     OmnichannelCustomerMessageUnitsEvent omnichannel_customer_message_units_event = 355;
     // an event for when the message units for a system omni message were calculated
     OmnichannelSystemMessageUnitsEvent omnichannel_system_message_units_event = 356;
+    // an event for when a payment link is sent
+    OmnichannelPaymentLinkSentEvent omnichannel_payment_link_sent_event = 357;
 
     /// Asm events 400
     // agent logged into asm event
