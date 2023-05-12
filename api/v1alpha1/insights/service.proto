@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.insights;
 
+import "annotations/authz.proto";
 import "api/v1alpha1/insights/insight.proto";
 import "google/api/annotations.proto";
 
@@ -10,59 +11,129 @@ service Insights {
   rpc CreateInsight(CreateInsightRequest) returns (CreateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/createinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListInsights lists insights
   rpc ListInsights(ListInsightsRequest) returns (ListInsightsResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/listinsights";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateInsight updates an existing insight
   rpc UpdateInsight(UpdateInsightRequest) returns (UpdateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/updateinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteInsight deletes a insight
   rpc DeleteInsight(DeleteInsightRequest) returns (DeleteInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/deleteinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetInsight gets a insight by id
   rpc GetInsight(GetInsightRequest) returns (GetInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/getinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateCommonsInsight creates a common library insight
   rpc CreateCommonsInsight(CreateInsightRequest) returns (CreateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/createcommonsinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateCommonsInsight updates a common library insight
   rpc UpdateCommonsInsight(UpdateInsightRequest) returns (UpdateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/updatecommonsinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteCommonsInsight deletes a common library insight
   rpc DeleteCommonsInsight(DeleteInsightRequest) returns (DeleteInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/deletecommonsinsight";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetVfsSchema gets schema for a vfs
   rpc GetVfsSchema(GetVfsSchemaRequest) returns (GetVfsSchemaResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/getvfsschema";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListVfses lists exported vfs aliases
   rpc ListVfses(ListVfsesRequest) returns (ListVfsesResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/listvfses";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INSIGHTS_MANAGE]
+        }
+      ];
+    };
   }
 }
