@@ -16,11 +16,11 @@ syntax = "proto3";
 
 package api.v1alpha1.wfm;
 
+import "api/commons/org.proto";
+import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "api/commons/wfm.proto";
-import "api/commons/org.proto";
 
 // WFM is responsible for call prediction and call volume calculations based on call skills and other parameters.
 service WFM {
@@ -33,10 +33,15 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listskillprofiles";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]},
-      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        },
+        {
+          permissions: [Permission_PERMISSION_SCORECARDS]
+        }
+      ]
     };
-
   }
 
   // Updates the @name, and averages of a skill profile that has the given @skill_profile_sid.
@@ -51,7 +56,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofile";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -65,7 +74,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileproficiencies";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -83,7 +96,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofile";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -93,12 +110,18 @@ service WFM {
   //   NONE
   // Errors:
   //   - grpc.Internal: error occurs when creating the new skills and skill profiles.
-  rpc ResyncSkillProfiles(ResyncSkillProfilesReq) returns (ResyncSkillProfilesRes){
+  rpc ResyncSkillProfiles(ResyncSkillProfilesReq) returns (ResyncSkillProfilesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/resyncskillprofiles";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]},
-      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        },
+        {
+          permissions: [Permission_PERMISSION_SCORECARDS]
+        }
+      ]
     };
   }
 
@@ -112,8 +135,14 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getlastskillprofileresyncdate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]},
-      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        },
+        {
+          permissions: [Permission_PERMISSION_SCORECARDS]
+        }
+      ]
     };
   }
 
@@ -128,7 +157,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastingparameters";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -142,7 +175,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getforecastingparameters";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -162,7 +199,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldata";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -177,7 +218,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadelta";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -193,7 +238,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upserthistoricaldatadeltas";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -207,7 +256,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listskills";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -227,7 +280,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildcallprofiletemplateforskillprofile";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -243,7 +300,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createinactiveskillprofilemapping";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -252,11 +313,15 @@ service WFM {
   //  NONE
   // Errors:
   //  -grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
-  rpc GetAvailableRegressionForecasterModelTypes (GetAvailableRegressionForecasterModelTypesReq) returns (GetAvailableRegressionForecasterModelTypesRes){
+  rpc GetAvailableRegressionForecasterModelTypes(GetAvailableRegressionForecasterModelTypesReq) returns (GetAvailableRegressionForecasterModelTypesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getavailableregressionforecastermodeltypes";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -268,11 +333,15 @@ service WFM {
   //   - grpc.NotFound: the skill profile is not found for the org.
   //   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
   //				            the given @inactive_skill_profile_sid is of an active skill profile.
-  rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes){
+  rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/disconnectinactiveskillprofilemapping";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -288,7 +357,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletehistoricaldatadeltas";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -304,7 +377,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listtopskillprofiles";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -317,7 +394,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getskillprofilescount";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -335,7 +416,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyinterval";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -354,7 +439,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyintervalwithstats";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -374,7 +463,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertprofileforecast";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -388,7 +481,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createcallprofiletemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -402,7 +499,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletecallprofiletemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -416,7 +517,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createregressiontemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -430,7 +535,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteregressiontemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -443,7 +552,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listregressiontemplates";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -457,7 +570,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervalsforskillprofile";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -475,7 +592,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyinterval";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -489,11 +610,15 @@ service WFM {
   // Errors:
   //   - grpc.Invalid: the @regression_template in the request is invalid.
   //   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
-  rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq)returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
+  rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq) returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyintervalwithstats";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -506,7 +631,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcallprofiletemplates";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -523,7 +652,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertregressionforecast";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -538,7 +671,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadelta";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -553,7 +690,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertforecastdatadeltas";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -572,7 +713,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteforecastintervals";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -588,7 +733,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldataforallskillprofiles";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -602,7 +751,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/builddowandmoyprofiles";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -620,7 +773,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/calculatetrainingdataaveragesforskillprofile";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -641,11 +798,16 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofileaveragesusinghistoricaldata";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]},
-      {permissions: [Permission_PERMISSION_SCORECARDS]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        },
+        {
+          permissions: [Permission_PERMISSION_SCORECARDS]
+        }
+      ]
     };
   }
-
 
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
@@ -667,7 +829,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatecallcenternode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -686,7 +852,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createclientnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -704,7 +874,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateclientnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -723,7 +897,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createlocationnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -741,7 +919,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatelocationnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -760,7 +942,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createprogramnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -778,7 +964,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha/wfm/updateprogramnode";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -799,7 +989,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createconstraintrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -822,7 +1016,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateconstraintrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -838,7 +1036,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteconstraintrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -855,10 +1057,13 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createnonskillactivity";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
-
 
   // Updates a non skill activity that has the given @non_skill_activity_sid with the given values.
   // Required permissions:
@@ -871,7 +1076,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatenonskillactivity";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -885,7 +1094,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listnonskillactivityassociations";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -904,7 +1117,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcandidateschedulingactivities";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -922,7 +1139,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createagentgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -941,7 +1162,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateagentgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -959,7 +1184,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updatewfmagent";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -976,7 +1205,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listallwfmagents";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -992,7 +1225,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listcandidatewfmagents";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1009,7 +1246,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listungroupedwfmagents";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1023,7 +1264,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listwfmagentsassociatedwithagentgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1039,7 +1284,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createwfmagentmemberships";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1054,7 +1303,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletewfmagentmemberships";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1071,7 +1324,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildagentdiagnostics";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1090,7 +1347,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createshifttemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1109,7 +1370,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshifttemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1123,7 +1388,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshifttemplatesbysids";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1137,7 +1406,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildshifttemplatediagnostics";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1156,7 +1429,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createplacementrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1175,7 +1452,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha/wfm/updateplacementrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1191,7 +1472,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteplacementrule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1208,7 +1493,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createopentimespattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1225,7 +1514,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateopentimespattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1240,7 +1533,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteopentimespattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1258,7 +1555,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getopentimesbitmaps";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1275,7 +1576,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createagentavailabilitypattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1288,11 +1593,15 @@ service WFM {
   //   - grpc.Invalid: one or more fields in the @agent_availability_pattern have invalid values.
   //   - grpc.Internal: error occurs when updating the agent avilability pattern.
   //   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent availability pattern.
-  rpc UpdateAgentAvailabilityPattern(UpdateAgentAvailabilityPatternReq) returns (UpdateAgentAvailabilityPatternRes){
+  rpc UpdateAgentAvailabilityPattern(UpdateAgentAvailabilityPatternReq) returns (UpdateAgentAvailabilityPatternRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateagentavailabilitypattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1307,7 +1616,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteagentavailabilitypattern";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1327,7 +1640,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getavailabilitybitmaps";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1348,7 +1665,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/upsertnonskillactivityassociation";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1368,7 +1689,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createskillproficiencies";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1388,7 +1713,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateskillproficiencies";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1403,7 +1732,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteskillproficiency";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1420,7 +1753,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/copyscenario";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1435,11 +1772,15 @@ service WFM {
   // Errors:
   //   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
   //   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
-  rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes){
+  rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createschedulescenariowithnodes";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1457,7 +1798,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateschedulescenario";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1474,7 +1819,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listconfigentities";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1489,7 +1838,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteshiftinstances";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1505,7 +1858,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildnodediagnostics";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1520,7 +1877,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildglobaldiagnostics";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1542,7 +1903,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1557,7 +1922,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getpublishedschedulerequiredcalls";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1572,7 +1941,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedulerequiredcalls";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1589,7 +1962,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createdraftschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1601,7 +1978,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/builddraftschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1620,7 +2001,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/publishdraftschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1642,7 +2027,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getdraftschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1657,7 +2046,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listdraftschedules";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1673,7 +2066,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletedraftschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1687,7 +2084,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstance";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1701,7 +2102,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1715,7 +2120,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstance";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1732,7 +2141,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshiftsegmentsbyshiftinstancesids";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1749,7 +2162,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/setschedulingtarget";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1764,7 +2181,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getschedulingtarget";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1779,7 +2200,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteschedulingtarget";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1796,7 +2221,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/getperformancemetrics";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 
@@ -1811,7 +2240,11 @@ service WFM {
     option (google.api.http).post = "/api/v1alpha1/wfm/listrequiredcallsintervals";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      sets: [{permissions: [Permission_PERMISSION_WFM]}]
+      sets: [
+        {
+          permissions: [Permission_PERMISSION_WFM]
+        }
+      ]
     };
   }
 }
@@ -1990,7 +2423,7 @@ message GetForecastingParametersRes {
 // Message type specifying an interval of calls linked to a skill profile used for historical the forecaster
 message HistoricalDataInterval {
   // time that this interval starts at.
-   google.protobuf.Timestamp start_datetime = 1;
+  google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile that this interval belongs to.
   int64 skill_profile_sid = 2;
 
@@ -2125,7 +2558,7 @@ message CreateInactiveSkillProfileMappingRes {}
 message GetAvailableRegressionForecasterModelTypesReq {}
 
 // Response message for the GetAvailableRegressionForecasterModelTypes RPC.
-message GetAvailableRegressionForecasterModelTypesRes  {
+message GetAvailableRegressionForecasterModelTypesRes {
   // List of all the available forecaster types currently available.
   repeated commons.RegressionForecasterModelTypes model_types = 1;
 }
@@ -2173,7 +2606,7 @@ message GetSkillProfilesCountRes {
 }
 
 // Request message for the BuildProfileForecastByInterval RPC
-message BuildProfileForecastByIntervalReq{
+message BuildProfileForecastByIntervalReq {
   // Template to use to generate the profile forecast.
   CallProfileTemplate call_profile_template = 1;
   // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
@@ -2187,7 +2620,7 @@ message BuildProfileForecastByIntervalReq{
 // Message type specifying calls in an interval for a specific skill profile
 message CallDataByInterval {
   // Start time of the interval.
-  google.protobuf.Timestamp  start_datetime = 1;
+  google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile to forecast for (not set in profile forecasts).
   int64 skill_profile_sid = 2;
   // the number of calls in this interval with this skill profile (answered + unanswered).
@@ -2212,7 +2645,7 @@ message CallDataByInterval {
 }
 
 // Request message for the BuildProfileForecastByIntervalWithStats RPC
-message BuildProfileForecastByIntervalWithStatsReq{
+message BuildProfileForecastByIntervalWithStatsReq {
   // Template to use to generate the profile forecast.
   CallProfileTemplate call_profile_template = 1;
   // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
@@ -2256,7 +2689,7 @@ message CreateCallProfileTemplateReq {
 }
 
 // Response message for the CreateCallProfileTemplate RPC
-message CreateCallProfileTemplateRes{}
+message CreateCallProfileTemplateRes {}
 
 // Request message for the DeleteCallProfileTemplate RPC
 message DeleteCallProfileTemplateReq {
@@ -2265,7 +2698,7 @@ message DeleteCallProfileTemplateReq {
 }
 
 // Response message for the DeleteCallProfileTemplate RPC
-message DeleteCallProfileTemplateRes{}
+message DeleteCallProfileTemplateRes {}
 
 // Message type specifying the parameters for a regression forecast
 message RegressionTemplate {
@@ -2322,7 +2755,7 @@ message ListRegressionTemplatesRes {
 }
 
 // Request message for the BuildRegressionForecastByInterval RPC
-message BuildRegressionForecastByIntervalReq{
+message BuildRegressionForecastByIntervalReq {
   // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
   // optional
   float average_speed_of_answer_in_seconds = 1;
@@ -2427,7 +2860,7 @@ message UpsertRegressionForecastReq {
 }
 
 // Response message for the UpsertRegressionForecast RPC
-message UpsertRegressionForecastRes {};
+message UpsertRegressionForecastRes {}
 
 // Request message for the UpsertForecastDataDelta RPC
 message UpsertForecastDataDeltaReq {
@@ -2464,7 +2897,7 @@ message DeleteForecastIntervalsReq {
     // sids of the intervals/deltas to be deleted
     repeated int64 sids = 1;
   }
-    oneof delete_param{
+  oneof delete_param {
     // ID of the skill profile of which to delete the intervas/deltas.
     int64 skill_profile_sid = 1;
     // Wrapper for SIDs of intervals to be deleted
@@ -2475,7 +2908,7 @@ message DeleteForecastIntervalsReq {
 }
 
 // Response message for the DeleteForecastIntervals RPC
-message DeleteForecastIntervalsRes {};
+message DeleteForecastIntervalsRes {}
 
 // Request message for the ListHistoricalDataForAllSkillProfiles RPC
 message ListHistoricalDataForAllSkillProfilesReq {}
@@ -2484,7 +2917,7 @@ message ListHistoricalDataForAllSkillProfilesReq {}
 message ListHistoricalDataForAllSkillProfilesRes {
   // History intervals sorted by @start_datetime.
   repeated HistoricalDataInterval history = 1;
-};
+}
 
 // Request message for the BuildDOWAndMOYProfiles RPC
 message BuildDOWAndMOYProfilesReq {
@@ -2764,8 +3197,8 @@ message CreateProgramNodeRes {
 
 // Request message for the UpdateProgramNode RPC
 message UpdateProgramNodeReq {
-    // Program node to update.
-    ProgramNode program_node = 1;
+  // Program node to update.
+  ProgramNode program_node = 1;
 }
 
 // Response messsage for the UpdateProgramNode RPC
@@ -2806,7 +3239,7 @@ message ConstraintRule {
   // ID of the schedule scenario that the constraint rule belongs to.
   int64 schedule_scenario_sid = 13;
   // Entity associated with @target_sid.
-  oneof member_target_entity{
+  oneof member_target_entity {
     // The scheduling_activity associated with @target_sid.
     SchedulingActivity scheduling_activity = 14;
     // The skill_proficienct associated with @target_sid.
@@ -2894,7 +3327,7 @@ message UpdateNonSkillActivityReq {
 message UpdateNonSkillActivityRes {}
 
 // Request message for the ListNonSkillActivityAssociations RPC
-message ListNonSkillActivityAssociationsReq{
+message ListNonSkillActivityAssociationsReq {
   // Entity to check for relationships with the non skill activities.
   ParentEntity associated_entity = 1;
   // Type of relationship between non skill activity and the @associated_entity.
@@ -2902,7 +3335,7 @@ message ListNonSkillActivityAssociationsReq{
 }
 
 // Response message for the ListNonSkillActivityAssociations RPC
-message ListNonSkillActivityAssociationsRes{
+message ListNonSkillActivityAssociationsRes {
   // ID of the non skill activities found to have the @relationship_type with the @associated_entity in the request.
   repeated int64 non_skill_activity_sids = 1;
 }
@@ -2921,7 +3354,7 @@ message SchedulingActivity {
 }
 
 // Request message for the ListCandidateSchedulingActivitiesReq RPC
-message ListCandidateSchedulingActivitiesReq{
+message ListCandidateSchedulingActivitiesReq {
   // The parent who the rule will inherit candidate scheduling activities from.
   // May be any node, an agent_group, or shift template.
   // To get candidate scheduling activities for rules belonging to a wfm agent, @parent_of_rule should be the agent group the wfm agent belongs to.
@@ -2931,7 +3364,7 @@ message ListCandidateSchedulingActivitiesReq{
 }
 
 // Response message for the ListCandidateSchedulingActivitiesRes RPC
-message ListCandidateSchedulingActivitiesRes{
+message ListCandidateSchedulingActivitiesRes {
   repeated SchedulingActivity scheduling_activities = 1;
 }
 
@@ -2972,9 +3405,9 @@ message CreateAgentGroupRes {
 }
 
 // Request message for the UpdateAgentGroup RPC
-message UpdateAgentGroupReq{
-    // AgentGroup to update
-    AgentGroup agent_group = 1;
+message UpdateAgentGroupReq {
+  // AgentGroup to update
+  AgentGroup agent_group = 1;
 }
 
 // Response message for the UpdateAgentGroup RPC
@@ -3029,7 +3462,7 @@ message ListAllWFMAgentsRes {
   // List of all wfm agents that belong to the org sending the request.
   repeated WFMAgent wfm_agents = 1;
   // Represents a list of agent groups which are associated with an agent.
-  message AgentGroupsByAgent{
+  message AgentGroupsByAgent {
     repeated AgentGroup agent_groups = 1;
   }
   // Correlating list of agent groups that the agent with the same index is a member of.
@@ -3067,19 +3500,19 @@ message ListUngroupedWFMAgentsRes {
 }
 
 // Request message for the ListWFMAgentsAssociatedWithAgentGroup RPC
-message ListWFMAgentsAssociatedWithAgentGroupReq{
+message ListWFMAgentsAssociatedWithAgentGroupReq {
   // ID of the agent group that the wfm agents have a membership with.
   int64 agent_group_sid = 1;
 }
 
 // Response message for the ListWFMAgentsAssociatedWithAgentGroup RPC
-message ListWFMAgentsAssociatedWithAgentGroupRes{
+message ListWFMAgentsAssociatedWithAgentGroupRes {
   // ID of the wfm agents found to have a relationship with the @agent_group_sid in the request.
   repeated int64 wfm_agent_sids = 1;
 }
 
 // Request message for the BuildAgentDiagnostics RPC
-message BuildAgentDiagnosticsReq{
+message BuildAgentDiagnosticsReq {
   // ID of the wfm agent to build diagnostics for.
   int64 wfm_agent_sid = 1;
   // ID of the schedule scenario that the wfm agent belongs to.
@@ -3090,7 +3523,7 @@ message BuildAgentDiagnosticsReq{
 }
 
 // Response message for the BuildAgentDiagnostics RPC
-message BuildAgentDiagnosticsRes{
+message BuildAgentDiagnosticsRes {
   // Diagnostics built for the given req.
   // Will only contain one element if build for a single @wfm_agent_sid.
   // Will contain one element for each WFM agent if build for an @agent_group_sid.a
@@ -3098,7 +3531,7 @@ message BuildAgentDiagnosticsRes{
 }
 
 // Request message for the CreateWFMAgentMemberships RPC
-message CreateWFMAgentMembershipsReq{
+message CreateWFMAgentMembershipsReq {
   // ID of the wfm agents to create the association of.
   repeated int64 wfm_agent_sids = 1;
   // ID of the agent group to that the agents associate with.
@@ -3108,10 +3541,10 @@ message CreateWFMAgentMembershipsReq{
 }
 
 // Response message for CreateWFMAgentMemberships RPC
-message CreateWFMAgentMembershipsRes{}
+message CreateWFMAgentMembershipsRes {}
 
 // Request message for the DeleteWFMAgentMemberships RPC
-message DeleteWFMAgentMembershipsReq{
+message DeleteWFMAgentMembershipsReq {
   // ID of the wfm agents to delete the association of.
   repeated int64 wfm_agent_sids = 1;
   // ID of the agent group to that the agents associate with.
@@ -3119,7 +3552,7 @@ message DeleteWFMAgentMembershipsReq{
 }
 
 // Response message for DeleteWFMAgentMemberships RPC
-message DeleteWFMAgentMembershipsRes{}
+message DeleteWFMAgentMembershipsRes {}
 
 // DOW Placement
 message DOWPlacement {
@@ -3177,7 +3610,7 @@ message ShiftTemplate {
 }
 
 // Request message for the CreateShiftTemplate RPC
-message CreateShiftTemplateReq{
+message CreateShiftTemplateReq {
   // Shift template to create, the @shift_template_sid doesn't need to be set since it won't be used
   ShiftTemplate shift_template = 1;
 }
@@ -3189,7 +3622,7 @@ message CreateShiftTemplateRes {
 }
 
 // Request message for the UpdateShiftTemplate RPC
-message UpdateShiftTemplateReq{
+message UpdateShiftTemplateReq {
   // Shift template to update
   ShiftTemplate shift_template = 1;
 }
@@ -3198,7 +3631,7 @@ message UpdateShiftTemplateReq{
 message UpdateShiftTemplateRes {}
 
 // Request message for the ListShiftTemplatesBySids RPC
-message ListShiftTemplatesBySidsReq{
+message ListShiftTemplatesBySidsReq {
   // IDs of the shift templates to list.
   repeated int64 shift_template_sids = 1;
 }
@@ -3210,7 +3643,7 @@ message ListShiftTemplatesBySidsRes {
 }
 
 // Request message for BuildShiftTemplateDiagnostics RPC
-message BuildShiftTemplateDiagnosticsReq{
+message BuildShiftTemplateDiagnosticsReq {
   // ID of the shift template to build diagnostics for.
   int64 shift_template_sid = 1;
   // ID of the schedule scenario that the shift template belongs to.
@@ -3218,7 +3651,7 @@ message BuildShiftTemplateDiagnosticsReq{
 }
 
 // Response message for BuildShiftTemplateDiagnostics RPC
-message BuildShiftTemplateDiagnosticsRes{
+message BuildShiftTemplateDiagnosticsRes {
   // Diagnostic reports for the shift template associated with @shift_template_sid.
   repeated Diagnostic diagnostics = 1;
 }
@@ -3244,7 +3677,7 @@ message PlacementRule {
 }
 
 // Request message for the CreatePlacementRule RPC
-message CreatePlacementRuleReq{
+message CreatePlacementRuleReq {
   // Placement rule to create, the @placement_rule_sid doesn't need to be set since it won't be used
   PlacementRule placement_rule = 1;
 }
@@ -3256,13 +3689,13 @@ message CreatePlacementRuleRes {
 }
 
 // Request message for the UpdatePlacementRule RPC
-message UpdatePlacementRuleReq{
-    // Placement rule to update.
-    PlacementRule placement_rule = 1;
+message UpdatePlacementRuleReq {
+  // Placement rule to update.
+  PlacementRule placement_rule = 1;
 }
 
 // Response message for the UpdatePlacementRule RPC
-message UpdatePlacementRuleRes{}
+message UpdatePlacementRuleRes {}
 
 // Request message for the DeletePlacementRule RPC
 message DeletePlacementRuleReq {
@@ -3319,7 +3752,7 @@ message OpenTimesPattern {
 }
 
 // Request message for the CreateOpenTimesPattern RPC
-message CreateOpenTimesPatternReq{
+message CreateOpenTimesPatternReq {
   // Open times pattern to create, the @open_times_pattern_sid doesn't need to be set since it won't be used.
   OpenTimesPattern open_times_pattern = 1;
 }
@@ -3361,7 +3794,7 @@ message GetOpenTimesBitmapsReq {
 }
 
 // Response message for the GetOpenTimesBitmaps RPC
-message GetOpenTimesBitmapsRes{
+message GetOpenTimesBitmapsRes {
   // Map of open times options inherited from parent nodes.
   repeated commons.OpenTimesOption inherited_bitmap = 1;
   // Map of open times options belonging to the node being checked.
@@ -3371,7 +3804,7 @@ message GetOpenTimesBitmapsRes{
 }
 
 // Represents and Agent Availability Pattern
-message AgentAvailabilityPattern{
+message AgentAvailabilityPattern {
   // ID of this pattern.
   int64 agent_availability_pattern_sid = 1;
   // Parent entity of this pattern.
@@ -3383,19 +3816,19 @@ message AgentAvailabilityPattern{
 }
 
 // Request message for the AgentAvailabilityPattern RPC
-message CreateAgentAvailabilityPatternReq{
+message CreateAgentAvailabilityPatternReq {
   // AgentAvailabilityPattern to be created, the @agent_availability_pattern_sid doesn't need to be set since it won't be used.
   AgentAvailabilityPattern agent_availability_pattern = 1;
 }
 
 // Response message for the AgentAvailabilityPattern RPC
-message CreateAgentAvailabilityPatternRes{
+message CreateAgentAvailabilityPatternRes {
   // ID of the newly create agent availability pattern.
   int64 agent_availability_pattern_sid = 1;
 }
 
 // Request message for the UpdateAgentAvailabilityPattern RPC
-message UpdateAgentAvailabilityPatternReq{
+message UpdateAgentAvailabilityPatternReq {
   // Agent availability pattern to update.
   AgentAvailabilityPattern agent_availability_pattern = 1;
 }
@@ -3410,10 +3843,10 @@ message DeleteAgentAvailabilityPatternReq {
 }
 
 // Response message for the DeleteAgentAvailabilityPattern RPC
-message DeleteAgentAvailabilityPatternRes{}
+message DeleteAgentAvailabilityPatternRes {}
 
 // Contains a set of bitmaps for an entity.
-message AvailabilityBitmapSet{
+message AvailabilityBitmapSet {
   // Map of availability options belonging to the node being checked.
   repeated commons.AvailabilityOption own_bitmap = 1;
   // Map of availability options inherited from parent nodes.
@@ -3425,7 +3858,7 @@ message AvailabilityBitmapSet{
 }
 
 // Request message for the GetAvailabilityBitmaps RPC
-message GetAvailabilityBitmapsReq{
+message GetAvailabilityBitmapsReq {
   // The entities that @bitmaps will be associated with.
   // Must be nodes, wfm agents, and agent groups only. For agent groups, bitmaps will be returned for each of the groups member agents,
   repeated ParentEntity entities_to_check = 1;
@@ -3438,13 +3871,13 @@ message GetAvailabilityBitmapsReq{
 }
 
 // Response message for the GetAvailabilityBitmaps RPC
-message GetAvailabilityBitmapsRes{
+message GetAvailabilityBitmapsRes {
   // Requested bitmaps, with a pointer to the entity that the bitmaps belong.
   repeated AvailabilityBitmapSet bitmaps = 1;
 }
 
 // Request message for the UpsertNonSkillActivityAssociation RPC
-message UpsertNonSkillActivityAssociationReq{
+message UpsertNonSkillActivityAssociationReq {
   // ID of the non skill activity to upsert the association of.
   int64 non_skill_activity_sid = 1;
   // Node that the non skill activity will be associated with.
@@ -3456,7 +3889,7 @@ message UpsertNonSkillActivityAssociationReq{
 }
 
 // Response message for the UpsertNonSkillActivityAssociation RPC
-message UpsertNonSkillActivityAssociationRes{
+message UpsertNonSkillActivityAssociationRes {
   // Pair of parent entities, used to relate two entities.
   message EntityMapping {
     // When possible, the parent entity of the pair.
@@ -3498,7 +3931,7 @@ message SkillProficiency {
 }
 
 // Request message for the CreateSkillProficiencies RPC
-message CreateSkillProficienciesReq{
+message CreateSkillProficienciesReq {
   // Skill proficiencies to create, the @skill_proficiency_sid's don't need to be set since they won't be used.
   repeated SkillProficiency proficiencies = 1;
   // ID of the schedule scenario that the @parent_entity in each @proficiency belongs to.
@@ -3518,7 +3951,7 @@ message UpdateSkillProficienciesReq {
 message UpdateSkillProficienciesRes {}
 
 // Request message for the DeleteSkillProficiency RPC
-message DeleteSkillProficiencyReq{
+message DeleteSkillProficiencyReq {
   // ID of skill proficiency to delete.
   int64 skill_proficiency_sid = 1;
 }
@@ -3572,7 +4005,7 @@ message CreateScheduleScenarioWithNodesReq {
   // Name for the created call center node.
   string call_center_node_name = 2;
   // Description for the created call center node.
-  string call_center_node_description= 3;
+  string call_center_node_description = 3;
   // Name for the created client node.
   string client_node_name = 4;
   // Description for the created client node.
@@ -3580,7 +4013,7 @@ message CreateScheduleScenarioWithNodesReq {
   // Name for the created location node.
   string location_node_name = 6;
   // Description for the location center node.
-  string location_node_description= 7;
+  string location_node_description = 7;
   // Name for the created program node.
   string program_node_name = 8;
   // Description for the created program node.
@@ -3597,7 +4030,7 @@ message CreateScheduleScenarioWithNodesRes {
 
 // Request message for the UpdateScheduleScenario RPC
 message UpdateScheduleScenarioReq {
-    ScheduleScenario scheduleScenario = 1;
+  ScheduleScenario scheduleScenario = 1;
 }
 
 // Request message for the UpdateScheduleScenario RPC
@@ -3606,7 +4039,7 @@ message UpdateScheduleScenarioRes {}
 // Request message for the ListConfigEntities RPC
 message ListConfigEntitiesReq {
   // Entity type of the entities to retrieve.
- commons.ConfigEntityType entity_type = 1;
+  commons.ConfigEntityType entity_type = 1;
   // Entity that the entities to return will belong to.
   ParentEntity belongs_to_entity = 2;
   // Indicates whether or not to retrieve inactive entities (true=active and inactive, false=active only).
@@ -3641,8 +4074,8 @@ message ListConfigEntitiesRes {
   }
   // Group containing Shift Templates.
   message ShiftTemplateEntities {
-      // Shift Templates.
-      repeated ShiftTemplate entities = 1;
+    // Shift Templates.
+    repeated ShiftTemplate entities = 1;
   }
   // Group of WFM Agents.
   message WFMAgentEntities {
@@ -3651,8 +4084,8 @@ message ListConfigEntitiesRes {
   }
   // Group containing Placement Rules.
   message PlacementRuleEntities {
-      // Placement Rules.
-      repeated PlacementRule entities = 1;
+    // Placement Rules.
+    repeated PlacementRule entities = 1;
   }
   // Group containing Constraint Rules.
   message ConstraintRuleEntities {
@@ -3729,7 +4162,7 @@ message ListConfigEntitiesRes {
 }
 
 // Message type specifying the parameters of a diagnostic
-message Diagnostic{
+message Diagnostic {
   // The diagnostic level describes the class of the diagnostic message.
   commons.DiagnosticLevel level = 1;
   // A code to describe the diagnostic when possible. Default value of General when a more specific code is not available.
@@ -3737,7 +4170,7 @@ message Diagnostic{
   // The message detailing the diagnostic.
   string message = 3;
   // The entity that the diagnostic was built in reference to.
-  ParentEntity source_entity= 4;
+  ParentEntity source_entity = 4;
 }
 
 // Represents a group of diagnostics for a single entity
@@ -3749,7 +4182,7 @@ message Diagnostics {
 }
 
 // Request message for the DeleteShiftInstances RPC
-message DeleteShiftInstancesReq{
+message DeleteShiftInstancesReq {
   // IDs of shift instances to delete.
   repeated int64 shift_instance_sids = 1;
 }
@@ -3758,7 +4191,7 @@ message DeleteShiftInstancesReq{
 message DeleteShiftInstancesRes {}
 
 // Request message for the BuildNodeDiagnostics RPC
-message BuildNodeDiagnosticsReq{
+message BuildNodeDiagnosticsReq {
   // The node that @diagnostics will be associated with.
   ParentEntity node_to_check = 1;
   // ID of the schedule scenario that @node_to_check belongs to.
@@ -3766,7 +4199,7 @@ message BuildNodeDiagnosticsReq{
 }
 
 // Response message for the BuildNodeDiagnostics RPC
-message BuildNodeDiagnosticsRes{
+message BuildNodeDiagnosticsRes {
   // Set of diagnostic reports for the given @node_to_check.
   repeated Diagnostic diagnostics = 1;
   // Set of all nodes checked during the diagnostics.
@@ -3774,14 +4207,14 @@ message BuildNodeDiagnosticsRes{
 }
 
 // Request message for the BuildGlobalDiagnostics RPC
-message BuildGlobalDiagnosticsReq{
+message BuildGlobalDiagnosticsReq {
   // ID of the schedule scenario to get diagnostics for.
   int64 schedule_scenario_sid = 1;
 }
 
 // Response message for the BuildGlobalDiagnostics RPC
-message BuildGlobalDiagnosticsRes{
-   // Set of diagnostic reports for the given @schedule_scenario_sid.
+message BuildGlobalDiagnosticsRes {
+  // Set of diagnostic reports for the given @schedule_scenario_sid.
   repeated Diagnostic diagnostics = 1;
   // Set of all nodes checked during the diagnostics.
   repeated ParentEntity nodes_checked = 2;
@@ -3826,7 +4259,7 @@ message DraftSchedule {
 }
 
 // Represents a performance metric
-message PerformanceMetric{
+message PerformanceMetric {
   // Datetime range over which the metrics were determined.
   commons.DatetimeRange date_range = 1;
   // The total calls required over the @date_range, as determined by the forecast.
@@ -3857,7 +4290,7 @@ message PerformanceMetric{
 }
 
 // Represents a service level interval.
-message ServiceLevelInterval{
+message ServiceLevelInterval {
   // The start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // The service level achieved as a percent value, ranging from 0.0 to 1.0
@@ -3865,7 +4298,7 @@ message ServiceLevelInterval{
 }
 
 // Represents an fte required vs achieved interval.
-message FTERequiredVsAchievedInterval{
+message FTERequiredVsAchievedInterval {
   // The start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // Number of required calls in the interval.
@@ -3884,7 +4317,7 @@ message RequiredCallsInterval {
 }
 
 // Represents a shift instance
-message ShiftInstance{
+message ShiftInstance {
   // ID of the shift instance.
   int64 shift_instance_sid = 1;
   // The start time for this shift instance
@@ -4044,7 +4477,7 @@ message BuildDraftScheduleRes {
   // The built draft schedule.
   DraftSchedule draft_schedule = 1;
   // Set of diagnostic reports for the given @draft_schedule_sid.
- repeated Diagnostic diagnostics = 2;
+  repeated Diagnostic diagnostics = 2;
 }
 
 // Request message for the PublishDraftSchedule RPC
@@ -4129,7 +4562,7 @@ message ListDraftSchedulesRes {
 }
 
 // Request message for the DeleteDraftSchedule RPC
-message DeleteDraftScheduleReq{
+message DeleteDraftScheduleReq {
   // ID of draft schedule to delete.
   int64 draft_schedule_sid = 1;
 }
@@ -4308,7 +4741,7 @@ message DeleteSchedulingTargetReq {
 message DeleteSchedulingTargetRes {}
 
 // Request message for the ListRequiredCallsIntervals RPC.
-message ListRequiredCallsIntervalsReq{
+message ListRequiredCallsIntervalsReq {
   // The that the required call intervals will be associated with.
   ParentEntity node_selector = 1;
   // The datetime range across which required call intervals will be collected.
@@ -4319,7 +4752,7 @@ message ListRequiredCallsIntervalsReq{
 }
 
 // Response message for the ListRequiredCallsIntervals RPC.
-message ListRequiredCallsIntervalsRes{
+message ListRequiredCallsIntervalsRes {
   // The width of each interval in minutes.
   int32 interval_width_in_minutes = 1;
   // Requested required call intervals.
