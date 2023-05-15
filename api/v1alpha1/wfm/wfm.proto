@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package api.v1alpha1.wfm;
 
+import "annotations/authz.proto";
 import "api/commons/org.proto";
 import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
