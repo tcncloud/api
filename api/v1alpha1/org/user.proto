@@ -134,6 +134,8 @@ message GetMyUserResponse {
   AgentProfileGroup agent_profile_group = 10;
   // A list of the trusts assigned to the user.
   repeated api.commons.org.Trust trusts = 11;
+  // Whether the user is an account owner
+  bool account_owner = 12;
 }
 
 // Request message for GetUser.
@@ -218,6 +220,8 @@ message GetUserResponse {
   google.protobuf.Timestamp last_updated = 27;
   // user's password reset required
   bool password_reset_required = 28;
+  // Whether the user is an account owner
+  bool account_owner = 29;
 }
 
 // Request message for GetUserByOrgId.
@@ -270,6 +274,8 @@ message GetUserByOrgIdResponse {
   AgentProfileGroup agent_profile_group = 10;
   // A list of trusts the user has been assigned.
   repeated api.commons.org.Trust trusts = 21;
+  // Whether the user is an account owner
+  bool account_owner = 22;
 }
 
 // Request message for listAgents rpc.
@@ -312,6 +318,26 @@ message ListAgentsResponse {
     repeated string trust_ids = 11;
     // A list of the (neo)permission groups the user belongs to
     repeated api.commons.org.PermissionGroup permission_groups = 12;
+    // The agent's agent sid
+    int64 agent_sid = 13;
+    // The agent's full name
+    string name = 14;
+    // The User's partner agent id.
+    string partner_agent_id = 15;
+    // User caller id
+    string user_caller_id = 16;
+    // The date/time the user was created.
+    google.protobuf.Timestamp created = 17;
+    // The date/time the user was last updated.
+    google.protobuf.Timestamp last_updated = 18;
+    // An object with the agent profile group fields required for the call
+    AgentProfileGroup agent_profile_group = 19;
+    // a bool signalling whether or not the user is also an agent
+    bool agent = 20;
+    // User TimeZone with wrapper for nullable timezone
+    api.commons.TimeZoneWrapper time_zone_override = 21;
+    // The email of the agent. Empty if none set.
+    string email = 22;
   }
 
   // List of returned agents with masked data.
