@@ -77,6 +77,7 @@ message GetDataDipTemplateRequest {
 // Response message for the GetDataDipTemplate RPC method.
 message GetDataDipTemplateResponse {
   // The requested template.
+  api.commons.org.DataDipConfig template = 1;
 }
 
 // Request message for ListDataDipTemplates RPC method.
@@ -88,11 +89,13 @@ message ListDataDipTemplatesRequest {
 // Response message for ListDataDipTemplates RPC method.
 message ListDataDipTemplatesResponse {
   // list of the organizations templates.
+  repeated api.commons.org.DataDipConfig templates = 1;
 }
 
 // Request message for creating a Data Dip template.
 message CreateDataDipTemplateRequest {
   // The new template to persist.
+  api.commons.org.DataDipConfig template = 1;
 }
 
 // Response message from creating a Data Dip template.
