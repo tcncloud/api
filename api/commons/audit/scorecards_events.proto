@@ -91,6 +91,16 @@ message ScorecardsCreateEvaluationEvent {
   api.commons.Evaluation evaluation = 6; // the evaluation being created
 }
 
+// ScorecardsUpdateEvaluationEvent is event when an evaluation library evaluation is updated
+message ScorecardsUpdateEvaluationEvent {
+  int64 evaluation_id = 1; // id of the evaluation being updated
+  int64 scorecard_id = 2; // id of evaluated scorecard
+  string scorer_id = 3; // user_id of person performing evaluation
+  string agent_user_id = 4; // agent user id of agent getting evaluated
+  int64 call_sid = 5; // sid of the call being evaluated
+  api.commons.Evaluation evaluation = 6; // the evaluation being updated
+}
+
 // ScorecardsDeleteEvaluationEvent is event when an evaluation library evaluation is deleted
 message ScorecardsDeleteEvaluationEvent {
   int64 evaluation_id = 1; // id of the evaluation being created

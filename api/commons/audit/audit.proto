@@ -196,6 +196,8 @@ message AuditEvent {
     ScorecardsDeleteScorecardQuestionEvent scorecards_delete_scorecard_question_event = 520;
     // auto evaluation library auto evaluation created
     ScorecardsCreateAutoEvaluationEvent scorecards_create_auto_evaluation_event = 521;
+    // evaluation library evaluation updated
+    ScorecardsUpdateEvaluationEvent scorecards_update_evaluation_event = 522;
     //Tickets Events
     // EDIT update event
     TicketEvent ticket_event = 601;

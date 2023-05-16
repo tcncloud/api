@@ -178,6 +178,8 @@ enum EventType {
   SCORECARDS_DELETE_SCORECARD_QUESTION_EVENT = 520;
   // create auto evaluation event
   SCORECARDS_CREATE_AUTO_EVALUATION_EVENT = 521;
+  // update evaluation event
+  SCORECARDS_UPDATE_EVALUATION_EVENT = 522;
 
   //Tickets Events
   // create event
