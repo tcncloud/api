@@ -11,6 +11,7 @@ import "api/commons/logging.proto";
 import "api/commons/notifications.proto";
 import "api/commons/omnichannel.proto";
 import "api/commons/org.proto";
+import "api/commons/org/agent_profile_group.proto";
 import "api/commons/org/trusts.proto";
 import "api/commons/org_preferences.proto";
 import "api/commons/perms.proto";
@@ -369,17 +370,6 @@ message GetAgentSettingsResponse {
   repeated string reserved_carriers = 3; // List of reserved carrier strings.
 }
 
-message AgentProfileGroup {
-  string id = 1;
-  string org_id = 2;
-  string name = 3;
-  repeated PriorityGroup priority_groups = 4;
-  // last time agent profile group was updated
-  google.protobuf.Timestamp last_updated = 5;
-
-  bool default_group = 10;
-}
-
 // PriorityGroup is a type and threshold in array for AgentProfileGroup
 message PriorityGroup {
   reserved 1;
@@ -394,17 +384,17 @@ message GetAgentProfileGroupRequest {
 }
 
 message GetAgentProfileGroupResponse {
-  AgentProfileGroup agent_profile_group = 1;
+  api.commons.org.AgentProfileGroup agent_profile_group = 1;
 }
 
 message UpdateAgentProfileGroupRequest {
-  AgentProfileGroup agent_profile_group = 2;
+  api.commons.org.AgentProfileGroup agent_profile_group = 2;
 }
 
 message UpdateAgentProfileGroupResponse {}
 
 message CreateAgentProfileGroupRequest {
-  AgentProfileGroup agent_profile_group = 2;
+  api.commons.org.AgentProfileGroup agent_profile_group = 2;
 }
 
 message CreateAgentProfileGroupResponse {
@@ -414,7 +404,7 @@ message CreateAgentProfileGroupResponse {
 message ListAgentProfileGroupsRequest {}
 
 message ListAgentProfileGroupsResponse {
-  repeated AgentProfileGroup agent_profile_groups = 1;
+  repeated api.commons.org.AgentProfileGroup agent_profile_groups = 1;
 }
 
 message DeleteAgentProfileGroupRequest {
