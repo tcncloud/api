@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
+import "annotations/authz.proto";
 import "api/v1alpha1/scorecards/auto_evaluation.proto";
 import "api/v1alpha1/scorecards/auto_question.proto";
 import "api/v1alpha1/scorecards/category.proto";
@@ -18,198 +19,438 @@ service Scorecards {
   rpc CreateScorecard(CreateScorecardRequest) returns (CreateScorecardResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createscorecard";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListScorecards lists scorecards
   rpc ListScorecards(ListScorecardsRequest) returns (ListScorecardsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listscorecards";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // UpdateScorecard updates an existing scorecard
   rpc UpdateScorecard(UpdateScorecardRequest) returns (UpdateScorecardResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatescorecard";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteScorecard deletes a scorecard
   rpc DeleteScorecard(DeleteScorecardRequest) returns (DeleteScorecardResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletescorecard";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetScorecard gets a scorecard by ID
   rpc GetScorecard(GetScorecardRequest) returns (GetScorecardResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getscorecard";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // CreateQuestion creates a new library question
   rpc CreateQuestion(CreateQuestionRequest) returns (CreateQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListQuestions lists library questions
   rpc ListQuestions(ListQuestionsRequest) returns (ListQuestionsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listquestions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateQuestion updates a library question
   rpc UpdateQuestion(UpdateQuestionRequest) returns (UpdateQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatequestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteQuestion deletes a library question
   rpc DeleteQuestion(DeleteQuestionRequest) returns (DeleteQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletequestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetQuestion gets a library question
   rpc GetQuestion(GetQuestionRequest) returns (GetQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // BulkCreateQuestions creates library questions by a scorecard id
   rpc BulkCreateQuestions(BulkCreateQuestionsRequest) returns (BulkCreateQuestionsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/bulkcreatequestions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateCategory creates a new scorecards category
   rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createcategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListCategories lists scorecards categories
   rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listcategories";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // UpdateCategory updates a scorecard category
   rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatecategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteCategory deletes a scorecard category
   rpc DeleteCategory(DeleteCategoryRequest) returns (DeleteCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletecategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetCategory gets a scorecard category
   rpc GetCategory(GetCategoryRequest) returns (GetCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getcategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateScorecardQuestion creates a scorecard scorecard question
   rpc CreateScorecardQuestion(CreateScorecardQuestionRequest) returns (CreateScorecardQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createscorecardquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateScorecardQuestion updates a scorecard question
   rpc UpdateScorecardQuestion(UpdateScorecardQuestionRequest) returns (UpdateScorecardQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatescorecardquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteScorecardQuestion deletes a scorecard question
   rpc DeleteScorecardQuestion(DeleteScorecardQuestionRequest) returns (DeleteScorecardQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletescorecardquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetScorecardQuestion gets a scorecard question
   rpc GetScorecardQuestion(GetScorecardQuestionRequest) returns (GetScorecardQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getscorecardquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateSection creates a new scorecards section
   rpc CreateSection(CreateSectionRequest) returns (CreateSectionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createsection";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // ListSections lists scorecards sections
   rpc ListSections(ListSectionsRequest) returns (ListSectionsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listsections";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateSection updates a scorecard section
   rpc UpdateSection(UpdateSectionRequest) returns (UpdateSectionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatesection";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetSection gets a scorecard section
   rpc GetSection(GetSectionRequest) returns (GetSectionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getsection";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteSection deletes a scorecard section
   rpc DeleteSection(DeleteSectionRequest) returns (DeleteSectionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletesection";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateQuestionCategory links a scorecard question and category
   rpc CreateQuestionCategory(CreateQuestionCategoryRequest) returns (CreateQuestionCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createquestioncategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteQuestionCategory deletes link between a scorecard question and category
   rpc DeleteQuestionCategory(DeleteQuestionCategoryRequest) returns (DeleteQuestionCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletequestioncategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // CreateEvaluation creates a new evaluation
   rpc CreateEvaluation(CreateEvaluationRequest) returns (CreateEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // DeleteEvaluation gets an evaluation
   rpc DeleteEvaluation(DeleteEvaluationRequest) returns (DeleteEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deleteevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // GetEvaluation gets an evaluation
   rpc ScoreEvaluation(ScoreEvaluationRequest) returns (ScoreEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/scoreevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // UpdateEvaluation updates an evaluation
   rpc UpdateEvaluation(UpdateEvaluationRequest) returns (UpdateEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updateevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // GetEvaluation gets an evaluation
   rpc GetEvaluation(GetEvaluationRequest) returns (GetEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // ListEvaluations gets a list of evaluations
   rpc ListEvaluations(ListEvaluationsRequest) returns (ListEvaluationsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listevaluations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // DEPRECATED. Use CreateEvaluation to create evaluation sub-entities.
@@ -217,65 +458,142 @@ service Scorecards {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createevaluationquestion";
     option (google.api.http).body = "*";
     option deprecated = true;
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // UpdateEvaluationQuestion updates an existing evaluation question
   rpc UpdateEvaluationQuestion(UpdateEvaluationQuestionRequest) returns (UpdateEvaluationQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updateevaluationquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // DeleteEvaluationQuestion creates an evaluation question
   rpc DeleteEvaluationQuestion(DeleteEvaluationQuestionRequest) returns (DeleteEvaluationQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deleteevaluationquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // SampleCallsByCategory
   rpc SampleCallsByCategory(SampleCallsByCategoryRequest) returns (SampleCallsByCategoryResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/samplecallsbycategory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // CreateAutoQuestion creates an auto question
   rpc CreateAutoQuestion(CreateAutoQuestionRequest) returns (CreateAutoQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createautoquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // UpdateAutoQuestion updates an auto question
   rpc UpdateAutoQuestion(UpdateAutoQuestionRequest) returns (UpdateAutoQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updateautoquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // DeleteAutoQuestion deletes an auto question
   rpc DeleteAutoQuestion(DeleteAutoQuestionRequest) returns (DeleteAutoQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deleteautoquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetAutoQuestion gets an auto question
   rpc GetAutoQuestion(GetAutoQuestionRequest) returns (GetAutoQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getautoquestion";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
   }
 
   // GetAutoEvaluation gets an auto evaluation
   rpc GetAutoEvaluation(GetAutoEvaluationRequest) returns (GetAutoEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getautoevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // ListAutoEvaluations gets a list of auto evaluations
   rpc ListAutoEvaluations(ListAutoEvaluationsRequest) returns (ListAutoEvaluationsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listautoevaluations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 
   // DeleteAutoEvaluation deletes an auto evaluations
   rpc DeleteAutoEvaluation(DeleteAutoEvaluationRequest) returns (DeleteAutoEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deleteautoevaluation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
   }
 }
