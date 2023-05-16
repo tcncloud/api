@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics.notifier;
 
+import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -10,6 +11,13 @@ service Notifier {
   rpc GetNotify(GetNotifyRequest) returns (Notify) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/notifier/notifier/getnotify";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 }
 
