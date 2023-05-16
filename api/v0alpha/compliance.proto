@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "api/commons/communication.proto";
 import "api/commons/compliance.proto";
@@ -16,46 +17,133 @@ service Compliance {
   rpc RuleAutoComplete(RuleAutoCompleteReq) returns (RuleAutoCompleteRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/ruleautocomplete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc CheckRuleSet(CheckRuleSetReq) returns (CheckRuleSetRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/checkruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc AssignRuleSet(AssignRuleSetReq) returns (AssignRuleSetRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/assignruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc ListRuleSets(ListRuleSetsReq) returns (stream ListRuleSetsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listrulesets";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc GetRuleSet(GetRuleSetReq) returns (RuleSet) {
     option (google.api.http).post = "/api/v0alpha/compliance/getruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc GetRuleSetByName(GetRuleSetByNameReq) returns (RuleSet) {
     option (google.api.http).post = "/api/v0alpha/compliance/getrulesetbyname";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc CreateRuleSet(CreateRuleSetReq) returns (RuleSet) {
     option (google.api.http).post = "/api/v0alpha/compliance/createruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc RenameRuleSet(RenameRuleSetReq) returns (RenameRuleSetRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/renameruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc EnableRuleSet(EnableRuleSetReq) returns (EnableRuleSetRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/enableruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc DisableRuleSet(DisableRuleSetReq) returns (DisableRuleSetRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/disableruleset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   rpc CreateScrubList(CreateScrubListReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/createscrublist";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   // Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
@@ -66,6 +154,16 @@ service Compliance {
   rpc AddScrubListEntries(AddScrubListEntriesReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/addscrublistentries";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        },
+        {
+          permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
+        }
+      ];
+    };
   }
 
   // Update scrub list entry defined by UpdateScrubEntryReq message.
@@ -75,125 +173,324 @@ service Compliance {
   rpc UpdateScrubEntry(UpdateScrubEntryReq) returns (UpdateScrubEntryRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/updatescrubentry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc DeleteScrubListEntries(DeleteScrubListEntriesReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/deletescrublistentries";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        },
+        {
+          permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
+        }
+      ];
+    };
   }
 
   rpc GetScrubList(GetScrubListReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getScrublist";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        },
+        {
+          permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
+        }
+      ];
+    };
   }
 
   rpc DeleteScrubList(DeleteScrubListReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/deleteScrublist";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc GetDefaultRules(GetDefaultRulesReq) returns (GetDefaultRulesRes) {
     option (google.api.http).get = "/api/v0alpha/compliance/getdefaultrules";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc GetScrubLists(GetScrubListsReq) returns (ScrubListsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getscrublists";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc SearchScrubList(SearchScrubListReq) returns (ScrubList) {
     option (google.api.http).post = "/api/v0alpha/compliance/searchscrublist";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        },
+        {
+          permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
+        }
+      ];
+    };
   }
 
   rpc GetScrubListUploadUrl(GetScrubListUploadUrlReq) returns (GetScrubListUploadUrlRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getscrublistuploadurl";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc ProcessScrubListUpload(ProcessScrubListUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processscrublistupload";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc ProcessScrubListDeleteUpload(ProcessScrubListDeleteUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processscrublistdeleteupload";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   rpc ExportScrubList(ExportScrubListReq) returns (ExportScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/exportscrublist";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   // Purge entries from a scrub list defined by PurgeScrubListReq message.
   // Required permissions:
   //      EXECUTE_DO_NOT_CALL_LIST
-  rpc PurgeScrubList(PurgeScrubListReq) returns (PurgeScrubListRes);
+  rpc PurgeScrubList(PurgeScrubListReq) returns (PurgeScrubListRes) {
+    option (google.api.http).post = "/api/v0alpha/compliance/purgescrublist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
+  }
 
   // Creates a new Scenario
   rpc CreateScenario(CreateScenarioReq) returns (CreateScenarioRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/createscenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Gets one Scenario
   rpc GetScenario(GetScenarioReq) returns (GetScenarioRes) {
     option (google.api.http).get = "/api/v0alpha/compliance/getscenario";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Updates a Scenario
   rpc UpdateScenario(UpdateScenarioReq) returns (UpdateScenarioRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/updatescenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Deletes a Scenario
   rpc DeleteScenario(DeleteScenarioReq) returns (DeleteScenarioRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/deletescenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Run scenarios against ruleset
   rpc RunAssignedScenarios(RunAssignedScenariosReq) returns (RunAssignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/runassignedscenarios";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Lists all scenarios
   rpc ListAllScenarios(ListAllScenariosReq) returns (ListAllScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listallscenarios";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // List currently unassigned scenarios available to be assigned to a given ruleset
   rpc ListUnassignedScenarios(ListUnassignedScenariosReq) returns (ListUnassignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listunassignedscenarios";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // List rule sets currently assigned to a given scenario
   rpc ListAssignedRuleSets(ListAssignedRuleSetsReq) returns (ListAssignedRuleSetsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listassignedrulesets";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // List scenarios currently assigned to a given ruleset
   rpc ListAssignedScenarios(ListAssignedScenariosReq) returns (ListAssignedScenariosRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listassignedscenarios";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Assign a scenario to a given ruleset
   rpc AssignScenario(AssignScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/assignscenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Unassign a scenario from a given ruleset
   rpc UnassignScenario(UnassignScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/unassignscenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Enable an scenario
   rpc EnableScenario(EnableScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/enablescenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // Disable an scenario
   rpc DisableScenario(DisableScenarioReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/disablescenario";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
 
   // Frequency data calls
@@ -201,11 +498,20 @@ service Compliance {
   rpc GetFieldNames(GetFieldNamesReq) returns (FieldNames) {
     option (google.api.http).post = "/api/v0alpha/compliance/getfieldnames";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
   }
+
   // This will get all possible results (Answered, Answered Machine, Busy, etc.)
   rpc GetResultDescriptions(GetResultDescriptionsReq) returns (FieldNames) {
     option (google.api.http).post = "/api/v0alpha/compliance/getresultdescriptions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // consent api
@@ -218,6 +524,13 @@ service Compliance {
   rpc CreateConsentProfile(CreateConsentProfileReq) returns (CreateConsentProfileRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/createconsentprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Create/Record a consent defined by CreateConsentReq message.
@@ -228,6 +541,7 @@ service Compliance {
   rpc CreateConsent(CreateConsentReq) returns (CreateConsentRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/createconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a consent profile defined by GetConsentProfileReq message
@@ -238,6 +552,13 @@ service Compliance {
   rpc GetConsentProfile(GetConsentProfileReq) returns (ConsentProfile) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsentprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Gets a consent defined by GetConsentReq message
@@ -248,6 +569,13 @@ service Compliance {
   rpc GetConsent(GetConsentReq) returns (Consent) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Gets a consent defined by GetConsentByProfileAndContentReq message
@@ -258,6 +586,13 @@ service Compliance {
   rpc GetConsentByProfileAndContent(GetConsentByProfileAndContentReq) returns (GetConsentByProfileAndContentRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsentbyprofileandcontent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Gets a consent defined by GetConsentByContentReq message
@@ -268,6 +603,13 @@ service Compliance {
   rpc GetConsentByContent(GetConsentByContentReq) returns (GetConsentByContentRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsentbycontent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Searches for a consent defined by SearchConsentByContentReq message
@@ -278,6 +620,13 @@ service Compliance {
   rpc SearchConsentByContent(SearchConsentByContentReq) returns (SearchConsentByContentRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/searchconsentbycontent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Update a consent defined by UpdateConsentReq message for
@@ -294,6 +643,13 @@ service Compliance {
   rpc UpdateConsent(UpdateConsentReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/updateconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Expire a consent defined by ExpireConsentReq message.
@@ -304,6 +660,13 @@ service Compliance {
   rpc ExpireConsent(ExpireConsentReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/expireconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Revoke a consent defined by RevokeConsentReq message.
@@ -315,6 +678,7 @@ service Compliance {
   rpc RevokeConsent(RevokeConsentReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/revokeconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a consent defined by DeleteConsentReq message
@@ -324,6 +688,13 @@ service Compliance {
   rpc DeleteConsent(DeleteConsentReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/deleteconsent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Process a consent delete list defined by DeleteConsentReq message
@@ -333,6 +704,13 @@ service Compliance {
   rpc ProcessConsentListDeleteUpload(ProcessConsentListDeleteUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processconsentlistdeleteupload";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Enable a consent profile defined by EnableConsentProfileReq message.
@@ -344,6 +722,13 @@ service Compliance {
   rpc EnableConsentProfile(EnableConsentProfileReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/enableconsentprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Disable a consent profile defined by DisableConsentProfileReq message.
@@ -355,6 +740,13 @@ service Compliance {
   rpc DisableConsentProfile(DisableConsentProfileReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/disableconsentprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // List consent profiles defined by ListConsentProfilesReq message.
@@ -367,6 +759,13 @@ service Compliance {
   rpc ListConsentProfiles(ListConsentProfilesReq) returns (ListConsentProfilesRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listconsentprofiles";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Get consent upload url defined by GetConsentUploadUrlReq message.
@@ -377,6 +776,13 @@ service Compliance {
   rpc GetConsentUploadUrl(GetConsentUploadUrlReq) returns (GetConsentUploadUrlRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsentuploadurl";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Process consent upload defined by ProcessConsentUploadReq message.
@@ -386,6 +792,13 @@ service Compliance {
   rpc ProcessConsentUpload(ProcessConsentUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processconsentupload";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // List consent topics defined by ListConsentTopicsReq message.
@@ -397,6 +810,13 @@ service Compliance {
   rpc ListConsentTopics(ListConsentTopicsReq) returns (ListConsentTopicsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listconsenttopics";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Gets a consent topic defined by GetConsentTopicReq message
@@ -407,6 +827,13 @@ service Compliance {
   rpc GetConsentTopic(GetConsentTopicReq) returns (ConsentTopic) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsenttopic";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Create a consent topic defined by ConsentTopic
@@ -416,6 +843,13 @@ service Compliance {
   rpc CreateConsentTopic(ConsentTopic) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/createconsenttopic";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Delete a consent topic defined by ConsentTopic message.
@@ -425,6 +859,13 @@ service Compliance {
   rpc DeleteConsentTopic(ConsentTopic) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/deleteconsenttopic";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Update a consent topic defined by UpdateConsentTopicReq message.
@@ -434,6 +875,13 @@ service Compliance {
   rpc UpdateConsentTopic(UpdateConsentTopicReq) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/updateconsenttopic";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
   }
 
   // Process and Outbound Phone Number against a rule set.
@@ -445,6 +893,13 @@ service Compliance {
   rpc ProcessOutboundCall(ProcessOutboundCallReq) returns (ProcessRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/processoutboundcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 }
 
