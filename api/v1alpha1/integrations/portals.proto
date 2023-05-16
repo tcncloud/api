@@ -281,9 +281,9 @@ message CreatePortalLinksRes {
 message ListFlowFieldNamesReq {
   message Entity {
     // the single flow we are interested in checking
-    api.commons.public.Flow flow = 3;
+    api.commons.integrations.Flow flow = 3;
     // the location the flow will check for fields
-    api.commons.public.FlowFieldLoc loc = 4;
+    api.commons.integrations.FlowFieldLoc loc = 4;
   }
   Entity entity = 5;
 }
@@ -295,20 +295,20 @@ message ListFlowFieldNamesRes {
 
 // for listing fields on the given verification flow
 message ListAvailableVerificationFieldsReq {
-  api.commons.public.VerificationFlow verification = 1;
+  api.commons.integrations.VerificationFlow verification = 1;
 }
 
 // the available fields for the verification flow
 message ListAvailableVerificationFieldsRes {
-  repeated api.commons.public.FieldDefinition verification_fields = 2;
+  repeated api.commons.integrations.FieldDefinition verification_fields = 2;
 }
 
 // for listing fields on the given payment flow
 message ListAvailablePaymentFieldsReq {
-  api.commons.public.PaymentFlow payment = 1;
+  api.commons.integrations.PaymentFlow payment = 1;
 }
 
 // the available fields for the payment flow
 message ListAvailablePaymentFieldsRes {
-  repeated api.commons.public.FieldDefinition payment_fields = 2;
+  repeated api.commons.integrations.FieldDefinition payment_fields = 2;
 }

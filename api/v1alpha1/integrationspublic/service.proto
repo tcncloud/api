@@ -52,7 +52,7 @@ message Value {
   // what type of data value we *want* to validate as.
   // a value does *not* have to match the validation enum.
   // a value that does not match its validation enum is just invalid.
-  api.commons.public.Validation validation = 8;
+  api.commons.integrations.Validation validation = 8;
 }
 
 // represents the individual parts of a string, where some of the parts are
@@ -118,16 +118,16 @@ message GetLinkDataRes {
   // styling info
   PortalConfig portal_config = 4;
   // how the user verifies identity for this portal
-  api.commons.public.VerificationFlow verification = 5;
+  api.commons.integrations.VerificationFlow verification = 5;
   // how the user retrieves invoice for this portal
-  api.commons.public.InvoiceFlow invoice = 6;
+  api.commons.integrations.InvoiceFlow invoice = 6;
   // all the accepted payment flows for this portal
-  repeated api.commons.public.PaymentFlow payments = 7;
+  repeated api.commons.integrations.PaymentFlow payments = 7;
 
   message FieldNames {
-    api.commons.public.Flow flow = 8;
+    api.commons.integrations.Flow flow = 8;
     repeated string field_names = 9;
-    repeated api.commons.public.FieldDefinition fields = 10;
+    repeated api.commons.integrations.FieldDefinition fields = 10;
   }
   repeated FieldNames flow_forms = 9;
   // text that appears on one of the portal pages
@@ -175,14 +175,14 @@ message GetInvoiceRes {
   double amount_due = 2;
   string amount_due_key = 3;
   // the parsed data
-  api.commons.public.Invoices invoices = 4;
+  api.commons.integrations.Invoices invoices = 4;
 }
 message SubmitPaymentReq {
   PortalLinkId entity = 1;
   string session_id = 2;
 
   map<string, Value> payment_fields = 3;
-  api.commons.public.PaymentFlow payment_flow = 4;
+  api.commons.integrations.PaymentFlow payment_flow = 4;
 }
 message SubmitPaymentRes {
   map<string, Value> fields = 1;
@@ -204,5 +204,5 @@ message GetReceiptRes {
   // field in the response that represents the amount charged
   string amount_paid_key = 5;
   // flow name, type and options used
-  api.commons.public.PaymentFlow payment_flow = 6;
+  api.commons.integrations.PaymentFlow payment_flow = 6;
 }
