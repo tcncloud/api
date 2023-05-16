@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics;
 
+import "annotations/authz.proto";
 import "api/v1alpha1/vanalytics/filter.proto";
 import "api/v1alpha1/vanalytics/flag.proto";
 import "api/v1alpha1/vanalytics/flag_filter.proto";
@@ -20,18 +21,39 @@ service Vanalytics {
   rpc Audit(AuditRequest) returns (AuditResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/audit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // GetRecordingUrl gets a signed url to download a transcript recording.
   rpc GetRecordingUrl(GetRecordingUrlRequest) returns (GetRecordingUrlResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/getrecordingurl";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListBillingSpan lists billing spans.
   rpc ListBillingSpan(ListBillingSpanRequest) returns (ListBillingSpanResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listbillingspan";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [TRANSCRIPT] ==============================================================
@@ -42,30 +64,64 @@ service Vanalytics {
   rpc Search(SearchRequest) returns (SearchResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/search";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListTranscriptGroupNames lists transcript group names.
   rpc ListTranscriptGroupNames(ListTranscriptGroupNamesRequest) returns (ListTranscriptGroupNamesResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listtranscriptgroupnames";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
-
   // BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
   rpc BulkDeleteTranscripts(BulkDeleteTranscriptsRequest) returns (BulkDeleteTranscriptsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/bulkdeletetranscripts";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
+        }
+      ];
+    };
   }
 
   // BulkRestoreTranscripts bulk restores transcripts matching the provided query.
   rpc BulkRestoreTranscripts(BulkRestoreTranscriptsRequest) returns (BulkRestoreTranscriptsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/bulkrestoretranscripts";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
+        }
+      ];
+    };
   }
 
   // ListAgentResponseValues lists transcript agent response values.
   rpc ListAgentResponseValues(ListAgentResponseValuesRequest) returns (ListAgentResponseValuesResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listagentresponsevalues";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FILTER] ==================================================================
@@ -75,30 +131,65 @@ service Vanalytics {
   rpc CreateFilter(CreateFilterRequest) returns (Filter) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createfilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListFilters lists filters.
   rpc ListFilters(ListFiltersRequest) returns (ListFiltersResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // UpdateFilter updates a filter search request and/or name.
   rpc UpdateFilter(UpdateFilterRequest) returns (Filter) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/updatefilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // DeleteFilter deletes filter given a filter_sid.
   rpc DeleteFilter(DeleteFilterRequest) returns (DeleteFilterResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/deletefilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // GetFilter gets filter given a filter_sid, name or search request.
   rpc GetFilter(GetFilterRequest) returns (Filter) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/getfilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG] ====================================================================
@@ -107,30 +198,65 @@ service Vanalytics {
   rpc GetFlag(GetFlagRequest) returns (Flag) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/getflag";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // CreateFlag creates a new flag.
   rpc CreateFlag(CreateFlagRequest) returns (Flag) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createflag";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListFlags lists flags in an organization.
   rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflags";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // UpdateFlag updates a flag.
   rpc UpdateFlag(UpdateFlagRequest) returns (Flag) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/updateflag";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // DeleteFlag deletes the flag identified by the given flag_sid.
   rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/deleteflag";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG_REVIEW] =============================================================
@@ -139,18 +265,39 @@ service Vanalytics {
   rpc CreateFlagReview(CreateFlagReviewRequest) returns (FlagReview) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createflagreview";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // BulkCreateFlagReview creates flag reviews.
   rpc BulkCreateFlagReview(BulkCreateFlagReviewRequest) returns (BulkCreateFlagReviewResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/bulkcreateflagreview";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListFlagReviews lists reviews in an organization.
   rpc ListFlagReviews(ListFlagReviewsRequest) returns (ListFlagReviewsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflagreviews";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG_TRANSCRIPT] =========================================================
@@ -159,12 +306,26 @@ service Vanalytics {
   rpc CreateFlagTranscript(CreateFlagTranscriptRequest) returns (CreateFlagTranscriptResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createflagtranscript";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // SearchFlagTranscripts searches flag transcripts.
   rpc SearchFlagTranscripts(SearchFlagTranscriptsRequest) returns (SearchFlagTranscriptsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/searchflagtranscripts";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG_FILTER] =============================================================
@@ -173,18 +334,39 @@ service Vanalytics {
   rpc CreateFlagFilter(CreateFlagFilterRequest) returns (FlagFilter) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createflagfilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // ListFlagFilters lists flag filter associations.
   rpc ListFlagFilters(ListFlagFiltersRequest) returns (ListFlagFiltersResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflagfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // DEPRECATED.
   rpc DeleteFlagFilter(DeleteFlagFilterRequest) returns (DeleteFlagFilterResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/deleteflagfilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG_SNAPSHOT] ===========================================================
@@ -193,6 +375,13 @@ service Vanalytics {
   rpc ListFlagSnapshots(ListFlagSnapshotsRequest) returns (ListFlagSnapshotsResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflagSnapshots";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 
   // [FLAG_TRANSCRIPT_FILTER] ==================================================
@@ -201,6 +390,13 @@ service Vanalytics {
   rpc ListFlagTranscriptFilters(ListFlagTranscriptFiltersRequest) returns (ListFlagTranscriptFiltersResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflagtranscriptfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
   }
 }
 
