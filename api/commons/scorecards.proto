@@ -189,6 +189,7 @@ message AutoEvaluationQuestion {
   bool passed = 7; // whether the auto question evaluation was passed/failed.
   int32 sort_order = 8; // order number of auto evaluation question.
   RiskLevel risk_level = 11; // The risk level of the evaluation question.
+  bool expression_matched = 14; // Whether the flag expression matched.
 }
 
 // AutoEvaluationSection is an auto Section in an evaluation.
@@ -281,6 +282,7 @@ message Scorecard {
   ScorecardState state = 15; // determines how a scorecard can be used
   bool is_ad_hoc = 16 [deprecated = true]; // Deprecated. Use Ad Hoc category.
   repeated string custom_field_keys = 19; // Optional. Set of unique keys for custom key-value fields.
+  api.commons.CallType.Enum call_type = 20; // call types supported by scorecard
 }
 
 // AutoQuestion represents an automatically scored question.

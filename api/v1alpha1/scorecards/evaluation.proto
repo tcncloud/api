@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.scorecards;
 
 import "api/commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
 
 // CreateEvaluationRequest is request to create a new evaluation
 message CreateEvaluationRequest {
@@ -12,6 +13,15 @@ message CreateEvaluationRequest {
 // CreateEvaluationResponse is response with created entity
 message CreateEvaluationResponse {
   api.commons.Evaluation evaluation = 1; // entity created
+}
+
+message UpdateEvaluationRequest {
+  api.commons.Evaluation evaluation = 1; // Required - evaluation that is to be updated
+  google.protobuf.FieldMask update_mask = 2; // Required - specification of which fields should be updated
+}
+
+message UpdateEvaluationResponse {
+  api.commons.Evaluation evaluation = 1;
 }
 
 // DeleteEvaluationRequest is request to delete an evaluation

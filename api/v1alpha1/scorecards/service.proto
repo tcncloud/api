@@ -194,6 +194,12 @@ service Scorecards {
     option (google.api.http).body = "*";
   }
 
+  // UpdateEvaluation updates an evaluation
+  rpc UpdateEvaluation(UpdateEvaluationRequest) returns (UpdateEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updateevaluation";
+    option (google.api.http).body = "*";
+  }
+
   // GetEvaluation gets an evaluation
   rpc GetEvaluation(GetEvaluationRequest) returns (GetEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getevaluation";
