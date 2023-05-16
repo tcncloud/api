@@ -36,12 +36,12 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         },
         {
-          permissions: [Permission_PERMISSION_SCORECARDS]
+          permissions: [PERMISSION_SCORECARDS]
         }
-      ]
+      ];
     };
   }
 
@@ -59,9 +59,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -77,9 +77,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -99,9 +99,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -117,12 +117,12 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         },
         {
-          permissions: [Permission_PERMISSION_SCORECARDS]
+          permissions: [PERMISSION_SCORECARDS]
         }
-      ]
+      ];
     };
   }
 
@@ -138,12 +138,12 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         },
         {
-          permissions: [Permission_PERMISSION_SCORECARDS]
+          permissions: [PERMISSION_SCORECARDS]
         }
-      ]
+      ];
     };
   }
 
@@ -160,9 +160,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -178,9 +178,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -202,9 +202,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -221,9 +221,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -241,9 +241,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -259,9 +259,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -283,9 +283,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -303,9 +303,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -320,9 +320,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -340,9 +340,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -360,9 +360,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -380,9 +380,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -397,9 +397,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -419,9 +419,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -442,9 +442,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -466,9 +466,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -484,9 +484,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -502,9 +502,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -520,9 +520,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -538,9 +538,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -555,9 +555,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -573,9 +573,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -595,9 +595,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -617,9 +617,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -634,9 +634,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -655,9 +655,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -674,9 +674,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -693,9 +693,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -716,9 +716,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -736,9 +736,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -754,9 +754,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -776,9 +776,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -801,12 +801,12 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         },
         {
-          permissions: [Permission_PERMISSION_SCORECARDS]
+          permissions: [PERMISSION_SCORECARDS]
         }
-      ]
+      ];
     };
   }
 
@@ -832,9 +832,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -855,9 +855,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -877,9 +877,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -900,9 +900,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -922,9 +922,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -945,9 +945,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -967,9 +967,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -992,9 +992,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1019,9 +1019,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1039,9 +1039,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1060,9 +1060,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1079,9 +1079,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1097,9 +1097,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1120,9 +1120,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1142,9 +1142,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1165,9 +1165,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1187,9 +1187,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1208,9 +1208,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1228,9 +1228,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1249,9 +1249,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1267,9 +1267,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1287,9 +1287,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1306,9 +1306,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1327,9 +1327,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1350,9 +1350,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1373,9 +1373,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1391,9 +1391,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1409,9 +1409,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1432,9 +1432,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1455,9 +1455,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1475,9 +1475,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1496,9 +1496,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1517,9 +1517,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1536,9 +1536,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1558,9 +1558,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1579,9 +1579,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1600,9 +1600,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1619,9 +1619,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1643,9 +1643,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1668,9 +1668,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1692,9 +1692,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1716,9 +1716,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1735,9 +1735,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1756,9 +1756,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1779,9 +1779,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1801,9 +1801,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1822,9 +1822,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1841,9 +1841,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1861,9 +1861,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1880,9 +1880,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1906,9 +1906,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1925,9 +1925,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1944,9 +1944,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1965,9 +1965,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -1981,9 +1981,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2004,9 +2004,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2030,9 +2030,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2049,9 +2049,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2069,9 +2069,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2087,9 +2087,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2105,9 +2105,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2123,9 +2123,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2144,9 +2144,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2165,9 +2165,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2184,9 +2184,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2203,9 +2203,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2224,9 +2224,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 
@@ -2243,9 +2243,9 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [Permission_PERMISSION_WFM]
+          permissions: [PERMISSION_WFM]
         }
-      ]
+      ];
     };
   }
 }
