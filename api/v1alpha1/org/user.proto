@@ -293,6 +293,14 @@ message ListAgentsResponse {
       string hunt_group_name = 2;
     }
 
+    // Object to contain the agent profile group fields
+    message AgentProfileGroup {
+      // The id of the user's agent profile group
+      string agent_profile_group_id = 1;
+      // The name of the user's agent profile group
+      string agent_profile_group_name = 2;
+    }
+
     // The user ID of the agent
     string user_id = 1;
     // The ID of the agent's organization
