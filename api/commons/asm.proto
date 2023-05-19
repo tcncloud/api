@@ -98,6 +98,13 @@ message StreamAgentStateRes {
   }
 }
 
+message ManagerStreamAgentStateRes {
+  oneof manager_agent_state {
+    commons.AgentState state = 1;
+    KeepAlive heart_beat = 2;
+  }
+}
+
 message KeepAlive {}
 
 message QueueCallAdd {
