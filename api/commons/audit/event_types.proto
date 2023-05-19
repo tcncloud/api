@@ -132,6 +132,8 @@ enum EventType {
   ASM_PAUSE_EVENT = 407;
   // asm resume event
   ASM_RESUME_EVENT = 408;
+  // asm conversation pulled event
+  ASM_CONVERSATION_PULLED_EVENT = 409;
 
   // Scorecards
   // create question event

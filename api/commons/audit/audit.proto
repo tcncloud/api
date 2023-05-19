@@ -150,6 +150,8 @@ message AuditEvent {
     AsmPauseEvent asm_pause_event = 407;
     // asm resume event
     AsmResumeEvent asm_resume_event = 408;
+    // asm conversation pulled event
+    AsmConversationPulledEvent asm_conversation_pulled_event = 409;
 
     // Scorecards events class 500
     // question library question created

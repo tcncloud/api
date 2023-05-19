@@ -93,3 +93,9 @@ message AsmResumeEvent {
   // the session sid generated when the agent logged into asm
   int64 asm_session_sid = 2;
 }
+
+// AsmConversationPulledEvent -
+message AsmConversationPulledEvent {
+  // the conversation pulled
+  api.commons.OmniConversation conversation = 1;
+}

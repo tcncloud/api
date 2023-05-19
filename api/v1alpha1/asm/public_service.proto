@@ -38,7 +38,7 @@ service Asm {
     };
   }
   // Streams back statuses for the desired filter
-  rpc ManagerStreamAgentState(ManagerStreamAgentStateReq) returns (stream api.commons.AgentState) {
+  rpc ManagerStreamAgentState(ManagerStreamAgentStateReq) returns (stream api.commons.ManagerStreamAgentStateRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asm/managerstreamagentstate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {

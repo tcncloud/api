@@ -56,6 +56,7 @@ message AsmEvent {
     SendStatusAsmEvent send_status_asm_event = 8;
     PauseEvent pause_event = 9;
     ResumeEvent resume_event = 10;
+    ConversationPulledEvent conversation_pulled_event = 11;
   }
 }
 
@@ -83,3 +84,7 @@ message SendStatusAsmEvent {}
 message PauseEvent {}
 
 message ResumeEvent {}
+
+message ConversationPulledEvent {
+  api.commons.OmniConversation conversation = 1;
+}
