@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.srec;
 
+import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -10,18 +11,39 @@ service Srec {
   rpc ListScreenRecordings(ListScreenRecordingsRequest) returns (ListScreenRecordingsResponse) {
     option (google.api.http).post = "/api/v1alpha1/srec/srec/listscreenrecordings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING]
+        }
+      ];
+    };
   }
 
   // GetScreenRecordingURL returns the screen recording url.
   rpc GetScreenRecordingURL(GetScreenRecordingURLRequest) returns (GetScreenRecordingURLResponse) {
     option (google.api.http).post = "/api/v1alpha1/srec/srec/getscreenrecordingurl";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING]
+        }
+      ];
+    };
   }
 
   // DeleteScreenRecording deletes a screen recording.
   rpc DeleteScreenRecording(DeleteScreenRecordingRequest) returns (DeleteScreenRecordingResponse) {
     option (google.api.http).post = "/api/v1alpha1/srec/srec/deletescreenrecording";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING_DELETE]
+        }
+      ];
+    };
   }
 }
 
