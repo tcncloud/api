@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/ana.proto";
 import "api/commons/ana_charts.proto";
 import "google/api/annotations.proto";
@@ -15,6 +16,13 @@ service Ana {
   rpc GetSpecifiedVisualizations(GetSpecifiedVisualizationsReq) returns (Visualizations) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetSpecifiedVisualizations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
   // Admin
 
@@ -26,57 +34,127 @@ service Ana {
   rpc RegisterAccount(RegisterAccountReq) returns (AnaAccount) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/RegisterAccount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
   // sets the length of analytics history the client can view
   rpc SetWeeks(SetWeeksReq) returns (SetWeeksRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetWeeks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
   // set default time filter for given ana account
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc SetDefaultTimeFilter(SetDefaultTimeFilterReq) returns (SetDefaultTimeFilterRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultTimeFilter";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      wip: true;
+      no_permissions: true;
+    };
   }
   // sets the dashboard that is shown by default for neo
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc SetDefaultDashboard(SetDefaultDashboardReq) returns (SetDefaultDashboardRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultDashboard";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      wip: true;
+      no_permissions: true;
+    };
   }
 
   // gets account details for the client
+  // org.Permission_VIEW_REPORTS
   rpc GetAccount(GetAccountReq) returns (AnaAccount) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetAccount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // gets account details using the org_id provided
   rpc GetSpecifiedAccount(GetSpecifiedAccountReq) returns (AnaAccount) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetSpecifiedAccount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Gets an authorized url for the clients BI analytics page
   rpc GetAuthorizedAnalyticsLink(GetAuthorizedAnalyticsLinkReq) returns (GetAuthorizedAnalyticsLinkRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetAuthorizedAnalyticsLink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
+        }
+      ];
+    };
   }
 
   // creates and returns a url to download billing for the month provided or the previous month if none is provided
+  // org.Permission_VIEW_BILLING
   rpc GenerateMonthlyBilling(GenerateMonthlyBillingReq) returns (GenerateMonthlyBillingRes) {
     option (google.api.http).post = "/api/v0alpha/ana/billing/GenerateMonthlyBilling";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_BILLING]
+        }
+      ];
+    };
   }
 
   // gets the ana_account timezone for the client
+  // org.Permission_VIEW_REPORTS
   rpc GetTimeZone(GetTimeZoneReq) returns (TimeZone) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetTimeZone";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // updates the timezone for the account
+  // org.Permission_VIEW_REPORTS
   rpc SetTimeZone(SetTimeZoneReq) returns (SetTimeZoneRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetTimeZone";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // copies the reports (dashboards legacy and visualizations legacy)
@@ -84,12 +162,26 @@ service Ana {
   rpc CopyDashViz(CopyDashVizReq) returns (CopyDashVizRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/CopyDashViz";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // returns a summary of all billing factors for the specified client, whether client is pro, and which of those features contribute to making the client pro
   rpc GetSpecifiedBillingSummary(GetSpecifiedBillingSummaryReq) returns (BillingSummary) {
     option (google.api.http).post = "/api/v0alpha/ana/billing/GetSpecifiedBillingSummary";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // returns a summary of all billing factors for the client, whether client is
@@ -97,48 +189,108 @@ service Ana {
   rpc GetBillingSummary(GetBillingSummaryReq) returns (BillingSummary) {
     option (google.api.http).post = "/api/v0alpha/ana/billing/GetBillingSummary";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // enable custom report usage for the client
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc EnableCustomReports(SetCustomReportsEnabledReq) returns (SetCustomReportsEnabledRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/EnableCustomReports";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // disable custom report usage for the client
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc DisableCustomReports(SetCustomReportsEnabledReq) returns (SetCustomReportsEnabledRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/DisableCustomReports";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // allow the client to be adopted by another account
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc MakeAdoptable(MakeAdoptableReq) returns (MakeAdoptableRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/MakeAdoptable";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // disallow other accounts from adopting the client
+  // org.Permission_EDIT_CLIENT_PREFERENCES
   rpc MakeUnadoptable(MakeAdoptableReq) returns (MakeAdoptableRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/MakeUnadoptable";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // allow the parent to view the data of the adoptable child
   rpc AdoptAnaAccount(SetAnaAccountRelationReq) returns (SetAnaAccountRelationRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/AdoptAnaAccount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // disallow the parent from viewing the data of the child
   rpc DisownAnaAccount(SetAnaAccountRelationReq) returns (SetAnaAccountRelationRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/DisownAnaAccount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets all clients that can be viewed by the client including the client
   rpc GetAccessibleClients(GetAccessibleClientsReq) returns (SimpleRelations) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetAccessibleClients";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
+        }
+      ];
+    };
   }
 
   // gets all relations in which the client is involved grouped by whether the
@@ -146,6 +298,13 @@ service Ana {
   rpc GetFamily(GetFamilyReq) returns (Family) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetFamily";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets the client's data visibility as defined in the database (source of
@@ -153,6 +312,13 @@ service Ana {
   rpc GetAllowedDataVisibility(GetVisibilityReq) returns (DataVisibility) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetAllowedDataVisibility";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets the client's data visibility as is evident from the elasticsearch
@@ -160,6 +326,13 @@ service Ana {
   rpc GetCurrentDataVisibility(GetVisibilityReq) returns (DataVisibility) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetCurrentDataVisibility";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets a visibility summary from the perspective of the elasticsearch
@@ -167,24 +340,52 @@ service Ana {
   rpc GetIndicesVisibility(GetVisibilityReq) returns (IndicesVisibility) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetIndicesVisibility";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
   // gets the client's data visibility as exists in the elasticsearch data;
   // internal use only
   rpc GetAuditableDataVisibility(GetVisibilityReq) returns (DataVisibility) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetAuditableDataVisibility";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets a map of client sids to organization names
   rpc GetOrganizationNames(GetOrganizationNamesReq) returns (GetOrganizationNamesRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GetOrganizationNames";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // generate visualization data for the id
   rpc GenerateVizDataById(GenerateVizDataByIdReq) returns (GenerateVizDataByIdRes) {
     option (google.api.http).post = "/api/v0alpha/ana/admin/GenerateVizDataById";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
+        }
+      ];
+    };
   }
 
   // Census
@@ -198,6 +399,13 @@ service Ana {
   rpc GetClientStatus(GetClientStatusReq) returns (GetClientStatusResp) {
     option (google.api.http).post = "/api/v0alpha/ana/census/GetClientStatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Reloads client's data
@@ -208,12 +416,26 @@ service Ana {
   rpc ReloadClientData(ReloadClientDataReq) returns (ReloadClientDataResp) {
     option (google.api.http).post = "/api/v0alpha/ana/census/ReloadClientData";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // list all clients visualizations id and title
   rpc ListVisualizationsLegacy(ListVisualizationsLegacyReq) returns (ListVisualizationsLegacyRes) {
     option (google.api.http).post = "/api/v0alpha/ana/visualization/ListLegacy";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
+        }
+      ];
+    };
   }
 }
 
