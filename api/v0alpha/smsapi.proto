@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/sms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -19,6 +20,7 @@ service SmsApi {
   rpc ListSmsTemplates(ListSmsTemplatesReq) returns (ListSmsTemplatesRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmstemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsTemplate defined by CreateSmsTemplateReq message.
@@ -28,6 +30,7 @@ service SmsApi {
   rpc CreateSmsTemplate(CreateSmsTemplateReq) returns (CreateSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a SmsTemplate defined by UpdateSmsTemplateReq message for
@@ -41,6 +44,7 @@ service SmsApi {
   rpc UpdateSmsTemplate(UpdateSmsTemplateReq) returns (UpdateSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a SmsTemplate defined by DeleteSmsTemplateReq message for
@@ -50,6 +54,7 @@ service SmsApi {
   rpc DeleteSmsTemplate(DeleteSmsTemplateReq) returns (DeleteSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deletesmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets an SmsTemplate defined by GetSmsTemplateBySidReq message for the specified
@@ -59,6 +64,7 @@ service SmsApi {
   rpc GetSmsTemplateBySid(GetSmsTemplateBySidReq) returns (GetSmsTemplateBySidRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmstemplatebysid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms IntentTemplates  defined by ListSmsIntentTemplatesReq message.
@@ -69,6 +75,7 @@ service SmsApi {
   rpc ListSmsIntentTemplates(ListSmsIntentTemplatesReq) returns (ListSmsIntentTemplatesRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsintenttemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsIntentTemplate defined by SmsIntentTemplate message.
@@ -78,6 +85,7 @@ service SmsApi {
   rpc CreateSmsIntentTemplate(SmsIntentTemplate) returns (CreateSmsIntentTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmsintenttemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a SmsIntentTemplate defined by SmsIntentTemplate message for
@@ -92,6 +100,7 @@ service SmsApi {
   rpc UpdateSmsIntentTemplate(SmsIntentTemplate) returns (UpdateSmsIntentTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsintenttemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a SmsIntentTemplate defined by DeleteSmsIntentTemplateReq message for
@@ -101,6 +110,7 @@ service SmsApi {
   rpc DeleteSmsIntentTemplate(DeleteSmsIntentTemplateReq) returns (DeleteSmsIntentTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deletesmsintenttemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets an SmsIntentTemplate group defined by GetSmsIntentTemplateBySidReq message for the specified
@@ -110,6 +120,7 @@ service SmsApi {
   rpc GetSmsIntentTemplateBySid(GetSmsIntentTemplateBySidReq) returns (SmsIntentTemplate) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsintenttemplatebysid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms SourceNumbers  defined by ListSmsSourceNumbersReq message.
@@ -120,6 +131,7 @@ service SmsApi {
   rpc ListSmsSourceNumbers(ListSmsSourceNumbersReq) returns (ListSmsSourceNumbersRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmssourcenumbers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsSourceNumber defined by CreateSmsSourceNumberReq message.
@@ -129,6 +141,7 @@ service SmsApi {
   rpc CreateSmsSourceNumber(CreateSmsSourceNumberReq) returns (CreateSmsSourceNumberRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmssourcenumber";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a SmsSourceNumber defined by UpdateSmsSourceNumberReq message for
@@ -143,6 +156,7 @@ service SmsApi {
   rpc UpdateSmsSourceNumber(UpdateSmsSourceNumberReq) returns (UpdateSmsSourceNumberRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmssourcenumber";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a SmsSourceNumber defined by DeleteSmsSourceNumberReq message for
@@ -152,6 +166,7 @@ service SmsApi {
   rpc DeleteSmsSourceNumber(DeleteSmsSourceNumberReq) returns (DeleteSmsSourceNumberRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deletesmssourcenumber";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // get sms source number for the particular sid
@@ -162,6 +177,7 @@ service SmsApi {
   rpc GetSmsSourceNumberBySid(GetSmsSourceNumberBySidReq) returns (SmsNumbers) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmssourcenumberbysid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Send sms notification defined by SendSmsNotificationReq message for the specified
@@ -173,6 +189,7 @@ service SmsApi {
   rpc SendSmsNotification(SendSmsNotificationReq) returns (SendSmsNotificationRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/sendsmsnotification";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Group defined by ListSmsGroupByFiltersReq message.
@@ -183,6 +200,7 @@ service SmsApi {
   rpc ListSmsGroupByFilters(ListSmsGroupByFiltersReq) returns (ListSmsGroupByFiltersRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupbyfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Group defined by ListSmsGroupsByGroupSidsReq message.
@@ -193,6 +211,7 @@ service SmsApi {
   rpc ListSmsGroupsByGroupSids(ListSmsGroupsByGroupSidsReq) returns (ListSmsGroupsByGroupSidsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupsbygroupsids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Task  defined by ListSmsTasksByGroupSidsReq message.
@@ -204,6 +223,7 @@ service SmsApi {
   rpc ListSmsTasksByGroupSids(ListSmsTasksByGroupSidsReq) returns (ListSmsTasksByGroupSidsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmstasksbygroupsids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Group defined by ListSmsGroupByFiltersReq message.
@@ -214,6 +234,7 @@ service SmsApi {
   rpc ListSmsGroupByFiltersForAudit(ListSmsGroupByFiltersReq) returns (ListSmsGroupByFiltersRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupbyfiltersforaudit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Group defined by ListSmsGroupsByGroupSidsReq message.
@@ -224,6 +245,7 @@ service SmsApi {
   rpc ListSmsGroupsByGroupSidsForAudit(ListSmsGroupsByGroupSidsReq) returns (ListSmsGroupsByGroupSidsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsgroupsbygroupsidsforaudit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Task  defined by ListSmsTasksByGroupSidsReq message.
@@ -235,6 +257,7 @@ service SmsApi {
   rpc ListSmsTasksByGroupSidsForAudit(ListSmsTasksByGroupSidsReq) returns (ListSmsTasksByGroupSidsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmstasksbygroupsidsforaudit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Sms Task  defined by ListSmsTasksWithDetailedStatusReq message.
@@ -246,6 +269,7 @@ service SmsApi {
   rpc ListSmsTasksWithDetailedStatus(ListSmsTasksWithDetailedStatusReq) returns (ListSmsTasksWithDetailedStatusRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmstaskswithdetailedstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
@@ -255,6 +279,7 @@ service SmsApi {
   rpc UpdateSmsGroupStatus(SmsGroupInfo) returns (UpdateSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
@@ -264,6 +289,7 @@ service SmsApi {
   rpc UpdateSmsGroupSendsPerMinute(SmsGroupInfo) returns (UpdateSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupsendsperminute";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update the Scheduled Sms group defined by SmsGroupInfo message for the specified
@@ -273,6 +299,7 @@ service SmsApi {
   rpc UpdateSmsGroupScheduleTimes(SmsGroupInfo) returns (UpdateSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsgroupscheduletimes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Schedule Sms group defined by ScheduleSmsReq message for the specified
@@ -282,6 +309,7 @@ service SmsApi {
   rpc ScheduleSms(ScheduleSmsReq) returns (ScheduleSmsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/schedulesms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Re-Schedule Sms group defined by ResendUnconnectedSmsReq message for the specified
@@ -291,6 +319,7 @@ service SmsApi {
   rpc ResendUnconnectedSms(ResendUnconnectedSmsReq) returns (ResendUnconnectedSmsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/resendunconnectedsms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Search SMS activity defined by SmsActivitySearchReq message for
@@ -301,6 +330,7 @@ service SmsApi {
   rpc SmsActivitySearch(SmsActivitySearchReq) returns (SmsActivitySearchRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/smsactivitysearch";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a InboundSmsTemplate defined by CreateInboundSmsTemplateReq message.
@@ -310,6 +340,7 @@ service SmsApi {
   rpc CreateInboundSmsTemplate(CreateInboundSmsTemplateReq) returns (CreateInboundSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createinboundsmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a InboundSmsTemplate defined by UpdateInboundSmsTemplateReq message for
@@ -323,6 +354,7 @@ service SmsApi {
   rpc UpdateInboundSmsTemplate(UpdateInboundSmsTemplateReq) returns (UpdateInboundSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updateinboundsmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a InboundSmsTemplate defined by DeleteInboundSmsTemplateReq message for
@@ -332,6 +364,7 @@ service SmsApi {
   rpc DeleteInboundSmsTemplate(DeleteInboundSmsTemplateReq) returns (DeleteInboundSmsTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deleteinboundsmstemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List InboundSmsTemplate  defined by ListInboundSmsTemplatesReq message.
@@ -343,6 +376,7 @@ service SmsApi {
   rpc ListInboundSmsTemplates(ListInboundSmsTemplatesReq) returns (ListInboundSmsTemplatesRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmstemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets an InboundSmsTemplate group defined by GetInboundSmsTemplateByIdReq message for the specified
@@ -352,6 +386,7 @@ service SmsApi {
   rpc GetInboundSmsTemplateById(GetInboundSmsTemplateByIdReq) returns (GetInboundSmsTemplateByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getinboundsmstemplatebyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a InboundSmsGroup defined by CreateInboundSmsGroupReq message.
@@ -361,6 +396,7 @@ service SmsApi {
   rpc CreateInboundSmsGroup(CreateInboundSmsGroupReq) returns (CreateInboundSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createinboundsmsgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a InboundSmsGroup defined by UpdateInboundSmsGroupReq message for
@@ -374,6 +410,7 @@ service SmsApi {
   rpc UpdateInboundSmsGroup(UpdateInboundSmsGroupReq) returns (UpdateInboundSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updateinboundsmsgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a InboundSmsGroup defined by DeleteInboundSmsGroupReq message for
@@ -383,6 +420,7 @@ service SmsApi {
   rpc DeleteInboundSmsGroup(DeleteInboundSmsGroupReq) returns (DeleteInboundSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deleteinboundsmsgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List InboundSmsGroup  defined by ListInboundSmsGroupsReq message.
@@ -394,6 +432,7 @@ service SmsApi {
   rpc ListInboundSmsGroups(ListInboundSmsGroupsReq) returns (ListInboundSmsGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List Active InboundSmsGroup  defined by ListActiveInboundSmsGroupsReq message.
@@ -405,6 +444,7 @@ service SmsApi {
   rpc ListActiveInboundSmsGroups(ListActiveInboundSmsGroupsReq) returns (ListActiveInboundSmsGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listactiveinboundsmsgroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List InboundSmsGroup  defined by InboundSmsGroupByFiltersReq message.
@@ -416,6 +456,7 @@ service SmsApi {
   rpc ListInboundSmsGroupByFilters(ListInboundSmsGroupByFiltersReq) returns (ListInboundSmsGroupByFiltersRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroupbyfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets an InboundSms group defined by GetInboundSmsGroupByIdReq message for the specified
@@ -425,6 +466,7 @@ service SmsApi {
   rpc GetInboundSmsGroupById(GetInboundSmsGroupByIdReq) returns (GetInboundSmsGroupByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getinboundsmsgroupbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List InboundSmsGroup  defined by ListInboundSmsGroupsByGroupIdsReq message.
@@ -436,6 +478,7 @@ service SmsApi {
   rpc ListInboundSmsGroupsByGroupIds(ListInboundSmsGroupsByGroupIdsReq) returns (ListInboundSmsGroupsByGroupIdsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmsgroupbygroupids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Stop an InboundSms group defined by StopInboundSmsGroupReq message for the specified
@@ -445,6 +488,7 @@ service SmsApi {
   rpc StopInboundSmsGroup(StopInboundSmsGroupReq) returns (StopInboundSmsGroupRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/stopinboundsmsgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Schedule InboundSms group defined by ScheduleInboundSmsReq message for the specified
@@ -454,6 +498,7 @@ service SmsApi {
   rpc ScheduleInboundSms(ScheduleInboundSmsReq) returns (ScheduleInboundSmsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/scheduleinboundsms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsConversation defined by CreateSmsConversationReq message.
@@ -463,6 +508,7 @@ service SmsApi {
   rpc CreateSmsConversation(CreateSmsConversationReq) returns (CreateSmsConversationRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Update a SmsConversation defined by UpdateSmsConversationReq message for
@@ -476,6 +522,7 @@ service SmsApi {
   rpc UpdateSmsConversation(UpdateSmsConversationReq) returns (UpdateSmsConversationRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/updatesmsconversation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Delete a SmsConversation defined by DeleteSmsConversationReq message for
@@ -485,6 +532,7 @@ service SmsApi {
   rpc DeleteSmsConversation(DeleteSmsConversationReq) returns (DeleteSmsConversationRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/deletesmsconversation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List SmsConversation profiles defined by ListSmsConversationsReq message.
@@ -496,6 +544,7 @@ service SmsApi {
   rpc ListSmsConversations(ListSmsConversationsReq) returns (ListSmsConversationsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a SmsConversation defined by GetSmsConversationByIdReq message for the specified
@@ -505,6 +554,7 @@ service SmsApi {
   rpc GetSmsConversationById(GetSmsConversationByIdReq) returns (GetSmsConversationByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets SmsMessage defined by GetSmsMessageReq message for the specified
@@ -514,6 +564,7 @@ service SmsApi {
   rpc GetSmsMessage(GetSmsMessageReq) returns (GetSmsMessageRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsmessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsConversationAudit defined by SmsConversationAudit message.
@@ -523,6 +574,7 @@ service SmsApi {
   rpc CreateSmsConversationAudit(SmsConversationAudit) returns (CreateSmsConversationAuditRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversationaudit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List SmsConversationAudit profiles defined by ListSmsConversationAuditsReq message.
@@ -534,6 +586,7 @@ service SmsApi {
   rpc ListSmsConversationAudits(ListSmsConversationAuditsReq) returns (ListSmsConversationAuditsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversationsaudit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a SmsConversationAudit defined by GetSmsConversationAuditByIdReq message for the specified
@@ -543,6 +596,7 @@ service SmsApi {
   rpc GetSmsConversationAuditById(GetSmsConversationAuditByIdReq) returns (GetSmsConversationAuditByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationauditbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create/Record a SmsConversationAssignedAgent defined by SmsConversationAssignedAgent message.
@@ -551,6 +605,7 @@ service SmsApi {
   rpc CreateSmsConversationAssignedAgent(SmsConversationAssignedAgent) returns (CreateSmsConversationAssignedAgentRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/createsmsconversationassignedagent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List SmsConversationAssignedAgent profiles defined by ListSmsConversationAssignedAgentsReq message.
@@ -562,6 +617,7 @@ service SmsApi {
   rpc ListSmsConversationAssignedAgents(ListSmsConversationAssignedAgentsReq) returns (ListSmsConversationAssignedAgentsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listsmsconversationassignedagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a SmsConversationAssignedAgent defined by GetSmsConversationAssignedAgentByIdReq message for the specified
@@ -571,6 +627,7 @@ service SmsApi {
   rpc GetSmsConversationAssignedAgentById(GetSmsConversationAssignedAgentByIdReq) returns (GetSmsConversationAssignedAgentByIdRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/getsmsconversationassignedagentbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List InboundSmsTasks defined by ListInboundSmsTasksByGroupIdsReq message.
@@ -582,6 +639,7 @@ service SmsApi {
   rpc ListInboundSmsTasksByGroupIds(ListInboundSmsTasksByGroupIdsReq) returns (ListInboundSmsTasksByGroupIdsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/listinboundsmstasksbygroupids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Stop all OutboundSms groups defined by StopAllOutboundSmsGroupsReq message for the specified
@@ -591,6 +649,7 @@ service SmsApi {
   rpc StopAllOutboundSmsGroups(StopAllOutboundSmsGroupsReq) returns (StopAllOutboundSmsGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/stopalloutboundsmsgroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Stop all InboundSms groups defined by StopAllInboundSmsGroupsReq message for the specified
@@ -600,6 +659,7 @@ service SmsApi {
   rpc StopAllInboundSmsGroups(StopAllInboundSmsGroupsReq) returns (StopAllInboundSmsGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/smsapi/stopallinboundsmsgroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 
