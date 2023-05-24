@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package api.commons;
 
+import "api/commons/communication.proto";
+import "api/commons/enums.proto";
+import "google/protobuf/timestamp.proto";
+
 enum Verb {
   V_UNKNOWN = 0;
   V_ALLOW = 1;
@@ -63,4 +67,219 @@ enum Environment {
 enum ConsentAbsentAction {
   CONSENT_ABSENT_ACTION_ALLOW = 0;
   CONSENT_ABSENT_ACTION_DENY = 1;
+}
+
+message Rule {
+  api.commons.Verb verb = 1;
+  api.commons.Entity entity = 2;
+  api.commons.SubEntity sub_entity = 3;
+  repeated Selector selectors = 4;
+  string rule_text = 6;
+}
+
+message Selector {
+  oneof selection_rule {
+    TimeExp time = 1;
+    WeekdayExp week = 2;
+    DnclExp dncl = 3;
+    FrequencyExp frequency = 4;
+    LocationExp location = 5;
+    PhoneTypeExp phone_type = 6;
+    MonthExp month = 7;
+    DateExp date = 8;
+    HolidayExp holiday = 9;
+    MetaFieldExp meta = 10;
+    PluginExp plugin = 11;
+  }
+}
+
+message TimeExp {
+  string start_hour = 1;
+  string end_hour = 2;
+}
+
+message WeekdayExp {
+  api.commons.Weekday.Enum day = 1;
+  string text = 2;
+}
+
+message DnclExp {
+  string list_name = 1;
+  FieldNamesMod field_names = 2;
+}
+
+message FrequencyExp {
+  int64 count = 1; // Maximum number of tries
+  int64 duration = 2; // Measured in nanoseconds
+  ResultsMod results = 3;
+  DispositionMod dispositions = 4;
+  FieldNamesMod field_names = 5;
+  repeated EntityExp checking_entities = 6;
+}
+
+message LocationExp {
+  string country = 1;
+  string state = 2;
+  string county = 3;
+  string city = 4;
+  string province = 5;
+  repeated string postal_codes = 6;
+  repeated string area_codes = 7;
+}
+
+message PhoneTypeExp {
+  PhoneType phone_type = 1;
+}
+
+message MonthExp {
+  api.commons.Month month = 1;
+  string text = 2;
+}
+
+message DateExp {
+  api.commons.Month month = 1;
+  int64 day = 2;
+  int64 year = 3;
+}
+
+message HolidayExp {
+  string name = 1;
+  string country = 2;
+  string type = 3;
+}
+
+message MetaFieldExp {
+  string field = 1;
+}
+
+message PluginExp {
+  PluginType type = 1;
+  bool tcn_strict = 4; // true/false deny on errors
+
+  // gryphon
+  string license_id = 2;
+  string reference_key = 3;
+  string from_number = 5;
+  Environment env = 6;
+
+  // tcn_consent
+  string profile_name = 7;
+  string content_field = 8;
+  string topic = 9;
+  ConsentAbsentAction absent_action = 11;
+
+  // rnd
+  string date_last_contact = 10;
+}
+
+message EntityExp {
+  SubEntity sub_entity = 1;
+  Entity entity = 2;
+}
+
+message FieldNamesMod {
+  repeated Field field_names = 1;
+}
+
+message ResultsMod {
+  repeated string results = 1;
+}
+
+message DispositionMod {
+  repeated DispositionField dispositions = 1;
+}
+
+message DispositionField {
+  string key = 1;
+  string value = 2;
+  repeated DispositionPair pairs = 3;
+}
+
+message DispositionPair {
+  string key = 1;
+  string value = 2;
+}
+
+message Field {
+  string Field = 1;
+  string Content = 2;
+}
+
+// ConsentCondition defines conditions
+// required for a consent to take affect
+message ConsentCondition {
+  // Condition id
+  int64 consent_condition_id = 1;
+  // Consent it belongs to
+  int64 consent_id = 2;
+
+  // Days of week the condition is applicable to
+  repeated api.commons.Weekday.Enum days_of_the_week = 10;
+  // Time of day condition starts
+  string time_of_day_from = 11;
+  // Time of day condition ends
+  string time_of_day_to = 12;
+  // Date condition starts
+  google.protobuf.Timestamp from_date = 13;
+  // Date condition ends
+  google.protobuf.Timestamp to_date = 14;
+}
+
+message ScenarioData {
+  api.commons.CommType comm_type = 1;
+  string phone_number = 2;
+  string country_code = 3 [deprecated = true];
+  string email = 4;
+  map<string, string> call_metadata = 5;
+  google.protobuf.Timestamp time_of_call = 6;
+  int64 frequency_count = 7;
+  int64 frequency_duration = 8;
+  bool dncl_blocks = 9;
+  string country = 10;
+  string state = 11;
+  string county = 12;
+  string city = 13;
+  string province = 14;
+  api.commons.PhoneType phone_type = 15;
+  // time_zone uses the iana timezone format. Defaults to utc
+  string time_zone = 16;
+  repeated string holidays = 17;
+  CountryCode country_code_data = 18;
+}
+
+message CountryCode {
+  int64 country_code = 1;
+  string country_name = 2;
+  string country_id = 3;
+}
+
+message ScenarioResult {
+  reserved 1;
+  bool passed_value = 5;
+  repeated ScenarioRuleResponse should_allow_responses = 2;
+  repeated ScenarioRuleResponse should_deny_responses = 3;
+  string scenario_name = 4;
+}
+
+message ScenarioRuleResponse {
+  string rule_text = 1;
+  reserved 2;
+  bool permit_value = 3;
+}
+
+// Scrub entry details information
+message ScrubEntryDetails {
+  // entry content (phone number, sms, email ...)
+  string content = 1;
+  // date when entry should expire
+  google.protobuf.Timestamp expiration_date = 2;
+}
+
+message RuleResponse {
+  // the rule text
+  string rule_text = 1;
+  // indicates if the rule allowed or denied the request
+  bool permit = 2;
+  // the response from the plugin
+  string plugin_response = 3;
 }

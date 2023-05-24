@@ -916,18 +916,9 @@ message ProcessOutboundCallReq {
   // The id of the caller associated with this process request
   int64 source_id = 5;
   // The call type of the caller associated with this process request
-  api.commons.CallType.Enum source_field = 6;
+  string source_field = 6;
   // The caller id being called from
   string caller_id = 7;
-}
-
-message RuleResponse {
-  // the rule text
-  string rule_text = 1;
-  // indicates if the rule allowed or denied the request
-  bool permit = 2;
-  // the response from the plugin
-  string plugin_response = 3;
 }
 
 // response given after processing something against a rule set
@@ -935,20 +926,12 @@ message ProcessRes {
   // indicates if the process request was permitted or not
   bool permit = 1;
   // the list of rules checked against
-  repeated RuleResponse rule_responses = 2;
+  repeated api.commons.RuleResponse rule_responses = 2;
 }
 
 message ScrubList {
   string list_id = 2;
   repeated ScrubEntry entries = 3;
-}
-
-// Scrub entry details information
-message ScrubEntryDetails {
-  // entry content (phone number, sms, email ...)
-  string content = 1;
-  // date when entry should expire
-  google.protobuf.Timestamp expiration_date = 2;
 }
 
 message CreateScrubListReq {
@@ -958,7 +941,7 @@ message CreateScrubListReq {
   repeated string list = 10;
   api.commons.ContentType content_type = 11;
   string country_code = 12;
-  repeated ScrubEntryDetails scrub_entry_details = 13;
+  repeated api.commons.ScrubEntryDetails scrub_entry_details = 13;
 }
 
 // AddScrubListEntries request message
@@ -978,7 +961,7 @@ message AddScrubListEntriesReq {
   string country_code = 12;
 
   // the list of scrub entries that are sent in order to be added
-  repeated ScrubEntryDetails scrub_entry_details = 13;
+  repeated api.commons.ScrubEntryDetails scrub_entry_details = 13;
 }
 
 message UpdateScrubEntryReq {
@@ -1062,7 +1045,7 @@ message CheckRuleSetReq {
 }
 
 message CheckRuleSetRes {
-  repeated Rule rules = 1;
+  repeated api.commons.Rule rules = 1;
   repeated string warnings = 2;
 }
 
@@ -1107,7 +1090,7 @@ message CreateRuleSetReq {
   string rule_set_id = 1;
   string name = 4;
   string rules_text = 6;
-  repeated Rule rules = 7;
+  repeated api.commons.Rule rules = 7;
 }
 
 message EnableRuleSetReq {
@@ -1137,104 +1120,7 @@ message RuleSet {
   // sha256 for the input strings
   string sha = 10;
 
-  repeated Rule rules = 20;
-}
-
-message Rule {
-  api.commons.Verb verb = 1;
-  api.commons.Entity entity = 2;
-  api.commons.SubEntity sub_entity = 3;
-  repeated Selector selectors = 4;
-}
-
-message Selector {
-  oneof selection_rule {
-    TimeExp time = 1;
-    WeekdayExp week = 2;
-    DnclExp dncl = 3;
-    FrequencyExp frequency = 4;
-    LocationExp location = 5;
-    PhoneTypeExp phone_type = 6;
-    MonthExp month = 7;
-    HolidayExp holiday = 8;
-    DateExp date = 9;
-    MetaFieldExp meta = 10;
-    PluginExp plugin = 11;
-  }
-}
-
-// Expressions/Selectors
-message HolidayExp {
-  api.commons.Month month = 1;
-  int64 day = 2;
-  string name = 3;
-}
-
-message TimeExp {
-  string start_hour = 1;
-  string end_hour = 2;
-}
-
-message WeekdayExp {
-  api.commons.Weekday.Enum day = 1;
-  string text = 2;
-}
-
-message MonthExp {
-  api.commons.Month month = 1;
-  string text = 2;
-}
-
-message DateExp {
-  api.commons.Month month = 1;
-  int64 day = 2;
-  int64 year = 3;
-}
-
-message DnclExp {
-  string list_name = 1;
-  string field_name = 2;
-}
-
-message FrequencyExp {
-  int64 count = 1; // Maximum number of tries
-  int64 duration = 2; // Measured in nanoseconds
-}
-
-message LocationExp {
-  string location = 1;
-}
-
-message PhoneTypeExp {
-  api.commons.PhoneType phone_type = 1;
-}
-
-message MetaFieldExp {
-  string field = 1;
-}
-
-message PluginExp {
-  api.commons.PluginType type = 1;
-  bool tcn_strict = 4; // true/false deny on errors
-
-  // gryphon
-  string license_id = 2;
-  string reference_key = 3;
-  string from_number = 5;
-  api.commons.Environment env = 6;
-
-  // tcn_consent
-  string profile = 7;
-  // field to use as content
-  string content_field = 8;
-  // consent topic
-  string topic = 9;
-  // consent absent action (deny/allow if consent doesn't exist)
-  api.commons.ConsentAbsentAction absent_action = 11;
-
-  // rnd
-  // date of last contact
-  string date_last_contact = 10;
+  repeated api.commons.Rule rules = 20;
 }
 
 message GetDefaultRulesReq {}
@@ -1285,45 +1171,19 @@ message ExportScrubListRes {
   string url = 1;
 }
 
-message CountryCode {
-  int64 country_code = 1;
-  string country_name = 2;
-  string country_id = 3;
-}
-
 message Scenario {
   int64 cpl_scenario_id = 1;
   reserved 2;
-  ScenarioData should_allow = 3;
-  ScenarioData should_deny = 4;
-  ScenarioResult last_execution_result = 5;
+  api.commons.ScenarioData should_allow = 3;
+  api.commons.ScenarioData should_deny = 4;
+  api.commons.ScenarioResult last_execution_result = 5;
   string name = 6;
 }
-message ScenarioData {
-  api.commons.CommType comm_type = 1;
-  string phone_number = 2;
-  string country_code = 3 [deprecated = true];
-  string email = 4;
-  map<string, string> call_metadata = 5;
-  google.protobuf.Timestamp time_of_call = 6;
-  int64 frequency_count = 7;
-  int64 frequency_duration = 8;
-  bool dncl_blocks = 9;
-  string country = 10;
-  string state = 11;
-  string county = 12;
-  string city = 13;
-  string province = 14;
-  api.commons.PhoneType phone_type = 15;
-  // time_zone uses the iana timezone format. Defaults to utc
-  string time_zone = 16;
-  repeated string holidays = 17;
-  CountryCode country_code_data = 18;
-}
+
 message CreateScenarioReq {
   reserved 1;
-  ScenarioData should_allow = 2;
-  ScenarioData should_deny = 3;
+  api.commons.ScenarioData should_allow = 2;
+  api.commons.ScenarioData should_deny = 3;
   string name = 4;
 }
 message CreateScenarioRes {
@@ -1350,22 +1210,11 @@ message RunAssignedScenariosReq {
 }
 message RunAssignedScenariosRes {
   reserved 1;
-  repeated ScenarioResult results = 2;
+  repeated api.commons.ScenarioResult results = 2;
   bool passed_value = 4;
   string cpl_rule_set_name = 3;
 }
-message ScenarioResult {
-  reserved 1;
-  bool passed_value = 5;
-  repeated ScenarioRuleResponse should_allow_responses = 2;
-  repeated ScenarioRuleResponse should_deny_responses = 3;
-  string scenario_name = 4;
-}
-message ScenarioRuleResponse {
-  string rule_text = 1;
-  reserved 2;
-  bool permit_value = 3;
-}
+
 message ListAllScenariosReq {}
 message ListAllScenariosRes {
   repeated Scenario scenarios = 1;
@@ -1382,7 +1231,7 @@ message ListAssignedScenariosReq {
 message AssignedScenario {
   Scenario scenario = 1;
   bool enabled = 2;
-  ScenarioResult last_execution_result = 3;
+  api.commons.ScenarioResult last_execution_result = 3;
 }
 message ListAssignedScenariosRes {
   repeated AssignedScenario assigned_scenarios = 1;
@@ -1457,7 +1306,7 @@ message CreateConsentReq {
   google.protobuf.Timestamp condition_to = 24;
   string notes = 25;
   // Consent Conditions
-  repeated ConsentCondition conditions = 26;
+  repeated api.commons.ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
   api.commons.ContentType content_type = 27;
   api.commons.Channel channel_type = 28;
@@ -1515,30 +1364,10 @@ message Consent {
   google.protobuf.Timestamp condition_to = 24 [deprecated = true];
   string notes = 25;
   // Consent Conditions
-  repeated ConsentCondition conditions = 26;
+  repeated api.commons.ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
   api.commons.ContentType content_type = 27;
   api.commons.Channel channel_type = 28;
-}
-
-// ConsentCondition defines conditions
-// required for a consent to take affect
-message ConsentCondition {
-  // Condition id
-  int64 consent_condition_id = 1;
-  // Consent it belongs to
-  int64 consent_id = 2;
-
-  // Days of week the condition is applicable to
-  repeated api.commons.Weekday.Enum days_of_the_week = 10;
-  // Time of day condition starts
-  string time_of_day_from = 11;
-  // Time of day condition ends
-  string time_of_day_to = 12;
-  // Date condition starts
-  google.protobuf.Timestamp from_date = 13;
-  // Date condition ends
-  google.protobuf.Timestamp to_date = 14;
 }
 
 message GetConsentProfileReq {
@@ -1573,7 +1402,7 @@ message UpdateConsentReq {
   google.protobuf.Timestamp condition_to = 24;
   string notes = 25;
   // Consent Conditions
-  repeated ConsentCondition conditions = 26;
+  repeated api.commons.ConsentCondition conditions = 26;
   // content_type (call, email, sms, account number)
   api.commons.ContentType content_type = 27;
   api.commons.Channel channel_type = 28;
@@ -1712,7 +1541,7 @@ message ConsentByContent {
   // content_type (call, email, sms, account number)
   api.commons.ContentType content_type = 21;
   // Consent Conditions
-  repeated ConsentCondition conditions = 22;
+  repeated api.commons.ConsentCondition conditions = 22;
   api.commons.Channel channel_type = 23;
 }
 
@@ -1725,6 +1554,7 @@ message GetConsentByProfileAndContentReq {
   string content = 3;
   string profile_id = 4;
   api.commons.ContentType content_type = 5;
+  api.commons.Channel channel_type = 6;
 }
 
 message GetConsentByProfileAndContentRes {
@@ -1752,7 +1582,7 @@ message GetConsentByProfileAndContentRes {
   // content_type (call, email, sms, account number)
   api.commons.ContentType content_type = 21;
   // Consent Conditions
-  repeated ConsentCondition conditions = 22;
+  repeated api.commons.ConsentCondition conditions = 22;
   api.commons.Channel channel_type = 23;
   // notate revocation (reason)
   string revoked_reason = 24;
