@@ -2,12 +2,14 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "google/api/annotations.proto";
 
 service Cfg {
   rpc GetWebAgentConfig(GetConfigReq) returns (WebAgent) {
     option (google.api.http).post = "/api/v0alpha/cfg/getwebagentconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

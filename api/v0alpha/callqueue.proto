@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/call.proto";
 import "api/commons/sms.proto";
 import "api/v0alpha/p3api.proto";
@@ -14,36 +15,42 @@ service CallQueue {
   rpc DequeuePreviewRecordOrCall(DequeuePreviewRecordOrCallReq) returns (DequeuePreviewRecordOrCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/dequeuepreviewrecordorcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues the given preview record into the specified queue.
   rpc EnqueuePreviewRecord(EnqueuePreviewRecordReq) returns (EnqueuePreviewRecordRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuepreviewrecord";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Returns the scrubbed simple call data for the given preview record.
   rpc DequeueScrubbedCallForPreviewRecord(DequeueScrubbedCallForPreviewRecordReq) returns (DequeueScrubbedCallForPreviewRecordRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/dequeuescrubbedcallforpreviewrecord";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Clears the preview record return queue for the requesting agent.
   rpc ClearPreviewRecordReturnQueue(ClearPreviewRecordReturnQueueReq) returns (ClearPreviewRecordReturnQueueRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/clearpreviewrecordreturnqueue";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues the given preview dial call into the specified queue.
   rpc EnqueuePreviewDialCall(EnqueuePreviewDialCallReq) returns (EnqueuePreviewDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuepreviewdialcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Clears the manual dial return queue of the requesting agent.
   rpc ClearManualDialQueue(ClearManualDialQueueReq) returns (ClearManualDialQueueRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/clearmanualdialqueue";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues the call to the manual dial receive queue for scrubbing.
@@ -52,6 +59,7 @@ service CallQueue {
   rpc ProcessManualDialCall(ProcessManualDialCallReq) returns (ProcessManualDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/processmanualdialcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Dequeues a call for manual approval from the requesting agent's hunt group queues or a client queue,
@@ -59,42 +67,49 @@ service CallQueue {
   rpc DequeueCallForManualApproval(DequeueCallForManualApprovalReq) returns (DequeueCallForManualApprovalRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/dequeuecallformanualapproval";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues a call in the MAC approval queue.
   rpc EnqueueManuallyApprovedCall(EnqueueManuallyApprovedCallReq) returns (EnqueueManuallyApprovedCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuemanuallyapprovedcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues a call in the MAC rejection queue.
   rpc EnqueueManuallyRejectedCall(EnqueueManuallyRejectedCallReq) returns (EnqueueManuallyRejectedCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuemanuallyrejectedcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Requeues a call requiring manual approval to the specified queue.
   rpc RequeueManuallyApprovedCall(RequeueManuallyApprovedCallReq) returns (RequeueManuallyApprovedCallRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/requeuemanuallyapprovedcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues sms msg in the MAM approval queue.
   rpc EnqueueManuallyApprovedSms(EnqueueManuallyApprovedSmsReq) returns (EnqueueManuallyApprovedSmsRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuemanuallyapprovedsms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Enqueues sms msg in the MAM rejection queue.
   rpc EnqueueManuallyRejectedSms(EnqueueManuallyRejectedSmsReq) returns (EnqueueManuallyRejectedSmsRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/enqueuemanuallyrejectedsms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Requeues sms msg requiring manual approval to the specified queue.
   rpc RequeueManuallyApprovedSms(RequeueManuallyApprovedSmsReq) returns (RequeueManuallyApprovedSmsRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/requeuemanuallyapprovedsms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Dequeues a sms mam msg for manual approval from the requesting agent's hunt group queues or a client queue,
@@ -102,6 +117,7 @@ service CallQueue {
   rpc DequeueSmsMamForManualApproval(DequeueSmsMamForManualApprovalReq) returns (DequeueSmsMamForManualApprovalRes) {
     option (google.api.http).post = "/api/v0alpha/callqueue/dequeuesmsmamformanualapproval";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

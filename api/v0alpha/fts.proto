@@ -2,12 +2,14 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "google/api/annotations.proto";
 
 service FTS {
   rpc GetUploadFileUrl(GetUploadFileUrlReq) returns (GetUploadFileUrlRes) {
     option (google.api.http).post = "/api/v0alpha/fts/upload_url";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

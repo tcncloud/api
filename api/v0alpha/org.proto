@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/ana.proto";
 import "api/commons/audit/event_types.proto";
 import "api/commons/auth/perms.proto";
@@ -25,6 +26,13 @@ service Org {
   rpc RegisterOrganization(RegisterOrganizationRequest) returns (RegisterOrganizationResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/register";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Converts a standard organiztion to a manual one.
@@ -32,50 +40,113 @@ service Org {
   rpc ConvertOrgToManual(ConvertOrgToManualRequest) returns (ConvertOrgToManualResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/converttomanual";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Updates an organization
   rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Archives an organization. An archived organization effectively disappears, but isn't deleted.
   rpc ArchiveOrganization(ArchiveOrganizationRequest) returns (ArchiveOrganizationResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/archive";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Restores an archived organization.
   rpc UnArchiveOrganization(UnArchiveOrganizationRequest) returns (UnArchiveOrganizationResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/unarchive";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Returns the list of organizations that have been archived.
   rpc ListArchivedOrganizations(ListArchivedOrganizationsRequest) returns (ListArchivedOrganizationsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/archived/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc GetOrganizationProfile(GetOrganizationProfileRequest) returns (GetOrganizationProfileResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/profile/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc GetOrganizationProfileById(GetOrganizationProfileByIdRequest) returns (GetOrganizationProfileResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/profile/byid/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc ListOrganizationDescriptions(ListOrganizationDescriptionsRequest) returns (ListOrganizationDescriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/description/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc ListRegionalOrganizations(ListRegionalOrganizationsRequest) returns (ListRegionalOrganizationsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/organization/description/regional/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // update an organizations owning organization.
@@ -84,6 +155,13 @@ service Org {
   rpc UpdateP3OwningOrg(UpdateP3OwningOrgRequest) returns (UpdateP3OwningOrgResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updatep3owningorg";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // gets the owning organiztion for the given org
@@ -92,27 +170,50 @@ service Org {
   rpc GetP3OwningOrg(GetP3OwningOrgRequest) returns (GetP3OwningOrgResponse) {
     option (google.api.http).post = "/api/v0alpha/org/getp3owningorg";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc ListOrganizationUserDescriptions(ListOrganizationUserDescriptionsRequest) returns (ListOrganizationUserDescriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/descriptions/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc ListUserDescriptions(ListUserDescriptionsRequest) returns (stream ListUserDescriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/all/user/descriptions/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc GetUserDirectory(GetUserDirectoryRequest) returns (GetUserDirectoryResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/directory/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetRegions takes nothing in the request and returns a list of all region names
   rpc GetRegions(GetRegionsRequest) returns (GetRegionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/region/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetUserDetails(GetUserDetailsRequest) returns (UserDetails) {
@@ -123,11 +224,25 @@ service Org {
   rpc AdminGetUserDetails(AdminGetUserDetailsRequest) returns (UserDetails) {
     option (google.api.http).post = "/api/v0alpha/org/admin/user/details";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc GetAgentUsers(GetAgentUsersRequest) returns (GetAgentUsersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/agents/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // This is transitionary api. It will be removed when user api is available.
@@ -137,6 +252,13 @@ service Org {
   rpc GetAgentSettings(GetAgentSettingsRequest) returns (GetAgentSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentsettings/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // GetAgentProfileGroup gets a single AgentProfileGroup by given ID
@@ -145,6 +267,13 @@ service Org {
   rpc GetAgentProfileGroup(GetAgentProfileGroupRequest) returns (GetAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateAgentProfileGroup updates an AgentProfileGroup. Can only update if user is in same org as AgentProfileGroup
@@ -153,6 +282,13 @@ service Org {
   rpc UpdateAgentProfileGroup(UpdateAgentProfileGroupRequest) returns (UpdateAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // CreateAgentProfileGroup creates an AgentProfileGroup. Can only create if user is in same org as AgentProfileGroup
@@ -161,6 +297,13 @@ service Org {
   rpc CreateAgentProfileGroup(CreateAgentProfileGroupRequest) returns (CreateAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // ListAgentProfileGroups lists all AgentProfileGroups for a given org
@@ -169,6 +312,13 @@ service Org {
   rpc ListAgentProfileGroups(ListAgentProfileGroupsRequest) returns (ListAgentProfileGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // DeleteAgentProfileGroup deletes a single AgentProfileGroup by given ID. Can only delete if user is in same org as AgentProfileGroup
@@ -177,6 +327,13 @@ service Org {
   rpc DeleteAgentProfileGroup(DeleteAgentProfileGroupRequest) returns (DeleteAgentProfileGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // AssignAgentProfileGroups bulk assigns a list of users to a given AgentProfileGroup
@@ -185,6 +342,13 @@ service Org {
   rpc AssignAgentProfileGroups(AssignAgentProfileGroupsRequest) returns (AssignAgentProfileGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentprofilegroup/assign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // UpdateUser updates a user as defined by the UpdateUserRequest.
@@ -213,6 +377,7 @@ service Org {
   rpc CreateDelegatedUser(CreateDelegatedUserRequest) returns (CreateDelegatedUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/delegateduser/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // UpdateUserPassword updates a users password to the
@@ -230,6 +395,7 @@ service Org {
   rpc ResetUserRequirePasswordReset(ResetUserRequirePasswordResetRequest) returns (ResetUserRequirePasswordResetResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/resetpasswordrequired";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Generate a password reset link for a user.
@@ -273,26 +439,49 @@ service Org {
   rpc GetTempUserToken(GetTempUserTokenReq) returns (GetTempUserTokenRes) {
     option (google.api.http).post = "/api/v0alpha/org/user/token";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc GetCountriesList(GetCountriesListRequest) returns (GetCountriesListResponse) {
     option (google.api.http).post = "/api/v0alpha/org/countries/list/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetAdminClientPreferences(GetAdminClientPreferencesRequest) returns (GetAdminClientPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/admin/client/preferences/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc UpdateAdminClientPreferences(UpdateAdminClientPreferencesRequest) returns (UpdateAdminClientPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/admin/client/preferences/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   rpc GetPermissions(GetPermissionsRequest) returns (GetPermissionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/permissions/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // RevokeAccountOwnerPermissionFromUser revokes the
@@ -300,6 +489,13 @@ service Org {
   rpc RevokeAccountOwnerPermissionFromUser(RevokeAccountOwnerPermissionFromUserRequest) returns (RevokeAccountOwnerPermissionFromUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/permissions/revoke";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // UpdateUserDisabled updates a specified user to disabled or enabled. A disabled user cannot log in.
@@ -308,6 +504,13 @@ service Org {
   rpc UpdateUserDisabled(UpdateUserDisabledRequest) returns (UpdateUserDisabledResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/permissions/userdisabled/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
   }
 
   // UpdateBulkUsersDisabled updates every given user_id to be disabled or enabled. The returned list of updated_ids contains every id that was successfully updated.
@@ -316,6 +519,13 @@ service Org {
   rpc UpdateBulkUsersDisabled(UpdateBulkUsersDisabledRequest) returns (UpdateBulkUsersDisabledResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/permissions/userdisabled/updatebulk";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
   }
 
   // Customer Support Billing
@@ -332,6 +542,13 @@ service Org {
   rpc GetOrgBillingSettings(GetOrgBillingSettingsRequest) returns (GetOrgBillingSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/billing/getorgbillingsettings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Updates the given orgs billing settings as defined by the info
@@ -346,6 +563,13 @@ service Org {
   rpc SetOrgBillingSettings(SetOrgBillingSettingsRequest) returns (SetOrgBillingSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/billing/setorgbillingsettings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Adds a single billing region override for the given orgs billing settings.
@@ -359,6 +583,13 @@ service Org {
   rpc AddOrgBillingOverride(AddOrgBillingOverrideRequest) returns (AddOrgBillingOverrideResponse) {
     option (google.api.http).post = "/api/v0alpha/org/billing/addorgbillingoverride";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Removes a single billing region override for the given orgs billing settings.
@@ -372,6 +603,13 @@ service Org {
   rpc RemoveOrgBillingOverride(RemoveOrgBillingOverrideRequest) returns (RemoveOrgBillingOverrideResponse) {
     option (google.api.http).post = "/api/v0alpha/org/billing/removeorgbillingoverride";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Returns the system default billing rates.
@@ -380,6 +618,13 @@ service Org {
   rpc GetSystemDefaultBillingRates(GetSystemDefaultBillingRatesRequest) returns (GetSystemDefaultBillingRatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/billing/getsystemdefaultbillingrates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // neo permissions
@@ -394,23 +639,51 @@ service Org {
   rpc CreatePermissionGroup(CreatePermissionGroupRequest) returns (CreatePermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
 
   // UpdatePermissionGroup updates a permission group by id for the caller's organization.
   rpc UpdatePermissionGroup(UpdatePermissionGroupRequest) returns (UpdatePermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
 
   // DeletePermissionGroup deletes a permission group by id for the caller's organization.
   rpc DeletePermissionGroup(DeletePermissionGroupRequest) returns (DeletePermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
   // Assigns a user to a acount owner permission group.
   rpc AssignUserToAccountOwnerPermissionGroup(AssignUserToAccountOwnerPermissionGroupRequest) returns (AssignUserToAccountOwnerPermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/admin/assignaccountowner";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Assigns a permission group to another user.
@@ -419,6 +692,13 @@ service Org {
   rpc AssignUserPermissionGroup(AssignUserPermissionGroupRequest) returns (AssignUserPermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/assign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // Assigns a permission group to multiple users.
@@ -427,6 +707,13 @@ service Org {
   rpc AssignUsersPermissionGroup(AssignUsersPermissionGroupRequest) returns (AssignUsersPermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/assignusers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // Assigns permission group(s) to another user.
@@ -435,6 +722,13 @@ service Org {
   rpc UpdateUserNeoPermissionGroups(UpdateUserNeoPermissionGroupsRequest) returns (UpdateUserNeoPermissionGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/user/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // Revokes a permission group from another user.
@@ -443,6 +737,13 @@ service Org {
   rpc RevokeUserPermissionGroup(RevokeUserPermissionGroupRequest) returns (RevokeUserPermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/revoke";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // Revokes a permission group to multiple users.
@@ -451,6 +752,13 @@ service Org {
   rpc RevokeUsersPermissionGroup(RevokeUsersPermissionGroupRequest) returns (RevokeUsersPermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/revokeusers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // InitDefaultPermissionGroups initializes the default read only permission groups for the callers organization.
@@ -458,28 +766,75 @@ service Org {
   rpc InitDefaultPermissionGroups(InitDefaultPermissionGroupsRequest) returns (InitDefaultPermissionGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/initialize";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Adds a single permission to an organization's Account Owner Group.
-  rpc AddPermissionToAccountOwnerPermissionGroup(AddPermissionToAccountOwnerPermissionGroupRequest) returns (AddPermissionToAccountOwnerPermissionGroupResponse);
+  rpc AddPermissionToAccountOwnerPermissionGroup(AddPermissionToAccountOwnerPermissionGroupRequest) returns (AddPermissionToAccountOwnerPermissionGroupResponse) {
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
 
   // Adds a single permission to an organization's Account Owner Group.
-  rpc RevokePermissionToAccountOwnerPermissionGroup(RevokePermissionToAccountOwnerPermissionGroupRequest) returns (RevokePermissionToAccountOwnerPermissionGroupResponse);
+  rpc RevokePermissionToAccountOwnerPermissionGroup(RevokePermissionToAccountOwnerPermissionGroupRequest) returns (RevokePermissionToAccountOwnerPermissionGroupResponse) {
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
 
   // Adds a single permission to an organization's default Super User Group.
   // Required Permissions:
   //    - TCN_ADMIN_SETTINGS
-  rpc AddPermissionToOrgDefaultGroup(AddPermissionToOrgDefaultGroupRequest) returns (AddPermissionToOrgDefaultGroupResponse);
+  rpc AddPermissionToOrgDefaultGroup(AddPermissionToOrgDefaultGroupRequest) returns (AddPermissionToOrgDefaultGroupResponse) {
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
+  }
 
   // Removes a single permission from an organization's default Super User Group.
   // Required Permissions:
   //    - TCN_ADMIN_SETTINGS
-  rpc RemovePermissionFromOrgDefaultGroup(RemovePermissionFromOrgDefaultGroupRequest) returns (RemovePermissionFromOrgDefaultGroupResponse);
+  rpc RemovePermissionFromOrgDefaultGroup(RemovePermissionFromOrgDefaultGroupRequest) returns (RemovePermissionFromOrgDefaultGroupResponse) {
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
+  }
 
   // Returns an organization's default Super User Group.
   // Required Permissions:
   //    - TCN_ADMIN_SETTINGS
-  rpc GetOrgDefaultSuperUserGroup(GetOrgDefaultSuperUserGroupRequest) returns (GetOrgDefaultSuperUserGroupResponse);
+  rpc GetOrgDefaultSuperUserGroup(GetOrgDefaultSuperUserGroupRequest) returns (GetOrgDefaultSuperUserGroupResponse) {
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
+  }
 
   // ListP3PermissionGroups returns the list of an org's P3 permission groups.
   rpc ListP3PermissionGroups(ListP3PermissionGroupsRequest) returns (ListP3PermissionGroupsResponse) {
@@ -491,18 +846,39 @@ service Org {
   rpc AddUserRegion(AddUserRegionRequest) returns (AddUserRegionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/addregion/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
   }
 
   // RemoveUserRegion from a Users Accessible Regions
   rpc RemoveUserRegion(RemoveUserRegionRequest) returns (RemoveUserRegionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/removeregion/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
   }
 
   // Creates new p3 permission group
   rpc CreateP3PermissionGroup(CreateP3PermissionGroupRequest) returns (CreateP3PermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
 
   // Update p3 permission group
@@ -515,18 +891,39 @@ service Org {
   rpc DeleteP3PermissionGroup(DeleteP3PermissionGroupRequest) returns (DeleteP3PermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
 
   // Assign one or many users a p3 permission group
   rpc AssignUsersP3PermissionGroup(AssignUsersP3PermissionGroupRequest) returns (AssignUsersP3PermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/group/assign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // AddLoginToUser Creates new login for a given user
   rpc AddLoginToUser(AddLoginToUserRequest) returns (AddLoginToUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/create/login";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Revoke a p3 permission group to another user(s).
@@ -535,6 +932,13 @@ service Org {
   rpc RevokeUsersP3PermissionGroup(RevokeUsersP3PermissionGroupRequest) returns (RevokeUsersP3PermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/group/revoke";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
+        }
+      ];
+    };
   }
 
   // Preferences
@@ -543,232 +947,543 @@ service Org {
   rpc GetContactPreferences(GetContactPreferencesRequest) returns (GetContactPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateContactPreferences update fields for all contact preferences for client
   rpc UpdateContactPreferences(UpdateContactPreferencesRequest) returns (UpdateContactPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/contact/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Returns all client compliance preferences
   rpc GetCompliancePreferences(GetCompliancePreferencesRequest) returns (GetCompliancePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
   // Updates all client Compliance preferences
   rpc UpdateCompliancePreferences(UpdateCompliancePreferencesRequest) returns (UpdateCompliancePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/compliance/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetAgentPreferences returns all client agent preferences
   rpc GetAgentPreferences(GetAgentPreferencesRequest) returns (GetAgentPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateAgentPreferences updates client agent preferences
   rpc UpdateAgentPreferences(UpdateAgentPreferencesRequest) returns (UpdateAgentPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agent/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetOrganizationPreferences returns preferences for the organization tab
   rpc GetOrganizationPreferences(GetOrganizationPreferencesRequest) returns (GetOrganizationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateOrganizationPreferences updates preferences for the organization tab
   rpc UpdateOrganizationPreferences(UpdateOrganizationPreferencesRequest) returns (UpdateOrganizationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/organization/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetSchedulePreferences returns all schedule preferences for an org.
   rpc GetSchedulePreferences(GetSchedulePreferencesRequest) returns (GetSchedulePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateSchedulePreferences returns all schedule preferences for an org.
   rpc UpdateSchedulePreferences(UpdateSchedulePreferencesRequest) returns (UpdateSchedulePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/schedule/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetBusinessPreferences returns all business intelligence and associated analytic preferences
   rpc GetBusinessPreferences(GetBusinessPreferencesRequest) returns (GetBusinessPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateBusinessPreferences updates all business intelligence and associated analytic preferences
   rpc UpdateBusinessPreferences(UpdateBusinessPreferencesRequest) returns (UpdateBusinessPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/bi/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetEndOfDayPreferences returns a time (hour 1-24) for each day of the week.
   rpc GetEndOfDayPreferences(GetEndOfDayPreferencesRequest) returns (GetEndOfDayPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateEndOfDayPreferences update fields for a time (hour 1-24) for each day of the week.
   rpc UpdateEndOfDayPreferences(UpdateEndOfDayPreferencesRequest) returns (UpdateEndOfDayPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/eod/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetReportFilterPreferences returns preferences for the organization tab
   rpc GetReportFilterPreferences(GetFilterPreferencesRequest) returns (GetFilterPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateReportFilterPreferences updates preferences for the filter tab
   rpc UpdateReportFilterPreferences(UpdateFilterPreferencesRequest) returns (UpdateFilterPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/filters/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetPhonePreferences returns all phone and recording preferences for an org.
   rpc GetPhonePreferences(GetPhonePreferencesRequest) returns (GetPhonePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdatePhonePreferences updates phone and recording preferences for an org.
   rpc UpdatePhonePreferences(UpdatePhonePreferencesRequest) returns (UpdatePhonePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/phone/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetDashboardGeneralPreferences returns all dashboard general preferences for an org.
   rpc GetDashboardGeneralPreferences(GetDashboardGeneralPreferencesRequest) returns (GetDashboardGeneralPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateDashboardGeneralPreferences updates dashboard General preferences for an org.
   rpc UpdateDashboardGeneralPreferences(UpdateDashboardGeneralPreferencesRequest) returns (UpdateDashboardGeneralPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/dashboard/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetWebhookPreferences returns all webhook preferences for an org.
   rpc GetWebhookPreferences(GetWebhookPreferencesRequest) returns (GetWebhookPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateWebhookPreferences updates webhook preferences for an org.
   rpc UpdateWebhookPreferences(UpdateWebhookPreferencesRequest) returns (UpdateWebhookPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/webhook/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetBroadcastPreferences returns all broadcast options for campaign preferences for an org.
   rpc GetBroadcastPreferences(GetBroadcastPreferencesRequest) returns (GetBroadcastPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateBroadcastPreferences updates broadcast options for campaign preferences for an org.
   rpc UpdateBroadcastPreferences(UpdateBroadcastPreferencesRequest) returns (UpdateBroadcastPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/broadcast/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetAuthenticationPreferences returns all authentication options for an org.
   rpc GetAuthenticationPreferences(GetAuthenticationPreferencesRequest) returns (GetAuthenticationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateAuthenticationPreferences updates authentication preferences for an org.
   rpc UpdateAuthenticationPreferences(UpdateAuthenticationPreferencesRequest) returns (UpdateAuthenticationPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/authentication/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetRecordingPreferences returns all recording options for an org.
   rpc GetRecordingPreferences(GetRecordingPreferencesRequest) returns (GetRecordingPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateRecordingPreferences updates Recording preferences for an org.
   rpc UpdateRecordingPreferences(UpdateRecordingPreferencesRequest) returns (UpdateRecordingPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/recording/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetDashboardQueuePreferences returns the Dashboard Queue table preferences.
   rpc GetDashboardQueuePreferences(GetDashboardQueuePreferencesRequest) returns (GetDashboardQueuePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // UpdateDashboardQueuePreferences updates the Dashboard Queue table preferences.
   rpc UpdateDashboardQueuePreferences(UpdateDashboardQueuePreferencesRequest) returns (UpdateDashboardQueuePreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/manager/dashboardqueue/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // GetAgentQuickViewPreferences returns the diplay templates for the client
   rpc GetAgentQuickViewPreferences(GetAgentQuickViewPreferencesRequest) returns (GetAgentQuickViewPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
   rpc GetVoiceAnalyticsPreferences(GetVoiceAnalyticsPreferencesRequest) returns (GetVoiceAnalyticsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // GetVoiceAnalyticsPreferences updates the all preferences for voice analytics
   rpc UpdateVoiceAnalyticsPreferences(UpdateVoiceAnalyticsPreferencesRequest) returns (UpdateVoiceAnalyticsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetScorecardsPreferences returns the all preferences for scorecards
   rpc GetScorecardsPreferences(GetScorecardsPreferencesRequest) returns (GetScorecardsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // GetScorecardsPreferences updates the all preferences for scorecards
   rpc UpdateScorecardsPreferences(UpdateScorecardsPreferencesRequest) returns (UpdateScorecardsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/scorecards/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // GetEmailSmsPreferences returns the all preferences for email and sms
   rpc GetEmailSmsPreferences(GetEmailSmsPreferencesRequest) returns (GetEmailSmsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/email/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
   // GetEmailSmsPreferences updates the all preferences for email and sms
   rpc UpdateEmailSmsPreferences(UpdateEmailSmsPreferencesRequest) returns (UpdateEmailSmsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/email/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // EditAgentQuickViewPreferences return nil,error
   rpc EditAgentQuickViewPreferences(EditAgentQuickViewPreferencesRequest) returns (EditAgentQuickViewPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/agentquickview/edit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
   // EditBackofficeThemePreference returns nil, error
   // changes the Client Skin client property
   rpc EditBackofficeThemePreference(EditBackofficeThemePreferenceRequest) returns (EditBackofficeThemePreferenceResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/edit";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   rpc GetBackofficeThemePreference(GetBackofficeThemePreferenceRequest) returns (GetBackofficeThemePreferenceResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/reports/backofficetheme/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // AcceptLinkbackRecordingTerms controls acknowledgement for linkback recording terms and conditions
   rpc AcceptLinkbackRecordingTerms(AcceptLinkbackRecordingTermsRequest) returns (AcceptLinkbackRecordingTermsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/linkback/acceptterms";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // LinkbackUpdateBroadcastTemplates updates broadcast template action parameters pertaining to linkback recording
   rpc LinkbackUpdateBroadcastTemplates(LinkbackUpdateBroadcastTemplatesRequest) returns (LinkbackUpdateBroadcastTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/linkback/updatetemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // RecordEmailUnsubscribeAcknowledgement inserts an activity log when the client acknowledges responsibility
@@ -776,6 +1491,13 @@ service Org {
   rpc RecordEmailUnsubscribeAcknowledgement(RecordEmailUnsubscribeAcknowledgementRequest) returns (RecordEmailUnsubscribeAcknowledgementResponse) {
     option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/record";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // ClearEmailUnsubscribeAcknowledgement inserts an activity log when the client clears acknowledgement for
@@ -783,6 +1505,13 @@ service Org {
   rpc ClearEmailUnsubscribeAcknowledgement(ClearEmailUnsubscribeAcknowledgementRequest) returns (ClearEmailUnsubscribeAcknowledgementResponse) {
     option (google.api.http).post = "/api/v0alpha/org/emailsmsacknowledgement/clear";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Web Link Templates
@@ -793,34 +1522,73 @@ service Org {
   rpc CreateWebLinkTemplate(CreateWebLinkTemplateRequest) returns (CreateWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // List every WebLinkTemplate.
   // Required Permissions:
   //  ORG_VIEW
   rpc ListWebLinkTemplates(ListWebLinkTemplatesRequest) returns (ListWebLinkTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Get one WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_VIEW
   rpc GetWebLinkTemplate(GetWebLinkTemplateRequest) returns (GetWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Updates the WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_EDIT
   rpc UpdateWebLinkTemplate(UpdateWebLinkTemplateRequest) returns (UpdateWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // Deletes the WebLinkTemplate with the given web_link_template_id.
   // Required Permissions:
   //  ORG_EDIT
   rpc DeleteWebLinkTemplate(DeleteWebLinkTemplateRequest) returns (DeleteWebLinkTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/weblinktemplate/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Agent Trigger Templates
@@ -833,7 +1601,15 @@ service Org {
   rpc CreateAgentTriggerTemplate(CreateAgentTriggerTemplateRequest) returns (CreateAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // Returns a list of every AgentTriggerTemplate for the given
   // hunt_group_sid on the request.
   // Requiree Permissions:
@@ -841,27 +1617,58 @@ service Org {
   rpc ListAgentTriggerTemplates(ListAgentTriggerTemplatesRequest) returns (ListAgentTriggerTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Returns one AgentTriggerTemplate with the id given on the request message.
   // Required Permissions:
   //  ORG_VIEW
   rpc GetAgentTriggerTemplate(GetAgentTriggerTemplateRequest) returns (GetAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Updates the AgentTriggerTemplate with the id given on the request message.
   // Required Permissions:
   //  ORG_EDIT
   rpc UpdateAgentTriggerTemplate(UpdateAgentTriggerTemplateRequest) returns (UpdateAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Deletes the AgentTriggerTemplate with the id given on the request message.
   // Required Permissions:
   //  ORG_EDIT
   rpc DeleteAgentTriggerTemplate(DeleteAgentTriggerTemplateRequest) returns (DeleteAgentTriggerTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agenttriggertemplate/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Client Info Display Templates
@@ -873,14 +1680,30 @@ service Org {
   rpc CreateClientInfoDisplayTemplate(CreateClientInfoDisplayTemplateRequest) returns (CreateClientInfoDisplayTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // Returns a list of every ClientInfoDisplayTemplate.
   // Required Permissions:
   //  ORG_EDIT
   rpc ListClientInfoDisplayTemplates(ListClientInfoDisplayTemplatesRequest) returns (ListClientInfoDisplayTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // Updates the ClientInfoDisplayTemplate as defined by request
   // message UpdateClientIntoDisplayTemplateRequest.
   // Required Permissions:
@@ -888,7 +1711,15 @@ service Org {
   rpc UpdateClientInfoDisplayTemplate(UpdateClientInfoDisplayTemplateRequest) returns (UpdateClientInfoDisplayTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
+
   // Deletes the ClientInfoDisplayTemplate with the id given on the request
   // message.
   // Required Permissions:
@@ -896,7 +1727,15 @@ service Org {
   rpc DeleteClientInfoDisplayTemplate(DeleteClientInfoDisplayTemplateRequest) returns (DeleteClientInfoDisplayTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
+
   // Returns one ClientInfoDisplayTemplate with the id given on the
   // request message.
   //  Required Permissions:
@@ -904,6 +1743,13 @@ service Org {
   rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateRequest) returns (GetClientInfoDisplayTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/clientinfodisplaytemplate/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Agent Pause Code
@@ -912,6 +1758,13 @@ service Org {
   rpc ListAgentPauseCodes(ListAgentPauseCodesRequest) returns (ListAgentPauseCodesResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentpausecodes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Creates a new Agent Pause Code as defined by the request message.
@@ -921,6 +1774,13 @@ service Org {
   rpc CreateAgentPauseCode(CreateAgentPauseCodeRequest) returns (CreateAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/createagentpausecode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Updates an Agent Pause Code with the xml_client_property_sid given on
@@ -928,12 +1788,20 @@ service Org {
   // on the pause_code message.
   // Required Permissions:
   //    AGENT_MANAGEMENT
+  //    Actual permission checked is ORG_EDIT??
   // Errors:
   //    - grpc.InvalidArgument: The pause_code field was not set or the pause_code.codes field was an empty list.
   //    - grpc.Internal: an error occurred while marshalling the pause_code into an xml string.
   rpc UpdateAgentPauseCode(UpdateAgentPauseCodeRequest) returns (UpdateAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentpausecode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Deletes an Agent Pause Code with the sid given on the request message.
@@ -942,6 +1810,13 @@ service Org {
   rpc DeleteAgentPauseCode(DeleteAgentPauseCodeRequest) returns (DeleteAgentPauseCodeResponse) {
     option (google.api.http).post = "/api/v0alpha/p3api/deleteagentpausecode";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Custom Report Filters
@@ -954,6 +1829,13 @@ service Org {
   rpc ListCustomReportFilters(ListCustomReportFiltersRequest) returns (ListCustomReportFiltersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Creates a new custom report filter as defined by the request message.
@@ -965,6 +1847,13 @@ service Org {
   rpc CreateCustomReportFilter(CreateCustomReportFilterRequest) returns (CreateCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Updates a custom report filter with the requested xml_client_property_sid
@@ -977,6 +1866,13 @@ service Org {
   rpc UpdateCustomReportFilter(UpdateCustomReportFilterRequest) returns (UpdateCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Deletes a custom report filter with the sid given on the request message.
@@ -987,6 +1883,13 @@ service Org {
   rpc DeleteCustomReportFilter(DeleteCustomReportFilterRequest) returns (DeleteCustomReportFilterResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Returns a slice of hunt group scripts belonging to the client_sid.
@@ -997,6 +1900,13 @@ service Org {
   rpc ListAgentResponseGroups(ListAgentResponseGroupsRequest) returns (ListAgentResponseGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/agentresponses";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Returns a slice of last template element scripts belonging to the client_sid.
@@ -1007,6 +1917,13 @@ service Org {
   rpc ListLastTemplateElements(ListLastTemplateElementsRequest) returns (ListLastTemplateElementsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/customreportfilter/templateelements";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Lists the names of the custom queue configs.
@@ -1030,6 +1947,13 @@ service Org {
   rpc DeleteQueueConfig(DeleteQueueConfigReq) returns (DeleteQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Gets the details for the queue config for the given @client_sid with
@@ -1043,6 +1967,13 @@ service Org {
   rpc GetQueueConfig(GetQueueConfigReq) returns (GetQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Creates a queue config as defined by the @config given
@@ -1055,6 +1986,13 @@ service Org {
   rpc CreateQueueConfig(CreateQueueConfigReq) returns (CreateQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Updates a new queue config as defined by the @config given
@@ -1068,6 +2006,13 @@ service Org {
   rpc UpdateQueueConfig(UpdateQueueConfigReq) returns (UpdateQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Copies a queue config belonging to one organization to another.
@@ -1084,6 +2029,13 @@ service Org {
   rpc CopyQueueConfig(CopyQueueConfigReq) returns (CopyQueueConfigRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/copy";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Returns the url of a downloadable zip file containing every
@@ -1096,6 +2048,13 @@ service Org {
   rpc GetAllQueueConfigSounds(GetAllQueueConfigSoundsReq) returns (GetAllQueueConfigSoundsRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/getall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Returns the url of a downladable wav file for the given config's
@@ -1111,6 +2070,13 @@ service Org {
   rpc GetQueueConfigSound(GetQueueConfigSoundReq) returns (GetQueueConfigSoundRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Sets the given sound for the config to one of the uploaded
@@ -1128,6 +2094,13 @@ service Org {
   rpc SetQueueConfigSound(SetQueueConfigSoundReq) returns (SetQueueConfigSoundRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/set";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Sets every sound for a given config by copying them from
@@ -1147,6 +2120,13 @@ service Org {
   rpc SetAllQueueConfigSoundsFromSource(SetAllQueueConfigSoundsFromSourceReq) returns (SetAllQueueConfigSoundsFromSourceRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/sounds/setallfromsource";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Checks a user's blocked status.
@@ -1158,6 +2138,13 @@ service Org {
   rpc GetUserBlocked(GetUserBlockedRequest) returns (GetUserBlockedResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/blocked";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Unblocks the given user.
@@ -1169,6 +2156,13 @@ service Org {
   rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/unblock";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // List all users who only exist in skunk and have not yet been migrated
@@ -1177,6 +2171,13 @@ service Org {
   rpc ListP3UnMigratedUsers(ListP3UnMigratedUsersRequest) returns (ListP3UnMigratedUsersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/user/List";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Migrates a login or agent from backoffice to firestore
@@ -1185,6 +2186,13 @@ service Org {
   rpc MigrateP3User(MigrateP3UserRequest) returns (MigrateP3UserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/user/migrate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Updates the username in skunk only for a agent or login
@@ -1193,20 +2201,43 @@ service Org {
   rpc UpdateP3UserName(UpdateP3UserNameRequest) returns (UpdateP3UserNameResponse) {
     option (google.api.http).post = "/api/v0alpha/org/p3/username/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
+
   // Gets all users under the p3 hierarchy
   // Required Permissions:
   //  OWNING_ORG_IMITATION
   rpc ListOwnedUsers(ListOwnedUsersRequest) returns (ListOwnedUsersResponse) {
     option (google.api.http).post = "/api/v0alpha/org/ownedusers/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OWNING_ORG_IMITATION]
+        }
+      ];
+    };
   }
+
   // Gets all orgs under the p3 hierarchy
   // Required Permissions:
   // PERMISSION_ORG_VIEW
   rpc ListOwnedOrgs(ListOwnedOrgsRequest) returns (ListOwnedOrgsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/OwnedOrgs/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Removed login strike from list of given login_log_sids
@@ -1215,6 +2246,13 @@ service Org {
   rpc RemoveLoginStrikes(RemoveLoginStrikesRequest) returns (RemoveLoginStrikesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/Loginstriks/remove";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Removed login strikes by user_id
@@ -1223,6 +2261,13 @@ service Org {
   rpc RemoveUserLoginStrikes(RemoveUserLoginStrikesRequest) returns (RemoveUserLoginStrikesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/Loginstrikes/remove";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Lists user login history by ip or user_id
@@ -1231,6 +2276,13 @@ service Org {
   rpc ListLoginHistory(ListLoginHistoryRequest) returns (ListLoginHistoryResponse) {
     option (google.api.http).post = "/api/v0alpha/org/loginhistory/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Updates a users agentsid and loginsid
@@ -1239,6 +2291,13 @@ service Org {
   rpc UpdateP3UserSids(UpdateP3UserSidsRequest) returns (UpdateP3UserSidsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updatep3usersids";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+        }
+      ];
+    };
   }
 
   // AUTH0 CONNECTIONS
@@ -1247,24 +2306,52 @@ service Org {
   rpc CreateAuthConnection(CreateAuthConnectionRequest) returns (CreateAuthConnectionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
   }
 
   // GetAuthConnectionSettings gets auth0 connection settings.
   rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
   }
 
   // UpdateAuthConnectionSettings updates an existing auth0 connection settings.
   rpc UpdateAuthConnectionSettings(UpdateAuthConnectionSettingsRequest) returns (UpdateAuthConnectionSettingsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
   }
 
   // DeleteAuthConnection removes the current orgs auth settings.
   rpc DeleteAuthConnection(DeleteAuthConnectionRequest) returns (DeleteAuthConnectionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/connection/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
   }
 
   // USER SUBSCTRIPTIONS
@@ -1320,6 +2407,13 @@ service Org {
   rpc ListOrgSubscriptions(ListOrgSubscriptionsRequest) returns (ListOrgSubscriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/listorgsubscriptions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Returns the systems current environment details
@@ -1328,6 +2422,7 @@ service Org {
   rpc GetSystemEnvironmentDetails(GetSystemEnvironmentDetailsRequest) returns (GetSystemEnvironmentDetailsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/getsystemenvironmentdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Agent Statistics Templates
@@ -1340,6 +2435,13 @@ service Org {
   rpc ListAgentStatisticsTemplates(ListAgentStatisticsTemplatesRequest) returns (ListAgentStatisticsTemplatesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Creates a new agent statistics template for the given client_sid.
@@ -1350,6 +2452,13 @@ service Org {
   rpc CreateAgentStatisticsTemplate(CreateAgentStatisticsTemplateRequest) returns (CreateAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Updates an existing agent statistics template for the given client_sid.
@@ -1360,6 +2469,13 @@ service Org {
   rpc UpdateAgentStatisticsTemplate(UpdateAgentStatisticsTemplateRequest) returns (UpdateAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Deletes an existing agent statistics template for the given client_sid.
@@ -1370,6 +2486,13 @@ service Org {
   rpc DeleteAgentStatisticsTemplate(DeleteAgentStatisticsTemplateRequest) returns (DeleteAgentStatisticsTemplateResponse) {
     option (google.api.http).post = "/api/v0alpha/org/agentstatisticstemplate/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 }
 
