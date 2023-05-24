@@ -7,6 +7,12 @@ import "google/protobuf/timestamp.proto";
 
 // TODO: Enum names are not very intuitive; improve.
 
+enum CategoryType {
+  INVALID = 0;
+  SKILL_CALLS = 1;
+  MANUAL_DIAL = 2;
+}
+
 // Evaluation is how a scorecard gets evaluated.
 // It is not a boolean because it might grow (i.e. MIXED).
 enum EvaluationType {
@@ -96,6 +102,7 @@ message Category {
   int32 version = 7; // current version of the category
   repeated CallType.Enum call_types = 10; // call types supported by the category
   bool is_system = 11; // whether a category is a system category (read only)
+  CategoryType category_type = 12; // Type of category, (skill calls or manual calls)
 }
 
 // Evaluation represents a evaluated scorecard.
@@ -282,7 +289,7 @@ message Scorecard {
   ScorecardState state = 15; // determines how a scorecard can be used
   bool is_ad_hoc = 16 [deprecated = true]; // Deprecated. Use Ad Hoc category.
   repeated string custom_field_keys = 19; // Optional. Set of unique keys for custom key-value fields.
-  api.commons.CallType.Enum call_type = 20; // call types supported by scorecard
+  repeated api.commons.CallType.Enum call_types = 20; // call types supported by scorecard
 }
 
 // AutoQuestion represents an automatically scored question.
