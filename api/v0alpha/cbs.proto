@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "api/commons/cbs.proto";
 import "google/api/annotations.proto";
@@ -12,21 +13,25 @@ service CBS {
   rpc CreateServiceId(CreateServiceIdReq) returns (CreateServiceIdRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/createserviceid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CreateCallbackWithDetails(CreateCallbackWithDetailsReq) returns (CreateCallbackWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/createcallbackwithdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateScheduledCallbackToReady(UpdateScheduledCallbackToReadyReq) returns (UpdateScheduledCallbackToReadyRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktoready";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateScheduledCallbackToCanceled(UpdateScheduledCallbackToCanceledReq) returns (UpdateScheduledCallbackToCanceledRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktocanceled";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a scheduled callback and it's callback details, by checking that the callback:
@@ -46,35 +51,59 @@ service CBS {
   rpc GetNextScheduledCallbackWithDetails(GetNextScheduledCallbackWithDetailsReq) returns (GetNextScheduledCallbackWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/getnextscheduledcallbackwithdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateScheduledCallbackToClosed(UpdateScheduledCallbackToClosedReq) returns (UpdateScheduledCallbackToClosedRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallbacktoclosed";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Updates a callback with the provided info, and replaces the details with the ones provided.
   rpc UpdateScheduledCallback(UpdateScheduledCallbackReq) returns (UpdateScheduledCallbackRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/updatescheduledcallback";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Gets a scheduled callback's info and it's details for the given scheduled_callback_id.
   rpc GetScheduledCallbackWithDetails(GetScheduledCallbackWithDetailsReq) returns (GetScheduledCallbackWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/getscheduledcallbackwithdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists callbacks by phone number, caller id, or time range
   rpc ListScheduledCallbacksWithDetails(ListScheduledCallbacksWithDetailsReq) returns (stream ListScheduledCallbacksWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/listscheduledcallbackswithdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // List callbacks by skills
   rpc ListScheduledCallbacksWithDetailsBySkills(ListScheduledCallbacksWithDetailsBySkillsReq) returns (ListScheduledCallbacksWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/listscheduledcallbackswithdetailsbyskillsreq";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 }
 

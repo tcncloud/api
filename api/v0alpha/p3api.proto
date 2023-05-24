@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "api/commons/broadcasts.proto";
 import "api/commons/call.proto";
@@ -17,18 +18,14 @@ service P3Api {
   rpc GetAgentHuntGroup(GetAgentHuntGroupReq) returns (HuntGroup) {
     option (google.api.http).post = "/api/v0alpha/p3api/getagenthuntgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetAgentSession(GetAgentSessionReq) returns (AgentSession) {
     option (google.api.http).post = "/api/v0alpha/p3api/getagentsession";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
-
-  // removing to use asm create session
-  // rpc CreateAgentSession(CreateAgentSessionReq) returns (AgentSession) {
-  //   option (google.api.http).post = "/api/v0alpha/p3api/createagentsession";
-  //   option (google.api.http).body = "*";
-  // }
 
   // Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
   // Skills will be returned as a value pair (name, level).
@@ -43,6 +40,7 @@ service P3Api {
   rpc GetAgentSkills(GetAgentSkillsReq) returns (GetAgentSkillsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getagentskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Creates a new agent skill as defined by the request message.
@@ -51,6 +49,13 @@ service P3Api {
   rpc CreateAgentSkill(CreateAgentSkillReq) returns (CreateAgentSkillRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createagentskill";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Updates an agent skill as defined by the request message.
@@ -59,6 +64,13 @@ service P3Api {
   rpc UpdateAgentSkill(UpdateAgentSkillReq) returns (UpdateAgentSkillRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentskill";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Deletes the agent skill with the agent_skill_sid given on the request.
@@ -67,6 +79,13 @@ service P3Api {
   rpc DeleteAgentSkill(DeleteAgentSkillReq) returns (DeleteAgentSkillRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deleteagentskill";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
   }
 
   // Returns a list of agent skills for the given client sid.
@@ -77,6 +96,7 @@ service P3Api {
   rpc ListSkillsForCurrentAgent(ListSkillsForCurrentAgentReq) returns (ListSkillsForCurrentAgentRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listskillsforcurrentagent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Returns a list of skills filtered by types given on
@@ -85,6 +105,13 @@ service P3Api {
   rpc ListSkills(ListSkillsReq) returns (ListSkillsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // Updates an agents assigned skills as defined by the skills list on
@@ -94,32 +121,44 @@ service P3Api {
   rpc UpdateAgentSkills(UpdateAgentSkillsReq) returns (UpdateAgentSkillsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   rpc GetCurrentAgent(GetCurrentAgentReq) returns (Agent) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcurrentagent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetClientInfoData(GetClientInfoDataReq) returns (GetClientInfoDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getclientinfodata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetClientInfoDisplayTemplate(GetClientInfoDisplayTemplateReq) returns (GetClientInfoDisplayTemplateRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getclientinfodisplaytemplate";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListAgentStatisticsData(ListAgentStatisticsDataReq) returns (ListAgentStatisticsDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentstatisticsdata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists all agent and hunt group PBX extensions that the requested agent has.
   rpc ListPBXExtensions(ListPBXExtensionsReq) returns (ListPBXExtensionsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listpbxextensions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists every agent extension for the current client
@@ -130,6 +169,13 @@ service P3Api {
   rpc ListAgentExtensions(ListAgentExtensionsReq) returns (ListAgentExtensionsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentextensions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Lists every hunt group extension for the current client
@@ -140,6 +186,13 @@ service P3Api {
   rpc ListHuntGroupExtensions(ListHuntGroupExtensionsReq) returns (ListHuntGroupExtensionsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupextensions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Creates a new extension as defined by the request message
@@ -151,6 +204,13 @@ service P3Api {
   rpc CreateExtension(CreateExtensionReq) returns (CreateExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Deletes a pbx_extension with the given pbx_extension_sid.
@@ -161,6 +221,13 @@ service P3Api {
   rpc DeleteExtension(DeleteExtensionReq) returns (DeleteExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deleteextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Updates an extension as defined by the request message.
@@ -172,16 +239,25 @@ service P3Api {
   rpc UpdateExtension(UpdateExtensionReq) returns (UpdateExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   rpc UpdatePBXExtension(UpdatePBXExtensionReq) returns (UpdatePBXExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatepbxextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CreateDNCLNumbers(CreateDNCLNumbersReq) returns (CreateDNCLNumbersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/creatednclnumbers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets the campaign or huntgroup script for the given agent's current hunt
@@ -191,11 +267,13 @@ service P3Api {
   rpc GetScriptOrResponses(GetScriptOrResponsesReq) returns (GetScriptOrResponsesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getscriptorresponses";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetHuntGroupAgentSettings(GetHuntGroupAgentSettingsReq) returns (HuntGroupAgentSettings) {
     option (google.api.http).post = "/api/v0alpha/p3api/gethuntgroupagentsettings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Returns a list of weblinks for the hunt group in the request.
@@ -203,11 +281,13 @@ service P3Api {
   rpc ListHuntGroupWebLinks(ListHuntGroupWebLinksReq) returns (ListHuntGroupWebLinksRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupweblinks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetHuntGroupPauseCodes(GetHuntGroupPauseCodesReq) returns (GetHuntGroupPauseCodesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/gethuntgrouppausecodes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists the call history of the requested agent for the past day or
@@ -215,6 +295,7 @@ service P3Api {
   rpc ListAgentCallHistory(ListAgentCallHistoryReq) returns (ListAgentCallHistoryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentcallhistory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists all client phone book entries.
@@ -223,6 +304,13 @@ service P3Api {
   rpc ListClientPhoneBookEntries(ListClientPhoneBookEntriesReq) returns (ListClientPhoneBookEntriesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listclientphonebookentries";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Lists all hunt group phone book entries.
@@ -231,6 +319,13 @@ service P3Api {
   rpc ListHuntGroupPhoneBookEntries(ListHuntGroupPhoneBookEntriesReq) returns (ListHuntGroupPhoneBookEntriesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listhuntgroupphonebookentries";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Creates a new phone_book as defined by the request message.
@@ -242,6 +337,13 @@ service P3Api {
   rpc CreatePhoneBookEntry(CreatePhoneBookEntryReq) returns (CreatePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createphonebookentry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Updates an existing phone_book as defined by the request message.
@@ -253,6 +355,13 @@ service P3Api {
   rpc UpdatePhoneBookEntry(UpdatePhoneBookEntryReq) returns (UpdatePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatephonebookentry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Deletes the phone_book with the phone_book_sid given on the reques message.
@@ -261,6 +370,13 @@ service P3Api {
   rpc DeletePhoneBookEntry(DeletePhoneBookEntryReq) returns (DeletePhoneBookEntryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletephonebookentry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   // Lists caller_id, outbound and transfer phone books for the requesting client and given hunt group sid.
@@ -274,11 +390,13 @@ service P3Api {
   rpc ListPhoneBooks(ListPhoneBooksReq) returns (ListPhoneBooksRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listphonebooks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListAgentTriggers(ListAgentTriggersReq) returns (ListAgentTriggersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagenttriggers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets all running broadcasts (task groups) for the requesting agent and hunt_group_sid in the request.
@@ -291,6 +409,7 @@ service P3Api {
   rpc GetCampaignCompletionStatus(GetCampaignCompletionStatusReq) returns (GetCampaignCompletionStatusRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcampaigncompletionstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Uses lost peer call sid and call type from the request to get information about lost call
@@ -304,6 +423,7 @@ service P3Api {
   rpc GetLostPeerInfo(GetLostPeerInfoReq) returns (GetLostPeerInfoRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getlostpeerinfo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets all the available Disposition Keys
@@ -313,11 +433,13 @@ service P3Api {
   rpc GetDispositionKeys(GetDispositionKeysReq) returns (GetDispositionKeysRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getdispositionkeys";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetReadyAgents(GetReadyAgentsReq) returns (GetReadyAgentsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getreadyagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Returns lists with call data of calls that were:
@@ -331,37 +453,44 @@ service P3Api {
   rpc ListAgentQueueAndOnHoldCallData(ListAgentQueueAndOnHoldCallDataReq) returns (ListAgentQueueAndOnHoldCallDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentqueueandonholdcalldata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc SaveAgentCallResponses(SaveAgentCallResponsesReq) returns (SaveAgentCallResponsesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/saveagentcallresponses";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListAgentTransferOptions(ListAgentTransferOptionsReq) returns (ListAgentTransferOptionsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagenttransferoptions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateAgentCallResponseValue(UpdateAgentCallResponseValueReq) returns (UpdateAgentCallResponseValueRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentcallresponsevalue";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetIntercomPeerInfo(GetIntercomPeerInfoReq) returns (GetIntercomPeerInfoRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getintercompeerinfo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists the requesting user's org response evaluators.
   rpc ListOrgResponseEvaluators(ListOrgResponseEvaluatorsReq) returns (ListOrgResponseEvaluatorsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listorgresponseevaluators";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetQueueConfigurationOptionsArray(GetQueueConfigurationOptionsArrayReq) returns (GetQueueConfigurationOptionsArrayRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getqueueconfigurationoptionsarray";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Get the rules for conditionally adding a number to the DNCL depending on
@@ -369,83 +498,95 @@ service P3Api {
   rpc GetConditionalDNCLRules(GetConditionalDNCLRulesReq) returns (GetConditionalDNCLRulesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getconditionaldnclrules";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ManualDialStart(ManualDialStartReq) returns (ManualDialStartRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/manualdialstart";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListExtendedCallHistory(ListExtendedCallHistoryReq) returns (stream ListExtendedCallHistoryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listextendedcallhistory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListWhiteListPhoneBooks(ListWhiteListPhoneBooksReq) returns (ListWhiteListPhoneBooksRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listwhitelistphonebooks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadCallRecording(DownloadCallRecordingReq) returns (DownloadRecordingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecording";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadCallRecordings(DownloadCallRecordingsReq) returns (DownloadRecordingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/downloadcallrecordings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc PlacePreviewDialCall(PlacePreviewDialCallReq) returns (PlacePreviewDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/placepreviewdialcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CancelPreviewDialCall(CancelPreviewDialCallReq) returns (CancelPreviewDialCallRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/cancelpreviewdialcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateTaskStatus(UpdateTaskStatusReq) returns (Nil) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatetaskstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
-
-  // removed and done by asm end session
-  // rpc UpdateWebLogoutTime(UpdateWebLogoutTimeReq) returns (Nil) {
-  //   option (google.api.http).post = "/api/v0alpha/p3api/saveweblogouttime";
-  //   option (google.api.http).body = "*";
-  // }
 
   // ListCallbackRoutingAgents returns a list of agents that are allowed to make a callback.
   rpc ListCallbackRoutingAgents(ListCallbackRoutingAgentsReq) returns (ListCallbackRoutingAgentsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListCallbackRoutingSkills(ListCallbackRoutingSkillsReq) returns (ListCallbackRoutingSkillsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcallbackroutingskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc HandleRecordingDelay(HandleRecordingDelayReq) returns (HandleRecordingDelayRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/handlerecordingdelay";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateAgentAssignedHuntGroup(UpdateAgentAssignedHuntGroupReq) returns (UpdateAgentAssignedHuntGroupRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagentassignedhuntgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetCallData(GetCallDataReq) returns (GetCallDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcalldata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListHuntGroups(ListHuntGroupsReq) returns (ListHuntGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listHuntGroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // List the hunt groups an agent within a given hunt group can reassign
@@ -455,11 +596,13 @@ service P3Api {
   rpc ListReassignmentHuntGroups(ListReassignmentHuntGroupsReq) returns (ListReassignmentHuntGroupsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listreassignmenthuntgroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetOrgAgentSettings(GetOrgAgentSettingsReq) returns (GetOrgAgentSettingsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getorgagentsettings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists caller id numbers with their associated region codes for the given
@@ -467,16 +610,19 @@ service P3Api {
   rpc ListCallerIdsFromBucket(ListCallerIdsFromBucketReq) returns (ListCallerIdsFromBucketRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcalleridsfrombucket";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc SaveLastCallResponse(SaveLastCallResponseReq) returns (SaveLastCallResponseRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/savelastcallresponse";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListAgentCallLogsByCallSidAndType(ListAgentCallLogsByCallSidAndTypeReq) returns (ListAgentCallLogsByCallSidAndTypeRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentcalllogsbycallsidandtype";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists the keys and values of the latest responses for the given call_sid,
@@ -484,18 +630,21 @@ service P3Api {
   rpc ListAgentCallResponseValues(ListAgentCallResponseValuesReq) returns (ListAgentCallResponseValuesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentcallresponsevalues";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Get contact schema details based on contact group sid
   rpc GetContactSchemaByContactGroup(GetContactSchemaByContactGroupReq) returns (ContactSchema) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcontactschemabycontactgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List contact group details based on client sid from contact_group table
   rpc ListContactGroupDetailsByClientSid(ListContactGroupDetailsByClientSidReq) returns (ListContactGroupDetailsByClientSidRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcontactgroupdetailsbyclientsid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Get contact group details based on contact group sid from contact_group
@@ -503,36 +652,48 @@ service P3Api {
   rpc GetContactGroupDetails(GetContactGroupReq) returns (ContactGroup) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcontactgroupdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Get contact group size based on contacts size
   rpc GetContactGroupSize(GetContactGroupReq) returns (GetContactGroupSizeRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getcontactgroupsize";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Create contact field description details
   rpc CreateContactFieldDescription(CreateContactFieldDescriptionReq) returns (CreateContactFieldDescriptionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createcontactfielddescription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
   }
 
   // Delete contact field description details
   rpc DeleteContactFieldDescription(DeleteContactFieldDescriptionReq) returns (DeleteContactFieldDescriptionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletecontactfielddescription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
   }
 
   // List contact field desc details from contact_field_description table
   rpc ListContactFieldDescriptions(ListContactFieldDescriptionsReq) returns (ListContactFieldDescriptionsRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List contact field description details based on contact group sid
   rpc ListContactFieldDescriptionsByCGSid(ListContactFieldDescriptionsByCGSidReq) returns (ListContactFieldDescriptionsByCGSidRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcontactfielddescriptionsbycgsid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List contactImportTemplates based on client_sid from
@@ -540,6 +701,7 @@ service P3Api {
   rpc ListContactImportTemplates(ListContactImportTemplatesReq) returns (ListContactImportTemplatesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcontactimporttemplates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Updates task data for a preview record to finished and logs an agent
@@ -547,12 +709,17 @@ service P3Api {
   rpc UpdatePreviewRecordToFinished(UpdatePreviewRecordToFinishedReq) returns (UpdatePreviewRecordToFinishedRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatepreviewrecordtofinished";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Updates the requesting agent's hunt_group_sid.
   rpc UpdateAgentHuntGroup(UpdateAgentHuntGroupReq) returns (UpdateAgentHuntGroupRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updateagenthuntgroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
   }
 
   // Updates every given user's hunt_group_sid.
@@ -564,12 +731,17 @@ service P3Api {
   rpc MultiAgentHuntGroupAssignment(MultiAgentHuntGroupAssignmentReq) returns (MultiAgentHuntGroupAssignmentRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/multiagenthuntgroupassignment";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
   }
 
   // GetAgentProfile returns an agent profile.
   rpc GetAgentProfile(GetAgentProfileReq) returns (AgentProfile) {
     option (google.api.http).post = "/api/v0alpha/p3api/getagentprofile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // RecalculateBilling updates statuses for every billing type given on the
@@ -581,6 +753,10 @@ service P3Api {
   rpc RecalculateBilling(RecalculateBillingReq) returns (RecalculateBillingRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/recalculatebilling";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_TCN_BILLING}];
+    };
   }
 
   // Gets information of the requesting client's broadcast templates (template_number, name, type, modify_date)
@@ -592,6 +768,7 @@ service P3Api {
   rpc ListOutboundBroadcastTemplateData(ListOutboundBroadcastTemplateDataReq) returns (ListOutboundBroadcastTemplateDataRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listoutboundbroadcasttemplatedata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Assign every skill to every agent with the given aptitude.
@@ -612,6 +789,7 @@ service P3Api {
   rpc ListMAMAgentHuntGroupsByClientSid(ListMAMAgentHuntGroupsByClientSidReq) returns (ListMAMAgentHuntGroupsByClientSidRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listmamagenthuntgroupsbyclientsid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // List every tts voice
@@ -622,6 +800,10 @@ service P3Api {
   rpc ListTtsVoices(ListTtsVoicesReq) returns (ListTtsVoicesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listttsvoices";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
   }
 
   // Create a new tts voice
@@ -633,6 +815,10 @@ service P3Api {
   rpc CreateTtsVoice(CreateTtsVoiceReq) returns (CreateTtsVoiceRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createttsvoice";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
   }
 
   // Delete a tts voice with the given tts_voice_sid.
@@ -644,6 +830,10 @@ service P3Api {
   rpc DeleteTtsVoice(DeleteTtsVoiceReq) returns (DeleteTtsVoiceRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletettsvoice";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+    };
   }
 
   // List of account custom data keys based on client sid
@@ -654,6 +844,10 @@ service P3Api {
   rpc ListCustomDataKeys(ListCustomDataKeysReq) returns (ListCustomDataKeysRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcustomdatakeys";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // Creates a new Data Key as defined by the request message
@@ -666,6 +860,10 @@ service P3Api {
   rpc CreateCustomDataKey(CreateCustomDataKeyReq) returns (CreateCustomDataKeyRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/createcustomdatakey";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
   }
 
   // Deletes a Custom Data Key with the sid given on the request message.
@@ -678,6 +876,10 @@ service P3Api {
   rpc DeleteCustomDataKey(DeleteCustomDataKeyReq) returns (DeleteCustomDataKeyRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletecustomdatakey";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
   }
 
   // Updates a custom data key with the client_properties_sid and data key
@@ -691,6 +893,10 @@ service P3Api {
   rpc UpdateCustomDataKey(UpdateCustomDataKeyReq) returns (UpdateCustomDataKeyRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/updatecustomdatakey";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
   }
 
   // Get Activity logs for given users and by specified time range
@@ -699,36 +905,60 @@ service P3Api {
   rpc GetActivityLogHistory(GetActivityLogHistoryReq) returns (stream GetActivityLogHistoryRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/getactivityloghistory";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_CUSTOMER_SUPPORT}];
+    };
   }
 
   // List agent and queue table template properties by client sid
   rpc ListTableTemplateProperties(ListTableTemplatePropertiesReq) returns (ListTableTemplatePropertiesRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listtabletemplateproperties";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // List agent skills filters by client sid
   rpc ListAgentSkillsFilters(ListAgentSkillsFiltersReq) returns (ListAgentSkillsFiltersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listagentskillsfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // List Schedule Rules
   rpc ListScheduleRules(ListScheduleRulesRequest) returns (ListScheduleRulesResult) {
     option (google.api.http).post = "/api/v0alpha/org/compliance/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // List custom report filters by client sid
   rpc ListCustomReportFilters(ListCustomReportFiltersReq) returns (ListCustomReportFiltersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listcustomreportfilters";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_VIEW}];
+    };
   }
 
   // List sms numbers by client sid
   rpc ListSmsNumbers(ListSmsNumbersReq) returns (ListSmsNumbersRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/listsmsnumbers";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_OMNI_BOSS}];
+    };
   }
 }
 

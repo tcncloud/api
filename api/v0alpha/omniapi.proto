@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/omnichannel.proto";
 import "api/commons/types.proto";
 import "google/api/annotations.proto";
@@ -16,6 +17,13 @@ service OmniApi {
   rpc ArchiveCampaign(ArchiveCampaignReq) returns (ArchiveCampaignRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/archivecampaign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Create Omni Campaign defined by CreateOmniCampaign message
@@ -26,32 +34,55 @@ service OmniApi {
   rpc CreateCampaign(CreateCampaignReq) returns (api.commons.OmniCampaign) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createcampaign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   //Get campaign defined by GetChatCampaignById.
   rpc GetCampaignById(GetCampaignByIdReq) returns (api.commons.OmniCampaign) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getcampaignbyid";
     option (google.api.http).body = "*";
-  }
-
-  // List campaigns defined by ListCampaignsReq.
-  // The method will return a ListCampaignsReq entity that will contain
-  // all the campaigns within the specified filter.
-  rpc ListCampaigns(ListCampaignsReq) returns (ListCampaignsRes) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/listcampaigns";
-    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // pause a campaign
   rpc PauseCampaign(PauseCampaignReq) returns (PauseCampaignRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/pausecampaign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // resume a campaign
   rpc ResumeCampaign(ResumeCampaignReq) returns (ResumeCampaignRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/resumecampaign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Updates a campaign
@@ -60,113 +91,230 @@ service OmniApi {
   rpc UpdateCampaign(UpdateCampaignReq) returns (UpdateCampaignRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatecampaign";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // update campaign pacing - speed up/slow down a campaign
   rpc UpdateCampaignPacingSpeed(UpdateCampaignPacingSpeedReq) returns (UpdateCampaignPacingSpeedRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatecampaignpacingspeed";
     option (google.api.http).body = "*";
-  }
-
-  // Get the text message for an off-loaded text message payload. Used
-  // only for managers/agents/users. It is not for customers.
-  rpc GetOffLoadedTextMessage(GetOffLoadedTextMessageReq) returns (GetOffLoadedTextMessageRes) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/getoffloadedtextmessage";
-    option (google.api.http).body = "*";
-  }
-
-  // Get a stream of new conversation message for a given conversation. Used
-  // only for managers. It is not for customers.
-  rpc ManagerListMessages(ManagerListMessagesReq) returns (stream api.commons.OmniMessage) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/managerlistmessages";
-    option (google.api.http).body = "*";
-  }
-
-  // Get a stream of conversation message for a given conversation. Used
-  // only for agents/users. It is not for customers.
-  rpc ListMessages(ListMessagesReq) returns (stream api.commons.OmniMessage) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/listmessages";
-    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Send a chat message
   rpc SendOmniMessage(SendOmniMessageReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/sendomnimessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Send a chat message
   rpc ManagerSendOmniMessage(SendOmniMessageReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/managersendomnimessage";
     option (google.api.http).body = "*";
-  }
-
-  // lists all conversation and assigned users for a given date range.
-  // Required permissions:
-  //    OMNI_BOSS
-  rpc ManagerListConversations(ListConversationsReq) returns (ListConversationsRes) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/listconversations";
-    option (google.api.http).body = "*";
-  }
-
-  // Experimental API
-  rpc SuggestResponse(SuggestResponseReq) returns (SuggestResponseRes) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/suggestresponse";
-    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Create a disposition
   rpc CreateDisposition(CreateDispositionReq) returns (CreateDispositionRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createdisposition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // DeleteDisposition - delete an existing disposition
   rpc DeleteDisposition(DeleteDispositionReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deletedisposition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // ListDispositions - lists all dispositions
   rpc ListDispositions(ListDispositionsReq) returns (ListDispositionsRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listdispositions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // UpdateDisposition - update an existing disposition
   rpc UpdateDisposition(UpdateDispositionReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatedisposition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // ListCustomUnsubscribeLinks - retrieves all the custom unsubscribe links
   rpc ListCustomUnsubscribeLinks(api.commons.Empty) returns (ListCustomUnsubscribeLinksRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listcustomunsubscribelinks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // CreateUnsubscribeLink - creates a new unsubscribe link
   rpc CreateCustomUnsubscribeLink(api.commons.OmniCustomUnsubscribeLink) returns (CreateCustomUnsubscribeLinkRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createcustomunsubscribelink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // UpdateCustomUnsubscribeLink - update custom unsubscribe link details
   rpc UpdateCustomUnsubscribeLink(UpdateCustomUnsubscribeLinkReq) returns (UpdateCustomUnsubscribeLinkRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatecustomunsubscribelink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
   rpc DeleteCustomUnsubscribeLink(DeleteCustomUnsubscribeLinkReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deletecustomunsubscribelink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // List campaigns defined by ListCampaignsReq.
+  // The method will return a ListCampaignsReq entity that will contain
+  // all the campaigns within the specified filter.
+  rpc ListCampaigns(ListCampaignsReq) returns (ListCampaignsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcampaigns";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // Get a stream of new conversation message for a given conversation. Used
+  // only for managers. It is not for customers.
+  rpc ManagerListMessages(ManagerListMessagesReq) returns (stream commons.OmniMessage) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/managerlistmessages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // Get a stream of conversation message for a given conversation. Used
+  // only for agents/users. It is not for customers.
+  rpc ListMessages(ListMessagesReq) returns (stream commons.OmniMessage) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listmessages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // lists all conversation and assigned users for a given date range.
+  // Required permissions:
+  //    OMNI_BOSS
+  rpc ManagerListConversations(ListConversationsReq) returns (ListConversationsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/managerlistconversations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // ListContactLists - retrieves all the contact lists
   rpc ListContactLists(ListContactListsReq) returns (ListContactListsRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listcontactlists";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
@@ -175,6 +323,13 @@ service OmniApi {
   rpc GetAvailableHeaders(GetAvailableHeadersReq) returns (GetAvailableHeadersRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getavailableheaders";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // GetTask - retrieves a task using the provided criteria
@@ -183,6 +338,16 @@ service OmniApi {
   rpc GetTask(GetTaskReq) returns (api.commons.OmniTask) {
     option (google.api.http).post = "/api/v0alpha/omniapi/gettask";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // ListTasks - retrieves tasks using the provided criteria
@@ -191,6 +356,13 @@ service OmniApi {
   rpc ListTasks(ListTasksReq) returns (ListTasksRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listtasks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // CreateConnectedInbox - create a new connected inbox
@@ -199,6 +371,13 @@ service OmniApi {
   rpc CreateConnectedInbox(api.commons.ConnectedInbox) returns (CreateConnectedInboxRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createconnectedinbox";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // DeleteConnectedInboxBySid - deletes a connected inbox given it's identifier
@@ -207,6 +386,13 @@ service OmniApi {
   rpc DeleteConnectedInboxBySid(DeleteConnectedInboxBySidReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deleteconnectedinboxbysid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // GetConnectedInboxBySid - retrieves a connected inbox given it's identifier
@@ -215,15 +401,30 @@ service OmniApi {
   rpc GetConnectedInboxBySid(GetConnectedInboxBySidReq) returns (api.commons.ConnectedInbox) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getconnectedinboxbysid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
+
   //Perform sendgrid account check to make sure all the account settings are valid defined by SendgridAccountByClientReq message.
   // The method will return a SendgridAccountByClientRes message/entity that will
   // contain the result true/false verifying account settings with sendgrid for this client
   // Required permissions:
   //      OMNI_BOSS
   rpc PerformSendgridAccountChecks(SendgridAccountByClientReq) returns (SendgridAccountByClientRes) {
-    option (google.api.http).post = "/api/v0alpha/emailapi/performsendgridaccountchecks";
+    option (google.api.http).post = "/api/v0alpha/omniapi/performsendgridaccountchecks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // ListConnectedInboxes - retrieves all the connected inboxes for the organization
@@ -232,6 +433,13 @@ service OmniApi {
   rpc ListConnectedInboxes(ListConnectedInboxesReq) returns (ListConnectedInboxesRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listconnectedinboxes";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // TestConnectedInbox - check if connected inbox login works for a specified email_address,
@@ -241,6 +449,13 @@ service OmniApi {
   rpc TestConnectedInbox(api.commons.ConnectedInbox) returns (TestConnectedInboxRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/testconnectedinbox";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // UpdateConnectedInbox - update a connected inbox
@@ -249,6 +464,13 @@ service OmniApi {
   rpc UpdateConnectedInbox(UpdateConnectedInboxReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updateconnectedinbox";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // CreateVerifiedEmail.  this will create a new verified email
@@ -257,18 +479,15 @@ service OmniApi {
   rpc CreateVerifiedEmail(api.commons.VerifiedEmail) returns (CreateVerifiedEmailRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createverifiedemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
-  // Send email notification defined by SendEmailNotificationReq message for the specified
-  // subject, message and array of to email addresses.
-  // The method will return a stream of SendEmailNotificationRes messages
-  // containing result true/false after notified by email for the client_sid.
-  // Required permissions:
-  //      OMNI_BOSS
-  rpc SendEmailNotification(SendEmailNotificationReq) returns (SendEmailNotificationRes) {
-    option (google.api.http).post = "/api/v0alpha/emailapi/sendemailnotification";
-    option (google.api.http).body = "*";
-  }
   // Delete verify email record based on verified email id defined by
   // DeleteVerifiedEmailReq for the specified client.
   // This method will return a DeleteVerifiedEmailRes message/entity.
@@ -278,6 +497,13 @@ service OmniApi {
   rpc DeleteVerifiedEmail(DeleteVerifiedEmailReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deleteverifiedemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Get the verified email details based on verified email id defined by
@@ -288,6 +514,13 @@ service OmniApi {
   rpc GetVerifiedEmailBySid(GetVerifiedEmailBySidReq) returns (api.commons.VerifiedEmail) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getverifiedemailbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // List all the verified emails and their details defined by
@@ -298,6 +531,13 @@ service OmniApi {
   rpc ListVerifiedEmails(ListVerifiedEmailsReq) returns (ListVerifiedEmailsRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listverifiedemails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Resend verify email record based on verified email id defined by
@@ -308,12 +548,26 @@ service OmniApi {
   rpc ResendVerifiedEmail(ResendVerifiedEmailReq) returns (ResendVerifiedEmailRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/resendverifiedemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Updates verified email description
   rpc UpdateVerifiedEmail(UpdateVerifiedEmailReq) returns (api.commons.Empty) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updateverifiedemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // GetPendingGoogleXOAuth2Data - retrieves the pending oauth data required to finish creating a connected inbox
@@ -322,6 +576,31 @@ service OmniApi {
   rpc GetPendingGoogleXOAuth2Data(GetPendingGoogleXOAuth2DataReq) returns (GetPendingGoogleXOAuth2DataRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getpendinggooglexoauth2data";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // Send email notification defined by SendEmailNotificationReq message for the specified
+  // subject, message and array of to email addresses.
+  // The method will return a stream of SendEmailNotificationRes messages
+  // containing result true/false after notified by email for the client_sid.
+  // Required permissions:
+  //      OMNI_BOSS
+  rpc SendEmailNotification(SendEmailNotificationReq) returns (SendEmailNotificationRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/emailapi/sendemailnotification";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
@@ -336,12 +615,29 @@ service OmniApi {
   rpc GetOmniAttachment(GetOmniAttachmentReq) returns (api.commons.OmniAttachment) {
     option (google.api.http).post = "/api/v0alpha/omniapi/getomniattachment";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Create a task with a given contat list .
   rpc CreateTasks(CreateTasksReq) returns (CreateTasksRes) {
-    option (google.api.http).post = "/api/v0alpha/omniapi/createTasks";
+    option (google.api.http).post = "/api/v0alpha/omniapi/createtasks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // CreateSignature - creates a new message signature
@@ -350,6 +646,13 @@ service OmniApi {
   rpc CreateSignature(CreateSignatureReq) returns (CreateSignatureRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/createsignature";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // DeleteSignature - deletes a message signature
@@ -358,6 +661,13 @@ service OmniApi {
   rpc DeleteSignature(DeleteSignatureReq) returns (DeleteSignatureRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/deletesignature";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // ListSignatures - retrieves the signatures created by the organization
@@ -366,6 +676,16 @@ service OmniApi {
   rpc ListSignatures(ListSignaturesReq) returns (ListSignaturesRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/listsignatures";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // UpdateSignature - updates a message signature
@@ -374,6 +694,26 @@ service OmniApi {
   rpc UpdateSignature(UpdateSignatureReq) returns (UpdateSignatureRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/updatesignature";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // SuggestResponse
+  rpc SuggestResponse(SuggestResponseReq) returns (SuggestResponseRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/suggestresponse";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Create/Record project defined by CreateProjectReq message for a specified
@@ -383,8 +723,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc CreateProject(CreateProjectReq) returns (CreateProjectRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/createproject";
+    option (google.api.http).post = "/api/v0alpha/omniapi/createproject";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // list projects for the current org
@@ -392,8 +739,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc ListProjects(ListProjectsReq) returns (ListProjectsRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/listprojects";
+    option (google.api.http).post = "/api/v0alpha/omniapi/listprojects";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Update project defined by EditProjectByIdReq message for a specified
@@ -403,8 +757,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc EditProjectById(EditProjectByIdReq) returns (EditProjectByIdRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/editeprojectbyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/editprojectbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Closes project defined by CloseProjectByIdReq message for a specified
@@ -414,8 +775,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc CloseProjectById(CloseProjectByIdReq) returns (CloseProjectByIdRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/closeeprojectbyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/closeprojectbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Get project details defined by GetProjectByIdReq message for a specified
@@ -425,8 +793,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc GetProjectById(GetProjectByIdReq) returns (Project) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/getprojectbyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/getprojectbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Create/Record canned message defined by CreateCannedMessageReq message for a specified
@@ -436,8 +811,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc CreateCannedMessage(CreateCannedMessageReq) returns (CannedMessage) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/createcannedmessage";
+    option (google.api.http).post = "/api/v0alpha/omniapi/createcannedmessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // list canned messages for the current org
@@ -445,8 +827,18 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc ListCannedMessages(ListCannedMessagesReq) returns (ListCannedMessagesRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/listcannedmessages";
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcannedmessages";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Update canned message defined by UpdateCannedMessageReq message for a specified
@@ -456,8 +848,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc UpdateCannedMessage(UpdateCannedMessageReq) returns (CannedMessage) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/updatecannedmessage";
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatecannedmessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Get canned message details for the canned_message_id
@@ -465,8 +864,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc GetCannedMessageById(GetCannedMessageByIdReq) returns (CannedMessageWithGroup) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/getcannedmessagebyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/getcannedmessagebyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Delete canned message details for the canned_message_id
@@ -474,8 +880,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc DeleteCannedMessageById(DeleteCannedMessageByIdReq) returns (DeleteCannedMessageByIdRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/deletecannedmessagebyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/deletecannedmessagebyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
@@ -485,8 +898,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc CreateCannedMessageGroup(CreateCannedMessageGroupReq) returns (CannedMessageGroup) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/createcannedmessagegroup";
+    option (google.api.http).post = "/api/v0alpha/omniapi/createcannedmessagegroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // list canned message groups for the current org
@@ -494,8 +914,18 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc ListCannedMessageGroups(ListCannedMessageGroupsReq) returns (ListCannedMessageGroupsRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/listcannedmessagegroups";
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcannedmessagegroups";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
@@ -503,8 +933,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc UpdateCannedMessageGroup(UpdateCannedMessageGroupReq) returns (UpdateCannedMessageGroupRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/updatecannedmessagegroup";
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatecannedmessagegroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Delete canned message group and all the related messages for the canned_message_group_id
@@ -512,8 +949,15 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc DeleteCannedMessageGroup(DeleteCannedMessageGroupReq) returns (DeleteCannedMessageGroupRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/deletecannedmessagegroup";
+    option (google.api.http).post = "/api/v0alpha/omniapi/deletecannedmessagegroup";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // list canned messages for the group
@@ -521,8 +965,18 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc ListCannedMessagesByGroupId(ListCannedMessagesByGroupIdReq) returns (ListCannedMessagesByGroupIdRes) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/listcannedmessagesbygroupid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/listcannedmessagesbygroupid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Get canned message group details for the canned_message_group_id
@@ -530,8 +984,18 @@ service OmniApi {
   // Required permissions:
   //      OMNI_BOSS
   rpc GetCannedMessageGroupById(GetCannedMessageGroupByIdReq) returns (CannedMessageGroup) {
-    option (google.api.http).post = "/api/v0alpha/projectapi/getcannedmessagegroupbyid";
+    option (google.api.http).post = "/api/v0alpha/omniapi/getcannedmessagegroupbyid";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 }
 
