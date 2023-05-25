@@ -191,6 +191,18 @@ service Org {
     };
   }
 
+  rpc AdminListUserDescriptions(AdminListUserDescriptionsRequest) returns (stream AdminListUserDescriptionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/all/user/descriptions/adminlist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   rpc ListUserDescriptions(ListUserDescriptionsRequest) returns (stream ListUserDescriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/all/user/descriptions/list";
     option (google.api.http).body = "*";
@@ -216,9 +228,28 @@ service Org {
     option (annotations.authz) = {no_permissions: true};
   }
 
+  rpc GetMyUserDetails(GetMyUserDetailsRequest) returns (UserDetails) {
+    option (google.api.http).post = "/api/v0alpha/org/user/mydetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
   rpc GetUserDetails(GetUserDetailsRequest) returns (UserDetails) {
     option (google.api.http).post = "/api/v0alpha/org/user/details";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc AdminGetUserDetails(AdminGetUserDetailsRequest) returns (UserDetails) {
@@ -352,25 +383,78 @@ service Org {
   }
 
   // UpdateUser updates a user as defined by the UpdateUserRequest.
-  // Required Permissions:
-  // USER_EDIT if the user_id is given on the request.
-  // NONE (TODO: create & use new perm) if the user_id is NOT given.
-  //  This will only the currently logged in user.
-  //  Only some of the fields on the request message can be updated
-  //  for the currently logged in user: time_zone, linkback_numbers,
-  //  caller_ids, and default_app.
+  // Required Permissions: USER_EDIT (default)
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/agent/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateMyUser updates the currently logged in user as defined by the UpdateMyUserRequest.
+  // Required Permissions: USER_EDIT_OPTIONS
+  // Only some of the fields on the request message can be updated
+  // for the currently logged in user: time_zone, linkback_numbers,
+  // caller_ids, and default_app.
+  rpc UpdateMyUser(UpdateMyUserRequest) returns (UpdateMyUserResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/myuser/update";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserCallerId updates a user's caller id as defined by the UpdateUserCallerIdRequest.
+  // Required Permissions: USER_EDIT_AGENT_CALLER_ID
+  rpc UpdateUserCallerId(UpdateUserCallerIdRequest) returns (UpdateUserCallerIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/update/callerid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_AGENT_CALLER_ID]
+        }
+      ];
+    };
   }
 
   // CreateUser creates a new user as defined by the CreateUserRequest
   // request message.
-  // Required Permissions:
-  // USER_CREATE, CUSTOMER_SUPPORT if adding to an org other than your own
+  // Required Permissions: USER_CREATE
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_CREATE]
+        }
+      ];
+    };
+  }
+
+  // CreateUserByOrgId creates a new user as defined by the CreateUserByOrgIdRequest
+  // request message to a specific org.
+  // Required Permissions: CUSTOMER_SUPPORT
+  rpc CreateUserByOrgId(CreateUserByOrgIdRequest) returns (CreateUserByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/admin/create";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Creates a delegated user. This should only be called by an auth0 action.
@@ -380,14 +464,49 @@ service Org {
     option (annotations.authz) = {no_permissions: true};
   }
 
-  // UpdateUserPassword updates a users password to the
-  // password given on the request message.
-  // Required Permissions:
-  // USER_EDIT if user_id was given on the request (Update another user's password)
-  // USER_EDIT_PASSWORD if user_id is retrieved from token (Update your own password)
+  // UpdateUserPassword updates a user's password (in the same org as the current user)
+  // to the password given on the request message.
+  // Required Permissions: USER_EDIT (Update another user's password in the same org)
   rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/password/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateMyUserPassword updates the current user's password to the
+  // password given on the request message.
+  // Required Permissions: USER_EDIT_PASSWORD (Update your own password)
+  rpc UpdateMyUserPassword(UpdateMyUserPasswordRequest) returns (UpdateMyUserPasswordResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/update/mypassword";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserPasswordByOrgId updates a specific user's password
+  // from a specific org to the password given on the request message.
+  // Required Permissions: CUSTOMER_SUPPORT (Update a user's password from an org)
+  rpc UpdateUserPasswordByOrgId(UpdateUserPasswordByOrgIdRequest) returns (UpdateUserPasswordByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/update/password/byorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // updates the users PasswordResetRequired field to false.
@@ -398,46 +517,146 @@ service Org {
     option (annotations.authz) = {no_permissions: true};
   }
 
-  // Generate a password reset link for a user.
-  // Required Permissions:
-  //  USER_EDIT_PASSWORD if user_id not given on request.
+  // GetUserPasswordResetLink generates a password reset link for a user
+  // in the same org as the current user.
+  // Required Permissions: USER_EDIT
   //  USER_EDIT if user_id given on the request.
-  //  CUSTOMER_SUPPORT if user_id & org_id given on request. User_id must be given if org_id is.
   rpc GetUserPasswordResetLink(GetUserPasswordResetLinkRequest) returns (GetUserPasswordResetLinkResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/password/resetlink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // GetMyUserPasswordResetLink generate a password reset link for the current user.
+  // Required Permissions: USER_EDIT_PASSWORD
+  rpc GetMyUserPasswordResetLink(GetMyUserPasswordResetLinkRequest) returns (GetMyUserPasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/mypassword/resetlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
+        }
+      ];
+    };
+  }
+
+  // GetUserPasswordResetLinkByOrgId generates a password reset link
+  // for a specific user in a specific org.
+  // Required Permissions: CUSTOMER_SUPPORT
+  rpc GetUserPasswordResetLinkByOrgId(GetUserPasswordResetLinkByOrgIdRequest) returns (GetUserPasswordResetLinkByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/password/resetlink/byorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Returns whether or not the given user's email is verified.
-  // Required Permissions:
-  //  USER_EDIT if org_id not given on request.
-  //  CUSTOMER_SUPPORT if org_id given on request.
+  // Required Permissions: USER_EDIT
   rpc GetUserEmailVerified(GetUserEmailVerifiedRequest) returns (GetUserEmailVerifiedResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/emailverified";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
   }
+
+  // GetUserEmailVerifiedByOrgId returns whether or not the given user's email
+  // from a specific org is verified.
+  // Required Permissions: CUSTOMER_SUPPORT
+  rpc GetUserEmailVerifiedByOrgId(GetUserEmailVerifiedByOrgIdRequest) returns (GetUserEmailVerifiedByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/emailverified/byorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // Sends a verfication email to the given users email.
-  // Required Permissions:
-  //  USER_EDIT if org_id not given on request.
-  //  CUSTOMER_SUPPORT if org_id given on request.
+  rpc SendUserVerificationEmailByOrgId(SendUserVerificationEmailByOrgIdRequest) returns (SendUserVerificationEmailByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/sendverificationemailbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Sends a verfication email to the given users email.
   rpc SendUserVerificationEmail(SendUserVerificationEmailRequest) returns (SendUserVerificationEmailResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/sendverificationemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
   }
+
   // Sets the given user's to verified without needing to send a verification email.
-  // Required Permissions:
-  //  USER_EDIT if org_id not given on request.
-  //  CUSTOMER_SUPPORT if org_id given on request.
+  rpc ManualUserEmailVerificationByOrgId(ManualUserEmailVerificationByOrgIdRequest) returns (ManualUserEmailVerificationByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/manualuseremailverificationbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Sets the given user's to verified without needing to send a verification email.
   rpc ManualUserEmailVerification(ManualUserEmailVerificationRequest) returns (ManualUserEmailVerificationResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/manualuseremailverification";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
   }
 
-  // Authenticates impersonation and generates token to be used.
-  // Required Permissions:
-  // CUSTOMER_SUPPORT
+  // GetTempUserToken authenticates impersonation and generates token
+  // to be used for the current user.
+  // Required Permissions: None, anyone authorized can use this
   rpc GetTempUserToken(GetTempUserTokenReq) returns (GetTempUserTokenRes) {
     option (google.api.http).post = "/api/v0alpha/org/user/token";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // GetTempUserTokenByUserId authenticates impersonation and generates token
+  // to be used for the user with the given user_id.
+  // Required Permissions: CUSTOMER_SUPPORT
+  rpc GetTempUserTokenByUserId(GetTempUserTokenByUserIdReq) returns (GetTempUserTokenByUserIdRes) {
+    option (google.api.http).post = "/api/v0alpha/org/user/token/byuserid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -499,8 +718,6 @@ service Org {
   }
 
   // UpdateUserDisabled updates a specified user to disabled or enabled. A disabled user cannot log in.
-  // Required Permissions:
-  //    - USER_EDIT
   rpc UpdateUserDisabled(UpdateUserDisabledRequest) returns (UpdateUserDisabledResponse) {
     option (google.api.http).post = "/api/v0alpha/org/user/permissions/userdisabled/update";
     option (google.api.http).body = "*";
@@ -508,6 +725,19 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserDisabledByOrgId updates a specified user in a specific organization to disabled or enabled.
+  rpc UpdateUserDisabledByOrgId(UpdateUserDisabledByOrgIdRequest) returns (UpdateUserDisabledByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/user/admin/update/userdisabled";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ];
     };
@@ -533,8 +763,25 @@ service Org {
   // Returns the billing data for the given org. Billing data
   // will only be included for countries present on the org's
   // allowed countries preference.
-  // Required Permissions:
-  //    CUSTOMER_SUPPORT
+  // Errors:
+  //    - grpc.InvalidArgument: The org_id on the request was invalid.
+  //    - grpc.NotFound: The given org_id did not exist.
+  //    - grpc.Internal: An unexpected error occurred while getting the orgs billing settings.
+  rpc GetOrgBillingSettingsByOrgId(GetOrgBillingSettingsByOrgIdRequest) returns (GetOrgBillingSettingsByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/billing/getorgbillingsettingsbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Returns the billing data for the current org. Billing data
+  // will only be included for countries present on the org's
+  // allowed countries preference.
   // Errors:
   //    - grpc.InvalidArgument: The org_id on the request was invalid.
   //    - grpc.NotFound: The given org_id did not exist.
@@ -545,7 +792,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+          permissions: [PERMISSION_ORG_VIEW]
         }
       ];
     };
@@ -629,10 +876,30 @@ service Org {
 
   // neo permissions
 
+  // ListPermissionGroupsByOrgId returns the list of an org's permission groups.
+  rpc ListPermissionGroupsByOrgId(ListPermissionGroupsByOrgIdRequest) returns (ListPermissionGroupsByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissiongroup/listbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // ListPermissionGroups returns the list of an org's permission groups.
   rpc ListPermissionGroups(ListPermissionGroupsRequest) returns (ListPermissionGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissiongroup/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // CreatePermissionGroup creates a new permission group for the caller's organization.
@@ -836,10 +1103,30 @@ service Org {
     };
   }
 
+  // ListP3PermissionGroupsByOrgId returns the list of an org's P3 permission groups.
+  rpc ListP3PermissionGroupsByOrgId(ListP3PermissionGroupsByOrgIdRequest) returns (ListP3PermissionGroupsByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/groups/listbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // ListP3PermissionGroups returns the list of an org's P3 permission groups.
   rpc ListP3PermissionGroups(ListP3PermissionGroupsRequest) returns (ListP3PermissionGroupsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/groups/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   // AddUserRegion to a Users Accessible Regions
@@ -882,9 +1169,29 @@ service Org {
   }
 
   // Update p3 permission group
+  rpc UpdateP3PermissionGroupByOrgId(UpdateP3PermissionGroupByOrgIdRequest) returns (UpdateP3PermissionGroupByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/permissions/p3/updatebyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Update p3 permission group
   rpc UpdateP3PermissionGroup(UpdateP3PermissionGroupRequest) returns (UpdateP3PermissionGroupResponse) {
     option (google.api.http).post = "/api/v0alpha/org/permissions/p3/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
   }
 
   // Delete new p3 permission group
@@ -1358,7 +1665,7 @@ service Org {
     };
   }
 
-  // GetVoiceAnalyticsPreferences updates the all preferences for voice analytics
+  // UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
   rpc UpdateVoiceAnalyticsPreferences(UpdateVoiceAnalyticsPreferencesRequest) returns (UpdateVoiceAnalyticsPreferencesResponse) {
     option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/update";
     option (google.api.http).body = "*";
@@ -1366,6 +1673,22 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateVoiceAnalyticsPreferencesEnabled updates the enabled preferences for voice analytics
+  rpc UpdateVoiceAnalyticsPreferencesEnabled(UpdateVoiceAnalyticsPreferencesEnabledRequest) returns (UpdateVoiceAnalyticsPreferencesEnabledResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/preferences/vanalytics/updateenabled";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_ORG_EDIT,
+            PERMISSION_VOICE_ANALYTICS
+          ]
         }
       ];
     };
@@ -2226,8 +2549,19 @@ service Org {
   }
 
   // Gets all orgs under the p3 hierarchy
-  // Required Permissions:
-  // PERMISSION_ORG_VIEW
+  rpc ListOwnedOrgsByOrgId(ListOwnedOrgsByOrgIdRequest) returns (ListOwnedOrgsByOrgIdResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/OwnedOrgs/listbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Gets all orgs under the p3 hierarchy
   rpc ListOwnedOrgs(ListOwnedOrgsRequest) returns (ListOwnedOrgsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/OwnedOrgs/list";
     option (google.api.http).body = "*";
@@ -2365,22 +2699,43 @@ service Org {
     option (google.api.http).body = "*";
   }
 
-  // Adds a user subscription to users list of subscriptions
-  // Required Permissions:
-  //    USER_EDIT if user id IS provided
-  //    EDIT_USER_OPTIONS if user id NOT provided
+  // Adds a user subscription to user's list of subscriptions
   rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/addusersubscription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
   }
 
-  // Removes a user subscription from a users list of subscription
-  // Required Permissions:
-  //    USER_EDIT if user id IS provided
-  //    EDIT_USER_OPTIONS if user id NOT provided
+  // Removes a user subscription from a specified user's list of subscriptions
   rpc RemoveUserSubscription(RemoveUserSubscriptionRequest) returns (RemoveUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/removeusersubscription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Removes a user subscription from a user's list of subscriptions
+  rpc RemoveMyUserSubscription(RemoveMyUserSubscriptionRequest) returns (RemoveMyUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/removemyusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
   }
 
   // Updates a user subscription
@@ -2690,22 +3045,46 @@ message UserDirectoryEntry {
 }
 
 message GetTempUserTokenReq {
-  // UserId that token is being created for
-  string user_id = 1;
+  // DEPRECATED: user_id was previously optional,
+  // if user_id needs to be provided, use GetTempUserTokenByUserId rpc
+  string user_id = 1 [deprecated = true];
 }
 
 message GetTempUserTokenRes {
   string region_id = 1;
-
   // Temporary token generated for user
   string token = 2;
 }
 
-message ListUserDescriptionsRequest {
+message GetTempUserTokenByUserIdReq {
+  // UserId that token is being created for
+  string user_id = 1;
+}
+
+message GetTempUserTokenByUserIdRes {
+  string region_id = 1;
+  // Temporary token generated for user
+  string token = 2;
+}
+
+message AdminListUserDescriptionsRequest {
   // Optional. RegionId to filter by.
   string region_id = 1;
   // Optional. OrgId to filter by.
   string org_id_filter = 2;
+}
+
+message AdminListUserDescriptionsResponse {
+  repeated UserDescription user_descriptions = 1;
+}
+
+message ListUserDescriptionsRequest {
+  // DEPRECATED. region_id was previously optional,
+  // if region_id needs to be provided, use AdminListUserDescriptions rpc
+  string region_id = 1 [deprecated = true];
+  // DEPRECATED. org_id_filter was previously optional,
+  // if org_id_filter needs to be provided, use AdminListUserDescriptions rpc
+  string org_id_filter = 2 [deprecated = true];
 }
 
 message ListUserDescriptionsResponse {
@@ -2721,6 +3100,8 @@ message GetRegionsResponse {
 message GetUserDetailsRequest {
   string user_id = 1;
 }
+
+message GetMyUserDetailsRequest {}
 
 message AdminGetUserDetailsRequest {
   string user_id = 1;
@@ -2911,7 +3292,9 @@ message UpdateUserRequest {
   string user_name = 8;
   // Default app the user starts on
   api.commons.OperatorApplications default_app = 9;
-  string user_caller_id = 10;
+  // DEPRECATED: user_caller_id was previously optional,
+  // if user_caller_id needs to be provided, use UpdateUserCallerId rpc
+  string user_caller_id = 10 [deprecated = true];
   bool password_reset_required = 13;
   string agent_profile_group_id = 14;
   // A list of labels to assign to the user
@@ -2923,6 +3306,38 @@ message UpdateUserRequest {
 }
 
 message UpdateUserResponse {}
+
+message UpdateMyUserRequest {
+  reserved "name";
+  reserved 3, 5, 15;
+  string first_name = 11;
+  string last_name = 12;
+  string partner_agent_id = 4;
+  // User TimeZone with wrapper for nullable timezone
+  api.commons.TimeZoneWrapper time_zone_override = 16;
+  repeated string linkback_numbers = 6;
+  repeated string caller_ids = 7;
+  string user_name = 8;
+  // Default app the user starts on
+  api.commons.OperatorApplications default_app = 9;
+  bool password_reset_required = 13;
+  string agent_profile_group_id = 14;
+  // A list of labels to assign to the user
+  repeated Label label_entities = 18;
+  // The users email
+  string email = 17;
+  // List of all fields being updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+message UpdateMyUserResponse {}
+
+message UpdateUserCallerIdRequest {
+  string user_id = 1;
+  string user_caller_id = 2;
+}
+
+message UpdateUserCallerIdResponse {}
 
 message Country {
   string country_id = 2;
@@ -3003,16 +3418,29 @@ message GetPermissionsResponse {
 }
 
 message UpdateUserDisabledRequest {
+  // the USER_EDIT permission is required.
+  // the id of the user to update.
   string user_id = 1;
   // Disables/Enables the User. true disables, false enables.
   bool disable = 2;
-  // If org_id is given, the CUSTOMER_SUPPORT permission is required.
-  // Otherwise the org_id is pulled off of the token and the
-  // USER_EDIT permission is required.
-  string org_id = 3;
+  // DEPRECATED: org id was previously optional,
+  // if org_id needs to be provided, use UpdateUserDisabledByOrgId rpc
+  string org_id = 3 [deprecated = true];
 }
 
 message UpdateUserDisabledResponse {}
+
+message UpdateUserDisabledByOrgIdRequest {
+  // the CUSTOMER_SUPPORT permission is required.
+  // the id of the user to update.
+  string user_id = 1;
+  // the id of the org the user belongs to.
+  string org_id = 2;
+  // Disables/Enables the User. true disables, false enables.
+  bool disable = 3;
+}
+
+message UpdateUserDisabledByOrgIdResponse {}
 
 message UpdateBulkUsersDisabledRequest {
   repeated string user_ids = 1;
@@ -3085,8 +3513,17 @@ message PermissionGroup {
   bool read_only = 6;
 }
 
-message ListPermissionGroupsRequest {
+message ListPermissionGroupsByOrgIdRequest {
   string org_id = 1;
+}
+
+message ListPermissionGroupsByOrgIdResponse {
+  repeated PermissionGroup permission_groups = 1;
+}
+
+message ListPermissionGroupsRequest {
+  // DEPRECATED: Use ListPermissionGroupsByOrgId rpc if this field was used
+  string org_id = 1 [deprecated = true];
 }
 
 message ListPermissionGroupsResponse {
@@ -3189,8 +3626,17 @@ message RevokeUsersPermissionGroupRequest {
 // The response for api.v0alpha.RevokeUsersPermissionGroup.
 message RevokeUsersPermissionGroupResponse {}
 
-message ListP3PermissionGroupsRequest {
+message ListP3PermissionGroupsByOrgIdRequest {
   string org_id = 1;
+}
+
+message ListP3PermissionGroupsByOrgIdResponse {
+  repeated P3PermissionGroup permission_groups = 1;
+}
+
+message ListP3PermissionGroupsRequest {
+  // DEPRECATED: if provided use ListP3PermissionGroupsByOrgId rpc instead
+  string org_id = 1 [deprecated = true];
 }
 
 message ListP3PermissionGroupsResponse {
@@ -3216,9 +3662,22 @@ message CreateP3PermissionGroupResponse {
   P3PermissionGroup p3_permission_group = 1;
 }
 
-message UpdateP3PermissionGroupRequest {
+message UpdateP3PermissionGroupByOrgIdRequest {
   // optional org_id. If not is passsed in peel off token.
   string org_id = 1;
+  string permission_group_id = 2;
+  string name = 3;
+  string description = 4;
+  repeated api.commons.Permission permissions = 5;
+}
+
+message UpdateP3PermissionGroupByOrgIdResponse {
+  P3PermissionGroup p3_permission_group = 1;
+}
+
+message UpdateP3PermissionGroupRequest {
+  // DEPRECATED: org_id. If this was previously used use the UpdateP3PermissionGroupByOrgId rpc instead.
+  string org_id = 1 [deprecated = true];
   string permission_group_id = 2;
   string name = 3;
   string description = 4;
@@ -3996,6 +4455,16 @@ message UpdateVoiceAnalyticsPreferencesRequest {
 
 // Empty response for UpdateVoiceAnalyticsPreferences
 message UpdateVoiceAnalyticsPreferencesResponse {}
+
+// Request for UpdateVoiceAnalyticsPreferencesEnabled
+message UpdateVoiceAnalyticsPreferencesEnabledRequest {
+  VoiceAnalyticsPreferences voice_analytics_preferences = 2; // Voice analytics preferences object, required to update
+
+  google.protobuf.FieldMask field_mask = 10; // Field mask for update request
+}
+
+// Empty response for UpdateVoiceAnalyticsPreferencesEnabled
+message UpdateVoiceAnalyticsPreferencesEnabledResponse {}
 
 // Preferences for voice analytics. Primarily consumed and interpreted by
 // localmixer when mixing and transcribing call recordings.
@@ -4835,12 +5304,11 @@ message GetClientInfoDisplayTemplateResponse {
 }
 
 message CreateUserRequest {
+  // the USER_CREATE permission is required.
   reserved 8, 10, 11, 14, 15;
-  // if org_id is set the user will be created for
-  // the given org_id. This requires the CUSTOMER_SUPPORT permission.
-  // if this field is not set it will get the org_id
-  // from the token. This only requires the USER_CREATE permission.
-  string org_id = 1;
+  // DEPRECATED: org_id was previously optional,
+  // if org_id needs to be provided, use CreateUserByOrgId rpc
+  string org_id = 1 [deprecated = true];
   string first_name = 2;
   string last_name = 3;
   string email = 4;
@@ -4866,30 +5334,113 @@ message CreateUserResponse {
   string user_id = 1;
 }
 
+message CreateUserByOrgIdRequest {
+  // the CUSTOMER_SUPPORT permission is required.
+  reserved 8, 10, 11, 14, 15;
+  string org_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string user_name = 5;
+  string password = 6;
+  repeated string permission_group_ids = 7;
+  int64 hunt_group_sid = 9;
+  string partner_agent_id = 12;
+  string p3_permission_group_id = 13;
+  repeated string linkback_numbers = 16;
+  repeated string caller_ids = 17;
+  // Default app the user starts on
+  api.commons.OperatorApplications default_app = 19;
+  string user_caller_id = 20;
+  string agent_profile_group_id = 21;
+  // A list of labels to assign to the user
+  repeated string labels = 22;
+  // User TimeZone with wrapper for nullable timezone
+  api.commons.TimeZoneWrapper time_zone_override = 23;
+}
+
+message CreateUserByOrgIdResponse {
+  string user_id = 1;
+}
+
 message UpdateUserPasswordRequest {
-  // If user_id is set, the password for the given user_id will
-  // be updated. This requires the USER_EDIT permission.
-  // This will update another user's password.
-  // Otherwise the user_id will be retrieved from the token.
-  // This requires the USER_EDIT_PASSWORD permission.
-  // This updates your password.
+  // the USER_EDIT permission is require
+  // to update another user's password
+  // in the same org as the current user.
   string user_id = 1;
   string password = 2;
   string current_password = 3;
-  // If org_id is set, UpdateUserPassword will require
-  // the CUSTOMER_SUPPORT permission. The user_id MUST
-  // be set if this field is not empty.
+  // DEPRECATED: org_id was previously optional,
+  // if org_id needs to be provided, use UpdateUserPasswordByOrgId rpc
+  string org_id = 4 [deprecated = true];
+}
+
+message UpdateUserPasswordResponse {}
+
+message UpdateMyUserPasswordRequest {
+  // the USER_EDIT_PASSWORD permission is require
+  // to update the current user's own password.
+  string password = 2;
+  string current_password = 3;
+}
+
+message UpdateMyUserPasswordResponse {}
+
+message UpdateUserPasswordByOrgIdRequest {
+  // the CUSTOMER_SUPPORT permission is require
+  // to update a specific user's password
+  // in a specific org.
+  string user_id = 1;
+  string password = 2;
+  string current_password = 3;
   string org_id = 4;
 }
 
-// Request message for the GetUserPasswordReset rpc.
+message UpdateUserPasswordByOrgIdResponse {}
+
+// Request message for the GetUserPasswordResetLinkRequest rpc.
 message GetUserPasswordResetLinkRequest {
-  // The ID of the user
+  // The ID of the user in the same org as the current user.
   string user_id = 1;
-  // The Org ID of the user
-  string org_id = 2;
+  // DEPRECATED: org_id was previously optional,
+  // if org_id needs to be provided, use GetUserPasswordResetLinkByOrgId rpc
+  string org_id = 2 [deprecated = true];
   // The time to live (in seconds) of the generated link. This will default to 180 if set to 0.
   int64 ttl = 3;
+}
+
+// Response message for the GetUserPasswordResetLinkRequest rpc.
+message GetUserPasswordResetLinkResponse {
+  // the generated link url.
+  string url = 1;
+}
+
+// Request message for the GetUserPasswordReset rpc.
+message GetMyUserPasswordResetLinkRequest {
+  // The time to live (in seconds) of the generated link. This will default to 180 if set to 0.
+  int64 ttl = 1;
+}
+
+// Response message for the GetUserPasswordReset rpc.
+message GetMyUserPasswordResetLinkResponse {
+  // the generated link url.
+  string url = 1;
+}
+
+// Request message for the GetUserPasswordResetLinkByOrgIdRequest rpc.
+message GetUserPasswordResetLinkByOrgIdRequest {
+  // The ID of the user in the same org as the current user.
+  string user_id = 1;
+  // The ID of the org.
+  string org_id = 2;
+  // The time to live (in seconds) of the generated link. This will default to 180 if set to 0.
+  int64 ttl = 12;
+}
+
+// Response message for the GetUserPasswordResetLinkByOrgIdRequest rpc.
+message GetUserPasswordResetLinkByOrgIdResponse {
+  // the generated link url.
+  string url = 1;
 }
 
 // Request message for ResetUserRequirePasswordReset.
@@ -4900,14 +5451,6 @@ message ResetUserRequirePasswordResetRequest {
 
 // Response message for ResetUserRequirePasswordReset.
 message ResetUserRequirePasswordResetResponse {}
-
-// Response message for the GetUserPasswordReset rpc.
-message GetUserPasswordResetLinkResponse {
-  // the generated link url.
-  string url = 1;
-}
-
-message UpdateUserPasswordResponse {}
 
 message UpdateP3OwningOrgRequest {
   string org_id = 1;
@@ -5295,10 +5838,21 @@ message ListOwnedUsersResponse {
   repeated UserDescription user_descriptions = 1;
 }
 
-// Request message for the ListOwnedOrgs rpc.
-message ListOwnedOrgsRequest {
+// Request message for the ListOwnedOrgsByOrgId rpc.
+message ListOwnedOrgsByOrgIdRequest {
   // organization id passed in by customer support
   string org_id = 1;
+}
+
+message ListOwnedOrgsByOrgIdResponse {
+  repeated OrganizationDescription organization_descriptions = 1;
+}
+
+// Request message for the ListOwnedOrgs rpc.
+message ListOwnedOrgsRequest {
+  // DEPRECATED: org_id was previously optional,
+  // if org_id needs to be providedm use ListOwnedOrgsByOrgId rpc
+  string org_id = 1 [deprecated = true];
 }
 
 message ListOwnedOrgsResponse {
@@ -5513,9 +6067,27 @@ message PhoneBillingRates {
   }
 }
 
+// Request message for the GetOrgBillingSettingsByOrgId rpc.
+message GetOrgBillingSettingsByOrgIdRequest {
+  string org_id = 1;
+}
+
+// Response message for the GetOrgBillingSettingsByOrgId rpc.
+message GetOrgBillingSettingsByOrgIdResponse {
+  reserved 2;
+  OrgBillingSettings settings = 1;
+  // country_default_regions contains the billing data for regions
+  // that belong to the orgs allowed countries that don't
+  // have custom overrides.
+  // Key: api.commons.Country as int32
+  map<int32, BillingRegionMap> country_default_regions = 3;
+}
+
 // Request message for the GetOrgBillingSettings rpc.
 message GetOrgBillingSettingsRequest {
-  string org_id = 1;
+  // DEPRECATED: org_id was previously optional,
+  // if org_id needs to be provided, use GetOrgBillingSettingsByOrgId rpc
+  string org_id = 1 [deprecated = true];
 }
 
 // Response message for the GetOrgBillingSettings rpc.
@@ -5785,6 +6357,15 @@ message RemoveUserSubscriptionRequest {
 // Response for deleting a user subscription.
 message RemoveUserSubscriptionResponse {}
 
+// Request for removing a user subscription by id.
+message RemoveMyUserSubscriptionRequest {
+  // Required.
+  string subscription_id = 1;
+}
+
+// Response for deleting a user subscription.
+message RemoveMyUserSubscriptionResponse {}
+
 // ----- Multiple user subscriptions -----
 
 // Request for listing subscriptions for a user.
@@ -5856,9 +6437,9 @@ message CreateDelegatedUserResponse {
 message GetUserEmailVerifiedRequest {
   // Required. The ID of the user.
   string user_id = 1;
-  // Optional. The ID of the org the user belongs to.
-  // If this is set the rpc will require the support permission.
-  string org_id = 2;
+  // DEPRECATED. the org_id was previously optional,
+  // if org_id needs to be provided, use GetUserEmailVerifiedByOrgId rpc
+  string org_id = 2 [deprecated = true];
 }
 
 // Response for GetUserEmailVerified RPC.
@@ -5867,25 +6448,61 @@ message GetUserEmailVerifiedResponse {
   bool verified = 1;
 }
 
+// Request for the GetUserEmailVerifiedByOrgId RPC.
+message GetUserEmailVerifiedByOrgIdRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // Required. The ID of the org the user belongs to.
+  string org_id = 2;
+}
+
+// Response for GetUserEmailVerifiedByOrgId RPC.
+message GetUserEmailVerifiedByOrgIdResponse {
+  // Whether or not the user's email is verified.
+  bool verified = 1;
+}
+
+// Request for the SendUserVerificationEmailByOrgId RPC.
+message SendUserVerificationEmailByOrgIdRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // The ID of the org the user belongs to.
+  string org_id = 2;
+}
+
+// Response for the SendUserVerificationEmailByOrgId RPC.
+message SendUserVerificationEmailByOrgIdResponse {}
+
 // Request for the SendUserVerificationEmail RPC.
 message SendUserVerificationEmailRequest {
   // Required. The ID of the user.
   string user_id = 1;
-  // Optional. The ID of the org the user belongs to.
-  // If this is set the rpc will require the support permission.
-  string org_id = 2;
+  // DEPRECATED. the org_id was previously optional,
+  // if org_id needs to be provided, use SendUserVerificationEmailByOrgId rpc
+  string org_id = 2 [deprecated = true];
 }
 
 // Response for the SendUserVerificationEmail RPC.
 message SendUserVerificationEmailResponse {}
 
+// Request for the ManualUserEmailVerificationByOrgId RPC.
+message ManualUserEmailVerificationByOrgIdRequest {
+  // Required. The ID of the user.
+  string user_id = 1;
+  // The ID of the org the user belongs to.
+  string org_id = 2;
+}
+
+// Response for the ManualUserEmailVerificationByOrgId RPC.
+message ManualUserEmailVerificationByOrgIdResponse {}
+
 // Request for the ManualUserEmailVerification RPC.
 message ManualUserEmailVerificationRequest {
   // Required. The ID of the user.
   string user_id = 1;
-  // Optional. The ID of the org the user belongs to.
-  // If this is set the rpc will require the support permission.
-  string org_id = 2;
+  // DEPRECATED. the org_id was previously optional,
+  // if org_id needs to be provided, use ManualUserEmailVerificationByOrgId rpc
+  string org_id = 2 [deprecated = true];
 }
 
 // Response for the ManualUserEmailVerification RPC.
