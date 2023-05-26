@@ -2250,15 +2250,35 @@ service Org {
   }
 
   // Lists the names of the custom queue configs.
-  // Required Permissions:
-  //    ORG_VIEW (If @org_id is empty)
-  //    CUSTOMER_SUPPORT (If @org_id is NOT empty)
   // Errors:
   //   - grpc.Internal: An error occurred while getting the config names.
   //   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
   rpc ListQueueConfigs(ListQueueConfigsReq) returns (ListQueueConfigsRes) {
     option (google.api.http).post = "/api/v0alpha/org/queueconfigs/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Lists the names of the custom queue configs.
+  // Errors:
+  //   - grpc.Internal: An error occurred while getting the config names.
+  //   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+  rpc ListQueueConfigsByOrgId(ListQueueConfigsByOrgIdReq) returns (ListQueueConfigsByOrgIdRes) {
+    option (google.api.http).post = "/api/v0alpha/org/queueconfigs/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 
   // Deletes a queue config with the given @client_sid and @config_name.
@@ -2691,17 +2711,41 @@ service Org {
   // USER SUBSCTRIPTIONS
 
   // Gets a user subscription by id
-  // Required Permissions:
-  //    ORG_VIEW if user id IS provided
-  //    none if user id NOT provided
   rpc GetUserSubscription(GetUserSubscriptionRequest) returns (GetUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/getusersubscription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Gets a user subscription by id
+  rpc GetMyUserSubscription(GetMyUserSubscriptionRequest) returns (GetMyUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/getmyusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Adds a user subscription to user's list of subscriptions
   rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/addusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Adds a user subscription to user's list of subscriptions
+  rpc AddMyUserSubscription(AddMyUserSubscriptionRequest) returns (AddMyUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/addmyusersubscription";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -2739,21 +2783,49 @@ service Org {
   }
 
   // Updates a user subscription
-  // Required Permissions:
-  //    USER_EDIT if user id IS provided
-  //    EDIT_USER_OPTIONS if user id NOT provided
   rpc UpdateUserSubscription(UpdateUserSubscriptionRequest) returns (UpdateUserSubscriptionResponse) {
     option (google.api.http).post = "/api/v0alpha/org/updateusersubscription";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Updates a user subscription
+  rpc UpdateMyUserSubscription(UpdateMyUserSubscriptionRequest) returns (UpdateMyUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/updatemyusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
   }
 
   // Lists all of a users subscriptions
-  // Required Permissions:
-  //    ORG_VIEW if user id IS provided
-  //    none if user id NOT provided
   rpc ListUserSubscriptions(ListUserSubscriptionsRequest) returns (ListUserSubscriptionsResponse) {
     option (google.api.http).post = "/api/v0alpha/org/listusersubscriptions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Lists all of a users subscriptions
+  rpc ListMyUserSubscriptions(ListMyUserSubscriptionsRequest) returns (ListMyUserSubscriptionsResponse) {
+    option (google.api.http).post = "/api/v0alpha/org/listmyusersubscriptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists multiple users subscriptions by org. Optionally filters by event type.
@@ -5481,12 +5553,22 @@ message ConvertOrgToManualRequest {
 message ConvertOrgToManualResponse {}
 
 message ListQueueConfigsReq {
+  // DEPRECATED: if org_id was provided use ListQueueConfigsByOrgId rpc instead.
+  string org_id = 1 [deprecated = true];
+}
+
+message ListQueueConfigsRes {
+  // configs is a list of a clients custom queue configurations.
+  repeated QueueConfig configs = 1;
+}
+
+message ListQueueConfigsByOrgIdReq {
   // If org_id is left empty, the org_id will be
   // retreived from the users token.
   string org_id = 1;
 }
 
-message ListQueueConfigsRes {
+message ListQueueConfigsByOrgIdRes {
   // configs is a list of a clients custom queue configurations.
   repeated QueueConfig configs = 1;
 }
@@ -6313,6 +6395,19 @@ message AddUserSubscriptionResponse {
   UserSubscription subscription = 1;
 }
 
+// Request to add a user subscription.
+message AddMyUserSubscriptionRequest {
+  // Required.
+  // All fields (except subscription id) must be set.
+  UserSubscription subscription = 1;
+}
+
+// Response to adding a user subscription.
+// Contains a single user subscription.
+message AddMyUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
 // Request for getting a user subscription.
 message GetUserSubscriptionRequest {
   // Required.
@@ -6325,6 +6420,18 @@ message GetUserSubscriptionRequest {
 // Response for getting a user subscription.
 // Contains a single user subscription.
 message GetUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for getting a user subscription.
+message GetMyUserSubscriptionRequest {
+  // Required.
+  string subscription_id = 2;
+}
+
+// Response for getting a user subscription.
+// Contains a single user subscription.
+message GetMyUserSubscriptionResponse {
   UserSubscription subscription = 1;
 }
 
@@ -6342,6 +6449,23 @@ message UpdateUserSubscriptionRequest {
 // Response for updating a user subscription.
 // Contains a single user subscription.
 message UpdateUserSubscriptionResponse {
+  UserSubscription subscription = 1;
+}
+
+// Request for updating a user subscription.
+message UpdateMyUserSubscriptionRequest {
+  // Required.
+  // Must have org id and subscription id.
+  UserSubscription subscription = 1;
+
+  // Required. Only fields in field mask will be updated.
+  // Valid fields include: "filters", "room303"
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response for updating a user subscription.
+// Contains a single user subscription.
+message UpdateMyUserSubscriptionResponse {
   UserSubscription subscription = 1;
 }
 
@@ -6377,6 +6501,15 @@ message ListUserSubscriptionsRequest {
 // Response for listing subscriptions for a user.
 // Contains a user subscriptions (plural) object.
 message ListUserSubscriptionsResponse {
+  repeated UserSubscription subscriptions = 1;
+}
+
+// Request for listing subscriptions for a user.
+message ListMyUserSubscriptionsRequest {}
+
+// Response for listing subscriptions for a user.
+// Contains a user subscriptions (plural) object.
+message ListMyUserSubscriptionsResponse {
   repeated UserSubscription subscriptions = 1;
 }
 
