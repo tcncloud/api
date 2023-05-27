@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package api.v1alpha1.acd;
-
-service AcdApi {
-  // rpc here
-}
-
-// messages here
