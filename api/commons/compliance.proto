@@ -5,6 +5,7 @@ package api.commons;
 import "api/commons/communication.proto";
 import "api/commons/enums.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 enum Verb {
   V_UNKNOWN = 0;
@@ -273,6 +274,7 @@ message ScrubEntryDetails {
   string content = 1;
   // date when entry should expire
   google.protobuf.Timestamp expiration_date = 2;
+  google.protobuf.StringValue notes = 3;
 }
 
 message RuleResponse {
