@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package api.v1alpha1.soundboard;
 
-import "api/v1alpha1/org/soundboard/entities.proto";
+import "annotations/authz.proto";
+import "api/v1alpha1/soundboard/entities.proto";
 import "google/api/annotations.proto";
 
 service Soundboard {
@@ -11,6 +12,13 @@ service Soundboard {
   rpc GetSoundboardFile(GetSoundboardFileReq) returns (stream GetSoundboardFileRes) {
     option (google.api.http).post = "/api/v1alpha1/org/soundboard/getfile";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SOUNDBOARD_VIEW]
+        }
+      ];
+    };
   }
 
   // CreateSoundboard takes in a stream of metadata and audio file segments.
@@ -20,6 +28,13 @@ service Soundboard {
   rpc CreateSoundboard(CreateSoundboardReq) returns (CreateSoundboardRes) {
     option (google.api.http).post = "/api/v1alpha1/org/soundboard/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SOUNDBOARD_EDIT]
+        }
+      ];
+    };
   }
 
   // ListSoundboards returns all of the metadata for soundboards corresponding
@@ -27,17 +42,38 @@ service Soundboard {
   rpc ListSoundboards(ListSoundboardsReq) returns (ListSoundboardsRes) {
     option (google.api.http).post = "/api/v1alpha1/org/soundboard/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SOUNDBOARD_VIEW]
+        }
+      ];
+    };
   }
 
   // UpdateSondboard updates a soundboard's metadata in the soundboard table.
   rpc UpdateSoundboard(UpdateSoundboardReq) returns (UpdateSoundboardRes) {
     option (google.api.http).post = "/api/v1alpha1/org/soundboard/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SOUNDBOARD_EDIT]
+        }
+      ];
+    };
   }
 
   // DeleteSondboard deletes a soundboard's metadata from the soundboard table.
   rpc DeleteSoundboard(DeleteSoundboardReq) returns (DeleteSoundboardRes) {
     option (google.api.http).post = "/api/v1alpha1/org/soundboard/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SOUNDBOARD_EDIT]
+        }
+      ];
+    };
   }
 }
