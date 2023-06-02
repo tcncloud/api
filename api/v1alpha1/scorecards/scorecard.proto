@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
+import "api/commons/acd.proto";
 import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
@@ -20,6 +21,8 @@ message ListScorecardsRequest {
   repeated string author_ids = 2; // Optional. Results include any of the authors
   repeated int64 category_ids = 3; // Optional. Results include any of the categories listed.
   repeated api.commons.ScorecardState states = 4; // Optional. Results include scorecard in any of the given states.
+  repeated api.commons.EvaluationType evaluation_types = 5; // Optional. Results include scorecard with any of the given types
+  repeated api.commons.CallType.Enum call_types = 6; // Optional. Results include scorecard with any of the given call types.
 
   // TODO: Spec out the phrase/keyword option(s)
 }
