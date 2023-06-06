@@ -28,6 +28,26 @@ RUN case $(uname -s) in \
     *) echo "Unknown ARCH $(uname -m)"; exit -1 ;; esac && \
     curl -L -o - https://nodejs.org/download/release/v16.20.0/node-v16.20.0-${HOSTOS}-${HOSTARCH}.tar.xz | tar -C /usr/local  --strip-components=1 -Jxf -
 
+## install protoc 3.5.1
+RUN case $(uname -s) in \
+    "Linux") HOSTOS="linux" ;; \
+    *) echo "Unknown OS $(uname -s)"; exit -1 ;; \
+    esac && \
+    case $(uname -m) in \
+    "x86_64") HOSTARCH="x64" \
+    curl -L -o /usr/local/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.5.1/protoc-3.5.1-linux-x86_64.exe && chmod +x /usr/local/bin/protoc ;; \
+    *) echo "Unknown ARCH $(uname -m)" ;; esac
+
+## install protoc-gen-grpc-java
+RUN case $(uname -s) in \
+    "Linux") HOSTOS="linux" ;; \
+    *) echo "Unknown OS $(uname -s)"; exit -1 ;; \
+    esac && \
+    case $(uname -m) in \
+    "x86_64") HOSTARCH="x64" \
+    curl -L -o /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.14.0/protoc-gen-grpc-java-1.14.0-linux-x86_64.exe && chmod +x /usr/local/bin/protoc-gen-grpc-java ;; \
+    *) echo "Unknown ARCH $(uname -m)" ;; esac
+
 USER vscode 
 
 WORKDIR /home/vscode
