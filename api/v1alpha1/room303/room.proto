@@ -2,7 +2,15 @@ syntax = "proto3";
 
 package api.v1alpha1.room303;
 
+import "api/commons/org.proto";
+import "api/commons/org/agent_profile_group.proto";
+import "api/commons/org/labels.proto";
+import "api/commons/org/permissions.proto";
+import "api/commons/org/trusts.proto";
+import "api/commons/org/user.proto";
 import "api/commons/room303.proto";
+import "api/commons/user.proto";
+import "google/protobuf/timestamp.proto";
 
 message CreateRoomRequest {
   string name = 1;
@@ -26,4 +34,55 @@ message ListRoomsResponse {
 
 message ArchiveRoomRequest {
   string room_id = 1;
+}
+
+// Request message for the ListUsersByOrgId rpc.
+message ListUsersByOrgIdRequest {
+  // Filter by org ID.
+  string org_id = 1;
+  // Return a list of only user agents (users whose default app is agent). When this is false all users are returned.
+  bool agent = 2;
+  // Filter by the user's archived status
+  api.commons.UserArchivedStateFilter archived_filter = 3;
+}
+
+// Response message for the ListsUserByOrgId rpc.
+message ListUsersByOrgIdResponse {
+  // List of returned users with masked data.
+  repeated UserDetails user_details = 1;
+}
+
+// Wrapper for associating non entity fields with an User
+message UserDetails {
+  api.commons.org.User user = 1;
+  string org_name = 2;
+  HuntGroup hunt_group = 3;
+  AgentProfileGroup agent_profile_group = 4;
+  repeated api.commons.org.Skill skills = 5;
+  repeated api.commons.org.PermissionGroup permission_groups = 6;
+  api.commons.org.P3PermissionGroup p3_permission_group = 7;
+  bool delegated = 8;
+  repeated api.commons.org.Label labels = 9;
+  LoginInfo login_info = 10;
+  // Billing_prefix + clientSid. Used for integrations and billing. This is from the organization
+  string billing_id = 11;
+  repeated api.commons.org.Trust trusts = 12;
+
+  message HuntGroup {
+    int64 hunt_group_sid = 1;
+    string hunt_group_name = 2;
+  }
+  message AgentProfileGroup {
+    string agent_profile_group_id = 1;
+    string agent_profile_group_name = 2;
+  }
+
+  message LoginInfo {
+    string last_ip = 1;
+    google.protobuf.Timestamp last_login = 2;
+    google.protobuf.Timestamp last_password_reset = 3;
+    int64 logins_count = 4;
+    bool has_blocked_ips = 5;
+    bool email_verified = 6;
+  }
 }

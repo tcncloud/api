@@ -292,4 +292,17 @@ service Room303API {
       ];
     };
   }
+  rpc ListUsersByOrgId(ListUsersByOrgIdRequest) returns (stream ListUsersByOrgIdResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/room303/room303api/listusersbyorgid"
+      body: "*"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ROOM303]
+        }
+      ];
+    };
+  }
 }
