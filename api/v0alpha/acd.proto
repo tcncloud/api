@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
@@ -52,6 +53,13 @@ service Acd {
   rpc AgentGetConnectedParty(AgentGetConnectedPartyRequest) returns (AgentGetConnectedPartyReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetconnectedparty";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc AgentIntercom(AgentIntercomRequest) returns (AgentIntercomReply) {
