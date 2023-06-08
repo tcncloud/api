@@ -1016,8 +1016,6 @@ enum ConnectedInboxAuthenticationType {
 message VerifiedEmail {
   // verified email identifier
   int64 verified_email_sid = 1 [jstype = JS_STRING];
-  // verification key
-  google.protobuf.StringValue verification_key = 2;
   // connected email address
   string email_address = 3;
   // if the email has been verified
