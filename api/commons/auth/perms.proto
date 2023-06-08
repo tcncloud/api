@@ -411,7 +411,13 @@ enum Permission {
    */
 
   // ACCESS the Tickets APP: Routing, Listing the tickets, dashboard, reports.
-  PERMISSION_TICKETS_APP = 3100 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
+  PERMISSION_TICKETS_APP = 3100 [(annotations.perms.options) = {
+    wip: true
+    app: APPLICATION_TICKETS
+  }];
   // Adds Extra Access to: EnableProject
-  PERMISSION_TICKETS_ADMIN = 3101 [(annotations.perms.options) = {app: APPLICATION_VOICE_ANALYTICS}];
+  PERMISSION_TICKETS_ADMIN = 3101 [(annotations.perms.options) = {
+    wip: true
+    app: APPLICATION_TICKETS
+  }];
 }
