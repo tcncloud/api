@@ -62,6 +62,18 @@ service Acd {
     };
   }
 
+  rpc ManagerAgentGetConnectedParty(ManagerAgentGetConnectedPartyRequest) returns (ManagerAgentGetConnectedPartyReply) {
+    option (google.api.http).post = "/api/v0alpha/acd/manageragentgetconnectedparty";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
   rpc AgentIntercom(AgentIntercomRequest) returns (AgentIntercomReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentIntercom";
     option (google.api.http).body = "*";
@@ -342,6 +354,16 @@ message AgentGetConnectedPartyRequest {
 }
 
 message AgentGetConnectedPartyReply {
+  int64 call_id = 2;
+  api.commons.CallType.Enum call_type = 3;
+}
+
+message ManagerAgentGetConnectedPartyRequest {
+  int64 session_sid = 1;
+  string user_id = 2;
+}
+
+message ManagerAgentGetConnectedPartyReply {
   int64 call_id = 2;
   api.commons.CallType.Enum call_type = 3;
 }
