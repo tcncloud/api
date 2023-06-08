@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
@@ -52,6 +53,18 @@ service Acd {
   rpc AgentGetConnectedParty(AgentGetConnectedPartyRequest) returns (AgentGetConnectedPartyReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetconnectedparty";
     option (google.api.http).body = "*";
+  }
+
+  rpc ManagerAgentGetConnectedParty(ManagerAgentGetConnectedPartyRequest) returns (ManagerAgentGetConnectedPartyReply) {
+    option (google.api.http).post = "/api/v0alpha/acd/manageragentgetconnectedparty";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        }
+      ];
+    };
   }
 
   rpc AgentIntercom(AgentIntercomRequest) returns (AgentIntercomReply) {
@@ -334,6 +347,16 @@ message AgentGetConnectedPartyRequest {
 }
 
 message AgentGetConnectedPartyReply {
+  int64 call_id = 2;
+  api.commons.CallType.Enum call_type = 3;
+}
+
+message ManagerAgentGetConnectedPartyRequest {
+  int64 session_sid = 1;
+  string user_id = 2;
+}
+
+message ManagerAgentGetConnectedPartyReply {
   int64 call_id = 2;
   api.commons.CallType.Enum call_type = 3;
 }
