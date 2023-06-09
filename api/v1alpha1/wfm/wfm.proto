@@ -100,6 +100,9 @@ service WFM {
       sets: [
         {
           permissions: [PERMISSION_WFM]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS]
         }
       ];
     };
