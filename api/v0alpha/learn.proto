@@ -16,25 +16,107 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 // A service for creating and reading learning material
 service Learn {
-  rpc Exist(ExistReq) returns (ExistRes);
-  rpc Content(ContentReq) returns (ContentRes);
-  rpc ContentEditorData(ContentEditorDataReq) returns (ContentEditorDataRes);
-  rpc Update(UpdateReq) returns (UpdateRes);
+  // check if learning page already exists
+  rpc Exist(ExistReq) returns (ExistRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/exist";
+    option (google.api.http).body = "*"; //Exist intentionally empty, no perm required
+  }
+
+  // retreive content from learning pages
+  rpc Content(ContentReq) returns (ContentRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/content";
+    option (google.api.http).body = "*"; //Content intentionally empty, no perm required
+  }
+
   // exports multiple pages of the learning center markdown as PDF
-  rpc ExportMany(ExportManyReq) returns (ExportRes);
-  // upload url for static images
-  rpc StoreStaticImage(StoreStaticImageReq) returns (StoreStaticImageRes);
+  rpc ExportMany(ExportManyReq) returns (ExportRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/exportmany";
+    option (google.api.http).body = "*"; //Export intentionally empty, no perm required
+  }
+
   // search content in learning pages
-  rpc SearchContent(SearchContentReq) returns (SearchRes);
-  // upload dynamic learning image screenshot
-  rpc UploadDynamicScreenshot(UploadDynamicScreenshotReq) returns (UploadDynamicScreenshotRes);
+  rpc SearchContent(SearchContentReq) returns (SearchRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/searchcontent";
+    option (google.api.http).body = "*"; //SearchContent intentionally empty, no perm required
+  }
+
   // get standalone articles from learning pages
-  rpc Standalone(StandaloneReq) returns (StandaloneRes);
+  rpc Standalone(StandaloneReq) returns (StandaloneRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/standalone";
+    option (google.api.http).body = "*"; //Standalone intentionally empty, no perm required
+  }
+
+  // retrieve user who edited the content last
+  rpc ContentEditorData(ContentEditorDataReq) returns (ContentEditorDataRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/contenteditordata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // update contents for learning pages
+  rpc Update(UpdateReq) returns (UpdateRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/update";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // upload url for static images
+  rpc StoreStaticImage(StoreStaticImageReq) returns (StoreStaticImageRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/storestaticimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // upload dynamic learning image screenshot
+  rpc UploadDynamicScreenshot(UploadDynamicScreenshotReq) returns (UploadDynamicScreenshotRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/uploaddynamic";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // delete standalone articles from learning pages
+  rpc DeleteStandalone(DeleteStandaloneReq) returns (DeleteStandaloneRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/deletestandalone";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 message ExistReq {
@@ -180,3 +262,14 @@ message LearnStandaloneDetails {
   // The last time this learning content was edited.
   google.protobuf.Timestamp last_edited_timestamp = 3;
 }
+
+// request to delete standalone articles
+message DeleteStandaloneReq {
+  // locale used for the markdown contents
+  string locale = 1;
+  // list of article names
+  repeated string article_names = 2;
+}
+
+// response to delete standalone articles
+message DeleteStandaloneRes {}
