@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -11,24 +12,28 @@ service Sds {
   rpc GetAgentResponseData(GetAgentResponseDataReq) returns (GetAgentResponseDataRes) {
     option (google.api.http).post = "/api/v0alpha/sds/getagentresponsedata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Gets a document from the mongodb calls collection.
   rpc GetCall(GetCallReq) returns (CallObject) {
     option (google.api.http).post = "/api/v0alpha/sds/getcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Updates the agent_response_data field for a document in the mongodb calls collection.
   rpc UpdateAgentResponseData(UpdateAgentResponseDataReq) returns (UpdateAgentResponseDataRes) {
     option (google.api.http).post = "/api/v0alpha/sds/updateagentresponsedata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Updates the voicemail_box field for a document in the mongodb calls collection.
   rpc UpdateVoicemailBox(UpdateVoicemailBoxReq) returns (UpdateVoicemailBoxRes) {
     option (google.api.http).post = "/api/v0alpha/sds/updatevoicemailbox";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

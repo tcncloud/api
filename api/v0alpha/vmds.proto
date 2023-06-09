@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "google/api/annotations.proto";
 
@@ -9,71 +10,85 @@ service Vmds {
   rpc GetVoicemailMetadata(GetVoicemailMetadataReq) returns (stream GetVoicemailMetadataRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmetadata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetVoicemailMessageCount(GetVoicemailCountReq) returns (GetVoicemailCountRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/getvoicemailmessagecount";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DeleteVoicemail(DeleteVoicemailReq) returns (DeleteVoicemailRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/deletevoicemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DeleteGreeting(DeleteGreetingReq) returns (DeleteGreetingRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/deletegreeting";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateUploadName(UpdateUploadNameReq) returns (UpdateUploadNameRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/updateuploadname";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateVoicemailFlagRead(UpdateVoicemailFlagReadReq) returns (UpdateVoicemailFlagReadRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/updatevoicemailflagread";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadMessage(DownloadMessageReq) returns (DownloadMessageRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/downloadmessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadMessages(DownloadMessagesReq) returns (DownloadMessagesRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/downloadmessages";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadGreetingForExtension(DownloadGreetingForExtensionReq) returns (DownloadGreetingForExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/downloadgreetingforextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DownloadGreeting(DownloadGreetingReq) returns (DownloadGreetingRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/downloadgreeting";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetUploadGreetingUrl(GetUploadGreetingUrlReq) returns (GetUploadGreetingUrlRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/getuploadgreetingurl";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ProcessGreetingUpload(ProcessGreetingUploadReq) returns (ProcessGreetingUploadRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/processgreetingupload";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc UpdateGreetingForExtension(UpdateGreetingForExtensionReq) returns (UpdateGreetingForExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/updategreetingforextension";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ListAvailableGreetings(ListAvailableGreetingsReq) returns (ListAvailableGreetingsRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/listavailablegreetings";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 
