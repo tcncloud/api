@@ -27,30 +27,35 @@ service Learn {
   rpc Exist(ExistReq) returns (ExistRes) {
     option (google.api.http).post = "/api/v0alpha/learn/exist";
     option (google.api.http).body = "*"; //Exist intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // retreive content from learning pages
   rpc Content(ContentReq) returns (ContentRes) {
     option (google.api.http).post = "/api/v0alpha/learn/content";
     option (google.api.http).body = "*"; //Content intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // exports multiple pages of the learning center markdown as PDF
   rpc ExportMany(ExportManyReq) returns (ExportRes) {
     option (google.api.http).post = "/api/v0alpha/learn/exportmany";
     option (google.api.http).body = "*"; //Export intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // search content in learning pages
   rpc SearchContent(SearchContentReq) returns (SearchRes) {
     option (google.api.http).post = "/api/v0alpha/learn/searchcontent";
     option (google.api.http).body = "*"; //SearchContent intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // get standalone articles from learning pages
   rpc Standalone(StandaloneReq) returns (StandaloneRes) {
     option (google.api.http).post = "/api/v0alpha/learn/standalone";
     option (google.api.http).body = "*"; //Standalone intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // retrieve user who edited the content last
@@ -119,18 +124,24 @@ service Learn {
   }
 }
 
+// request to check if learning page url exists
 message ExistReq {
   string url = 1;
   string locale = 2;
 }
+
+// response for checking if learning page  url exists
 message ExistRes {
   bool exist = 1;
 }
 
+// request to retreive learning pages content from the url
 message ContentReq {
   string url = 1;
   string locale = 2;
 }
+
+// response to retreive learning pages content
 message ContentRes {
   string content = 1;
   // The last time this learning content was edited.
@@ -139,16 +150,19 @@ message ContentRes {
   repeated LearnImage images = 3;
 }
 
+// request to retreive last user edited learning pages content
 message ContentEditorDataReq {
   string url = 1;
   string locale = 2;
 }
 
+// response to retreive last user edited learning pages content
 message ContentEditorDataRes {
   // The user who edited the content last. This is only visible to users with the Permission_PERMISSION_LEARN_EDIT permission.
   string last_edited_user = 1;
 }
 
+//request to update learning pages content based on the url
 message UpdateReq {
   string url = 1;
   string locale = 2;
@@ -158,6 +172,7 @@ message UpdateReq {
   string message = 12;
 }
 
+//response to update learning pages content
 message UpdateRes {}
 
 // request to export multiple pages of the learning center markdown to PDF
