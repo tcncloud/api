@@ -43,6 +43,7 @@ message Ticket {
   int64 status = 16;
   // A list of sla  assotiated with a ticket
   repeated Sla ticket_sla = 17;
+  string assignee = 18;
 }
 
 // Metadata - Contains a key value pair of strings, Will have metadata of an agent conversations
