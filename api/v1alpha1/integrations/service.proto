@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package api.v1alpha1.integrations;
 
+import "annotations/authz.proto";
 import "api/commons/integrations/integrations.proto";
+import "api/commons/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -12,79 +14,184 @@ service Integrations {
   rpc Process(ProcessReq) returns (ProcessRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/process";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // get an integration transaction
   rpc GetIntegrationTransaction(GetIntegrationTransactionReq) returns (IntegrationTransaction) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransaction";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetIntegrationTransactionReport(GetIntegrationTransactionReportReq) returns (GetIntegrationTransactionReportRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransactionreport";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetIntegrationTransactionReportData(GetIntegrationTransactionReportDataReq) returns (GetIntegrationTransactionReportDataRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationtransactionreportdata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
   rpc GetAggregatedMetadata(GetAggregatedMetadataReq) returns (GetAggregatedMetadataRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getaggregatemetadata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
   rpc GetPortalLinksByDateRange(GetPortalLinksByDateRangeReq) returns (GetPortalLinksByDateRangeRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getportallinksbydaterange";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // search integration transactions
   //rpc SearchIntegrationTransactions(SearchIntegrationTransactionsReq) returns (SearchIntegrationTransactionsRes) {
   //  option (google.api.http).post = "/api/v1alpha1/integrations/searchintegrationtransactions";
   //  option (google.api.http).body = "*";
+  // option (annotations.authz) = {
+  //     sets: [
+  //       {
+  //         permissions: [PERMISSION_INTEGRATIONS_VIEW]
+  //       }
+  //     ];
+  //   };
   //}
 
   // create a integration config
   rpc CreateIntegrationConfig(IntegrationConfig) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/createintegrationconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // get an integration config
   rpc GetIntegrationConfig(GetIntegrationConfigReq) returns (IntegrationConfig) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // update an integration config
   rpc UpdateIntegrationConfig(UpdateIntegrationConfigReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/udpateintegrationconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // delete an integration config
   rpc DeleteIntegrationConfig(DeleteIntegrationConfigReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/deleteintegrationconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // list all supported integrations
   rpc ListIntegrations(Empty) returns (IntegrationInfos) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listintegrations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 
   // lists all the names of the configs for an org's integration type
   rpc ListIntegrationConfigNames(ListIntegrationConfigNamesReq) returns (ListIntegrationConfigNamesRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listintegrationconfignames";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListJourneyConfigs(ListJourneyConfigsReq) returns (IntegrationConfigs) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listjourneyconfigs";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListNonJourneyConfigs(ListNonJourneyConfigsReq) returns (IntegrationConfigs) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listnonjourneyconfigs";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO all services looking for payment portal configs should be using the
   // PortalManagerApi service in this same packages
@@ -92,38 +199,87 @@ service Integrations {
   rpc CreatePortalConfig(PortalConfig) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/createportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO better signature
   // rpc ListPortalConfigs(ListPortalConfigsReq) returns (ListPortalConfigsRes);
   rpc ListPortalConfigs(ListPortalConfigsReq) returns (PortalConfigs) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listportalconfigs";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc UpdatePortalConfig(PortalConfig) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/updateportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO better signature
   // rpc GetPortalConfig(GetPortalConfigReq) returns (GetPortalConfigRes);
   rpc GetPortalConfig(GetPortalConfigReq) returns (PortalConfig) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO better signature
   // rpc DeletePortalConfig(DeletePortalConfigReq) returns (DeletePortalConfigRes);
   rpc DeletePortalConfig(DeletePortalConfigReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/deleteportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO deprecate
   rpc UpdatePortalLogo(UpdatePortalLogoReq) returns (Empty) {
     option (google.api.http).post = "/api/v1alpha1/integrations/updateportallogo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO deprecate
   rpc GetPortalLogo(GetPortalLogoReq) returns (Logo) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getportallogo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // TODO deprecate. use CreatePortalLinks on the PortalManagerApi
   // pulls the payment_link_config
@@ -131,16 +287,37 @@ service Integrations {
   rpc CreatePaymentPortalLinks(CreatePaymentPortalLinksReq) returns (CreatePaymentPortalLinksRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/createpaymentportallinks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // takes a year in YYYY format and returns the summary of transaction for that year
   rpc Summary(SummaryReq) returns (SummaryRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/summary";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // Lists integration templates that use the passed in integration config
   rpc ListIntegrationTemplatesByConfig(ListIntegrationTemplatesByConfigReq) returns (ListIntegrationTemplatesByConfigRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/integrationtemplatesbyconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 }
 

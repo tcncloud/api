@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package api.v1alpha1.integrations;
 
+import "annotations/authz.proto";
 import "api/commons/integrations/integrations.proto";
+import "api/commons/perms.proto";
 // our entities are located here, entities should probably be in own file
 import "api/v1alpha1/integrations/service.proto";
 import "google/api/annotations.proto";
@@ -12,99 +14,260 @@ service PortalManagerApi {
   rpc UpsertPortalConfig(UpsertPortalConfigReq) returns (UpsertPortalConfigRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/upsertportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListPortalConfigs(ListPortalConfigsReq) returns (ListPortalConfigsRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listportalconfigs";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetPortalConfig(GetPortalConfigReq) returns (GetPortalConfigRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc DeletePortalConfig(DeletePortalConfigReq) returns (DeletePortalConfigRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteportalconfig";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc UpdatePortalConfigLogo(UpdatePortalConfigLogoReq) returns (UpdatePortalConfigLogoRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/updateportalconfiglogo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetPortalConfigLogo(GetPortalConfigLogoReq) returns (GetPortalConfigLogoRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportalconfiglogo";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // portal links
   rpc ListPortalLinks(ListPortalLinksReq) returns (ListPortalLinksRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listportallinks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetPortalLink(GetPortalLinkReq) returns (GetPortalLinkRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportallink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc DeletePortalLink(DeletePortalLinkReq) returns (DeletePortalLinkRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteportallink";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc CreatePortalLinks(CreatePortalLinksReq) returns (CreatePortalLinksRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/createportallinks";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // portals
   rpc UpsertPortal(UpsertPortalReq) returns (UpsertPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/upsertportal";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetPortal(GetPortalReq) returns (GetPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getportal";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc DeletePortal(DeletePortalReq) returns (DeletePortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteportal";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListPortals(ListPortalsReq) returns (ListPortalsRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listportals";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListDetailedPortals(ListDetailedPortalsReq) returns (ListDetailedPortalsRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listdetailedportals";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetDetailedPortal(GetDetailedPortalReq) returns (GetDetailedPortalRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getdetailedportal";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // PluginInstances
   rpc UpsertPluginInstance(UpsertPluginInstanceReq) returns (UpsertPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/upsertplugininstance";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetPluginInstance(GetPluginInstanceReq) returns (GetPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/getplugininstance";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc DeletePluginInstance(DeletePluginInstanceReq) returns (DeletePluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/deleteplugininstance";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListPluginInstance(ListPluginInstanceReq) returns (ListPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listplugininstances";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   rpc ListFlowFieldNames(ListFlowFieldNamesReq) returns (ListFlowFieldNamesRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listflowfieldnames";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // returns the default form fields for verification flow
   rpc ListAvailableVerificationFields(ListAvailableVerificationFieldsReq) returns (ListAvailableVerificationFieldsRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listavailableverificationfields";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
   // returns the default form fields for payment flow
   rpc ListAvailablePaymentFields(ListAvailablePaymentFieldsReq) returns (ListAvailablePaymentFieldsRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listavailablePaymentfields";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
   }
 }
 
