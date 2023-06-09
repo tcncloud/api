@@ -43,11 +43,13 @@ service Acd {
   rpc AgentGetStatusStream(AgentGetStatusRequest) returns (stream AgentGetStatusReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetstatusstream";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentGetStatus(AgentGetStatusRequest) returns (AgentGetStatusReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentGetConnectedParty(AgentGetConnectedPartyRequest) returns (AgentGetConnectedPartyReply) {
@@ -77,252 +79,402 @@ service Acd {
   rpc AgentIntercom(AgentIntercomRequest) returns (AgentIntercomReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentIntercom";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentIntercomAccept(AgentIntercomAcceptRequest) returns (AgentIntercomAcceptReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentintercomaccept";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentIntercomReject(AgentIntercomRejectRequest) returns (AgentIntercomRejectReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentintercomreject";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentIntercomCancel(AgentIntercomCancelRequest) returns (AgentIntercomCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentintercomcancel";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DialManualPrepare(DialManualPrepareRequest) returns (DialManualPrepareReply) {
     option (google.api.http).post = "/api/v0alpha/acd/dialmanualprepare";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DialManualCancel(DialManualCancelRequest) returns (DialManualCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/dialmanualcancel";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc DialPreviewPrepare(DialPreviewPrepareRequest) returns (DialPreviewPrepareReply) {
     option (google.api.http).post = "/api/v0alpha/acd/dialpreviewprepare";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentPause(AgentPauseRequest) returns (AgentPauseReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentpause";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentSetReady(AgentSetReadyRequest) returns (AgentSetReadyReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentsetready";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentGUIBusy(AgentGUIBusyRequest) returns (AgentGUIBusyReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentguibusy";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ReportAgentSessionEvent(AgentSessionEventReq) returns (AgentSessionEventRes) {
     option (google.api.http).post = "/api/v0alpha/acd/reportagentsessionevent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CallerRequeue(CallerRequeueRequest) returns (CallerRequeueReply) {
     option (google.api.http).post = "/api/v0alpha/acd/callerrequeue";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentDisconnect(AgentDisconnectRequest) returns (AgentDisconnectReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentdisconnect";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferWarmToOutboundCancel(TransferWarmToOutboundCancelRequest) returns (TransferWarmToOutboundCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundcancel";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferWarmToAgentCancel(TransferWarmToAgentCancelRequest) returns (TransferWarmToAgentCancelReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentcancel";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferWarmToOutboundApprove(TransferWarmToOutboundApproveRequest) returns (TransferWarmToOutboundApproveReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundapprove";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc TransferWarmToAgentApprove(TransferWarmToAgentApproveRequest) returns (TransferWarmToAgentApproveReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentapprove";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CallerSendToVoicemail(CallerSendToVoicemailRequest) returns (CallerSendToVoicemailReply) {
     option (google.api.http).post = "/api/v0alpha/acd/callersendtovoicemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentInviteTransferCallerToConference(AgentInviteTransferCallerToConferenceRequest) returns (AgentInviteTransferCallerToConferenceReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentinvitetransfercallertoconference";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentMonitorCalls(AgentMonitorCallsRequest) returns (AgentMonitorCallsReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentmonitorcalls";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferColdToOutbound(TransferColdToOutboundRequest) returns (TransferColdToOutboundReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transfercoldtooutbound";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferColdToAgent(TransferColdToAgentRequest) returns (TransferColdToAgentReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transfercoldtoagent";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc TransferWarmToOutboundStart(TransferWarmToOutboundStartRequest) returns (TransferWarmToOutboundStartReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtooutboundstart";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // creates a new outbound transfer member using the given src/dst numbers
   rpc CreateWarmOutboundTransferMember(CreateWarmOutboundTransferMemberRequest) returns (CreateWarmOutboundTransferMemberReply) {
     option (google.api.http).post = "/api/v0alpha/acd/createwarmoutboundtransferdmember";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // hangups a transfer member using the given member identifier
   rpc RemoveTransferMember(RemoveTransferMemberRequest) returns (RemoveTransferMemberReply) {
     option (google.api.http).post = "/api/v0alpha/acd/deletewarmoutboundtransferdmember";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc TransferWarmToAgentStart(TransferWarmToAgentStartRequest) returns (TransferWarmToAgentStartReply) {
     option (google.api.http).post = "/api/v0alpha/acd/transferwarmtoagentstart";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentGetCallFromHold(AgentGetCallFromHoldRequest) returns (AgentGetCallFromHoldReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetcallfromhold";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentGetSpecificCallFromHold(AgentGetSpecificCallFromHoldRequest) returns (AgentGetSpecificCallFromHoldReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentgetspecificcallfromhold";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc ACDGetAllAgentsStatuses(ACDGetAllAgentsStatusesRequest) returns (ACDGetAllAgentsStatusesReply) {
     option (google.api.http).post = "/api/v0alpha/acd/acdgetallagentsstatuses";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentPutCallOnHold(AgentPutCallOnHoldRequest) returns (AgentPutCallOnHoldReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentputcallonhold";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentReceiveMessage(AgentReceiveMessageRequest) returns (AgentReceiveMessageReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentreceivemessage";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentPBXApproveCall(AgentPBXApproveCallRequest) returns (AgentPBXApproveCallReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentpbxapprovecall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AgentPBXRejectCall(AgentPBXRejectCallRequest) returns (AgentPBXRejectCallReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentpbxrejectcall";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetCallerLostPeer(GetCallerLostPeerRequest) returns (GetCallerLostPeerReply) {
     option (google.api.http).post = "/api/v0alpha/acd/getcallerlostpeer";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc CallerGetRawEvent(CallerGetRawEventRequest) returns (CallerGetRawEventReply) {
     option (google.api.http).post = "/api/v0alpha/acd/getcallerraweventreply";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc PeerAgentWithCaller(PeerAgentWithCallerRequest) returns (PeerAgentWithCallerReply) {
     option (google.api.http).post = "/api/v0alpha/acd/peeragentwithcaller";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc HoldTransferMember(HoldTransferMemberReq) returns (HoldTransferMemberRes) {
     option (google.api.http).post = "/api/v0alpha/acd/mutetransferpartymember";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc UnholdTransferMember(UnholdTransferMemberReq) returns (UnholdTransferMemberRes) {
     option (google.api.http).post = "/api/v0alpha/acd/unmutetransfermember";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc GetAgentCallCounts(GetAgentCallCountsReq) returns (GetAgentCallCountsRes) {
     option (google.api.http).post = "/api/v0alpha/acd/getagentcallcounts";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to start a warm caller transfer
   rpc WarmCallerTransferStart(WarmCallerTransferStartReq) returns (WarmCallerTransferStartRes) {
     option (google.api.http).post = "/api/v0alpha/acd/warmcallertransferstart";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to cancel a warm caller transfer
   rpc WarmCallerTransferCancel(WarmCallerTransferCancelReq) returns (WarmCallerTransferCancelRes) {
     option (google.api.http).post = "/api/v0alpha/acd/warmcallertransfercancel";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to approve a warm caller transfer
   rpc WarmCallerTransferApprove(WarmCallerTransferApproveReq) returns (WarmCallerTransferApproveRes) {
     option (google.api.http).post = "/api/v0alpha/acd/warmcallertransferapprove";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to play a soundboard file for a customer
   rpc PlaySoundboardEntity(PlaySoundboardEntityReq) returns (PlaySoundboardEntityRes) {
     option (google.api.http).post = "/api/v0alpha/acd/playsoundboardentity";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to stop a soundboard file for a customer
   rpc StopSoundboardEntity(StopSoundboardEntityReq) returns (StopSoundboardEntityRes) {
     option (google.api.http).post = "/api/v0alpha/acd/stopsoundboardentity";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to update an agent's skills
   rpc UpdateAgentSkills(UpdateAgentSkillsRequest) returns (UpdateAgentSkillsReply) {
     option (google.api.http).post = "/api/v0alpha/acd/updateagentskills";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to play a dtmf tone to all members of a the agent's conference
   rpc PlayDTMF(PlayDTMFRequest) returns (PlayDTMFReply) {
     option (google.api.http).post = "/api/v0alpha/acd/playdtmf";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to mute and agent's mic
   rpc AgentMute(AgentMuteRequest) returns (AgentMuteReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentmute";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // endpoint used to unmute and agent's mic
   rpc AgentUnmute(AgentUnmuteRequest) returns (AgentUnmuteReply) {
     option (google.api.http).post = "/api/v0alpha/acd/agentunmute";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 }
 
