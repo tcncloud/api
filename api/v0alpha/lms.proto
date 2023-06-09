@@ -2,9 +2,11 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/communication.proto";
 import "api/commons/compliance.proto";
 import "api/commons/lms.proto";
+import "api/commons/perms.proto";
 import "api/commons/types.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
@@ -16,133 +18,337 @@ service LMS {
   rpc GetPublicKey(GetPublicKeyReq) returns (PublicKey) {
     option (google.api.http).post = "/api/v0alpha/lms/pgpkey/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc CreateFileTemplate(FileTemplate) returns (FileTemplate) {
     option (google.api.http).post = "/api/v0alpha/lms/file_templates/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc ListFileTemplates(GetFileTemplatesReq) returns (stream FileTemplate) {
     option (google.api.http).post = "/api/v0alpha/lms/file_templates";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc UpdateFileTemplate(FileTemplate) returns (FileTemplate) {
     option (google.api.http).post = "/api/v0alpha/lms/file_templates/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc DeleteFileTemplate(FileTemplate) returns (FileTemplate) {
     option (google.api.http).post = "/api/v0alpha/lms/file_templates/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc GetFileTemplate(FileTemplate) returns (FileTemplate) {
     option (google.api.http).post = "/api/v0alpha/lms/file_templates/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   rpc CreateField(Field) returns (Field) {
     option (google.api.http).post = "/api/v0alpha/lms/fields/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc ListFields(ListFieldsReq) returns (Fields) {
     option (google.api.http).post = "/api/v0alpha/lms/fields";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetField(Field) returns (Field) {
     option (google.api.http).post = "/api/v0alpha/lms/fields/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc UpdateField(UpdateFieldReq) returns (Field) {
     option (google.api.http).post = "/api/v0alpha/lms/fields/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc DeleteField(Field) returns (Field) {
     option (google.api.http).delete = "/api/v0alpha/lms/fields/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc ListAvailableFieldsByElementId(ListAvailableFieldsByElementIdReq) returns (ProcessFields) {
     option (google.api.http).post = "/api/v0alpha/lms/fieldsbyelement";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   // list campaign links and descriptions
   rpc ListCampaignLinks(google.protobuf.Empty) returns (ListCampaignLinksRes) {
     option (google.api.http).post = "/api/v0alpha/lms/campaignlink/list";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc PeekList(PeekListReq) returns (PeekListRes) {
     option (google.api.http).post = "/api/v0alpha/lms/lists/preview";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc GetHistory(GetHistoryReq) returns (GetHistoryRes) {
     option (google.api.http).post = "/api/v0alpha/lms/lists/history";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc CreateElement(Element) returns (Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc ListElements(ListElementsReq) returns (stream Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc UpdateElement(Element) returns (Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc DeleteElement(Element) returns (Element) {
     option (google.api.http).delete = "/api/v0alpha/lms/pipelines/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   // CopyPipelineUpstream copies an Element and all of its' parents
   rpc CopyPipelineUpstream(Element) returns (stream Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/copyupstream";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   // CopyPipelineDownstream copies an Element and all of its' children
   rpc CopyPipelineDownstream(Element) returns (stream Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/copydownstream";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc ProcessElement(ProcessElementReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/process";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
   rpc GetAvailableFields(google.protobuf.Empty) returns (ProcessFields) {
     option (google.api.http).post = "/api/v0alpha/lms/available-fields";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   // returns queue events for the last 30 minutes
   rpc ListNewEvents(google.protobuf.Empty) returns (Events) {
     option (google.api.http).post = "/api/v0alpha/lms/get-new-events";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc ViewQueue(ViewQueueReq) returns (Events) {
     option (google.api.http).post = "/api/v0alpha/lms/view-queue";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc Autocomplete(ParseReq) returns (ParseRes) {
     option (google.api.http).post = "/api/v0alpha/lms/autocomplete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
 
   rpc GetComplianceScrubLists(GetComplianceScrubListsReq) returns (GetComplianceScrubListsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/compliancescrublists";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   rpc FindFieldUsages(FindFieldUsagesReq) returns (FindFieldUsagesRes) {
     option (google.api.http).post = "/api/v0alpha/lms/find-field-usages";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   rpc FindInvalidElements(FindInvalidElementsReq) returns (FindInvalidElementsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/find-invalid-elements";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   /* CJS calls */
   rpc CreateCollection(CollectionMetadata) returns (CollectionMetadata) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/create";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc GetCollection(GetCollectionReq) returns (CollectionMetadata) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/get";
@@ -239,18 +445,39 @@ service LMS {
   rpc GetCjsSecureSearchCriteria(GetCjsSecureSearchCriteriaReq) returns (CjsSecureSearchCriteria) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/getsecuresearchdcriteria";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   // CreateCjsSecureSearchCriteria creates a secure search criteria
   rpc CreateCjsSecureSearchCriteria(CjsSecureSearchCriteria) returns (CjsSecureSearchCriteria) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/createsecuresearchdcriteria";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 
   // UpdateCjsSecureSearchCriteria updates the secure search criteria
   rpc UpdateCjsSecureSearchCriteria(CjsSecureSearchCriteria) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/updatesecuresearchdcriteria";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
   }
 }
 
