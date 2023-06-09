@@ -1807,7 +1807,7 @@ service WFM {
     };
   }
 
-  // Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity parameter.
+  // Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity and @schedule_scenario_sid parameters.
   // If @include_member_lists is set to true the member lists of the entities retrieved will be included.
   // Any nodes in the returned set of entities will have inherited nonskill associations applied to the node's member_nonskill_activity fields.
   // Prior to listing the entities it will Resync TCN Agents and skill proficiencies.
@@ -4049,6 +4049,8 @@ message ListConfigEntitiesReq {
   // e.g: a value of 0 will only get the entities requested with no children/member.
   //      a value of 1 will get the entities with children/member entities included 1 level down.
   int32 member_depth = 4;
+  // ID of the scenario that the entities desired belong to, must match the scenario of @belongs_to_entity.
+  int64 schedule_scenario_sid = 5;
 }
 
 // Response message for the ListConfigEntities RPC
