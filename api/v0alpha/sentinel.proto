@@ -16,22 +16,30 @@ syntax = "proto3";
 
 package api.v0alpha;
 
+import "annotations/authz.proto";
 import "api/commons/logging.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 // A service for internal observability utilities.
 // service UIEventLogging {
 service Sentinel {
   // Send a json blob of ui events and logs.
-  rpc SendEvents(SendEventsReq) returns (SendEventsRes) {}
+  rpc SendEvents(SendEventsReq) returns (SendEventsRes) {
+    option (google.api.http).post = "/api/v0alpha/sentinel/sendevents";
+    option (google.api.http).body = "*"; //SendEvents intentionally empty, no perm required
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
 
+// sentinel event
 message SentinelEvent {
   oneof event {
     LogEvent log_event = 1;
   }
 }
 
+// log events details to be sent
 message LogEvent {
   string trace_id = 3;
   // the browsers session id
@@ -45,8 +53,10 @@ message LogEvent {
   api.commons.Level severity = 10;
 }
 
+// request to sentinel send events
 message SendEventsReq {
   repeated SentinelEvent events = 1;
 }
 
+// response to sentinel send events
 message SendEventsRes {}
