@@ -213,4 +213,17 @@ service Tickets {
       ];
     };
   }
+
+  // Public method to assign a ticket
+  rpc AssignSelf(CreateSelfAssignReq) returns (CreateSelfAssignRes) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignself";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
 }

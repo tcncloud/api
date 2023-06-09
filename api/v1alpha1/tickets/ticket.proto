@@ -29,6 +29,7 @@ message CreateTicketReq {
   int64 status = 11;
   // A list of sla assotiated with a ticket
   repeated api.commons.Sla ticket_sla = 12;
+  bool assign_self = 13;
 }
 
 // CreateTicketRes - Response from CreateTicket BE API
@@ -193,4 +194,14 @@ message ReplyCommentReq {
 message ReplyCommentRes {
   // Returns boolen true OR False in the response
   api.commons.ConfirmReplyComment is_created = 1;
+}
+
+// CreateSelfAssignReq -
+message CreateSelfAssignReq {
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+}
+
+// CreateSelfAssignRes -
+message CreateSelfAssignRes {
+  bool is_assigned = 1;
 }
