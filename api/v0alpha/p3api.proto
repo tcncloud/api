@@ -90,7 +90,17 @@ service P3Api {
 
   // Returns a list of agent skills for the given client sid.
   // DEPRECATED. Use ListSkills
-  rpc ListAgentSkills(ListAgentSkillsReq) returns (ListAgentSkillsRes);
+  rpc ListAgentSkills(ListAgentSkillsReq) returns (ListAgentSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listagentskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
 
   // Returns a list of skills for the current agent.
   rpc ListSkillsForCurrentAgent(ListSkillsForCurrentAgentReq) returns (ListSkillsForCurrentAgentRes) {
