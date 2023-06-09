@@ -13,11 +13,11 @@ RUN case $(uname -s) in \
     "x86_64") HOSTARCH="amd64" ;; \
     "aarch64") HOSTARCH="arm64" ;; \
     *) echo "Unknown ARCH $(uname -m)"; exit -1 ;; esac && \
-    curl -L -o - https://go.dev/dl/go1.20.3.${HOSTOS}-${HOSTARCH}.tar.gz | tar -C /usr/local -zxf - 
-ENV PATH=$PATH:/usr/local/go/bin 
+    curl -L -o - https://go.dev/dl/go1.20.3.${HOSTOS}-${HOSTARCH}.tar.gz | tar -C /usr/local -zxf -
+ENV PATH=$PATH:/usr/local/go/bin
 RUN GO111MODULE=on GOBIN=/usr/local/bin go install github.com/bufbuild/buf/cmd/buf@v1.17.0
 
-## install nodejs 
+## install nodejs
 RUN case $(uname -s) in \
     "Linux") HOSTOS="linux" ;; \
     *) echo "Unknown OS $(uname -s)"; exit -1 ;; \
@@ -48,7 +48,7 @@ RUN case $(uname -s) in \
     curl -L -o /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.14.0/protoc-gen-grpc-java-1.14.0-linux-x86_64.exe && chmod +x /usr/local/bin/protoc-gen-grpc-java ;; \
     *) echo "Unknown ARCH $(uname -m)" ;; esac
 
-USER vscode 
+USER vscode
 
 WORKDIR /home/vscode
 
@@ -57,7 +57,7 @@ ENV PATH=$PATH:/home/vscode/go/bin
 
 
 # install go dependencies
-# ADD go.mod mod 
+# ADD go.mod mod
 # RUN cat mod | grep -v "tcncloud.net" > go.mod && \
 #     go mod edit -module=git.tcncloud.net/m/protos && \
 #     go mod download && rm -f go.mod mod go.sum
@@ -75,8 +75,8 @@ ENV PATH=$PATH:/home/vscode/.local/bin
 
 
 # # install sdkman
-# RUN curl -s "https://get.sdkman.io" | bash 
-# RUN source "/home/vscode/.sdkman/bin/sdkman-init.sh" 
+# RUN curl -s "https://get.sdkman.io" | bash
+# RUN source "/home/vscode/.sdkman/bin/sdkman-init.sh"
 # RUN sdk install gradle 8.1.1
-# install please 
+# install please
 # RUN curl https://get.please.build | bash

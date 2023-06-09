@@ -1974,6 +1974,27 @@ service WFM {
     };
   }
 
+  // Updates the @name, @description, and @datetime_range of the given @draft_schedule_sid for the org sending the request.
+  // The @name, @description, and @datetime_range fields must all be set with their desired values.
+  // If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
+  // If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+  // If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
+  // If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+  // Errors:
+  //   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+  //   - grpc.Internal: error occurs when updating the schedule or its instances.
+  rpc UpdateDraftSchedule(UpdateDraftScheduleReq) returns (UpdateDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatedraftschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
   // The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
   // @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
@@ -4449,6 +4470,31 @@ message CreateDraftScheduleReq {
 message CreateDraftScheduleRes {
   // ID of the newly created draft schedule.
   int64 draft_schedule_sid = 1;
+}
+
+// Request message for the UpdateDraftSchedule RPC.
+message UpdateDraftScheduleReq {
+  // ID of the draft schedule to be updated.
+  int64 draft_schedule_sid = 1;
+  // Name of the draft schedule.
+  string name = 2;
+  // Description of the draft schedule.
+  string description = 3;
+  // Range to retrieve shift instances and segments from the published schedule to use for this draft schedule.
+  commons.DatetimeRange datetime_range = 4;
+  // Set to true to delete any shift instances belonging to the draft schedule, which are outside of the new @datetime_range.
+  // If false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+  bool delete_shifts_not_in_range = 5;
+  // Set to true to copy shift instances from the published schedule into regions of the schedule with no shift instances.
+  bool copy_shifts_into_new_range = 6;
+  // Set to true to get the draft schedule with the updated schedule range, shift instances, and shift segments
+  bool get_updated_shifts = 7;
+}
+
+// Response message for the UpdateDraftSchedule RPC.
+message UpdateDraftScheduleRes {
+  // The newly updated draft schedule.
+  DraftSchedule draft_schedule = 1;
 }
 
 // Request message for the BuildDraftSchedule RPC.

@@ -11,4 +11,4 @@ plugins:
   - plugin: buf.build/protocolbuffers/java
     out: tcnapi-jdk8/src/main/java
 
-    
+
