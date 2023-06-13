@@ -142,10 +142,10 @@ service Asm {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_AGENT,
-            PERMISSION_OMNI_BOSS
-          ]
+          permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
         }
       ];
     };
