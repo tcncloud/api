@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package api.v1alpha1.ghostnotifier;
 
+import "annotations/authz.proto";
 import "api/commons/ghostnotifier.proto";
 import "google/api/annotations.proto";
 
@@ -24,6 +25,7 @@ service GhostNotifierApi {
   rpc ListNotifications(ListNotificationsReq) returns (stream api.commons.GhostNotification) {
     option (google.api.http).post = "/api/v1alpha1/ghostnotifier/ghostnotifierapi/listnotifications";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 

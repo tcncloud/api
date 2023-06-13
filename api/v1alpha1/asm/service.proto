@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package api.v1alpha1.asm;
 
+import "annotations/authz.proto";
 import "api/commons/acd.proto";
 import "api/commons/asm.proto";
 import "api/commons/auth/user.proto";
@@ -30,56 +31,99 @@ service AsmApi {
   rpc CreateSession(CreateSessionReq) returns (CreateSessionRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/createsession";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   // Returns an aggregate of the statuses of all channels
   rpc GetStatus(GetStatusReq) returns (GetStatusRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getstatus";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   // Closes an asm session and all sub sessions
   rpc EndSession(EndSessionReq) returns (EndSessionRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/endsession";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   // Gets an agent's current asm session
   rpc GetCurrentSession(GetCurrentSessionReq) returns (AsmSession) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getcurrentsession";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   // Updates the currently active subsession
   rpc SwitchSubsession(SwitchSubsessionReq) returns (SwitchSubsessionRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/switchsubsession";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // Lists the conversations for an assigned agent
   rpc ListConversations(ListConversationsReq) returns (ListConversationsRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/listconversations";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Assign agent to matched conversation based on skills and channelTypes requested
   rpc AssignNewConversation(AssignNewConversationReq) returns (AssignNewConversationRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/assignnewconversation";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // List all agents for the given user. Contains statistical enrichments for each agent and their conversations.
   rpc ListAgents(ListAgentsReq) returns (ListAgentsRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/listagents";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Set collected data per conversation
   rpc SetConversationCollectedData(SetConversationCollectedDataReq) returns (SetConversationCollectedDataRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/setconversationcollecteddata";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
   }
 
   // Set queue details
   rpc GetQueuesDetails(GetQueuesDetailsReq) returns (api.commons.GetQueuesDetailsRes) {
     option (google.api.http).post = "/api/v1alpha1/asm/asmapi/getqueuesdetails";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 }
 
