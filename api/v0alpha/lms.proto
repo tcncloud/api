@@ -353,35 +353,43 @@ service LMS {
   rpc GetCollection(GetCollectionReq) returns (CollectionMetadata) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/get";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc UpdateCollection(CollectionMetadata) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/update";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc DeleteCollection(DeleteCollectionReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/delete";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc ListCollections(ListCollectionsReq) returns (ListCollectionsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc ResetCollection(ResetCollectionReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/reset";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc AddCollectionEntry(CollectionEntry) returns (CollectionEntry) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/add-entry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc DeleteCollectionEntry(DeleteCollectionEntryReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/delete-entry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   rpc UpdateCollectionEntry(CollectionEntry) returns (CollectionEntry) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/update-entry";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // StreamCollection needs to be used in conjunction with GetCollection
@@ -389,6 +397,7 @@ service LMS {
   rpc StreamCollection(StreamCollectionReq) returns (stream CollectionEntry) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/stream";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // SearchCollectionsWithQueryPaginated needs to be used in conjunction with GetCollection
@@ -396,6 +405,7 @@ service LMS {
   rpc SearchCollectionsPaginated(SearchCollectionsPaginatedReq) returns (PaginatedSearchRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/searchcollections";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetCollectionEntries fetches a page (size specified by the page_size param) of entries for
@@ -403,42 +413,49 @@ service LMS {
   rpc GetCollectionEntries(GetCollectionEntriesReq) returns (GetCollectionEntriesRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/getcollectionentries";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // CreateCjsSearchDefinition creates a search definition
   rpc CreateCjsSearchDefinition(CjsSearchDefinition) returns (CjsSearchDefinition) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/createsearchdefinition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetCjsSearchDefinition gets the search definition specified by search_definition_id
   rpc GetCjsSearchDefinition(GetCjsSearchDefinitionReq) returns (CjsSearchDefinition) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/getsearchdefinition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // UpdateCjsSearchDefinition updates the search definition specified by search_definition_id
   rpc UpdateCjsSearchDefinition(CjsSearchDefinition) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/updatesearchdefinition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // DeleteCjsSearchDefinition deletes the search definition specified by search_definition_id
   rpc DeleteCjsSearchDefinition(DeleteCjsSearchDefinitionReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/deletesearchdefinition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // ListCjsSearchDefinitions lists the search definitions
   rpc ListCjsSearchDefinitions(ListCjsSearchDefinitionsReq) returns (ListCjsSearchDefinitionsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/listsearchdefinitions";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // ExecuteCjsSearchDefinition executes the search definition specified by search_definition_id
   rpc ExecuteCjsSearchDefinition(ExecuteCjsSearchDefinitionReq) returns (ExecuteCjsSearchDefinitionRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/executesearchdefinition";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetCjsSecureSearchCriteria gets the secure search criteria
