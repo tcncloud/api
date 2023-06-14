@@ -8,19 +8,6 @@ import "api/commons/billing/invoice.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-// CreateBillingPlanReq - request to create a billing plan for an organization
-message CreateBillingPlanReq {
-  // Required. the billing plan to create
-  api.commons.billing.Plan billing_plan = 1;
-}
-
-// CreateBillingPlanRes - result of creating a billing plan; contains the
-// created billing plan
-message CreateBillingPlanRes {
-  // the created billing plan
-  api.commons.billing.Plan billing_plan = 1;
-}
-
 // GetBillingPlanReq - request to get an organization's billing plan
 message GetBillingPlanReq {}
 
@@ -50,15 +37,6 @@ message UpdateBillingPlanRes {
   // the updated billing plan
   api.commons.billing.Plan billing_plan = 1;
 }
-
-// DeleteBillingDetailsReq - request to delete billing details
-message DeleteBillingDetailsReq {
-  // the identifiers of the billing details to delete
-  repeated int64 billing_detail_sids = 1;
-}
-
-// DeleteBillingDetailsRes - result of deleting billing details
-message DeleteBillingDetailsRes {}
 
 // GetInvoiceReq - request to get an invoice
 message GetInvoiceReq {
