@@ -784,7 +784,14 @@ service P3Api {
   // Assign every skill to every agent with the given aptitude.
   // Errors:
   //    - grpc.Invalid: the aptitude field is invalid.
-  rpc MultiAgentSkillAssignment(MultiAgentSkillAssignmentReq) returns (MultiAgentSkillAssignmentRes);
+  rpc MultiAgentSkillAssignment(MultiAgentSkillAssignmentReq) returns (MultiAgentSkillAssignmentRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/multiagentskillassignment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
 
   // Unassigns every given skill from every given user.
   // Errors:
@@ -792,7 +799,14 @@ service P3Api {
   //        - the user_ids list is empty or contains an empty string.
   //        - one or more of the user_ids does not belong to the client.
   //    - grpc.Internal: an error occurred while deleting the skill assignments.
-  rpc MultiAgentSkillUnassignment(MultiAgentSkillUnassignmentReq) returns (MultiAgentSkillUnassignmentRes);
+  rpc MultiAgentSkillUnassignment(MultiAgentSkillUnassignmentReq) returns (MultiAgentSkillUnassignmentRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/multiagentskillunassignment";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+    };
+  }
 
   // List of agent hunt groups based on client sid
   // that have manually approved messages enabled
