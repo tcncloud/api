@@ -100,7 +100,7 @@ message Category {
   string description = 5; // description of category (i.e. purpose and use)
   repeated int64 skill_profiles = 6; // skill_profiles ids related to category
   int32 version = 7; // current version of the category
-  repeated CallType.Enum call_types = 10; // call types supported by the category
+  repeated CallType.Enum call_types = 10 [deprecated = true]; // Deprecated. Use scorecard.call_types
   bool is_system = 11; // whether a category is a system category (read only)
   CategoryType category_type = 12; // Type of category, (skill calls or manual calls)
 }

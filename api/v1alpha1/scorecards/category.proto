@@ -22,7 +22,7 @@ message CreateCategoryResponse {
 message ListCategoriesRequest {
   repeated string author_ids = 2; // Optional. Returns categories by any author.
   repeated int64 skill_profiles = 3; // Optional. Returns categories with any skill.
-  repeated api.commons.CallType.Enum call_types = 4; // Optional. Returns categories with any call type.
+  repeated api.commons.CallType.Enum call_types = 4 [deprecated = true]; // Deprecated.
   CategoryType category_type = 5; // Required. Returns categories matching type.
 
   enum CategoryType {
