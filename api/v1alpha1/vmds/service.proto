@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package api.v1alpha1.vmds;
+
+import "annotations/authz.proto";
+import "api/commons/acd.proto";
+import "google/api/annotations.proto";
+
+service VmdsService {
+  rpc DownloadSpecifiedMessages(DownloadSpecifiedMessagesRequest) returns (DownloadSpecifiedMessagesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vmds/downloadspecifiedmessages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+}
+
+message DownloadSpecifiedMessagesRequest {
+  message MessageRequest {
+    string mail_box = 1;
+    string caller_sid = 2;
+    api.commons.CallType.Enum caller_type = 3;
+  }
+  repeated MessageRequest messages = 1;
+}
+
+message DownloadSpecifiedMessagesResponse {
+  string url = 1;
+}
