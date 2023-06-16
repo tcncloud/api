@@ -19,16 +19,8 @@ message GetBillingPlanRes {
 
 // UpdateBillingPlanReq - request to update a billing plan.
 message UpdateBillingPlanReq {
-  // Required. the updates to perform on the billing plan
-  repeated UpdateReq updates = 1;
-
-  // UpdateReq - request to update a single billing detail
-  message UpdateReq {
-    // Required. the billing detail to update
-    api.commons.billing.Detail billing_detail = 1;
-    // Required. the mask of fields to update for the billing detail
-    repeated string fields = 2;
-  }
+  // Required. the billing details to update
+  repeated api.commons.billing.Detail billing_details = 1;
 }
 
 // UpdateBillingPlanRes - result of updating a billing plan; contains
