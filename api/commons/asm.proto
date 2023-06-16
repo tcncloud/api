@@ -117,13 +117,15 @@ message QueueCallAdd {
   // timestamp indicating when the call was put on hold (only set when call is a hold call).
   google.protobuf.Timestamp hold_date = 4;
   // formatted skills that the call requires.
-  repeated string skills = 5;
+  map<string, string> formatted_skills = 5;
   // indicates if the call is specific to the agent (multi-hold) or it can be picked up by multiple agents (queued and HQM calls).
   bool agent_specific = 6;
   // queued notification type of the call.
   api.commons.QueuedNotificationType queued_notification_type = 7;
   // callersid
   api.commons.CallerSid caller_sid = 8;
+  // skills
+  map<string, bool> skills = 9;
 }
 
 message QueueCallRemove {
