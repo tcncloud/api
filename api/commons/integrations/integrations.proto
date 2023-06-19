@@ -54,6 +54,10 @@ enum RequestMethod {
   REQUEST_METHOD_RELATIENT_POSTPATIENTBALANCE = 204;
   REQUEST_METHOD_RELATIENT_GETPATIENT = 205;
   REQUEST_METHOD_RELATIENT_POSTBALANCEBYID = 206;
+  REQUEST_METHOD_RELATIENT_CREATE_FORTIS_ACHTOKEN = 207;
+  REQUEST_METHOD_RELATIENT_CREATE_FORTIS_CCTOKEN = 208;
+  REQUEST_METHOD_RELATIENT_FORTIS_TOKEN_ACH_DEBIT_PAYMENT = 209;
+  REQUEST_METHOD_RELATIENT_FORTIS_TOKEN_CC_PAYMENT = 210;
 
   REQUEST_METHOD_CYBERSOURCE_CREDITPAYMENT = 301;
   REQUEST_METHOD_CYBERSOURCE_ECHECKPAYMENT = 302;
@@ -583,6 +587,10 @@ message ExecuteFlow {
     ExecuteRelatientPostPatientBalance relatient_post_patient_balance = 204;
     ExecuteRelatientGetPatient relatient_get_patient = 205;
     ExecuteRelatientPostBalanceById relatient_post_balance_by_id = 206;
+    ExecuteRelatientCreateFortisAchtoken relatient_create_fortis_achtoken = 207;
+    ExecuteRelatientCreateFortisCctoken relatient_create_fortis_cctoken = 208;
+    ExecuteRelatientFortisTokenAchDebitPayment relatient_fortis_token_ach_debit_payment = 209;
+    ExecuteRelatientFortisTokenCcPayment relatient_fortis_token_cc_payment = 210;
 
     ExecuteCybersourceCreditPayment cybersource_credit_payment = 301;
     ExecuteCybersourceEcheckPayment cybersource_echeck_payment = 302;
@@ -819,6 +827,10 @@ message ExecuteRelatientPostPatientToken {}
 message ExecuteRelatientPostPatientBalance {}
 message ExecuteRelatientGetPatient {}
 message ExecuteRelatientPostBalanceById {}
+message ExecuteRelatientCreateFortisAchtoken {}
+message ExecuteRelatientCreateFortisCctoken {}
+message ExecuteRelatientFortisTokenAchDebitPayment {}
+message ExecuteRelatientFortisTokenCcPayment {}
 message ExecuteCybersourceCreditPayment {}
 message ExecuteCybersourceEcheckPayment {}
 message ExecuteCircproPhoneLookupWithBundle {}
