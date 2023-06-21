@@ -353,7 +353,13 @@ service LMS {
   rpc GetCollection(GetCollectionReq) returns (CollectionMetadata) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/get";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc UpdateCollection(CollectionMetadata) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/update";
@@ -368,7 +374,13 @@ service LMS {
   rpc ListCollections(ListCollectionsReq) returns (ListCollectionsRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
   rpc ResetCollection(ResetCollectionReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/reset";
@@ -413,7 +425,13 @@ service LMS {
   rpc GetCollectionEntries(GetCollectionEntriesReq) returns (GetCollectionEntriesRes) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/getcollectionentries";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
   }
 
   // CreateCjsSearchDefinition creates a search definition
