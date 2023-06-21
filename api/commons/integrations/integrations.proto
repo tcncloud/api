@@ -39,6 +39,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_I2C = 3200;
   INTEGRATION_TYPE_OPAYO = 3300;
   INTEGRATION_TYPE_SHIFT4 = 3400;
+  INTEGRATION_TYPE_POSCORP = 3500;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -236,6 +237,10 @@ enum RequestMethod {
   REQUEST_METHOD_OPAYO_CCPAYMENTS = 3301;
 
   REQUEST_METHOD_SHIFT4_CCPAYMENTS = 3401;
+
+  REQUEST_METHOD_POSCORP_ACCESSTOKEN = 3501;
+  REQUEST_METHOD_POSCORP_LOOKUP_GUARANTOR = 3502;
+  REQUEST_METHOD_POSCORP_UPDATE_PAYMENT_STATUS = 3503;
 }
 
 enum TransactionType {
@@ -769,6 +774,10 @@ message ExecuteFlow {
     ExecuteOpayoCcPayments opayo_cc_payment = 3301;
 
     ExecuteShift4CcPayments shift4_cc_payment = 3401;
+
+    ExecutePoscorpAccesstoken poscorp_accesstoken = 3501;
+    ExecutePoscorpLookupGuarantor poscorp_lookup_guarantor = 3502;
+    ExecutePoscorpUpdatePaymentStatus poscorp_update_payment_status = 3503;
   }
 }
 
@@ -977,3 +986,6 @@ message ExecuteI2cGetCreditPaymentInfo {}
 message ExecuteI2cTransactionHistory {}
 message ExecuteOpayoCcPayments {}
 message ExecuteShift4CcPayments {}
+message ExecutePoscorpAccesstoken {}
+message ExecutePoscorpLookupGuarantor {}
+message ExecutePoscorpUpdatePaymentStatus {}
