@@ -1296,7 +1296,7 @@ service WFM {
     };
   }
 
-  // Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+  // Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
   // Required permissions:
   //   NONE
   // Errors:
@@ -1305,6 +1305,24 @@ service WFM {
   //   - grpc.Internal: error occurs when deleting the association.
   rpc DeleteWFMAgentMemberships(DeleteWFMAgentMembershipsReq) returns (DeleteWFMAgentMembershipsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletewfmagentmemberships";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes all membership associations for the given @wfm_agent_sids with the given @agent_group_sids.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sids are invalid.
+  //   - grpc.Internal: error occurs when deleting the associations.
+  rpc DeleteWFMAgentsMemberships(DeleteWFMAgentsMembershipsReq) returns (DeleteWFMAgentsMembershipsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletewfmagentsmemberships";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -3578,6 +3596,17 @@ message DeleteWFMAgentMembershipsReq {
 
 // Response message for DeleteWFMAgentMemberships RPC
 message DeleteWFMAgentMembershipsRes {}
+
+// Request message for the DeleteWFMAgentsMemberships RPC
+message DeleteWFMAgentsMembershipsReq {
+  // ID of the wfm agents to delete the association of.
+  repeated int64 wfm_agent_sids = 1;
+  // ID of the agent groups that the agents associate with.
+  repeated int64 agent_group_sids = 2;
+}
+
+// Response message for DeleteWFMAgentsMemberships RPC
+message DeleteWFMAgentsMembershipsRes {}
 
 // DOW Placement
 message DOWPlacement {
