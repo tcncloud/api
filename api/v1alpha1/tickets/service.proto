@@ -22,7 +22,7 @@ service Tickets {
       ];
     };
   }
-  // Public Method to create a ticket.
+  // Public Method to edit a ticket.
   rpc EditTicket(EditTicketReq) returns (EditTicketRes) {
     // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editticket";
@@ -64,7 +64,7 @@ service Tickets {
     };
   }
 
-  // Closes the ticket
+  // Public Method to Close a ticket
   rpc CloseTicket(CloseTicketReq) returns (CloseTicketRes) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/closeticket";
     option (google.api.http).body = "*";
