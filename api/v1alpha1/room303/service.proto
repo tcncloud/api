@@ -292,9 +292,11 @@ service Room303API {
       ];
     };
   }
-  rpc ListUsersByOrgId(ListUsersByOrgIdRequest) returns (stream ListUsersByOrgIdResponse) {
+
+  // ListUsersNames returns a list of users with names and ids
+  rpc ListUsersNames(ListUsersNamesRequest) returns (stream ListUsersNamesResponse) {
     option (google.api.http) = {
-      post: "/api/v1alpha1/room303/room303api/listusersbyorgid"
+      post: "/api/v1alpha1/room303/room303api/listusersnames"
       body: "*"
     };
     option (annotations.authz) = {
