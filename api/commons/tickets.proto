@@ -55,7 +55,20 @@ message Metadata {
 // Skills - Field for a skill set assigned to a ticket
 message Skills {
   string skill_id = 1;
+  // Mandatory = 0, Preferred = 1
+  bool is_preferred = 2;
 }
+
+// EditColumnType Fields
+/*enum EditColumnType {
+     NONE_COLUMN = 0;
+     DESCRIPTION = 1;
+     SKILLS = 2;
+     STATUS = 3;
+     DUE_DATE = 4;
+     SLA = 5;
+     ASSIGNEE = 6;
+   } */
 
 // Sla - Field for a sla set assigned to a ticket
 message Sla {
@@ -92,7 +105,7 @@ message CloseTicket {
   string created_by_id = 5; // used in creating comment
 }
 
-// ConfirmClose - Boolean response Field post closing a Ticket
+// ConfirmClose - Boolean response for closing a Ticket
 message ConfirmClose {
   int64 status = 1;
 }
@@ -212,4 +225,5 @@ message EditAttribute {
   string from_val = 2;
   string to_val = 3;
   bool is_edited = 4;
+  //EditColumnType edit_column_type = 5;
 }

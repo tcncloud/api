@@ -30,6 +30,7 @@ message CreateTicketReq {
   // A list of sla assotiated with a ticket
   repeated api.commons.Sla ticket_sla = 12;
   bool assign_self = 13;
+  string assign_other = 14;
 }
 
 // CreateTicketRes - Response from CreateTicket BE API
@@ -40,12 +41,12 @@ message CreateTicketRes {
 
 // EditTicketReq - Request for EditTicketReq
 message EditTicketReq {
-  int64 ticket_sid = 1;
+  int64 ticket_sid = 1 [jstype = JS_STRING];
   // The comment text
   api.commons.EditAttribute edit_value = 2;
 }
 
-// EditTicketReq - Request for EditTicketReq
+// EditTicketRes - Response for EditTicketReq
 message EditTicketRes {
   bool is_edited = 1;
 }
@@ -57,12 +58,14 @@ message ListTicketsRes {
   repeated api.commons.Ticket tickets = 1;
 }
 
+// AssignTicketReq
 message AssignTicketReq {
   int64 ticket_sid = 1 [jstype = JS_STRING];
   string assignee_list = 2; // type:json - send 0 or null for un-assigning a ticket
   string assigned_id = 3; // uuid
 }
 
+// AssignTicketRes
 message AssignTicketRes {
   int64 ticket_sid = 1 [jstype = JS_STRING];
   string assignee_list = 2;
