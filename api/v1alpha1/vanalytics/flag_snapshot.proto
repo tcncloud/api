@@ -83,4 +83,26 @@ message FlagSnapshot {
 
   // Output only. Determines whether this flag must be notified.
   bool must_notify = 11;
+
+  // Required. Boolean expression of filters which a transcript must match
+  // for this flag to be applied.
+  BoolExpr bool_expr = 12;
+
+  // BoolExpr defines a boolean expression of filters.
+  message BoolExpr {
+    // Optional. Boolean and operator.
+    repeated BoolExpr and = 1;
+
+    // Optional. Boolean or operator.
+    repeated BoolExpr or = 2;
+
+    // Optional. Filter to match.
+    Filter filter = 3;
+
+    // Filter defines a filter.
+    message Filter {
+      // Required. Filter sid.
+      int64 filter_sid = 1;
+    }
+  }
 }
