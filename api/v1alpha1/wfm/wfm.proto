@@ -1401,6 +1401,7 @@ service WFM {
   }
 
   // Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+  // If @include_placement_rules is set to true, the @shift_templates will be returned with their member placement rules.
   // Required permissions:
   //   NONE
   // Errors:
@@ -3688,6 +3689,8 @@ message UpdateShiftTemplateRes {}
 message ListShiftTemplatesBySidsReq {
   // IDs of the shift templates to list.
   repeated int64 shift_template_sids = 1;
+  // Indicates whether the @shift_templates in the response should include member placement rules.
+  bool include_placement_rules = 2;
 }
 
 // Response message for the ListShiftTemplatesBySids RPC
