@@ -58,7 +58,17 @@ service Vmds {
   rpc DownloadGreetingForExtension(DownloadGreetingForExtensionReq) returns (DownloadGreetingForExtensionRes) {
     option (google.api.http).post = "/api/v0alpha/vmds/downloadgreetingforextension";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          // Agents are allowed to download greetings in the agent app
+          permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
   }
 
   rpc DownloadGreeting(DownloadGreetingReq) returns (DownloadGreetingRes) {
