@@ -19,7 +19,17 @@ service CBS {
   rpc CreateCallbackWithDetails(CreateCallbackWithDetailsReq) returns (CreateCallbackWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/createcallbackwithdetails";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        },
+        {
+          // Agents are allowed to create callbacks on the agent page.
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   rpc UpdateScheduledCallbackToReady(UpdateScheduledCallbackToReadyReq) returns (UpdateScheduledCallbackToReadyRes) {
@@ -77,7 +87,17 @@ service CBS {
   rpc GetScheduledCallbackWithDetails(GetScheduledCallbackWithDetailsReq) returns (GetScheduledCallbackWithDetailsRes) {
     option (google.api.http).post = "/api/v0alpha/cbs/getscheduledcallbackwithdetails";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_MANAGEMENT]
+        },
+        {
+          // Our apps allow agents to get scheduled callbacks on the agent page
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
   }
 
   // Lists callbacks by phone number, caller id, or time range

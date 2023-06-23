@@ -10,7 +10,13 @@ service VmdsService {
   rpc DownloadSpecifiedMessages(DownloadSpecifiedMessagesRequest) returns (DownloadSpecifiedMessagesResponse) {
     option (google.api.http).post = "/api/v1alpha1/vmds/downloadspecifiedmessages";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICEMAIL_DOWNLOAD]
+        }
+      ];
+    };
   }
 }
 
