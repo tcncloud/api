@@ -1309,6 +1309,10 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          // We allow users with agent permissions to access this in order for Agents to get all agent settings within the agent application
+          permissions: [PERMISSION_AGENT]
         }
       ];
     };
