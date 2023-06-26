@@ -922,6 +922,7 @@ message Process {
     OmniExchangeProcess omni_exchange_process = 73;
     // WebExchangeProcess allows a user to setup a process to send data to an external api
     WebExchangeProcess web_exchange_process = 74;
+    SplitCriteria split = 75;
   }
 }
 
@@ -2480,4 +2481,33 @@ message CjsSecureSearchCriteriaField {
   string cjs_secure_search_criteria_field_id = 1;
   string cjs_secure_search_criteria_id = 2;
   api.commons.FieldType field_type = 3;
+}
+
+message SplitCriteria {
+  oneof action {
+    SplitByUnique unique = 1;
+    SplitByMaxSize max_size = 2;
+    SplitByEqualParts equal_parts = 3;
+  }
+}
+
+message UniquePair {
+  FieldIndex split_on_fields = 1;
+  string split_value = 2;
+}
+
+message SplitByNamedUnique {
+  repeated UniquePair named_fields = 1;
+}
+
+message SplitByUnique {
+  repeated FieldIndex split_on_fields = 1;
+}
+
+message SplitByMaxSize {
+  int32 max_size = 1;
+}
+
+message SplitByEqualParts {
+  int32 part_size = 1;
 }
