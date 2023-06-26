@@ -99,6 +99,9 @@ message FlagSnapshot {
     // Optional. Filter to match.
     Filter filter = 3;
 
+    // Optional. Boolean not operator.
+    BoolExpr not = 4;
+
     // Filter defines a filter.
     message Filter {
       // Required. Filter sid.
