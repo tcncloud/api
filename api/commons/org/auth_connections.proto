@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "google/protobuf/timestamp.proto";
+
+// AuthConnectionSettings is the entity for oidc connection information.
+message AuthConnectionSettings {
+  // issuer_url is the url provided by the identity provider
+  // used to get authorization tokens.
+  string issuer_url = 1;
+  // tenant_url is the url used to match user's emails so
+  // that the connection is used.
+  string tenant_url = 2;
+  // client_id is the id of the application created from
+  // the auth provider.
+  string client_id = 3;
+  // connection_id is the id of the auth0 connection.
+  // This field will be populated automatically during
+  // the CreateAuthConnection rpc.
+  string connection_id = 4;
+  // secret_expiration is an optional field that is
+  // used to know when the connection's secret will
+  // expire. Some providers have secret's that don't expire.
+  SecretExpiration secret_expiration = 5;
+  // default_group defines settings used for all users for this connection
+  // regardless of their groups. Group name is ignored for the default. This
+  // field can be left nil if no default settings are desired.
+  GroupItem default_group = 6;
+  // custom_groups defines the settings that will be used if a user with
+  // this connection contains one or more of the matching group names.
+  // If a user has multiple matching groups the settings for the highest
+  // priority custom group will be used. Priority is determined by the custom
+  // groups position in the list.
+  repeated GroupItem custom_groups = 7;
+
+  message SecretExpiration {
+    google.protobuf.Timestamp date = 1;
+  }
+}
+
+// GroupItem defines settings mapped to a single group.
+message GroupItem {
+  // name of the group.
+  string group_name = 1;
+  // hunt group sid for the group.
+  int64 hunt_group_sid = 2;
+  // agent profile group for the group.
+  string agent_profile_group_id = 3;
+  // p3 permission group id for the group.
+  string p3_permission_group_id = 4;
+  // list of permission group ids for the group. If a user belongs to multiple
+  // groups the list of permission group ids will be appended to the existing
+  // permissions the user contains. All other group settings will be overridden
+  // by the highest priority group.
+  repeated string permission_group_ids = 5;
+}
