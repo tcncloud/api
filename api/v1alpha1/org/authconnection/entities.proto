@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.authconnection;
+
+import "api/commons/org/auth_connections.proto";
+
+// Request message for the CreateAuthConnection rpc.
+message CreateAuthConnectionRequest {
+  api.commons.org.AuthConnectionSettings settings = 1;
+  // client secret is the secret required for the provider.
+  // Some providers don't allow for non expiring secrets. If this
+  // is the case the secret_expiration field on the settings should
+  // be set.
+  // This field is not part of the ConnectionSettings message
+  // because it should never be stored.
+  string client_secret = 2;
+}
+
+// Response message for the CreateAuthConnection rpc.
+message CreateAuthConnectionResponse {}
+
+// Request message for the GetAuthConnectionSettings rpc.
+message GetAuthConnectionSettingsRequest {}
+
+// Response message for the GetConnectionSettings rpc.
+message GetAuthConnectionSettingsResponse {
+  api.commons.org.AuthConnectionSettings settings = 1;
+}
+
+// Request message for the DeleteAuthConnection rpc.
+message DeleteAuthConnectionRequest {
+  string connection_id = 1;
+}
+
+// Response message for the DeleteAuthConnection rpc.
+message DeleteAuthConnectionResponse {}
+
+// Request message for the UpdateAuthConnectionSecret rpc.
+message UpdateAuthConnectionSecretRequest {
+  // the connection that will be updated.
+  string connection_id = 1;
+  // A secret associated with the provider.
+  string client_secret = 2;
+}
+
+// Response message for the UpdateAuthConnectionSecret rpc.
+message UpdateAuthConnectionSecretResponse {}
+
+// Request message for the UpdateAuthConnectionGroups rpc.
+message UpdateAuthConnectionGroupsRequest {
+  // The default group. This group is assigned to all users
+  // that don't match any custom groups.
+  api.commons.org.GroupItem default_group = 1;
+  // Custom groups. These groups are assigned to users that belong
+  // to groups in the sso provider with the same name.
+  repeated api.commons.org.GroupItem custom_groups = 2;
+}
+
+// Response message for the UpdateAuthConnectionGroups rpc.
+message UpdateAuthConnectionGroupsResponse {}

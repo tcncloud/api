@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.authconnection;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/authconnection/entities.proto";
+import "google/api/annotations.proto";
+
+service AuthConnectionService {
+  // CreateAuthConnection creates a new auth0 connection.
+  rpc CreateAuthConnection(CreateAuthConnectionRequest) returns (CreateAuthConnectionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/create";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
+  // GetAuthConnectionSettings gets auth0 connection settings.
+  rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/get";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
+  // DeleteAuthConnection removes the current orgs auth settings.
+  rpc DeleteAuthConnection(DeleteAuthConnectionRequest) returns (DeleteAuthConnectionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
+  // UpdateAuthConnectionSecret updates a connections secret.
+  rpc UpdateAuthConnectionSecret(UpdateAuthConnectionSecretRequest) returns (UpdateAuthConnectionSecretResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/update/secret";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
+  // UpdateAuthConnectionGroups updates a connections groups.
+  rpc UpdateAuthConnectionGroups(UpdateAuthConnectionGroupsRequest) returns (UpdateAuthConnectionGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/update/groups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+}
