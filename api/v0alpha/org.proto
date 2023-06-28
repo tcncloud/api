@@ -1097,7 +1097,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ];
     };
