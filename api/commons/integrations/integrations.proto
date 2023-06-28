@@ -148,6 +148,14 @@ enum RequestMethod {
   REQUEST_METHOD_EXPERIAN_BALANCEREQUEST = 2003;
   REQUEST_METHOD_EXPERIAN_ACH_PAYMENT_REQUEST = 2004;
   REQUEST_METHOD_EXPERIAN_ACH_PAYMENTPLANREQUEST = 2005;
+  REQUEST_METHOD_EXPERIAN_STELLA_CARD_ENTRY = 2006;
+  REQUEST_METHOD_EXPERIAN_STELLA_ECHECK = 2007;
+  REQUEST_METHOD_EXPERIAN_STELLA_CARD_DEVICE_TOKENIZATION = 2008;
+  REQUEST_METHOD_EXPERIAN_STELLA_TOKEN_PAYMENT = 2009;
+  REQUEST_METHOD_EXPERIAN_STELLA_ACH_TOKENIZATION = 20010;
+  REQUEST_METHOD_EXPERIAN_STELLA_ADD_USA_EPAY_TOKEN = 2011;
+  REQUEST_METHOD_EXPERIAN_STELLA_PAYMENT_PLANS = 2012;
+  REQUEST_METHOD_EXPERIAN_STELLA_AUTH = 2013;
 
   REQUEST_METHOD_NEWSCYCLE_LOGIN = 2101;
   REQUEST_METHOD_NEWSCYCLE_SEARCHPAGE = 2102;
@@ -685,6 +693,14 @@ message ExecuteFlow {
     ExecuteExperianBalancerequest experian_balancerequest = 2003;
     ExecuteExperianAchPaymentRequest experian_ach_payment_request = 2004;
     ExecuteExperianAchPaymentPlanRequest experian_ach_payment_plan_request = 2005;
+    ExecuteExperianStellaCardEntry experian_stella_card_entry = 2006;
+    ExecuteExperianStellaECheck experian_stella_echeck = 2007;
+    ExecuteExperianStellaCardDeviceTokenization experian_stella_card_device_tokenization = 2008;
+    ExecuteExperianStellaTokenPayment experian_stella_token_payment = 2009;
+    ExecuteExperianStellaAchTokenization experian_stella_ach_tokenization = 2010;
+    ExecuteExperianStellaAddusaepaytoken experian_stella_add_usa_epay_token = 2011;
+    ExecuteExperianStellaPaymentPlans experian_stella_payment_plans = 2012;
+    ExecuteExperianStellaAuth experian_stella_auth = 2013;
 
     ExecuteNewscycleLogin newscycle_login = 2101;
     ExecuteNewscycleSearchPage newscycle_search_page = 2102;
@@ -911,6 +927,14 @@ message ExecuteExperianCcPaymentPlanRequest {}
 message ExecuteExperianBalancerequest {}
 message ExecuteExperianAchPaymentRequest {}
 message ExecuteExperianAchPaymentPlanRequest {}
+message ExecuteExperianStellaCardEntry {}
+message ExecuteExperianStellaECheck {}
+message ExecuteExperianStellaCardDeviceTokenization {}
+message ExecuteExperianStellaTokenPayment {}
+message ExecuteExperianStellaAchTokenization {}
+message ExecuteExperianStellaAddusaepaytoken {}
+message ExecuteExperianStellaPaymentPlans {}
+message ExecuteExperianStellaAuth {}
 message ExecuteNewscycleLogin {}
 message ExecuteNewscycleSearchPage {}
 message ExecuteNewscycleBillingInfo {}
