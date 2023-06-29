@@ -4047,6 +4047,8 @@ message CopyScenarioReq {
   string name = 3;
   // If no input is given, use copied_scenario.description, otherwise use the given input.
   string description = 4;
+  // Datetime range that the schedules for the new scenario will cover when built using the copied schedule scenario.
+  commons.DatetimeRange schedule_range = 5;
 }
 
 // Response message for the CopyScenario RPC
