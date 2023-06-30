@@ -11,6 +11,7 @@ message FlowDefinition {
   string description = 3;
 
   string entry_node_id = 4;
+  string org_id = 5;
   repeated NodeDefinition nodes = 10;
   string error_node_id = 11;
 }

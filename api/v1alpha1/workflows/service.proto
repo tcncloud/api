@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package api.v1alpha1.workflows;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/workflows/entities.proto";
+import "google/api/annotations.proto";
+
+service WorkflowsDefinitionService {
+  // ListFlowDefinitions lists flow definitions
+  rpc ListFlowDefinitions(ListFlowDefinitionsRequest) returns (ListFlowDefinitionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/workflows/listflowdefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WORKFLOWS]
+        }
+      ];
+    };
+  }
+
+  // SaveFlowDefinition creates or updates a flow definition
+  rpc SaveFlowDefinition(SaveFlowDefinitionRequest) returns (SaveFlowDefinitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/workflows/saveflowdefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WORKFLOWS]
+        }
+      ];
+    };
+  }
+
+  // GetFlowDefinition gets a flow definition
+  rpc GetFlowDefinition(GetFlowDefinitionRequest) returns (GetFlowDefinitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/workflows/getflowdefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WORKFLOWS]
+        }
+      ];
+    };
+  }
+
+  // DeleteFlowDefinition deletes a flow definition
+  rpc DeleteFlowDefinition(DeleteFlowDefinitionRequest) returns (DeleteFlowDefinitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/workflows/deleteflowdefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WORKFLOWS]
+        }
+      ];
+    };
+  }
+}
