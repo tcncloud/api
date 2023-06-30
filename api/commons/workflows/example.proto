@@ -36,9 +36,9 @@ message NodeChatbot {
 }
 
 message DiceDocument {
-  int32 diceValue = 1;
-  int32 diceValueMax = 2;
-  int32 diceValueMin = 3;
+  int32 dice_value = 1;
+  int32 dice_value_max = 2;
+  int32 dice_value_min = 3;
   string last_message = 4;
   map<string, string> variables = 5;
   string error = 100;

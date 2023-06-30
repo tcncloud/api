@@ -420,4 +420,11 @@ enum Permission {
     wip: true
     app: APPLICATION_TICKETS
   }];
+
+  /*
+   * Workflows
+   */
+
+  // Enables access to workflows builder
+  PERMISSION_WORKFLOWS = 4000 [(annotations.perms.options) = {app: APPLICATION_WORKFLOWS}];
 }
