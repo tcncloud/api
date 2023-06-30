@@ -5,6 +5,7 @@ package api.v0alpha;
 import "annotations/authz.proto";
 import "api/commons/omnichannel.proto";
 import "api/commons/types.proto";
+import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -997,6 +998,24 @@ service OmniApi {
       ];
     };
   }
+
+  // Returns a list of skills filtered by types given on
+  // the request message field type_filter. Leaving the type_filter
+  // field empty will return all types of skills.
+  rpc ListUserSkills(ListUserSkillsReq) returns (ListUserSkillsRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listuserskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
 }
 
 message SuggestResponseReq {
@@ -1971,4 +1990,32 @@ message ListCannedMessagesByGroupIdRes {
 message GetCannedMessageGroupByIdReq {
   // canned_message_group_id
   string canned_message_group_id = 1;
+}
+
+// request to list user skills
+message ListUserSkillsReq {
+  // Filters the response to only contain skills with the
+  // given types. Leaving this field empty will return
+  // all skill types. The PBX SkillType is not
+  // supported and will cause an error if present.
+  // Should use AGENT_PBX or HUNT_GROUP_PBX.
+  repeated api.commons.SkillType.Enum type_filters = 1;
+}
+
+// respose to list users skills
+message ListUserSkillsRes {
+  repeated OmniSkill skills = 1;
+}
+
+// skill details
+message OmniSkill {
+  // region
+  string region = 1;
+  // p3 id
+  string p3_id = 2;
+  // skill name
+  string name = 3;
+  // skill description
+  string description = 4;
+  api.commons.SkillType.Enum type = 5;
 }
