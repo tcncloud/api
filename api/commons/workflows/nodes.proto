@@ -4,6 +4,7 @@ package api.commons.workflows;
 
 import "api/commons/workflows/example.proto";
 import "api/commons/workflows/omni.proto";
+import "api/commons/workflows/omni_bot.proto";
 
 // A node is a single step in a flow
 message NodeDefinition {
@@ -22,9 +23,14 @@ message NodeDefinition {
     NodeComparator comparator = 104;
     NodeStoreInput store_input = 105;
     NodeChatbot chatbot = 1000;
+
     OmniNodePrompt omni_prompt = 201;
     OmniNodeSetSkill omni_set_skill = 202;
     OmniNodeToAgent omni_to_agent = 203;
     OmniNodeError omni_error = 204;
+
+    OmniBotNodeTestStart omni_bot_test_start = 301;
+    OmniBotNodeTestStep omni_bot_test_step = 302;
+    OmniBotNodeTestEnd omni_bot_test_end = 303;
   }
 }
