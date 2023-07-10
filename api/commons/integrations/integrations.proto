@@ -99,6 +99,7 @@ enum RequestMethod {
 
   REQUEST_METHOD_USAEPAY_SUBMITCCPAYMENTS = 901;
   REQUEST_METHOD_USAEPAY_SUBMITACHPAYMENTS = 902;
+  REQUEST_METHOD_USAEPAY_GETCCTOKEN = 903;
 
   REQUEST_METHOD_EZIDEBIT_SUBMITCCPAYMENTS = 1001;
   REQUEST_METHOD_EZIDEBIT_SUBMITACHPAYMENTS = 1002;
@@ -647,6 +648,7 @@ message ExecuteFlow {
 
     ExecuteUsaepaySubmitCcPayments usaepay_submit_cc_payments = 901;
     ExecuteUsaepaySubmitAchPayments usaepay_submit_ach_payments = 902;
+    ExecuteUsaepayGetCcToken usaepay_get_cc_token = 903;
 
     ExecuteEzidebitSubmitCcPayments ezidebit_submit_cc_payments = 1001;
     ExecuteEzidebitSubmitAchPayments ezidebit_submit_ach_payments = 1002;
@@ -895,6 +897,7 @@ message ExecuteInstamedPaymentSale {}
 message ExecuteInstamedVoidPayment {}
 message ExecuteUsaepaySubmitCcPayments {}
 message ExecuteUsaepaySubmitAchPayments {}
+message ExecuteUsaepayGetCcToken {}
 message ExecuteEzidebitSubmitCcPayments {}
 message ExecuteEzidebitSubmitAchPayments {}
 message ExecuteBamboraSubmitCcPayments {}
