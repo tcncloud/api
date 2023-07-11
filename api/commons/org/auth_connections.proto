@@ -4,7 +4,7 @@ package api.commons.org;
 
 import "google/protobuf/timestamp.proto";
 
-// AuthConnectionSettings is the entity for oidc connection information.
+// AuthConnectionSettings is the entity for sso connection information.
 message AuthConnectionSettings {
   // issuer_url is the url provided by the identity provider
   // used to get authorization tokens.
@@ -33,6 +33,12 @@ message AuthConnectionSettings {
   // priority custom group will be used. Priority is determined by the custom
   // groups position in the list.
   repeated GroupItem custom_groups = 7;
+  // org_id is the id of the organization the connection belongs too.
+  string org_id = 8;
+  // name is the name of the connection.
+  string name = 9;
+  // type is what type of provider is used for the connection.
+  ConnectionType type = 10;
 
   message SecretExpiration {
     google.protobuf.Timestamp date = 1;
@@ -54,4 +60,10 @@ message GroupItem {
   // permissions the user contains. All other group settings will be overridden
   // by the highest priority group.
   repeated string permission_group_ids = 5;
+}
+
+// ConnectionType defines the different provider types an auth connection can be.
+enum ConnectionType {
+  CONNECTION_TYPE_NONE = 0;
+  CONNECTION_TYPE_OIDC = 1;
 }
