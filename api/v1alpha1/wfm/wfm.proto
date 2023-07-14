@@ -1808,7 +1808,7 @@ service WFM {
   }
 
   // Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
-  // Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+  // Only the @name, @description and @datetime_set_to_inactive fields may be updated, and must be filled in with current value if updating the field is not desired.
   // The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
   // All other fields will be ignored since they cannot be updated.
   // Required permissions:
@@ -4036,6 +4036,10 @@ message ScheduleScenario {
   google.protobuf.Int64Value copied_from_scenario_sid = 7;
   // Datetime range that schedules will cover when built using this schedule scenario.
   commons.DatetimeRange schedule_range = 8;
+  // Datetime that the sceneario was set to inactive.
+  google.protobuf.Timestamp datetime_set_to_inactive = 9;
+  // Indicates whether or not the scenario is active.
+  bool is_active = 10;
 }
 
 // Request message for the CopyScenario RPC
