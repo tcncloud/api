@@ -608,6 +608,7 @@ service OmniApi {
   rpc SendFeedbackEmail(SendFeedbackEmailReq) returns (SendFeedbackEmailRes) {
     option (google.api.http).post = "/api/v0alpha/omniapi/sendfeedbackemail";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetOmniAttachment - retrieves the omni attachment details based on the request
