@@ -786,7 +786,7 @@ service WFM {
   }
 
   // Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-  // If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+  // If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
   // Averages will be weighted by the number of calls that each historical data interval has.
   // Once the averages are calculated, they will be updated in the db for those skill profiles.
   //
@@ -1632,7 +1632,7 @@ service WFM {
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+  //   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
   //   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
   //   - grpc.Internal: error occurs when removing the agent availability pattern.
   rpc DeleteAgentAvailabilityPattern(DeleteAgentAvailabilityPatternReq) returns (DeleteAgentAvailabilityPatternRes) {
@@ -1836,7 +1836,7 @@ service WFM {
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+  //   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
   //   - grpc.Internal: error occurs when getting the config entities.
   rpc ListConfigEntities(ListConfigEntitiesReq) returns (ListConfigEntitiesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listconfigentities";
@@ -2120,6 +2120,7 @@ service WFM {
   }
 
   // Creates a shift instance for the org sending the request with the provided parameters.
+  // This method is not implemented. Do not use.
   // Required permissions:
   // NONE
   // Errors:
@@ -2127,6 +2128,27 @@ service WFM {
   //   - grpc.Internal: error occurs when creating the shift instance.
   rpc CreateShiftInstance(CreateShiftInstanceReq) returns (CreateShiftInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstance";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates a shift instance for the org sending the request with the provided parameters.
+  // If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+  // A shift instance will be created for each wfm agent sid provided.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when creating the shift instance.
+  //   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+  rpc CreateShiftInstanceV2(CreateShiftInstanceV2Req) returns (CreateShiftInstanceV2Res) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstancev2";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -2392,8 +2414,6 @@ message UpdateSkillProfileProficienciesReq {
     int32 proficiency = 3;
   }
 
-  // Org ID that the skill profiles belong to.
-  string org_id = 1;
   // Proficiencies to update.
   repeated Proficiency proficiencies = 2;
 }
@@ -4664,6 +4684,7 @@ message DeleteDraftScheduleReq {
 message DeleteDraftScheduleRes {}
 
 // Request message for the CreateShiftInstance RPC
+// Method is Unimplimented. Use CreateShiftInstanceV2 instead.
 message CreateShiftInstanceReq {
   // ID of the draft schedule for the shift instance.
   int64 draft_schedule_sid = 1;
@@ -4688,6 +4709,30 @@ message CreateShiftInstanceRes {
   ShiftInstance shift_instance = 1;
   // Performance metrics that this shift instance has.
   repeated PerformanceMetric performance_metrics = 2;
+}
+
+// Request message for the CreateShiftInstanceV2 RPC
+message CreateShiftInstanceV2Req {
+  // ID of the draft schedule for the shift instance.
+  int64 draft_schedule_sid = 1;
+  // ID of the shift template for the shift instance.
+  int64 shift_template_sid = 2;
+  // Start datetime of the shift instance.
+  google.protobuf.Timestamp start_datetime = 3;
+  // Indicates whether the shift instance is locked.
+  bool is_locked = 4;
+  // ID of the wfm agents for the shift instance.
+  // If empty it will create a new unassigned WfmAgent for the shift instance.
+  // If given more than one sid, then a copy of the instance will be created for each agent.
+  repeated int64 wfm_agent_sids = 5;
+}
+
+// Response message for the CreateShiftInstanceV2 RPC
+message CreateShiftInstanceV2Res {
+  // Any shift instances that were created.
+  repeated ShiftInstance shift_instances = 1;
+  // Diagnostics to report cause if shift instances fail to build.
+  repeated Diagnostic diagnostics = 2;
 }
 
 // Request message for the SwapShiftInstances RPC
