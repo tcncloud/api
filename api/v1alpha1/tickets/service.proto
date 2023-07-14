@@ -226,4 +226,30 @@ service Tickets {
       ];
     };
   }
+  // Public Method to edit a ticket.
+  // EditTicket would be deprecated
+  rpc EditMaskTicket(EditMaskTicketReq) returns (EditMaskTicketRes) {
+    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editmaskticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+  rpc ListAllocatedTickets(ListAllocatedTicketReq) returns (ListAllocatedTicketRes) {
+    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listallocatedtickets";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
 }

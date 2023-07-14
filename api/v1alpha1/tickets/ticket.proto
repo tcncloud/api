@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.tickets;
 
 import "api/commons/tickets.proto";
+import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 message PingReq {}
@@ -45,6 +46,28 @@ message EditTicketReq {
   // The comment text
   api.commons.EditAttribute edit_value = 2;
 }
+
+// EditMaskTicketReq - Request for EditMaskTicket
+// EditTicketReq would be deprecated
+message EditMaskTicketReq {
+  int64 ticket_sid = 1 [jstype = JS_STRING];
+  api.commons.Ticket edit_value = 2;
+  repeated google.protobuf.FieldMask edited_fields_mask = 3;
+}
+
+// EditMaskTicketRes - Response for EditMaskTicketReq
+// EditTicketRes would be deprecated
+message EditMaskTicketRes {
+  bool is_edited = 1;
+}
+
+// ListAllocatedTicketRes -
+message ListAllocatedTicketRes {
+  repeated int64 ticket_sid = 1 [jstype = JS_STRING];
+}
+
+// ListAllocatedTicketReq -
+message ListAllocatedTicketReq {}
 
 // EditTicketRes - Response for EditTicketReq
 message EditTicketRes {
