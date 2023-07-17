@@ -141,6 +141,9 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
       ];
     };
@@ -163,6 +166,9 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
       ];
     };
@@ -174,6 +180,9 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
       ];
     };
@@ -185,6 +194,9 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
       ];
     };
