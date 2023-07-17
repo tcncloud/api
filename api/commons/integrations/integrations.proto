@@ -540,6 +540,8 @@ message PaymentFlow {
     PaymentAuthorizeNetPaypal authorize_net_paypal = 6;
     PaymentAuthorizeNetApplePay authorize_net_apple_pay = 7;
     PaymentAuthorizeNetGooglePay authorize_net_google_pay = 8;
+    PaymentPaywaySubmitCardSaleRequest payway_submit_card_sale_request = 9;
+    PaymentPaywaySubmitACHAlertRequest payway_submit_ach_alert_request = 10;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
@@ -851,6 +853,9 @@ message PaymentAuthorizeNetACH {}
 message PaymentAuthorizeNetPaypal {}
 message PaymentAuthorizeNetApplePay {}
 message PaymentAuthorizeNetGooglePay {}
+
+message PaymentPaywaySubmitCardSaleRequest {}
+message PaymentPaywaySubmitACHAlertRequest {}
 
 // execute flows
 message ExecuteBraintreeCreditSale {}
