@@ -144,10 +144,9 @@ message DateExp {
 }
 
 message HolidayExp {
-  reserved 1, 2;
-  string name = 3;
-  string country = 4;
-  string type = 5;
+  string name = 1;
+  string country = 2;
+  string type = 3;
 }
 
 message MetaFieldExp {
