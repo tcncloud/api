@@ -122,6 +122,27 @@ service Learn {
       ];
     };
   }
+
+  // get snippet content from learning pages
+  // we allow all the logged in agents/admins to view snippet content
+  rpc Snippet(SnippetReq) returns (SnippetRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/snippet";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // delete learning pages
+  rpc DeleteLearnPages(DeleteLearnPagesReq) returns (DeleteLearnPagesRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/deletelearnpages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -288,3 +309,35 @@ message DeleteStandaloneReq {
 
 // response to delete standalone articles
 message DeleteStandaloneRes {}
+
+// request to get snippets
+message SnippetReq {
+  // locale used for the markdown contents
+  string locale = 1;
+}
+
+// response to get snippets
+message SnippetRes {
+  repeated LearnSnippetDetails snippet_details = 1;
+}
+
+// snippet details
+message LearnSnippetDetails {
+  // storage bucket
+  string name = 1;
+  // markdown content
+  string content = 2;
+  // The last time this learning content was edited.
+  google.protobuf.Timestamp last_edited_timestamp = 3;
+}
+
+// request to delete learn pages
+message DeleteLearnPagesReq {
+  // locale used for the markdown contents
+  string locale = 1;
+  // list of learning urls to be deleted
+  repeated string url = 2;
+}
+
+// response to delete learn pages
+message DeleteLearnPagesRes {}
