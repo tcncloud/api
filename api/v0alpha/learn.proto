@@ -45,9 +45,18 @@ service Learn {
   }
 
   // search content in learning pages
+  // we allow all the logged in agents/admins to view search content
   rpc SearchContent(SearchContentReq) returns (SearchRes) {
     option (google.api.http).post = "/api/v0alpha/learn/searchcontent";
-    option (google.api.http).body = "*"; //SearchContent intentionally empty, no perm required
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // stream search content results in learning pages
+  // we allow all the logged in agents/admins to view search content
+  rpc ListSearchResults(SearchContentReq) returns (stream SearchRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/listsearchresults";
+    option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
 
