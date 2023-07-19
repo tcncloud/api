@@ -4,18 +4,18 @@ package api.commons.workflows;
 
 // OmniBotNodeTestStart represents an omni-bot start-of-test node.
 message OmniBotNodeTestStart {
-  // Optional. Startup data to be used by the test.
-  string data = 1;
+  // deprecated
+  string data = 1 [deprecated = true];
 }
 
 // OmniBotNodeTestStep represents an omni-bot test-step node.
 message OmniBotNodeTestStep {
-  // Required. Data to be used by the test.
-  string data = 1;
+  // deprecated
+  string data = 1 [deprecated = true];
 }
 
 // OmniBotNodeTestEnd represents an omni-bot end-of-test node.
 message OmniBotNodeTestEnd {
-  // Optional. Error message if the test failed.
-  string error = 1;
+  // deprecated
+  string error = 1 [deprecated = true];
 }
