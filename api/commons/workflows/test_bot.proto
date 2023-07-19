@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package api.commons.workflows;
+
+import "api/commons/auth/user.proto";
+import "api/v0alpha/omniapi.proto";
+
+// TestBotNodeTestStart represents a start-of-test node.
+message TestBotNodeTestStart {
+  // Optional. The entities the test requires to run, where
+  // the key is a unique name given to the entity for the
+  // sole purpose of this flow.
+  map<string, TestBotEntity> entities = 1;
+}
+
+// TestBotNodeTestStep represents an test-bot test-step node.
+message TestBotNodeTestStep {
+  // Optional. Whether the test should error if the step fails.
+  bool should_error = 1;
+  // Required. The type of test step.
+  TestBotTestStepType type = 2;
+  // Optional. The names of the entities to use in the test step.
+  // These names must correspond to the names provided in the
+  // NodeTestStart message.
+  repeated string entity_names = 3;
+}
+
+// TestBotNodeTestEnd represents an test-bot end-of-test node.
+message TestBotNodeTestEnd {
+  // Optional. Error message if the test failed.
+  string error = 1;
+}
+
+// TestBotTestStepType represents the type of test step.
+enum TestBotTestStepType {
+  TEST_BOT_TEST_STEP_TYPE_UNSPECIFIED = 0;
+
+  // OMNICHANNEL
+  TEST_BOT_TEST_STEP_TYPE_OMNICHANNEL_CREATE_PROJECT = 1000;
+  TEST_BOT_TEST_STEP_TYPE_OMNICHANNEL_GET_PROJECT = 1001;
+}
+
+// TestBotEntity represents an entity that is required for the test.
+message TestBotEntity {
+  // Required. The entity type.
+  TestBotEntityType type = 1;
+  // Optional. Whether the entity is "atomic." An atomic entity
+  // is one that can only be used by one test at any given time.
+  bool atomic = 2;
+  // Required. The entity value.
+  oneof data {
+    api.commons.auth.AuthenticatedUser user = 100;
+
+    // OMNICHANNEL
+    api.v0alpha.Project omnichannel_project = 300;
+  }
+}
+
+// TestBotEntityType represents the type of entity.
+enum TestBotEntityType {
+  TEST_BOT_ENTITY_TYPE_UNSPECIFIED = 0;
+  TEST_BOT_ENTITY_TYPE_USER = 100;
+
+  // OMNICHANNEL
+  TEST_BOT_ENTITY_TYPE_OMNICHANNEL_PROJECT = 300;
+}
