@@ -9,7 +9,10 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 // GetBillingPlanReq - request to get an organization's billing plan
-message GetBillingPlanReq {}
+message GetBillingPlanReq {
+  // Required. the identifier of the organization to get the plan for
+  string org_id = 1;
+}
 
 // GetBillingPlanRes - result of retrieving an organization's billing plan
 message GetBillingPlanRes {
@@ -21,6 +24,8 @@ message GetBillingPlanRes {
 message UpdateBillingPlanReq {
   // Required. the billing details to update
   repeated api.commons.billing.Detail billing_details = 1;
+  // Required. the identifier of the organization to update the plan for
+  string org_id = 2;
 }
 
 // UpdateBillingPlanRes - result of updating a billing plan; contains
@@ -37,10 +42,49 @@ message GetInvoiceReq {
   // Otherwise, it will return the invoice associated with the billing
   // cycle that contains the specified date.
   google.protobuf.Timestamp invoice_date = 1;
+  // Required. the identifier of the organization to update the plan for
+  string org_id = 2;
+  // Optional. the invoice for the organization. If not specified,
+  // will use the proto format as the default
+  InvoiceFormat format = 3;
 }
 
 // GetInvoiceRes - result of retrieving an invoice
 message GetInvoiceRes {
-  // the invoice for the organization
+  // deprecated
   api.commons.billing.Invoice invoice = 1;
+  // the invoice for the organization
+  oneof format {
+    api.commons.billing.Invoice proto = 2;
+    string csv_url = 3;
+  }
+}
+
+// ExportGenerateInvoicesReq - request to export a generated invoice
+message ExportGeneratedInvoiceReq {
+  // Optional. the date of the invoice to retrieve. If not specified,
+  // will return the invoice associated with the current billing cycle.
+  // Otherwise, it will return the invoice associated with the billing
+  // cycle that contains the specified date.
+  google.protobuf.Timestamp invoice_date = 1;
+  // Required. the identifier of the organization to get the plan for
+  string org_id = 2;
+  // Optional. the invoice for the organization. If not specified,
+  // will use the proto format as the default
+  InvoiceFormat format = 3;
+}
+
+// ExportGeneratedInvoicesRes - result of exporting a generated invoice
+message ExportGeneratedInvoiceRes {
+  // the invoice for the organization
+  oneof format {
+    api.commons.billing.Invoice proto = 1;
+    string csv_url = 2;
+  }
+}
+
+enum InvoiceFormat {
+  INVOICE_FORMAT_UNSPECIFIED = 0;
+  INVOICE_FORMAT_PROTO = 1;
+  INVOICE_FORMAT_CSV = 2;
 }

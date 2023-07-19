@@ -15,10 +15,7 @@ service Billing {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_BILLING_EDIT
-          ];
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ];
     };
@@ -37,10 +34,7 @@ service Billing {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_BILLING_EDIT
-          ];
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ];
     };
@@ -57,10 +51,19 @@ service Billing {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING
-          ];
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  rpc ExportGeneratedInvoice(ExportGeneratedInvoiceReq) returns (ExportGeneratedInvoiceRes) {
+    option (google.api.http).post = "/api/v1alpha1/billing/exportgeneratedinvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ];
     };
