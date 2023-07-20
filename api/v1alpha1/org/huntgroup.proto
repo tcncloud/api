@@ -104,6 +104,28 @@ message CreateDataDipTemplateResponse {
   int64 xml_client_property_sid = 1;
 }
 
+// Request message for UpdateDataDipTemplate RPC method.
+message UpdateDataDipTemplateRequest {
+  // Org ID.
+  string org_id = 1;
+  // The template to save.
+  api.commons.org.DataDipConfig template = 2;
+}
+
+// Response message for UpdateDataDipTemplate RPC method.
+message UpdateDataDipTemplateResponse {}
+
+// Request message for DeleteDataDipTemplate RPC method.
+message DeleteDataDipTemplateRequest {
+  // Org ID.
+  string org_id = 1;
+  // The ID of the template to delete.
+  int64 xml_client_property_sid = 2;
+}
+
+// Response message for DeleteDataDipTemplate RPC method.
+message DeleteDataDipTemplateResponse {}
+
 // Request message for the ListAgentResponseAutoRules RPC method.
 message ListAgentResponseAutoRulesRequest {}
 

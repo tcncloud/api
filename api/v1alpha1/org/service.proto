@@ -1351,9 +1351,32 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
-        },
+        }
+      ];
+    };
+  }
+
+  // Updates a data dip template.
+  rpc UpdateDataDipTemplate(UpdateDataDipTemplateRequest) returns (UpdateDataDipTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatedatadiptemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Deletes a data dip template.
+  rpc DeleteDataDipTemplate(DeleteDataDipTemplateRequest) returns (DeleteDataDipTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/deletedatadiptemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
       ];
     };
