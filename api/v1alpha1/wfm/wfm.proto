@@ -2178,6 +2178,7 @@ service WFM {
   }
 
   // Updates a shift instance for the org sending the request with the provided parameters.
+  // This method is not implemented. Do not use.
   // Required permissions:
   // NONE
   // Errors:
@@ -2185,6 +2186,24 @@ service WFM {
   //   - grpc.Internal: error occurs when updating the shift instance.
   rpc UpdateShiftInstance(UpdateShiftInstanceReq) returns (UpdateShiftInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstance";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates a shift instance for the org sending the request with the provided parameters.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when updating the shift instance.
+  rpc UpdateShiftInstanceV2(UpdateShiftInstanceV2Req) returns (UpdateShiftInstanceV2Res) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancev2";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -4525,6 +4544,8 @@ message CreateDraftScheduleReq {
   string description = 2;
   // Range to retrieve shift instances and segments from the published schedule to use for this draft schedule.
   commons.DatetimeRange scheduling_range = 3;
+  // ID of the schedule scenario that the draft schedule will be associated with.
+  int64 schedule_scenario_sid = 4;
 }
 
 // Response message for the CreateDraftSchedule RPC
@@ -4775,6 +4796,30 @@ message UpdateShiftInstanceRes {
   ShiftInstance shift_instance = 1;
   // Performance metrics that this shift instance has.
   repeated PerformanceMetric performance_metrics = 2;
+}
+
+// Request message for the UpdateShiftInstanceV2 RPC
+message UpdateShiftInstanceV2Req {
+  // ID of the shift instance to update.
+  int64 shift_instance_sid = 1;
+  // The new start time for the updated shift instance.
+  google.protobuf.Timestamp start_datetime = 2;
+  // The width of the updated shift instance
+  int32 width_in_minutes = 3;
+  // The updated wfm agent to be assigned to @shift_segment_sid.
+  int64 wfm_agent_sid = 4;
+  // If true, locks @shift_instance_sid, so that it may not be updated again without being unlocked.
+  // if true and the shift instance already is locked, the instance will not have any fields updated.
+  // If false, will unlock a currently locked shift instance and allow it to be updated.
+  bool is_locked = 5;
+}
+
+// Response message for the UpdateShiftInstanceV2 RPC
+message UpdateShiftInstanceV2Res {
+  // The updated shift instance.
+  ShiftInstance shift_instance = 1;
+  // A list of diagnostics for any errors encountered, which prevented the update.
+  repeated Diagnostic diagnostics = 2;
 }
 
 // ListShiftSegmentsByShiftInstanceSids request.
