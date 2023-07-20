@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package api.v1alpha1.agenttraining;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/agenttraining/learning_opportunity.proto";
+import "google/api/annotations.proto";
+
+service AgentTrainingService {
+  // CreateLearningOpportunity creates a new learning opportunity.
+  rpc CreateLearningOpportunity(CreateLearningOpportunityRequest) returns (CreateLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/createlearningopportunity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
+  }
+
+  // ListLearningOpportunities lists learning opportunities.
+  rpc ListLearningOpportunities(ListLearningOpportunitiesRequest) returns (ListLearningOpportunitiesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/listlearningopportunities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
+  }
+}

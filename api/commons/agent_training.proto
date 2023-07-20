@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "api/commons/acd.proto";
+
+// LearningOpportunity represents a single learning opportunity entity.
+message LearningOpportunity {
+  int64 learning_opportunity_id = 2; // Unique id of the learning opportunity.
+  int64 call_sid = 3; // Call sid of the learning opportunity's related call.
+  api.commons.CallType.Enum call_type = 4; // Call type of the learning opportunity's related call.
+  int64 transcript_sid = 5; // (optional) Transcript sid of the learning opportunity's related transcript.
+  string agent_user_id = 6; // Agent user id of the agent receiving the learning opportunity.
+  int32 start_offset = 7; // Start offset (in milliseconds) of the learning opportunity.
+  int32 end_offset = 8; // End offset (in milliseconds) of the learning opportunity.
+  string description = 9; // (optional) Description text.
+}
