@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package api.v1alpha1.agenttraining;
+
+import "api/commons/agent_training.proto";
+
+// CreateLearningOpportunityRequest represents a request to create a new learning opportunity.
+message CreateLearningOpportunityRequest {
+  api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
+// CreateLearningOpportunityResponse represents the created learning opportunity.
+message CreateLearningOpportunityResponse {
+  api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
+// ListLearningOpportunitiesRequest represents a request to list learning opportunities.
+message ListLearningOpportunitiesRequest {}
+
+// ListLearningOpportunitiesResponse represents the listed learning opportunities.
+message ListLearningOpportunitiesResponse {
+  repeated api.commons.LearningOpportunity learning_opportunities = 1;
+}
