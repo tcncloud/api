@@ -148,6 +148,30 @@ service LMS {
       ];
     };
   }
+  rpc ListFieldsForElement(ListFieldsForElementReq) returns (ListFieldsForElementRes) {
+    option (google.api.http).post = "/api/v0alpha/lms/fieldsforelement";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+
+  rpc ListAutocompleteFields(ListAutocompleteFieldsReq) returns (ListAutocompleteFieldsRes) {
+    option (google.api.http).post = "/api/v0alpha/lms/autocompletefields";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+
   // list campaign links and descriptions
   rpc ListCampaignLinks(google.protobuf.Empty) returns (ListCampaignLinksRes) {
     option (google.api.http).post = "/api/v0alpha/lms/campaignlink/list";
@@ -196,6 +220,17 @@ service LMS {
   }
   rpc ListElements(ListElementsReq) returns (stream Element) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GetElement(ElementPK) returns (Element) {
+    option (google.api.http).post = "/api/v0alpha/lms/pipelines/get";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -582,6 +617,19 @@ message ProcessElementReq {
 }
 
 message ListAvailableFieldsByElementIdReq {
+  string element_id = 1;
+}
+message ListFieldsForElementReq {
+  string element_id = 1;
+}
+message ListFieldsForElementRes {
+  repeated Field fields = 1;
+}
+message ListAutocompleteFieldsReq {}
+message ListAutocompleteFieldsRes {
+  repeated Field fields = 1;
+}
+message ElementPK {
   string element_id = 1;
 }
 
@@ -2155,7 +2203,8 @@ message ListMetrics {
   repeated string field_names = 3;
   // all the field types that exist. field_types[i] has a name of field_names[i].
   // THeir indexes match up
-  repeated api.commons.RecordType field_types = 4;
+  repeated api.commons.RecordType field_types = 4 [deprecated = true];
+  repeated api.commons.FieldType ftypes = 18;
   // the counts of the field_name[i], field_type[i] pairs.
   // ex: if field_name[i] == 'test' and field_types[i] == record_type_err, and field_counts[i] == 10
   // means we woud have 10 fiels named test that were error types in the list.
