@@ -336,7 +336,6 @@ message AgentCallLogActionValue {
     DNCL_RESULT_FAILED = 1;
     CALL_ENDED_CALLER_DISCONNECTED = 2; // Ended via the agent.
     /*DNCL_RESULT_ADDED    = "ADDED ";
-
        DNCL_NUMBER          = "NUMBER: ";
        DNCL_COUNTRY         = "COUNTRY: ";
        DNCL_EXPIRATION      = "EXPIRATION: ";*/
