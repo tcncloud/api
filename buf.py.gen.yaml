@@ -6,5 +6,6 @@ plugins:
     out: pytcnapi
   # dependencies
   - plugin: buf.build/protocolbuffers/python
-    out: pytcnapi 
-
+    out: pytcnapi
+  - plugin: buf.build/protocolbuffers/pyi
+    out: pytcnapi
