@@ -3683,6 +3683,8 @@ message ShiftTemplate {
   // May include more sets of seven days to represent another sequential week (ie, 21 placements for 3 weeks).
   // The DOWPlacements represents sequential days of the week, always starting on Sunday.
   repeated DOWPlacement DOW_placements = 16;
+  // agent groups that are children of call center node
+  repeated AgentGroup member_agent_groups = 17;
 }
 
 // Request message for the CreateShiftTemplate RPC
