@@ -244,6 +244,118 @@ message SearchQuery {
   // Optional. Queries on agent call log.
   AgentCallLog agent_call_log = 10;
 
+  // Optional. Queries on phone.
+  Phone phone = 11;
+
+  // Phone defines a query on the phone.
+  message Phone {
+    // Optional. Queries on phone country code.
+    Cc cc = 1;
+
+    // Optional. Queries on phone ndc (area code).
+    Ndc ndc = 2;
+
+    // Optional. Queries on phone subscriber number prefix.
+    Prefix prefix = 3;
+
+    // Optional. Queries on phone city.
+    City city = 4;
+
+    // Optional. Queries on phone iso2 country code.
+    Iso2 iso2 = 5;
+
+    // Optional. Queries on phone region code.
+    RegionCode region_code = 6;
+
+    // Optional. Queries on phone region name.
+    RegionName region_name = 7;
+
+    // Optional. Queries on phone time zone.
+    TimeZone time_zone = 8;
+
+    // Optional. Queries on phone number type.
+    Type type = 9;
+
+    // Optional. Queries on phone number utc.
+    Utc utc = 10;
+
+    // Optional. Queries on phone number location.
+    Location location = 11;
+  }
+
+  // Cc defines a query on the phone country code.
+  message Cc {
+    // Optional. Queries where cc in list provided.
+    repeated string in = 1;
+  }
+
+  // Ndc defines a query on the phone ndc.
+  message Ndc {
+    // Optional. Queries where ndc in list provided.
+    repeated string in = 1;
+  }
+
+  // Prefix defines a query on the phone prefix.
+  message Prefix {
+    // Optional. Queries where prefix in list provided.
+    repeated string in = 1;
+  }
+
+  // City defines a query on the phone city.
+  message City {
+    // Optional. Queries where city in list provided.
+    repeated string in = 1;
+  }
+
+  // Iso2 defines a query on the phone Iso2.
+  message Iso2 {
+    // Optional. Queries where iso2 in list provided.
+    repeated string in = 1;
+  }
+
+  // RegionCode defines a query on the phone region code.
+  message RegionCode {
+    // Optional. Queries where region code in list provided.
+    repeated string in = 1;
+  }
+
+  // RegionName defines a query on the phone region name.
+  message RegionName {
+    // Optional. Queries where region name in list provided.
+    repeated string in = 1;
+  }
+
+  // TimeZone defines a query on the phone time zone.
+  message TimeZone {
+    // Optional. Queries where time zone in list provided.
+    repeated string in = 1;
+  }
+
+  // Type defines a query on the phone type.
+  message Type {
+    // Optional. Queries where type in list provided.
+    repeated string in = 1;
+  }
+
+  // Utc defines a query on the phone utc.
+  message Utc {
+    // Optional. Queries where utc in list provided.
+    repeated float in = 1;
+  }
+
+  // Location defines a query on the phone location.
+  message Location {
+    ZipCodeProximity zip_code_proximity = 1;
+    message ZipCodeProximity {
+      // Required. Queries on phone number country code.
+      string country_code = 1;
+      // Required. Queries where phone location is within distance of zipcode.
+      string zip_code = 2;
+      // Required. Queries where phone location is within distance (km or mi) of zipcode. For example: 100km.
+      string distance = 3;
+    }
+  }
+
   // AgentCallLog is a query for the agent call log.
   message AgentCallLog {
     // Optional. Call skills initial will query the initial call skills.
