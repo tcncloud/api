@@ -549,6 +549,18 @@ service LMS {
       ];
     };
   }
+
+  rpc GetQueuedEventsStatusByElementId(ElementPK) returns (Events) {
+    option (google.api.http).post = "/api/v0alpha/lms/collections/getqueuedeventsstatusbyelementid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
 }
 
 message GetPublicKeyReq {}
