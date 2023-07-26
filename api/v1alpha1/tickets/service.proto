@@ -240,9 +240,50 @@ service Tickets {
       ];
     };
   }
+
   rpc ListAllocatedTickets(ListAllocatedTicketReq) returns (ListAllocatedTicketRes) {
     // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listallocatedtickets";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  //public method - to return list of available tickets to pick for an Agent
+  rpc ListAvailableAgentTickets(ListAvailableAgentTicketsRequest) returns (ListAvailableAgentTicketsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listavailableagenttickets";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // public method to fetch list of skills for a tickets user
+  rpc ListSkills(ListSkillsRequest) returns (ListSkillsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // public method to fetch list of users for a tickets user
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listusers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
