@@ -20,8 +20,22 @@ service AuthConnectionService {
     };
   }
 
-  // GetAuthConnectionSettings gets auth0 connection settings.
+  // GetAuthConnectionSettings gets auth connection settings.
+  // DEPRECATED: use GetAuthConnection
   rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/getsettings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
+  // GetAuthConnection gets an existing auth connection.
+  rpc GetAuthConnection(GetAuthConnectionRequest) returns (GetAuthConnectionResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/connection/get";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
