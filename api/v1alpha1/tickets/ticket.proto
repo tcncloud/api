@@ -63,11 +63,22 @@ message EditMaskTicketRes {
 
 // ListAllocatedTicketRes -
 message ListAllocatedTicketRes {
+  option deprecated = true;
   repeated int64 ticket_sid = 1 [jstype = JS_STRING];
 }
 
 // ListAllocatedTicketReq -
-message ListAllocatedTicketReq {}
+message ListAllocatedTicketReq {
+  option deprecated = true;
+}
+
+// ListAvailableAgentTicketsResponse -
+message ListAvailableAgentTicketsResponse {
+  repeated int64 ticket_sid = 1 [jstype = JS_STRING];
+}
+
+// ListAvailableAgentTicketsRequest -
+message ListAvailableAgentTicketsRequest {}
 
 // EditTicketRes - Response for EditTicketReq
 message EditTicketRes {
@@ -230,4 +241,29 @@ message CreateSelfAssignReq {
 // CreateSelfAssignRes -
 message CreateSelfAssignRes {
   bool is_assigned = 1;
+}
+
+// ListSkillsRequest - request message
+message ListSkillsRequest {}
+
+// ListSkillsResponse - response message wraps p3 skills Id and name
+message ListSkillsResponse {
+  repeated Skill skills = 1;
+}
+message Skill {
+  string skill_id = 1;
+  string name = 2;
+}
+
+// ListUsersRequest - Users request message
+message ListUsersRequest {}
+
+// ListUsersResponse - response wraps userId, first_name, last_name
+message ListUsersResponse {
+  repeated User users = 1;
+}
+message User {
+  string user_id = 1;
+  string first_name = 2;
+  string last_name = 3;
 }
