@@ -178,6 +178,8 @@ message ContentRes {
   google.protobuf.Timestamp last_edited_timestamp = 2;
   // List containing static file links from parsing markdown
   repeated LearnImage images = 3;
+  // title of the article
+  string title = 4;
 }
 
 // request to retreive last user edited learning pages content
@@ -200,6 +202,9 @@ message UpdateReq {
 
   // commit message
   string message = 12;
+
+  // title of the article
+  string title = 13;
 }
 
 //response to update learning pages content
@@ -306,6 +311,8 @@ message LearnStandaloneDetails {
   string content = 2;
   // The last time this learning content was edited.
   google.protobuf.Timestamp last_edited_timestamp = 3;
+  // title of the article
+  string title = 4;
 }
 
 // request to delete standalone articles
@@ -338,6 +345,8 @@ message LearnSnippetDetails {
   string content = 2;
   // The last time this learning content was edited.
   google.protobuf.Timestamp last_edited_timestamp = 3;
+  // title of the article
+  string title = 4;
 }
 
 // request to delete learn pages
