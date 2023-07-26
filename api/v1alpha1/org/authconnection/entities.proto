@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.org.authconnection;
 
 import "api/commons/org/auth_connections.proto";
+import "google/protobuf/timestamp.proto";
 
 // Request message for the CreateAuthConnection rpc.
 message CreateAuthConnectionRequest {
@@ -17,13 +18,27 @@ message CreateAuthConnectionRequest {
 }
 
 // Response message for the CreateAuthConnection rpc.
-message CreateAuthConnectionResponse {}
+message CreateAuthConnectionResponse {
+  // The id of the newly created auth connection.
+  string connection_id = 1;
+}
 
 // Request message for the GetAuthConnectionSettings rpc.
 message GetAuthConnectionSettingsRequest {}
 
 // Response message for the GetConnectionSettings rpc.
 message GetAuthConnectionSettingsResponse {
+  api.commons.org.AuthConnectionSettings settings = 1;
+}
+
+// Request message for the GetAuthConnection rpc.
+message GetAuthConnectionRequest {
+  // The id of the connetion to retrieve.
+  string connection_id = 1;
+}
+
+// Response message for the GetAuthConnection rpc.
+message GetAuthConnectionResponse {
   api.commons.org.AuthConnectionSettings settings = 1;
 }
 
@@ -41,6 +56,12 @@ message UpdateAuthConnectionSecretRequest {
   string connection_id = 1;
   // A secret associated with the provider.
   string client_secret = 2;
+  // OPTIONAL: The date the secret will expire.
+  SecretExpiration secret_expiration = 3;
+
+  message SecretExpiration {
+    google.protobuf.Timestamp date = 1;
+  }
 }
 
 // Response message for the UpdateAuthConnectionSecret rpc.
@@ -54,6 +75,8 @@ message UpdateAuthConnectionGroupsRequest {
   // Custom groups. These groups are assigned to users that belong
   // to groups in the sso provider with the same name.
   repeated api.commons.org.GroupItem custom_groups = 2;
+  // the connection that will be updated.
+  string connection_id = 3;
 }
 
 // Response message for the UpdateAuthConnectionGroups rpc.
