@@ -2159,11 +2159,15 @@ service WFM {
     };
   }
 
-  // Swaps a list of shift instances to have a different @wfm_agent_sid.
+  // Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
+  // Returns the swapped @shift_instances after they are succesfully updated.
+  // If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+  // All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
   // Required permissions:
   // NONE
   // Errors:
   //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
   //   - grpc.Internal: error occurs when swapping the shift instances.
   rpc SwapShiftInstances(SwapShiftInstancesReq) returns (SwapShiftInstancesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
@@ -2204,6 +2208,24 @@ service WFM {
   //   - grpc.Internal: error occurs when updating the shift instance.
   rpc UpdateShiftInstanceV2(UpdateShiftInstanceV2Req) returns (UpdateShiftInstanceV2Res) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancev2";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc ListShiftInstanceSidsForAgent(ListShiftInstanceSidsForAgentReq) returns (ListShiftInstanceSidsForAgentRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesidsforagent";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -4760,9 +4782,9 @@ message CreateShiftInstanceV2Res {
 
 // Request message for the SwapShiftInstances RPC
 message SwapShiftInstancesReq {
-  // ID of the wfm agent sid that the shift instances had.
+  // ID of the wfm agent that will swap instances with @wfm_agent_sid2.
   int64 wfm_agent_sid1 = 1;
-  // ID of the wfm agent sid that the shift instances will have.
+  // ID of the wfm agent that will swap instances with @wfm_agent_sid1.
   int64 wfm_agent_sid2 = 2;
   // IDs of the shift instances that will be swapped.
   repeated int64 shift_instance_sids = 3;
@@ -4772,6 +4794,8 @@ message SwapShiftInstancesReq {
 message SwapShiftInstancesRes {
   // Shift instances that were swapped.
   repeated ShiftInstance shift_instances = 1;
+  // Diagnostics for any overlapping shift instances.
+  repeated Diagnostic diagnostics = 2;
 }
 
 // Request message for the UpdateShiftInstance RPC
@@ -4822,6 +4846,22 @@ message UpdateShiftInstanceV2Res {
   ShiftInstance shift_instance = 1;
   // A list of diagnostics for any errors encountered, which prevented the update.
   repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the ListShiftInstanceSidsForAgent RPC
+message ListShiftInstanceSidsForAgentReq {
+  // Schedule to get the shift instance sids from.
+  commons.ScheduleSelector schedule_selector = 1;
+  // The datetime range over which to get the shift instance sids.
+  commons.DatetimeRange datetime_range = 2;
+  // wfm agent to get shifts for.
+  int64 wfm_agent_sid = 3;
+}
+
+// ListShiftInstanceSidsForAgent response RPC.
+message ListShiftInstanceSidsForAgentRes {
+  // Requested shift instance sids.
+  repeated int64 shift_instance_sids = 1;
 }
 
 // ListShiftSegmentsByShiftInstanceSids request.
