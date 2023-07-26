@@ -47,3 +47,9 @@ message InvoiceItem {
   // time the invoice item was last modified
   google.protobuf.Timestamp date_modified = 5;
 }
+
+enum InvoiceFormat {
+  INVOICE_FORMAT_UNSPECIFIED = 0;
+  INVOICE_FORMAT_PROTO = 1;
+  INVOICE_FORMAT_CSV = 2;
+}
