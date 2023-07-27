@@ -299,7 +299,17 @@ message History {
   google.protobuf.Timestamp transfer_complete = 10;
   // the application calling for delivery
   api.commons.OperatorApplications origin = 11;
+  string org_id = 12;
+  // this should only be the first 64 chars of the message_payload
+  string message_payload = 13;
+  // this represents the full actual length of the message_payload from the frontend
+  int32 message_payload_len = 14;
+  // the status of the delivery
+  api.commons.TransferStatus status = 15;
+  bool is_inbound = 16;
+  int64 transaction_sid = 17 [jstype = JS_STRING];
 }
+
 message ListByIDReq {
   // start listing records less than this sid
   int64 before_sid = 2;
