@@ -626,6 +626,8 @@ message GetComplianceScrubListsRes {
 
 message ProcessElementReq {
   string element_id = 1;
+  // says if it was triggered by a cron or manually
+  string process_message = 2;
 }
 
 message ListAvailableFieldsByElementIdReq {
