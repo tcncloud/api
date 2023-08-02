@@ -432,4 +432,27 @@ enum Permission {
 
   // Enables access to workflows builder
   PERMISSION_WORKFLOWS = 4000 [(annotations.perms.options) = {app: APPLICATION_WORKFLOWS}];
+
+  /*
+   * PBX Manager
+   */
+
+  // Enables access to view PBX Manager.
+  PERMISSION_PBX_MANAGER_VIEW = 4100 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_PBX_MANAGER
+    features: [
+      "PBX User Managment",
+      "Extension Group Managment"
+    ]
+  }];
+  // Enables access to create, update, or delete in PBX Manager.
+  PERMISSION_PBX_MANAGER_EDIT = 4101 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_PBX_MANAGER
+    features: [
+      "PBX User Managment",
+      "Extension Group Managment"
+    ]
+  }];
 }

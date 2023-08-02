@@ -38,6 +38,7 @@ enum Card {
   CARD_HUNT_GROUPS = 7;
   CARD_SOUNDBOARD = 8;
   CARD_SUBSCRIPTIONS = 9;
+  CARD_PBX_MANAGER = 10;
 
   // Other app cards (structure them together as shown, delete this comment
   // when new ones are added).
