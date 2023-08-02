@@ -61,9 +61,10 @@ service Learn {
   }
 
   // get standalone articles from learning pages
+  // we allow all the logged in agents/admins to view standalone articles
   rpc Standalone(StandaloneReq) returns (StandaloneRes) {
     option (google.api.http).post = "/api/v0alpha/learn/standalone";
-    option (google.api.http).body = "*"; //Standalone intentionally empty, no perm required
+    option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
 
@@ -296,6 +297,8 @@ message UploadDynamicScreenshotRes {
 message StandaloneReq {
   // locale used for the markdown contents
   string locale = 1;
+  // categorize the articles
+  string category = 2;
 }
 
 // standalone articles
@@ -307,10 +310,10 @@ message StandaloneRes {
 message LearnStandaloneDetails {
   // storage bucket
   string name = 1;
-  // markdown content
-  string content = 2;
-  // The last time this learning content was edited.
-  google.protobuf.Timestamp last_edited_timestamp = 3;
+  // deprecated
+  string content = 2 [deprecated = true];
+  // deprecated
+  google.protobuf.Timestamp last_edited_timestamp = 3 [deprecated = true];
   // title of the article
   string title = 4;
 }
