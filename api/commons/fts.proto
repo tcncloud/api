@@ -15,4 +15,5 @@ enum AppName {
   INTEGRATIONS = 9;
   OMNICHANNEL = 10;
   LEARN = 11;
+  BILLING = 12;
 }
