@@ -184,6 +184,7 @@ message AutoEvaluation {
   int64 transcript_sid = 10; // optional - transcript sid associated with evaluation
   bool expression_matched = 11; // whether the expression was matched or not
   RiskLevel risk_level = 12; // The risk level of the evaluation
+  int32 call_length = 16; // duration of the call audio
 }
 
 // AutoEvaluationQuestion is an auto question in an evaluation.
