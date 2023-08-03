@@ -2218,6 +2218,28 @@ service WFM {
     };
   }
 
+  // Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+  // If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+  //  then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+  // If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+  // Required permissions:
+  // NONE
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when copying the shift instances.
+  rpc CopyShiftInstancesToSchedule(CopyShiftInstancesToScheduleReq) returns (CopyShiftInstancesToScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/copyshiftinstancestoschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
   // Required permissions:
   //   NONE
@@ -4846,6 +4868,24 @@ message UpdateShiftInstanceV2Res {
   ShiftInstance shift_instance = 1;
   // A list of diagnostics for any errors encountered, which prevented the update.
   repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the CopyShiftInstancesToSchedule RPC
+message CopyShiftInstancesToScheduleReq {
+  // Schedule that the @shift_instance_sids will be copied into.
+  .api.commons.ScheduleSelector destination_schedule = 1;
+  // IDs of the shift instances to copy into @destination_schedule.
+  repeated int64 shift_instance_sids = 2;
+  // If set to true, overlapping shifts will be permitted, and return a warning diagnostic after persisting.
+  // Otherwise, any overlapping shifts for agents in the @destination_schedule will return an error diagnostic and no shifts will be copied.
+  bool overlap_as_warning = 3;
+}
+
+// Response message for the CopyShiftInstancesToSchedule RPC
+message CopyShiftInstancesToScheduleRes {
+  // A list of diagnostics for any errors encountered, which prevented the copy.
+  // If @overlap_as_warning is set to true, warning diagnostics for overlaps may be returned after a sucessful copy.
+  repeated Diagnostic diagnostics = 1;
 }
 
 // Request message for the ListShiftInstanceSidsForAgent RPC
