@@ -67,3 +67,12 @@ message ListEvaluationsRequest {
 message ListEvaluationsResponse {
   repeated api.commons.Evaluation evaluations = 1;
 }
+
+message PreviewEvaluationScoreRequest {
+  api.commons.Evaluation evaluation = 2; // Required - evaluation to preview score of
+  api.commons.Scorecard scorecard = 3; // Required - scorecard the evaluation belongs too
+}
+
+message PreviewEvaluationScoreResponse {
+  api.commons.Evaluation evaluation = 1; // preview of scored evaluation
+}
