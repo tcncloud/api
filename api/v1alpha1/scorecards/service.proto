@@ -596,4 +596,17 @@ service Scorecards {
       ];
     };
   }
+
+  // PreviewEvaluationScore previews the score for an evaluation
+  rpc PreviewEvaluationScore(PreviewEvaluationScoreRequest) returns (PreviewEvaluationScoreResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/previewevaluationscore";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
+  }
 }
