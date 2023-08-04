@@ -338,6 +338,11 @@ enum Permission {
     ]
   }];
 
+  PERMISSION_OMNI_PORTALS_VIEW = 1210 [(annotations.perms.options) = {
+    app: APPLICATION_OMNI_BOSS
+    features: ["Portals"]
+  }];
+
   /*
    * Integrations app
    */
