@@ -118,6 +118,12 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
       ];
     };
