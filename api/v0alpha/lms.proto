@@ -2076,7 +2076,9 @@ message ReshapeAction {
   // convert a field to another type, if conversion fails, it will be an error
   // type
   message Convert {
-    api.commons.RecordType newType = 17;
+    api.commons.RecordType newType = 17 [deprecated = true];
+    Field new_field = 18;
+    RecordFieldProto default_value = 19;
   }
   // will remove "field" from the record
   message RemoveField {}
