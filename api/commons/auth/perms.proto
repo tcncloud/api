@@ -396,6 +396,8 @@ enum Permission {
   PERMISSION_SCORECARDS_MANAGE = 1601 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
   // Enables access to evaluating scorecards.
   PERMISSION_SCORECARDS_EVALUATE = 1602 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
+  // Enables access to flag eval features.
+  PERMISSION_SCORECARDS_FLAG_EVAL = 1603 [(annotations.perms.options) = {app: APPLICATION_SCORECARDS}];
 
   /*
    * Dev Tools
