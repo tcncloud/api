@@ -422,3 +422,13 @@ message SkillProfileCategory {
   // Category type for @skill_profile_category_sid.
   CategoryType skill_profile_category_type = 2;
 }
+
+// Enum representing the options for bitmap creation.
+enum BitmapType {
+  // The complete bitmap type. Bitmaps will be generated using all relevant pattern data.
+  COMPLETE = 0;
+  // The bitmaps will be created using only the weekmaps from the patterns.
+  ONLY_WEEKMAPS = 1;
+  // The bitmaps will be created using only the calendar items from the patterns.
+  ONLY_CALENDAR_ITEMS = 2;
+}
