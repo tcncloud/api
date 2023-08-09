@@ -318,8 +318,8 @@ message ListAgentsResponse {
     // An object with the hunt group fields required for the call
     HuntGroup hunt_group = 8;
     // Reserving a space for labels
-    reserved "labels";
-    reserved 9;
+    // reserved "labels";
+    // reserved 9;
     // Whether the agent is delegated (sso related)
     bool delegated = 10;
     // A list of the trust ids the user has been assigned.
@@ -374,8 +374,8 @@ message ListUsersResponse {
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 9;
     // Reserving a space for labels
-    reserved "labels";
-    reserved 10;
+    // reserved "labels";
+    // reserved 10;
     // Whether the user is an account owner
     bool account_owner = 11;
     // Whether the user is also an agent
@@ -417,8 +417,8 @@ message ListUsersByOrgIdResponse {
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 8;
     // Reserving a space for labels
-    reserved "labels";
-    reserved 9;
+    // reserved "labels";
+    // reserved 9;
     // Whether the user is an account owner
     bool account_owner = 10;
     // Whether the user is also an agent
@@ -460,8 +460,8 @@ message ListUsersByRegionResponse {
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 9;
     // Reserving a space for labels
-    reserved "labels";
-    reserved 10;
+    // reserved "labels";
+    // reserved 10;
     // Whether the user is an account owner
     bool account_owner = 11;
     // Whether the user is also an agent
