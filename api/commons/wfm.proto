@@ -406,3 +406,19 @@ message ScheduleSelector {
   // Type of the schedule to select.
   ScheduleType schedule_type = 2;
 }
+
+// Indetifier for a skill profile category.
+message SkillProfileCategory {
+  // enum representing the type of a of skill profile category.
+  enum CategoryType {
+    // Single skill profile.
+    SINGLE_SKILL_PROFILE = 0;
+    // Skill profile group.
+    SKILL_PROFILE_GROUP = 1;
+  }
+
+  // ID of either a skill profile or a skill profile group determined by @skill_profile_category_type.
+  int64 skill_profile_category_sid = 1;
+  // Category type for @skill_profile_category_sid.
+  CategoryType skill_profile_category_type = 2;
+}
