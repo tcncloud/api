@@ -292,6 +292,7 @@ enum OperatorApplications {
 
   TICKETS_APP = 31; // Ticketing System
   AGENT_BETA_APP = 32; // Agent Beta
+  NEWSROOM_APP = 33; // Newsroom
 }
 
 enum AnnouncementMixingOption {

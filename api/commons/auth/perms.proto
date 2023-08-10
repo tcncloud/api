@@ -462,4 +462,14 @@ enum Permission {
       "Extension Group Managment"
     ]
   }];
+
+  /*
+   * Newsroom
+   */
+
+  // No view permissions required for Newsroom home
+  // Enables access to create, update, and archive in Newsroom manager
+  PERMISSION_NEWSROOM_EDIT = 4200 [(annotations.perms.options) = {app: APPLICATION_NEWSROOM}];
+  // Enables access to publish in Newsroom manager
+  PERMISSION_NEWSROOM_PUBLISH = 4201 [(annotations.perms.options) = {app: APPLICATION_NEWSROOM}];
 }
