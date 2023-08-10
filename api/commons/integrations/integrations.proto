@@ -41,6 +41,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_SHIFT4 = 3400;
   INTEGRATION_TYPE_POSCORP = 3500;
   INTEGRATION_TYPE_PIANO = 3600;
+  INTEGRATION_TYPE_EPIC = 3700;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -254,6 +255,14 @@ enum RequestMethod {
 
   REQUEST_METHOD_PIANO_GET_USER = 3601;
   REQUEST_METHOD_PIANO_UPDATE_USER = 3602;
+
+  REQUEST_METHOD_EPIC_GET_TOKEN = 3701;
+  REQUEST_METHOD_EPIC_GET_PATIENT = 3702;
+  REQUEST_METHOD_EPIC_MATCH_PATIENT = 3703;
+  REQUEST_METHOD_EPIC_SEARCH_APPOINTMENT = 3704;
+  REQUEST_METHOD_EPIC_FIND_APPOINTMENT = 3705;
+  REQUEST_METHOD_EPIC_BOOK_APPOINTMENT = 3706;
+  REQUEST_METHOD_EPIC_GET_ACCOUNT = 3707;
 }
 
 enum TransactionType {
@@ -805,6 +814,14 @@ message ExecuteFlow {
 
     ExecutePianoGetUser PIANO_GET_USER = 3601;
     ExecutePianoUpdateUser PIANO_UPDATE_USER = 3602;
+
+    ExecuteEpicGetToken epic_get_token = 3701;
+    ExecuteEpicGetPatient epic_get_patient = 3702;
+    ExecuteEpicMatchPatient epic_match_patient = 3703;
+    ExecuteEpicSearchAppointment epic_search_appointment = 3704;
+    ExecuteEpicFindAppointment epic_find_appointment = 3705;
+    ExecuteEpicBookAppointment epic_book_appointment = 3706;
+    ExecuteEpicGetAccount epic_get_account = 3707;
   }
 }
 
@@ -1030,3 +1047,10 @@ message ExecutePoscorpLookupGuarantor {}
 message ExecutePoscorpUpdatePaymentStatus {}
 message ExecutePianoGetUser {}
 message ExecutePianoUpdateUser {}
+message ExecuteEpicGetToken {}
+message ExecuteEpicGetPatient {}
+message ExecuteEpicMatchPatient {}
+message ExecuteEpicSearchAppointment {}
+message ExecuteEpicFindAppointment {}
+message ExecuteEpicBookAppointment {}
+message ExecuteEpicGetAccount {}
