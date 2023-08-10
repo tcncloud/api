@@ -2125,6 +2125,31 @@ service WFM {
     };
   }
 
+  // Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+  // If @datetime_range is set, all shifts within the datetime range will be copied.
+  // If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+  // If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+  // If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+  // If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+  // If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: one or more fields in the request have invalid values.
+  //   -grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+  //   -grpc.Internal: error occurs when creating the copied shift instances.
+  rpc CopyScheduleToSchedule(CopyScheduleToScheduleReq) returns (CopyScheduleToScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/copyscheduletoschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Creates a shift instance for the org sending the request with the provided parameters.
   // This method is not implemented. Do not use.
   // Required permissions:
@@ -4759,6 +4784,31 @@ message DeleteDraftScheduleReq {
 
 // Response message for the DeleteDraftSchedule RPC
 message DeleteDraftScheduleRes {}
+
+// Request message for the CopyScheduleToSchedule RPC
+message CopyScheduleToScheduleReq {
+  // The schedule that shifts will be copied from.
+  .api.commons.ScheduleSelector source_schedule_selector = 1;
+  // The schedule that the shifts will be copied to.
+  .api.commons.ScheduleSelector destination_schedule_selector = 2;
+  // The node that the shifts to copy should be associated with.
+  ParentEntity node_selector = 3;
+  // The datetime range over which to get the shift instance sids.
+  // If no range is provided, the scheduling range for the @destination_schedule_selector will be used if it is a draft schedule, otherwise the range of the @source_schedule_selector will be used.
+  .api.commons.DatetimeRange datetime_range = 4;
+  // Set to true to copy shifts that start within the range being copied, otherwise any shift that overlaps the range will be copied.
+  bool start_datetimes_only = 5;
+  // Set to true to allow the shifts to be copied when there is a resulting overlap conflict for an agents shifts, with diagnostic warnings being returned after.
+  // Otherwise, overlap conflicts will return diagnostic errors and cause no shifts to be copied.
+  bool overlap_as_warning = 6;
+}
+
+// Response message for the CopyScheduleToScheduleRes RPC
+message CopyScheduleToScheduleRes {
+  // A list of diagnostics for any errors encountered, which prevented the copy.
+  // If @overlap_as_warning is set to true, warning diagnostics for overlaps may be returned after a sucessful copy.
+  repeated Diagnostic diagnostics = 1;
+}
 
 // Request message for the CreateShiftInstance RPC
 // Method is Unimplimented. Use CreateShiftInstanceV2 instead.
