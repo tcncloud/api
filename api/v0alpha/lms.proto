@@ -2080,6 +2080,28 @@ message ReshapeAction {
     Field new_field = 18;
     RecordFieldProto default_value = 19;
   }
+  // Represents a message for division operation.
+  message Divide {
+    // The default value to be used if no other value is provided.
+    double default_value = 1;
+    // The divisor to be used for the division operation.
+    double divisor = 2;
+  }
+  // Represents a message for multiplication operation.
+  message Multiply {
+    // The default value to be used if no other value is provided.
+    double default_value = 1;
+    // The multiplier to be used for the multiplication operation.
+    double multiplier = 2;
+  }
+  // Represents a message for modulo operation.
+  message Modulo {
+    // The default value to be used if no other value is provided.
+    int32 default_value = 1;
+    // The modulus to be used for the modulo operation.
+    int32 modulus = 2;
+  }
+
   // will remove "field" from the record
   message RemoveField {}
   // will add "field" to the record with default starting value
@@ -2199,6 +2221,9 @@ message ReshapeAction {
     RemoveField remove_field = 29;
     AddNewField add_new_field = 30;
     ChangeCurrencyType change_currency_type = 31;
+    Divide divide = 32;
+    Multiply multiply = 33;
+    Modulo modulo = 34;
     Merge merge = 40;
     SetFieldValue set_field_value = 41;
     AddNewFieldFromField add_new_field_from_field = 45;
