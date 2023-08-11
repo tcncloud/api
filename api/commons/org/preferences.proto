@@ -416,6 +416,8 @@ message SchedulePreferences {
   map<string, string> campaign_links = 18;
   // Default campaign link ID.
   string default_campaign_link_id = 19;
+  // Whether user canceled campaigns can be resent in the organization.
+  bool resend_cancelled_campaigns = 20;
 }
 
 // Preferences for email and SMS management.
