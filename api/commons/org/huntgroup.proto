@@ -465,6 +465,8 @@ message ManualDialSettings {
   repeated DataDipIntegrationMapping data_dip_integration_mappings = 27;
   // The action to take if the integration mapping fails.
   ManualDialDataDipHandling data_dip_integration_handling = 28;
+  // Control whether the reject option is available to the approvers.
+  bool enable_reject_option_for_approvers = 29;
 
   // Allow the agent to override scrub settings.
   message ScrubOverride {
