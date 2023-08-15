@@ -17,6 +17,7 @@ message GetAutoEvaluationResponse {
 // ListAutoEvaluationsRequest is the request to get a list of auto evaluations.
 message ListAutoEvaluationsRequest {
   repeated int64 scorecard_ids = 2; // Optional - filter by scorecard ids.
+  api.commons.TimeFilter completed_at = 3; // Optional, filter completed timestamp by a specific range
 }
 
 // ListAutoEvaluationsResponse returns a list of evaluations.
