@@ -42,6 +42,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_POSCORP = 3500;
   INTEGRATION_TYPE_PIANO = 3600;
   INTEGRATION_TYPE_EPIC = 3700;
+  INTEGRATION_TYPE_NEWZWARE = 3800;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -263,6 +264,11 @@ enum RequestMethod {
   REQUEST_METHOD_EPIC_FIND_APPOINTMENT = 3705;
   REQUEST_METHOD_EPIC_BOOK_APPOINTMENT = 3706;
   REQUEST_METHOD_EPIC_GET_ACCOUNT = 3707;
+
+  REQUEST_METHOD_NEWZWARE_PHONE_LOOKUP = 3801;
+  REQUEST_METHOD_NEWZWARE_ACCOUNT_INQUIRY = 3802;
+  REQUEST_METHOD_NEWZWARE_CC_PAYMENT = 3803;
+  REQUEST_METHOD_NEWZWARE_ACH_PAYMENT = 3804;
 }
 
 enum TransactionType {
@@ -535,6 +541,7 @@ message InvoiceFlow {
     InvoiceAuthorizeNetCustomHttp authorize_net_custom_http = 11;
     InvoiceJourney journey = 12;
     InvoiceDynamicJourney dynamic_journey = 13;
+    InvoiceNewzwareAccountInquiry newzware_account_inquiry = 14;
   }
   // the template of how the fields map on an invoice
   InvoiceTemplate invoice_template = 3;
@@ -551,6 +558,8 @@ message PaymentFlow {
     PaymentAuthorizeNetGooglePay authorize_net_google_pay = 8;
     PaymentPaywaySubmitCardSaleRequest payway_submit_card_sale_request = 9;
     PaymentPaywaySubmitACHAlertRequest payway_submit_ach_alert_request = 10;
+    PaymentNewzwareCc newzware_cc = 11;
+    PaymentNewzwareAch newzware_ach = 12;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
@@ -567,6 +576,8 @@ message VerificationFlow {
     VerificationAuthorizeNetCustomerProfile authorize_net_customer_profile = 6;
     VerificationAuthorizeNetLinkData authorize_net_link_data = 7;
     VerificationJourney journey = 12;
+    VerificationNewzwareLookupPhone newzware_lookup_phone = 13;
+    VerificationNewzwareAccountInquiry newzware_account_inquiry = 14;
   }
   // the fields the user must verify for this flow.
   // must conform to the list of fields returned from the flow
@@ -822,6 +833,11 @@ message ExecuteFlow {
     ExecuteEpicFindAppointment epic_find_appointment = 3705;
     ExecuteEpicBookAppointment epic_book_appointment = 3706;
     ExecuteEpicGetAccount epic_get_account = 3707;
+
+    ExecuteNewzwarePhoneLookup newzware_phone_lookup = 3801;
+    ExecuteNewzwareAccountInquiry newzware_account_inquiry = 3802;
+    ExecuteNewzwareCcPayment newzware_cc_payment = 3803;
+    ExecuteNewzwareAchPayment newzware_ach_Payment = 3804;
   }
 }
 
@@ -836,6 +852,7 @@ message InvoiceDynamicJourney {
   string total_field = 2;
   map<string, ListOfStrings> journey_fields = 3;
 }
+message InvoiceNewzwareAccountInquiry {}
 
 // verification flows
 message VerificationExperianQueryBalance {}
@@ -860,6 +877,8 @@ message VerificationJourney {
   // only used if the VerificationFlow this belongs to is empty
   string last4_ssn = 5 [deprecated = true];
 }
+message VerificationNewzwareLookupPhone {}
+message VerificationNewzwareAccountInquiry {}
 
 // payment flows
 message PaymentExperianCC {}
@@ -873,6 +892,9 @@ message PaymentAuthorizeNetGooglePay {}
 
 message PaymentPaywaySubmitCardSaleRequest {}
 message PaymentPaywaySubmitACHAlertRequest {}
+
+message PaymentNewzwareCc {}
+message PaymentNewzwareAch {}
 
 // execute flows
 message ExecuteBraintreeCreditSale {}
@@ -1054,3 +1076,7 @@ message ExecuteEpicSearchAppointment {}
 message ExecuteEpicFindAppointment {}
 message ExecuteEpicBookAppointment {}
 message ExecuteEpicGetAccount {}
+message ExecuteNewzwarePhoneLookup {}
+message ExecuteNewzwareAccountInquiry {}
+message ExecuteNewzwareCcPayment {}
+message ExecuteNewzwareAchPayment {}
