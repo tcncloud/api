@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+package services.pbx.v1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+
+service PBXService {
+  // Queries details of PBX Users based on specified criteria for the authenticated callers ORG
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc QueryPbxUsers(QueryPbxUsersRequest) returns (QueryPbxUsersResponse) {
+    option (google.api.http).get = "/api/pbx/v1/querypbxusers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Queries details of Ring Groups based on specified criteria for the authenticated callers ORG
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc QueryRingGroups(QueryRingGroupsRequest) returns (QueryRingGroupsResponse) {
+    option (google.api.http).get = "/api/pbx/v1/queryringgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Updates details of a PBX User for the authenticated callers ORG.
+  // Allows for updating, activating, and deactivating a user.
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc UpdatePbxUser(UpdatePbxUserRequest) returns (UpdatePbxUserResponse) {
+    option (google.api.http).post = "/api/pbx/v1/managepbxuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Updates details of a Ring Group for the authenticated callers ORG. This operation acts as an "upsert".
+  //   - If the groupID is in the update mask and the group exists, the group will be updated.
+  //   - If the groupID is not in the update mask a group will be created.
+  // Allows for creating and updating a ring group.
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc UpdateRingGroup(UpdateRingGroupRequest) returns (UpdateRingGroupResponse) {
+    option (google.api.http).post = "/api/pbx/v1/manageringgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Creates a ring group for the authenticated caller's ORG.
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc CreateRingGroup(CreateRingGroupRequest) returns (CreateRingGroupResponse) {
+    option (google.api.http).post = "/api/pbx/v1/createringgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Deletes a specific Ring Group for the authenticated caller's ORG.
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The groupID is an invalid format.
+  //   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc DeleteRingGroup(DeleteRingGroupRequest) returns (DeleteRingGroupResponse) {
+    option (google.api.http).delete = "/api/pbx/v1/deleteringgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Assigns a random extension either to a PBX user or a Ring Group
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc AssignRandomExtension(AssignRandomExtensionRequest) returns (AssignRandomExtensionResponse) {
+    option (google.api.http).post = "/api/pbx/v1/assignrandomextension";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_EDIT]
+        }
+      ];
+    };
+  }
+}
+
+// -------------------------
+// Enums
+// -------------------------
+enum RingStrategy {
+  RING_STRATEGY_UNSPECIFIED = 0;
+  RING_STRATEGY_RING_ALL = 1;
+  RING_STRATEGY_ROUND_ROBIN = 2;
+  RING_STRATEGY_RANDOM = 3;
+}
+
+// -------------------------
+// Entity Definitions
+// -------------------------
+message PBXUser {
+  string pbx_user_id = 1;
+  string org_user_id = 2;
+  repeated SIPAccount sip_accounts = 3;
+}
+
+message SIPAccount {
+  string sip_id = 1;
+  bool is_active = 2;
+  int32 extension = 3;
+  repeated RingGroup ring_groups = 4;
+}
+
+message RingGroup {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 extension = 4;
+  RingStrategy ring_strategy = 5;
+  repeated PBXUser pbx_users = 6;
+}
+
+// -------------------------
+//  RPC Messages
+// -------------------------
+message QueryPbxUsersRequest {
+  string pbx_user_id = 1; // Optional: If you want to fetch a specific user by ID.
+  google.protobuf.FieldMask response_mask = 2; // Fields to be returned in the response.
+}
+
+message QueryPbxUsersResponse {
+  repeated PBXUser users = 1;
+}
+
+message QueryRingGroupsRequest {
+  string group_id = 1; // Optional: If you want to fetch a specific group by ID.
+  google.protobuf.FieldMask response_mask = 2; // Fields to be returned in the response.
+}
+
+message QueryRingGroupsResponse {
+  repeated RingGroup groups = 1;
+}
+
+message UpdatePbxUserRequest {
+  PBXUser user = 1; // The user details to update.
+  google.protobuf.FieldMask update_mask = 2; // Fields to be updated.
+}
+
+message UpdatePbxUserResponse {
+  PBXUser user = 1;
+}
+
+message UpdateRingGroupRequest {
+  RingGroup group = 1;
+  google.protobuf.FieldMask update_mask = 2; // Fields to be modified.
+}
+
+message UpdateRingGroupResponse {
+  RingGroup group = 1;
+}
+
+message AssignRandomExtensionRequest {}
+
+message AssignRandomExtensionResponse {
+  int32 extension = 1;
+}
+
+message CreateRingGroupRequest {
+  string name = 1; // Required: The name of the group.
+  string description = 2; // Optional: The description of the group.
+  RingStrategy ring_strategy = 3; // Optional: The ring strategy of the group.
+  repeated string pbx_user_ids = 4; // Optional: The PBX user IDs to add to the group.
+}
+
+message CreateRingGroupResponse {
+  RingGroup group = 1;
+}
+
+message DeleteRingGroupRequest {
+  string group_id = 1;
+}
+
+message DeleteRingGroupResponse {}
