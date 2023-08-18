@@ -2059,6 +2059,29 @@ service WFM {
     };
   }
 
+  // Resets the shifts on the @draft_schedule_sid for the org sending the request.
+  // Shifts overlapping the @datetime_range will be deleted, then that @datetime_range will be populated with shifts from the published schedule.
+  // If no @datetime_range is provided, all shifts will be removed from the @draft_schedule_sid, and published shifts will be copied across the draft's datetime range.
+  // If @unlocked_only is set to true, only unlocked shifts will be deleted, and the locked shift instances will remain.
+  //   The published schedule will still be copied, so any newly overlapping shifts will result in an overlap warning.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid for the org sending the request.
+  //   - grpc.NotFound: the @draft_schedule_sid doesn't exist.
+  //   - grpc.Internal: error occurs when resetting the schedule.
+  rpc ResetDraftSchedule(ResetDraftScheduleReq) returns (ResetDraftScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/resetdraftschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
   // The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
   // if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
@@ -4729,6 +4752,23 @@ message PublishDraftScheduleRes {
   PublishedSchedule published_schedule = 1;
   // Any diagnostics that were produced while publishing the schedule
   repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the ResetDraftSchedule RPC
+message ResetDraftScheduleReq {
+  // ID of the draft schedule to reset.
+  int64 draft_schedule_sid = 1;
+  // Date range to of the draft to reset.
+  // If left blank, the full range for the draft schedule will be used by default.
+  api.commons.DatetimeRange datetime_range = 2;
+  // Set to true to only delete unlocked shifts from @draft_schedule_sid.
+  bool unlocked_only = 3;
+}
+
+// Response message for the ResetDraftSchedule RPC
+message ResetDraftScheduleRes {
+  // Set of diagnostic reports for any newly created overlap conflicts..
+  repeated Diagnostic diagnostics = 1;
 }
 
 // Request message for the GetDraftSchedule RPC
