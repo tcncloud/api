@@ -985,6 +985,7 @@ message Process {
     // WebExchangeProcess allows a user to setup a process to send data to an external api
     WebExchangeProcess web_exchange_process = 74;
     SplitCriteria split = 75;
+    EpicEntrypoint epic_entry_point = 76;
   }
 }
 
@@ -2600,4 +2601,101 @@ message SplitByMaxSize {
 
 message SplitByEqualParts {
   int32 part_size = 1;
+}
+
+//EHR EPIC
+message EpicEntrypoint {
+  // how often this event needs to run.
+  // this cron string will be restricted differently depending
+  // on the specific operation being run. For example, Epic
+  // only allows calls once per 24 hours.
+  string cron = 2;
+  // how long in minutes we will wait with the entrypoint
+  // in the CHECK state. 0 is interpreted as wait indefinitely.
+  double max_wait_time = 3;
+  // the file template that will convert the raw data during the process state.
+  // do we need to specify a file template id? Or should we only push into journey?
+  //string file_template_id = 4;
+
+  // the types of entities we want retrieved
+  repeated EpicEntityType entity_types = 4;
+  // the base url that points to the group of entites we are querying.
+  // Each group can be contacted once every 24 hours max.
+  // Example: https://apporchard.epic.com/interconnect-aocurprd-oauth/api/FHIR/R4
+  string group_base_url = 5;
+  // the id for the group we are matching.
+  // Example: eIscQb2HmqkT.aPxBKDR1mIj3721CpVk1suC7rlu3yX83
+  string group_fhir_id = 6;
+  // values during event processing.
+  // Not visible to user.
+  RuntimeValues runtime_values = 7;
+
+  // how many pages we should save before aggregating the data and sending downstream
+  // default is 100. Max is 10000.
+  // If a termination state hasn't been reached, the event will be re-queued and continue
+  // where it left off.
+  int64 flush_page_count = 8;
+  // how much total elapsed time (in minutes) we want to wait before flushing records.
+  // if total time spent aggregating the data goes over this many minutes, we will flush
+  // the current records downstream.
+  // default is 20. Max is 120. Min is 1.
+  // If a termination state hasn't been reached, the event will be re-queued and continue
+  // where it left off.
+  int64 flush_minute_count = 9;
+  // if true, we will switch to processing mode when we have enough records to flush
+  // even if we haven't downloaded all the pages yet.
+  // after the current records are flushed, we switch back to downloading the remaining records.
+  // If false (default), we download all the pages before we start processing any records.
+  bool flush_during_check = 10;
+}
+
+// The types of entities that can be returned from Epic's bulk data api.
+enum EpicEntityType {
+  EPIC_UNKNOWN_TYPE = 0;
+  EPIC_ENTITY_TYPE_PATIENT = 1;
+  EPIC_ENTITY_TYPE_APPOINTMENT = 2;
+  EPIC_ENTITY_TYPE_MEDICATION = 3;
+  EPIC_ENTITY_TYPE_MEDICATION_REQUEST = 4;
+  EPIC_ENTITY_TYPE_ACCOUNT = 5;
+}
+
+// These values are invisible to the user, and null in the lms_elements table.
+// These will be used during the processing of the event.
+message RuntimeValues {
+  // current state of the entrypoint
+  // this is set to kickoff when the entrypoint is queued up
+  api.commons.EventState state = 1;
+  // the token we are using for this session.
+  // This value is retrieved by sending a jwt to epic's auth endpoint.
+  string access_token = 2;
+  // the url returned from the kickoff's 'Content-Location' response header
+  // used during the CHECK state.
+  string check_url = 3;
+  // the the location for all the data we are importing.
+  // Epic returns newline delimited json for each url endpoint
+  repeated EntityURL data_urls = 4;
+  // how many times we have ran the paginated request
+  int64 current_iteration = 5;
+  int64 total_seconds_spent = 6;
+  // any errors that happened during processing
+  repeated string errors = 7;
+  // how many times the bulk entrypoint has been not ready total
+  int64 total_not_ready_count = 8;
+  // as of writing, the unflushed input is stored in fts.
+  // the keys will be the fts_id the page, and the values the size of the request in bytes
+  map<string, int64> file_ids = 9;
+  // the named variables saved from the preliminary requests
+  // these can be used in the paginated_request
+  map<string, string> preliminary_vars = 10;
+  // the events that happened before this one
+  repeated int64 parent_event_ids = 11;
+  // if true we wont need to switch back from process state, to check state.
+  // if false, we need to continue in check state after flushing records
+  bool no_more_pages = 12;
+  // tracks all fts files we have writen regardless of whether they have been processed yet
+  repeated string total_fts_ids = 13;
+}
+message EntityURL {
+  EpicEntityType entity_type = 1;
+  string url = 2;
 }
