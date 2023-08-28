@@ -317,9 +317,8 @@ message ListAgentsResponse {
     bool login_disabled = 7;
     // An object with the hunt group fields required for the call
     HuntGroup hunt_group = 8;
-    // Reserving a space for labels
-    // reserved "labels";
-    // reserved 9;
+    // A list of the labels associated with the agent
+    repeated api.commons.org.Label labels = 9;
     // Whether the agent is delegated (sso related)
     bool delegated = 10;
     // A list of the trust ids the user has been assigned.
@@ -373,9 +372,8 @@ message ListUsersResponse {
     bool login_disabled = 7;
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 9;
-    // Reserving a space for labels
-    // reserved "labels";
-    // reserved 10;
+    // A list of the labels associated with the user
+    repeated api.commons.org.Label labels = 10;
     // Whether the user is an account owner
     bool account_owner = 11;
     // Whether the user is also an agent
@@ -416,9 +414,8 @@ message ListUsersByOrgIdResponse {
     bool login_disabled = 7;
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 8;
-    // Reserving a space for labels
-    // reserved "labels";
-    // reserved 9;
+    // A list of the labels associated with the user
+    repeated api.commons.org.Label labels = 9;
     // Whether the user is an account owner
     bool account_owner = 10;
     // Whether the user is also an agent
@@ -459,9 +456,8 @@ message ListUsersByRegionResponse {
     bool login_disabled = 7;
     // A list of the (neo)permission group Ids the agent belongs to
     repeated string permission_group_ids = 9;
-    // Reserving a space for labels
-    // reserved "labels";
-    // reserved 10;
+    // A list of the labels associated with the user
+    repeated api.commons.org.Label labels = 10;
     // Whether the user is an account owner
     bool account_owner = 11;
     // Whether the user is also an agent
