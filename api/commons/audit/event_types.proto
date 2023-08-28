@@ -196,4 +196,8 @@ enum EventType {
   COMPLIANCE_RND_QUERY_EVENT = 700;
   // rnd query cached event
   COMPLIANCE_RND_QUERY_CACHED_EVENT = 701;
+
+  // Agent Training
+  // create learning opportunity event
+  AGENT_TRAINING_CREATE_LEARNING_OPPORTUNITY_EVENT = 800;
 }

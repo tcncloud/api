@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "api/commons/agent_training.proto";
+
+// AgentTrainingCreateLearningOpportunityEvent - when a learning opportunity is created
+message AgentTrainingCreateLearningOpportunityEvent {
+  api.commons.LearningOpportunity learning_opportunity = 1; // learning opportunity created
+}
