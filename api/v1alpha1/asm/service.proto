@@ -336,6 +336,8 @@ message SetConversationCollectedDataReq {
   api.commons.ChannelType channel_type = 2;
   // collected data - key/value
   map<string, string> collected_data = 3;
+  // asm session sid
+  int64 asm_session_sid = 4;
 }
 
 //response after setting collected data for a conversation

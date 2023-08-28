@@ -73,6 +73,8 @@ message OmnichannelAgentAssignConversationEvent {
   api.commons.OmniConversation conversation = 5;
   // the message sent by the agent
   api.commons.OmniMessage message = 6;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 7;
 }
 
 // OmnichannelAgentUnassignConversationEvent - handle agent unassign conversation event
@@ -89,6 +91,8 @@ message OmnichannelAgentUnassignConversationEvent {
   api.commons.OmniConversation conversation = 5;
   // the message sent by the agent
   api.commons.OmniMessage message = 6;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 7;
 }
 
 // OmnichannelAgentReassignConversationEvent - handle agent reassign conversation event
@@ -131,6 +135,10 @@ message OmnichannelAgentTextMessageEvent {
   api.commons.OmniMessage message = 4;
   // conversation this message belongs to
   api.commons.OmniConversation conversation = 5;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 6;
+  // the id of the agent
+  string user_id = 7;
 }
 
 // OmnichannelManagerTextMessageEvent - whenever an agent send a text message
@@ -141,6 +149,10 @@ message OmnichannelManagerTextMessageEvent {
   api.commons.OmniMessage message = 4;
   // conversation this message belongs to
   api.commons.OmniConversation conversation = 5;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 6;
+  // user id
+  string user_id = 7;
 }
 
 // OmnichannelFinishWrapUpEvent - when an agent has finished wrap up
@@ -171,6 +183,10 @@ message OmnichannelBeginWrapUpEvent {
   api.commons.OmniConversation conversation = 4;
   // the message sent by the agent
   api.commons.OmniMessage message = 5;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 6;
+  // the id of the agent
+  string user_id = 7;
 }
 
 // OmnichannelT11Event - whenever the t11 timer went off
@@ -213,6 +229,10 @@ message OmnichannelCloseConversationEvent {
   api.commons.OmniMessage message = 1;
   // conversation the message belongs to
   api.commons.OmniConversation conversation = 2;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 3;
+  // the id of the agent
+  string user_id = 4;
 }
 
 // OmnichannelUpdateCampaignEvent - whenever a campaign is update
@@ -241,6 +261,8 @@ message OmnichannelSetConversationCollectedDataEvent {
   api.commons.CampaignDirection campaign_direction = 4;
   //collected data
   api.commons.ConversationCollectedData collected_data = 5;
+  // the AsmSession Sid
+  google.protobuf.Int64Value asm_session_sid = 6;
 }
 
 // OmnichannelCompleteCampaignEvent - whenever a campaign is completed
