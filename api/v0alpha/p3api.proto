@@ -1550,7 +1550,8 @@ message ManualDialSettings {
   bool enable_metadata = 27;
   ZipCodeValidation use_timezone_validation_zip = 28;
   // Control whether the reject option is available to the approvers.
-  bool enable_reject_option_for_approvers = 29;
+  // Please use disable_reject_option_for_approvers under GeneralSettings.
+  bool enable_reject_option_for_approvers = 29 [deprecated = true];
   bool enable_sip_address = 30; // enable/disable the SIP address
   bool mask_manual_dial_caller_id = 31; // mask/unmask the caller id for buckets and statically set caller ids
   // Manual Dial Data Dip Settings
@@ -1743,6 +1744,8 @@ message ManualApprovalSettings {
   bool confirm = 2;
   bool sms_allowed = 3;
   bool sms_number_confirmation = 4;
+  // Control whether the reject option is available to the approvers.
+  bool disable_reject_option_for_approvers = 5;
 }
 
 message ListHuntGroupWebLinksReq {
