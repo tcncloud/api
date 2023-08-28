@@ -122,6 +122,8 @@ message OmniCampaignModuleConfig {
   google.protobuf.StringValue compliance_rule_set_id = 18;
   // Payment Portal Ids
   repeated string payment_portal_ids = 19;
+  // Flow Id
+  Int64Id flow_id = 20;
 }
 
 // SmsNumber
