@@ -2128,6 +2128,35 @@ service WFM {
     };
   }
 
+  // Clears shift instances from the @schedule_selector for the org sending the request.
+  // If @node_selector is set, only shifts related to the given @node_selector will be cleared.
+  // If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the shift template they are associated with.
+  // If @datetime_range is set, only the shifts overlapping the @datetime_range will be cleared.
+  // If @datetime_range is not set, all shifts on the schedule will be considered in range to be deleted and @invert_datetime_range and @start_datetimes_only must be set to false.
+  // If @invert_datetime_range is set to true, the shifts overlapping the range before and after the provided @datetime_range will be deleted.
+  // If @invert_datetime_range is set to false, the provided @datetime_range will be used.
+  // If @start_datetimes_only is set to true, deletes the shifts that start within the @datetime range, or start before or after @datetime_range if @invert_datetime_range is true.
+  // If @start_datetimes_only is set to false, deletes the shifts that overlap with the @datetime range, or overlap the range before or after @datetime_range if @invert_datetime_range is true.
+  // If @delete_locked is set to true, both locked and unlocked shifts will be cleared.
+  // If @delete_locked is set to false, only shifts with @is_locked set to false may be cleared.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @node_selector, @schedule_selector, or @datetime_range in the request are invalid.
+  //   - grpc.NotFound: the draft schedule with the given @schedule_selector doesn't exist.
+  //   - grpc.Internal: error occurs when removing the shifts from the schedule.
+  rpc ClearSchedule(ClearScheduleReq) returns (ClearScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/clearschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
   // It also deletes all of its shift instances and segments.
   // Required permissions:
@@ -2221,7 +2250,7 @@ service WFM {
   // NONE
   // Errors:
   //   - grpc.Invalid: one or more fields in the request have invalid values.
-  //   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
+  //   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
   //   - grpc.Internal: error occurs when swapping the shift instances.
   rpc SwapShiftInstances(SwapShiftInstancesReq) returns (SwapShiftInstancesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
@@ -4814,6 +4843,36 @@ message ListDraftSchedulesReq {
 message ListDraftSchedulesRes {
   // Draft schedules found.
   repeated DraftSchedule draft_schedules = 1;
+}
+
+// Request message for the ClearSchedule RPC
+message ClearScheduleReq {
+  // The schedule to be cleared.
+  .api.commons.ScheduleSelector schedule_selector = 1;
+  // If set, node the shifts to be delete will all be related to.
+  // Otherwise, deleted shifts will not be filtered based on the node they are related to.
+  ParentEntity node_selector = 2;
+  // If set, acts as a range to clear all shifts from.
+  // Otherwise, all shifts belonging to @schedule_selector are considered within range to be cleared.
+  .api.commons.DatetimeRange datetime_range = 3;
+  // Set to delete all shifts starting before or ending after the given @datetime range.
+  // Otherwise shifts overlapping the @datetime_range will be deleted.
+  // Cannot be set to true if no datetime range is provided.
+  bool invert_datetime_range = 4;
+  // If set to true, only checks the start datetime of shifts when checking the @datetime_range.
+  // Otherwise, any shifts that overlap the @datetime_range will be cleared.
+  // If @invert_datetime_range is true, any shifts that start before or start after the @datetime_range will be deleted.
+  // Cannot be set to true if no datetime range is provided.
+  bool start_datetimes_only = 5;
+  // Set to true to delete locked and unlocked shifts in the range to be cleared.
+  // Otherwise, only shift instances with is_locked set to false will be deleted.
+  bool delete_locked = 6;
+}
+
+// Response message for the ClearSchedule RPC
+message ClearScheduleRes {
+  // Set of diagnostic reports for the any issues encountered.
+  repeated Diagnostic diagnostics = 1;
 }
 
 // Request message for the DeleteDraftSchedule RPC
