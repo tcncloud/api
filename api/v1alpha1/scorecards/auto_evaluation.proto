@@ -34,3 +34,14 @@ message DeleteAutoEvaluationRequest {
 message DeleteAutoEvaluationResponse {
   api.commons.AutoEvaluation auto_evaluation = 1; // deleted auto evaluation object.
 }
+
+// StreamAutoEvaluationsRequest is the request to stream a list of auto evaluations.
+message StreamAutoEvaluationsRequest {
+  repeated int64 scorecard_ids = 2; // Optional - filter by scorecard ids.
+  api.commons.TimeFilter completed_at = 3; // Optional - filter completed timestamp by a specific range
+}
+
+// StreamAutoEvaluationsResponse is the response object streamed.
+message StreamAutoEvaluationsResponse {
+  api.commons.AutoEvaluation auto_evaluation = 1; // single-stream object.
+}

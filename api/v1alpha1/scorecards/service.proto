@@ -584,6 +584,19 @@ service Scorecards {
     };
   }
 
+  // StreamAutoEvaluations streams a list of auto evaluations
+  rpc StreamAutoEvaluations(StreamAutoEvaluationsRequest) returns (stream StreamAutoEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/streamautoevaluations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
+  }
+
   // DeleteAutoEvaluation deletes an auto evaluations
   rpc DeleteAutoEvaluation(DeleteAutoEvaluationRequest) returns (DeleteAutoEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deleteautoevaluation";
