@@ -350,8 +350,11 @@ message SftpDestination {
 message Room303Destination {
   // which room or user to sned the file to
   string room = 1;
-  // username which sends the message.
+  // will lookup user_sid through org if not provided
+  // username of the intended user
   string username = 2;
+  // user_id of the intended user
+  string user_id = 3;
 }
 message SmsDestination {
   // must include country code and area code
