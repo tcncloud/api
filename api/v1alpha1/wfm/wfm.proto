@@ -1088,6 +1088,23 @@ service WFM {
     };
   }
 
+  // Lists the non skill activities that belong to the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:.
+  //   - grpc.Internal: error occurs when listing the activites.
+  rpc ListNonSkillActivities(ListNonSkillActivitiesReq) returns (ListNonSkillActivitiesRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listnonskillactivities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
   // Required permissions:
   //   NONE
@@ -2138,6 +2155,30 @@ service WFM {
   //   - grpc.Internal: error occurs when removing the draft schedule.
   rpc DeleteDraftSchedule(DeleteDraftScheduleReq) returns (DeleteDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletedraftschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+  // If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+  // If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+  // If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+  // @include_shift_segments must be true to take effect.
+  // If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+  // activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+  //   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+  rpc ListShiftInstancesBySid(ListShiftInstancesBySidReq) returns (ListShiftInstancesBySidRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesbysid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -3508,6 +3549,15 @@ message UpdateNonSkillActivityReq {
 // Response message for the UpdateNonSkillActivity RPC
 message UpdateNonSkillActivityRes {}
 
+// Request message for the ListNonSkillActivities RPC
+message ListNonSkillActivitiesReq {}
+
+// Response message for the ListNonSkillActivities RPC
+message ListNonSkillActivitiesRes {
+  // ID of the non skill activities found to belong to the org sending the request
+  repeated NonSkillActivity non_skill_activities = 1;
+}
+
 // Request message for the ListNonSkillActivityAssociations RPC
 message ListNonSkillActivityAssociationsReq {
   // Entity to check for relationships with the non skill activities.
@@ -4824,6 +4874,29 @@ message DeleteDraftScheduleReq {
 
 // Response message for the DeleteDraftSchedule RPC
 message DeleteDraftScheduleRes {}
+
+// Request message for the ListShiftInstancesBySid RPC
+message ListShiftInstancesBySidReq {
+  // ID of the shift instances to list.
+  repeated int64 shift_instance_sids = 1;
+  // If true, the shift segments will be included in the returned shift instances.
+  // If false, the instances will be returned without any shift segments.
+  bool include_shift_segments = 2;
+  // Set to true to include shift template in the returned shift instance.
+  bool include_shift_template = 3;
+  // Set to true to include scheduling activity in each of the returned shift segments.
+  // Only effective when include_shift_segments is also set to true.
+  bool include_scheduling_activity = 4;
+  // Set to true to include non skill activity in each of the returned scheduling activities.
+  // Only effective when include_scheduling_activity and include_shift_segments are also set to true.
+  bool include_activity = 5;
+}
+
+// Response message for the ListShiftInstancesBySid RPC
+message ListShiftInstancesBySidRes {
+  // The shift instances that match the given @shift_instance_sids.
+  repeated ShiftInstance shift_instances = 1;
+}
 
 // Request message for the CopyScheduleToSchedule RPC
 message CopyScheduleToScheduleReq {
