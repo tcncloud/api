@@ -32,6 +32,7 @@ message CreateTicketReq {
   repeated api.commons.Sla ticket_sla = 12;
   bool assign_self = 13;
   string assign_other = 14;
+  repeated api.commons.TicketAction ticket_action = 15;
 }
 
 // CreateTicketRes - Response from CreateTicket BE API
@@ -96,15 +97,15 @@ message ListTicketsRes {
 // AssignTicketReq
 message AssignTicketReq {
   int64 ticket_sid = 1 [jstype = JS_STRING];
-  string assignee_list = 2; // type:json - send 0 or null for un-assigning a ticket
-  string assigned_id = 3; // uuid
+  string assignee_list = 2;
+  string assigned_id = 3;
 }
 
 // AssignTicketRes
 message AssignTicketRes {
   int64 ticket_sid = 1 [jstype = JS_STRING];
   string assignee_list = 2;
-  string assigned_id = 3; // uuid
+  string assigned_id = 3;
 }
 
 // ViewTicketReq -
@@ -149,22 +150,6 @@ message CloseTicketReq {
 message CloseTicketRes {
   bool is_status = 1;
 }
-// EditCommentReq - Edit Comment Request Messages
-/*message EditCommentReq {
-       // The snowflake id of a comment row in ticket_comment.
-       int64 comment_sid = 1 [jstype = JS_STRING];
-       // The ticket reference where the comment was added.
-       int64 ticket_sid = 2 [jstype = JS_STRING];
-       // The comment text
-       string comment = 3;
-       // commenter by id
-       string created_by_id = 4; // used in creating comment
-   }*/
-// EditCommentRes - Edit Comment Response Messages
-/*message EditCommentRes {
-       // Returns boolen true OR False in the response
-       api.commons.ConfirmEditComment is_edited = 1;
-   }*/
 
 // Create CreateSlaReq  - Create Sla Request From Client
 message CreateSlaReq {
@@ -267,4 +252,36 @@ message User {
   string user_id = 1;
   string first_name = 2;
   string last_name = 3;
+}
+message CreateTicketActionRequest {
+  api.commons.TicketAction ticket_action = 1;
+}
+
+message CreateTicketActionResponse {
+  api.commons.TicketAction ticket_action = 1;
+}
+message CloseTicketActionRequest {
+  int64 ticket_action_id = 1 [jstype = JS_STRING];
+  int64 ticket_id = 2 [jstype = JS_STRING];
+  string comment = 3;
+}
+
+message CloseTicketActionResponse {
+  bool is_closed = 1;
+}
+
+message AssignTicketActionRequest {
+  int64 ticket_action_id = 1 [jstype = JS_STRING];
+}
+
+message AssignTicketActionResponse {
+  bool is_assigned = 1;
+}
+
+message ChangeTicketStatusRequest {
+  int64 ticket_id = 1 [jstype = JS_STRING];
+  int64 status_id = 2 [jstype = JS_STRING];
+}
+message ChangeTicketStatusResponse {
+  bool is_status_edited = 1;
 }

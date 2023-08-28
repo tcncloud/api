@@ -11,7 +11,6 @@ import "google/api/annotations.proto";
 service Tickets {
   // Public Method to create a ticket.
   rpc CreateTicket(CreateTicketReq) returns (CreateTicketRes) {
-    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -24,7 +23,6 @@ service Tickets {
   }
   // Public Method to edit a ticket.
   rpc EditTicket(EditTicketReq) returns (EditTicketRes) {
-    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -38,7 +36,6 @@ service Tickets {
 
   // Public method to list tickets
   rpc ListTickets(ListTicketsReq) returns (ListTicketsRes) {
-    // "/api.v1alpha1.tickets/Tickets/ListTickets".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listtickets";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -51,8 +48,8 @@ service Tickets {
   }
 
   // Public method to assign ticket
+  // Would be deprecated
   rpc AssignTicket(AssignTicketReq) returns (AssignTicketRes) {
-    // "/api.v1alpha1.tickets/Tickets/AssignTicket".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -65,6 +62,7 @@ service Tickets {
   }
 
   // Public Method to Close a ticket
+  // Any agent can close the ticket. No BE validation required
   rpc CloseTicket(CloseTicketReq) returns (CloseTicketRes) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/closeticket";
     option (google.api.http).body = "*";
@@ -115,14 +113,6 @@ service Tickets {
       ];
     };
   }
-  // Public method to Edit Comment for Ticketing system
-  /* rpc EditComment (EditCommentReq) returns(EditCommentRes) {
-         option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editcomment";
-         option (google.api.http).body = "*";
-         option (annotations.authz) = {
-         sets: [{permissions: [PERMISSION_TICKETS_APP]}];
-         };
-     }*/
 
   // Public method to List projects enabled for Ticketing system
   rpc ListEnabledProjects(ListEnabledProjectsReq) returns (ListEnabledProjectsRes) {
@@ -229,7 +219,6 @@ service Tickets {
   // Public Method to edit a ticket.
   // EditTicket would be deprecated
   rpc EditMaskTicket(EditMaskTicketReq) returns (EditMaskTicketRes) {
-    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editmaskticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -242,7 +231,6 @@ service Tickets {
   }
 
   rpc ListAllocatedTickets(ListAllocatedTicketReq) returns (ListAllocatedTicketRes) {
-    // "/api.v1alpha1.tickets/Tickets/CreateTicket".replace(".", "/").lower()
     option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listallocatedtickets";
     option (google.api.http).body = "*";
@@ -284,6 +272,57 @@ service Tickets {
   // public method to fetch list of users for a tickets user
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listusers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Any agent can close the ticket. No BE validation required
+  rpc CloseTicketAction(CloseTicketActionRequest) returns (CloseTicketActionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/closeticketaction";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to assign a ticket action
+  rpc AssignTicketAction(AssignTicketActionRequest) returns (AssignTicketActionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignticketaction";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+  // Public method to assign a ticket
+  rpc CreateTicketAction(CreateTicketActionRequest) returns (CreateTicketActionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createticketaction";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to change the Status of a ticket
+  rpc ChangeTicketStatus(ChangeTicketStatusRequest) returns (ChangeTicketStatusResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/changeticketstatus";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [

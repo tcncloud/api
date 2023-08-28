@@ -44,6 +44,59 @@ message Ticket {
   // A list of sla  assotiated with a ticket
   repeated Sla ticket_sla = 17;
   string assignee = 18;
+  repeated TicketAction ticket_action = 19;
+  TicketStatus ticket_status = 20;
+}
+
+enum TimeScale {
+  TIME_SCALE_MINUTE = 0;
+  TIME_SCALE_HOUR = 1;
+  TIME_SCALE_DAY = 2;
+  TIME_SCALE_WEEK = 3;
+  TIME_SCALE_MONTH = 4;
+  TIME_SCALE_YEAR = 5;
+}
+
+message Duration {
+  int64 value = 1 [jstype = JS_STRING];
+  TimeScale scale = 2;
+}
+
+enum TicketStatus {
+  TICKET_STATUS_NEW = 0;
+  TICKET_STATUS_OPEN = 1;
+  TICKET_STATUS_CLOSE = 2;
+}
+
+// TICKET_ACTION - New messgae have actions mapped to tickets
+message TicketAction {
+  // snowflake id
+  int64 ticket_action_id = 1 [jstype = JS_STRING];
+  // action id from ACTION_MASTER table, Only callback for now
+  int64 action_id = 2 [jstype = JS_STRING];
+  // Attributes for a callback Action
+  CallbackContext callback_context = 3;
+  // ticket id from ticket table
+  int64 ticket_id = 4 [jstype = JS_STRING];
+  // Start Date of the ACTION
+  google.protobuf.Timestamp start_ts = 5;
+  // Expiry date of the ACTION
+  google.protobuf.Timestamp expiry_ts = 6;
+
+  // Ticket action status can be 1 == AVAILABLE and 2 == NOT AVAILABLE
+  int64 state = 8;
+  // Skills needed for the action to be completed
+  // For action we need only skill id and not mandatory/optional
+  repeated string action_skills = 9;
+  // SLA Id for the ACTION
+  repeated Sla action_sla_id = 10;
+}
+
+message CallbackContext {
+  string caller_id = 1;
+  string phone_no = 2;
+  string country_code = 3;
+  string caller_name = 4;
 }
 
 // Metadata - Contains a key value pair of strings, Will have metadata of an agent conversations
@@ -59,22 +112,12 @@ message Skills {
   bool is_preferred = 2;
 }
 
-// EditColumnType Fields
-/*enum EditColumnType {
-     NONE_COLUMN = 0;
-     DESCRIPTION = 1;
-     SKILLS = 2;
-     STATUS = 3;
-     DUE_DATE = 4;
-     SLA = 5;
-     ASSIGNEE = 6;
-   } */
-
 // Sla - Field for a sla set assigned to a ticket
 message Sla {
   int64 condition_sid = 1 [jstype = JS_STRING];
   int64 sla_sid = 2 [jstype = JS_STRING];
   int64 sla_min = 3 [jstype = JS_STRING];
+  Duration sla_duration = 4;
 }
 
 // Comment - Fields for Comment on a ticket, listing comments of a ticket (ViewComment)
@@ -110,23 +153,6 @@ message ConfirmClose {
   int64 status = 1;
 }
 
-// EditComment - Fields for editing a comment
-/*message EditComment {
-       // The snowflake id of a comment row in ticket_comment.
-       int64 comment_sid = 1 [jstype = JS_STRING];
-       // The ticket reference where the comment was added.
-       int64 ticket_sid = 2 [jstype = JS_STRING];
-       // The comment text
-       string comment = 3;
-       // commenter by id
-       string created_by_id = 4; // used in creating comment
-   }*/
-
-/*message ConfirmEditComment {
-       // boolean value to confirm edit comment
-       bool is_edited = 1;
-   }*/
-
 //TicketProject - Fields for Project setting in ticketing system
 message TicketProject {
   // Seq Id of project entry
@@ -155,6 +181,7 @@ message TicketSla {
   int64 interval = 4;
   // Indicates sla is enable or disable
   int64 is_active = 5;
+  Duration ticket_sla_duration = 6;
 }
 
 // SlaConditions - Condition Fields for sla on a ticket
@@ -165,7 +192,7 @@ message SlaConditions {
   string sla_condition_name = 2;
 }
 
-// SlaConditions - Condition Fields for sla on a ticket
+// ReplyComment -
 message ReplyComment {
   // The snowflake id of a comment row in ticket_comment.
   int64 comment_sid = 1 [jstype = JS_STRING];
@@ -210,20 +237,10 @@ message EditTicket {
   EditAttribute edit_value = 2;
 }
 
-// Edit Attribute
-/*
-   Description = 1
-   Skills = 2
-   Status = 3
-   Due Date = 4
-   SLA = 5
-   All Values must come as String. BE to convert values to int64, JSON and DateTime
-*/
 message EditAttribute {
   // Column Descripter
   int64 col_desc = 1 [jstype = JS_STRING];
   string from_val = 2;
   string to_val = 3;
   bool is_edited = 4;
-  //EditColumnType edit_column_type = 5;
 }
