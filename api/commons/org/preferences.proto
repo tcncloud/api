@@ -106,6 +106,10 @@ message ContactFieldDescription {
   int64 id = 1;
   // Contact field name.
   string field_name = 2;
+  // Whether this field holds a phone number.
+  bool is_phone = 3;
+  // Special formatting.
+  string display_format_string = 4;
 }
 
 // Preferences for controlling the organization's authentication properties.
