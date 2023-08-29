@@ -21,6 +21,28 @@ service DeliveryApi {
       ];
     };
   }
+  rpc CreateDeliveryDefinition(CreateDeliveryDefinitionReq) returns (CreateDeliveryDefinitionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createdeliverydefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc CreateEncryption(CreateEncryptionReq) returns (CreateEncryptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createencryption";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
   rpc ListTransferConfigs(ListTransferConfigsReq) returns (ListTransferConfigsRes) {
     option (google.api.http).post = "/api/v1alpha1/delivery/listtransferconfigs";
     option (google.api.http).body = "*";
@@ -246,6 +268,18 @@ message GetHistoryReq {
 message GetHistoryRes {
   History entity = 1;
 }
+message CreateDeliveryDefinitionReq {
+  DeliveryDefinition definition = 1;
+}
+message CreateDeliveryDefinitionRes {
+  ID entity = 1;
+}
+message CreateEncryptionReq {
+  Encryption encryption = 1;
+}
+message CreateEncryptionRes {
+  ID entity = 1;
+}
 
 //entity types
 message TransferConfig {
@@ -447,4 +481,98 @@ message UpdateCredentialRes {
 }
 message Credentials {
   repeated Credential entities = 1;
+}
+
+// replaces TransferConfig
+message DeliveryDefinition {
+  int64 delivery_definition_sid = 1 [jstype = JS_STRING];
+  string org_id = 2;
+  // the name of the definition. Must be unique within the org
+  string name = 3;
+  string description = 4;
+  // optional nofitifications to send out when this config is being used
+  // TODO:
+  // bool transfer_start_notification = 5;
+  // bool transfer_end_notification = 6;
+
+  // how many hours the files should live in cloud storage for
+  // must always be > 0
+  int32 ttl = 8;
+
+  oneof transport {
+    SFTPTransport sftp = 9;
+    EmailTransport email = 10;
+    Room303Transport room303 = 11;
+    SMSTransport sms = 12;
+  }
+  oneof encryption {
+    AESEncryptionRef aes = 13;
+    PGPEncryptionRef pgp = 14;
+  }
+
+  google.protobuf.Timestamp created_on = 15;
+  google.protobuf.Timestamp last_edited = 16;
+}
+
+message SFTPTransport {
+  string host = 1;
+  int32 port = 2;
+  oneof credentials {
+    PasswordRef password = 3;
+    SSHKeyRef ssh_key = 4;
+  }
+  string username = 5;
+  string base_dir = 6;
+}
+message EmailTransport {
+  string from_address = 1;
+  string to_address = 2;
+}
+message Room303Transport {
+  oneof transport {
+    // this way we can use different types of room303 deliveries
+    // in the future, support different api calls,
+    // maybe support multiple groups etc
+    Room303SystemMessage system_message = 1;
+  }
+}
+message Room303SystemMessage {
+  // which room or user to sned the file to
+  string room = 1;
+  oneof user {
+    // will lookup user_sid through org if not provided
+    // username of the intended user
+    string username = 2;
+    // user_id of the intended user
+    string user_id = 3;
+  }
+}
+message SMSTransport {}
+
+message AESEncryptionRef {
+  int64 aes_sid = 1;
+}
+message PGPEncryptionRef {
+  int64 pgp_sid = 1;
+}
+message PasswordRef {
+  int64 password_sid = 1;
+}
+message SSHKeyRef {
+  int64 ssh_key_sid = 1;
+}
+
+message Encryption {
+  int64 encryption_sid = 1;
+  string org_id = 2;
+  string name = 3;
+  string description = 4;
+
+  oneof encryption { // stored as jsonb
+    PGPKeyPair pgp_key_pair = 5;
+    AESPassword aes_password = 6;
+  }
+
+  google.protobuf.Timestamp created_on = 10;
+  google.protobuf.Timestamp last_edited = 11;
 }
