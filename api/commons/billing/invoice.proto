@@ -32,6 +32,14 @@ message Invoice {
   // The items forming the invoice, where a product type
   // should show up only once in this list.
   repeated InvoiceItem items = 1;
+  // the invoice identifier
+  int64 invoice_id = 2 [jstype = JS_STRING];
+  // the billing cycle this invoice was generated for
+  string billing_cycle = 3;
+  // time the invoice was created
+  google.protobuf.Timestamp create_time = 4;
+  // time the invoice was last updated
+  google.protobuf.Timestamp update_time = 5;
 }
 
 // InvoiceItem -
@@ -46,6 +54,8 @@ message InvoiceItem {
   google.protobuf.Timestamp date_created = 4;
   // time the invoice item was last modified
   google.protobuf.Timestamp date_modified = 5;
+  // the invoice identifier
+  int64 invoice_id = 6 [jstype = JS_STRING];
 }
 
 enum InvoiceFormat {

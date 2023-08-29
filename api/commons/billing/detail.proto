@@ -11,6 +11,18 @@ message Plan {
   // all the details that make up this billing plan, where each
   // detail defines how to configure a particular rating module.
   repeated Detail details = 1;
+  // the organization identifier
+  string org_id = 2;
+  // billing plan identifier
+  int64 billing_plan_id = 3 [jstype = JS_STRING];
+  // time the billing plan was created
+  google.protobuf.Timestamp create_time = 4;
+  // time the billing plan was updated
+  google.protobuf.Timestamp update_time = 5;
+  // the time from which this billing plan took effect
+  google.protobuf.Timestamp start_time = 6;
+  // the time (if applicable) this billing plan ended; can be null
+  google.protobuf.Timestamp end_time = 7;
 }
 
 // Detail - all the data required to configure a rating module
@@ -29,6 +41,8 @@ message Detail {
   google.protobuf.Timestamp date_modified = 6;
   // the time the detail was deleted (if applicable)
   google.protobuf.Timestamp deleted_on = 7;
+  // the billing plan identifier
+  int64 billing_plan_id = 8 [jstype = JS_STRING];
 }
 
 // DetailConfig - contains the data specific to the rating module,
