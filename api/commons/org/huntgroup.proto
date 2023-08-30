@@ -218,6 +218,9 @@ message GeneralSettings {
   // Whether to allow the agent to intercom with other agents.
   // `AllowAgentIntercom`
   bool enable_agent_intercom = 803;
+  // Enables the delivery of incoming calls to the agent
+  // depending on the dial status prior to them clicking "Dial".
+  PrepareStateCallDelivery prepare_state_call_delivery = 804;
 
   // Alphanumeric keypad options.
   message AlphanumericKeypad {
@@ -237,6 +240,12 @@ message GeneralSettings {
     // List of required contact field description metadata.
     // List of contact_field_description_sids
     repeated int64 required_data = 3;
+  }
+
+  // PrepareStateCallDelivery options (the dial modes).
+  message PrepareStateCallDelivery {
+    bool manual_dial = 1;
+    bool preview_dial = 2;
   }
 }
 
