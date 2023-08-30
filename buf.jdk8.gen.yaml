@@ -6,9 +6,9 @@ managed:
     except:
       - buf.build/googleapis/googleapis
 plugins:
-  - plugin: buf.build/grpc/java
+  - plugin: buf.build/grpc/java:v1.57.1
     out: tcnapi-jdk8/src/main/java
-  - plugin: buf.build/protocolbuffers/java
+  - plugin: buf.build/protocolbuffers/java:v23.4
     out: tcnapi-jdk8/src/main/java
 
 
