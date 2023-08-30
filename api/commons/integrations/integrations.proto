@@ -43,6 +43,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_PIANO = 3600;
   INTEGRATION_TYPE_EPIC = 3700;
   INTEGRATION_TYPE_NEWZWARE = 3800;
+  INTEGRATION_TYPE_PRIOCOMMERCE = 3900;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -274,6 +275,9 @@ enum RequestMethod {
   REQUEST_METHOD_NEWZWARE_VACATION_RESTART = 3807;
   REQUEST_METHOD_NEWZWARE_VACATION_UPDATE = 3808;
   REQUEST_METHOD_NEWZWARE_PHONE_LOOKUP_MULTI = 3809;
+
+  REQUEST_METHOD_PRIOCOMMERCE_ACH_PAYMENT = 3901;
+  REQUEST_METHOD_PRIOCOMMERCE_CC_PAYMENT = 3902;
 }
 
 enum TransactionType {
@@ -565,6 +569,8 @@ message PaymentFlow {
     PaymentPaywaySubmitACHAlertRequest payway_submit_ach_alert_request = 10;
     PaymentNewzwareCc newzware_cc = 11;
     PaymentNewzwareAch newzware_ach = 12;
+    PaymentPriocommerceCc priocommerce_cc = 13;
+    PaymentPriocommerceAch priocommerce_ach = 14;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
@@ -848,6 +854,9 @@ message ExecuteFlow {
     ExecuteNewzwareVacationRestart newzware_vacation_restart = 3807;
     ExecuteNewzwareVacationUpdate newzware_vacation_update = 3808;
     ExecuteNewzwarePhoneLookupMulti newzware_phone_lookup_multi = 3809;
+
+    ExecutePriocommerceAchPayment priocommerce_ach_payment = 3901;
+    ExecutePriocommerceCcPayment priocommerce_cc_payment = 3902;
   }
 }
 
@@ -905,6 +914,9 @@ message PaymentPaywaySubmitACHAlertRequest {}
 
 message PaymentNewzwareCc {}
 message PaymentNewzwareAch {}
+
+message PaymentPriocommerceCc {}
+message PaymentPriocommerceAch {}
 
 // execute flows
 message ExecuteBraintreeCreditSale {}
@@ -1132,3 +1144,6 @@ message ExecuteNewzwareComplaintUpdate {}
 message ExecuteNewzwareVacationRestart {}
 message ExecuteNewzwareVacationUpdate {}
 message ExecuteNewzwarePhoneLookupMulti {}
+
+message ExecutePriocommerceAchPayment {}
+message ExecutePriocommerceCcPayment {}

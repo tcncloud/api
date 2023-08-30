@@ -159,6 +159,18 @@ service Integrations {
     };
   }
 
+  rpc ListIntegrationsForOrg(ListIntegrationsForOrgReq) returns (IntegrationInfos) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listintegrationsfororg";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
+
   // lists all the names of the configs for an org's integration type
   rpc ListIntegrationConfigNames(ListIntegrationConfigNamesReq) returns (ListIntegrationConfigNamesRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/listintegrationconfignames";
@@ -388,6 +400,8 @@ message ProcessRes {
   // twice, with the first call timing out.
   string transaction_id = 5;
 }
+
+message ListIntegrationsForOrgReq {}
 
 message IntegrationInfos {
   repeated IntegrationInfo values = 1;
