@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package api.v1alpha1.newsroom;
+
+import "api/commons/newsroom.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+// Request to create news article
+message CreateNewsArticleRequest {
+  // news article title
+  string title = 1;
+  // markdown content
+  string content = 2;
+}
+
+// Response to create news article
+message CreateNewsArticleResponse {
+  // news article details
+  NewsArticleDetails article_details = 1;
+}
+
+// Request to list of news articles
+message ListNewsArticlesRequest {
+  // the statuses to select by when listing articles (if empty, selects all)
+  repeated api.commons.ArticleStatus statuses = 1;
+
+  // list of article details to be Requested
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Responseponse to list of news articles
+message ListNewsArticlesResponse {
+  // article details
+  repeated NewsArticleDetails article_details = 1;
+}
+
+// Request to get news article by id
+message GetNewsArticleByIdRequest {
+  // the unique news article identifier
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+}
+
+// Response to get news article
+message GetNewsArticleByIdResponse {
+  // news article details
+  NewsArticleDetails article_details = 1;
+}
+
+// Request to update news article
+message UpdateNewsArticleRequest {
+  // the news article fields specified to be updated
+  NewsArticleDetails article_details = 1;
+
+  // list of fields Requested to be updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Response to update news article
+message UpdateNewsArticleResponse {
+  // latest news article
+  NewsArticleDetails article_details = 1;
+}
+
+// news article details
+message NewsArticleDetails {
+  // the unique news article identifier
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+  // news article title
+  string title = 2;
+  // markdown content
+  string content = 3;
+  // article status
+  api.commons.ArticleStatus status = 4;
+  // news article creation date
+  google.protobuf.Timestamp date_created = 5;
+  // news article last updated date
+  google.protobuf.Timestamp last_edited = 6;
+}

@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package api.v1alpha1.newsroom;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/newsroom/entities.proto";
+import "google/api/annotations.proto";
+
+// Service for interacting with TCN's Newsroom API system.
+// Accessing all of the methods Requestuire an authenticated user with the correct
+// permissions.
+service NewsroomAPI {
+  // create news article
+  rpc CreateNewsArticle(CreateNewsArticleRequest) returns (CreateNewsArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/createnewsarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_EDIT]
+        }
+      ];
+    };
+  }
+
+  // list news articles
+  rpc ListNewsArticles(ListNewsArticlesRequest) returns (ListNewsArticlesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listnewsarticles";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // get news article details by the id
+  rpc GetNewsArticleById(GetNewsArticleByIdRequest) returns (GetNewsArticleByIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/getnewsarticlebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // update news article
+  rpc UpdateNewsArticle(UpdateNewsArticleRequest) returns (UpdateNewsArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/updatenewsarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_EDIT]
+        }
+      ];
+    };
+  }
+}
