@@ -33,6 +33,9 @@ message NodeDefinition {
     OmniNodeUserInput omni_user_input = 207;
     OmniNodeBranching omni_branching = 208;
     OmniNodeToMatcher omni_to_matcher = 209;
+    OmniNodeWebhook omni_webhook = 210;
+    OmniNodeScrublist omni_scrublist = 211;
+    OmniNodeEndConversation omni_end_conversation = 212;
 
     OmniBotNodeTestStart omni_bot_test_start = 301 [deprecated = true];
     OmniBotNodeTestStep omni_bot_test_step = 302 [deprecated = true];

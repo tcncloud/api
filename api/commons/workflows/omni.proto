@@ -53,3 +53,23 @@ message OmniNodeError {
   // the error message to send/log
   string error = 1;
 }
+
+message OmniNodeWebhook {
+  string url = 1;
+  string method = 2;
+  string body = 3;
+  map<string, string> headers = 4;
+}
+
+enum OmniNodeScrublistAction {
+  ADD = 0;
+  REMOVE = 1;
+}
+
+// take an action on a scrublist, either add or remove (other?)
+message OmniNodeScrublist {
+  OmniNodeScrublistAction action = 1;
+}
+
+// close out the conversation
+message OmniNodeEndConversation {}
