@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api.commons;
+
+// newsroom article statuses -
+enum ArticleStatus {
+  // initial news article status
+  STATUS_DRAFT = 0;
+
+  // news article has been published
+  STATUS_PUBLISHED = 1;
+
+  // new article has been archived/closed
+  STATUS_ARCHIVED = 2;
+}
