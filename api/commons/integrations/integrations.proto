@@ -269,6 +269,11 @@ enum RequestMethod {
   REQUEST_METHOD_NEWZWARE_ACCOUNT_INQUIRY = 3802;
   REQUEST_METHOD_NEWZWARE_CC_PAYMENT = 3803;
   REQUEST_METHOD_NEWZWARE_ACH_PAYMENT = 3804;
+  REQUEST_METHOD_NEWZWARE_COMPLAINT_HISTORY = 3805;
+  REQUEST_METHOD_NEWZWARE_COMPLAINT_UPDATE = 3806;
+  REQUEST_METHOD_NEWZWARE_VACATION_RESTART = 3807;
+  REQUEST_METHOD_NEWZWARE_VACATION_UPDATE = 3808;
+  REQUEST_METHOD_NEWZWARE_PHONE_LOOKUP_MULTI = 3809;
 }
 
 enum TransactionType {
@@ -838,6 +843,11 @@ message ExecuteFlow {
     ExecuteNewzwareAccountInquiry newzware_account_inquiry = 3802;
     ExecuteNewzwareCcPayment newzware_cc_payment = 3803;
     ExecuteNewzwareAchPayment newzware_ach_Payment = 3804;
+    ExecuteNewzwareComplaintHistory newzware_complaint_history = 3805;
+    ExecuteNewzwareComplaintUpdate newzware_complaint_update = 3806;
+    ExecuteNewzwareVacationRestart newzware_vacation_restart = 3807;
+    ExecuteNewzwareVacationUpdate newzware_vacation_update = 3808;
+    ExecuteNewzwarePhoneLookupMulti newzware_phone_lookup_multi = 3809;
   }
 }
 
@@ -899,6 +909,7 @@ message PaymentNewzwareAch {}
 // execute flows
 message ExecuteBraintreeCreditSale {}
 message ExecuteBraintreeBankSale {}
+
 message ExecuteRelatientGetPatientBalance {}
 message ExecuteRelatientGetPatientCcTokens {}
 message ExecuteRelatientPostPatientToken {}
@@ -909,8 +920,10 @@ message ExecuteRelatientCreateFortisAchtoken {}
 message ExecuteRelatientCreateFortisCctoken {}
 message ExecuteRelatientFortisTokenAchDebitPayment {}
 message ExecuteRelatientFortisTokenCcPayment {}
+
 message ExecuteCybersourceCreditPayment {}
 message ExecuteCybersourceEcheckPayment {}
+
 message ExecuteCircproPhoneLookupWithBundle {}
 message ExecuteCircproPhoneLookup {}
 message ExecuteCircproVacationRestartInquiry {}
@@ -925,6 +938,7 @@ message ExecuteCircproRestartUpdate {}
 message ExecuteCircproLawImmediatePayment {}
 message ExecuteCircproLawUpdateDataWithPac {}
 message ExecuteCircproLawGetCustomers {}
+
 message ExecuteAuthorizenetChargeCreditCard {}
 message ExecuteAuthorizenetDebitBankAccount {}
 message ExecuteAuthorizenetCreateCustomerPaymentProfile {}
@@ -932,33 +946,45 @@ message ExecuteAuthorizenetPaypalTransaction {}
 message ExecuteAuthorizenetGooglePayTransaction {}
 message ExecuteAuthorizenetApplePayTransaction {}
 message ExecuteAuthorizenetPayPalAuthCapture {}
+
 message ExecuteExpitransCcTransaction {}
 message ExecuteExpitransAchTransaction {}
+
 message ExecuteAxiamedfusionCcTransaction {}
 message ExecuteAxiamedfusionAchTransaction {}
 message ExecuteAxiamedfusionCardVerify {}
+
 message ExecuteInstamedPaymentSale {}
 message ExecuteInstamedVoidPayment {}
+
 message ExecuteUsaepaySubmitCcPayments {}
 message ExecuteUsaepaySubmitAchPayments {}
 message ExecuteUsaepayGetCcToken {}
+
 message ExecuteEzidebitSubmitCcPayments {}
 message ExecuteEzidebitSubmitAchPayments {}
+
 message ExecuteBamboraSubmitCcPayments {}
 message ExecuteBamboraSubmitAchPayments {}
+
 message ExecuteRepayStoreCard {}
 message ExecuteRepayPaymentToken {}
 message ExecuteRepayAchPaymentToken {}
+
 message ExecuteAxiaSubmitSaleRequestByCc {}
 message ExecuteAxiaSubmitSaleRequestByCheck {}
+
 message ExecuteSecuretradingSendPayment {}
+
 message ExecutePaymentVisionSubmitCardSaleRequestByCc {}
 message ExecutePaymentVisionSubmitCardSaleRequestByAch {}
+
 message ExecuteInterproseLookupAccount {}
 message ExecuteInterproseSubmitCardSaleRequestByCc {}
 message ExecuteInterproseSubmitCardSaleRequestByAch {}
 message ExecuteInterproseLookupPaymentId {}
 message ExecuteInterproseLookupAccountByFormId {}
+
 message ExecuteDallasnewsSearchByPhone {}
 message ExecuteDallasnewsSearchByZipStreet {}
 message ExecuteDallasnewsSearchBy {}
@@ -972,10 +998,13 @@ message ExecuteDallasnewsUpdatePhoneNumber {}
 message ExecuteDallasnewsStopAccount {}
 message ExecuteDallasnewsCcPaymentToken {}
 message ExecuteDallasnewsAchPaymentToken {}
+
 message ExecutePaywaySubmitCardSaleRequest {}
 message ExecutePaywayCreateTokenRequest {}
 message ExecutePaywaySubmitACHSaleRequest {}
+
 message ExecuteBillingtreeSubmitCardSaleRequest {}
+
 message ExecuteExperianCcPaymentRequest {}
 message ExecuteExperianCcPaymentPlanRequest {}
 message ExecuteExperianBalancerequest {}
@@ -989,6 +1018,7 @@ message ExecuteExperianStellaAchTokenization {}
 message ExecuteExperianStellaAddusaepaytoken {}
 message ExecuteExperianStellaPaymentPlans {}
 message ExecuteExperianStellaAuth {}
+
 message ExecuteNewscycleLogin {}
 message ExecuteNewscycleSearchPage {}
 message ExecuteNewscycleBillingInfo {}
@@ -1001,14 +1031,19 @@ message ExecuteNewscycleAutoRenewInfo {}
 message ExecuteNewscycleAutoTran {}
 message ExecuteNewscyclePayInfo {}
 message ExecuteNewscyclePayTran {}
+
 message ExecuteTrustcommerceCreditSale {}
 message ExecuteTrustcommerceAchSale {}
+
 message ExecuteVantivCreditSale {}
 message ExecuteVantivAchSale {}
+
 message ExecuteJourneyLatest {}
+
 message ExecuteAthenahealthGetPatients {}
 message ExecuteAthenahealthGetPatientsWithId {}
 message ExecuteAthenahealthCcPayment {}
+
 message ExecuteBrainworksGetCustomersByPhone {}
 message ExecuteBrainworksGetSuspends {}
 message ExecuteBrainworksGetCustomerByCustIdV2 {}
@@ -1018,9 +1053,11 @@ message ExecuteBrainworksStopSuspends {}
 message ExecuteBrainworksStartSuspends {}
 message ExecuteBrainworksSendComplaint {}
 message ExecuteBrainworksGetCustomerByCustId {}
+
 message ExecuteOsgconnectCcPayments {}
 message ExecuteOsgconnectAchPayments {}
 message ExecuteOsgconnectValidateAccountNo {}
+
 message ExecuteNtvbCreditMissedDelivery {}
 message ExecuteNtvbCustomerSearch {}
 message ExecuteNtvbEndCall {}
@@ -1035,6 +1072,7 @@ message ExecuteNtvbStartOutgoingCall {}
 message ExecuteNtvbSubscriptionInfo {}
 message ExecuteNtvbVacationStop {}
 message ExecuteNtvbAuthtest {}
+
 message ExecuteElavonCreditCardSale {}
 message ExecuteElavonAddRecurring {}
 message ExecuteElavonDccResponse {}
@@ -1045,13 +1083,16 @@ message ExecuteElavonHealthCareCCSale {}
 message ExecuteElavonAddInstallment {}
 message ExecuteElavonDeleteInstallment {}
 message ExecuteElavonUpdateInstallment {}
+
 message ExecuteGlobalPaymentsCardSale {}
 message ExecuteGlobalPaymentsGetTransactionByID {}
 message ExecuteGlobalPaymentsListTransactions {}
 message ExecuteGlobalPaymentsRefundSale {}
 message ExecuteGlobalPaymentsReverseSaleOrRefund {}
+
 message ExecutePayScoutCreditCardSale {}
 message ExecutePayScoutEcheckSale {}
+
 message ExecuteI2cEcho {}
 message ExecuteI2cBalanceInquiry {}
 message ExecuteI2cVerifyUser {}
@@ -1062,13 +1103,18 @@ message ExecuteI2cGetCardholderStatement {}
 message ExecuteI2cGetCardholderBalance {}
 message ExecuteI2cGetCreditPaymentInfo {}
 message ExecuteI2cTransactionHistory {}
+
 message ExecuteOpayoCcPayments {}
+
 message ExecuteShift4CcPayments {}
+
 message ExecutePoscorpAccesstoken {}
 message ExecutePoscorpLookupGuarantor {}
 message ExecutePoscorpUpdatePaymentStatus {}
+
 message ExecutePianoGetUser {}
 message ExecutePianoUpdateUser {}
+
 message ExecuteEpicGetToken {}
 message ExecuteEpicGetPatient {}
 message ExecuteEpicMatchPatient {}
@@ -1076,7 +1122,13 @@ message ExecuteEpicSearchAppointment {}
 message ExecuteEpicFindAppointment {}
 message ExecuteEpicBookAppointment {}
 message ExecuteEpicGetAccount {}
+
 message ExecuteNewzwarePhoneLookup {}
 message ExecuteNewzwareAccountInquiry {}
 message ExecuteNewzwareCcPayment {}
 message ExecuteNewzwareAchPayment {}
+message ExecuteNewzwareComplaintHistory {}
+message ExecuteNewzwareComplaintUpdate {}
+message ExecuteNewzwareVacationRestart {}
+message ExecuteNewzwareVacationUpdate {}
+message ExecuteNewzwarePhoneLookupMulti {}
