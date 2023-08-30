@@ -29,6 +29,10 @@ message NodeDefinition {
     OmniNodeSetSkill omni_set_skill = 202;
     OmniNodeToAgent omni_to_agent = 203;
     OmniNodeError omni_error = 204;
+    OmniNodeSendMessage omni_send_message = 206;
+    OmniNodeUserInput omni_user_input = 207;
+    OmniNodeBranching omni_branching = 208;
+    OmniNodeToMatcher omni_to_matcher = 209;
 
     OmniBotNodeTestStart omni_bot_test_start = 301 [deprecated = true];
     OmniBotNodeTestStep omni_bot_test_step = 302 [deprecated = true];

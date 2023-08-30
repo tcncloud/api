@@ -2,18 +2,54 @@ syntax = "proto3";
 
 package api.commons.workflows;
 
+// OmniNodePrompt is the PoC all-in-one version to send a message (optionally displaying options) and store the user input
 message OmniNodePrompt {
+  // the base message to send
   string prompt = 1;
+  // the name (key in payload) under which to store the user input
   string store_to = 2;
+  // a list of options to display along with the prompt
   repeated string options = 3;
 }
 
-message OmniNodeSetSkill {
-  string skill = 1;
+// OmniNodeSendMessage will send a message, displaying options if provided
+message OmniNodeSendMessage {
+  // the base message to send
+  string prompt = 1;
+  // the list of options to select from as the correct response
+  repeated string options = 2;
 }
 
+// OmniNodeUserInput will store the text value of an incoming message under a given key in the payload
+message OmniNodeUserInput {
+  // the name (key in payload) under which to store the input (e.g. "input_text")
+  string store_id = 1;
+}
+
+// OmniNodeBranching compares the input against a list of options
+message OmniNodeBranching {
+  // key of data stored in the payload to compare against the options (likely references an OmniNodeUserInput.store_id)
+  string store_id = 1;
+  // the list of options to use for branching
+  repeated string options = 2;
+}
+
+// OmniNodeSetSkill adds the given string as a skill on the coversation
+message OmniNodeSetSkill {
+  // a single skill to add to the conversation (deprecated)
+  string skill = 1 [deprecated = true];
+  // list of skills to add to the conversation
+  repeated string skills = 2;
+}
+
+// OmniNodeToAgent removes the conversation from the flow (updates the status)
 message OmniNodeToAgent {}
 
+// OmniNodeToMatcher removes the conversation from the flow (updates the status)
+message OmniNodeToMatcher {}
+
+// OmniNodeError will send an error message to the user and log an error
 message OmniNodeError {
+  // the error message to send/log
   string error = 1;
 }
