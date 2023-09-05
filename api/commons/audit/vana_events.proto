@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.commons.audit;
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 ///
@@ -77,4 +78,26 @@ message VanaFlagSummaryEvent {
     int64 transcript_sid = 1;
     repeated int64 flag_sids = 2;
   }
+}
+
+// VanaPhraseCorrectionEvent is a user suggestion for what some words in a transcript
+// should be changed to when the original translation is off.
+message VanaPhraseCorrectionEvent {
+  // Required. Start offset of the selected words in the transcript.
+  google.protobuf.Duration start_offset = 1;
+
+  // Required. End offset of the selected words in the transcript.
+  google.protobuf.Duration end_offset = 2;
+
+  // Required. Original text that the transcript was translated to.
+  string original_text = 3;
+
+  // Required. Proposed text of what the transcript text should be.
+  string proposed_text = 4;
+
+  // Required. Url of the call recording for the transcript.
+  string url = 5;
+
+  // Required. Channel that the words were spoken on.
+  uint32 channel = 6;
 }
