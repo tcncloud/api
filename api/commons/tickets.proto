@@ -46,6 +46,8 @@ message Ticket {
   string assignee = 18;
   repeated TicketAction ticket_action = 19;
   TicketStatus ticket_status = 20;
+  // assignee list
+  repeated string ticket_assignee = 21;
 }
 
 enum TimeScale {
