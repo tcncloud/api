@@ -164,6 +164,7 @@ message CreateSlaReq {
 
   // sla interval
   int64 interval = 4;
+  api.commons.Duration duration = 5;
 }
 
 // CreateSlaRes - Response from CreateSla BE API
