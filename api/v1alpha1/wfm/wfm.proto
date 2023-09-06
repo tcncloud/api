@@ -583,14 +583,13 @@ service WFM {
   }
 
   // Generates a regression forecast using the provided @regression_template.
-  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-  // if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
   // It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
   // It will use the client's saved interval width to divide the resulting forecast intervals.
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
   //   - grpc.Internal: error occurs during the building of the regression forecast.
   rpc BuildRegressionForecastByInterval(BuildRegressionForecastByIntervalReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyinterval";
@@ -605,14 +604,13 @@ service WFM {
   }
 
   // Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
-  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-  // if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+  // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
   // It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
   // It will use the client's saved interval width to divide the resulting forecast intervals.
   // The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
   //
   // Errors:
-  //   - grpc.Invalid: the @regression_template in the request is invalid.
+  //   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
   //   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
   rpc BuildRegressionForecastByIntervalWithStats(BuildRegressionForecastByIntervalWithStatsReq) returns (stream BuildRegressionForecastByIntervalWithStatsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildregressionforecastbyintervalwithstats";
@@ -2677,7 +2675,8 @@ message HistoricalDataInterval {
   // time that this interval starts at.
   google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile that this interval belongs to.
-  int64 skill_profile_sid = 2;
+  // Deprecated: use skill_profile_category instead.
+  int64 skill_profile_sid = 2 [deprecated = true];
 
   // the following are averages for all the calls found for this interval.
   // average time that calls took to be answered.
@@ -2709,12 +2708,17 @@ message HistoricalDataInterval {
   int32 original_total_calls = 14;
   // original total number of calls that were abandoned
   int32 original_total_abandoned_calls = 15;
+  // Skill profile category that the interval belongs to.
+  commons.SkillProfileCategory skill_profile_category = 16;
 }
 
 // Request message for the ListHistoricalData RPC
 message ListHistoricalDataReq {
   // ID of the skill profile used to examine matching calls in the client's historical data.
-  int64 skill_profile_sid = 1;
+  // Deprecated: use skill_profile_category instead.
+  int64 skill_profile_sid = 1 [deprecated = true];
+  // Skill profile category that the desired calls will belong to.
+  commons.SkillProfileCategory skill_profile_category = 2;
 }
 
 // Response message for the ListHistoricalData RPC
@@ -3020,7 +3024,6 @@ message BuildRegressionForecastByIntervalReq {
   // Template to use to generate the regression forecast
   RegressionTemplate regression_template = 5;
   // IDs of the skill profiles to generate the forecasts,
-  // if no IDs are sent, it will forecast for all active skill profiles.
   repeated int64 skill_profile_sids_to_forecast = 6;
 }
 
@@ -3038,7 +3041,6 @@ message BuildRegressionForecastByIntervalWithStatsReq {
   // Template to use to generate the regression forecast
   RegressionTemplate regression_template = 5;
   // IDs of the skill profiles to generate the forecasts,
-  // if no IDs are sent, it will forecast for all active skill profiles.
   repeated int64 skill_profile_sids_to_forecast = 6;
 }
 
