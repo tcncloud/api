@@ -900,8 +900,16 @@ message VerificationNewzwareLookupPhone {}
 message VerificationNewzwareAccountInquiry {}
 
 // payment flows
-message PaymentExperianCC {}
-message PaymentExperianACH {}
+message PaymentExperianCC {
+  // if true instead of using the account number uploaded to textpay,
+  // we send the payment with the account number returned on the invoice
+  bool use_invoice_account_number = 1;
+}
+message PaymentExperianACH {
+  // if true instead of using the account number uploaded to textpay,
+  // we send the payment with the account number returned on the invoice
+  bool use_invoice_account_number = 1;
+}
 
 message PaymentAuthorizeNetCC {}
 message PaymentAuthorizeNetACH {}
