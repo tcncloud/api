@@ -49,4 +49,31 @@ service NewsroomAPI {
       ];
     };
   }
+
+  // create published article
+  rpc CreatePublishedArticle(CreatePublishedArticleRequest) returns (CreatePublishedArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/createpublishedarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_EDIT]
+        }
+      ];
+    };
+  }
+
+  // list published articles
+  rpc ListPublishedArticles(ListPublishedArticlesRequest) returns (ListPublishedArticlesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listpublishedarticles";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // get published article details by the id
+  rpc GetPublishedArticleById(GetPublishedArticleByIdRequest) returns (GetPublishedArticleByIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/getpublishedarticlebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }

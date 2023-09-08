@@ -77,3 +77,50 @@ message NewsArticleDetails {
   // news article last updated date
   google.protobuf.Timestamp last_edited = 6;
 }
+
+// published article details
+message PublishedArticleDetails {
+  // the unique published article identifier
+  int64 published_article_sid = 1 [jstype = JS_STRING];
+  // news article details
+  NewsArticleDetails news_article_details = 2;
+  // news article published date
+  google.protobuf.Timestamp date_published = 3;
+  // this flag determines if we show to user or not
+  bool display_to_user = 4;
+}
+
+// Request to create published article
+message CreatePublishedArticleRequest {
+  // news article identifier
+  int64 new_article_sid = 1;
+  // determines if we show to user
+  bool display_to_user = 2;
+}
+
+// Response to create published article
+message CreatePublishedArticleResponse {
+  // news article details
+  PublishedArticleDetails published_article_details = 1;
+}
+
+// Request to list of published articles
+message ListPublishedArticlesRequest {}
+
+// Response to list of published articles
+message ListPublishedArticlesResponse {
+  // published article details
+  repeated PublishedArticleDetails published_article_details = 1;
+}
+
+// Request to get published article by id
+message GetPublishedArticleByIdRequest {
+  // the unique news article identifier
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+}
+
+// Response to get published article
+message GetPublishedArticleByIdResponse {
+  // published article details
+  PublishedArticleDetails published_article_details = 1;
+}
