@@ -187,17 +187,16 @@ service WFM {
     };
   }
 
-  // Gets the historical data for the org sending the request and the given @skill_profile_sid.
+  // Gets the historical data for the org sending the request and the given @skill_profile_category.
   // It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
   // The duration of each interval will be the interval width of the org's forecasting parameters.
-  // It also applies any deltas that the client has stored for the given @SkillProfileSid.
+  // It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
   // If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-  // If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-  //   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+  //   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+  //   - grpc.NotFound: the @skill_profile_category given is not found for the org.
   //   - grpc.Internal: error occurs when getting the historical data.
   rpc ListHistoricalData(ListHistoricalDataReq) returns (ListHistoricalDataRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listhistoricaldata";
@@ -274,6 +273,7 @@ service WFM {
   // The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
   // or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
   // The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+  // DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
   // Required permissions:
   //   NONE
   // Errors:
@@ -282,6 +282,31 @@ service WFM {
   //   - grpc.Internal: error occurs when building the call profile template.
   rpc BuildCallProfileTemplateForSkillProfile(BuildCallProfileTemplateForSkillProfileReq) returns (BuildCallProfileTemplateForSkillProfileRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildcallprofiletemplateforskillprofile";
+    option (google.api.http).body = "*";
+    option deprecated = true;
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+  // The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+  // from the client's saved forecasting parameters.
+  // The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+  // or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+  // The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+  //   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+  //   - grpc.Internal: error occurs when building the call profile template.
+  rpc BuildCallProfileTemplate(BuildCallProfileTemplateReq) returns (BuildCallProfileTemplateRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/buildcallprofiletemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -409,12 +434,12 @@ service WFM {
   // Builds a profile forecast using the provided @call_profile_template.
   // The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
   // (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
   // The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+  //   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
   //   - grpc.Internal: error occurs during the building of the profile forecast.
   rpc BuildProfileForecastByInterval(BuildProfileForecastByIntervalReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyinterval";
@@ -431,13 +456,13 @@ service WFM {
   // Builds a profile forecast using the provided @call_profile_template.
   // The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
   // (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+  // The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
   // The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-  // It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+  // It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+  //   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
   //   - grpc.Internal: error occurs during the building of the profile forecast.
   rpc BuildProfileForecastByIntervalWithStats(BuildProfileForecastByIntervalWithStatsReq) returns (stream BuildProfileForecastByIntervalWithStatsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/buildprofileforecastbyintervalwithstats";
@@ -2675,7 +2700,7 @@ message HistoricalDataInterval {
   // time that this interval starts at.
   google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile that this interval belongs to.
-  // Deprecated: use skill_profile_category instead.
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
   int64 skill_profile_sid = 2 [deprecated = true];
 
   // the following are averages for all the calls found for this interval.
@@ -2715,7 +2740,7 @@ message HistoricalDataInterval {
 // Request message for the ListHistoricalData RPC
 message ListHistoricalDataReq {
   // ID of the skill profile used to examine matching calls in the client's historical data.
-  // Deprecated: use skill_profile_category instead.
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
   int64 skill_profile_sid = 1 [deprecated = true];
   // Skill profile category that the desired calls will belong to.
   commons.SkillProfileCategory skill_profile_category = 2;
@@ -2799,6 +2824,18 @@ message BuildCallProfileTemplateForSkillProfileRes {
   CallProfileTemplate call_profile_template = 1;
 }
 
+// Request message for the BuildCallProfileTemplate RPC.
+message BuildCallProfileTemplateReq {
+  // Skill profile category of the training data used to generate the template.
+  commons.SkillProfileCategory skill_profile_category = 1;
+}
+
+// Response message for the BuildCallProfileTemplate RPC.
+message BuildCallProfileTemplateRes {
+  // call profile template found in the training data set.
+  CallProfileTemplate call_profile_template = 1;
+}
+
 // Request message for the CreateInactiveSkillProfileMapping RPC.
 message CreateInactiveSkillProfileMappingReq {
   // ID of the inactive skill profile that will be mapped to the active_skill_profile_sid.
@@ -2870,7 +2907,10 @@ message BuildProfileForecastByIntervalReq {
   // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
   bool fixed_averages_forecast = 2;
   // ID of the skill profile that the forecast will belong to.
-  int64 skill_profile_sid = 3;
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
+  int64 skill_profile_sid = 3 [deprecated = true];
+  // Skill profile category that the forecast belongs to.
+  commons.SkillProfileCategory skill_profile_category = 4;
 }
 
 // Message type specifying calls in an interval for a specific skill profile
@@ -2878,7 +2918,8 @@ message CallDataByInterval {
   // Start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // ID of the skill profile to forecast for (not set in profile forecasts).
-  int64 skill_profile_sid = 2;
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
+  int64 skill_profile_sid = 2 [deprecated = true];
   // the number of calls in this interval with this skill profile (answered + unanswered).
   int32 total_calls = 3;
   // optional
@@ -2898,6 +2939,8 @@ message CallDataByInterval {
   // Interval width minutes that the interval used on creation.
   // Only set for forecast intervals.
   int32 interval_width_in_minutes = 11;
+  // Skill profile category that the interval belongs to.
+  commons.SkillProfileCategory skill_profile_category = 12;
 }
 
 // Request message for the BuildProfileForecastByIntervalWithStats RPC
@@ -2908,8 +2951,11 @@ message BuildProfileForecastByIntervalWithStatsReq {
   // and will only use the fixed averages fields and @total_calls_profile from the @call_profile_template.
   // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
   bool fixed_averages_forecast = 2;
-  // ID of the skill profile to use the training data for stats.
-  int64 skill_profile_sid = 3;
+  // ID of the skill profile that the forecast will belong to.
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
+  int64 skill_profile_sid = 3 [deprecated = true];
+  // Skill profile category that the forecast belongs to.
+  commons.SkillProfileCategory skill_profile_category = 4;
 }
 
 // Response message for BuildProfileForecastByIntervalWithStats RPC
@@ -2926,13 +2972,16 @@ message BuildProfileForecastByIntervalWithStatsRes {
 // Request message for the UpsertProfileForecast RPC
 message UpsertProfileForecastReq {
   // ID of the skill profile that the forecast will belong to.
-  int64 skill_profile_sid = 1;
+  // Deprecated as of Sep/8/2023: use skill_profile_category instead.
+  int64 skill_profile_sid = 1 [deprecated = true];
   // Template to use to generate the forecast that will be stored.
   CallProfileTemplate call_profile_template = 2;
   // If @fixed_averages_forecast is set to true it will do a fixed averages forecast,
   // and will only use the fixed averages fields and @total_calls_profile from the @call_profile_template.
   // Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
   bool fixed_averages_forecast = 3;
+  // Skill profile category that the forecast belongs to.
+  commons.SkillProfileCategory skill_profile_category = 4;
 }
 
 // Response message for the UpsertProfileForecast RPC
