@@ -57,7 +57,7 @@ service NewsroomAPI {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_NEWSROOM_EDIT]
+          permissions: [PERMISSION_NEWSROOM_PUBLISH]
         }
       ];
     };
