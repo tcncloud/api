@@ -999,6 +999,24 @@ service WFM {
     };
   }
 
+  // Lists the program nodes with the given @program_node_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the given @program_node_sids are invalid.
+  //   - grpc.Internal: error occurs when listing the program nodes.
+  rpc ListProgramNodesBySid(ListProgramNodesBySidReq) returns (ListProgramNodesBySidRes) {
+    option (google.api.http).post = "/api/v1alpha/wfm/listprogramnodesbysid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Creates the given @constraint_rule for the org sending the request.
   // The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
   // The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -3506,6 +3524,18 @@ message UpdateProgramNodeReq {
 
 // Response messsage for the UpdateProgramNode RPC
 message UpdateProgramNodeRes {}
+
+// Request message for the ListProgramNodesBySid RPC
+message ListProgramNodesBySidReq {
+  // IDs of the program nodes to list.
+  repeated int64 program_node_sids = 1;
+}
+
+// Response message for the ListProgramNodesBySid RPC
+message ListProgramNodesBySidRes {
+  // The program nodes matching the given @program_node_sids.
+  repeated ProgramNode program_nodes = 1;
+}
 
 message ParentEntity {
   // ID of a parent entity
