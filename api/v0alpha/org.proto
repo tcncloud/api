@@ -4450,6 +4450,7 @@ message SchedulePreferences {
   bool use_campaign_linking = 8; // Use campaign linking by default
   map<string, string> campaign_links = 9; // List of campaign links
   string default_campaign_link_id = 10; // Default campaign link ID (id in CampaignLink associated with default)
+  bool resend_cancelled_campaigns = 11; // Whether user canceled campaigns can be resent in the organization.
 }
 
 // Request for GetEmailSmsPreferences
