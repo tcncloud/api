@@ -1316,6 +1316,26 @@ service WFM {
     };
   }
 
+  // Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+  // Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+  // If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //  - grpc.Invalid: the @tcn_agent_sids are invalid.
+  //  - grpc.Internal: error occours while listing the wfm_agent_sids.
+  rpc ListWFMAgentSids(ListWFMAgentSidsReq) returns (ListWFMAgentSidsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listwfmagentsids";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
   // Required permissions:
   //   NONE
@@ -3839,6 +3859,19 @@ message ListUngroupedWFMAgentsReq {
 message ListUngroupedWFMAgentsRes {
   // List of all unnasigned wfm agents for the given @schedule_scenario_sid.
   repeated WFMAgent wfm_agents = 1;
+}
+
+// Request message for the ListWFMAgentSids RPC
+message ListWFMAgentSidsReq {
+  // IDs of the agents to get the related wfm_agent_sid for.
+  repeated int64 tcn_agent_sids = 1;
+}
+
+// Response message for the ListWFMAgentSids RPC
+message ListWFMAgentSidsRes {
+  // Map of WFM agents found.
+  // Key: tcn_agent_sid - Value: wfm_agent_sid.
+  map<int64, int64> sids = 1;
 }
 
 // Request message for the ListWFMAgentsAssociatedWithAgentGroup RPC
