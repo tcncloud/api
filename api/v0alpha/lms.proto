@@ -2647,6 +2647,8 @@ message EpicEntrypoint {
   // after the current records are flushed, we switch back to downloading the remaining records.
   // If false (default), we download all the pages before we start processing any records.
   bool flush_during_check = 10;
+  // Specifies the timezone to be used by the cron
+  string timezone = 11;
 }
 
 // The types of entities that can be returned from Epic's bulk data api.
