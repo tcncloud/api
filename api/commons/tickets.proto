@@ -99,6 +99,7 @@ message CallbackContext {
   string phone_no = 2;
   string country_code = 3;
   string caller_name = 4;
+  string caller_country_code = 5;
 }
 
 // Metadata - Contains a key value pair of strings, Will have metadata of an agent conversations
