@@ -297,6 +297,28 @@ service LMS {
       ];
     };
   }
+  rpc ProcessList(ProcessListRequest) returns (ProcessListResponse) {
+    option (google.api.http).post = "/api/v0alpha/lms/pipelines/processlist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc StreamList(stream StreamListRequest) returns (StreamListResponse) {
+    option (google.api.http).post = "/api/v0alpha/lms/pipelines/streamlist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
   rpc GetAvailableFields(google.protobuf.Empty) returns (ProcessFields) {
     option (google.api.http).post = "/api/v0alpha/lms/available-fields";
     option (google.api.http).body = "*";
@@ -628,6 +650,33 @@ message ProcessElementReq {
   string element_id = 1;
   // says if it was triggered by a cron or manually
   string process_message = 2;
+}
+message ProcessListRequest {
+  // the element/node we want to upload the list to.
+  // must be an api_entrypoint type element.
+  string element_id = 3;
+  // raw bytes of the list we are uploading.
+  // must be parsable by the file_template for element_id.
+  bytes list = 4;
+}
+message ProcessListResponse {
+  // empty for now
+}
+
+message StreamListRequest {
+  string org_id = 1;
+  string region_id = 2;
+  // the element/node we want to upload the list to.
+  // must be an api_entrypoint type element.
+  // all chunks will be concat together in order for each element streamed.
+  // if this field is ever empty the whole call will error.
+  string element_id = 3;
+  // up to 2mb of raw bytes of the list we are uploading.
+  // all chunks streamed are concat together and uploaded after streaming ends.
+  bytes chunk = 4;
+}
+message StreamListResponse {
+  // empty for now
 }
 
 message ListAvailableFieldsByElementIdReq {
