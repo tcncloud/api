@@ -1,4 +1,4 @@
 include:
   - project: "tcnpublic/api-ci"
-    ref: generate-jdk6-protos
+    ref: master
     file: api-gitlab-ci.yml
