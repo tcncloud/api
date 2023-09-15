@@ -58,7 +58,7 @@ message UpdateNewsArticleRequest {
 
 // Response to update news article
 message UpdateNewsArticleResponse {
-  // latest news article
+  // updated news article
   NewsArticleDetails article_details = 1;
 }
 
@@ -90,10 +90,26 @@ message PublishedArticleDetails {
   bool display_to_user = 4;
 }
 
+// user activity details
+message UserActivity {
+  // the unique user activity log identifier
+  int64 user_activity_log_sid = 1 [jstype = JS_STRING];
+  // user activity created date
+  google.protobuf.Timestamp date_created = 2;
+  // user activity details
+  UserActivityDetails user_activity_details = 3;
+
+  // user activity details
+  message UserActivityDetails {
+    // the unique published article identifier
+    int64 published_article_sid = 1 [jstype = JS_STRING];
+  }
+}
+
 // Request to create published article
 message CreatePublishedArticleRequest {
   // news article identifier
-  int64 new_article_sid = 1;
+  int64 new_article_sid = 1 [jstype = JS_STRING];
   // determines if we show to user
   bool display_to_user = 2;
 }
@@ -115,12 +131,35 @@ message ListPublishedArticlesResponse {
 
 // Request to get published article by id
 message GetPublishedArticleByIdRequest {
-  // the unique news article identifier
-  int64 new_article_sid = 1 [jstype = JS_STRING];
+  // deprecated
+  int64 new_article_sid = 1 [deprecated = true];
+  // the unique published article sid
+  int64 published_article_sid = 2 [jstype = JS_STRING];
 }
 
 // Response to get published article
 message GetPublishedArticleByIdResponse {
   // published article details
   PublishedArticleDetails published_article_details = 1;
+}
+
+// Request to update user activity
+message UserActivityRequest {
+  // the unique published article identifier
+  int64 published_article_sid = 1 [jstype = JS_STRING];
+}
+
+// Response to user activity updates
+message UserActivityResponse {
+  // user activity details
+  UserActivity user_activity = 1;
+}
+
+// Request to get unseen news articles for the user
+message GetNewsForUserRequest {}
+
+// Response to unseen news articles for the user
+message GetNewsForUserResponse {
+  // published article details
+  repeated PublishedArticleDetails published_article_details = 1;
 }
