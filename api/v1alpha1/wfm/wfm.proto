@@ -590,6 +590,7 @@ service WFM {
   }
 
   // Gets the forecast data intervals for the given @skill_profile_sid.
+  // DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
   // Required permissions:
   //   NONE
   // Errors:
@@ -597,6 +598,25 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the forecast data intervals.
   rpc ListForecastIntervalsForSkillProfile(ListForecastIntervalsForSkillProfileReq) returns (stream CallDataByInterval) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervalsforskillprofile";
+    option (google.api.http).body = "*";
+    option deprecated = true;
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Gets the forecast data intervals for the given @skill_profile_category.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+  //   - grpc.Internal: error occurs when getting the forecast data intervals.
+  rpc ListForecastIntervals(ListForecastIntervalsReq) returns (stream CallDataByInterval) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervals";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -726,7 +746,7 @@ service WFM {
   }
 
   // Deletes forecast data intervals/deltas based on the parameters provided.
-  // If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+  // If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
   // associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
   // deleted will be contained in the list @interval_sids. The @delete_type field determines which
   // table(s) in the database the intervals/deltas will be deleted from.
@@ -3187,6 +3207,12 @@ message ListForecastIntervalsForSkillProfileReq {
   int64 skill_profile_sid = 1;
 }
 
+// Request message for the ListForecastIntervals RPC
+message ListForecastIntervalsReq {
+  // Category to get the forecast data intervals for.
+  commons.SkillProfileCategory skill_profile_category = 1;
+}
+
 // Request message for the UpsertRegressionForecast RPC
 message UpsertRegressionForecastReq {
   // Forecast template used to build the regression forecast
@@ -3210,7 +3236,7 @@ message UpsertRegressionForecastRes {}
 // Request message for the UpsertForecastDataDelta RPC
 message UpsertForecastDataDeltaReq {
   // Delta to store
-  // The @start_datetime, @is_delta, and @skill_profile_sid fields DO NOT need to be set.
+  // The @start_datetime, @is_delta, and @skill_profile_category fields DO NOT need to be set.
   CallDataByInterval delta = 1;
 }
 
@@ -3223,7 +3249,7 @@ message UpsertForecastDataDeltaRes {
 // Request message for the UpsertForecastDataDeltas RPC
 message UpsertForecastDataDeltasReq {
   // Deltas to store
-  // The @start_datetime, @is_delta, and @skill_profile_sid fields DO NOT need to be set.
+  // The @start_datetime, @is_delta, and @skill_profile_category fields DO NOT need to be set.
   repeated CallDataByInterval deltas = 1;
 }
 
@@ -3244,9 +3270,12 @@ message DeleteForecastIntervalsReq {
   }
   oneof delete_param {
     // ID of the skill profile of which to delete the intervas/deltas.
-    int64 skill_profile_sid = 1;
+    // Deprecated as of Sep/13/2023: use skill_profile_category instead.
+    int64 skill_profile_sid = 1 [deprecated = true];
     // Wrapper for SIDs of intervals to be deleted
     IntervalSids forecast_interval_sids = 2;
+    // Skill profile category of which to delete the intervals/deltas.
+    commons.SkillProfileCategory skill_profile_category = 4;
   }
   // Type of interval to delete
   ForecastIntervalDeleteType forecast_interval_delete_type = 3;
