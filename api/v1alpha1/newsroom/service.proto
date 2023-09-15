@@ -76,4 +76,18 @@ service NewsroomAPI {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+
+  // user activity updates
+  rpc UserActivity(UserActivityRequest) returns (UserActivityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/useractivity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // fetch the unseen articles for the user
+  rpc GetNewsForUser(GetNewsForUserRequest) returns (GetNewsForUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/getnewsforuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
