@@ -21,28 +21,6 @@ service DeliveryApi {
       ];
     };
   }
-  rpc CreateDeliveryDefinition(CreateDeliveryDefinitionReq) returns (CreateDeliveryDefinitionRes) {
-    option (google.api.http).post = "/api/v1alpha1/delivery/createdeliverydefinition";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
-        }
-      ];
-    };
-  }
-  rpc CreateEncryption(CreateEncryptionReq) returns (CreateEncryptionRes) {
-    option (google.api.http).post = "/api/v1alpha1/delivery/createencryption";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
-        }
-      ];
-    };
-  }
   rpc ListTransferConfigs(ListTransferConfigsReq) returns (ListTransferConfigsRes) {
     option (google.api.http).post = "/api/v1alpha1/delivery/listtransferconfigs";
     option (google.api.http).body = "*";
@@ -186,6 +164,138 @@ service DeliveryApi {
       ];
     };
   }
+  rpc CreateDeliveryDefinition(CreateDeliveryDefinitionReq) returns (CreateDeliveryDefinitionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createdeliverydefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc DeleteDeliveryDefinition(DeleteDeliveryDefinitionReq) returns (DeleteDeliveryDefinitionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/deletedeliverydefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc GetDeliveryDefinition(GetDeliveryDefinitionReq) returns (GetDeliveryDefinitionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/getdeliverydefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GetDeliveryDefinitionByName(GetDeliveryDefinitionByNameReq) returns (GetDeliveryDefinitionByNameRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/getdeliverydefinitionbyname";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListDeliveryDefinitions(ListDeliveryDefinitionsReq) returns (ListDeliveryDefinitionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listdeliverydefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListDeliveryDefinitionsByCredentialID(ListDeliveryDefinitionsByCredentialIDReq) returns (ListDeliveryDefinitionsByCredentialIDRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listdeliverydefinitionsbycredentialid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc UpdateDeliveryDefinition(UpdateDeliveryDefinitionReq) returns (UpdateDeliveryDefinitionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/updatedeliverydefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc CreateEncryption(CreateEncryptionReq) returns (CreateEncryptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/createencryption";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc DeleteEncryption(DeleteEncryptionReq) returns (DeleteEncryptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/deleteencryption";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc GetEncryption(GetEncryptionReq) returns (GetEncryptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/getencryption";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListEncryptions(ListEncryptionsReq) returns (ListEncryptionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listencryptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc UpdateEncryption(UpdateEncryptionReq) returns (UpdateEncryptionRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/updateencryption";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 message CreateTransferConfigReq {
@@ -232,7 +342,7 @@ message GetTransferConfigRes {
   TransferConfig entity = 1;
 }
 message GetTransferConfigByNameReq {
-  string name = 1; // obsolete dont use
+  string name = 1 [deprecated = true]; // obsolete dont use
   google.protobuf.FieldMask mask = 2;
   TransferConfig entity = 3;
 }
@@ -274,10 +384,79 @@ message CreateDeliveryDefinitionReq {
 message CreateDeliveryDefinitionRes {
   ID entity = 1;
 }
+message DeleteDeliveryDefinitionReq {
+  ID entity = 1;
+}
+message DeleteDeliveryDefinitionRes {}
+message GetDeliveryDefinitionReq {
+  DeliveryDefinition entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message GetDeliveryDefinitionRes {
+  DeliveryDefinition entity = 1;
+}
+message GetDeliveryDefinitionByNameReq {
+  string name = 1 [deprecated = true]; // obsolete dont use
+  google.protobuf.FieldMask mask = 2;
+  DeliveryDefinition entity = 3;
+}
+message GetDeliveryDefinitionByNameRes {
+  DeliveryDefinition entity = 1;
+}
+message ListDeliveryDefinitionsReq {
+  DeliveryDefinition entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  ListReq list_req = 3;
+}
+message ListDeliveryDefinitionsRes {
+  repeated DeliveryDefinition entities = 1;
+}
+message ListDeliveryDefinitionsByCredentialIDReq {
+  DeliveryDefinition entity = 1;
+  google.protobuf.FieldMask mask = 2;
+  ID credential_sid = 3;
+  ListReq list_req = 4;
+}
+message ListDeliveryDefinitionsByCredentialIDRes {
+  repeated DeliveryDefinition entities = 1;
+}
+message UpdateDeliveryDefinitionReq {
+  DeliveryDefinition entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message UpdateDeliveryDefinitionRes {
+  ID entity = 1;
+}
 message CreateEncryptionReq {
   Encryption encryption = 1;
 }
 message CreateEncryptionRes {
+  ID entity = 1;
+}
+message DeleteEncryptionReq {
+  ID entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message DeleteEncryptionRes {}
+message GetEncryptionReq {
+  Encryption entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message GetEncryptionRes {
+  Encryption entity = 1;
+}
+message ListEncryptionsReq {
+  ListReq entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message ListEncryptionsRes {
+  repeated Encryption entities = 1;
+}
+message UpdateEncryptionReq {
+  Encryption entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+message UpdateEncryptionRes {
   ID entity = 1;
 }
 
