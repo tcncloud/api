@@ -386,6 +386,12 @@ enum Permission {
     ]
   }];
 
+  // Enables access to the Agent Portal feature.
+  PERMISSION_AGENT_PORTAL = 1501 [(annotations.perms.options) = {
+    app: APPLICATION_WORK_FORCE_MANAGEMENT
+    features: ["Agent Portal"]
+  }];
+
   /*
    * Scorecards
    */
