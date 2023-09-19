@@ -15,7 +15,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc QueryPbxUsers(QueryPbxUsersRequest) returns (QueryPbxUsersResponse) {
-    option (google.api.http).get = "/api/pbx/v1/querypbxusers";
+    option (google.api.http).post = "/services/pbx/v1/querypbxusers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -34,7 +34,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc QueryRingGroups(QueryRingGroupsRequest) returns (QueryRingGroupsResponse) {
-    option (google.api.http).get = "/api/pbx/v1/queryringgroups";
+    option (google.api.http).post = "/services/pbx/v1/queryringgroups";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -54,7 +54,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc UpdatePbxUser(UpdatePbxUserRequest) returns (UpdatePbxUserResponse) {
-    option (google.api.http).post = "/api/pbx/v1/managepbxuser";
+    option (google.api.http).post = "/services/pbx/v1/managepbxuser";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -77,7 +77,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc UpdateRingGroup(UpdateRingGroupRequest) returns (UpdateRingGroupResponse) {
-    option (google.api.http).post = "/api/pbx/v1/manageringgroup";
+    option (google.api.http).post = "/services/pbx/v1/manageringgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -97,7 +97,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc CreateRingGroup(CreateRingGroupRequest) returns (CreateRingGroupResponse) {
-    option (google.api.http).post = "/api/pbx/v1/createringgroup";
+    option (google.api.http).post = "/services/pbx/v1/createringgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -118,7 +118,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc DeleteRingGroup(DeleteRingGroupRequest) returns (DeleteRingGroupResponse) {
-    option (google.api.http).delete = "/api/pbx/v1/deleteringgroup";
+    option (google.api.http).post = "/services/pbx/v1/deleteringgroup";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -137,7 +137,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc AssignRandomExtension(AssignRandomExtensionRequest) returns (AssignRandomExtensionResponse) {
-    option (google.api.http).post = "/api/pbx/v1/assignrandomextension";
+    option (google.api.http).post = "/services/pbx/v1/assignrandomextension";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
