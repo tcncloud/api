@@ -6364,6 +6364,7 @@ message UserSubscription {
   oneof deliver_method {
     Room303 room303 = 100;
     // TODO: add email, sms, etc.
+    Delivery delivery = 200;
   }
 
   // Optional. Updates must specify current version or be rejected.
@@ -6380,6 +6381,12 @@ message UserSubscription {
     // If not set the message will be sent in the default
     // system room.
     string room_name = 1;
+  }
+
+  message Delivery {
+    // Required.
+    // Used to lookup how the notification is going to happen through Delivery.
+    string transfer_config_name = 1;
   }
 }
 
