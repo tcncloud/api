@@ -5,6 +5,6 @@ package api.commons.audit;
 import "api/commons/tickets.proto";
 
 message TicketEvent {
-  api.commons.EditTicket editticket = 1; // update ticket
+  api.commons.EditTicket editticket = 1;
   string created_by_id = 2;
 }
