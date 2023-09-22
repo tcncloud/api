@@ -374,6 +374,84 @@ service WFM {
     };
   }
 
+  // Creates the given @skill_profile_group.
+  // @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+  //   - grpc.Internal: error occurs creating the skill profile group.
+  rpc CreateSkillProfileGroup(CreateSkillProfileGroupReq) returns (CreateSkillProfileGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createskillprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+  // @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+  //   - grpc.NotFound: the skill profile group to update doesn't exist.
+  //   - grpc.Internal: error occurs updating the skill profile group.
+  rpc UpdateSkillProfileGroup(UpdateSkillProfileGroupReq) returns (UpdateSkillProfileGroupRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+  // If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+  //   - grpc.Internal: error occurs getting the skill profile groups.
+  rpc ListSkillProfileGroups(ListSkillProfileGroupsReq) returns (ListSkillProfileGroupsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listskillprofilegroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates associations of the given @skill_profile_group_sid for the org sending the request.
+  // It will create the associations with the @skill_profile_sids_to_associate, and remove the associations with the @skill_profile_sids_to_disassociate.
+  // Only one of the skill_profile_sids fields needs to be set, but both can be set on the same request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the values in the request are invalid.
+  //   - grpc.Internal: error occurs updating the skill profile group associations.
+  rpc UpdateSkillProfileGroupAssociations(UpdateSkillProfileGroupAssociationsReq) returns (UpdateSkillProfileGroupAssociationsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateskillprofilegroupassociations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
   // If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
   // Required permissions:
@@ -2638,6 +2716,29 @@ message SkillProfile {
   bool are_averages_manual = 14;
 }
 
+message SkillProfileGroup {
+  // ID of the skill profile group.
+  int64 skill_profile_group_sid = 1;
+  // name of the skill profile group.
+  string name = 2;
+  // description about the skill profile group.
+  string description = 3;
+  // date of creation of the skill profile group.
+  google.protobuf.Timestamp create_time = 4;
+  // average time that calls took to be answered.
+  float average_speed_of_answer_in_seconds = 5;
+  // average duration of answered calls.
+  float average_handle_time_in_seconds = 6;
+  // average time that agents spent in wrap up.
+  float average_after_call_work_in_seconds = 7;
+  // average time that callers waited before hanging unanswered calls.
+  float average_time_to_abort_in_seconds = 8;
+  // indicates whether or not the averages were manually entered by the user (if false then the averages were automatically calculated from the historical data).
+  bool are_averages_manual = 9;
+  // IDs of the skill profiles that belong to this group.
+  repeated int64 skill_profile_sids = 10;
+}
+
 // Request message for the ListSkillProfiles RPC.
 message ListSkillProfilesReq {
   // If set to true only active skill profiles will be returned, otherwise active and inactive skill profiles will be returned.
@@ -2926,6 +3027,56 @@ message DisconnectInactiveSkillProfileMappingReq {
 
 // Response message for the DisconnectInactiveSkillProfileMapping RPC.
 message DisconnectInactiveSkillProfileMappingRes {}
+
+// Request message for the CreateSkillProfileGroup RPC.
+message CreateSkillProfileGroupReq {
+  // Skill profile group to create.
+  // @skill_profile_group_sid will be ignored since that field is generated upon creation of the entity.
+  // @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+  SkillProfileGroup skill_profile_group = 1;
+}
+
+// Response message for the CreateSkillProfileGroup RPC.
+message CreateSkillProfileGroupRes {
+  // ID of the skill profile group created.
+  int64 skill_profile_group_sid = 1;
+}
+
+// Request message for the UpdateSkillProfileGroup RPC.
+message UpdateSkillProfileGroupReq {
+  // Skill profile group to update.
+  // @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+  SkillProfileGroup skill_profile_group = 1;
+}
+
+// Response message for the UpdateSkillProfileGroup RPC.
+message UpdateSkillProfileGroupRes {}
+
+// Request message for the ListSkillProfileGroups RPC.
+message ListSkillProfileGroupsReq {
+  // IDs of the skill profile groups to get.
+  // If left empty it will get all the skill profile groups for the org
+  repeated int64 skill_profile_group_sids = 1;
+}
+
+// Response message for the ListSkillProfileGroups RPC.
+message ListSkillProfileGroupsRes {
+  // Skill profile groups found.
+  repeated SkillProfileGroup skill_profile_groups = 1;
+}
+
+// Request message for the UpdateSkillProfileGroupAssociations RPC.
+message UpdateSkillProfileGroupAssociationsReq {
+  // IDs of the skill profile groups to update the associations of.
+  int64 skill_profile_group_sid = 1;
+  // IDs of the skill profiles to associate with this group.
+  repeated int64 skill_profile_sids_to_associate = 2;
+  // IDs of the skill profiles to disassociate with this group.
+  repeated int64 skill_profile_sids_to_disassociate = 3;
+}
+
+// Response message for the UpdateSkillProfileGroupAssociations RPC.
+message UpdateSkillProfileGroupAssociationsRes {}
 
 // Request message for the DeleteHistoricalDataDeltas RPC.
 message DeleteHistoricalDataDeltasReq {
