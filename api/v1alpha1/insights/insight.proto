@@ -16,6 +16,22 @@ message Insight {
   uint32 insight_version = 6; // Required - version of the insight
   string body = 7; // Required - serialized json of the insight body
   api.commons.InsightPermissionType insight_permission_type = 8; // Required - enum type used to deserialize body
+  string resource_id = 9; // unique resource id of the insight
+  bool standard_insight = 10; // whether the insight is a standard insight
+}
+
+// PublishInsightRequest is the request to publish an insight.
+message PublishInsightRequest {
+  // Required - resource id of the insight to publish
+  string resource_id = 1;
+  // Optional - resource id of the destination to publish to
+  // If not provided, a new standard insight will be created
+  string destination_resource_id = 2;
+}
+
+// PublishInsightResponse contains the Insight that was published.
+message PublishInsightResponse {
+  Insight insight = 1; // Published entity
 }
 
 // CreateInsightRequest is the request to create an insight.
@@ -52,6 +68,7 @@ message UpdateInsightResponse {
 // DeleteInsightRequest is the request to delete an insight.
 message DeleteInsightRequest {
   int64 insight_id = 1 [jstype = JS_STRING]; // Required - id of insight to delete
+  string resource_id = 2; // resource id of the insight to delete
 }
 
 // DeleteInsightResponse contains the Insight that was deleted.
@@ -62,6 +79,7 @@ message DeleteInsightResponse {
 // GetInsightRequest is the request to get an insight.
 message GetInsightRequest {
   int64 insight_id = 1 [jstype = JS_STRING]; // Required - id of insight to get
+  string resource_id = 2; // resource id of insight to get
 }
 
 // GetInsightResponse contains the Insight that was retrieved.

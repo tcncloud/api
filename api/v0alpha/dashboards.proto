@@ -160,6 +160,36 @@ service Dashboards {
       ];
     };
   }
+  // PublishDashboard publishes a dashboard
+  rpc PublishDashboard(PublishDashboardRequest) returns (PublishDashboardResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/PublishDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_SUPPORT_TCN_DASHBOARDS_ADMIN,
+            PERMISSION_DASHBOARDS_EDIT
+          ]
+        }
+      ];
+    };
+  }
+}
+
+// PublishDashboardRequest used in PublishDashboard rpc
+message PublishDashboardRequest {
+  // resource id of the dashboard to be published
+  string resource_id = 1;
+  // destination resource id can be emtpy to create
+  // a new resource or can be used to update an existing
+  string destination_resource_id = 2;
+}
+
+// PublishDashboardResponse used in PublishDashboard rpc
+message PublishDashboardResponse {
+  // resource id of the published dashboard
+  string resource_id = 1;
 }
 
 // ListDashboardsRequest --  filled in from auth. May include filters in future
@@ -180,6 +210,8 @@ message DashboardSummary {
   string description = 3;
   // number of associated panels
   int32 panel_count = 4;
+  // resource id of the dashboard
+  string resource_id = 5;
 }
 
 // GetDefaultDashboardRequest used in GetDefaultDashboard rpc
@@ -191,6 +223,7 @@ message SetDefaultDashboardRequest {
   string dashboard_id = 1;
 }
 
+// ListProductTypesRequest used in ListProductTypes rpc
 message ListProductTypesRequest {}
 
 message ListProductTypesResult {
@@ -206,12 +239,16 @@ message ProductType {
 message DeleteDashboardRequest {
   // unique ID of dashboard to be deleted
   string dashboard_id = 1;
+  // resource id of the dashboard
+  string resource_id = 2;
 }
 
 // GetDashboardRequest used in GetDashboard rpc
 message GetDashboardRequest {
   // unique ID of dashboard to retrieve
   string dashboard_id = 1;
+  // resource id of the dashboard
+  string resource_id = 2;
 }
 
 // CreateDashboardRequest used in the CreateDashboard rpc
@@ -232,6 +269,8 @@ message CreateDashboardRequest {
 message CreateDashboardResponse {
   // unique ID of the dashboard created
   string dashboard_id = 1;
+  // resource id of the dashboard created
+  string resource_id = 2;
 }
 
 // DashboardLayout contains location information for a dashboards panels
@@ -281,6 +320,8 @@ message Dashboard {
   DashboardView view = 5;
   // dashboard type, with type specific components
   DashboardType type = 6;
+  // resource id of the dashboard
+  string resource_id = 7;
 }
 
 // DashboardType, specifies what type of dashboard we are dealing with
@@ -322,6 +363,8 @@ message UpdateDashboardRequest {
   DashboardView view = 5;
   // dashboard type, with type specific components
   DashboardType type = 6;
+  // resource id of the dashboard
+  string resource_id = 7;
 }
 
 // UpdateDashboardTitleAndDescriptionResponse used for the update RPC
@@ -332,6 +375,8 @@ message UpdateDashboardTitleAndDescriptionRequest {
   string title = 2;
   // optional new dashboard description
   string description = 3;
+  // resource id of the dashboard
+  string resource_id = 4;
 }
 
 // UpdateDashboardTitleAndDescriptionRequest used for the update RPC
@@ -340,6 +385,8 @@ message UpdateDashboardLayoutRequest {
   string dashboard_id = 1;
   // layout of associated panels
   DashboardLayout layout = 2;
+  // resource id of the dashboard
+  string resource_id = 3;
 }
 
 // UpdateDashboardViewRequest  used in the update RPC
@@ -348,6 +395,8 @@ message UpdateDashboardViewRequest {
   string dashboard_id = 1;
   // the dashboards viewing params
   DashboardView view = 2;
+  // resource id of the dashboard
+  string resource_id = 3;
 }
 
 // DashboardView contains the viewing parameters that make up the view of a dashboard
