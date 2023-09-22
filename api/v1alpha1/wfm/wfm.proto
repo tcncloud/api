@@ -2289,7 +2289,7 @@ service WFM {
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+  //   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
   //   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
   rpc ListShiftInstancesBySid(ListShiftInstancesBySidReq) returns (ListShiftInstancesBySidRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesbysid";
@@ -2537,6 +2537,37 @@ service WFM {
   //   -grpc.Internal: error occurs when removing the scheduling target.
   rpc DeleteSchedulingTarget(DeleteSchedulingTargetReq) returns (DeleteSchedulingTargetRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deleteschedulingtarget";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Gets the scheduling-target values for the org making the request.
+  // Errors:
+  //   - grpc.Internal: error occours when getting the scheduling-target values.
+  rpc GetDefaultSchedulingTarget(GetDefaultSchedulingTargetReq) returns (GetDefaultSchedulingTargetRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getdefaultschedulingtarget";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Sets the scheduling-target values for the org making the request.
+  // Errors:
+  //   - grpc.Invalid: any of the given values are invalid.
+  //   - grpc.Internal: error occours when setting the scheduling-target values.
+  rpc SetDefaultSchedulingTarget(SetDefaultSchedulingTargetReq) returns (SetDefaultSchedulingTargetRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/setdefaultschedulingtarget";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -5387,6 +5418,26 @@ message DeleteSchedulingTargetReq {
 
 // DeleteSchedulingTarget response.
 message DeleteSchedulingTargetRes {}
+
+// GetDefaultSchedulingTargetReq is a request mesage.
+message GetDefaultSchedulingTargetReq {
+  // Empty.
+}
+
+// GetDefaultSchedulingTargetRes is a response mesage.
+message GetDefaultSchedulingTargetRes {
+  SchedulingTarget scheduling_target = 1;
+}
+
+// SetDefaultSchedulingTargetReq is a request mesage.
+message SetDefaultSchedulingTargetReq {
+  SchedulingTarget scheduling_target = 1;
+}
+
+// SetDefaultSchedulingTargetRes is a response mesage.
+message SetDefaultSchedulingTargetRes {
+  // Empty.
+}
 
 // Request message for the ListRequiredCallsIntervals RPC.
 message ListRequiredCallsIntervalsReq {
