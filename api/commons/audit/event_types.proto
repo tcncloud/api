@@ -207,4 +207,7 @@ enum EventType {
   // Agent Training
   // create learning opportunity event
   AGENT_TRAINING_CREATE_LEARNING_OPPORTUNITY_EVENT = 800;
+
+  // LMS Events
+  LMS_PIPELINE_FAILURE_EVENT = 900;
 }

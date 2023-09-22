@@ -7,6 +7,7 @@ import "api/commons/audit/asm_events.proto";
 import "api/commons/audit/compliance_events.proto";
 import "api/commons/audit/event_types.proto";
 import "api/commons/audit/events.proto";
+import "api/commons/audit/lms_events.proto";
 import "api/commons/audit/omnichannel_events.proto";
 import "api/commons/audit/scorecards_events.proto";
 import "api/commons/audit/tickets_events.proto";
@@ -215,5 +216,8 @@ message AuditEvent {
     // Agent Training events class 800
     // learning opportunity created event
     AgentTrainingCreateLearningOpportunityEvent agent_training_create_learning_opportunity_event = 800;
+
+    // LMS Events class 900
+    LMSPipelineFailureEvent lms_pipeline_failure_event = 900;
   }
 }
