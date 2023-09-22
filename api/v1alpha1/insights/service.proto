@@ -14,7 +14,10 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
       ];
     };
@@ -27,7 +30,13 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_DASHBOARD_EDIT]
         }
       ];
     };
@@ -40,7 +49,10 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
       ];
     };
@@ -53,7 +65,10 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
       ];
     };
@@ -66,46 +81,64 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_DASHBOARD_VIEW]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_DASHBOARD_EDIT]
         }
       ];
     };
   }
 
-  // CreateCommonsInsight creates a common library insight
+  // CreateCommonsInsight is deprecated.
   rpc CreateCommonsInsight(CreateInsightRequest) returns (CreateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/createcommonsinsight";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+          permissions: [
+            PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
+            PERMISSION_INSIGHTS_INSIGHT_EDIT
+          ]
         }
       ];
     };
   }
 
-  // UpdateCommonsInsight updates a common library insight
+  // UpdateCommonsInsight is deprecated.
   rpc UpdateCommonsInsight(UpdateInsightRequest) returns (UpdateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/updatecommonsinsight";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+          permissions: [
+            PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
+            PERMISSION_INSIGHTS_INSIGHT_EDIT
+          ]
         }
       ];
     };
   }
 
-  // DeleteCommonsInsight deletes a common library insight
+  // DeleteCommonsInsight is deprecated.
   rpc DeleteCommonsInsight(DeleteInsightRequest) returns (DeleteInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/deletecommonsinsight";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE]
+          permissions: [
+            PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
+            PERMISSION_INSIGHTS_INSIGHT_EDIT
+          ]
         }
       ];
     };
@@ -118,7 +151,10 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
       ];
     };
@@ -131,7 +167,26 @@ service Insights {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_INSIGHTS_MANAGE]
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ];
+    };
+  }
+
+  // PublishInsight publishes an insight
+  rpc PublishInsight(PublishInsightRequest) returns (PublishInsightResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/publishinsight";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
+            PERMISSION_INSIGHTS_INSIGHT_EDIT
+          ]
         }
       ];
     };
