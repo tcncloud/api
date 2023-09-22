@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+message LMSPipelineFailureEvent {
+  string element_id = 1;
+  string element_name = 2;
+  string file_name = 3;
+  string failure_message = 4;
+}
