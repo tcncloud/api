@@ -7,6 +7,7 @@ import "api/commons/enums.proto";
 import "api/commons/lms.proto";
 import "api/commons/org.proto";
 import "api/commons/types.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
@@ -19,7 +20,7 @@ message OmniCampaign {
   // the campaign description
   string description = 3;
   // skills associated with the campaign
-  OmniConversationSkills skills = 4;
+  OmniConversationSkills skills = 4 [deprecated = true];
   // time the campaign should start; null == (not scheduled) || (start now)
   google.protobuf.Timestamp start_date = 5;
   // campaign status (i.e. running|stopped|paused|etc.)
@@ -124,6 +125,8 @@ message OmniCampaignModuleConfig {
   repeated string payment_portal_ids = 19;
   // Flow Id
   Int64Id flow_id = 20;
+  // skills
+  OmniConversationSkills skills = 21;
 }
 
 // SmsNumber
@@ -170,6 +173,8 @@ enum OmniCampaignModuleType {
   MODULE_TYPE_INBOUND = 0;
   // outbound module
   MODULE_TYPE_OUTBOUND = 1;
+  // manual approve module
+  MODULE_TYPE_MANUAL_APPROVAL = 2;
 }
 
 enum ChannelType {
@@ -790,6 +795,8 @@ message GetQueuesDetailsRes {
 // OmniTaskStatus -
 enum OmniTaskStatus {
   OMNI_TASK_WAITING = 0; // initial task created waiting to be processed
+  OMNI_TASK_WAITING_FOR_QUEUE = 1; // task is waiting to be queue
+  OMNI_TASK_WAITING_FOR_APPROVAL = 2; // task is waiting for approval
   OMNI_TASK_SENDING = 100; // the task is currently being sent
   OMNI_TASK_SENDING_FAILED = 110; // the task attempted to send but failed
   OMNI_TASK_SENDING_INCOMPLETE = 111; // the task began the process of sending but did not complete
@@ -898,11 +905,20 @@ message OmniTask {
   google.protobuf.StringValue status_message = 12;
   // scheduled time for task
   google.protobuf.Timestamp scheduled_time = 13;
+  // holds extra details about how a task should be processed
+  OmniTaskConfig task_config = 15;
 
   message Details {
     // name of the contact list
     google.protobuf.StringValue contact_list_name = 1;
   }
+}
+
+// TaskConfig -
+message OmniTaskConfig {
+  OmniConversationSkills skills = 1;
+  google.protobuf.Duration absolute_timeout_duration = 2;
+  google.protobuf.Duration agent_timeout_duration = 3;
 }
 
 // OmniTaskState -
