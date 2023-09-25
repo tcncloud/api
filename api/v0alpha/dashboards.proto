@@ -212,6 +212,8 @@ message DashboardSummary {
   int32 panel_count = 4;
   // resource id of the dashboard
   string resource_id = 5;
+  // standard dashboard flag
+  bool standard_dashboard = 6;
 }
 
 // GetDefaultDashboardRequest used in GetDefaultDashboard rpc
@@ -221,6 +223,8 @@ message GetDefaultDashboardRequest {}
 message SetDefaultDashboardRequest {
   // unique ID of dashboard to be set as default
   string dashboard_id = 1;
+  // resource id of the dashboard
+  string resource_id = 2;
 }
 
 // ListProductTypesRequest used in ListProductTypes rpc
@@ -322,6 +326,8 @@ message Dashboard {
   DashboardType type = 6;
   // resource id of the dashboard
   string resource_id = 7;
+  // standard dashboard flag
+  bool standard_dashboard = 8;
 }
 
 // DashboardType, specifies what type of dashboard we are dealing with
