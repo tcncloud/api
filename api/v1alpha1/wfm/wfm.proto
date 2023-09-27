@@ -2367,7 +2367,7 @@ service WFM {
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
+  //   - grpc.Invalid: @shift_instance_sids in the request are invalid.
   //   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
   rpc ListShiftInstancesBySid(ListShiftInstancesBySidReq) returns (ListShiftInstancesBySidRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesbysid";
@@ -2686,6 +2686,413 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the data.
   rpc ListRequiredCallsIntervals(ListRequiredCallsIntervalsReq) returns (ListRequiredCallsIntervalsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listrequiredcallsintervals";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates a Tour Pattern for @shift_template_sid and the org sending the request, returning @tour_pattern_sid.
+  // If there is already a Tour Pattern for @shift_template_sid then the method call will fail to create a new Tour Pattern.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
+  //   - grpc.Internal: error occurs when creating the Tour Pattern.
+  rpc CreateTourPattern(CreateTourPatternReq) returns (CreateTourPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtourpattern";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the requested Tour Pattern does not exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc GetTourPattern(GetTourPatternReq) returns (GetTourPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/gettourpattern";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
+  // Any member Tour Week Patterns or Agent Collections will be deleted as well.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when deleting the data or it's children.
+  rpc DeleteTourPattern(DeleteTourPatternReq) returns (DeleteTourPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetourpattern";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates a Tour Week Pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
+  // The newly created Tour Week Pattern will be placed at the end of the existing sequence of tour week patterns for @tour_pattern_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when creating the Tour Week Pattern.
+  rpc CreateTourWeekPattern(CreateTourWeekPatternReq) returns (CreateTourWeekPatternRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtourweekpattern";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the Tour Week Patterns with @tour_pattern_sid for the org sending the request
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the Tour Week Patterns.
+  rpc ListTourWeekPatterns(ListTourWeekPatternsReq) returns (ListTourWeekPatternsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtourweekpatterns";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes the Tour Week Patterns with the given @tour_week_pattern_sids for the org sending the request.
+  // Any Tour Week Instance or Segment Configs using @tour_week_pattern_sids will be deleted.
+  // Request will error if any @tour_week_pattern_sids are in use by a Tour Agent Collection, as those must be removed first.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.FailedPrecondition: a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+  //   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
+  rpc DeleteTourWeekPatterns(DeleteTourWeekPatternsReq) returns (DeleteTourWeekPatternsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetourweekpatterns";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+  // The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+  // The @member_tour_shift_segment_configs field will be ignored, and will not be created if passed through this endpoint.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+  //   - grpc.Internal: error occurs when creating the data.
+  rpc CreateTourShiftInstanceConfig(CreateTourShiftInstanceConfigReq) returns (CreateTourShiftInstanceConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtourshiftinstanceconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+  // The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+  // The @member_tour_shift_segment_configs field will be ignored, and will not be updated if passed through this endpoint.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid or a preexisting Tour Shift Instance Config would overlap @tour_shift_instance_config.
+  //   - grpc.Internal: error occurs when updating the data.
+  rpc UpdateTourShiftInstanceConfig(UpdateTourShiftInstanceConfigReq) returns (UpdateTourShiftInstanceConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatetourshiftinstanceconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the Tour Shift Instance Configs belonging to @tour_week_pattern_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+  rpc ListTourShiftInstanceConfigs(ListTourShiftInstanceConfigsReq) returns (ListTourShiftInstanceConfigsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtourshiftinstanceconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes the Tour Shift Instance Configs matching @tour_shift_instance_config_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+  rpc DeleteTourShiftInstanceConfigs(DeleteTourShiftInstanceConfigsReq) returns (DeleteTourShiftInstanceConfigsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetourshiftinstanceconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates the given @tour_shift_segment_config for the org sending the request, returning @tour_shift_segment_config_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when creating the entity.
+  rpc CreateTourShiftSegmentConfig(CreateTourShiftSegmentConfigReq) returns (CreateTourShiftSegmentConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtourshiftsegmentconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid for the org sending the request.
+  // If the updated Tour Shift Segment Config overlaps another segment or does not fit within the parent Tour Shift Instance Config the update will fail.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid or the resulting update would result in a conflict.
+  //   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when updating the entity.
+  rpc UpdateTourShiftSegmentConfig(UpdateTourShiftSegmentConfigReq) returns (UpdateTourShiftSegmentConfigRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatetourshiftsegmentconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the Tour Shift Segment Configs belonging to @tour_shift_instance_config_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the Tour Shift Segment Configs.
+  rpc ListTourShiftSegmentConfigs(ListTourShiftSegmentConfigsReq) returns (ListTourShiftSegmentConfigsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtourshiftsegmentconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes the Tour Shift Segment Configs associated with the given @tour_shift_segment_config_sids for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when deleting the Tour Shift Segment Configs.
+  rpc DeleteTourShiftSegmentConfigs(DeleteTourShiftSegmentConfigsReq) returns (DeleteTourShiftSegmentConfigsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetourshiftsegmentconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates the given @tour_agent_collection for the org sending the request and return the @tour_agent_collection_sid.
+  // The @wfm_agent_sids will be ignored and will not be created through this endpoint.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+  //   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when creating the entity.
+  rpc CreateTourAgentCollection(CreateTourAgentCollectionReq) returns (CreateTourAgentCollectionRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtouragentcollection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
+  // The @wfm_agent_sids will be ignored and will not be updated through this endpoint.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+  //   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when updating the entity.
+  rpc UpdateTourAgentCollection(UpdateTourAgentCollectionReq) returns (UpdateTourAgentCollectionRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatetouragentcollection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the Tour Agent Collections belonging to @tour_pattern_sid for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the tour agent collections.
+  rpc ListTourAgentCollections(ListTourAgentCollectionsReq) returns (ListTourAgentCollectionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtouragentcollections";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes the Tour Agent collections matching @tour_agent_collection_sids for the org sending the request.
+  // Any existing associations with WFM Agent Sids will be deleted as well.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when deleting the tour agent collections.
+  rpc DeleteTourAgentCollections(DeleteTourAgentCollectionsReq) returns (DeleteTourAgentCollectionsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetouragentcollections";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Creates an assocation between the @tour_agent_collection_sid and the @wfm_agent_sids for the org sending the request.
+  // If there is already an association between any of the @wfm_agent_sids and the Tour Pattern that @tour_agent_collection_sid belongs to, the method will fail and no associations will be created.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid
+  //   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
+  //   - grpc.Internal: error occurs when creating the association.
+  rpc CreateTourAgentCollectionWFMAgents(CreateTourAgentCollectionWFMAgentsReq) returns (CreateTourAgentCollectionWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createtouragentcollectionwfmagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists the WFM Agent SIDs belonging to @tour_agent_collection_sids for the org sending the request.
+  // The resulting sids will be returned in @wfm_agent_pairings each containing an @agent_collection_sid and @wfm_agent_sids.
+  // If no agents are found for a sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the tour agent collections.
+  rpc ListTourAgentCollectionWFMAgents(ListTourAgentCollectionWFMAgentsReq) returns (ListTourAgentCollectionWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listtouragentcollectionwfmagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Deletes association between the @wfm_agent_sids and @tour_agent_collection_sid for the org sending the request.
+  // If no @wfm_agent_sids are provided, all existing @wfm_agent_sids for the given @tour_agent_collection_sid will be deleted.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
+  //   - grpc.Internal: error occurs when getting the tour agent collections.
+  rpc DeleteTourAgentCollectionWFMAgents(DeleteTourAgentCollectionWFMAgentsReq) returns (DeleteTourAgentCollectionWFMAgentsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletetouragentcollectionwfmagents";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -5608,3 +6015,313 @@ message ListRequiredCallsIntervalsRes {
   // Requested required call intervals.
   repeated RequiredCallsInterval required_calls_intervals = 2;
 }
+
+// Represents a TourShiftSegmentConfig
+message TourShiftSegmentConfig {
+  // The unique ID of the tour shift segment config.
+  int64 tour_shift_segment_config_sid = 1;
+  // The ID of the parent tour shift instance config
+  int64 tour_shift_instance_config_sid = 2;
+  // The minute within the shift instance config where the shift segment config starts.
+  int32 start_minute_in_shift = 3;
+  // The number of minutes wide that the segment covers.
+  int32 width_in_minutes = 4;
+  // The ID of the scheduling activity that the segment will schedule.
+  int64 scheduling_activity_sid = 5;
+}
+
+// Represents a TourShiftInstanceConfig
+message TourShiftInstanceConfig {
+  // The unique ID of the tour shift instance config.
+  int64 tour_shift_instance_config_sid = 1;
+  // The ID of the tour week pattern that the tour shift instance config belongs to.
+  int64 tour_week_pattern_sid = 2;
+  // The number of minutes after the start of week UTC for the shift instance config to start.
+  // May not be greater than 10080, as that would begin during the next week.
+  int32 start_minute_in_week = 3;
+  // The number of minutes wide that the tour shift instance config covers.
+  int32 width_in_minutes = 4;
+  // The tour shift segment configs that are associated with @tour_shift_instance_config_sid.
+  repeated TourShiftSegmentConfig member_tour_shift_segment_configs = 5;
+}
+
+// Represents a TourWeekPattern
+message TourWeekPattern {
+  // The unique ID of the tour week pattern.
+  int64 tour_week_pattern_sid = 1;
+  // The ID of the tour pattern that the tour week pattern belongs to.
+  int64 tour_pattern_sid = 2;
+  // The tour week patterns place within the sequence of tour week patterns that belong to @tour_pattern_sid.
+  int32 week_pattern_number = 3;
+  // The tour shift instance configs associated with @tour_week_pattern_sid.
+  repeated TourShiftInstanceConfig member_tour_shift_instance_configs = 4;
+}
+
+// Represents a TourAgentCollection
+message TourAgentCollection {
+  // The unique ID of this tour agent collection sid.
+  int64 tour_agent_collection_sid = 1;
+  // The ID of the tour pattern that the tour agent collection is associated with.
+  int64 tour_pattern_sid = 2;
+  // The minimum number of agents that are required to be scheduled using this collection.
+  int32 min_agents_to_schedule = 3;
+  // The maximum number of agents that are allowed to be scheduled using this collection.
+  int32 max_agents_to_schedule = 4;
+  // The week pattern number to start scheduling this collection with.
+  // Each the next week pattern number in sequence will be scheduled, starting with the @first_week_pattern_number.
+  int32 first_week_pattern_number = 5;
+  // The name used to describe this tour agent collection to the user.
+  string name = 6;
+  // The IDs of any wfm agents associated with @tour_collection_sid.
+  repeated int64 wfm_agent_sids = 7;
+}
+
+// Represents a TourPattern
+message TourPattern {
+  // The unique ID of this tour pattern sid.
+  int64 tour_pattern_sid = 1;
+  // The ID of the shift template that the tour pattern belongs to.
+  int64 shift_template_sid = 2;
+  // The tour week patterns associated with @tour_pattern_sid.
+  repeated TourWeekPattern member_tour_week_patterns = 3;
+  // The tour agent collection associated with @tour_pattern_sid.
+  repeated TourAgentCollection member_tour_agent_collections = 4;
+}
+
+// Request message for the CreateTourPattern RPC.
+message CreateTourPatternReq {
+  // ID of the Shift Template to create the Tour Pattern for.
+  int64 shift_template_sid = 1;
+}
+
+// Response message for the CreateTourPattern RPC.
+message CreateTourPatternRes {
+  // ID of the newly created Tour Pattern
+  int64 tour_pattern_sid = 1;
+}
+
+// Request message for the GetTourPattern RPC.
+message GetTourPatternReq {
+  // ID of the Shift Template to get the Tour Pattern for.
+  int64 shift_template_sid = 1;
+}
+
+// Request message for the GetTourPattern RPC.
+message GetTourPatternRes {
+  // The requested Tour Pattern
+  TourPattern tour_pattern = 1;
+}
+
+// Request message for the DeleteTourPattern RPC.
+message DeleteTourPatternReq {
+  // ID of the tour pattern to delete.
+  // If any entities belong to @tour_pattern_sid they will be deleted too.
+  int64 tour_pattern_sid = 1;
+}
+
+// Request message for the DeleteTourPattern RPC.
+message DeleteTourPatternRes {}
+
+// Request message for the CreateTourWeekPattern RPC.
+message CreateTourWeekPatternReq {
+  // ID of the Tour Pattern to create the tour week pattern for.
+  int64 tour_pattern_sid = 1;
+}
+
+// Response message for the CreateTourWeekPattern RPC.
+message CreateTourWeekPatternRes {
+  // ID of the newly created Tour Pattern.
+  int64 tour_week_pattern_sid = 1;
+}
+
+// Request message for the ListTourWeekPatterns RPC.
+message ListTourWeekPatternsReq {
+  // ID of the tour pattern that the @tour_week_patterns to retrieve belong to.
+  int64 tour_pattern_sid = 1;
+}
+
+// Response message for the ListTourWeekPatterns RPC.
+message ListTourWeekPatternsRes {
+  // The requested Tour Week Patterns.
+  repeated TourWeekPattern tour_week_patterns = 1;
+}
+
+// Request message for the DeleteTourWeekPatterns RPC.
+message DeleteTourWeekPatternsReq {
+  // IDs of the tour week patterns to be deleted.
+  // Any member Configs will be deletes as well.
+  // If any Tour Agent Collections are using the @tour_week_pattern_sids, they must be deleted first.
+  repeated int64 tour_week_pattern_sids = 1;
+}
+
+// Response message for the DeleteTourWeekPatterns RPC.
+message DeleteTourWeekPatternsRes {}
+
+// Request message for the CreateTourShiftInstanceConfig RPC.
+message CreateTourShiftInstanceConfigReq {
+  // The Tour Shift Instance Config to create.
+  TourShiftInstanceConfig tour_shift_instance_config = 1;
+}
+
+// Response message for the CreateTourShiftInstanceConfig RPC.
+message CreateTourShiftInstanceConfigRes {
+  // ID of the newly created Tour Shift Instance Config.
+  int64 tour_shift_instance_config_sid = 1;
+}
+
+// Request message for the UpdateTourShiftInstanceConfig RPC.
+message UpdateTourShiftInstanceConfigReq {
+  // The Tour Shift Instance Config to update.
+  TourShiftInstanceConfig tour_shift_instance_config = 1;
+}
+
+// Response message for the UpdateTourShiftInstanceConfig RPC.
+message UpdateTourShiftInstanceConfigRes {}
+
+// Request message for the ListTourShiftInstanceConfigs RPC.
+message ListTourShiftInstanceConfigsReq {
+  // IDs of the tour week patterns to get the child Tour Shift Instance Configs for.
+  repeated int64 tour_week_pattern_sids = 1;
+}
+
+// Response message for the ListTourShiftInstanceConfigs RPC.
+message ListTourShiftInstanceConfigsRes {
+  // Requested Tour Shift Instance Configs.
+  repeated TourShiftInstanceConfig tour_shift_instance_configs = 1;
+}
+
+// Request message for the DeleteTourShiftInstanceConfigs RPC.
+message DeleteTourShiftInstanceConfigsReq {
+  // IDs of the Tour Shift Instance Configs to be deleted.
+  repeated int64 tour_shift_instance_config_sids = 1;
+}
+
+// Response message for the DeleteTourShiftInstanceConfigs RPC.
+message DeleteTourShiftInstanceConfigsRes {}
+
+// Request message for the CreateTourShiftSegmentConfig RPC.
+message CreateTourShiftSegmentConfigReq {
+  // The tour Shift Segment Config to Create.
+  TourShiftSegmentConfig tour_shift_segment_config = 1;
+}
+
+// Response message for the CreateTourPattern RPC.
+message CreateTourShiftSegmentConfigRes {
+  // ID of the newly created Tour shift Segment Config.
+  int64 tour_shift_segment_config_sid = 1;
+}
+
+// Request message for the UpdateTourShiftSegmentConfig RPC.
+message UpdateTourShiftSegmentConfigReq {
+  // The Tour Shift Segment Config to update.
+  TourShiftSegmentConfig tour_shift_segment_config = 1;
+}
+
+// Response message for the CreateTourPattern RPC.
+message UpdateTourShiftSegmentConfigRes {}
+
+// Request message for the ListTourShiftSegmentConfigs RPC.
+message ListTourShiftSegmentConfigsReq {
+  // IDs of the Tour Shift Instance Configs to get the child Tour Shift Segment Configs for.
+  repeated int64 tour_shift_instance_config_sids = 1;
+}
+
+// Response message for the ListTourShiftSegmentConfigs RPC.
+message ListTourShiftSegmentConfigsRes {
+  // Requested Tour Shift Segment Configs.
+  repeated TourShiftSegmentConfig tour_shift_segment_configs = 1;
+}
+
+// Request message for the DeleteTourShiftSegmentConfigs RPC.
+message DeleteTourShiftSegmentConfigsReq {
+  // IDs of the Tour Shift Segment Configs to delete.
+  repeated int64 tour_shift_segment_config_sids = 1;
+}
+
+// Response message for the DeleteTourShiftSegmentConfigs RPC.
+message DeleteTourShiftSegmentConfigsRes {}
+
+// Request message for the CreateTourAgentCollection RPC.
+message CreateTourAgentCollectionReq {
+  // The Tour Agent Collection to create.
+  TourAgentCollection tour_agent_collection = 1;
+}
+
+// Response message for the CreateTourAgentCollection RPC.
+message CreateTourAgentCollectionRes {
+  // ID of the newly created Tour Agent Collection.
+  int64 tour_agent_collection_sid = 1;
+}
+
+// Request message for the UpdateTourAgentCollection RPC.
+message UpdateTourAgentCollectionReq {
+  // The Tour Agent Collection to update.
+  TourAgentCollection tour_agent_collection = 1;
+}
+
+// Response message for the UpdateTourAgentCollection RPC.
+message UpdateTourAgentCollectionRes {}
+
+// Request message for the ListTourAgentCollections RPC.
+message ListTourAgentCollectionsReq {
+  // ID of the tour pattern to get the child Tour Agent Collections for.
+  int64 tour_pattern_sid = 1;
+}
+
+// Response message for the ListTourAgentCollections RPC.
+message ListTourAgentCollectionsRes {
+  // Requested Tour Agent Collections.
+  repeated TourAgentCollection tour_agent_collections = 1;
+}
+
+// Request message for the DeleteTourAgentCollections RPC.
+message DeleteTourAgentCollectionsReq {
+  // IDs of the Tour Agent Collections to be deleted.
+  // Any associations with WFM Agent SIDS for these Collections will also be deleted.
+  repeated int64 tour_agent_collection_sids = 1;
+}
+
+// Response message for the DeleteTourAgentCollections RPC.
+message DeleteTourAgentCollectionsRes {}
+
+// Request message for the CreateTourAgentCollectionWFMAgents RPC.
+message CreateTourAgentCollectionWFMAgentsReq {
+  // ID of the wfm agents to add to @tour_agent_collection_sid.
+  repeated int64 wfm_agent_sids = 1;
+  // ID of the Tour Agent Collection that the @wfm_agent_sids will belong to.
+  int64 tour_agent_collection_sid = 2;
+}
+
+// Response message for the CreateTourAgentCollectionWFMAgents RPC.
+message CreateTourAgentCollectionWFMAgentsRes {}
+
+// Request message for the ListTourAgentCollectionWFMAgents RPC.
+message ListTourAgentCollectionWFMAgentsReq {
+  // ID of the Tour Agent Collections to get the @wfm_agent_pairings for.
+  repeated int64 tour_agent_collection_sids = 1;
+}
+
+// Response message for the ListTourAgentCollectionWFMAgents RPC.
+message ListTourAgentCollectionWFMAgentsRes {
+  // Pair of IDs, to relate a Tour Agent Collection and a WFM Agent.
+  message SidMapping {
+    // ID of the Tour Agent Collection that the @wfm_agent_sid is associated with.
+    int64 agent_collection_sid = 1;
+    // ID of the WFM Agent that the agent_collection_sid is associated with.
+    repeated int64 wfm_agent_sids = 2;
+  }
+  // Requested WFM Agent SIDs.
+  repeated SidMapping wfm_agent_pairings = 1;
+}
+
+// Request message for the DeleteTourAgentCollectionWFMAgents RPC.
+message DeleteTourAgentCollectionWFMAgentsReq {
+  // ID of the WFM Agents to delete from @tour_agent_collection_sid.
+  // If no wfm_angent_sids are provided, all will be removed for @tour_agent_collection_sid.
+  repeated int64 wfm_agent_sids = 1;
+  // ID of the tour agent collection that the @wfm_agent_sids will be deleted from.
+  int64 tour_agent_collection_sid = 2;
+}
+
+// Response message for the DeleteTourAgentCollectionWFMAgents RPC.
+message DeleteTourAgentCollectionWFMAgentsRes {}
