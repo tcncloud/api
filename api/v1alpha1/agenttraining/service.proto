@@ -32,4 +32,56 @@ service AgentTrainingService {
       ];
     };
   }
+
+  // ListAgentLearningOpportunities lists learning opportunities by agent.
+  rpc ListAgentLearningOpportunities(ListAgentLearningOpportunitiesRequest) returns (ListAgentLearningOpportunitiesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/listagentlearningopportunities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
+        }
+      ];
+    };
+  }
+
+  // UpdateLearningOpportunity updates a learning opportunity.
+  rpc UpdateLearningOpportunity(UpdateLearningOpportunityRequest) returns (UpdateLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/updatelearningopportunity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
+  }
+
+  // DeleteLearningOpportunity deletes a learning opportunity.
+  rpc DeleteLearningOpportunity(DeleteLearningOpportunityRequest) returns (DeleteLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/deletelearningopportunity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
+  }
+
+  // GetLearningOpportunity gets a learning opportunity.
+  rpc GetLearningOpportunity(GetLearningOpportunityRequest) returns (GetLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/getlearningopportunity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ];
+    };
+  }
 }

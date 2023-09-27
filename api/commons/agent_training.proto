@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons;
 
 import "api/commons/acd.proto";
+import "google/protobuf/timestamp.proto";
 
 // LearningOpportunity represents a single learning opportunity entity.
 message LearningOpportunity {
@@ -14,4 +15,19 @@ message LearningOpportunity {
   int32 start_offset = 7; // Start offset (in milliseconds) of the learning opportunity.
   int32 end_offset = 8; // End offset (in milliseconds) of the learning opportunity.
   string description = 9; // (optional) Description text.
+  google.protobuf.Timestamp created_at = 10; // Time the learning opportunity was created at.
+  string title = 12; // Title of the learning opportunity.
+  LearningOpportunityStatus status = 13; // Current status (ex: OPEN, COMPLETED).
+}
+
+// LearningOpportunityStatus describes the status of the learning opportunity.
+enum LearningOpportunityStatus {
+  STATUS_OPEN = 0; // Default status - Ready to be completed by the agent.
+  STATUS_COMPLETED = 1; // Agent has completed the learning opportunity.
+}
+
+// CallIdentifier is used to completely identify calls.
+message CallIdentifier {
+  int64 sid = 1; // call sid
+  api.commons.CallType.Enum type = 2; // call type
 }

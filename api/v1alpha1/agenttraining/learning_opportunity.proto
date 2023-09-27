@@ -3,6 +3,8 @@ syntax = "proto3";
 package api.v1alpha1.agenttraining;
 
 import "api/commons/agent_training.proto";
+import "api/commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
 
 // CreateLearningOpportunityRequest represents a request to create a new learning opportunity.
 message CreateLearningOpportunityRequest {
@@ -15,9 +17,57 @@ message CreateLearningOpportunityResponse {
 }
 
 // ListLearningOpportunitiesRequest represents a request to list learning opportunities.
-message ListLearningOpportunitiesRequest {}
+message ListLearningOpportunitiesRequest {
+  repeated api.commons.CallIdentifier call_identifiers = 2; // Optional - 'any of' if provided.
+  repeated int64 transcript_sids = 3; // Optional - 'any of' if provided.
+  repeated string agent_user_ids = 4; // Optional - 'any of' if provided.
+  api.commons.TimeFilter created_at = 5; // Optional.
+}
 
 // ListLearningOpportunitiesResponse represents the listed learning opportunities.
 message ListLearningOpportunitiesResponse {
   repeated api.commons.LearningOpportunity learning_opportunities = 1;
+}
+
+// ListAgentLearningOpportunitiesRequest represents a request to list learning opportunities by agent.
+message ListAgentLearningOpportunitiesRequest {
+  repeated api.commons.CallIdentifier call_identifiers = 2; // Optional - 'any of' if provided.
+  repeated int64 transcript_sids = 3; // Optional - 'any of' if provided.
+  api.commons.TimeFilter created_at = 4; // Optional.
+}
+
+// ListAgentLearningOpportunitiesResponse represents the listed learning opportunities.
+message ListAgentLearningOpportunitiesResponse {
+  repeated api.commons.LearningOpportunity learning_opportunities = 1;
+}
+
+// UpdateLearningOpportunityRequest represents a request to update a learning opportunity.
+message UpdateLearningOpportunityRequest {
+  api.commons.LearningOpportunity learning_opportunity = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+// UpdateLearningOpportunityResponse represents the updated learning opportunity.
+message UpdateLearningOpportunityResponse {
+  api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
+// DeleteLearningOpportunityRequest represents a request to delete a learning opportunity.
+message DeleteLearningOpportunityRequest {
+  int64 learning_opportunity_id = 3;
+}
+
+// DeleteLearningOpportunityResponse represents the deleted learning opportunity.
+message DeleteLearningOpportunityResponse {
+  api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
+// GetLearningOpportunityRequest represents a request to get a learning opportunity.
+message GetLearningOpportunityRequest {
+  int64 learning_opportunity = 2;
+}
+
+// GetLearningOpportunityResponse represents the gotten learning opportunity.
+message GetLearningOpportunityResponse {
+  api.commons.LearningOpportunity learning_opportunity = 1;
 }
