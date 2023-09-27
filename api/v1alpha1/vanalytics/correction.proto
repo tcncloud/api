@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "google/protobuf/duration.proto";
+
+// [CREATE] ====================================================================
+
+// CreateCorrectionRequest is a request for creating a correction.
+message CreateCorrectionRequest {
+  // The correction resource to create.
+  Correction correction = 1;
+}
+
+// CreateCorrectionResponse is a response for creating a correction.
+message CreateCorrectionResponse {
+  // The correction resource that was created.
+  Correction correction = 1;
+}
+
+// [RESOURCE] ==================================================================
+
+// Correction is a resource in the Vanalytics API.
+message Correction {
+  // Output only. The unique id of this correction.
+  int64 correction_sid = 1;
+
+  // Required. The transcript sid of the transcript that the correction is on.
+  int64 transcript_sid = 3;
+
+  // Required. Start offset of the selected words in the transcript.
+  google.protobuf.Duration start_offset = 4;
+
+  // Required. End offset of the selected words in the transcript.
+  google.protobuf.Duration end_offset = 5;
+
+  // Required. Proposed text of what the transcript selected text should be.
+  string proposed_text = 6;
+
+  // Required. Channel that the words were spoken on.
+  uint32 channel = 7;
+}

@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.vanalytics;
 
 import "annotations/authz.proto";
+import "api/v1alpha1/vanalytics/correction.proto";
 import "api/v1alpha1/vanalytics/filter.proto";
 import "api/v1alpha1/vanalytics/flag.proto";
 import "api/v1alpha1/vanalytics/flag_filter.proto";
@@ -389,6 +390,21 @@ service Vanalytics {
   // ListFlagTranscriptFilters lists flag transcript filters in an organization.
   rpc ListFlagTranscriptFilters(ListFlagTranscriptFiltersRequest) returns (ListFlagTranscriptFiltersResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listflagtranscriptfilters";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [CORRECTION] =========================================================
+
+  // CreateCorrection creates a correction.
+  rpc CreateCorrection(CreateCorrectionRequest) returns (CreateCorrectionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/createcorrection";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
