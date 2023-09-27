@@ -163,3 +163,39 @@ message GetNewsForUserResponse {
   // published article details
   repeated PublishedArticleDetails published_article_details = 1;
 }
+
+// request to upload image for the news article
+message StoreNewsArticleImageRequest {
+  // NewsArticleImage
+  NewsArticleImage image = 1;
+}
+
+// image for the news article details
+message NewsArticleImage {
+  // unique name of the image
+  string uuid = 1;
+  // image for the new article
+  int64 new_article_sid = 2 [jstype = JS_STRING];
+  // image content
+  string content = 3;
+  // download image url
+  string download_url = 4;
+}
+
+// response to uploaded image
+message StoreNewsArticleImageResponse {
+  // stored image details
+  NewsArticleImage image = 1;
+}
+
+// request to list all images news article
+message ListImagesForNewsArticleRequest {
+  // images for the new article sid
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+}
+
+// response to list all images for the news article
+message ListImagesForNewsArticleResponse {
+  // images for the news article
+  repeated NewsArticleImage news_article_images = 1;
+}
