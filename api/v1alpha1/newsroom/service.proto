@@ -90,4 +90,24 @@ service NewsroomAPI {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+
+  // upload newsroom image for the news article
+  rpc StoreNewsArticleImage(StoreNewsArticleImageRequest) returns (StoreNewsArticleImageResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/storenewsarticleimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_EDIT]
+        }
+      ];
+    };
+  }
+
+  // list newsroom images
+  rpc ListImagesForNewsArticle(ListImagesForNewsArticleRequest) returns (ListImagesForNewsArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listimagesfornewsarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
