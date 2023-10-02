@@ -2698,6 +2698,8 @@ message EpicEntrypoint {
   bool flush_during_check = 10;
   // Specifies the timezone to be used by the cron
   string timezone = 11;
+  // If process is enabled
+  bool enabled = 12;
 }
 
 // The types of entities that can be returned from Epic's bulk data api.
