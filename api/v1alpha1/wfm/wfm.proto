@@ -318,6 +318,7 @@ service WFM {
   }
 
   // Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
+  // DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
   // Required permissions:
   //   NONE
   // Errors:
@@ -328,6 +329,7 @@ service WFM {
   rpc CreateInactiveSkillProfileMapping(CreateInactiveSkillProfileMappingReq) returns (CreateInactiveSkillProfileMappingRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createinactiveskillprofilemapping";
     option (google.api.http).body = "*";
+    option deprecated = true;
     option (annotations.authz) = {
       sets: [
         {
@@ -355,6 +357,7 @@ service WFM {
   }
 
   // Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
+  // DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
   // Required permissions:
   //   NONE
   // Errors:
@@ -365,6 +368,7 @@ service WFM {
   rpc DisconnectInactiveSkillProfileMapping(DisconnectInactiveSkillProfileMappingReq) returns (DisconnectInactiveSkillProfileMappingRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/disconnectinactiveskillprofilemapping";
     option (google.api.http).body = "*";
+    option deprecated = true;
     option (annotations.authz) = {
       sets: [
         {
@@ -906,16 +910,17 @@ service WFM {
     };
   }
 
-  // Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
+  // Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids, @skill_profile_group_sids and org sending the request.
   // If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
+  // If no @skill_profile_group_sids are given, it will calculate the averages for all skill profile groups for the org sending the request.
   // Averages will be weighted by the number of calls that each historical data interval has.
   // Once the averages are calculated, they will be updated in the db for those skill profiles.
   //
   // If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
   // If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
   //
-  // If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
-  // even if those skill profiles are in @skill_profile_sids.
+  // If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
+  // even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids respectively.
   //
   // Errors:
   //   - grpc.Internal: error occurs when calculating the averages from the historical data.
@@ -3926,6 +3931,8 @@ message UpdateSkillProfileAveragesUsingHistoricalDataReq {
   // If true, it will exclude skill profiles that have manual averages in them from the calculation (even if those skill profiles are in @skill_profile_sids).
   // Otherwise they will be included in the calculation.
   bool exclude_skill_profiles_with_manual_averages = 3;
+  // IDs of the skill profile groups to calculate the averages of, if none are sent it calculates it for all skill profile groups that the org has.
+  repeated int64 skill_profile_group_sids = 4;
 }
 
 // Response message for the UpdateSkillProfileAveragesUsingHistoricalData RPC
