@@ -112,6 +112,8 @@ message CreatePublishedArticleRequest {
   int64 new_article_sid = 1 [jstype = JS_STRING];
   // determines if we show to user
   bool display_to_user = 2;
+  // link to the published article
+  string article_link = 3;
 }
 
 // Response to create published article
