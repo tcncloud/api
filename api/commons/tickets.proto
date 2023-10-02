@@ -48,6 +48,8 @@ message Ticket {
   TicketStatus ticket_status = 20;
   // assignee list
   repeated string ticket_assignee = 21;
+  //participant list
+  repeated string ticket_participant = 22;
 }
 
 enum TimeScale {
@@ -92,6 +94,8 @@ message TicketAction {
   repeated string action_skills = 9;
   // SLA Id for the ACTION
   repeated Sla action_sla_id = 10;
+  // work done by
+  string work_done_by = 11;
 }
 
 message CallbackContext {
