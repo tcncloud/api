@@ -1382,6 +1382,32 @@ service Org {
     };
   }
 
+  // Copies a data dip template.
+  rpc CopyDataDipTemplate(CopyDataDipTemplateRequest) returns (CopyDataDipTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copydatadiptemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Copies a data dip template to a different organization.
+  rpc CopyDataDipTemplateToOrganization(CopyDataDipTemplateToOrganizationRequest) returns (CopyDataDipTemplateToOrganizationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copydatadiptemplatetoorganization";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
   // Lists Agent Call Response Automatically added compliance rules for an Org.
   rpc ListAgentResponseAutoRules(ListAgentResponseAutoRulesRequest) returns (ListAgentResponseAutoRulesResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listagentresponseautorules";
