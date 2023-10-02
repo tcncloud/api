@@ -126,6 +126,37 @@ message DeleteDataDipTemplateRequest {
 // Response message for DeleteDataDipTemplate RPC method.
 message DeleteDataDipTemplateResponse {}
 
+// Request message for CopyDataDipTemplate RPC method.
+message CopyDataDipTemplateRequest {
+  // Org ID.
+  string org_id = 1;
+  // ID of the template to copy.
+  int64 xml_client_property_sid = 2;
+  // Name to give the new template.
+  string config_name = 3;
+}
+
+// Response message for CopyDataDipTemplate RPC method
+message CopyDataDipTemplateResponse {
+  // The ID of the newly created template.
+  int64 xml_client_property_sid = 1;
+}
+
+// Request message for CopyDataDipTemplateToOrganization RPC method.
+message CopyDataDipTemplateToOrganizationRequest {
+  // Org ID.
+  string org_id = 1;
+  // ID of the template to copy.
+  int64 xml_client_property_sid = 2;
+  // Name to give the new template.
+  string config_name = 3;
+  // The ID of the org to copy to.
+  string destination_org_id = 4;
+}
+
+// Response message for CopyDataDipTemplateToOrganization RPC method
+message CopyDataDipTemplateToOrganizationResponse {}
+
 // Request message for the ListAgentResponseAutoRules RPC method.
 message ListAgentResponseAutoRulesRequest {}
 
