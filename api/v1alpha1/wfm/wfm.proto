@@ -2716,6 +2716,29 @@ service WFM {
     };
   }
 
+  // Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
+  // Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
+  // Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
+  //   belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
+  // At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the @tour_pattern.shift_template_sid does not exist.
+  //   - grpc.Internal: error occurs when upserting the tour pattern or members.
+  rpc UpsertTourPatternWithMembers(UpsertTourPatternWithMembersReq) returns (UpsertTourPatternWithMembersRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upserttourpatternwithmembers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
   // Required permissions:
   //   NONE
@@ -3093,6 +3116,30 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the tour agent collections.
   rpc DeleteTourAgentCollectionWFMAgents(DeleteTourAgentCollectionWFMAgentsReq) returns (DeleteTourAgentCollectionWFMAgentsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletetouragentcollectionwfmagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Generates a list of tour week patterns for @target_shift_template_sid and the org sending the request.
+  // Sets the member_tour_week_patterns with a tour week pattern for each of the @num_weeks_in_tour.
+  // Each of the tour week patterns will be set with tour shift instances and segment configs based on
+  //   the forecasted call data over the next @num_weeks_in_tour, starting on the next Monday.
+  // The returned data will not be persisted. This method will not effect any existing tour week patterns in the database.
+  // The @tour_week_patterns returned by this method are intended to replace, not append, all currenly existing tour week patterns for @target_shift_template_sid, once persisted.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
+  //   - grpc.Internal: error occurs when generating the tour week patterns.
+  rpc GenerateTourWeekPatterns(GenerateTourWeekPatternsReq) returns (GenerateTourWeekPatternsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/generatetourweekpatterns";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -6100,6 +6147,20 @@ message CreateTourPatternRes {
   int64 tour_pattern_sid = 1;
 }
 
+// Request message for the UpsertTourPatternWithMembers RPC.
+message UpsertTourPatternWithMembersReq {
+  // The tour pattern to upsert, including any members.
+  // Must include at least one Tour Week Pattern and one Tour Agent Collection.
+  // Will replace the existing Tour Pattern and all members in database for @tour_pattern.shift_template_sid.
+  TourPattern tour_pattern = 1;
+}
+
+// Response message for the UpsertTourPatternWithMembers RPC.
+message UpsertTourPatternWithMembersRes {
+  // The newly created tour pattern, returned with new SIDs and week pattern numbers.
+  TourPattern tour_pattern = 1;
+}
+
 // Request message for the GetTourPattern RPC.
 message GetTourPatternReq {
   // ID of the Shift Template to get the Tour Pattern for.
@@ -6325,3 +6386,21 @@ message DeleteTourAgentCollectionWFMAgentsReq {
 
 // Response message for the DeleteTourAgentCollectionWFMAgents RPC.
 message DeleteTourAgentCollectionWFMAgentsRes {}
+
+// Request message for the GenerateTourWeekPatterns RPC.
+message GenerateTourWeekPatternsReq {
+  // ID of the shift template to create the tour week patterns for.
+  int64 target_shift_template_sid = 1;
+  // The number of week patterns to be generated.
+  int32 num_weeks_in_tour = 2;
+  // ID of the schedule scenario that @target_shift_template_sid belong to.
+  int64 schedule_scenario_sid = 3;
+}
+
+// Response message for the GenerateTourWeekPatterns RPC.
+message GenerateTourWeekPatternsRes {
+  // A list of tour week patterns containing the newly generated tour pattern weeks in the member field.
+  repeated TourWeekPattern tour_week_patterns = 1;
+  // Reports any errors preventing @tour_pattern from being generated.
+  repeated Diagnostic diagnostics = 2;
+}
