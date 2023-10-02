@@ -52,6 +52,17 @@ message UpdateLearningOpportunityResponse {
   api.commons.LearningOpportunity learning_opportunity = 1;
 }
 
+// CompleteAgentLearningOpportunityRequest represents an agent
+// request to complete a learning opportunity assigned to that agent.
+message CompleteAgentLearningOpportunityRequest {
+  int64 learning_opportunity_id = 3;
+}
+
+// CompleteAgentLearningOpportunityResponse represents the completed learning opportunity.
+message CompleteAgentLearningOpportunityResponse {
+  api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
 // DeleteLearningOpportunityRequest represents a request to delete a learning opportunity.
 message DeleteLearningOpportunityRequest {
   int64 learning_opportunity_id = 3;

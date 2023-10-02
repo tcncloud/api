@@ -46,6 +46,19 @@ service AgentTrainingService {
     };
   }
 
+  // CompleteAgentLearningOpportunity completes an agent's learning opportunity.
+  rpc CompleteAgentLearningOpportunity(CompleteAgentLearningOpportunityRequest) returns (CompleteAgentLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/completeagentlearningopportunity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
+        }
+      ];
+    };
+  }
+
   // UpdateLearningOpportunity updates a learning opportunity.
   rpc UpdateLearningOpportunity(UpdateLearningOpportunityRequest) returns (UpdateLearningOpportunityResponse) {
     option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/updatelearningopportunity";
