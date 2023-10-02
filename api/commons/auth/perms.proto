@@ -187,12 +187,13 @@ enum Permission {
   PERMISSION_EXTENSION_EDIT = 1400 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables downloading of voicemails.
   PERMISSION_VOICEMAIL_DOWNLOAD = 1401 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Enables agents to view manual approve tasks
+  PERMISSION_MANUAL_APPROVE = 341 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables Agents to view portals.
   PERMISSION_AGENT_PORTALS_VIEW = 340 [(annotations.perms.options) = {
     app: APPLICATION_AGENT
     features: ["Portals"]
   }];
-
   /*
    * Voice Analytics
    */
