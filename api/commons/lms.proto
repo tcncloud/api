@@ -274,6 +274,8 @@ enum EventState {
   EVENT_STATE_PROCESS = 3;
   // event will do any remaining work needed to cleanup external system
   EVENT_STATE_CLEANUP = 4;
+  // event is finished executing and cleaning up and can exit out of it's process
+  EVENT_STATE_FINISHED = 5;
 }
 
 message PaginationTerminator {
