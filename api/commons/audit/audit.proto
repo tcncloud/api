@@ -134,6 +134,15 @@ message AuditEvent {
     // an event for when a payment link is sent
     OmnichannelPaymentLinkSentEvent omnichannel_payment_link_sent_event = 357;
 
+    //accepted manual approve task
+    OmnichannelManualApproveTaskAcceptedEvent omnichannel_manual_approve_task_accepted_event = 358;
+    //rejected manual approve task
+    OmnichannelManualApproveTaskRejectedEvent omnichannel_manual_approve_task_rejected_event = 359;
+    //timeout of manual approve task
+    OmnichannelManualApproveTaskTimeoutEvent omnichannel_manual_approve_task_timeout_event = 360;
+    //requeue of manual approve task
+    OmnichannelManualApproveTaskRequeueEvent omnichannel_manual_approve_task_requeue_event = 361;
+
     /// Asm events 400
     // agent logged into asm event
     AsmAgentLoginEvent asm_agent_login_event = 400;
