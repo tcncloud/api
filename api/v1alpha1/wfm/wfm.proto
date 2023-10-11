@@ -1067,6 +1067,7 @@ service WFM {
   // Errors:
   //   - grpc.Invalid: one or more fields in the @node have invalid values.
   //   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+  //                    the @skill_profile_category does not exist.
   //   - grpc.Internal: error occurs when creating the program node.
   rpc CreateProgramNode(CreateProgramNodeReq) returns (CreateProgramNodeRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createprogramnode";
@@ -1090,6 +1091,7 @@ service WFM {
   //   - grpc.Invalid: one or more fields in the @program_node have invalid values.
   //   - grpc.Internal: error occurs when updating the program node.
   //   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+  //                    the @skill_profile_category does not exist.
   rpc UpdateProgramNode(UpdateProgramNodeReq) returns (UpdateProgramNodeRes) {
     option (google.api.http).post = "/api/v1alpha/wfm/updateprogramnode";
     option (google.api.http).body = "*";
@@ -1981,10 +1983,12 @@ service WFM {
   // The @node_description fields may optionally be left blank.
   // The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
   // The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+  // The @skill_profile_category will be associated with the created program node.
   // Required permissions:
   //   NONE
   // Errors:
   //   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+  //   - grpc.NotFound: the @skill_profile_category does not exist.
   //   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
   rpc CreateScheduleScenarioWithNodes(CreateScheduleScenarioWithNodesReq) returns (CreateScheduleScenarioWithNodesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createschedulescenariowithnodes";
@@ -4198,6 +4202,8 @@ message ProgramNode {
   // ID of the original Program Node that this node was copied from.
   // If this node is the original, field will be set as nil.
   google.protobuf.Int64Value origin_sid = 16;
+  // The predicted calls of this skill profile category will be used when scheduling.
+  commons.SkillProfileCategory skill_profile_category = 17;
 }
 
 // Request message for the CreateProgramNode RPC
@@ -5100,6 +5106,9 @@ message CreateScheduleScenarioWithNodesReq {
   string program_node_description = 9;
   // TimeZoneVal is the desired timezone for the created nodes.
   commons.TimeZone time_zone_val = 10;
+  // Skill Profile Category to associate with the program node to create.
+  // The predicted calls of this skill profile category will be used when scheduling.
+  commons.SkillProfileCategory skill_profile_category = 11;
 }
 
 // Response message for the CreateScheduleScenarioWithNodes RPC
