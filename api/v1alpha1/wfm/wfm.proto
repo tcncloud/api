@@ -418,6 +418,7 @@ service WFM {
   }
 
   // Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+  // if @include_inactive is true then inactive groups will also be included, otherwise only active groups will be returned.
   // If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
   // Required permissions:
   //   NONE
@@ -3254,6 +3255,8 @@ message SkillProfileGroup {
   bool are_averages_manual = 9;
   // IDs of the skill profiles that belong to this group.
   repeated int64 skill_profile_sids = 10;
+  // Datetime that the group was set to inactive, if not set then the group is currently active.
+  google.protobuf.Timestamp datetime_set_to_inactive = 11;
 }
 
 // Request message for the ListSkillProfiles RPC.
@@ -3574,6 +3577,8 @@ message ListSkillProfileGroupsReq {
   // IDs of the skill profile groups to get.
   // If left empty it will get all the skill profile groups for the org
   repeated int64 skill_profile_group_sids = 1 [jstype = JS_STRING];
+  // Indicates whether inactive profile groups will be included in the result.
+  bool include_inactive = 2;
 }
 
 // Response message for the ListSkillProfileGroups RPC.
