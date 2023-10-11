@@ -152,6 +152,15 @@ enum Permission {
   }];
 
   /*
+   * Copy to Org
+   */
+  // Enables copying resources from one organization to another.  eg. Data Dip templates.
+  PERMISSION_COPY_TO_ORGANIZATION = 170 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_ORGANIZATION
+  }];
+
+  /*
    * Customer Support
    */
 

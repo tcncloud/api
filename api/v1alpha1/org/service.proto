@@ -1402,7 +1402,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW]
+          permissions: [PERMISSION_COPY_TO_ORGANIZATION]
         }
       ];
     };
