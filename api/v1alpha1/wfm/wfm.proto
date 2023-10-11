@@ -3208,7 +3208,7 @@ message SkillProfile {
 
 message SkillProfileGroup {
   // ID of the skill profile group.
-  int64 skill_profile_group_sid = 1;
+  int64 skill_profile_group_sid = 1 [jstype = JS_STRING];
   // name of the skill profile group.
   string name = 2;
   // description about the skill profile group.
@@ -3529,7 +3529,7 @@ message CreateSkillProfileGroupReq {
 // Response message for the CreateSkillProfileGroup RPC.
 message CreateSkillProfileGroupRes {
   // ID of the skill profile group created.
-  int64 skill_profile_group_sid = 1;
+  int64 skill_profile_group_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the UpdateSkillProfileGroup RPC.
@@ -3546,7 +3546,7 @@ message UpdateSkillProfileGroupRes {}
 message ListSkillProfileGroupsReq {
   // IDs of the skill profile groups to get.
   // If left empty it will get all the skill profile groups for the org
-  repeated int64 skill_profile_group_sids = 1;
+  repeated int64 skill_profile_group_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListSkillProfileGroups RPC.
@@ -3558,7 +3558,7 @@ message ListSkillProfileGroupsRes {
 // Request message for the UpdateSkillProfileGroupAssociations RPC.
 message UpdateSkillProfileGroupAssociationsReq {
   // IDs of the skill profile groups to update the associations of.
-  int64 skill_profile_group_sid = 1;
+  int64 skill_profile_group_sid = 1 [jstype = JS_STRING];
   // IDs of the skill profiles to associate with this group.
   repeated int64 skill_profile_sids_to_associate = 2;
   // IDs of the skill profiles to disassociate with this group.
@@ -3979,7 +3979,7 @@ message UpdateSkillProfileAveragesUsingHistoricalDataReq {
   // Otherwise they will be included in the calculation.
   bool exclude_skill_profiles_with_manual_averages = 3;
   // IDs of the skill profile groups to calculate the averages of, if none are sent it calculates it for all skill profile groups that the org has.
-  repeated int64 skill_profile_group_sids = 4;
+  repeated int64 skill_profile_group_sids = 4 [jstype = JS_STRING];
 }
 
 // Response message for the UpdateSkillProfileAveragesUsingHistoricalData RPC
@@ -6073,9 +6073,9 @@ message ListRequiredCallsIntervalsRes {
 // Represents a TourShiftSegmentConfig
 message TourShiftSegmentConfig {
   // The unique ID of the tour shift segment config.
-  int64 tour_shift_segment_config_sid = 1;
+  int64 tour_shift_segment_config_sid = 1 [jstype = JS_STRING];
   // The ID of the parent tour shift instance config
-  int64 tour_shift_instance_config_sid = 2;
+  int64 tour_shift_instance_config_sid = 2 [jstype = JS_STRING];
   // The minute within the shift instance config where the shift segment config starts.
   int32 start_minute_in_shift = 3;
   // The number of minutes wide that the segment covers.
@@ -6087,9 +6087,9 @@ message TourShiftSegmentConfig {
 // Represents a TourShiftInstanceConfig
 message TourShiftInstanceConfig {
   // The unique ID of the tour shift instance config.
-  int64 tour_shift_instance_config_sid = 1;
+  int64 tour_shift_instance_config_sid = 1 [jstype = JS_STRING];
   // The ID of the tour week pattern that the tour shift instance config belongs to.
-  int64 tour_week_pattern_sid = 2;
+  int64 tour_week_pattern_sid = 2 [jstype = JS_STRING];
   // The number of minutes after the start of week UTC for the shift instance config to start.
   // May not be greater than 10080, as that would begin during the next week.
   int32 start_minute_in_week = 3;
@@ -6102,9 +6102,9 @@ message TourShiftInstanceConfig {
 // Represents a TourWeekPattern
 message TourWeekPattern {
   // The unique ID of the tour week pattern.
-  int64 tour_week_pattern_sid = 1;
+  int64 tour_week_pattern_sid = 1 [jstype = JS_STRING];
   // The ID of the tour pattern that the tour week pattern belongs to.
-  int64 tour_pattern_sid = 2;
+  int64 tour_pattern_sid = 2 [jstype = JS_STRING];
   // The tour week patterns place within the sequence of tour week patterns that belong to @tour_pattern_sid.
   int32 week_pattern_number = 3;
   // The tour shift instance configs associated with @tour_week_pattern_sid.
@@ -6114,9 +6114,9 @@ message TourWeekPattern {
 // Represents a TourAgentCollection
 message TourAgentCollection {
   // The unique ID of this tour agent collection sid.
-  int64 tour_agent_collection_sid = 1;
+  int64 tour_agent_collection_sid = 1 [jstype = JS_STRING];
   // The ID of the tour pattern that the tour agent collection is associated with.
-  int64 tour_pattern_sid = 2;
+  int64 tour_pattern_sid = 2 [jstype = JS_STRING];
   // The minimum number of agents that are required to be scheduled using this collection.
   int32 min_agents_to_schedule = 3;
   // The maximum number of agents that are allowed to be scheduled using this collection.
@@ -6133,7 +6133,7 @@ message TourAgentCollection {
 // Represents a TourPattern
 message TourPattern {
   // The unique ID of this tour pattern sid.
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
   // The ID of the shift template that the tour pattern belongs to.
   int64 shift_template_sid = 2;
   // The tour week patterns associated with @tour_pattern_sid.
@@ -6151,7 +6151,7 @@ message CreateTourPatternReq {
 // Response message for the CreateTourPattern RPC.
 message CreateTourPatternRes {
   // ID of the newly created Tour Pattern
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the UpsertTourPatternWithMembers RPC.
@@ -6184,7 +6184,7 @@ message GetTourPatternRes {
 message DeleteTourPatternReq {
   // ID of the tour pattern to delete.
   // If any entities belong to @tour_pattern_sid they will be deleted too.
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the DeleteTourPattern RPC.
@@ -6193,19 +6193,19 @@ message DeleteTourPatternRes {}
 // Request message for the CreateTourWeekPattern RPC.
 message CreateTourWeekPatternReq {
   // ID of the Tour Pattern to create the tour week pattern for.
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Response message for the CreateTourWeekPattern RPC.
 message CreateTourWeekPatternRes {
   // ID of the newly created Tour Pattern.
-  int64 tour_week_pattern_sid = 1;
+  int64 tour_week_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the ListTourWeekPatterns RPC.
 message ListTourWeekPatternsReq {
   // ID of the tour pattern that the @tour_week_patterns to retrieve belong to.
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListTourWeekPatterns RPC.
@@ -6219,7 +6219,7 @@ message DeleteTourWeekPatternsReq {
   // IDs of the tour week patterns to be deleted.
   // Any member Configs will be deletes as well.
   // If any Tour Agent Collections are using the @tour_week_pattern_sids, they must be deleted first.
-  repeated int64 tour_week_pattern_sids = 1;
+  repeated int64 tour_week_pattern_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the DeleteTourWeekPatterns RPC.
@@ -6234,7 +6234,7 @@ message CreateTourShiftInstanceConfigReq {
 // Response message for the CreateTourShiftInstanceConfig RPC.
 message CreateTourShiftInstanceConfigRes {
   // ID of the newly created Tour Shift Instance Config.
-  int64 tour_shift_instance_config_sid = 1;
+  int64 tour_shift_instance_config_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the UpdateTourShiftInstanceConfig RPC.
@@ -6249,7 +6249,7 @@ message UpdateTourShiftInstanceConfigRes {}
 // Request message for the ListTourShiftInstanceConfigs RPC.
 message ListTourShiftInstanceConfigsReq {
   // IDs of the tour week patterns to get the child Tour Shift Instance Configs for.
-  repeated int64 tour_week_pattern_sids = 1;
+  repeated int64 tour_week_pattern_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListTourShiftInstanceConfigs RPC.
@@ -6261,7 +6261,7 @@ message ListTourShiftInstanceConfigsRes {
 // Request message for the DeleteTourShiftInstanceConfigs RPC.
 message DeleteTourShiftInstanceConfigsReq {
   // IDs of the Tour Shift Instance Configs to be deleted.
-  repeated int64 tour_shift_instance_config_sids = 1;
+  repeated int64 tour_shift_instance_config_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the DeleteTourShiftInstanceConfigs RPC.
@@ -6276,7 +6276,7 @@ message CreateTourShiftSegmentConfigReq {
 // Response message for the CreateTourPattern RPC.
 message CreateTourShiftSegmentConfigRes {
   // ID of the newly created Tour shift Segment Config.
-  int64 tour_shift_segment_config_sid = 1;
+  int64 tour_shift_segment_config_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the UpdateTourShiftSegmentConfig RPC.
@@ -6291,7 +6291,7 @@ message UpdateTourShiftSegmentConfigRes {}
 // Request message for the ListTourShiftSegmentConfigs RPC.
 message ListTourShiftSegmentConfigsReq {
   // IDs of the Tour Shift Instance Configs to get the child Tour Shift Segment Configs for.
-  repeated int64 tour_shift_instance_config_sids = 1;
+  repeated int64 tour_shift_instance_config_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListTourShiftSegmentConfigs RPC.
@@ -6303,7 +6303,7 @@ message ListTourShiftSegmentConfigsRes {
 // Request message for the DeleteTourShiftSegmentConfigs RPC.
 message DeleteTourShiftSegmentConfigsReq {
   // IDs of the Tour Shift Segment Configs to delete.
-  repeated int64 tour_shift_segment_config_sids = 1;
+  repeated int64 tour_shift_segment_config_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the DeleteTourShiftSegmentConfigs RPC.
@@ -6318,7 +6318,7 @@ message CreateTourAgentCollectionReq {
 // Response message for the CreateTourAgentCollection RPC.
 message CreateTourAgentCollectionRes {
   // ID of the newly created Tour Agent Collection.
-  int64 tour_agent_collection_sid = 1;
+  int64 tour_agent_collection_sid = 1 [jstype = JS_STRING];
 }
 
 // Request message for the UpdateTourAgentCollection RPC.
@@ -6333,7 +6333,7 @@ message UpdateTourAgentCollectionRes {}
 // Request message for the ListTourAgentCollections RPC.
 message ListTourAgentCollectionsReq {
   // ID of the tour pattern to get the child Tour Agent Collections for.
-  int64 tour_pattern_sid = 1;
+  int64 tour_pattern_sid = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListTourAgentCollections RPC.
@@ -6346,7 +6346,7 @@ message ListTourAgentCollectionsRes {
 message DeleteTourAgentCollectionsReq {
   // IDs of the Tour Agent Collections to be deleted.
   // Any associations with WFM Agent SIDS for these Collections will also be deleted.
-  repeated int64 tour_agent_collection_sids = 1;
+  repeated int64 tour_agent_collection_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the DeleteTourAgentCollections RPC.
@@ -6357,7 +6357,7 @@ message CreateTourAgentCollectionWFMAgentsReq {
   // ID of the wfm agents to add to @tour_agent_collection_sid.
   repeated int64 wfm_agent_sids = 1;
   // ID of the Tour Agent Collection that the @wfm_agent_sids will belong to.
-  int64 tour_agent_collection_sid = 2;
+  int64 tour_agent_collection_sid = 2 [jstype = JS_STRING];
 }
 
 // Response message for the CreateTourAgentCollectionWFMAgents RPC.
@@ -6366,7 +6366,7 @@ message CreateTourAgentCollectionWFMAgentsRes {}
 // Request message for the ListTourAgentCollectionWFMAgents RPC.
 message ListTourAgentCollectionWFMAgentsReq {
   // ID of the Tour Agent Collections to get the @wfm_agent_pairings for.
-  repeated int64 tour_agent_collection_sids = 1;
+  repeated int64 tour_agent_collection_sids = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ListTourAgentCollectionWFMAgents RPC.
@@ -6374,7 +6374,7 @@ message ListTourAgentCollectionWFMAgentsRes {
   // Pair of IDs, to relate a Tour Agent Collection and a WFM Agent.
   message SidMapping {
     // ID of the Tour Agent Collection that the @wfm_agent_sid is associated with.
-    int64 agent_collection_sid = 1;
+    int64 agent_collection_sid = 1 [jstype = JS_STRING];
     // ID of the WFM Agent that the agent_collection_sid is associated with.
     repeated int64 wfm_agent_sids = 2;
   }
@@ -6388,7 +6388,7 @@ message DeleteTourAgentCollectionWFMAgentsReq {
   // If no wfm_angent_sids are provided, all will be removed for @tour_agent_collection_sid.
   repeated int64 wfm_agent_sids = 1;
   // ID of the tour agent collection that the @wfm_agent_sids will be deleted from.
-  int64 tour_agent_collection_sid = 2;
+  int64 tour_agent_collection_sid = 2 [jstype = JS_STRING];
 }
 
 // Response message for the DeleteTourAgentCollectionWFMAgents RPC.
