@@ -518,3 +518,43 @@ message OmnichannelPaymentLinkSentEvent {
   // the payment link
   string link = 2;
 }
+
+// OmnichannelManualApproveTaskAcceptedEvent -
+message OmnichannelManualApproveTaskAcceptedEvent {
+  // the task that sent the message
+  api.commons.OmniTask task = 1;
+  // the id of the agent
+  string user_id = 2;
+  // asm session sid
+  int64 asm_session_sid = 3;
+}
+
+// OmnichannelManualApproveTaskRejectedEvent -
+message OmnichannelManualApproveTaskRejectedEvent {
+  // the task that sent the message
+  api.commons.OmniTask task = 1;
+  // the id of the agent
+  string user_id = 2;
+  // asm session sid
+  int64 asm_session_sid = 3;
+}
+
+// OmnichannelManualApproveTaskTimeoutEvent -
+message OmnichannelManualApproveTaskTimeoutEvent {
+  // the task that sent the message
+  api.commons.OmniTask task = 1;
+  // the id of the agent
+  string user_id = 2;
+  // asm session sid
+  int64 asm_session_sid = 3;
+}
+
+// OmnichannelManualApproveTaskRequeueEvent -
+message OmnichannelManualApproveTaskRequeueEvent {
+  // the task that sent the message
+  api.commons.OmniTask task = 1;
+  // the id of the agent
+  string user_id = 2;
+  // asm session sid
+  int64 asm_session_sid = 3;
+}
