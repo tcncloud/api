@@ -2721,11 +2721,34 @@ service WFM {
     };
   }
 
+  // Returns a list of diagnostics describing any issues with the given @tour_pattern.
+  // Checks the internal consistency between the pattern and all members, as well as making sure required fields are set with valid values.
+  // Ignores sid fields, except for @shift_template_sid and @scheduling_activity_sid.
+  // Does not query the database to check that foreign keys exist.
+  // Returns a single diagnostic with an OK code if the given @tour_pattern has no issues.
+  // The @member_tour_week_patterns and @member_tour_agent_collections fields must be set on @tour_pattern.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when validating the tour pattern or members.
+  rpc GetTourPatternDiagnostics(GetTourPatternDiagnosticsReq) returns (GetTourPatternDiagnosticsRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/gettourpatterndiagnostics";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
   // Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
   // Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
   //   belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
   // At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+  // If the tour pattern data or members have issues that prevent them from being persisted, a list of diagnostics will be returned describing the issues that must be resolved.
   // Required permissions:
   //   NONE
   // Errors:
@@ -6154,6 +6177,18 @@ message CreateTourPatternRes {
   int64 tour_pattern_sid = 1;
 }
 
+// Request message for the GetTourPatternDiagnostics RPC.
+message GetTourPatternDiagnosticsReq {
+  // The tour pattern and members to validate.
+  TourPattern tour_pattern = 1;
+}
+
+// Response message for the GetTourPatternDiagnostics RPC.
+message GetTourPatternDiagnosticsRes {
+  // Diagnostics for any issues encountered with the fields on the given @tour_pattern, or an OK diagnostic if there are no issues.
+  repeated Diagnostic diagnostics = 1;
+}
+
 // Request message for the UpsertTourPatternWithMembers RPC.
 message UpsertTourPatternWithMembersReq {
   // The tour pattern to upsert, including any members.
@@ -6166,6 +6201,8 @@ message UpsertTourPatternWithMembersReq {
 message UpsertTourPatternWithMembersRes {
   // The newly created tour pattern, returned with new SIDs and week pattern numbers.
   TourPattern tour_pattern = 1;
+  // Diagnostics for any issues encountered with the fields on the given @tour_pattern.
+  repeated Diagnostic diagnostics = 2;
 }
 
 // Request message for the GetTourPattern RPC.
