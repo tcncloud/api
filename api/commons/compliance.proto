@@ -116,6 +116,20 @@ message FrequencyExp {
   DispositionMod dispositions = 4;
   FieldNamesMod field_names = 5;
   repeated EntityExp checking_entities = 6;
+  MatchingMod matching = 7;
+}
+
+message MatchingMod {
+  repeated MatchingMod and = 1;
+  repeated MatchingMod or = 2;
+  MatchingEntity mod = 3;
+}
+
+message MatchingEntity {
+  oneof entity {
+    ResultsMod results = 1;
+    DispositionMod dispositions = 2;
+  }
 }
 
 message LocationExp {
