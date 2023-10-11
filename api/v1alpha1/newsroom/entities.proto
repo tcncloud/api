@@ -12,6 +12,10 @@ message CreateNewsArticleRequest {
   string title = 1;
   // markdown content
   string content = 2;
+  // article author
+  string author = 3;
+  // image reference id
+  string image_reference_id = 4;
 }
 
 // Response to create news article
@@ -76,6 +80,10 @@ message NewsArticleDetails {
   google.protobuf.Timestamp date_created = 5;
   // news article last updated date
   google.protobuf.Timestamp last_edited = 6;
+  // article author
+  string author = 7;
+  // image reference id
+  string image_reference_id = 8;
 }
 
 // published article details
@@ -182,6 +190,10 @@ message NewsArticleImage {
   string content = 3;
   // download image url
   string download_url = 4;
+  // image reference id
+  string image_reference_id = 5;
+  // image type
+  string image_type = 6;
 }
 
 // response to uploaded image
