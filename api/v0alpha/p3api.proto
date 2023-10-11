@@ -682,6 +682,16 @@ service P3Api {
     };
   }
 
+  // Update contact field description details
+  rpc UpdateContactFieldDescription(UpdateContactFieldDescriptionReq) returns (UpdateContactFieldDescriptionRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/updatecontactfielddescription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_ORG_EDIT}];
+    };
+  }
+
   // Delete contact field description details
   rpc DeleteContactFieldDescription(DeleteContactFieldDescriptionReq) returns (DeleteContactFieldDescriptionRes) {
     option (google.api.http).post = "/api/v0alpha/p3api/deletecontactfielddescription";
@@ -2468,6 +2478,15 @@ message CreateContactFieldDescriptionReq {
 }
 
 message CreateContactFieldDescriptionRes {}
+
+message UpdateContactFieldDescriptionReq {
+  int32 contact_field_description_sid = 1;
+  string field_name = 2;
+  bool is_phone = 3;
+  google.protobuf.StringValue display_format_string = 4;
+}
+
+message UpdateContactFieldDescriptionRes {}
 
 message DeleteContactFieldDescriptionReq {
   int32 contact_field_description_sid = 1;
