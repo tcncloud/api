@@ -44,6 +44,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_EPIC = 3700;
   INTEGRATION_TYPE_NEWZWARE = 3800;
   INTEGRATION_TYPE_PRIOCOMMERCE = 3900;
+  INTEGRATION_TYPE_NAVIGA = 4000;
+  INTEGRATION_TYPE_PAYNSECONDS = 4100;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -182,6 +184,8 @@ enum RequestMethod {
   REQUEST_METHOD_VANTIV_ACHSALE = 2302;
 
   REQUEST_METHOD_JOURNEY_LATEST = 2401;
+  REQUEST_METHOD_JOURNEY_LIST = 2402;
+  REQUEST_METHOD_JOURNEY_UPDATE = 2403;
 
   REQUEST_METHOD_ATHENAHEALTH_GETPATIENTS = 2501;
   REQUEST_METHOD_ATHENAHEALTH_GETPATIENTSWITHID = 2502;
@@ -259,6 +263,8 @@ enum RequestMethod {
   REQUEST_METHOD_PIANO_UPDATE_USER = 3602;
   REQUEST_METHOD_PIANO_UPDATE_SUBSCRIPTION = 3603;
   REQUEST_METHOD_PIANO_GET_PAYMENT = 3604;
+  REQUEST_METHOD_PIANO_LIST_SUBSCRIPTION = 3605;
+  REQUEST_METHOD_PIANO_LASTACCESS_CONVERSION = 3606;
 
   REQUEST_METHOD_EPIC_GET_TOKEN = 3701;
   REQUEST_METHOD_EPIC_GET_PATIENT = 3702;
@@ -280,6 +286,9 @@ enum RequestMethod {
 
   REQUEST_METHOD_PRIOCOMMERCE_ACH_PAYMENT = 3901;
   REQUEST_METHOD_PRIOCOMMERCE_CC_PAYMENT = 3902;
+
+  REQUEST_METHOD_NAVIGA_CREATE_PAYMENT = 4001;
+  REQUEST_METHOD_PAYNSECONDS_TOKENIZE_CARD = 4101;
 }
 
 enum TransactionType {
@@ -763,6 +772,8 @@ message ExecuteFlow {
     ExecuteVantivAchSale vantiv_ach_sale = 2302;
 
     ExecuteJourneyLatest journey_latest = 2401;
+    ExecuteJourneyList journey_list = 2402;
+    ExecuteJourneyUpdate journey_update = 2403;
 
     ExecuteAthenahealthGetPatients athenahealth_get_patients = 2501;
     ExecuteAthenahealthGetPatientsWithId athenahealth_get_patients_with_id = 2502;
@@ -840,6 +851,8 @@ message ExecuteFlow {
     ExecutePianoUpdateUser PIANO_UPDATE_USER = 3602;
     ExecutePianoUpdateSubscription PIANO_UPDATE_SUBSCRIPTION = 3603;
     ExecutePianoGetPayment PIANO_GET_PAYMENT = 3604;
+    ExecutePianoListSubscription PIANO_LIST_SUBSCRIPTION = 3605;
+    ExecutePianoLastAccessConversion PIANO_LASTACCESS_CONVERSION = 3606;
 
     ExecuteEpicGetToken epic_get_token = 3701;
     ExecuteEpicGetPatient epic_get_patient = 3702;
@@ -861,6 +874,10 @@ message ExecuteFlow {
 
     ExecutePriocommerceAchPayment priocommerce_ach_payment = 3901;
     ExecutePriocommerceCcPayment priocommerce_cc_payment = 3902;
+
+    ExecuteNavigaCreatePayment naviga_create_payment = 4001;
+
+    ExecutePaynsecondsTokenizeCard paynseconds_tokenize_card = 4101;
   }
 }
 
@@ -1063,6 +1080,8 @@ message ExecuteVantivCreditSale {}
 message ExecuteVantivAchSale {}
 
 message ExecuteJourneyLatest {}
+message ExecuteJourneyList {}
+message ExecuteJourneyUpdate {}
 
 message ExecuteAthenahealthGetPatients {}
 message ExecuteAthenahealthGetPatientsWithId {}
@@ -1140,6 +1159,8 @@ message ExecutePianoGetUser {}
 message ExecutePianoUpdateUser {}
 message ExecutePianoUpdateSubscription {}
 message ExecutePianoGetPayment {}
+message ExecutePianoListSubscription {}
+message ExecutePianoLastAccessConversion {}
 
 message ExecuteEpicGetToken {}
 message ExecuteEpicGetPatient {}
@@ -1161,3 +1182,6 @@ message ExecuteNewzwarePhoneLookupMulti {}
 
 message ExecutePriocommerceAchPayment {}
 message ExecutePriocommerceCcPayment {}
+
+message ExecuteNavigaCreatePayment {}
+message ExecutePaynsecondsTokenizeCard {}

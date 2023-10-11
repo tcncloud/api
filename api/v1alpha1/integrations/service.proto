@@ -1154,7 +1154,8 @@ message PluginInstance {
   Values data = 7;
   Values metadata = 10;
   google.protobuf.Timestamp last_edited = 9;
-  api.commons.integrations.RequestMethod method_id = 12;
+  api.commons.integrations.RequestMethod method_id = 12 [deprecated = true];
+  repeated api.commons.integrations.RequestMethod display_methods = 13;
 }
 
 // PortalLinkTransactionRow is all the metrics about a portal link,
