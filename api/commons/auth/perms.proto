@@ -500,7 +500,10 @@ enum Permission {
    * Newsroom
    */
 
-  // No view permissions required for Newsroom home
+  // Enables access to viewing the main newsroom app and showing the popup
+  // This permission will be give to orgs automatically, but can be removed
+  // manually to opt out of newsroom notifications
+  PERMISSION_NEWSROOM_VIEW = 4199 [(annotations.perms.options) = {app: APPLICATION_NEWSROOM}];
   // Enables access to create, update, and archive in Newsroom manager
   PERMISSION_NEWSROOM_EDIT = 4200 [(annotations.perms.options) = {app: APPLICATION_NEWSROOM}];
   // Enables access to publish in Newsroom manager
