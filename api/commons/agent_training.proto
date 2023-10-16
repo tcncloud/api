@@ -18,6 +18,7 @@ message LearningOpportunity {
   google.protobuf.Timestamp created_at = 10; // Time the learning opportunity was created at.
   string title = 12; // Title of the learning opportunity.
   LearningOpportunityStatus status = 13; // Current status (ex: OPEN, COMPLETED).
+  LearningOpportunityOrigin origin = 14; // Origin (ie. opportunity created from).
 }
 
 // LearningOpportunityStatus describes the status of the learning opportunity.
@@ -30,4 +31,15 @@ enum LearningOpportunityStatus {
 message CallIdentifier {
   int64 sid = 1; // call sid
   api.commons.CallType.Enum type = 2; // call type
+}
+
+// LearningOpportunityOrigin describes the possible origins
+// that a learning opportunity can be created from.
+enum LearningOpportunityOrigin {
+  UNDEFINED = 0; // Default value - Undefined origin.
+  QUALITY_EVALUATION = 1; // Created from Quality Evaluation.
+  AUTO_EVALUATION = 2; // Created from Auto Evaluation.
+  FLAG_EVALUATION = 3; // Created from Flag Evaluation.
+  CONVERSATION = 4; // Created from Conversation (voice analytics recordings).
+  FLAGGED_CONVERSATION = 5; // Created from Flagged Conversation (voice analytics flagged recordings).
 }
