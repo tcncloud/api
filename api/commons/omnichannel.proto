@@ -39,6 +39,8 @@ message OmniCampaign {
   api.commons.TimeZoneWrapper time_zone = 12;
   // shorten URL
   bool shorten_url = 13;
+  // compliance configuration
+  OmniComplianceConfig compliance_config = 14;
 }
 
 // OmniCampaign -
@@ -1064,6 +1066,38 @@ message Signature {
   string name = 6;
   // description for the signature
   string description = 7;
+}
+
+// OmniProjectComplianceConfig - compliance config for omni projects
+message OmniProjectComplianceConfig {
+  // compliance configuration for an email
+  OmniComplianceConfig email = 1;
+  // compliance configuration for sms
+  OmniComplianceConfig sms = 2;
+}
+
+// OmniComplianceAction - configuration action for omni compliance
+message OmniComplianceAction {
+  // a list of config keywords
+  repeated string keywords = 1;
+  // confirmation for the config
+  string confirmation_message = 2;
+}
+
+// OmniComplianceConfig -
+message OmniComplianceConfig {
+  // opting in to different compliance settings
+  OmniComplianceAction opt_in = 1;
+  // opting out of different compliance settings
+  OmniComplianceAction opt_out = 2;
+  // help regarding compliance settings
+  OmniComplianceAction help = 3;
+  // information regarding compliance settings
+  OmniComplianceAction information = 4;
+  // scrub list identifier
+  string scrub_list_id = 5;
+  // rule set identifier
+  google.protobuf.StringValue rule_set_id = 6;
 }
 
 // ConversationStateChangeTimerName -

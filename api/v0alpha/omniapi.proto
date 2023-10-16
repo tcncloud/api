@@ -1768,6 +1768,8 @@ message Project {
   api.commons.ProjectStatus status = 4;
   // creation date
   google.protobuf.Timestamp date_created = 5;
+  // compliance configuration
+  api.commons.OmniProjectComplianceConfig compliance_config = 6;
 }
 
 // request used to get a list of projects
