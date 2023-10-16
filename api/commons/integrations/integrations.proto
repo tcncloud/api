@@ -288,6 +288,8 @@ enum RequestMethod {
   REQUEST_METHOD_PRIOCOMMERCE_CC_PAYMENT = 3902;
 
   REQUEST_METHOD_NAVIGA_CREATE_PAYMENT = 4001;
+  REQUEST_METHOD_NAVIGA_CHANGE_BILLING = 4002;
+
   REQUEST_METHOD_PAYNSECONDS_TOKENIZE_CARD = 4101;
 }
 
@@ -876,6 +878,7 @@ message ExecuteFlow {
     ExecutePriocommerceCcPayment priocommerce_cc_payment = 3902;
 
     ExecuteNavigaCreatePayment naviga_create_payment = 4001;
+    ExecuteNavigaChangeBilling naviga_change_billing = 4002;
 
     ExecutePaynsecondsTokenizeCard paynseconds_tokenize_card = 4101;
   }
@@ -1184,4 +1187,6 @@ message ExecutePriocommerceAchPayment {}
 message ExecutePriocommerceCcPayment {}
 
 message ExecuteNavigaCreatePayment {}
+message ExecuteNavigaChangeBilling {}
+
 message ExecutePaynsecondsTokenizeCard {}
