@@ -174,6 +174,8 @@ enum Permission {
   PERMISSION_TCN_ADMIN_SETTINGS = 230;
   // Enables sensitive and specific billing tools for TCN employees only.
   PERMISSION_TCN_BILLING = 240;
+  // Enables sensitive and specific billing tools for TCN employees only.
+  PERMISSION_TCN_BILLING_ADMIN = 241;
   // Enables admin access to insights (TCN standard insights).
   PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN = 250;
   // Enables admin access to dashboards (TCN standard dashboards).
