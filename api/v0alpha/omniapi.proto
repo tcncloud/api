@@ -1746,6 +1746,8 @@ message CreateProjectReq {
   string name = 1;
   // project description
   string description = 2;
+  // compliance configuration
+  api.commons.OmniProjectComplianceConfig compliance_config = 3;
 }
 
 // CreateProjectRes -
