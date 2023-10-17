@@ -222,6 +222,18 @@ enum ConfigEntityType {
   SKILL_PROFICIENCY = 13;
   // entity is a schedule scenario.
   SCHEDULE_SCENARIO = 14;
+  // entity is a skill.
+  SKILL = 15;
+  // entity is a tour pattern.
+  TOUR_PATTERN = 16;
+  // entity is a tour week pattern.
+  TOUR_WEEK_PATTERN = 17;
+  // entity is a tour shift instance config.
+  TOUR_SHIFT_INSTANCE_CONFIG = 18;
+  // entity is a tour shift segment config.
+  TOUR_SHIFT_SEGMENT_CONFIG = 19;
+  // entity is a tour agent collection.
+  TOUR_AGENT_COLLECTION = 20;
 }
 
 // enum representing the different types of Constraint Rules
@@ -606,4 +618,21 @@ enum BitmapType {
   ONLY_WEEKMAPS = 1;
   // The bitmaps will be created using only the calendar items from the patterns.
   ONLY_CALENDAR_ITEMS = 2;
+}
+
+// Defines a Scheduling Result Metric from the Scheduler.
+message SchedulingResultMetric {
+  // The total number of minute-width intervals that were scheduled and measured.
+  int32 total_internal_intervals = 1;
+  // The total number of minute-width intervals that had enough scheduled ftes to meet the predicted call FTEs.
+  int32 total_intervals_with_fte_required = 2;
+  // The total number of intervals that have unmet predicted call FTEs (not enough scheduled FTEs).
+  int32 total_intervals_with_ftes_remaining = 3;
+  // The average ratio of interval metrics (min(1,  scheduled/predicted)). A value of 1 means every interval
+  //    with predicted call FTEs has enough scheduled FTEs to meet requirements.
+  float coverage = 4;
+  // Root Mean Square metric for predicted - scheduled FTEs.
+  float root_mean_square = 5;
+  // Set to TRUE if this object contains valid metrics.
+  bool has_result = 6;
 }
