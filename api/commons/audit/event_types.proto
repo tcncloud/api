@@ -205,6 +205,9 @@ enum EventType {
   TICKET_ACTION_STATE_CHANGE_EVENT = 605;
 
   TICKET_PARTICIPANT_EVENT = 606;
+  // Change For Create/Reply Comments
+  TICKET_CREATE_COMMENT_EVENT = 607;
+  TICKET_REPLY_COMMENT_EVENT = 608;
 
   // Compliance Events
   // rnd query event
