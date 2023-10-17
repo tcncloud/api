@@ -5626,6 +5626,8 @@ message BuildDraftScheduleRes {
   DraftSchedule draft_schedule = 1;
   // Set of diagnostic reports for the given @draft_schedule_sid.
   repeated Diagnostic diagnostics = 2;
+  // The scheduling result metric for the built schedule range.
+  commons.SchedulingResultMetric scheduling_result_metric = 3;
 }
 
 // Request message for the PublishDraftSchedule RPC
