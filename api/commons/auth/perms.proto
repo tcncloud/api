@@ -299,7 +299,8 @@ enum Permission {
    * Room 303 messenger
    */
 
-  // Enables access to room 303 chat.
+  // Enables access to room 303 chat at a base level
+  // Lowest tier permissions for unconfigured rooms and direct messaging
   PERMISSION_ROOM303 = 700 [(annotations.perms.options) = {
     app: APPLICATION_ROOM_303
     features: [
@@ -307,6 +308,21 @@ enum Permission {
       "Rooms",
       "Direct Messages",
       "System Messages"
+    ]
+  }];
+  // Provides middle level permissions for unconfigured
+  // rooms and direct messaging in room303
+  PERMISSION_ROOM303_MEMBER = 701 [(annotations.perms.options) = {
+    app: APPLICATION_ROOM_303
+    features: ["Escalatable Permissions"]
+  }];
+  // Provides top level permissions rooms and direct
+  // messaging for all users in room303
+  PERMISSION_ROOM303_SUPERVISOR = 702 [(annotations.perms.options) = {
+    app: APPLICATION_ROOM_303
+    features: [
+      "Configure All Rooms",
+      "Configure Direct Messaging Rules"
     ]
   }];
 
