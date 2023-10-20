@@ -27,14 +27,26 @@ service NewsroomAPI {
   rpc ListNewsArticles(ListNewsArticlesRequest) returns (ListNewsArticlesResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/listnewsarticles";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // get news article details by the id
   rpc GetNewsArticleById(GetNewsArticleByIdRequest) returns (GetNewsArticleByIdResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/getnewsarticlebyid";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // update news article
@@ -67,28 +79,52 @@ service NewsroomAPI {
   rpc ListPublishedArticles(ListPublishedArticlesRequest) returns (ListPublishedArticlesResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/listpublishedarticles";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // get published article details by the id
   rpc GetPublishedArticleById(GetPublishedArticleByIdRequest) returns (GetPublishedArticleByIdResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/getpublishedarticlebyid";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // user activity updates
   rpc UserActivity(UserActivityRequest) returns (UserActivityResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/useractivity";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // fetch the unseen articles for the user
   rpc GetNewsForUser(GetNewsForUserRequest) returns (GetNewsForUserResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/getnewsforuser";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 
   // upload newsroom image for the news article
@@ -108,6 +144,12 @@ service NewsroomAPI {
   rpc ListImagesForNewsArticle(ListImagesForNewsArticleRequest) returns (ListImagesForNewsArticleResponse) {
     option (google.api.http).post = "/api/v1alpha1/newsroom/listimagesfornewsarticle";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ];
+    };
   }
 }
