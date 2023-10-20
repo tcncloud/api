@@ -57,6 +57,17 @@ service Integrations {
       ];
     };
   }
+  rpc SearchPastTransactions(SearchPastTransactionsRequest) returns (SearchPastTransactionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/searchpasttransactions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
   // GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
   rpc GetAggregatedMetadata(GetAggregatedMetadataReq) returns (GetAggregatedMetadataRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/getaggregatemetadata";
@@ -399,6 +410,37 @@ message ProcessRes {
   // the transaction is pending. This happens if we call IntegrationsApi.Process() with the same request_id
   // twice, with the first call timing out.
   string transaction_id = 5;
+}
+
+message SearchPastTransactionsRequest {
+  // which plugin instance made this call.
+  // optional. If empty string, we use the int_id
+  string plugin_instance_id = 1;
+  api.commons.integrations.IntegrationType int_id = 2;
+  // which method to look up
+  api.commons.integrations.RequestMethod method_id = 3;
+  // what keys were given to IntegrationsApi during the ivr processing call
+  // and the string representation of the values
+  map<string, string> match_fields = 4;
+  // max records we will be looking for in the response.
+  // no more than 10.
+  // if left 0, default of 3 is used.
+  uint32 limit = 5;
+  // if provided, we will start the search at any transactions older than this timestamp.
+  // if left empty, we will start at the current time.
+  google.protobuf.Timestamp search_before = 6;
+}
+message SearchPastTransactionsResponse {
+  repeated PastTxEntity values = 1;
+}
+
+// simplified view of a IntegrationTransaction
+// all values converted to string.
+// only shows the request/resposne data, and timestamp it was created on
+message PastTxEntity {
+  map<string, string> req = 1;
+  map<string, string> res = 2;
+  google.protobuf.Timestamp created_on = 3;
 }
 
 message ListIntegrationsForOrgReq {}
