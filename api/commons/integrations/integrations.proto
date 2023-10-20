@@ -254,6 +254,7 @@ enum RequestMethod {
   REQUEST_METHOD_OPAYO_CCPAYMENTS = 3301;
 
   REQUEST_METHOD_SHIFT4_CCPAYMENTS = 3401;
+  REQUEST_METHOD_SHIFT4_ACCESSTOKEN = 3402;
 
   REQUEST_METHOD_POSCORP_ACCESSTOKEN = 3501;
   REQUEST_METHOD_POSCORP_LOOKUP_GUARANTOR = 3502;
@@ -844,6 +845,7 @@ message ExecuteFlow {
     ExecuteOpayoCcPayments opayo_cc_payment = 3301;
 
     ExecuteShift4CcPayments shift4_cc_payment = 3401;
+    ExecuteShift4CcPayments shift4_access_token = 3402;
 
     ExecutePoscorpAccesstoken poscorp_accesstoken = 3501;
     ExecutePoscorpLookupGuarantor poscorp_lookup_guarantor = 3502;
@@ -1153,6 +1155,7 @@ message ExecuteI2cTransactionHistory {}
 message ExecuteOpayoCcPayments {}
 
 message ExecuteShift4CcPayments {}
+message ExecuteShift4AccessToken {}
 
 message ExecutePoscorpAccesstoken {}
 message ExecutePoscorpLookupGuarantor {}
