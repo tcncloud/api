@@ -30,6 +30,8 @@ message CallerSid {
   api.commons.CallType.Enum type = 2;
   // the client's sid
   int64 tenant_sid = 3;
+  // org id of the caller
+  string org_id = 4;
 }
 
 enum ACDStatus {
