@@ -333,6 +333,32 @@ service OmniApi {
     };
   }
 
+  // ApproveTask approves a task.
+  rpc ApproveTask(ApproveTaskRequest) returns (ApproveTaskResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/approvetask";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // GetNextQueuedTask retrieves the next queued task for the agent.
+  rpc GetNextQueuedTask(GetNextQueuedTaskRequest) returns (GetNextQueuedTaskResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getnextqueuedtask";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
   // GetTask - retrieves a task using the provided criteria
   // Required permissions:
   //    OMNI_AGENT
@@ -361,6 +387,32 @@ service OmniApi {
       sets: [
         {
           permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // RejectTask rejects a task.
+  rpc RejectTask(RejectTaskRequest) returns (RejectTaskResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/rejecttask";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // RequeueTask requeues a task.
+  rpc RequeueTask(RequeueTaskRequest) returns (RequeueTaskResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/requeuetask";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
         }
       ];
     };
@@ -1463,6 +1515,20 @@ message HeaderGroup {
   repeated string headers = 2;
 }
 
+message ApproveTaskRequest {
+  int64 task_sid = 1 [jstype = JS_STRING];
+}
+
+message ApproveTaskResponse {}
+
+message GetNextQueuedTaskRequest {
+  api.commons.OmniConversationSkills skills = 1;
+}
+
+message GetNextQueuedTaskResponse {
+  api.commons.OmniTask task = 1;
+}
+
 // GetTaskReq - request to retrieve a task
 message GetTaskReq {
   // field mask for selecting optional details
@@ -1509,6 +1575,18 @@ message ListTasksRes {
   // The list of tasks.
   repeated api.commons.OmniTask tasks = 2;
 }
+
+message RejectTaskRequest {
+  int64 task_sid = 1 [jstype = JS_STRING];
+}
+
+message RejectTaskResponse {}
+
+message RequeueTaskRequest {
+  int64 task_sid = 1 [jstype = JS_STRING];
+}
+
+message RequeueTaskResponse {}
 
 // CreateConnectedInboxRes - result of creating a new connected inbox
 message CreateConnectedInboxRes {
