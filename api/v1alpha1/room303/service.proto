@@ -307,4 +307,49 @@ service Room303API {
       ];
     };
   }
+
+  // allow room configurations to be updated
+  rpc UpdateRoomConfig(UpdateRoomConfigRequest) returns (api.commons.Room) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/room303/room303api/updateroomconfig"
+      body: "*"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ROOM303]
+        }
+      ];
+    };
+  }
+
+  // update global configuration
+  rpc UpdateGlobalConfig(UpdateGlobalConfigRequest) returns (UpdateGlobalConfigResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/room303/room303api/updateglobalconfig"
+      body: "*"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ROOM303_SUPERVISOR]
+        }
+      ];
+    };
+  }
+
+  // get global configuration
+  rpc GetGlobalConfig(GetGlobalConfigRequest) returns (GetGlobalConfigResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/room303/room303api/getglobalconfig"
+      body: "*"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ROOM303]
+        }
+      ];
+    };
+  }
 }

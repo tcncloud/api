@@ -4,6 +4,8 @@ package api.v1alpha1.room303;
 
 import "api/commons/room303.proto";
 import "api/commons/user.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 message CreateRoomRequest {
   string name = 1;
@@ -55,4 +57,51 @@ message UserDetails {
   string first_name = 3;
   // user last name
   string last_name = 4;
+}
+
+// request to update room configuration
+message UpdateRoomConfigRequest {
+  // room id
+  string room_id = 1;
+  // room configuration details
+  api.commons.RoomConfig config = 2;
+
+  // list of config options to be updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// request to update global configuration
+message UpdateGlobalConfigRequest {
+  // global configuration details
+  api.commons.GlobalConfig config = 1;
+
+  // list of global config options to be updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// response to update global configuration
+message UpdateGlobalConfigResponse {
+  // last edited_by user
+  string edited_by = 1;
+  // global configuration details
+  api.commons.GlobalConfig config = 2;
+  // date created
+  google.protobuf.Timestamp date_created = 3;
+  // last edited on
+  google.protobuf.Timestamp last_edited = 4;
+}
+
+// request to get global configuration
+message GetGlobalConfigRequest {}
+
+// response to get global configuration
+message GetGlobalConfigResponse {
+  // last edited_by user
+  string edited_by = 1;
+  // global configuration details
+  api.commons.GlobalConfig config = 2;
+  // date created
+  google.protobuf.Timestamp date_created = 3;
+  // last edited on
+  google.protobuf.Timestamp last_edited = 4;
 }

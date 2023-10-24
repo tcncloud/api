@@ -71,6 +71,9 @@ message Room {
 
   // display name for the room which is replacing the field "name".
   string display_name = 9;
+
+  // room configuration details
+  RoomConfig config = 10;
 }
 
 message Message {
@@ -91,4 +94,29 @@ message Message {
 message MessageStat {
   string room_id = 1;
   int32 unread_messages = 2;
+}
+
+// ConfigPermissionEnum -
+enum ConfigPermissionEnum {
+  LIMITED = 0;
+  ROOM303_MEMBER = 1;
+  ROOM303_SUPERVISOR = 2;
+}
+
+// global configuration settings
+message GlobalConfig {
+  ConfigPermissionEnum create_room = 1;
+  ConfigPermissionEnum join_existing_room = 2;
+  ConfigPermissionEnum send_message_to_supervisor = 3;
+  ConfigPermissionEnum send_message_to_non_supervisor = 4;
+}
+
+// room confirmation settings
+message RoomConfig {
+  ConfigPermissionEnum add_user = 1;
+  ConfigPermissionEnum remove_user = 2;
+  ConfigPermissionEnum promote_to_admin = 3;
+  ConfigPermissionEnum read_messages = 4;
+  ConfigPermissionEnum send_message = 5;
+  ConfigPermissionEnum archive_room = 6;
 }
