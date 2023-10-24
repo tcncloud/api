@@ -19,6 +19,7 @@ message LearningOpportunity {
   string title = 12; // Title of the learning opportunity.
   LearningOpportunityStatus status = 13; // Current status (ex: OPEN, COMPLETED).
   LearningOpportunityOrigin origin = 14; // Origin (ie. opportunity created from).
+  string creator_user_id = 15; // User id for the creator of the learning opportunity.
 }
 
 // LearningOpportunityStatus describes the status of the learning opportunity.
