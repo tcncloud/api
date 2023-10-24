@@ -15,6 +15,7 @@ message OmnichannelCreateProjectEvent {
   int64 client_sid = 1;
   string name = 2;
   string description = 3;
+  api.commons.OmniProjectComplianceConfig compliance_config = 4;
 }
 
 // OmnichannelCreateCampaignEvent - whenever a campaign is created
