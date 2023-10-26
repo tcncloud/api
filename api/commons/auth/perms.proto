@@ -524,6 +524,12 @@ enum Permission {
       "Extension Group Managment"
     ]
   }];
+  // Enables access to the PBX Softphone Widget in the GlobalTopBar.
+  PERMISSION_PBX_SOFTPHONE_WIDGET = 4110 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_PBX_MANAGER
+    features: ["PBX Softphone Widget"]
+  }];
 
   /*
    * Newsroom
