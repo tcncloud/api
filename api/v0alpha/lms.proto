@@ -9,6 +9,7 @@ import "api/commons/lms.proto";
 import "api/commons/perms.proto";
 import "api/commons/types.proto";
 import "google/api/annotations.proto";
+import "google/api/httpbody.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
@@ -563,6 +564,21 @@ service LMS {
   rpc UpdateCjsSecureSearchCriteria(CjsSecureSearchCriteria) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/updatesecuresearchdcriteria";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+
+  //SampleEndpoint is to test that values come through to the api appropriately
+  rpc SampleEndpoint(SampleRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v0alpha/lms/sample";
+      body: "*";
+    };
     option (annotations.authz) = {
       sets: [
         {
@@ -2751,4 +2767,8 @@ message RuntimeValues {
 message EntityURL {
   EpicEntityType entity_type = 1;
   string url = 2;
+}
+
+message SampleRequest {
+  google.api.HttpBody http_body = 2;
 }
