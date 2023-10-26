@@ -3,6 +3,24 @@ syntax = "proto3";
 package api.v1alpha1.vanalytics;
 
 import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+
+// [UPDATE] ====================================================================
+
+// UpdateCorrectionRequest is a request for updating a correction.
+message UpdateCorrectionRequest {
+  // The correction resource to update.
+  Correction correction = 1;
+
+  // The fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// UpdateCorrectionResponse is a response for updating a correction.
+message UpdateCorrectionResponse {
+  // The correction resource that was updated.
+  Correction correction = 1;
+}
 
 // [CREATE] ====================================================================
 
@@ -15,6 +33,41 @@ message CreateCorrectionRequest {
 // CreateCorrectionResponse is a response for creating a correction.
 message CreateCorrectionResponse {
   // The correction resource that was created.
+  Correction correction = 1;
+}
+
+// [GET] =======================================================================
+
+message GetCorrectionRequest {
+  // Required. The unique id of the correction.
+  int64 correction_sid = 2;
+}
+
+// [LIST] ====================================================================
+
+// ListCorrectionsRequest is a request for listing corrections.
+message ListCorrectionsRequest {
+  // Required. The transcript sid of the transcript that the corrections are on.
+  int64 transcript_sid = 2;
+}
+
+// ListCorrectionsResponse is a response for listing corrections.
+message ListCorrectionsResponse {
+  // List of corrections.
+  repeated Correction corrections = 1;
+}
+
+// [DELETE] ====================================================================
+
+message DeleteCorrectionRequest {
+  // Required. The unique id of the correction to be deleted.
+  int64 correction_sid = 1;
+  // Optional. Return the correction that was deleted.
+  bool return = 3;
+}
+
+message DeleteCorrectionResponse {
+  // Optional. The correction that was deleted.
   Correction correction = 1;
 }
 

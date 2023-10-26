@@ -414,6 +414,58 @@ service Vanalytics {
       ];
     };
   }
+
+  // GetCorrection gets a correction.
+  rpc GetCorrection(GetCorrectionRequest) returns (Correction) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/getcorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // DeleteCorrection deletes a correction.
+  rpc DeleteCorrection(DeleteCorrectionRequest) returns (DeleteCorrectionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/deletecorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListCorrections lists corrections.
+  rpc ListCorrections(ListCorrectionsRequest) returns (ListCorrectionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listcorrections";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // UpdateCorrection updates a correction.
+  rpc UpdateCorrection(UpdateCorrectionRequest) returns (UpdateCorrectionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/updatecorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
 }
 
 message AuditRequest {
