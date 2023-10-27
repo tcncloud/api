@@ -200,6 +200,11 @@ enum Permission {
   PERMISSION_VOICEMAIL_DOWNLOAD = 1401 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables agents to view manual approve tasks
   PERMISSION_MANUAL_APPROVE = 341 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Enables Agents to view plugins.
+  PERMISSION_AGENT_PLUGINS_VIEW = 342 [(annotations.perms.options) = {
+    app: APPLICATION_AGENT
+    features: ["Plugins"]
+  }];
   // Enables Agents to view portals.
   PERMISSION_AGENT_PORTALS_VIEW = 340 [(annotations.perms.options) = {
     app: APPLICATION_AGENT
