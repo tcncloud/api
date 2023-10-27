@@ -260,6 +260,9 @@ service PortalManagerApi {
       sets: [
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PLUGINS_VIEW]
         }
       ];
     };
