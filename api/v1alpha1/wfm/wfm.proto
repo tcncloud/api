@@ -2456,6 +2456,28 @@ service WFM {
     };
   }
 
+  // Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+  // Any shift segments will be split between the two shift instances at @time_to_split.
+  // If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+  //   warning diagnostics will be returned and the instance will still be split.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+  //   -grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+  //   -grpc.Internal: error occurs when creating or updating the shift instances.
+  rpc SplitShiftInstance(SplitShiftInstanceReq) returns (SplitShiftInstanceRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/splitshiftinstance";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
   // Returns the swapped @shift_instances after they are succesfully updated.
   // If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
@@ -5864,6 +5886,22 @@ message CreateShiftInstanceV2Res {
   // Any shift instances that were created.
   repeated ShiftInstance shift_instances = 1;
   // Diagnostics to report cause if shift instances fail to build.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the SplitShiftInstance RPC
+message SplitShiftInstanceReq {
+  // ID of the shift instance to split.
+  int64 shift_instance_sid = 1;
+  // The datetime at which to split the @shift_instance_sid.
+  google.protobuf.Timestamp time_to_split = 2;
+}
+
+// Response message for the SplitShiftInstance RPC
+message SplitShiftInstanceRes {
+  // The newly split shift instances and their shift segments.
+  repeated ShiftInstance shift_instances = 1;
+  // Diagnostics to report if shift templates specify a larger minimum shift length than resulting shifts have.
   repeated Diagnostic diagnostics = 2;
 }
 
