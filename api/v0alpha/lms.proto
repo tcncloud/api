@@ -300,7 +300,7 @@ service LMS {
   }
   rpc ProcessList(ProcessListRequest) returns (ProcessListResponse) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/processlist/{element_id}";
-    option (google.api.http).body = "list";
+    option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
@@ -311,7 +311,7 @@ service LMS {
   }
   rpc StreamList(stream StreamListRequest) returns (StreamListResponse) {
     option (google.api.http).post = "/api/v0alpha/lms/pipelines/streamlist/{element_id}";
-    option (google.api.http).body = "chunk";
+    option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
