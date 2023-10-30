@@ -729,16 +729,16 @@ message Room303SystemMessage {
 message SMSTransport {}
 
 message AESEncryptionRef {
-  int64 aes_sid = 1;
+  int64 aes_sid = 1 [jstype = JS_STRING];
 }
 message PGPEncryptionRef {
-  int64 pgp_sid = 1;
+  int64 pgp_sid = 1 [jstype = JS_STRING];
 }
 message PasswordRef {
-  int64 password_sid = 1;
+  int64 password_sid = 1 [jstype = JS_STRING];
 }
 message SSHKeyRef {
-  int64 ssh_key_sid = 1;
+  int64 ssh_key_sid = 1 [jstype = JS_STRING];
 }
 
 message Encryption {
