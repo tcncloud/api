@@ -1522,7 +1522,8 @@ message ApproveTaskRequest {
 message ApproveTaskResponse {}
 
 message GetNextQueuedTaskRequest {
-  api.commons.OmniConversationSkills skills = 1;
+  api.commons.OmniConversationSkills skills = 1 [deprecated = true];
+  map<string, int64> agent_skills = 2;
 }
 
 message GetNextQueuedTaskResponse {
