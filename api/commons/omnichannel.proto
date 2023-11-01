@@ -167,6 +167,8 @@ enum SmsNumberProvider {
   APEIRON_PROVIDER = 4;
   // AusburstSMSProvider
   AUSBURST_SMS_PROVIDER = 5;
+  // MediaSat sms provider
+  MEDIASAT_SMS_PROVIDER = 6;
 }
 
 // OmniCampaignModuleType -
