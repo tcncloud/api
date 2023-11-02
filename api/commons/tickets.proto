@@ -52,6 +52,35 @@ message Ticket {
   repeated string ticket_participant = 22;
 }
 
+message TicketTemplate {
+  int64 ticket_template_id = 1;
+  string org_id = 2;
+  string template = 3;
+  string template_entity_version = 4;
+  string template_name = 5;
+  string created_by_id = 6;
+  string modified_by = 7;
+  google.protobuf.Timestamp created_date = 8;
+  google.protobuf.Timestamp modified_date = 9;
+  bool is_active = 10;
+}
+message ListTemplate {
+  int64 ticket_template_id = 1 [jstype = JS_STRING];
+  string template_name = 2;
+  int64 project_id = 3 [jstype = JS_STRING];
+  string template = 4;
+  string template_entity_version = 5;
+  bool is_active = 6;
+  string created_by_id = 7;
+  google.protobuf.Timestamp created_date = 8;
+  string project_title = 9;
+}
+
+message AssignProjectTemplate {
+  repeated int64 ticket_template_id = 1 [jstype = JS_STRING];
+  int64 project_id = 2 [jstype = JS_STRING];
+}
+
 enum TimeScale {
   TIME_SCALE_MINUTE = 0;
   TIME_SCALE_HOUR = 1;
@@ -174,6 +203,13 @@ message TicketProject {
   string project_title = 5;
   // Indicates if Project is enabled in ticketing system
   bool is_active = 6;
+  // Added ticket template ID & add in DB too
+  repeated TemplateDescription template_desc = 7;
+}
+
+message TemplateDescription {
+  int64 ticket_template_id = 1 [jstype = JS_STRING];
+  string template_name = 2;
 }
 
 // TicketSla - Fields for sla on a ticket
