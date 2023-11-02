@@ -37,6 +37,45 @@ message CreateTicketReq {
   repeated string ticket_assignee = 16;
 }
 
+//
+message CreateTicketTemplateRequest {
+  api.commons.TicketTemplate ticket_template = 1;
+}
+
+message CreateTicketTemplateResponse {
+  api.commons.TicketTemplate ticket_template = 1;
+}
+
+message EditTicketTemplateRequest {
+  int64 ticket_template_id = 1 [jstype = JS_STRING];
+  api.commons.TicketTemplate edit_value = 2;
+  google.protobuf.FieldMask edited_fields_mask = 3;
+}
+
+message EditTicketTemplateResponse {
+  bool is_edited = 1;
+}
+
+message ListTicketTemplateRequest {
+  int64 ticket_template_id = 1;
+  int64 project_id = 2;
+  // List values based on TemplateId OR ProjectId. If no mask is sent, return all template's based on ORG Id
+  google.protobuf.FieldMask request_mask = 3;
+}
+
+message ListTicketTemplateResponse {
+  repeated api.commons.ListTemplate enabled_templates = 1;
+}
+
+// AssignProjectTemplate
+message AssignProjectTemplateRequest {
+  api.commons.AssignProjectTemplate project_template = 1;
+}
+
+message AssignProjectTemplateResponse {
+  bool is_assigned = 1;
+}
+
 // CreateTicketRes - Response from CreateTicket BE API
 message CreateTicketRes {
   // Returns the created ticket row in the response
