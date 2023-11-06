@@ -644,3 +644,22 @@ message SchedulingResultMetric {
   // Set to TRUE if this object contains valid metrics.
   bool has_result = 6;
 }
+
+// Enum representing the state of the history cache.
+enum HistoryCacheState {
+  // Cache is not loaded and no loading attempts have been made.
+  NOT_LOADED = 0;
+  // Cache is currently being loaded.
+  LOADING = 1;
+  // Cache has been successfully loaded.
+  LOADING_COMPLETE = 2;
+  // Cache was attempted to be loaded but failed, and no new attempts have been made.
+  LOADING_FAILED = 3;
+}
+
+message ClientHistoryCacheInfo {
+  // Current state that a client's cache is at.
+  HistoryCacheState state = 1;
+  // Percentage estimate of how much of the cache has been loaded.
+  int32 progress_percentage = 2;
+}
