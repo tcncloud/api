@@ -2813,6 +2813,26 @@ service WFM {
     };
   }
 
+  // Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+  // The @tour_pattern will be returned with all member entities.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.NotFound: the requested Tour Pattern does not exist.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc GetTourPatternWithMembers(GetTourPatternWithMembersReq) returns (GetTourPatternWithMembersRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/gettourpatternwithmembers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
   // Any member Tour Week Patterns or Agent Collections will be deleted as well.
   // Required permissions:
@@ -6268,6 +6288,18 @@ message GetTourPatternReq {
 // Request message for the GetTourPattern RPC.
 message GetTourPatternRes {
   // The requested Tour Pattern
+  TourPattern tour_pattern = 1;
+}
+
+// Request message for the GetTourPatternWithMembers RPC.
+message GetTourPatternWithMembersReq {
+  // ID of the Shift Template to get the Tour Pattern for.
+  int64 shift_template_sid = 1;
+}
+
+// Request message for the GetTourPatternWithMembers RPC.
+message GetTourPatternWithMembersRes {
+  // The requested Tour Pattern with all member entities.
   TourPattern tour_pattern = 1;
 }
 
