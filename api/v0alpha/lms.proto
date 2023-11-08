@@ -588,6 +588,19 @@ service LMS {
     };
   }
 
+  // returns all fields possible that an ehr entity type could return (that we know of)
+  rpc GetAvailableEHRFields(EHREntityType) returns (Fields) {
+    option (google.api.http).post = "/api/v0alpha/lms/available-ehr-fields";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+
   rpc GetQueuedEventsStatusByElementId(ElementPK) returns (Events) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/getqueuedeventsstatusbyelementid";
     option (google.api.http).body = "*";
@@ -2716,6 +2729,10 @@ message EpicEntrypoint {
   string timezone = 11;
   // If process is enabled
   bool enabled = 12;
+  // The fields the user wants retrieved from the raw json response
+  repeated Field fields = 13;
+  // If we should return one column as raw json and not any specified fields for file template
+  bool raw_json = 14;
 }
 
 // The types of entities that can be returned from Epic's bulk data api.
@@ -2771,4 +2788,8 @@ message EntityURL {
 
 message SampleRequest {
   google.api.HttpBody http_body = 2;
+}
+
+message EHREntityType {
+  EpicEntityType epic_entity = 1;
 }
