@@ -147,6 +147,9 @@ service Tickets {
       sets: [
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
@@ -173,6 +176,9 @@ service Tickets {
       sets: [
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
@@ -367,6 +373,9 @@ service Tickets {
       sets: [
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
