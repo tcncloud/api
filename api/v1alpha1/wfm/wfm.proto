@@ -1336,6 +1336,19 @@ service WFM {
     };
   }
 
+  // Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+  rpc ListAgentScheduleGroups(ListAgentScheduleGroupsRequest) returns (ListAgentScheduleGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listagentschedulegroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
   // All of the entity's parameters that are not desired to be updated must be filled with their current values.
   // The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -4546,6 +4559,17 @@ message CreateAgentGroupReq {
 message CreateAgentGroupRes {
   // ID of the newly created agent group
   int64 agent_group_sid = 1;
+}
+
+// Request message for ListAgentScheduleGroups.
+message ListAgentScheduleGroupsRequest {
+  // Any Node or ShiftTemplate.
+  ParentEntity entity = 1;
+}
+
+// Response message for ListAgentScheduleGroups.
+message ListAgentScheduleGroupsResponse {
+  repeated AgentGroup agent_groups = 1;
 }
 
 // Request message for the UpdateAgentGroup RPC
