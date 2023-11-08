@@ -187,6 +187,27 @@ service WFM {
     };
   }
 
+  // Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+  // it will start the loading task before returning the current state.
+  // Required permissions:
+  //  NONE
+  // Errors:
+  //  -grpc.Internal: error occurs when getting the cache info.
+  rpc GetClientHistoryCacheInfo(GetClientHistoryCacheInfoReq) returns (GetClientHistoryCacheInfoRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getclienthistorycacheinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS]
+        }
+      ];
+    };
+  }
+
   // Gets the historical data for the org sending the request and the given @skill_profile_category.
   // It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
   // The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -3460,6 +3481,15 @@ message HistoricalDataInterval {
   int32 original_total_abandoned_calls = 15;
   // Skill profile category that the interval belongs to.
   commons.SkillProfileCategory skill_profile_category = 16;
+}
+
+// Request message for the GetClientHistoryCacheInfo RPC.
+message GetClientHistoryCacheInfoReq {}
+
+// Response message for the GetClientHistoryCacheInfo RPC.
+message GetClientHistoryCacheInfoRes {
+  // Cache info for the requested client.
+  commons.ClientHistoryCacheInfo cache_info = 1;
 }
 
 // Request message for the ListHistoricalData RPC
