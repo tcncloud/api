@@ -9,7 +9,6 @@ import "api/commons/lms.proto";
 import "api/commons/perms.proto";
 import "api/commons/types.proto";
 import "google/api/annotations.proto";
-import "google/api/httpbody.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
@@ -2787,7 +2786,8 @@ message EntityURL {
 }
 
 message SampleRequest {
-  google.api.HttpBody http_body = 2;
+  reserved "http_body";
+  reserved 2;
 }
 
 message EHREntityType {
