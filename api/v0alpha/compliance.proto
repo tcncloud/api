@@ -919,6 +919,20 @@ message ProcessOutboundCallReq {
   string source_field = 6;
   // The caller id being called from
   string caller_id = 7;
+  // The client id
+  int64 client_sid = 8;
+  // The communication type
+  api.commons.CommType comm_type = 9;
+  // The call type
+  string call_type = 10;
+  // The organization id
+  string org_id = 11;
+  // The region id
+  string region_id = 12;
+  // The email address to process
+  string email = 13;
+  // The zip code
+  string zip_code = 14;
 }
 
 // response given after processing something against a rule set
