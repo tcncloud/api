@@ -236,6 +236,11 @@ message ListArchivedOrganizationsResponse {
     google.protobuf.Timestamp add_date = 4;
     // Date the last broadcast was scheduled.
     google.protobuf.Timestamp last_scheduled_date = 5;
+    // First enabled region's clientSid; will be deprecated for
+    // enabled_regions map.
+    int64 client_sid = 6;
+    // Default region org was first enbabled for.
+    string region_id = 7;
   }
 
   // Organizations filtered by identifier.
