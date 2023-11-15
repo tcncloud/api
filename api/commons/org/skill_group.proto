@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+// SkillGroup represents a skill group entity.
+message SkillGroup {
+  // The ID of the skill group
+  string skill_group_id = 1;
+  // The ID of the org the skill group belongs to.
+  string org_id = 2;
+  // The name of the skill group.
+  string name = 3;
+  // The description of the skill group.
+  string description = 4;
+  // The skills and proficiencies for the skill group.
+  repeated SkillSet skill_sets = 5;
+}
+
+// A set of a skill identifier and the proficiency in that skill
+message SkillSet {
+  // The id of the skill (will be added in the future).
+  // string skill_id = 1;
+
+  // The proficiency of the skill as a percent [1,100].
+  int32 proficiency = 2;
+  // The sid of the skill
+  int64 skill_sid = 3;
+}
