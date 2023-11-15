@@ -613,7 +613,7 @@ message SkillProfileCategory {
   }
 
   // ID of either a skill profile or a skill profile group determined by @skill_profile_category_type.
-  int64 skill_profile_category_sid = 1;
+  int64 skill_profile_category_sid = 1 [jstype = JS_STRING];
   // Category type for @skill_profile_category_sid.
   CategoryType skill_profile_category_type = 2;
 }
