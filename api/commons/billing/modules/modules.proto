@@ -4,31 +4,15 @@ package api.commons.billing.modules;
 
 import "google/protobuf/wrappers.proto";
 
-// BasicConfig - basic config for a rating module when there is no
-// other data needed
 message BasicConfig {
-  // Required. the amount to rate a single event
-  double rate = 1;
+  option deprecated = true;
+  double rate = 1 [deprecated = true];
 }
 
-// BasicSizeConfig - basic config for a rating module that rates based
-// on event size
 message BasicAmountConfig {
-  // Required. the amount of a unit to apply the rate to. This is the
-  // increment amount; for example, an amount of 300 (with bytes as a
-  // unit of measurement) and a message of size 400 bytes will get
-  // billed as if it were a size of 600 bytes.
-  int64 amount = 1;
-  // Required. the amount to rate each size increment
-  double rate = 2;
-  // Optional. the minimum number of increments to rate; for example,
-  // an amount of 5 seconds and a min_increment of 2 would mean that
-  // any event less than 10 seconds would be billed as if it were 10
-  // seconds.
-  google.protobuf.Int64Value min_increment = 3;
-  // Optional. the maximum number of increments to rate; for example,
-  // an amount of 5 seconds and a max_increment of 2 would mean that
-  // any event more than 10 seconds would be billed as if it were 10
-  // seconds.
-  google.protobuf.Int64Value max_increment = 4;
+  option deprecated = true;
+  int64 amount = 1 [deprecated = true];
+  double rate = 2 [deprecated = true];
+  google.protobuf.Int64Value min_increment = 3 [deprecated = true];
+  google.protobuf.Int64Value max_increment = 4 [deprecated = true];
 }

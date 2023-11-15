@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha1;
+
+// MatchingRule represents a rule for matching an event to a
+// rate definition.
+enum MatchingRule {
+  MATCHING_RULE_UNSPECIFIED = 0;
+  MATCHING_RULE_AREA_CODE = 1;
+}
+
+// MatchingConfig represents the configuration for matching
+// an event to a rate definition.
+message MatchingConfig {
+  oneof config {
+    MatchingConfigAreaCode area_code = 1;
+  }
+}
+
+// MatchingConfigAreaCode represents the configuration for
+// matching an event to a rate definition based on the area
+// code of the event.
+message MatchingConfigAreaCode {
+  // The name of this matching configuration.
+  string name = 1;
+  // The area codes to match.
+  repeated string area_codes = 2;
+}

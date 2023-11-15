@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package services.billing.v1alpha1;
+
+import "google/protobuf/field_mask.proto";
+import "services/billing/entities/v1alpha1/invoice.proto";
+import "services/billing/v1alpha1/core.proto";
+
+message CreateInvoiceRequest {
+  string invoice_id = 1;
+  services.billing.entities.v1alpha1.Invoice invoice = 2;
+}
+
+message CreateInvoiceResponse {
+  string invoice_id = 1;
+}
+
+message DeleteInvoiceRequest {
+  string invoice_id = 1;
+}
+
+message DeleteInvoiceResponse {}
+
+message ExportInvoiceRequest {
+  string invoice_id = 1;
+  InvoiceFormat format = 2;
+}
+
+message ExportInvoiceResponse {
+  services.billing.entities.v1alpha1.Invoice invoice = 1;
+}
+
+message GetInvoiceRequest {
+  string invoice_id = 1;
+}
+
+message GetInvoiceResponse {
+  services.billing.entities.v1alpha1.Invoice invoice = 1;
+}
+
+enum InvoiceFormat {
+  INVOICE_FORMAT_UNSPECIFIED = 0;
+  INVOICE_FORMAT_CSV = 1;
+}
+
+message ListInvoicesRequest {
+  string invoice_id = 1;
+  string filter = 2; // Optional: defaults to no filter.
+  google.protobuf.FieldMask fields = 3; // Optional: defaults to all fields.
+  repeated Sort sort = 4; // Optional: defaults to no sort.
+  Page page = 5; // Optional: defaults to no paging.
+}
+
+message ListInvoicesResponse {
+  repeated services.billing.entities.v1alpha1.Invoice invoices = 1;
+  string token = 2; // Optional: only present if paginating.
+}
+
+message UpdateInvoiceRequest {
+  string invoice_id = 1;
+  services.billing.entities.v1alpha1.Invoice invoice = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateInvoiceResponse {}

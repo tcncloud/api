@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package services.billing.v1alpha1;
+
+import "google/protobuf/field_mask.proto";
+import "services/billing/entities/v1alpha1/rates.proto";
+import "services/billing/v1alpha1/core.proto";
+
+message CreateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha1.RateDefinition rate_definition = 2;
+}
+
+message CreateDefaultRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message CreateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha1.RateDefinition rate_definition = 2;
+}
+
+message CreateRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message DeleteDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteDefaultRateDefinitionResponse {}
+
+message DeleteRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteRateDefinitionResponse {}
+
+message GetRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message GetRateDefinitionResponse {
+  services.billing.entities.v1alpha1.RateDefinition rate_definition = 1;
+}
+
+message ListRateDefinitionsRequest {
+  string rate_definition_id = 1;
+  string filter = 2; // Optional: defaults to no filter
+  google.protobuf.FieldMask fields = 3; // Optional: defaults to all fields.
+  repeated Sort sort = 4; // Optional: defaults to no sort.
+  Page page = 5; // Optional: defaults to no paging.
+}
+
+message ListRateDefinitionsResponse {
+  repeated services.billing.entities.v1alpha1.RateDefinition rate_definitions = 1;
+  string token = 2; // Optional: only present if paginating.
+}
+
+message UpdateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha1.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateDefaultRateDefinitionResponse {}
+
+message UpdateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha1.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateRateDefinitionResponse {}

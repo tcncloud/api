@@ -4,6 +4,7 @@ package api.commons.audit;
 
 import "api/commons/audit/agent_training_events.proto";
 import "api/commons/audit/asm_events.proto";
+import "api/commons/audit/billing_events.proto";
 import "api/commons/audit/compliance_events.proto";
 import "api/commons/audit/event_types.proto";
 import "api/commons/audit/events.proto";
@@ -228,5 +229,18 @@ message AuditEvent {
 
     // LMS Events class 900
     LMSPipelineFailureEvent lms_pipeline_failure_event = 900;
+
+    // Billing Events class 1000
+    BillingCommitBillingPlanEvent billing_commit_billing_plan_event = 1000;
+    BillingCreateBillingPlanEvent billing_create_billing_plan_event = 1001;
+    BillingCreateInvoiceEvent billing_create_invoice_event = 1002;
+    BillingCreateRateDefinitionEvent billing_create_rate_definition_event = 1003;
+    BillingDeleteBillingPlanEvent billing_delete_billing_plan_event = 1004;
+    BillingDeleteInvoiceEvent billing_delete_invoice_event = 1005;
+    BillingDeleteRateDefinitionEvent billing_delete_rate_definition_event = 1006;
+    BillingExportInvoiceEvent billing_export_invoice_event = 1007;
+    BillingUpdateBillingPlanEvent billing_update_billing_plan_event = 1008;
+    BillingUpdateInvoiceEvent billing_update_invoice_event = 1009;
+    BillingUpdateRateDefinitionEvent billing_update_rate_definition_event = 1010;
   }
 }

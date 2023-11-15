@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package services.billing.v1alpha1;
+
+message Page {
+  int64 limit = 1; // Optional: if not specified, will not paginate
+  string token = 2; // Optional: if not specified, will start from the beginning
+}
+
+message Sort {
+  string key = 1; // Required: key to sort by
+  Order direction = 2; // Required: direction to sort by
+}
+
+enum Order {
+  ORDER_UNSPECIFIED = 0; // If unspecified, sorts ascending
+  ORDER_DESC = 1;
+}

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha1;
+
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha1/rates.proto";
+
+// BillingPlan represents a collection of rate definitions
+message BillingPlan {
+  // the billing plan identifier
+  string billing_plan_id = 1;
+  // time the billing plan was created
+  google.protobuf.Timestamp create_time = 2;
+  // time the billing plan was last updated
+  google.protobuf.Timestamp update_time = 3;
+  // the time from which this billing plan will take effect
+  google.protobuf.Timestamp start_time = 4;
+  // the time this billing plan ended; can be null
+  google.protobuf.Timestamp end_time = 5;
+  // the time this billing plan was deleted; can be null
+  google.protobuf.Timestamp delete_time = 6;
+  // the billing plan rate definitions
+  repeated string rate_definition_ids = 7;
+  // the billing plan status
+  BillingPlanStatus status = 8;
+}
+
+// BillingPlanStatus represents the status of a billing plan
+enum BillingPlanStatus {
+  BILLING_PLAN_STATUS_UNSPECIFIED = 0;
+  // A billing plan is initially created in "creating" status
+  // and is transitioned to "created" explicitly by committing
+  // the billing plan changes.
+  BILLING_PLAN_STATUS_CREATING = 100;
+  // A billing plan is in "created" status when it is ready to
+  // be used.
+  BILLING_PLAN_STATUS_CREATED = 200;
+}
