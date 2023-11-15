@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package services.billing.v1alpha1;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha1/plan.proto";
+import "services/billing/v1alpha1/core.proto";
+
+message CommitBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message CommitBillingPlanResponse {}
+
+message CommitDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message CommitDefaultBillingPlanResponse {}
+
+message CreateBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+}
+
+message CreateBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message CreateDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+}
+
+message CreateDefaultBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message DeleteBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message DeleteBillingPlanResponse {}
+
+message DeleteDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message DeleteDefaultBillingPlanResponse {}
+
+message DuplicateBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+}
+
+message DuplicateBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message DuplicateDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+}
+
+message DuplicateDefaultBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message GetActiveBillingPlanRequest {
+  string org_id = 1; // Optional: if not set, will get the default billing plan
+  google.protobuf.Timestamp effective_time = 2; // Optional: if not set, will use current time
+}
+
+message GetActiveBillingPlanResponse {
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 1;
+}
+
+message GetBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message GetBillingPlanResponse {
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 1;
+}
+
+message ListBillingPlansRequest {
+  string billing_plan_id = 1;
+  string filter = 2; // Optional: defaults to no filter.
+  google.protobuf.FieldMask fields = 3; // Optional: defaults to all fields.
+  repeated Sort sort = 4; // Optional: defaults to no sort.
+  Page page = 5; // Optional: defaults to no paging.
+}
+
+message ListBillingPlansResponse {
+  repeated services.billing.entities.v1alpha1.BillingPlan billing_plans = 1;
+  string token = 2; // Optional: only present if paginating.
+}
+
+message UpdateBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateBillingPlanResponse {}
+
+message UpdateDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha1.BillingPlan billing_plan = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateDefaultBillingPlanResponse {}

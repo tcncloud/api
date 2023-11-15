@@ -6,97 +6,86 @@ import "api/commons/audit/event_types.proto";
 import "api/commons/billing/modules/modules.proto";
 import "google/protobuf/timestamp.proto";
 
-// Plan - a collection of details belongind to a single organization.
 message Plan {
-  // all the details that make up this billing plan, where each
-  // detail defines how to configure a particular rating module.
-  repeated Detail details = 1;
-  // the organization identifier
-  string org_id = 2;
-  // billing plan identifier
-  int64 billing_plan_id = 3 [jstype = JS_STRING];
-  // time the billing plan was created
-  google.protobuf.Timestamp create_time = 4;
-  // time the billing plan was updated
-  google.protobuf.Timestamp update_time = 5;
-  // the time from which this billing plan took effect
-  google.protobuf.Timestamp start_time = 6;
-  // the time (if applicable) this billing plan ended; can be null
-  google.protobuf.Timestamp end_time = 7;
+  option deprecated = true;
+  repeated Detail details = 1 [deprecated = true];
+  string org_id = 2 [deprecated = true];
+  int64 billing_plan_id = 3 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
+  google.protobuf.Timestamp create_time = 4 [deprecated = true];
+  google.protobuf.Timestamp update_time = 5 [deprecated = true];
+  google.protobuf.Timestamp start_time = 6 [deprecated = true];
+  google.protobuf.Timestamp end_time = 7 [deprecated = true];
 }
 
-// Detail - all the data required to configure a rating module
 message Detail {
-  // billing detail identifier
-  int64 billing_detail_sid = 1;
-  // event type this billing detail is associated with
-  api.commons.audit.EventType event_type = 2;
-  // the type of configuration for this detail
-  DetailConfigType config_type = 3;
-  // the configuration details for this detail
-  DetailConfig config = 4;
-  // the time the detail was created
-  google.protobuf.Timestamp date_created = 5;
-  // the time the detail was last modified
-  google.protobuf.Timestamp date_modified = 6;
-  // the time the detail was deleted (if applicable)
-  google.protobuf.Timestamp deleted_on = 7;
-  // the billing plan identifier
-  int64 billing_plan_id = 8 [jstype = JS_STRING];
+  option deprecated = true;
+  int64 billing_detail_sid = 1 [deprecated = true];
+  api.commons.audit.EventType event_type = 2 [deprecated = true];
+  DetailConfigType config_type = 3 [deprecated = true];
+  DetailConfig config = 4 [deprecated = true];
+  google.protobuf.Timestamp date_created = 5 [deprecated = true];
+  google.protobuf.Timestamp date_modified = 6 [deprecated = true];
+  google.protobuf.Timestamp deleted_on = 7 [deprecated = true];
+  int64 billing_plan_id = 8 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
 }
 
-// DetailConfig - contains the data specific to the rating module,
-// so that it may rate events correctly
 message DetailConfig {
+  option deprecated = true;
   oneof config {
-    billing.modules.BasicConfig agent_seats_config = 2;
+    billing.modules.BasicConfig agent_seats_config = 2 [deprecated = true];
 
     // omni configs
-    billing.modules.BasicConfig agent_text_message_chat_config = 100;
-    billing.modules.BasicConfig agent_text_message_email_message_config = 101;
-    billing.modules.BasicAmountConfig agent_text_message_email_size_config = 102;
-    billing.modules.BasicConfig agent_text_message_sms_config = 103;
-    billing.modules.BasicConfig task_message_sent_email_message_config = 104;
-    billing.modules.BasicAmountConfig task_message_sent_email_size_config = 105;
-    billing.modules.BasicConfig task_message_sent_sms_config = 106;
-    billing.modules.BasicConfig connected_inbox_poll_config = 107;
-    billing.modules.BasicConfig manager_text_message_chat_config = 108;
-    billing.modules.BasicConfig manager_text_message_email_message_config = 109;
-    billing.modules.BasicAmountConfig manager_text_message_email_size_config = 110;
-    billing.modules.BasicConfig manager_text_message_sms_config = 111;
-    billing.modules.BasicConfig customer_text_message_chat_config = 112;
-    billing.modules.BasicConfig customer_text_message_email_message_config = 113;
-    billing.modules.BasicAmountConfig customer_text_message_email_size_config = 114;
-    billing.modules.BasicConfig customer_text_message_sms_config = 115;
-    billing.modules.BasicAmountConfig agent_text_message_chat_size_config = 116;
-    billing.modules.BasicAmountConfig manager_text_message_chat_size_config = 117;
-    billing.modules.BasicAmountConfig customer_text_message_chat_size_config = 118;
-    billing.modules.BasicConfig connected_inbox_created_config = 119;
-    billing.modules.BasicAmountConfig agent_text_message_sms_size_config = 120;
-    billing.modules.BasicAmountConfig manager_text_message_sms_size_config = 121;
-    billing.modules.BasicAmountConfig customer_text_message_sms_size_config = 122;
-    billing.modules.BasicAmountConfig task_message_sent_sms_size_config = 123;
-    billing.modules.BasicConfig agent_chat_message_units_config = 124;
-    billing.modules.BasicConfig agent_email_message_units_config = 125;
-    billing.modules.BasicConfig agent_sms_message_units_config = 126;
-    billing.modules.BasicConfig manager_chat_message_units_config = 127;
-    billing.modules.BasicConfig manager_email_message_units_config = 128;
-    billing.modules.BasicConfig manager_sms_message_units_config = 129;
-    billing.modules.BasicConfig customer_chat_message_units_config = 130;
-    billing.modules.BasicConfig customer_email_message_units_config = 131;
-    billing.modules.BasicConfig customer_sms_message_units_config = 132;
-    billing.modules.BasicConfig system_chat_message_units_config = 133;
-    billing.modules.BasicConfig system_email_message_units_config = 134;
-    billing.modules.BasicConfig system_sms_message_units_config = 135;
+    billing.modules.BasicConfig agent_text_message_chat_config = 100 [deprecated = true];
+    billing.modules.BasicConfig agent_text_message_email_message_config = 101 [deprecated = true];
+    billing.modules.BasicAmountConfig agent_text_message_email_size_config = 102 [deprecated = true];
+    billing.modules.BasicConfig agent_text_message_sms_config = 103 [deprecated = true];
+    billing.modules.BasicConfig task_message_sent_email_message_config = 104 [deprecated = true];
+    billing.modules.BasicAmountConfig task_message_sent_email_size_config = 105 [deprecated = true];
+    billing.modules.BasicConfig task_message_sent_sms_config = 106 [deprecated = true];
+    billing.modules.BasicConfig connected_inbox_poll_config = 107 [deprecated = true];
+    billing.modules.BasicConfig manager_text_message_chat_config = 108 [deprecated = true];
+    billing.modules.BasicConfig manager_text_message_email_message_config = 109 [deprecated = true];
+    billing.modules.BasicAmountConfig manager_text_message_email_size_config = 110 [deprecated = true];
+    billing.modules.BasicConfig manager_text_message_sms_config = 111 [deprecated = true];
+    billing.modules.BasicConfig customer_text_message_chat_config = 112 [deprecated = true];
+    billing.modules.BasicConfig customer_text_message_email_message_config = 113 [deprecated = true];
+    billing.modules.BasicAmountConfig customer_text_message_email_size_config = 114 [deprecated = true];
+    billing.modules.BasicConfig customer_text_message_sms_config = 115 [deprecated = true];
+    billing.modules.BasicAmountConfig agent_text_message_chat_size_config = 116 [deprecated = true];
+    billing.modules.BasicAmountConfig manager_text_message_chat_size_config = 117 [deprecated = true];
+    billing.modules.BasicAmountConfig customer_text_message_chat_size_config = 118 [deprecated = true];
+    billing.modules.BasicConfig connected_inbox_created_config = 119 [deprecated = true];
+    billing.modules.BasicAmountConfig agent_text_message_sms_size_config = 120 [deprecated = true];
+    billing.modules.BasicAmountConfig manager_text_message_sms_size_config = 121 [deprecated = true];
+    billing.modules.BasicAmountConfig customer_text_message_sms_size_config = 122 [deprecated = true];
+    billing.modules.BasicAmountConfig task_message_sent_sms_size_config = 123 [deprecated = true];
+    billing.modules.BasicConfig agent_chat_message_units_config = 124 [deprecated = true];
+    billing.modules.BasicConfig agent_email_message_units_config = 125 [deprecated = true];
+    billing.modules.BasicConfig agent_sms_message_units_config = 126 [deprecated = true];
+    billing.modules.BasicConfig manager_chat_message_units_config = 127 [deprecated = true];
+    billing.modules.BasicConfig manager_email_message_units_config = 128 [deprecated = true];
+    billing.modules.BasicConfig manager_sms_message_units_config = 129 [deprecated = true];
+    billing.modules.BasicConfig customer_chat_message_units_config = 130 [deprecated = true];
+    billing.modules.BasicConfig customer_email_message_units_config = 131 [deprecated = true];
+    billing.modules.BasicConfig customer_sms_message_units_config = 132 [deprecated = true];
+    billing.modules.BasicConfig system_chat_message_units_config = 133 [deprecated = true];
+    billing.modules.BasicConfig system_email_message_units_config = 134 [deprecated = true];
+    billing.modules.BasicConfig system_sms_message_units_config = 135 [deprecated = true];
 
     // compliance configs
-    billing.modules.BasicConfig compliance_rnd_query_config = 200;
-    billing.modules.BasicConfig compliance_rnd_query_cached_config = 201;
+    billing.modules.BasicConfig compliance_rnd_query_config = 200 [deprecated = true];
+    billing.modules.BasicConfig compliance_rnd_query_cached_config = 201 [deprecated = true];
   }
 }
 
-// DetailConfigType - the types of billing detail configurations available
 enum DetailConfigType {
+  option deprecated = true;
   DETAIL_CONFIG_TYPE_UNSPECIFIED = 0;
   DETAIL_CONFIG_TYPE_NOOP = 1;
 

@@ -8,100 +8,72 @@ import "api/commons/billing/invoice.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-// GetBillingPlanReq - request to get an organization's billing plan
 message GetBillingPlanReq {
-  // Required. the identifier of the organization to get the plan for
-  string org_id = 1;
+  option deprecated = true;
+  string org_id = 1 [deprecated = true];
 }
 
-// GetBillingPlanRes - result of retrieving an organization's billing plan
 message GetBillingPlanRes {
-  // the billing plan
-  api.commons.billing.Plan billing_plan = 1;
+  option deprecated = true;
+  api.commons.billing.Plan billing_plan = 1 [deprecated = true];
 }
 
-// UpdateBillingPlanReq - request to update a billing plan.
 message UpdateBillingPlanReq {
-  // Required. the billing details to update
-  repeated api.commons.billing.Detail billing_details = 1;
-  // Required. the identifier of the organization to update the plan for
-  string org_id = 2;
+  option deprecated = true;
+  repeated api.commons.billing.Detail billing_details = 1 [deprecated = true];
+  string org_id = 2 [deprecated = true];
 }
 
-// UpdateBillingPlanRes - result of updating a billing plan; contains
-// only the details that were provided in the request
 message UpdateBillingPlanRes {
-  // the updated billing plan
-  api.commons.billing.Plan billing_plan = 1;
+  option deprecated = true;
+  api.commons.billing.Plan billing_plan = 1 [deprecated = true];
 }
 
-// GetInvoiceReq - request to get an invoice
 message GetInvoiceReq {
-  // Optional. the date of the invoice to retrieve. If not specified,
-  // will return the invoice associated with the current billing cycle.
-  // Otherwise, it will return the invoice associated with the billing
-  // cycle that contains the specified date.
-  google.protobuf.Timestamp invoice_date = 1;
-  // Required. the identifier of the organization to update the plan for
-  string org_id = 2;
-  // deprecated
+  option deprecated = true;
+  google.protobuf.Timestamp invoice_date = 1 [deprecated = true];
+  string org_id = 2 [deprecated = true];
   InvoiceFormat format = 3 [deprecated = true];
-  // Optional. the format the invoice is returned using. If not specified,
-  // will use the proto format as the default
-  api.commons.billing.InvoiceFormat invoice_format = 4;
+  api.commons.billing.InvoiceFormat invoice_format = 4 [deprecated = true];
 }
 
-// GetInvoiceRes - result of retrieving an invoice
 message GetInvoiceRes {
-  // deprecated
+  option deprecated = true;
   api.commons.billing.Invoice invoice = 1 [deprecated = true];
-  // deprecated
   oneof format {
     api.commons.billing.Invoice proto = 2 [deprecated = true];
     string csv_url = 3 [deprecated = true];
   }
-  // the invoice in the format requested
   oneof invoice_data {
-    api.commons.billing.Invoice invoice_proto = 100;
-    string invoice_csv_url = 101;
+    api.commons.billing.Invoice invoice_proto = 100 [deprecated = true];
+    string invoice_csv_url = 101 [deprecated = true];
   }
-  // the billing cycle of the invoice requested
-  string billing_cycle = 4;
+  string billing_cycle = 4 [deprecated = true];
 }
 
-// ExportGenerateInvoicesReq - request to export a generated invoice
 message ExportGeneratedInvoiceReq {
-  // Optional. the date of the invoice to retrieve. If not specified,
-  // will return the invoice associated with the current billing cycle.
-  // Otherwise, it will return the invoice associated with the billing
-  // cycle that contains the specified date.
-  google.protobuf.Timestamp invoice_date = 1;
-  // Required. the identifier of the organization to get the plan for
-  string org_id = 2;
-  // deprecated
+  option deprecated = true;
+  google.protobuf.Timestamp invoice_date = 1 [deprecated = true];
+  string org_id = 2 [deprecated = true];
   InvoiceFormat format = 3 [deprecated = true];
-  // Optional. the invoice for the organization. If not specified,
-  // will use the proto format as the default
-  api.commons.billing.InvoiceFormat invoice_format = 4;
+  api.commons.billing.InvoiceFormat invoice_format = 4 [deprecated = true];
 }
 
-// ExportGeneratedInvoicesRes - result of exporting a generated invoice
 message ExportGeneratedInvoiceRes {
-  // deprecated
+  option deprecated = true;
   oneof format {
     api.commons.billing.Invoice proto = 1 [deprecated = true];
     string csv_url = 2 [deprecated = true];
   }
-  // the invoice in the format requested
   oneof invoice_data {
-    api.commons.billing.Invoice invoice_proto = 100;
-    string invoice_csv_url = 101;
+    api.commons.billing.Invoice invoice_proto = 100 [deprecated = true];
+    string invoice_csv_url = 101 [deprecated = true];
   }
-  // the billing cycle of the invoice requested
-  string billing_cycle = 4;
+  string billing_cycle = 4 [deprecated = true];
 }
 
 enum InvoiceFormat {
+  option deprecated = true;
   INVOICE_FORMAT_UNSPECIFIED = 0;
   INVOICE_FORMAT_PROTO = 1;
   INVOICE_FORMAT_CSV = 2;

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha1;
+
+import "google/protobuf/wrappers.proto";
+
+// BasicConfig represents the basic config for a rating module when
+// there is no other data needed
+message BasicConfig {
+  // Required. the amount to rate a single event
+  double rate = 1;
+}
+
+// BasicUnitConfig represents basic config for a rating module that
+// rates based on event units
+message BasicUnitConfig {
+  // Required. the size of an individual unit. For example, a unit
+  // size of 300 (with bytes as a unit of measurement) and an event
+  // of size 400 bytes will get billed as if it were 2 units.
+  int64 unit_size = 1;
+  // Required. the amount to rate each unit
+  double rate = 2;
+  // Optional. the minimum number of units to rate; for example, a
+  // unit size of 5 seconds and a min_units of 2 would mean that
+  // any event less than 10 seconds would be billed as if it were
+  // two units (10 seconds).
+  google.protobuf.Int64Value min_units = 3;
+  // Optional. the maximum number of units to rate; for example, a
+  // unit size of 5 seconds and a max_units of 2 would mean that
+  // any event more than 10 seconds would be billed as if it were
+  // two units (10 seconds).
+  google.protobuf.Int64Value max_units = 4;
+}

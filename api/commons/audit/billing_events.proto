@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+///
+/// This file contains event from Class 1000
+/// Billing events
+///
+
+// BillingCommitBillingPlanEvent is fired when a billing plan is committed
+message BillingCommitBillingPlanEvent {
+  string billing_plan_id = 1;
+  string user_id = 2;
+}
+
+// BillingCreateBillingPlanEvent is fired when a billing plan is created
+message BillingCreateBillingPlanEvent {
+  string billing_plan = 1;
+  string user_id = 2;
+}
+
+// BillingCreateInvoiceEvent is fired when an invoice is created
+message BillingCreateInvoiceEvent {
+  string invoice = 1;
+  string user_id = 2;
+}
+
+// BillingCreateRateDefinitionEvent is fired when a rate definition is created
+message BillingCreateRateDefinitionEvent {
+  string rate_definition = 1;
+  string user_id = 2;
+}
+
+// BillingDeleteBillingPlanEvent is fired when a billing plan is deleted
+message BillingDeleteBillingPlanEvent {
+  string billing_plan_id = 1;
+  string user_id = 2;
+}
+
+// BillingDeleteInvoiceEvent is fired when an invoice is deleted
+message BillingDeleteInvoiceEvent {
+  string invoice_id = 1;
+  string user_id = 2;
+}
+
+// BillingDeleteRateDefinitionEvent is fired when a rate definition is deleted
+message BillingDeleteRateDefinitionEvent {
+  string rate_definition_id = 1;
+  string user_id = 2;
+}
+
+// BillingExportInvoiceEvent is fired when an invoice is exported
+message BillingExportInvoiceEvent {
+  string invoice_id = 1;
+  string user_id = 2;
+}
+
+// BillingUpdateBillingPlanEvent is fired when a billing plan is updated
+message BillingUpdateBillingPlanEvent {
+  string billing_plan = 1;
+  string user_id = 2;
+}
+
+// BillingUpdateInvoiceEvent is fired when an invoice is updated
+message BillingUpdateInvoiceEvent {
+  string invoice = 1;
+  string user_id = 2;
+}
+
+// BillingUpdateRateDefinitionEvent is fired when a rate definition is updated
+message BillingUpdateRateDefinitionEvent {
+  string rate_definition = 1;
+  string user_id = 2;
+}

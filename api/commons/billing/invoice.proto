@@ -4,9 +4,8 @@ package api.commons.billing;
 
 import "google/protobuf/timestamp.proto";
 
-// Product - represents a billed product. A product should show up only
-// once in a monthly invoice.
 enum Product {
+  option deprecated = true;
   PRODUCT_UNSPECIFIED = 0;
   PRODUCT_OTHER = 1;
 
@@ -26,39 +25,33 @@ enum Product {
   PRODUCT_COMPLIANCE = 500;
 }
 
-// Invoice - a collection of products with their total rated amount for
-// a selected month or month-to-date.
 message Invoice {
-  // The items forming the invoice, where a product type
-  // should show up only once in this list.
-  repeated InvoiceItem items = 1;
-  // the invoice identifier
-  int64 invoice_id = 2 [jstype = JS_STRING];
-  // the billing cycle this invoice was generated for
-  string billing_cycle = 3;
-  // time the invoice was created
-  google.protobuf.Timestamp create_time = 4;
-  // time the invoice was last updated
-  google.protobuf.Timestamp update_time = 5;
+  option deprecated = true;
+  repeated InvoiceItem items = 1 [deprecated = true];
+  int64 invoice_id = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
+  string billing_cycle = 3 [deprecated = true];
+  google.protobuf.Timestamp create_time = 4 [deprecated = true];
+  google.protobuf.Timestamp update_time = 5 [deprecated = true];
 }
 
-// InvoiceItem -
 message InvoiceItem {
-  // The unique identifier for this invoice item
-  int64 invoice_item_sid = 1;
-  // The product this item contains the total for
-  Product product = 2;
-  // The total amount billed for the product
-  double amount = 3;
-  // time the invoice item was created
-  google.protobuf.Timestamp date_created = 4;
-  // time the invoice item was last modified
-  google.protobuf.Timestamp date_modified = 5;
-  // the invoice identifier
-  int64 invoice_id = 6 [jstype = JS_STRING];
+  option deprecated = true;
+  int64 invoice_item_sid = 1 [deprecated = true];
+  Product product = 2 [deprecated = true];
+  double amount = 3 [deprecated = true];
+  google.protobuf.Timestamp date_created = 4 [deprecated = true];
+  google.protobuf.Timestamp date_modified = 5 [deprecated = true];
+  int64 invoice_id = 6 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
 }
 
 enum InvoiceFormat {
+  option deprecated = true;
   INVOICE_FORMAT_UNSPECIFIED = 0;
   INVOICE_FORMAT_PROTO = 1;
   INVOICE_FORMAT_CSV = 2;
