@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.skills;
+
+import "api/commons/org/skill_group.proto";
+
+// Request message for the CreateSkillGroup rpc.
+message CreateSkillGroupRequest {
+  // The skill group object to create. It is expected to have the org id on it
+  api.commons.org.SkillGroup skill_group = 1;
+}
+
+// Response message for the CreateSkillGroup rpc.
+message CreateSkillGroupResponse {
+  // The ID of the created skill group.
+  string skill_group_id = 1;
+}
+
+// Request message for the ListSkillGroups rpc.
+message ListSkillGroupsRequest {
+  // Mask to filter fields on skill group entities in response.
+  repeated string field_mask = 1;
+}
+
+// Response message for the ListSkillGroups rpc.
+message ListSkillGroupsResponse {
+  // The skill groups in the organization.
+  repeated api.commons.org.SkillGroup skill_groups = 1;
+}
+
+// Request message for the UpdateSkillGroup rpc.
+message UpdateSkillGroupRequest {
+  // The desired updated skill group object. It is expected to have the skill group id and org id on it
+  api.commons.org.SkillGroup skill_group = 1;
+  // Mask to filter fields on skill group to update.
+  repeated string field_mask = 2;
+}
+
+// Response message for the UpdateSkillGroup rpc.
+message UpdateSkillGroupResponse {}
+
+// Request message for the GetSkillGroup rpc.
+message GetSkillGroupRequest {
+  // The skill group id of the skill group
+  string skill_group_id = 1;
+  // Mask to filter fields on skill group entity in response.
+  repeated string field_mask = 2;
+}
+
+// Response message for the GetSkillGroup rpc.
+message GetSkillGroupResponse {
+  // The requested skill group.
+  api.commons.org.SkillGroup skill_group = 1;
+}
+
+// Request message for the DeleteSkillGroup rpc.
+message DeleteSkillGroupRequest {
+  // The skill group id of the skill group to delete.
+  string skill_group_id = 1;
+}
+
+// Response message for the DeleteSkillGroup rpc.
+message DeleteSkillGroupResponse {}
+
+// Request message for the AssignSkillGroups rpc.
+message AssignSkillGroupsRequest {
+  // The ids of the skill groups to be assigned.
+  repeated string skill_group_ids = 1;
+  // The user id of the user.
+  string user_id = 2;
+}
+
+// Response message for the AssignSkillGroups rpc.
+message AssignSkillGroupsResponse {}
+
+// Request message for the RevokeSkillGroups rpc.
+message RevokeSkillGroupsRequest {
+  // The ids of the skill groups to be revoked.
+  repeated string skill_group_ids = 1;
+  // The user id of the user.
+  string user_id = 2;
+}
+
+// Response message for the RevokeSkillGroups rpc.
+message RevokeSkillGroupsResponse {}
+
+// Request message for the GetUserSkillGroups rpc.
+message GetUserSkillGroupsRequest {
+  // The user id of the user.
+  string user_id = 1;
+}
+
+// Response message for the GetUserSkillGroups rpc.
+message GetUserSkillGroupsResponse {
+  // The skill group ids assigned to the user.
+  repeated string skill_group_ids = 1;
+}
+
+// Request message for the GetUserSkills rpc.
+message GetUserSkillsRequest {
+  // The user id of the user.
+  string user_id = 1;
+}
+
+// Response message for the GetUserSkills rpc.
+message GetUserSkillsResponse {
+  // The skill sets a user has.
+  repeated api.commons.org.SkillSet skill_sets = 1;
+}
+
+// Request message for the GetSkillGroupMembers rpc.
+message GetSkillGroupMembersRequest {
+  // The skill group id of the skill group.
+  string skill_group_id = 1;
+}
+
+// Response message for the GetSkillGroupMembers rpc.
+message GetSkillGroupMembersResponse {
+  // The users ids which belong to the skill group.
+  repeated string user_ids = 1;
+}
