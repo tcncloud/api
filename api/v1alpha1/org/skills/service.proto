@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.skills;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/skills/entities.proto";
+import "google/api/annotations.proto";
+
+service SkillsService {
+  // CreateSkillGroup creates a new skill group.
+  rpc CreateSkillGroup(CreateSkillGroupRequest) returns (CreateSkillGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/createskillgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListSkillGroups lists the skill groups belonging to an organization.
+  rpc ListSkillGroups(ListSkillGroupsRequest) returns (ListSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/listskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // UpdateSkillGroup updates a single skill group.
+  rpc UpdateSkillGroup(UpdateSkillGroupRequest) returns (UpdateSkillGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/updateskillgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // GetSkillGroup gets a single skill group.
+  rpc GetSkillGroup(GetSkillGroupRequest) returns (GetSkillGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/getskillgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // DeleteSkillGroup deletes a skill group.
+  rpc DeleteSkillGroup(DeleteSkillGroupRequest) returns (DeleteSkillGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/deleteskillgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // AssignSkillGroups assigns a user to the given skill groups.
+  rpc AssignSkillGroups(AssignSkillGroupsRequest) returns (AssignSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/assignskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RevokeSkillGroups revokes the given skill groups from a user.
+  rpc RevokeSkillGroups(RevokeSkillGroupsRequest) returns (RevokeSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/revokeskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // GetUserSkillGroups gets the skill groups assigned to a user.
+  rpc GetUserSkillGroups(GetUserSkillGroupsRequest) returns (GetUserSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/getuserskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetUserSkills gets a user's skill proficiencies.
+  rpc GetUserSkills(GetUserSkillsRequest) returns (GetUserSkillsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/getuserskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetSkillGroupMembers gets the members of a skill group.
+  rpc GetSkillGroupMembers(GetSkillGroupMembersRequest) returns (GetSkillGroupMembersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/getskillgroupmembers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+}
