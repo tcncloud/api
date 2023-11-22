@@ -329,6 +329,13 @@ message AgentCallLogActionKey {
     WARM_CALLER_TRANSFER_INVITE_CALLER = 41;
     // when the transfer ends for a caller
     WARM_CALLER_TRANSFER_END = 42;
+
+    // Barge in audits
+
+    // when a manager starts a barge in
+    BARGE_IN_START = 43;
+    // when a manager stops a barge in
+    BARGE_IN_STOP = 44;
   }
 }
 
