@@ -74,6 +74,7 @@ message ListTemplate {
   string created_by_id = 7;
   google.protobuf.Timestamp created_date = 8;
   string project_title = 9;
+  repeated int64 assigned_project = 10;
 }
 
 message AssignProjectTemplate {
