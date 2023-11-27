@@ -176,6 +176,22 @@ service Insights {
     };
   }
 
+  // ListVfses lists exported vfs aliases
+  rpc ListVfsSchemas(ListVfsSchemasRequest) returns (ListVfsSchemasResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/listvfsschemas";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ];
+    };
+  }
+
   // PublishInsight publishes an insight
   rpc PublishInsight(PublishInsightRequest) returns (PublishInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/publishinsight";

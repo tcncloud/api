@@ -102,6 +102,7 @@ message GetVfsSchemaResponse {
   }
   repeated Field fields = 1; // array of fields
   string vfs_description = 2; // description of the vfs - optional may not always be present
+  string alias_name = 3; // alias name of the vfs
 }
 
 // ListVfsesRequest is request to list vfses
@@ -110,4 +111,12 @@ message ListVfsesRequest {}
 // ListVfsesResponse is response with vfs aliases
 message ListVfsesResponse {
   repeated string aliases = 1; // Array of vfs alias names
+}
+
+// ListVfsSchemasRequest is request to list vfs schemas
+message ListVfsSchemasRequest {}
+
+// ListVfsSchemasResponse is response with vfs schemas
+message ListVfsSchemasResponse {
+  repeated GetVfsSchemaResponse vfs_schemas = 1; // Array of vfs schemas
 }
