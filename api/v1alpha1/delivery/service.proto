@@ -704,8 +704,12 @@ message SFTPTransport {
   string base_dir = 6;
 }
 message EmailTransport {
+  // which email we want to show up as as from
   string from_address = 1;
+  // which email we are sending to
   string to_address = 2;
+  // additional emails we are sending to
+  repeated string cc_addresses = 3;
 }
 message Room303Transport {
   oneof transport {
@@ -726,7 +730,12 @@ message Room303SystemMessage {
     string user_id = 3;
   }
 }
-message SMSTransport {}
+message SMSTransport {
+  // must include country code and area code
+  string destination_phone = 1;
+  // the phone number we want this message to come from
+  string source_phone = 2;
+}
 
 message AESEncryptionRef {
   int64 aes_sid = 1 [jstype = JS_STRING];
