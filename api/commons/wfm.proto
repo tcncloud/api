@@ -663,3 +663,9 @@ message ClientHistoryCacheInfo {
   // Percentage estimate of how much of the cache has been loaded.
   int32 progress_percentage = 2;
 }
+
+// Defines an ErrorTrace to relate the error to associated log entries.
+message ErrorTrace {
+  // unique identifier to find any logs related to the error.
+  string grpc_trace_bin = 1;
+}
