@@ -99,6 +99,9 @@ message User {
 
   // a bool to determine whether or not user is account owner
   bool account_owner = 400;
+
+  // Whether or not the user's email is verified.
+  bool email_verified = 401;
 }
 
 // Agent skill
