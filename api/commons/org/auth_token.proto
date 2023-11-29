@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+import "google/protobuf/timestamp.proto";
+
+// AuthToken is an authentication token for a user
+message AuthToken {
+  // the raw token value
+  string token = 1;
+  // user the token belongs to
+  string user_id = 2;
+  // org the user and token belong to
+  string org_id = 3;
+  // tokens expiration
+  google.protobuf.Timestamp expiration = 4;
+}

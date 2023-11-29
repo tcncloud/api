@@ -4,6 +4,7 @@ package api.v1alpha1.org;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/org/agent_profile_group.proto";
+import "api/v1alpha1/org/auth_token.proto";
 import "api/v1alpha1/org/huntgroup.proto";
 import "api/v1alpha1/org/labels.proto";
 import "api/v1alpha1/org/notifications.proto";
@@ -1262,6 +1263,111 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // AUTH TOKEN
+  // CreateAuthToken creates an auth token for the current user.
+  rpc CreateAuthToken(CreateAuthTokenRequest) returns (CreateAuthTokenResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/CreateAuthToken";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // CreateAuthTokenByUserId creates an auth token for the given user.
+  rpc CreateAuthTokenByUserId(CreateAuthTokenByUserIdRequest) returns (CreateAuthTokenByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/CreateAuthTokenByUserId";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListAuthTokens list tokens of current user.
+  rpc ListAuthTokens(ListAuthTokensRequest) returns (ListAuthTokensResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/ListAuthTokens";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // ListAuthTokensByUserId list tokens of given user.
+  rpc ListAuthTokensByUserId(ListAuthTokensByUserIdRequest) returns (ListAuthTokensByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/ListAuthTokensByUserId";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // SetAuthTokenExpiration sets expiration back one year for current user.
+  rpc SetAuthTokenExpiration(SetAuthTokenExpirationRequest) returns (SetAuthTokenExpirationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/SetAuthTokenExpiration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+  rpc SetAuthTokenExpirationByUserId(SetAuthTokenExpirationByUserIdRequest) returns (SetAuthTokenExpirationByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/SetAuthTokenExpirationByUserId";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteAuthToken deletes a given auth token for the current user.
+  rpc DeleteAuthToken(DeleteAuthTokenRequest) returns (DeleteAuthTokenResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/DeleteAuthToken";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // DeleteAuthTokenByUserId deletes a given auth token for the given user.
+  rpc DeleteAuthTokenByUserId(DeleteAuthTokenByUserIdRequest) returns (DeleteAuthTokenByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/authtoken/DeleteAuthTokenByUserId";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
         }
       ];
     };
