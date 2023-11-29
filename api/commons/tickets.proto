@@ -52,19 +52,52 @@ message Ticket {
   repeated string ticket_participant = 22;
 }
 
+// Ticket Template
 message TicketTemplate {
-  int64 ticket_template_id = 1;
+  // Deprecated
+  int64 ticket_template_id = 1 [deprecated = true];
+  // Organization ID
   string org_id = 2;
+  // A formatted string which the FE uses to retrieve all template related information
   string template = 3;
+  // Version of the Template
   string template_entity_version = 4;
+  // Name of the Template
   string template_name = 5;
+  // Template created by user
   string created_by_id = 6;
+  // Template modified by user
   string modified_by = 7;
+  // Template create date
   google.protobuf.Timestamp created_date = 8;
+  // Template modified date
   google.protobuf.Timestamp modified_date = 9;
+  // True/False Identifies if a template is active or inactive
   bool is_active = 10;
+  // Snowflake Id of Ticket Template
+  int64 template_id = 11 [jstype = JS_STRING];
 }
+
+// Mapping of Template to a Project
+// Each Ticket Template Can be mapped to Multiple Projects - In ListTicketTemplateRequest we need all Template To
+// Project Mapping
+message TicketProjectTemplate {
+  TicketTemplate ticket_template = 1;
+  repeated ProjectDescription project_description = 2;
+}
+
+// Project Description
+message ProjectDescription {
+  // Project Id from Omni
+  int64 project_id = 1 [jstype = JS_STRING];
+  // Project Title From Omni
+  string project_title = 2;
+}
+
+// Deprecated and will not be used
 message ListTemplate {
+  // Entire message deprecated
+  option deprecated = true;
   int64 ticket_template_id = 1 [jstype = JS_STRING];
   string template_name = 2;
   int64 project_id = 3 [jstype = JS_STRING];
@@ -77,7 +110,10 @@ message ListTemplate {
   repeated int64 assigned_project = 10;
 }
 
+// Deprecated and will not be used
 message AssignProjectTemplate {
+  // Entire message deprecated
+  option deprecated = true;
   repeated int64 ticket_template_id = 1 [jstype = JS_STRING];
   int64 project_id = 2 [jstype = JS_STRING];
 }

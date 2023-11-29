@@ -57,19 +57,24 @@ message EditTicketTemplateResponse {
 }
 
 message ListTicketTemplateRequest {
-  int64 ticket_template_id = 1;
-  int64 project_id = 2;
+  int64 ticket_template_id = 1 [deprecated = true];
+  int64 project_id = 2 [deprecated = true];
   // List values based on TemplateId OR ProjectId. If no mask is sent, return all template's based on ORG Id
   google.protobuf.FieldMask request_mask = 3;
+  int64 template_id = 4 [jstype = JS_STRING];
+  int64 template_project_id = 5 [jstype = JS_STRING];
 }
 
 message ListTicketTemplateResponse {
-  repeated api.commons.ListTemplate enabled_templates = 1;
+  repeated api.commons.ListTemplate enabled_templates = 1 [deprecated = true];
+  repeated api.commons.TicketProjectTemplate ticket_project_template = 2;
 }
 
 // AssignProjectTemplate
 message AssignProjectTemplateRequest {
-  api.commons.AssignProjectTemplate project_template = 1;
+  api.commons.AssignProjectTemplate project_template = 1 [deprecated = true];
+  int64 project_id = 2 [jstype = JS_STRING];
+  repeated api.commons.TemplateDescription template_description = 3;
 }
 
 message AssignProjectTemplateResponse {
