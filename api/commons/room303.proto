@@ -11,6 +11,8 @@ enum RoomType {
   ROOM_TYPE_MULTI = 1;
   // System User channel - used for system notifications
   ROOM_TYPE_SYSTEM = 2;
+  // Global system channel - used for global messages
+  ROOM_TYPE_GLOBAL_SYSTEM = 3;
 }
 
 enum MessageStatus {
