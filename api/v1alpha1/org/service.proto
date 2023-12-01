@@ -519,6 +519,19 @@ service Org {
     };
   }
 
+  // UpdateAdminBusinessPreferences updates preferences for business intelligence.
+  rpc UpdateAdminBusinessPreferences(UpdateAdminBusinessPreferencesRequest) returns (UpdateAdminBusinessPreferencesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/business/updateadmin";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // GetScorecardsPreferences returns preferences for scorecards.
   rpc GetScorecardsPreferences(GetScorecardsPreferencesRequest) returns (GetScorecardsPreferencesResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/preferences/scorecards/get";
