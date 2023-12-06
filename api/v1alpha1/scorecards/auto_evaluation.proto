@@ -18,11 +18,38 @@ message GetAutoEvaluationResponse {
 message ListAutoEvaluationsRequest {
   repeated int64 scorecard_ids = 2; // Optional - filter by scorecard ids.
   api.commons.TimeFilter completed_at = 3; // Optional, filter completed timestamp by a specific range
+  repeated int64 category_ids = 5; // Optional - filter by category ids.
+  CallSidFilter call_sid = 6; // Optional - filter by call sid.
+  repeated string agent_user_ids = 7; // Optional - filter by agent user ids.
+  int32 page_size = 8; // Optional - number of auto evaluations included in response.
+
+  // Optional. The order by which auto evaluations will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "completed_at DESC".
+  string order_by = 9;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  string page_token = 10;
+
+  repeated api.commons.RiskLevel risk_levels = 11; // Optional - filter by risk level.
+
+  message CallSidFilter {
+    repeated int64 any_of = 1; // Optional - filter by any of the provided sids.
+
+    // filter values must be non-zero to be applied
+    int64 eq = 2; // Optional - filter by equal to.
+    int64 gte = 3; // Optional - filter by greater than or equal to.
+    int64 lte = 4; // Optional - filter by less than or equal to.
+    int64 gt = 5; // Optional - filter by greater than.
+    int64 lt = 6; // Optional - filter by less than.
+  }
 }
 
 // ListAutoEvaluationsResponse returns a list of evaluations.
 message ListAutoEvaluationsResponse {
   repeated api.commons.AutoEvaluation auto_evaluations = 1; // List of responses
+  // Token to retrieve the next page of auto evaluations, or empty if there are no
+  // more entries in the list.
+  string next_page_token = 2;
 }
 
 // DeleteAutoEvaluationRequest is the request to delete an auto evaluation (with sub-entities).
