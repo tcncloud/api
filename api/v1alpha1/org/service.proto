@@ -991,6 +991,19 @@ service Org {
     };
   }
 
+  // CreatePasswordResetLink creates a password reset link for the given user id.
+  rpc CreatePasswordResetLink(CreatePasswordResetLinkRequest) returns (CreatePasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/createpasswordresetlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
   // Used to be called GetUserBlocked
   // GetUserLoginInfo gets information about a user's login.
   rpc GetUserLoginInfo(GetUserLoginInfoRequest) returns (GetUserLoginInfoResponse) {
