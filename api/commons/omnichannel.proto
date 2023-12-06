@@ -1022,19 +1022,29 @@ message ConnectedInbox {
   // maximum number of messages
   int32 max_messages = 17;
   // google xoauth2 refresh token (if using google xoauth2)
-  google.protobuf.StringValue google_xoauth2_refresh_token = 18;
+  google.protobuf.StringValue google_xoauth2_refresh_token = 18 [deprecated = true];
   // google xoauth2 access token (if using google xoauth2)
-  google.protobuf.StringValue google_xoauth2_access_token = 19;
+  google.protobuf.StringValue google_xoauth2_access_token = 19 [deprecated = true];
   // time the google xoauth2 access token expires (if using google xoauth2)
-  google.protobuf.Timestamp google_xoauth2_access_token_expiration = 20;
+  google.protobuf.Timestamp google_xoauth2_access_token_expiration = 20 [deprecated = true];
   // type of authentication that should be used
   ConnectedInboxAuthenticationType authentication_type = 21;
+  // config for the oauth provider
+  ConnectedInboxOAuthConfig oauth_reference_id = 22;
 }
 
 // ConnectedInboxAuthenticationType -
 enum ConnectedInboxAuthenticationType {
   CONNECTED_INBOX_AUTHENTICATION_TYPE_PASSWORD = 0;
   CONNECTED_INBOX_AUTHENTICATION_TYPE_GOOGLE_XOAUTH2 = 1;
+}
+
+// ConnectedInboxOAuthConfig -
+message ConnectedInboxOAuthConfig {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 expires_at = 3;
+  string reference_id = 4;
 }
 
 // VerifiedEmail -
