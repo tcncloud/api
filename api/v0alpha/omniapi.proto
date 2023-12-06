@@ -1069,6 +1069,22 @@ service OmniApi {
       ];
     };
   }
+
+  // List whatsapp numbers for the client
+  rpc ListWhatsAppNumbers(v0alpha.ListWhatsAppNumbersReq) returns (v0alpha.ListWhatsAppNumbersRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/listwhatsappnumbers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
 }
 
 message SuggestResponseReq {
@@ -1125,6 +1141,7 @@ message ListCampaignsReq {
     ByConnectedInbox by_connected_inbox = 104;
     ByVerifiedEmail by_verified_email = 105;
     BySmsNumber by_sms_number = 106;
+    ByWhatsAppNumber by_whatsapp_number = 107;
   }
 
   // ByConnectedInbox - filter to list campaigns by the provided connected inbox
@@ -1168,6 +1185,12 @@ message ListCampaignsReq {
   // BySmsNumber - filter the list of campaigns by the Sms Number
   message BySmsNumber {
     // sms number
+    string number = 1;
+  }
+
+  // ByWhatsAppNumber - filter the list of campaigns by the Whatsapp Number
+  message ByWhatsAppNumber {
+    // whatsapp number
     string number = 1;
   }
 }
@@ -2102,4 +2125,13 @@ message OmniSkill {
   // skill description
   string description = 4;
   api.commons.SkillType.Enum type = 5;
+}
+
+// Request message for listing whatsapp numbers
+message ListWhatsAppNumbersReq {}
+
+// Response message for listing whatsapp numbers
+message ListWhatsAppNumbersRes {
+  // list of whatsapp numbers
+  repeated api.commons.WhatsAppNumber whatsapp_numbers = 1;
 }
