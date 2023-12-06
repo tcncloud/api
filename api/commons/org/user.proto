@@ -111,3 +111,11 @@ message Skill {
   string description = 3;
   int64 skill_sid = 4;
 }
+
+// PasswordResetLink defines a link for the given user to reset their password.
+message PasswordResetLink {
+  string link_id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  google.protobuf.Timestamp expiration = 4;
+}
