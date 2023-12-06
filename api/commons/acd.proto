@@ -249,6 +249,17 @@ message AgentSessionLogActionKey {
     WARM_CALLER_TRANSFER_INVITE_CALLER = 54;
     // when the transfer ends
     WARM_CALLER_TRANSFER_END = 55;
+
+    // Barge In
+
+    // when a manager starts a barge in
+    BARGE_IN_START = 56;
+    // when a manager stops a barge in
+    BARGE_IN_STOP = 57;
+    // when a manager joins a barge in
+    BargeInCallJoined = 58;
+    // when a manager leaves a barge in
+    BargeInCallLeft = 59;
   }
 }
 
