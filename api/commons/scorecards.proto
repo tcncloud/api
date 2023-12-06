@@ -185,6 +185,15 @@ message AutoEvaluation {
   bool expression_matched = 11; // whether the expression was matched or not
   RiskLevel risk_level = 12; // The risk level of the evaluation
   int32 call_length = 16; // duration of the call audio
+  ScorecardInfo scorecard_info = 17; // read-only info provided from the parent scorecard
+  CategoryInfo category_info = 18; // read-only info provided from the parent category
+
+  message ScorecardInfo {
+    string title = 1; // title of the scorecard.
+  }
+  message CategoryInfo {
+    string title = 1; // title of the category.
+  }
 }
 
 // AutoEvaluationQuestion is an auto question in an evaluation.
