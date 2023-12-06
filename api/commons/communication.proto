@@ -10,6 +10,7 @@ message CommType {
     CallType.Enum call_type = 1;
     EmailType.Enum email_type = 2;
     SmsType.Enum sms_type = 3;
+    WhatsAppType.Enum whatsapp_type = 4;
   }
 }
 
@@ -20,6 +21,12 @@ message EmailType {
 }
 
 message SmsType {
+  enum Enum {
+    OUTBOUND = 0;
+  }
+}
+
+message WhatsAppType {
   enum Enum {
     OUTBOUND = 0;
   }
