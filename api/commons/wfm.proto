@@ -669,3 +669,25 @@ message ErrorTrace {
   // unique identifier to find any logs related to the error.
   string grpc_trace_bin = 1;
 }
+
+// Enum representing the state of a client's initial setup to use WFM.
+enum InitialSetupState {
+  // Not setup and no set up attempts have been made.
+  NOT_SETUP = 0;
+  // Currently doing setup tasks.
+  SETTING_UP = 1;
+  // Set up for client is complete.
+  SETUP_COMPLETE = 2;
+  // Setup was attempted but failed and no new setup attempts have been made.
+  FAILURE = 3;
+}
+
+// Represents the status of a client's initial setup and progress to use WFM.
+message InitialSetupStatus {
+  // Current state that a client is at.
+  InitialSetupState state = 1;
+  // Progress percentage estimate of the setup process.
+  int32 progress_percentage = 2;
+  // Any message that a service has in regards to their current state.
+  string message = 3;
+}

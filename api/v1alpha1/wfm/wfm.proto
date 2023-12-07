@@ -3586,6 +3586,8 @@ message CallProfileTemplate {
   float fixed_average_time_to_abort = 12;
   // Indicates if fixed averages is the default forecast that this template should be used for.
   bool default_to_fixed_averages_forecast = 13;
+  // Time zone in IANA format that the call profile template is in.
+  string time_zone = 14;
 }
 
 // Request message for the BuildCallProfileTemplateForSkillProfile RPC.
