@@ -131,11 +131,10 @@ service WFM {
 
   // Gets the last date of a skill profile resync for the org seding the request.
   // If the org has never done a skill profile resync @resync_date will not be set.
-  // It will also start loading the client's history cache if its not loaded already.
   // Required permissions:
   //   NONE
   // Errors:
-  //   - grpc.Internal: error occurs when getting the resync date or starting the client's history cache.
+  //   - grpc.Internal: error occurs when getting the resync date.
   rpc GetLastSkillProfileResyncDate(GetLastSkillProfileResyncDateReq) returns (GetLastSkillProfileResyncDateRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getlastskillprofileresyncdate";
     option (google.api.http).body = "*";
@@ -3594,6 +3593,8 @@ message CallProfileTemplate {
 message BuildCallProfileTemplateForSkillProfileReq {
   // ID of the skill profile of the training data used to generate the template.
   int64 skill_profile_sid = 1;
+  // Time zone in IANA format that the call profile template built will be in.
+  string time_zone = 2;
 }
 
 // Response message for the BuildCallProfileTemplateForSkillProfile RPC.
@@ -3606,6 +3607,8 @@ message BuildCallProfileTemplateForSkillProfileRes {
 message BuildCallProfileTemplateReq {
   // Skill profile category of the training data used to generate the template.
   commons.SkillProfileCategory skill_profile_category = 1;
+  // Time zone in IANA format that the call profile template built will be in.
+  string time_zone = 2;
 }
 
 // Response message for the BuildCallProfileTemplate RPC.
