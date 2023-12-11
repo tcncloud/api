@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package api.commons;
 
-// import "google/protobuf/duration.proto";
-// import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
 // Ticket - Fields for Ticket creation, List tickets and view ticket
@@ -26,16 +24,13 @@ message Ticket {
   string created_by_id = 8;
   // The created_by_name from omni.project
   string created_by_name = 9;
-
+  // The created Date of the Ticket Object
   google.protobuf.Timestamp created_by_date = 10;
-
   // due-date
   google.protobuf.Timestamp due_date = 11;
-
-  // A list of hunt groups, skills or users assigned to this ticket.
+  // A list of users assigned to this ticket.
   string assignee_list = 12; // note: bound to re-factor later.
-
-  // A list of conversation context meatadatgit stata
+  // A list of conversation context meatadata
   repeated Metadata metadata = 14;
   // A list of skills assotiated with a ticket
   repeated Skills ticket_skills = 15;
@@ -43,12 +38,15 @@ message Ticket {
   int64 status = 16;
   // A list of sla  assotiated with a ticket
   repeated Sla ticket_sla = 17;
+  // To be deprecated
   string assignee = 18;
+  // A set of Action associated with a Project
   repeated TicketAction ticket_action = 19;
+  // Status of the ticket - NEW,OPEN,CLOSED
   TicketStatus ticket_status = 20;
   // assignee list
   repeated string ticket_assignee = 21;
-  //participant list
+  //participant list - Any user who participates in the ticket life cycle
   repeated string ticket_participant = 22;
 }
 
@@ -128,13 +126,18 @@ enum TimeScale {
 }
 
 message Duration {
+  // Value of of the Scale
   int64 value = 1 [jstype = JS_STRING];
+  // Scale - In minutes,hour,day,week,month,year
   TimeScale scale = 2;
 }
 
 enum TicketStatus {
+  // NEW
   TICKET_STATUS_NEW = 0;
+  // OPEN
   TICKET_STATUS_OPEN = 1;
+  // CLOSE
   TICKET_STATUS_CLOSE = 2;
 }
 
@@ -145,6 +148,7 @@ message TicketAction {
   // action id from ACTION_MASTER table, Only callback for now
   int64 action_id = 2 [jstype = JS_STRING];
   // Attributes for a callback Action
+  // To be Deprecated Later
   CallbackContext callback_context = 3;
   // ticket id from ticket table
   int64 ticket_id = 4 [jstype = JS_STRING];
@@ -152,7 +156,6 @@ message TicketAction {
   google.protobuf.Timestamp start_ts = 5;
   // Expiry date of the ACTION
   google.protobuf.Timestamp expiry_ts = 6;
-
   // Ticket action status can be 1 == AVAILABLE and 2 == NOT AVAILABLE
   int64 state = 8;
   // Skills needed for the action to be completed
@@ -162,14 +165,47 @@ message TicketAction {
   repeated Sla action_sla_id = 10;
   // work done by
   string work_done_by = 11;
+  // Context Object For Voice,SMS,Email - Only one object to be in Request
+  oneof context {
+    // Voice Callback Context
+    CallbackContext voice_context = 12;
+    // SMS Callback Context
+    SmsbackContext sms_context = 13;
+    // Email Callback Context
+    EmailbackContext email_context = 14;
+  }
+  // Action Type
+  ActionType action_type = 15;
 }
 
+// Message for Voice Callback Context
 message CallbackContext {
   string caller_id = 1;
   string phone_no = 2;
   string country_code = 3;
   string caller_name = 4;
   string caller_country_code = 5;
+}
+
+// Message for SMS Callback Context
+message SmsbackContext {
+  string contact_name = 1;
+  string to_sms = 2;
+  string from_sms = 3;
+  string to_country_code = 4;
+  string from_country_code = 5;
+}
+
+message ActionType {
+  int64 action_type_id = 1 [jstype = JS_STRING];
+  string action_name = 2;
+}
+
+// Message for EMAIL Callback Context
+message EmailbackContext {
+  string contact_name = 1;
+  string to_email = 2;
+  string from_email = 3;
 }
 
 // Metadata - Contains a key value pair of strings, Will have metadata of an agent conversations

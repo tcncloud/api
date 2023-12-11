@@ -87,8 +87,18 @@ message CreateTicketRes {
   api.commons.Ticket ticket = 1;
 }
 
+// Request all the Action Types
+message GetActionTypeRequest {}
+
+// Returns all the Action Types
+message GetActionTypeResponse {
+  repeated api.commons.ActionType action_type = 1;
+}
+
 // EditTicketReq - Request for EditTicketReq
 message EditTicketReq {
+  // Message deprecated as Mask is used for Editing Ticket & Actions
+  option deprecated = true;
   int64 ticket_sid = 1 [jstype = JS_STRING];
   // The comment text
   api.commons.EditAttribute edit_value = 2;
@@ -97,8 +107,11 @@ message EditTicketReq {
 // EditMaskTicketReq - Request for EditMaskTicket
 // EditTicketReq would be deprecated
 message EditMaskTicketReq {
+  // Ticket Id
   int64 ticket_sid = 1 [jstype = JS_STRING];
+  // Ticket Object
   api.commons.Ticket edit_value = 2;
+  // Field to be edited in DB
   repeated google.protobuf.FieldMask edited_fields_mask = 3;
 }
 
@@ -201,15 +214,13 @@ message CloseTicketRes {
 message CreateSlaReq {
   // sla_sid of the sla to be created.
   int64 sla_sid = 1 [jstype = JS_STRING];
-
   // name of the sla
   string name = 2;
-
   // description of the sla
   string description = 3;
-
   // sla interval
   int64 interval = 4;
+  // SLA Duration
   api.commons.Duration duration = 5;
 }
 
