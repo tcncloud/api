@@ -35,6 +35,8 @@ message RateDefinition {
   google.protobuf.Timestamp update_time = 10;
   // the time this rate definition was deleted (if applicable)
   google.protobuf.Timestamp delete_time = 11;
+  // the matching sha for this definition
+  string matching_sha = 12;
 }
 
 // RateDefinitionConfig defines the configuration for a rate definition.
