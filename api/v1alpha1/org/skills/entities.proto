@@ -119,3 +119,17 @@ message GetSkillGroupMembersResponse {
   // The users ids which belong to the skill group.
   repeated string user_ids = 1;
 }
+
+// Request message for the ListSkillGroupsMembers rpc.
+message ListSkillGroupsMembersRequest {}
+
+// Response message for the ListSkillGroupsMembers rpc.
+message ListSkillGroupsMembersResponse {
+  repeated SkillGroupMembers skill_group_members = 1;
+}
+
+// Submessage for ListSkillGroupsMembersResponse.
+message SkillGroupMembers {
+  string skill_group_id = 1;
+  repeated string user_ids = 2;
+}
