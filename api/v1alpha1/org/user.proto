@@ -618,11 +618,25 @@ message GetUserPasswordResetLinkByOrgIdResponse {
 // Request message for the CreatePasswordResetLink rpc.
 message CreatePasswordResetLinkRequest {
   string user_id = 1;
+  // DEPRECATED: no longer used.
   google.protobuf.Timestamp expiration = 2;
 }
 
 // Response message for the CreatePasswordResetLink rpc.
 message CreatePasswordResetLinkResponse {
+  string url = 1;
+}
+
+// Request message for the CreatePasswordResetLinkByOrgId rpc.
+message CreatePasswordResetLinkByOrgIdRequest {
+  // The ID of the user.
+  string user_id = 1;
+  // The organization ID of the user
+  string org_id = 2;
+}
+
+// Response message for the CreatePasswordResetLinkByOrgId rpc.
+message CreatePasswordResetLinkByOrgIdResponse {
   string url = 1;
 }
 
@@ -654,6 +668,59 @@ message GetUserLoginInfoResponse {
   // Whether the user has specific IPs which are blocked
   bool has_blocked_ips = 8;
 }
+
+// Request message for the SendPasswordReset rpc.
+message SendPasswordResetRequest {
+  // The email address to send the password reset lnk to.
+  string email = 1;
+}
+
+// Response message for the SendPasswordReset rpc.
+message SendPasswordResetResponse {}
+
+// Request message for the SendPasswordResetByOrgId rpc.
+message SendPasswordResetByOrgIdRequest {
+  // The organization ID of the user to be emailed.
+  string org_id = 1;
+  // The email address to send the password reset lnk to.
+  string email = 2;
+}
+
+// Response message for the SendPasswordResetByOrgId rpc.
+message SendPasswordResetByOrgIdResponse {}
+
+// Request message for the ResetMyPassword rpc.
+message ResetMyPasswordRequest {
+  // The new password to use for my user.
+  string password = 1;
+}
+
+// Response message for the ResetMyPassword rpc.
+message ResetMyPasswordResponse {}
+
+// Request message for the ResetUserPassword rpc.
+message ResetUserPasswordRequest {
+  // The new password to use for the specified user.
+  string password = 1;
+  // The ID of the user password to be changed.
+  string user_id = 2;
+}
+
+// Response message for the ResetUserPassword rpc.
+message ResetUserPasswordResponse {}
+
+// Request message for the ResetUserPasswordByOrgId rpc.
+message ResetUserPasswordByOrgIdRequest {
+  // The new password to use for the specified user.
+  string password = 1;
+  // The ID of the user password to be changed.
+  string user_id = 2;
+  // The organization ID of the user password to be changed.
+  string org_id = 3;
+}
+
+// Response message for the ResetUserPasswordByOrgId rpc.
+message ResetUserPasswordByOrgIdResponse {}
 
 // Request message for the GetUserEmailVerified rpc.
 message GetUserEmailVerifiedRequest {

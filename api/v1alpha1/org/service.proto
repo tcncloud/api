@@ -1004,6 +1004,19 @@ service Org {
     };
   }
 
+  // CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
+  rpc CreatePasswordResetLinkByOrgId(CreatePasswordResetLinkByOrgIdRequest) returns (CreatePasswordResetLinkByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/createpasswordresetlinkbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // Used to be called GetUserBlocked
   // GetUserLoginInfo gets information about a user's login.
   rpc GetUserLoginInfo(GetUserLoginInfoRequest) returns (GetUserLoginInfoResponse) {
@@ -1044,6 +1057,45 @@ service Org {
     };
   }
 
+  // ResetMyPassword resets the user's password.
+  rpc ResetMyPassword(ResetMyPasswordRequest) returns (ResetMyPasswordResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/org/resetmypassword";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
+        }
+      ];
+    };
+  }
+
+  // ResetUserPassword resets the user's password.
+  rpc ResetUserPassword(ResetUserPasswordRequest) returns (ResetUserPasswordResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/org/resetuserpassword";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ResetUserPasswordByOrgId resets the user's password.
+  rpc ResetUserPasswordByOrgId(ResetUserPasswordByOrgIdRequest) returns (ResetUserPasswordByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/org/resetuserpasswordbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // SendUserEmailVerification sends a verification email to the user.
   rpc SendUserEmailVerification(SendUserEmailVerificationRequest) returns (SendUserEmailVerificationResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/org/senduseremailverification";
@@ -1060,6 +1112,32 @@ service Org {
   // SendUserEmailVerificationByOrgId sends a verification email to the user.
   rpc SendUserEmailVerificationByOrgId(SendUserEmailVerificationByOrgIdRequest) returns (SendUserEmailVerificationByOrgIdResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/org/senduseremailverificationbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SendPasswordReset sends a password reset email to the user.
+  rpc SendPasswordReset(SendPasswordResetRequest) returns (SendPasswordResetResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/org/sendpasswordreset";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // SendPasswordResetByOrgId sends a password reset email to the user.
+  rpc SendPasswordResetByOrgId(SendPasswordResetByOrgIdRequest) returns (SendPasswordResetByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/org/sendpasswordresetbyorgid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
