@@ -25,6 +25,28 @@ import "google/protobuf/wrappers.proto";
 
 // WFM is responsible for call prediction and call volume calculations based on call skills and other parameters.
 service WFM {
+  // Starts the tasks to perform the initial setup on wfm services for the org sending the request.
+  // It will then report the state of their setup task.
+  // A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
+  // Required permissions:
+  //  NONE
+  // Errors:
+  //  - grpc.Internal: error occurs when performing the initial setup.
+  rpc PerformInitialClientSetup(PerformInitialClientSetupRequest) returns (PerformInitialClientSetupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/performinitialclientsetup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS]
+        }
+      ];
+    };
+  }
+
   // Retrieves all the skill profiles of the org sending the request.
   // Also it can return the skills of each of the returned profiles.
   // Required permissions:
@@ -189,6 +211,7 @@ service WFM {
 
   // Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
   // it will start the loading task before returning the current state.
+  // DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
   // Required permissions:
   //  NONE
   // Errors:
@@ -196,6 +219,7 @@ service WFM {
   rpc GetClientHistoryCacheInfo(GetClientHistoryCacheInfoReq) returns (GetClientHistoryCacheInfoRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/getclienthistorycacheinfo";
     option (google.api.http).body = "*";
+    option deprecated = true;
     option (annotations.authz) = {
       sets: [
         {
@@ -3267,6 +3291,15 @@ service WFM {
   }
 }
 
+// Request message for the PerformInitialClientSetup RPC.
+message PerformInitialClientSetupRequest {}
+
+// Response message for the PerformInitialClientSetup RPC.
+message PerformInitialClientSetupResponse {
+  // Setup status for the requested client.
+  commons.InitialSetupStatus setup_status = 1;
+}
+
 // Message type specifying information regarding the skill that will associated with
 // SkillProfile and other entities.
 message Skill {
@@ -3504,10 +3537,15 @@ message HistoricalDataInterval {
 }
 
 // Request message for the GetClientHistoryCacheInfo RPC.
-message GetClientHistoryCacheInfoReq {}
+// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
+message GetClientHistoryCacheInfoReq {
+  option deprecated = true;
+}
 
 // Response message for the GetClientHistoryCacheInfo RPC.
+// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
 message GetClientHistoryCacheInfoRes {
+  option deprecated = true;
   // Cache info for the requested client.
   commons.ClientHistoryCacheInfo cache_info = 1;
 }
@@ -3590,7 +3628,9 @@ message CallProfileTemplate {
 }
 
 // Request message for the BuildCallProfileTemplateForSkillProfile RPC.
+// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 message BuildCallProfileTemplateForSkillProfileReq {
+  option deprecated = true;
   // ID of the skill profile of the training data used to generate the template.
   int64 skill_profile_sid = 1;
   // Time zone in IANA format that the call profile template built will be in.
@@ -3598,7 +3638,9 @@ message BuildCallProfileTemplateForSkillProfileReq {
 }
 
 // Response message for the BuildCallProfileTemplateForSkillProfile RPC.
+// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 message BuildCallProfileTemplateForSkillProfileRes {
+  option deprecated = true;
   // call profile template found in the training data set.
   CallProfileTemplate call_profile_template = 1;
 }
@@ -3618,7 +3660,9 @@ message BuildCallProfileTemplateRes {
 }
 
 // Request message for the CreateInactiveSkillProfileMapping RPC.
+// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 message CreateInactiveSkillProfileMappingReq {
+  option deprecated = true;
   // ID of the inactive skill profile that will be mapped to the active_skill_profile_sid.
   int64 inactive_skill_profile_sid = 1;
   // ID of the active skill profile that the inactive_skill_profile_sid will be mapped to.
@@ -3626,7 +3670,10 @@ message CreateInactiveSkillProfileMappingReq {
 }
 
 // Response message for the CreateInactiveSkillProfileMapping RPC.
-message CreateInactiveSkillProfileMappingRes {}
+// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
+message CreateInactiveSkillProfileMappingRes {
+  option deprecated = true;
+}
 
 // Request message for the GetAvailableRegressionForecasterModelTypes RPC.
 message GetAvailableRegressionForecasterModelTypesReq {}
@@ -3638,13 +3685,18 @@ message GetAvailableRegressionForecasterModelTypesRes {
 }
 
 // Request message for the DisconnectInactiveSkillProfileMapping RPC.
+// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 message DisconnectInactiveSkillProfileMappingReq {
+  option deprecated = true;
   // IDs of the inactive skill profile to disconnect.
   int64 inactive_skill_profile_sid = 1;
 }
 
 // Response message for the DisconnectInactiveSkillProfileMapping RPC.
-message DisconnectInactiveSkillProfileMappingRes {}
+// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
+message DisconnectInactiveSkillProfileMappingRes {
+  option deprecated = true;
+}
 
 // Request message for the CreateSkillProfileGroup RPC.
 message CreateSkillProfileGroupReq {
@@ -3973,13 +4025,17 @@ message ListCallProfileTemplatesRes {
 }
 
 // Request message for the ListForecastIntervalsForSkillProfile RPC
+// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 message ListForecastIntervalsForSkillProfileReq {
+  option deprecated = true;
   // ID of skill profile to get the forecast of.
   int64 skill_profile_sid = 1;
 }
 
 // Request message for the ListForecastIntervals RPC
+// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 message ListForecastIntervalsReq {
+  option deprecated = true;
   // Category to get the forecast data intervals for.
   commons.SkillProfileCategory skill_profile_category = 1;
 }
