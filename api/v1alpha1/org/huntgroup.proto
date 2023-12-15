@@ -194,3 +194,14 @@ message DeleteAgentResponseAutoRulesRequest {
 
 // Response message for the DeleteAgentResponseAutoRules RPC method.
 message DeleteAgentResponseAutoRulesResponse {}
+
+// ListHuntGroupIntegrationLinksRequest is the request message for the ListHuntGroupIntegrationLinks RPC method.
+message ListHuntGroupIntegrationLinksRequest {
+  string org_id = 1;
+  int64 hunt_group_sid = 2;
+}
+
+// ListHuntGroupIntegrationLinksResponse is the response message for the ListHuntGroupIntegrationLinks RPC method.
+message ListHuntGroupIntegrationLinksResponse {
+  repeated api.commons.org.IntegrationLink links = 1;
+}
