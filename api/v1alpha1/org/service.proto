@@ -1592,6 +1592,19 @@ service Org {
     };
   }
 
+  // ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+  rpc ListHuntGroupIntegrationLinks(ListHuntGroupIntegrationLinksRequest) returns (ListHuntGroupIntegrationLinksResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listhuntgroupintegrationlinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
   // TRUSTS
 
   // CreateTrust creates a new trust.
