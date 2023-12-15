@@ -1141,7 +1141,8 @@ message ListCampaignsReq {
     ByConnectedInbox by_connected_inbox = 104;
     ByVerifiedEmail by_verified_email = 105;
     BySmsNumber by_sms_number = 106;
-    ByWhatsAppNumber by_whatsapp_number = 107;
+    ByWhatsAppNumber by_whatsapp_number = 107 [deprecated = true];
+    ByWhatsApp by_whats_app = 108;
   }
 
   // ByConnectedInbox - filter to list campaigns by the provided connected inbox
@@ -1190,6 +1191,12 @@ message ListCampaignsReq {
 
   // ByWhatsAppNumber - filter the list of campaigns by the Whatsapp Number
   message ByWhatsAppNumber {
+    // whatsapp number
+    string number = 1;
+  }
+
+  // ByWhatsApp - filter the list of campaigns by the Whatsapp
+  message ByWhatsApp {
     // whatsapp number
     string number = 1;
   }
