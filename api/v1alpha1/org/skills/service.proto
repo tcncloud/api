@@ -136,4 +136,17 @@ service SkillsService {
       ];
     };
   }
+
+  // ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
+  rpc ListSkillGroupsMembers(ListSkillGroupsMembersRequest) returns (ListSkillGroupsMembersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/listskillgroupsmembers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
 }
