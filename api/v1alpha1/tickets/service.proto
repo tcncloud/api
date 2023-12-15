@@ -339,7 +339,7 @@ service Tickets {
     };
   }
 
-  // Public method to change the Status of a ticket
+  // Public method to create a Ticket Template
   rpc CreateTicketTemplate(CreateTicketTemplateRequest) returns (CreateTicketTemplateResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createtickettemplate";
     option (google.api.http).body = "*";
@@ -352,7 +352,7 @@ service Tickets {
     };
   }
 
-  // Public method to change the Status of a ticket
+  // Public method to Edit a Ticket Template
   rpc EditTicketTemplate(EditTicketTemplateRequest) returns (EditTicketTemplateResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/edittickettemplate";
     option (google.api.http).body = "*";
@@ -365,7 +365,7 @@ service Tickets {
     };
   }
 
-  // Public method to change the Status of a ticket
+  // Public method to all Ticket Templates
   rpc ListTicketTemplate(ListTicketTemplateRequest) returns (ListTicketTemplateResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listtickettemplate";
     option (google.api.http).body = "*";
@@ -381,7 +381,7 @@ service Tickets {
     };
   }
 
-  // Public method to change the Status of a ticket
+  // Public method to assign a Template To a Project
   rpc AssignTicketTemplate(AssignProjectTemplateRequest) returns (AssignProjectTemplateResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assigntickettemplate";
     option (google.api.http).body = "*";
@@ -389,6 +389,22 @@ service Tickets {
       sets: [
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
+        }
+      ];
+    };
+  }
+
+  // Public method to list all Action Types
+  rpc GetAllActionType(GetActionTypeRequest) returns (GetActionTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/getallActiontype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
