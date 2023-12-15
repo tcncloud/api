@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package services.omnichannel.oauth.v1alpha1;
+
+import "api/commons/omnichannel.proto";
+
+message GetConnectedInboxOAuthURLRequest {
+  api.commons.ConnectedInboxAuthenticationType authentication_type = 1;
+  string returning_redirect_uri = 2;
+}
+
+message GetConnectedInboxOAuthURLResponse {
+  string oauth_url = 1;
+}

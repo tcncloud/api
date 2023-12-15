@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package services.omnichannel.oauth.v1alpha1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/omnichannel/oauth/v1alpha1/entities.proto";
+
+service OauthService {
+  rpc GetConnectedInboxOAuthURL(GetConnectedInboxOAuthURLRequest) returns (GetConnectedInboxOAuthURLResponse) {
+    option (google.api.http).post = "/services/omnichannel/oauth/v1alpha1/getconnectedinboxoauthurl";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ],
+    };
+  }
+}
