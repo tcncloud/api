@@ -20,6 +20,19 @@ service AuthConnectionService {
     };
   }
 
+  // ListAuthConnectionIds returns the IDs of all authconnections belonging to the current org.
+  rpc ListAuthConnectionIds(ListAuthConnectionIdsRequest) returns (ListAuthConnectionIdsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/connection/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LOGIN_CONNECTIONS]
+        }
+      ];
+    };
+  }
+
   // GetAuthConnectionSettings gets auth connection settings.
   // DEPRECATED: use GetAuthConnection
   rpc GetAuthConnectionSettings(GetAuthConnectionSettingsRequest) returns (GetAuthConnectionSettingsResponse) {
