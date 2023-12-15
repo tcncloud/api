@@ -23,6 +23,8 @@ message BillingPlan {
   repeated string rate_definition_ids = 7;
   // the billing plan status
   BillingPlanStatus status = 8;
+  // the time the billing will actually take effect
+  google.protobuf.Timestamp actual_start_time = 9;
 }
 
 // BillingPlanStatus represents the status of a billing plan
