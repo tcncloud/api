@@ -81,3 +81,16 @@ message UpdateAuthConnectionGroupsRequest {
 
 // Response message for the UpdateAuthConnectionGroups rpc.
 message UpdateAuthConnectionGroupsResponse {}
+
+// Request message for the ListAuthConnectionIds rpc.
+message ListAuthConnectionIdsRequest {}
+
+// Response message for the ListAuthConnectionIds rpc.
+message ListAuthConnectionIdsResponse {
+  repeated Connection connections = 1;
+
+  message Connection {
+    string auth_connection_id = 1;
+    string name = 2;
+  }
+}
