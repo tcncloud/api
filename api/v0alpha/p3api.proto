@@ -2027,6 +2027,8 @@ message ManualDialStartReq {
   reserved 3;
   int64 hunt_group_sid = 6;
   int64 agent_session_sid = 7;
+  int64 bucket_id = 8;
+  string bucket_region_data = 9;
 }
 
 message ManualDialStartRes {}
