@@ -95,6 +95,15 @@ message GetActionTypeResponse {
   repeated api.commons.ActionType action_type = 1;
 }
 
+// Reqiest For Phone Number Validation - Mobile/Other/Invalid
+message GetPhoneNumberTypeRequest {
+  string phone_number = 1;
+}
+
+message GetPhoneNumberTypeResponse {
+  api.commons.PhoneNumberType phone_type = 1;
+}
+
 // EditTicketReq - Request for EditTicketReq
 message EditTicketReq {
   // Message deprecated as Mask is used for Editing Ticket & Actions

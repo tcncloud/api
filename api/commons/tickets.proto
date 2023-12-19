@@ -141,6 +141,15 @@ enum TicketStatus {
   TICKET_STATUS_CLOSE = 2;
 }
 
+enum PhoneNumberType {
+  // Mobile Phone NUmber
+  MOBILE = 0;
+  // Geographic OR Other Number
+  OTHER = 1;
+  // No Response/Invalid/ERROR
+  INVALID_ERROR = 2;
+}
+
 // TICKET_ACTION - New messgae have actions mapped to tickets
 message TicketAction {
   // snowflake id
