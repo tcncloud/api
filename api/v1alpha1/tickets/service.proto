@@ -409,4 +409,19 @@ service Tickets {
       ];
     };
   }
+  // Public method to list all Action Types
+  rpc GetPhoneNumberType(GetPhoneNumberTypeRequest) returns (GetPhoneNumberTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/getphonenumbertype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
 }
