@@ -276,6 +276,8 @@ enum RequestMethod {
   REQUEST_METHOD_EPIC_GET_ACCOUNT = 3707;
   REQUEST_METHOD_EPIC_RECEIVE_COMMUNICATION_2 = 3708;
   REQUEST_METHOD_EPIC_RECEIVE_COMMUNICATION_3 = 3709;
+  REQUEST_METHOD_EPIC_POST_PATIENT_MADE_PAYMENT = 3710;
+  REQUEST_METHOD_EPIC_GET_PATIENT_BILLING_DETAILS = 3711;
 
   REQUEST_METHOD_NEWZWARE_PHONE_LOOKUP = 3801;
   REQUEST_METHOD_NEWZWARE_ACCOUNT_INQUIRY = 3802;
@@ -871,6 +873,8 @@ message ExecuteFlow {
     ExecuteEpicGetAccount epic_get_account = 3707;
     ExecuteEpicReceiveCommunication2 epic_receive_communication_2 = 3708;
     ExecuteEpicReceiveCommunication3 epic_receive_communication_3 = 3709;
+    ExecuteEpicPostPatientMadePayment epic_post_patient_made_payment = 3710;
+    ExecuteEpicGetPatientBillingDetails epic_get_patient_billing_details = 3711;
 
     ExecuteNewzwarePhoneLookup newzware_phone_lookup = 3801;
     ExecuteNewzwareAccountInquiry newzware_account_inquiry = 3802;
@@ -1186,6 +1190,8 @@ message ExecuteEpicBookAppointment {}
 message ExecuteEpicGetAccount {}
 message ExecuteEpicReceiveCommunication2 {}
 message ExecuteEpicReceiveCommunication3 {}
+message ExecuteEpicPostPatientMadePayment {}
+message ExecuteEpicGetPatientBillingDetails {}
 
 message ExecuteNewzwarePhoneLookup {}
 message ExecuteNewzwareAccountInquiry {}
