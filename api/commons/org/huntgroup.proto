@@ -682,6 +682,61 @@ message AgentResponseComparitors {
   int64 expiration = 2;
 }
 
+// A template used to describe a client info display
+message ClientInfoDisplayTemplate {
+  // The template sid of the client info display template
+  string template_sid = 1;
+  // The name of the client info display template
+  string name = 2;
+  // The description of the client info display template
+  string description = 3;
+  // Bool used to determine whether to show all fields in a client info display template
+  bool display_all_fields = 4;
+  // The dialed number field style of a client info display template
+  DialedNumberFieldStyle dialed_number_field_style = 5;
+  // A list of Contact Field Styles for a client info display template
+  repeated ContactFieldStyle contact_field_styles = 6;
+  // The template type
+  TemplateCategory template_category = 7;
+}
+
+// FieldStyle describes a particular field within a client info display
+message FieldStyle {
+  // Text color of a field style
+  string text_color = 1;
+  // Background color of a field style
+  string background_color = 2;
+  // Allow the agent to copy this field style
+  bool allow_agent_copy = 3;
+}
+
+// The ContactFieldStyle contains the description id
+// and the field style for a particular contact field
+message ContactFieldStyle {
+  // The description id of the contact field style
+  int64 description_id = 1;
+  // The field style of the contact field
+  FieldStyle field_style = 2;
+}
+
+// The DialedNumberFieldStyle contains the field style for Dialed Number Field
+message DialedNumberFieldStyle {
+  // The field style of the dialed number field
+  FieldStyle field_style = 1;
+  // Display the dialed number field to the agent
+  bool display_to_agent = 2;
+}
+
+// Tempate category differentiates between template types
+enum TemplateCategory {
+  // 0 explicitly means unspecified or invalid.
+  TEMPLATE_CATEGORY_UNSPECIFIED = 0;
+  // 1 means a hunt group client info display template
+  TEMPLATE_CATEGORY_HUNT_GROUP = 1;
+  // 2 means a campaign client info display template
+  TEMPLATE_CATEGORY_CAMPAIGN = 2;
+}
+
 // DataDipConfig is a proto recreation of the XML structure.
 message DataDipConfig {
   message Param {

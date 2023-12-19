@@ -195,6 +195,54 @@ message DeleteAgentResponseAutoRulesRequest {
 // Response message for the DeleteAgentResponseAutoRules RPC method.
 message DeleteAgentResponseAutoRulesResponse {}
 
+// Request message for GetHuntGroupClientInfoDisplayTemplate RPC method.
+message GetHuntGroupClientInfoDisplayTemplateRequest {
+  // The hunt group sid of the desired client info display template
+  int64 hunt_group_sid = 1;
+}
+
+// Response message for GetHuntGroupClientInfoDisplayTemplate RPC method.
+message GetHuntGroupClientInfoDisplayTemplateResponse {
+  // The template info of the client info display template
+  api.commons.org.ClientInfoDisplayTemplate template = 1;
+}
+
+// Request message for CreateHuntGroupClientInfoDisplayTemplate RPC method.
+message CreateHuntGroupClientInfoDisplayTemplateRequest {
+  // The hunt group sid of the desired client info display template
+  int64 hunt_group_sid = 1;
+  // The template info of the client info display template
+  api.commons.org.ClientInfoDisplayTemplate template = 2;
+}
+
+// Response message for CreateHuntGroupClientInfoDisplayTemplate RPC method.
+message CreateHuntGroupClientInfoDisplayTemplateResponse {
+  // The template sid of the created client info display template
+  int64 template_sid = 1;
+}
+
+// Request message for UpdateHuntGroupClientInfoDisplayTemplate RPC method.
+message UpdateHuntGroupClientInfoDisplayTemplateRequest {
+  // The hunt group sid of the desired client info display template to update
+  int64 hunt_group_sid = 1;
+  // The template info of the updated client info display template
+  api.commons.org.ClientInfoDisplayTemplate template = 2;
+}
+
+// Response message for UpdateHuntGroupClientInfoDisplayTemplate RPC method.
+message UpdateHuntGroupClientInfoDisplayTemplateResponse {}
+
+// Request message for DeleteHuntGroupClientInfoDisplayTemplate RPC method.
+message DeleteHuntGroupClientInfoDisplayTemplateRequest {
+  // The hunt group sid of the desired client info display template to delete
+  int64 hunt_group_sid = 1;
+  // The template sid of the client info display template to delete
+  int64 template_sid = 2;
+}
+
+// Response message for DeleteHuntGroupClientInfoDisplayTemplate RPC method.
+message DeleteHuntGroupClientInfoDisplayTemplateResponse {}
+
 // ListHuntGroupIntegrationLinksRequest is the request message for the ListHuntGroupIntegrationLinks RPC method.
 message ListHuntGroupIntegrationLinksRequest {
   string org_id = 1;
