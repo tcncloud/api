@@ -197,11 +197,14 @@ message DeleteAgentResponseAutoRulesResponse {}
 
 // ListHuntGroupIntegrationLinksRequest is the request message for the ListHuntGroupIntegrationLinks RPC method.
 message ListHuntGroupIntegrationLinksRequest {
+  // The ID of the organization which the hunt group belongs to.
   string org_id = 1;
+  // The ID of the hunt group to list integration links for.
   int64 hunt_group_sid = 2;
 }
 
 // ListHuntGroupIntegrationLinksResponse is the response message for the ListHuntGroupIntegrationLinks RPC method.
 message ListHuntGroupIntegrationLinksResponse {
+  // The list of integration links for the hunt group.
   repeated api.commons.org.IntegrationLink links = 1;
 }
