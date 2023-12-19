@@ -721,31 +721,47 @@ message DataDipConfig {
 
 // IntegrationLink defines a link between a hunt group and an integration.
 message IntegrationLink {
+  // The ID of the integration.
   int64 integration_id = 1;
+  // The sid or the unique ID of the integration link stored in the database.
   int64 parameter_sid = 2;
+  // The display name of the integration link.
   string name = 3;
+  // The description of the integration link.
   string description = 4;
+  // The ID of the method to use for the integration link.
   int64 method_id = 5;
+  // The order of the integration link, used for sorting.
   int64 order = 6;
+  // The parameters used for the integration link.
   repeated IntegrationLinkParameter parameters = 7;
+  // The configuration name of the integration link.
+  string configuration_name = 8;
 }
 
 // IntegrationLinkParameter defines a parameter for an integration link.
 message IntegrationLinkParameter {
+  // The parameter key.
   string key = 1;
+  // The sub parameters of the parameter.
   repeated IntegrationLinkSubParameter sub_parameters = 2;
 }
 
 // IntegrationLinkSubParameter defines a sub parameter for an integration link.
 message IntegrationLinkSubParameter {
+  // The sub parameter key is the field name of the integration link.
   string key = 1;
+  // The parts of the sub parameter.
   repeated IntegrationLinkSubParameterPart parts = 2;
 }
 
 // IntegrationLinkSubParameterPart defines a part of a sub parameter for an integration link.
 message IntegrationLinkSubParameterPart {
+  // The ID for the contact field.
   int64 contact_field_sid = 1;
+  // The value of the sub parameter part.
   string helper_value = 2;
+  // The source type of the sub parameter part.
   ParameterSourceType parameter_source_type = 3;
 }
 
