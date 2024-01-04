@@ -61,6 +61,18 @@ message ListEvaluationsRequest {
   repeated int64 category_ids = 4; // optional, list by category_ids
   repeated string agent_user_ids = 5; // Optional. List by agent user ids.
   repeated int64 scorecard_ids = 6; // Optional. List by scorecard_ids
+
+  // Optional. Fields to return. Defaults to all evaluation fields (no sub entities).
+  //
+  // Example selecting score, section points, and question answers:
+  // {
+  //   paths: [
+  //     "score",
+  //     "evaluation_section.points",
+  //     "evaluation_section.evaluation_question.answers"
+  //   ]
+  // }
+  google.protobuf.FieldMask return_fields = 10;
 }
 
 // ListEvaluationsResponse returns a list of evaluations
