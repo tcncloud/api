@@ -628,7 +628,32 @@ enum BitmapType {
   ONLY_CALENDAR_ITEMS = 2;
 }
 
+// Defines the per-skill metrics for SchedulingResultMetric from the Scheduler.
+// Wanted to define this in api.v1alpha1.wfm, but had a backwards compatibility error trying to move SchedulingResultMetric.
+// Not a top-level entity:
+// * No primary-key field.
+// * No org_id field.
+// * No rpc endpoints, part of SchedulingResultMetric only.
+message SchedulingResultMetricForSkillCollection {
+  // The total number of minute-width intervals that were scheduled and measured.
+  int32 total_internal_intervals = 1;
+  // The total number of minute-width intervals that had enough scheduled ftes to meet the predicted call FTEs.
+  int32 total_intervals_with_fte_required = 2;
+  // The total number of intervals that have unmet predicted call FTEs (not enough scheduled FTEs).
+  int32 total_intervals_with_ftes_remaining = 3;
+  // The average ratio of interval metrics (min(1,  scheduled/predicted)). A value of 1 means every interval
+  //    with predicted call FTEs has enough scheduled FTEs to meet requirements.
+  float coverage = 4;
+  // Root Mean Square metric for predicted - scheduled FTEs.
+  float root_mean_square = 5;
+  // Set to TRUE if this object contains valid metrics.
+  bool has_result = 6;
+  // Pointer to skill collection.
+  SkillProfileCategory skill_collection = 7;
+}
+
 // Defines a Scheduling Result Metric from the Scheduler.
+// Wanted to define this in api.v1alpha1.wfm, but had a backwards compatibility error trying to move it there.
 message SchedulingResultMetric {
   // The total number of minute-width intervals that were scheduled and measured.
   int32 total_internal_intervals = 1;
@@ -643,6 +668,8 @@ message SchedulingResultMetric {
   float root_mean_square = 5;
   // Set to TRUE if this object contains valid metrics.
   bool has_result = 6;
+  // Per-skill metrics.
+  repeated SchedulingResultMetricForSkillCollection metrics_by_skill_collection = 7;
 }
 
 // Enum representing the state of the history cache.

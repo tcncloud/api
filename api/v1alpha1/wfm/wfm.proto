@@ -5545,10 +5545,14 @@ message DraftSchedule {
   int64 schedule_scenario_sid = 10;
 }
 
-// Represents a performance metric
-message PerformanceMetric {
+// PerformanceMetricForSkillCollection.
+// Not a top-level entity:
+// * No primary-key field.
+// * No org_id field.
+// * No rpc endpoints, part of PerformanceMetric only.
+message PerformanceMetricForSkillCollection {
   // Datetime range over which the metrics were determined.
-  commons.DatetimeRange date_range = 1;
+  api.commons.DatetimeRange date_range = 1;
   // The total calls required over the @date_range, as determined by the forecast.
   int32 total_calls_required = 2;
   // The total calls the the schedule is likely to address with the current shift instances.
@@ -5566,7 +5570,7 @@ message PerformanceMetric {
   // Width of each interval in minutes.
   int32 interval_width_in_minutes = 9;
   // The type of metric being reported.
-  commons.PerformanceMetricType metric_type = 10;
+  api.commons.PerformanceMetricType metric_type = 10;
   // One value will be set between @fte_intervals and @service_level_intervals, depending on @metric_type.
   // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_intervals
   // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
@@ -5574,6 +5578,99 @@ message PerformanceMetric {
   repeated FTERequiredVsAchievedInterval fte_intervals = 11;
   // Interval set checking the service level achieved as a percentage.
   repeated ServiceLevelInterval service_level_intervals = 12;
+  // Pointer to skill collection.
+  api.commons.SkillProfileCategory skill_collection = 13;
+}
+
+// Represents a performance metric
+message PerformanceMetric {
+  // Datetime range over which the metrics were determined.
+  api.commons.DatetimeRange date_range = 1;
+  // The total calls required over the @date_range, as determined by the forecast.
+  int32 total_calls_required = 2;
+  // The total calls the the schedule is likely to address with the current shift instances.
+  int32 total_ftes_achieved = 3;
+  // The number of intervals with required calls.
+  int32 num_intervals_with_required_calls = 4;
+  // The number of intervals with FTE's but no schedules.
+  int32 num_intervals_with_ftes_but_no_schedules = 5;
+  // the number of intervals with FTE's but no forecasted calls.
+  int32 num_intervals_with_ftes_but_no_forecasted_calls = 6;
+  // The total calls forecsted where there are no FTE's scheduled.
+  int32 total_unscheduled_calls = 7;
+  // The total number of FTE's scheduled where there were no forecasted calls.
+  int32 total_unnecessary_ftes = 8;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 9;
+  // The type of metric being reported.
+  api.commons.PerformanceMetricType metric_type = 10;
+  // One value will be set between @fte_intervals and @service_level_intervals, depending on @metric_type.
+  // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_intervals
+  // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
+  // Interval set comparing the number of FTE required to the number achieved.
+  repeated FTERequiredVsAchievedInterval fte_intervals = 11;
+  // Interval set checking the service level achieved as a percentage.
+  repeated ServiceLevelInterval service_level_intervals = 12;
+  // Per-skill metrics.
+  repeated PerformanceMetricForSkillCollection metrics_by_skill_collection = 13;
+}
+
+// PerformanceMetricForSkillCollectionV2.
+// Not a top-level entity:
+// * No primary-key field.
+// * No org_id field.
+// * No rpc endpoints, part of PerformanceMetricV2 only.
+message PerformanceMetricForSkillCollectionV2 {
+  // Datetime range over which the metrics were determined.
+  api.commons.DatetimeRange date_range = 1;
+  float total_fte_intervals_required = 2;
+  float total_fte_intervals_achieved = 3;
+  int32 num_intervals_with_call_ftes = 4;
+  int32 num_intervals_with_shift_ftes = 5;
+  int32 num_intervals_with_call_ftes_but_no_shifts = 6;
+  int32 num_intervals_with_shifts_but_no_call_ftes = 7;
+  float total_underscheduled_call_ftes = 8;
+  float total_overscheduled_call_ftes = 9;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 10;
+  // The type of metric being reported.
+  api.commons.PerformanceMetricType metric_type = 11;
+  // One value will be set between @fte_occupancy_intervals and @service_level_intervals, depending on @metric_type.
+  // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_occupancy_intervals
+  // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
+  // Interval set comparing the number of FTE required to the number achieved.
+  repeated FTERequiredVsAchievedOccupancyInterval fte_occupancy_intervals = 12;
+  // Interval set checking the service level achieved as a percentage.
+  repeated ServiceLevelInterval service_level_intervals = 13;
+  // Pointer to skill collection.
+  api.commons.SkillProfileCategory skill_collection = 14;
+}
+
+// PerformanceMetricV2.
+message PerformanceMetricV2 {
+  // Datetime range over which the metrics were determined.
+  api.commons.DatetimeRange date_range = 1;
+  float total_fte_intervals_required = 2;
+  float total_fte_intervals_achieved = 3;
+  int32 num_intervals_with_call_ftes = 4;
+  int32 num_intervals_with_shift_ftes = 5;
+  int32 num_intervals_with_call_ftes_but_no_shifts = 6;
+  int32 num_intervals_with_shifts_but_no_call_ftes = 7;
+  float total_underscheduled_call_ftes = 8;
+  float total_overscheduled_call_ftes = 9;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 10;
+  // The type of metric being reported.
+  api.commons.PerformanceMetricType metric_type = 11;
+  // One value will be set between @fte_occupancy_intervals and @service_level_intervals, depending on @metric_type.
+  // If @metric_type is FTE_REQUIRED_VS_ACHIEVED_SIMPLE then the intervals will be stored in @fte_occupancy_intervals
+  // If @metric_type is SERVICE_LEVEL_ANALYSIS then the intervals will be stored in @service_level_intervals
+  // Interval set comparing the number of FTE required to the number achieved.
+  repeated FTERequiredVsAchievedOccupancyInterval fte_occupancy_intervals = 12;
+  // Interval set checking the service level achieved as a percentage.
+  repeated ServiceLevelInterval service_level_intervals = 13;
+  // Per-skill metrics.
+  repeated PerformanceMetricForSkillCollectionV2 metrics_by_skill_collection = 14;
 }
 
 // Represents a service level interval.
@@ -5592,6 +5689,12 @@ message FTERequiredVsAchievedInterval {
   int32 required_calls = 2;
   // Number of achieved FTE's in the interval.
   int32 achieved_ftes = 3;
+}
+
+message FTERequiredVsAchievedOccupancyInterval {
+  google.protobuf.Timestamp start_datetime = 1;
+  float required_fte_occupancy = 2;
+  float achieved_fte_occupancy = 3;
 }
 
 // Represents fte required
@@ -5633,6 +5736,22 @@ message ShiftInstance {
   ShiftTemplate shift_template = 11;
 }
 
+// ShiftSegmentCallStat.
+// Not a top-level entity:
+// * No primary-key field.
+// * No org_id field.
+// * No rpc endpoints, part of ShiftSegment only.
+message ShiftSegmentCallStat {
+  // Number of predicted calls.
+  // A float to account for predicted calls that would extend past end of shift_segment.
+  float num_calls = 1;
+  // The percentage fit
+  // 0.0 through 1.0, for 0% through 100%.
+  float percent_fit = 2;
+  // Pointer to skill_collection.
+  api.commons.SkillProfileCategory skill_collection = 3;
+}
+
 // Represents a shift segment
 message ShiftSegment {
   // ID of this shift segment.
@@ -5651,6 +5770,8 @@ message ShiftSegment {
   // The following field is only returned in List requests of the entity.
   // The scheduling activity referred to by @scheduling_activity_sid
   SchedulingActivity scheduling_activity = 8;
+  // Per-skill call stats.
+  repeated ShiftSegmentCallStat call_stats_by_skill_collection = 9;
 }
 
 // Request message for the GetPublishedSchedule RPC
