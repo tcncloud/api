@@ -3289,6 +3289,48 @@ service WFM {
       ];
     };
   }
+
+  // Returns a list of @wfm_agent_sids that are suitable for replacing @wfm_agent_sid_to_replace for the given parameters and the org sending the request.
+  // Only enforces that skill proficiencies are covered by the individual wfm agents, does not enforce constraint rules.
+  // If @skip_skill_proficiency_sort is False, the agents will be returned in order of cumulative skill proficiency towards the required skills.
+  // If @include_skill_mismatches is True, the agents will be included even if they do not include all of the required skills for the shifts being replaced.
+  // If @skip_force_same_agent_groups is False, the agents will only be returned if they belong to every agent group that @wfm_agent_sid_to_replace is a member of. Otherwise, this check will be skipped.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when determinining which agents are valid.
+  rpc ListValidAgentsForReplacement(ListValidAgentsForReplacementReq) returns (ListValidAgentsForReplacementRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listvalidagentsforreplacement";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+  // If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+  // Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+  rpc ReplaceAgentOnSchedule(ReplaceAgentOnScheduleRes) returns (ReplaceAgentOnScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/replaceagentonschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -6656,5 +6698,63 @@ message GenerateTourWeekPatternsRes {
   // A list of tour week patterns containing the newly generated tour pattern weeks in the member field.
   repeated TourWeekPattern tour_week_patterns = 1;
   // Reports any errors preventing @tour_pattern from being generated.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the ListValidAgentsForReplacement RPC.
+message ListValidAgentsForReplacementReq {
+  // ID of the schedule scenario to check for WFM agents.
+  int64 schedule_scenario_sid = 1;
+  // An optional field used to limit the datetime range of the shifts being checked.
+  // If left blank, the full schedule range will be updated.
+  commons.DatetimeRange datetime_range = 2;
+  // Indicates the schedule to be updated.
+  commons.ScheduleSelector schedule_selector = 3;
+  // An optional field indicating the node to get shifts from.
+  // Otherwise shifts will be checked for all nodes on the @schedule_selector.
+  ParentEntity node_selector = 4;
+  // ID of the WFM Agent to be replaced.
+  int64 wfm_agent_sid_to_replace = 5;
+  // Indicates whether the step to sort agents by skill proficiency should be skipped.
+  // If left as False, the @wfm_agent_sids will be returned in descending order from most qualified to least qualified.
+  bool skip_skill_proficiency_sort = 6;
+  // Indicated whether agent sids should still be returned, even if they do not have a skill proficiency for all of the required skills.
+  // If left as False, only agents with a skill proficiency for all the updted shifts will be returned.
+  // Under no conditions are constraint rule requirements enforced by this endpoint.
+  bool include_skill_mismatches = 7;
+  // Indicated whether to skip the check for must be members of all of the same agent groups as @
+  bool skip_force_same_agent_groups = 8;
+}
+
+// Response message for the ListValidAgentsForReplacement RPC.
+message ListValidAgentsForReplacementRes {
+  // A list of valid WFM agent sids. In order of highest related skill proficiency to lowest, if not @skip_skill_proficiency_sort.
+  repeated int64 wfm_agent_sids = 1;
+}
+
+// Request message for the ReplaceAgentOnSchedule RPC.
+message ReplaceAgentOnScheduleReq {
+  // An optional field used to limit the datetime range of the shifts being updated.
+  // If left blank, the full schedule range will be updated.
+  commons.DatetimeRange datetime_range = 1;
+  // Indicates the schedule to be updated.
+  commons.ScheduleSelector schedule_selector = 2;
+  // An optional field indicating the node to get shifts from.
+  // Otherwise shifts will be updated for all nodes on the @schedule_selector.
+  ParentEntity node_selector = 3;
+  // ID of the WFM agent to remove from the schedule.
+  int64 wfm_agent_sid_to_remove = 4;
+  // ID of the WFM agent to add to the schedule, in place of @wfm_agent_sid_to_remove.
+  int64 wfm_agent_sid_to_add = 5;
+  // If set to true, any overlapping shift conflicts will be skipped.
+  // Otherwise, any overlap conflicts will raise a diagnostic and prevent any shifts from being updated.
+  bool skip_overlapping_shifts = 6;
+}
+
+// Response message for the ReplaceAgentOnSchedule RPC.
+message ReplaceAgentOnScheduleRes {
+  // The updated shift instances which were transfered to @wfm_agent_sid_to_add.
+  repeated ShiftInstance updated_shift_instances = 1;
+  // Any diagnostics raised due to overlap conflicts.
   repeated Diagnostic diagnostics = 2;
 }
