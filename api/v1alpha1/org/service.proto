@@ -1722,6 +1722,58 @@ service Org {
     };
   }
 
+  // GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
+  rpc GetHuntGroupClientInfoDisplayTemplate(GetHuntGroupClientInfoDisplayTemplateRequest) returns (GetHuntGroupClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/gethuntgroupclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
+  // CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
+  rpc CreateHuntGroupClientInfoDisplayTemplate(CreateHuntGroupClientInfoDisplayTemplateRequest) returns (CreateHuntGroupClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/createhuntgroupclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
+  rpc UpdateHuntGroupClientInfoDisplayTemplate(UpdateHuntGroupClientInfoDisplayTemplateRequest) returns (UpdateHuntGroupClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatehuntgroupclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
+  rpc DeleteHuntGroupClientInfoDisplayTemplate(DeleteHuntGroupClientInfoDisplayTemplateRequest) returns (DeleteHuntGroupClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/deletehuntgroupclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
   // TRUSTS
 
   // CreateTrust creates a new trust.
