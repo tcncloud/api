@@ -1085,6 +1085,32 @@ service OmniApi {
       ];
     };
   }
+
+  // Create whatsapp number for the client
+  rpc CreateWhatsAppNumber(v0alpha.CreateWhatsAppNumberRequest) returns (v0alpha.CreateWhatsAppNumberResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createwhatsappnumber";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // Update whatsapp number for the client
+  rpc UpdateWhatsAppNumber(v0alpha.UpdateWhatsAppNumberRequest) returns (v0alpha.UpdateWhatsAppNumberResponse) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/updatewhatsappnumber";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
 }
 
 message SuggestResponseReq {
@@ -2141,4 +2167,30 @@ message ListWhatsAppNumbersReq {}
 message ListWhatsAppNumbersRes {
   // list of whatsapp numbers
   repeated api.commons.WhatsAppNumber whatsapp_numbers = 1;
+}
+
+// Request message for create whatsapp number
+message CreateWhatsAppNumberRequest {
+  // whatsapp number details
+  api.commons.WhatsAppNumber whatsapp_number = 1;
+}
+
+// Response message for listing whatsapp number
+message CreateWhatsAppNumberResponse {
+  // whatsapp number details
+  api.commons.WhatsAppNumber whatsapp_number = 1;
+}
+
+// Request message for update whatsapp number
+message UpdateWhatsAppNumberRequest {
+  // whatsapp number details
+  api.commons.WhatsAppNumber whatsapp_number = 1;
+  // list of all fields being updated
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// Response message for update whatsapp number
+message UpdateWhatsAppNumberResponse {
+  // whatsapp number details
+  api.commons.WhatsAppNumber whatsapp_number = 1;
 }
