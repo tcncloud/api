@@ -3331,6 +3331,26 @@ service WFM {
       ];
     };
   }
+
+  // Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+  // Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+  // The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+  rpc RemoveAgentFromSchedule(RemoveAgentFromScheduleRequest) returns (RemoveAgentFromScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/removeagentfromschedulerequest";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -6820,6 +6840,29 @@ message GenerateTourWeekPatternsRes {
   repeated TourWeekPattern tour_week_patterns = 1;
   // Reports any errors preventing @tour_pattern from being generated.
   repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the RemoveAgentFromSchedule RPC.
+message RemoveAgentFromScheduleRequest {
+  // Datetime range over which the agent should be removed.
+  commons.DatetimeRange datetime_range = 1;
+  // ID of the agent to be removed.
+  int64 wfm_agent_sid = 2;
+  // The schedule containing shifts for @wfm_agent_sid to be removed from.
+  commons.ScheduleSelector schedule_selector = 3;
+  // The node that the shifts to be removed are associated with.
+  // If left blank, the agent may be removed from shifts associated with the entire scenario.
+  ParentEntity node_selector = 4;
+  // The schedule_scenario_sid that @node_selector and @wfm_agent_sid is associated with.
+  int64 schedule_scenario_sid = 5;
+}
+
+// Response message for the RemoveAgentFromSchedule RPC.
+message RemoveAgentFromScheduleResponse {
+  // ID of the newly created unassigned WFM agent.
+  int64 unassigned_wfm_agent_sid = 1;
+  // All shifts updated by the method, now assigned to @unassigned_wfm_agent_sid.
+  repeated ShiftInstance updated_shifts = 2;
 }
 
 // Request message for the ListValidAgentsForReplacement RPC.
