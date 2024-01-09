@@ -685,7 +685,7 @@ message AgentResponseComparitors {
 // A template used to describe a client info display
 message ClientInfoDisplayTemplate {
   // The template sid of the client info display template
-  string template_sid = 1;
+  string template_sid = 1 [deprecated = true];
   // The name of the client info display template
   string name = 2;
   // The description of the client info display template
@@ -698,6 +698,8 @@ message ClientInfoDisplayTemplate {
   repeated ContactFieldStyle contact_field_styles = 6;
   // The template type
   TemplateCategory template_category = 7;
+  // The sid of the client info display template
+  int64 client_info_display_template_sid = 8;
 }
 
 // FieldStyle describes a particular field within a client info display
