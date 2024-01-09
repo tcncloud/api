@@ -1467,6 +1467,8 @@ message HuntGroupAgentSettings {
 
   // Array of interruptable call states (manual, preview, both manual and preview)
   repeated api.commons.InterruptedPeeringStatus interrupt_peering = 33;
+  bool display_integration_data_map = 34;
+  repeated string limit_integration_data_map = 35;
 }
 
 message AgentStatisticsSettings {
