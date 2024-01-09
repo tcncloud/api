@@ -351,6 +351,26 @@ message ListAgentsResponse {
   repeated AgentDetails agents = 1;
 }
 
+// Request message for ListPublicUsers rpc.
+message ListPublicUsersRequest {
+  // Return a list of only user agents. When this is false all users are returned.
+  bool agent_filter = 1;
+  // Filter by the user's archived status.
+  api.commons.UserArchivedStateFilter archived_filter = 2;
+}
+
+// Response message for ListPublicUsers rpc.
+message ListPublicUsersResponse {
+  // The user ID of the user
+  string user_id = 1;
+  // The user's first name
+  string first_name = 2;
+  // The user's last name
+  string last_name = 3;
+  // The user's username
+  string username = 4;
+}
+
 // Request message for listUsers rpc.
 message ListUsersRequest {}
 

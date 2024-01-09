@@ -835,6 +835,22 @@ service Org {
     };
   }
 
+  // ListPublicUsers returns a list of users with limited data for most applications.
+  rpc ListPublicUsers(ListPublicUsersRequest) returns (stream ListPublicUsersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/listPublicUsers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
   // ListUsers returns a list of users.
   rpc ListUsers(ListUsersRequest) returns (stream ListUsersResponse) {
     option (google.api.http).post = "/api/v1alpha1/user/list";
