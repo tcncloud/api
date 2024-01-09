@@ -243,6 +243,42 @@ message DeleteHuntGroupClientInfoDisplayTemplateRequest {
 // Response message for DeleteHuntGroupClientInfoDisplayTemplate RPC method.
 message DeleteHuntGroupClientInfoDisplayTemplateResponse {}
 
+// Request message for ListHuntGroupWebLinks
+message ListHuntGroupWebLinksRequest {
+  // The hunt group sid of the desired web links
+  int64 hunt_group_sid = 1;
+}
+
+// Response message for ListHuntGroupWebLinks
+message ListHuntGroupWebLinksResponse {
+  // The web links list from a givne hunt group
+  repeated api.commons.org.WebLink web_links = 1;
+}
+
+// Request message for CopyHuntGroupWebLinks
+message CopyHuntGroupWebLinkRequest {
+  // The hunt group sid of the residng web link
+  int64 from_hunt_group_sid = 1;
+  // The hunt group sid of where the web link will be copied
+  int64 to_hunt_group_sid = 2;
+  // The web link to be copied
+  api.commons.org.WebLink web_link = 3;
+}
+
+// Response message for CopyHuntGroupWebLinks
+message CopyHuntGroupWebLinkResponse {}
+
+// Request message for UpdateHuntGroupWebLinks
+message UpdateHuntGroupWebLinksRequest {
+  // The hunt group sid of the web links to be updated
+  int64 hunt_group_sid = 1;
+  // The list of web links to be updated
+  repeated api.commons.org.WebLink web_links = 2;
+}
+
+// Response message for UpdateHuntGroupWebLinks
+message UpdateHuntGroupWebLinksResponse {}
+
 // ListHuntGroupIntegrationLinksRequest is the request message for the ListHuntGroupIntegrationLinks RPC method.
 message ListHuntGroupIntegrationLinksRequest {
   // The ID of the organization which the hunt group belongs to.

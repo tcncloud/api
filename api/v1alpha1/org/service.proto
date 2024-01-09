@@ -1670,6 +1670,45 @@ service Org {
     };
   }
 
+  // Lists all web links for a given hunt group
+  rpc ListHuntGroupWebLinks(ListHuntGroupWebLinksRequest) returns (ListHuntGroupWebLinksResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listhuntgroupweblinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Copies a web link from one hunt group to another
+  rpc CopyHuntGroupWebLink(CopyHuntGroupWebLinkRequest) returns (CopyHuntGroupWebLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copyhuntgroupweblink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Updates the list of web links in a hunt group to be the given list
+  rpc UpdateHuntGroupWebLinks(UpdateHuntGroupWebLinksRequest) returns (UpdateHuntGroupWebLinksResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatehuntgroupweblink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
   // ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
   rpc ListHuntGroupIntegrationLinks(ListHuntGroupIntegrationLinksRequest) returns (ListHuntGroupIntegrationLinksResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listhuntgroupintegrationlinks";
