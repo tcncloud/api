@@ -578,11 +578,12 @@ message SmsDestination {
 
 message EmailDestination {
   // which email we are sending to
-  string to_addr = 1;
+  string to_addr = 1 [deprecated = true];
   // additional emails we are sending to
   repeated string cc_addrs = 2;
   // which email we want to show up as as from
   string from_addr = 3;
+  repeated string to_addrs = 4;
 }
 
 message CredentialData {
