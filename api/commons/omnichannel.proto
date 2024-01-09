@@ -1181,6 +1181,14 @@ message WhatsAppNumber {
   WhatsAppNumberProvider provider = 2;
   // country code the whatsapp number belongs to
   int32 country_code = 3;
+  // the whatsapp number identifier
+  int64 whatsapp_number_sid = 4 [jstype = JS_STRING];
+  // the display name
+  string display_name = 5;
+  // the time the whatsapp_number was created
+  google.protobuf.Timestamp date_created = 6;
+  // the time the whatsapp_number was last modified
+  google.protobuf.Timestamp date_modified = 7;
 }
 
 // WhatsAppNumberProvider
