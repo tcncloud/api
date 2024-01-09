@@ -181,6 +181,8 @@ enum OmniCampaignModuleType {
   MODULE_TYPE_OUTBOUND = 1;
   // manual approve module
   MODULE_TYPE_MANUAL_APPROVAL = 2;
+  // manual module
+  MODULE_TYPE_MANUAL = 3;
 }
 
 enum ChannelType {
