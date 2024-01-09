@@ -85,6 +85,19 @@ service SkillsService {
     };
   }
 
+  // UpdateUsersOnSkillGroup updates a skill groups assigned users.
+  rpc UpdateUsersOnSkillGroup(UpdateUsersOnSkillGroupRequest) returns (UpdateUsersOnSkillGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/updateuseronskillgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
   // RevokeSkillGroups revokes the given skill groups from a user.
   rpc RevokeSkillGroups(RevokeSkillGroupsRequest) returns (RevokeSkillGroupsResponse) {
     option (google.api.http).post = "/api/v1alpha1/skills/revokeskillgroups";

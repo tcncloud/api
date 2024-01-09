@@ -133,3 +133,14 @@ message SkillGroupMembers {
   string skill_group_id = 1;
   repeated string user_ids = 2;
 }
+
+// Request message for the UpdateUsersOnSkillGroup rpc.
+message UpdateUsersOnSkillGroupRequest {
+  // ID of the skill group the users are being assigned to.
+  string skill_group_id = 1;
+  // IDs of the users being assigned to the skill group.
+  repeated string user_ids = 2;
+}
+
+// Response message for the UpdateUsersOnSkillGroup rpc.
+message UpdateUsersOnSkillGroupResponse {}
