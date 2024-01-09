@@ -49,6 +49,8 @@ enum CallResult {
   // the case of a crash and
   // the restart of a task was
   // not a clean one ....
+  CALL_RESULT_FAILED_REFUSED_RETRIES_EXHAUSTED = 8340; // "CALL_RESULT_FAILED_REFUSED_RETRIES_EXHAUSTED", "Failed Refused Retries Exhausted", "FRR", "Call failed, retries exhausted"
+  CALL_RESULT_FAILED_REFUSED_BLOCK = 8350; // "CALL_RESULT_FAILED_REFUSED_BLOCK", "Failed Refused Block", "FRB", "Call blocked"
 
   CALL_RESULT_CANCELED = 9000; // "CALL_CANCELED", "Canceled", "CAN", "Call canceled, reason unknown"),
   CALL_RESULT_CANCELED_TIMEZONE = 9100; // "CALL_CANCELED_TIMEZONE", "Canceled Timezone", "CAZ", "Call canceled due to timezone restrictions"),
