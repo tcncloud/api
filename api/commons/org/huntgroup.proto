@@ -737,6 +737,80 @@ enum TemplateCategory {
   TEMPLATE_CATEGORY_CAMPAIGN = 2;
 }
 
+// A structure used for representing a web link
+message WebLink {
+  // The unique sid of a web link
+  int64 web_link_sid = 1;
+  // The name of the web link
+  string name = 2;
+  // The description of the web link
+  string description = 3;
+  // The link type
+  WebLinkType link_type = 4;
+  // The order position of the web link
+  int64 order = 5;
+  // The base url components of the web link
+  repeated WebLinkComponent base_url = 6;
+  // The web link parameters
+  repeated WebLinkParameter parameters = 7;
+}
+
+// WebLinkType describes the type of a particular web link
+enum WebLinkType {
+  // 0 explicitly means unspecified or invalid.
+  WEB_LINK_TYPE_UNSPECIFIED = 0;
+  // Standard web link type
+  WEB_LINK_STANDARD = 1;
+  // Javascript web link type
+  WEB_LINK_JAVASCRIPT = 2;
+}
+
+// WebLinkComponent contains the key type and string of a web link
+message WebLinkComponent {
+  // The component key type of the web link component
+  WebLinkComponentKeyType key_type = 1;
+  // The value of the web link component
+  string value = 2;
+}
+
+// Enums to represent the WebLinkComponentKeyType
+enum WebLinkComponentKeyType {
+  // 0 explicitly means unspecified or invalid
+  WEB_LINK_COMPONENT_KEY_TYPE_UNSPECIFIED = 0;
+  // Static or plaintext type
+  WEB_LINK_COMPONENT_KEY_TYPE_STATIC_TEXT = 1;
+  // TTS Field type
+  WEB_LINK_COMPONENT_KEY_TYPE_TTS_FIELD = 2;
+  // Agent Info type
+  WEB_LINK_COMPONENT_KEY_TYPE_AGENT_INFO = 3;
+  // Data Dip type
+  WEB_LINK_COMPONENT_KEY_TYPE_DATA_DIP = 4;
+  // IVR Data type
+  WEB_LINK_COMPONENT_KEY_TYPE_IVR_DATA = 5;
+  // Data Collect type
+  WEB_LINK_COMPONENT_KEY_TYPE_DATA_COLLECT = 6;
+  // Phone Metadata type
+  WEB_LINK_COMPONENT_KEY_TYPE_PHONE_METADATA = 7;
+  // Zip Postal Metadata type
+  WEB_LINK_COMPONENT_KEY_TYPE_ZIP_POSTAL_METADATA = 8;
+  // Custom Account Data key type
+  WEB_LINK_COMPONENT_KEY_TYPE_CUSTOM_ACCOUNT_DATA_KEY = 9;
+  // Sip Header Data type
+  WEB_LINK_COMPONENT_KEY_TYPE_SIP_HEADER_DATA = 10;
+  // Integration Data type
+  WEB_LINK_COMPONENT_KEY_TYPE_INTEGRATION_DATA = 11;
+  // Journey Data type
+  WEB_LINK_COMPONENT_KEY_TYPE_JOURNEY_DATA = 12;
+}
+
+// WebLinkParameter contains a key and web link component
+message WebLinkParameter {
+  // The key for a web link parameter
+  string key = 1;
+  // The web link components for a web link parameter
+  repeated WebLinkComponent components = 2;
+}
+
 // DataDipConfig is a proto recreation of the XML structure.
 message DataDipConfig {
   message Param {
