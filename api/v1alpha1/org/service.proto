@@ -845,7 +845,7 @@ service Org {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         },
         {
-          permissions: [PERMISSION_VOICE_ANALYTICS]
+          permissions: [PERMISSION_SCORECARDS]
         }
       ];
     };
