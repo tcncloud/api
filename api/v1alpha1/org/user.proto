@@ -362,13 +362,26 @@ message ListPublicUsersRequest {
 // Response message for ListPublicUsers rpc.
 message ListPublicUsersResponse {
   // The user ID of the user
-  string user_id = 1;
+  string user_id = 1 [deprecated = true];
   // The user's first name
-  string first_name = 2;
+  string first_name = 2 [deprecated = true];
   // The user's last name
-  string last_name = 3;
+  string last_name = 3 [deprecated = true];
   // The user's username
-  string username = 4;
+  string username = 4 [deprecated = true];
+
+  message User {
+    // The user ID of the user
+    string user_id = 1;
+    // The user's first name
+    string first_name = 2;
+    // The user's last name
+    string last_name = 3;
+    // The user's username
+    string username = 4;
+  }
+
+  repeated User users = 5;
 }
 
 // Request message for listUsers rpc.
