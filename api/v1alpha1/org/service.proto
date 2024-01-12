@@ -1790,6 +1790,45 @@ service Org {
     };
   }
 
+  // ListAgentTriggers returns a list of agent triggers for the given hunt group.
+  rpc ListAgentTriggers(ListAgentTriggersRequest) returns (ListAgentTriggersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listagenttriggers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW],
+        }
+      ];
+    };
+  }
+
+  // CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+  rpc CopyAgentTrigger(CopyAgentTriggerRequest) returns (CopyAgentTriggerResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copyagenttrigger";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT],
+        }
+      ];
+    };
+  }
+
+  // UpdateAgentTriggers updates all agent triggers for the given hunt group.
+  rpc UpdateAgentTriggers(UpdateAgentTriggersRequest) returns (UpdateAgentTriggersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updateagenttriggers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT],
+        }
+      ];
+    };
+  }
+
   // TRUSTS
 
   // CreateTrust creates a new trust.
