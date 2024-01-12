@@ -292,3 +292,39 @@ message ListHuntGroupIntegrationLinksResponse {
   // The list of integration links for the hunt group.
   repeated api.commons.org.IntegrationLink links = 1;
 }
+
+// ListAgentTriggersRequest is the request message for the ListAgentTriggers RPC method.
+message ListAgentTriggersRequest {
+  // The sid of the hunt group to get the triggers for
+  int64 hunt_group_sid = 1;
+}
+
+// ListAgentTriggersResponse is the response message for the ListAgentTriggers RPC method.
+message ListAgentTriggersResponse {
+  // The list of agent triggers for the hunt group
+  repeated api.commons.org.AgentTrigger agent_triggers = 1;
+}
+
+// CopyAgentTriggerRequest is the request message for the CopyAgentTrigger RPC method.
+message CopyAgentTriggerRequest {
+  // The sid of the hunt group from which the trigger is copied
+  int64 from_hunt_group_sid = 1;
+  // The sid of the hunt group to which the trigger is copied
+  int64 to_hunt_group_sid = 2;
+  // The agent trigger to copy
+  api.commons.org.AgentTrigger agent_trigger = 3;
+}
+
+// CopyAgentTriggerResponse is the response message for the CopyAgentTrigger RPC method.
+message CopyAgentTriggerResponse {}
+
+// UpdateAgentTriggersRequest is the request message for the UpdateAgentTriggers RPC method.
+message UpdateAgentTriggersRequest {
+  // The sid of the hunt group to update the trigger for
+  int64 hunt_group_sid = 1;
+  // The list of agent triggers to update
+  repeated api.commons.org.AgentTrigger agent_triggers = 2;
+}
+
+// UpdateAgentTriggersResponse is the response message for the UpdateAgentTriggers RPC method.
+message UpdateAgentTriggersResponse {}
