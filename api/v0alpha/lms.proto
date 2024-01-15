@@ -1634,9 +1634,11 @@ message P3ExportProcess {
   string contact_list_prefix = 2;
 
   // P3 API Username
-  string username = 3;
+  string username = 3 [deprecated = true];
   // P3 API Password
-  string password = 4;
+  string password = 4 [deprecated = true];
+  // user access token for authenticating with p3 without username password combo
+  string access_token = 49;
   // Call List Country
   string country = 5;
   // Specifies how to handle duplicate phone numbers.
