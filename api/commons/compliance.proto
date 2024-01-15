@@ -60,6 +60,7 @@ enum PluginType {
   GRYPHON = 1;
   TCN_CONSENT = 2;
   RND = 3;
+  MRS_COMPLIANCE = 4;
 }
 
 enum Environment {
@@ -188,6 +189,12 @@ message PluginExp {
 
   // rnd
   string date_last_contact = 10;
+
+  // mrs compliance
+  string lu = 12;
+  string account = 13;
+  string master = 14;
+  string client = 15;
 }
 
 message EntityExp {
