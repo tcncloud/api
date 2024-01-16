@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "wfo/vanalytics/v2/transcript.proto";
+
+service Vanalytics {
+  // SearchTranscripts searches transcripts by search criteria. The search response
+  // contains one page of transcript hits. Traversing the paginated hits is
+  // achieved by making use of the given page token.
+  rpc SearchTranscripts(SearchTranscriptsRequest) returns (SearchTranscriptsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/searchtranscripts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+}
