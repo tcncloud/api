@@ -4,6 +4,7 @@ package api.v1alpha1.delivery;
 
 import "annotations/authz.proto";
 import "api/commons/delivery.proto";
+import "api/commons/omnichannel.proto";
 import "api/commons/org.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
@@ -292,6 +293,17 @@ service DeliveryApi {
       sets: [
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc ListSMSNumbers(ListSMSNumbersReq) returns (ListSMSNumbersRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/listsmsnumbers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
       ];
     };
@@ -764,4 +776,9 @@ message Encryption {
 
   google.protobuf.Timestamp created_on = 10;
   google.protobuf.Timestamp last_edited = 11;
+}
+
+message ListSMSNumbersReq {}
+message ListSMSNumbersRes {
+  repeated commons.SmsNumber sms_numbers = 1;
 }
