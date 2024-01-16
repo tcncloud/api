@@ -1924,6 +1924,10 @@ message CFSExportReq {
 message DeDupCriteria {
   api.commons.DeDupActions action = 3;
   repeated FieldIndex fields = 2;
+  // skip record if expression results in true
+  FilterCheck unless = 4;
+  // whether to treat the fields as a disjunct set or composite value
+  bool disjunct_keys = 5;
 }
 
 message SortCriteria {
