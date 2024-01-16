@@ -1,0 +1,455 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "api/commons/acd.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+// An enumeration of transcript communication channels.
+enum Channel {
+  CHANNEL_CALL = 0;
+  CHANNEL_SMS = 1;
+}
+
+// An enumeration of a flagged transcripts review statuses. Todo means there
+// are flags that need review and have not been reviewed. Done means every flag
+// that needs review has been reviewed. None means no flags require review.
+enum ReviewStatus {
+  REVIEW_STATUS_TODO = 0;
+  REVIEW_STATUS_DONE = 1;
+  REVIEW_STATUS_NONE = 2;
+}
+
+// A textualized interaction between two or more participants.
+message Transcript {
+  // Channel specific transcript metadata.
+  oneof metadata {
+    // Call specific transcript metadata.
+    Call call = 1;
+    // Sms specific transcript metadata.
+    Sms sms = 2;
+  }
+
+  reserved 11;
+
+  // The communication channel of the transcript.
+  Channel channel = 12;
+
+  // The time the transcript was started.
+  google.protobuf.Timestamp start_time = 13;
+
+  // The time the transcript was marked as deleted.
+  google.protobuf.Timestamp delete_time = 15;
+
+  // The flag summary of the transcript.
+  FlagSummary flag_summary = 16;
+
+  // The unique identifier of the transcript.
+  int64 transcript_sid = 17;
+}
+
+// FlagSummary defines a summary of flags which were applied to a transcript.
+message FlagSummary {
+  // The number of flags associated with the transcript.
+  int32 count = 1;
+
+  // The sum of the priorities of the flags associated with the transcript.
+  int32 priority_sum = 2;
+
+  // The highest priority of the flags associated with the transcript.
+  int32 priority_max = 3;
+
+  // Need Review provides info on the flags that need review.
+  NeedReview need_review = 4;
+
+  // Flags contain the flags and filters that are associated with the transcript.
+  repeated Flag flags = 5;
+
+  // The review status of the flagged transcript.
+  ReviewStatus review_status = 6;
+
+  // NeedReview defines flags which need to be reviewed.
+  message NeedReview {
+    // The sum of the priorities of the flags that need review.
+    int32 priority_sum = 1;
+
+    // The highest priority of the flags that need review.
+    int32 priority_max = 2;
+
+    // The number of flags that need review.
+    int32 count = 3;
+
+    // The Flag sids that need review.
+    repeated int64 flag_sids = 4;
+  }
+
+  // Flag defines a flag that was applied to a transcript by one or more filters
+  // along with a user review when one exists.
+  message Flag {
+    // The unique id of this flag.
+    int64 flag_sid = 1;
+
+    // The name of this flag.
+    string name = 2;
+
+    // The priority of this flag.
+    int32 priority = 3;
+
+    // The version of this flag.
+    int64 version = 4;
+
+    // Filters which applied this flag.
+    repeated Filter filters = 5;
+
+    // Determines whether this flag must be reviewed.
+    bool must_review = 6;
+
+    // Determines whether this flag must be notified.
+    bool must_notify = 7;
+
+    // The reviews of this flag.
+    repeated Review reviews = 8;
+  }
+
+  // Filter defines a filter which applied some flag to some transcript.
+  message Filter {
+    // The join key in form [flag_sid:filter_sid].
+    string join_key = 1;
+
+    // The flag sid this filter belongs to.
+    int64 flag_sid = 2;
+
+    // The unique id of this filter.
+    int64 filter_sid = 3;
+
+    // The version of this filter.
+    int64 version = 4;
+
+    // The name of this filter.
+    string name = 5;
+  }
+
+  // Review contains info on the flag review when one exists.
+  message Review {
+    // The join key in form [flag_sid:user_id].
+    string join_key = 1;
+
+    // The flag sid this review belongs to.
+    int64 flag_sid = 2;
+
+    // The user id of the reviewer.
+    string user_id = 3;
+  }
+}
+
+// Sms specific transcript metadata.
+message Sms {
+  // The unique identifier of the sms conversation.
+  int64 conversation_sid = 1;
+
+  // The text from the sms in threads.
+  repeated Thread threads = 2;
+
+  // A thread is the text from one participant.
+  message Thread {
+    // The unique identifier of the thread.
+    int32 id = 1;
+
+    // The text of the thread in segments.
+    repeated Segment segments = 2;
+  }
+
+  // A segment of text.
+  message Segment {
+    string text = 1;
+  }
+}
+
+// Call specific transcript metadata.
+message Call {
+  // The unique identifier for the call.
+  int64 call_sid = 1;
+
+  // The type of call.
+  api.commons.CallType.Enum call_type = 2;
+
+  // The total audio time of a call.
+  uint32 audio_time = 3;
+
+  // The text from the call in threads.
+  repeated Thread threads = 4;
+
+  // A thread is the text from one participant.
+  message Thread {
+    // The unique identifier of the thread.
+    int32 id = 1;
+
+    // The text of the thread in segments.
+    repeated Segment segments = 2;
+  }
+
+  // A segment of text.
+  message Segment {
+    string text = 1;
+  }
+}
+
+// The request for the search transcripts RPC.
+message SearchTranscriptsRequest {
+  reserved 1;
+
+  // Number of hits to include in response. Defaults to 10.
+  uint32 page_size = 2;
+
+  // The order by which transcripts will be listed. Follows SQL order by
+  // syntax. When not provided the order defaults to transcript_sid asc.
+  string order_by = 3;
+
+  // A field mask which defines which transcript fields to return. When empty
+  // all transcript fields will be returned.
+  google.protobuf.FieldMask read_mask = 4;
+
+  // Query by which to filter transcripts.
+  TranscriptBoolQuery bool_query = 5;
+
+  // The next page token from a previous response.
+  string page_token = 6;
+
+  // Configuration to enable and control text highlights.
+  Highlight highlight = 7;
+}
+
+// Configuration to enable and control text highlights.
+message Highlight {
+  // The prefix for highlighted text. Defaults to "{{" when empty.
+  string prefix = 1;
+
+  // The suffix for highlighted text. Defaults to "}}" when empty.
+  string suffix = 2;
+}
+
+// The response for the search transcripts RPC.
+message SearchTranscriptsResponse {
+  // One page of search response hits.
+  repeated Hit hits = 1;
+
+  // A page token which can be provided on a follow up request to retrieve the
+  // next page of transcript hits.
+  string next_page_token = 2;
+
+  // A search response hit.
+  message Hit {
+    // A transcript which matched the transcript query.
+    Transcript transcript = 1;
+    reserved 2, 3;
+  }
+}
+
+// Boolean query to filter transcripts.
+message TranscriptBoolQuery {
+  // Query constraints on transcript.
+  TranscriptQuery transcript = 1;
+}
+
+// Query to filter transcripts.
+message TranscriptQuery {
+  // Query constraints on transcript sid.
+  TranscriptSid transcript_sid = 1;
+
+  // Query constraints on channel.
+  Channel channel = 2;
+
+  // Query constraints on metadata.
+  Metadata metadata = 3;
+
+  // Query constraints on threads.
+  Threads threads = 4;
+
+  // Query constraints on transcript sid.
+  message TranscriptSid {
+    // Requires all transcript hits to have a transcript sid in the list.
+    repeated int64 any = 1;
+  }
+
+  // Query constraints on channel.
+  message Channel {
+    // Requires all transcript hits to have a channel in the list.
+    repeated wfo.vanalytics.v2.Channel any = 1;
+  }
+
+  // Query constraints on metadata.
+  message Metadata {
+    // Query constraints on call metadata.
+    Call call = 1;
+
+    // Query constraints on sms metadata.
+    Sms sms = 2;
+  }
+
+  // Query constraints on call metadata.
+  message Call {
+    // Query constraints on call sid.
+    CallSid call_sid = 1;
+
+    // Query constraints on audio time.
+    AudioTime audio_time = 2;
+
+    // Query constraints on call type.
+    CallType call_type = 3;
+
+    // Query constraints on call type.
+    message CallType {
+      // Requires all call specific transcript hits to have a call type in the
+      // list.
+      repeated api.commons.CallType.Enum any = 1;
+    }
+
+    // Query constraints on call sid.
+    message CallSid {
+      // Requires all call specific transcript hits to have a call sid in the
+      // list.
+      repeated int64 any = 1;
+    }
+
+    // Query constraints on audio time.
+    message AudioTime {
+      // Queries where greater than or equal.
+      google.protobuf.Int32Value gte = 1;
+      // Queries where less than or equal.
+      google.protobuf.Int32Value lte = 2;
+      // Queries where greater than.
+      google.protobuf.Int32Value gt = 3;
+      // Queries where less than.
+      google.protobuf.Int32Value lt = 4;
+    }
+  }
+
+  // Query constraints on sms metadata.
+  message Sms {
+    // Query constraints on conversation sid.
+    ConversationSid conversation_sid = 1;
+
+    // Query constraints on conversation sid.
+    message ConversationSid {
+      // Requires all sms specific transcript hits to have a conversation sid
+      // in the list.
+      repeated int64 any = 1;
+    }
+  }
+
+  // Query constraints on threads.
+  message Threads {
+    // Query constraints on thread id.
+    Id id = 4;
+
+    // Query constraints on thread text.
+    Text text = 5;
+
+    // Query constraints on thread id.
+    message Id {
+      // Requires all transcript hits to have a thread id in the list.
+      repeated int32 any = 1;
+    }
+
+    // Query constraints on thread text.
+    message Text {
+      // Query text terms with optional fuzziness.
+      Match match = 1;
+
+      // Query text phrases.
+      SpanNear span_near = 2;
+    }
+  }
+}
+
+/*
+   Defines an automatic max allowable edit distance based on the length of the
+   text to match.
+
+     length  <  low -- Must match exactly.
+     length  < high -- Must match with one edit allowed.
+     length >= high -- Must match with two edits allowed.
+*/
+message FuzzinessAuto {
+  // The low length threshold.
+  uint32 low = 1;
+
+  // The high length threshold.
+  uint32 high = 2;
+}
+
+// Query text terms with optional fuzziness.
+message Match {
+  // Required. The text to be matched. The field may contain multiple terms
+  // to match when separated by spaces.
+  string text = 1;
+
+  // Determines whether any or all of the terms must be matched. Operator must
+  // be one of: (AND, OR). Defaults to OR when empty.
+  string operator = 2;
+
+  // Fuzziness controls the maximum edit distance that a similar term can have
+  // and be considered a match. For example, the edit distance between cat and
+  // bat would be 1 since only one letter is different. The edit distance
+  // between unity and united would be 2. Fuzziness auto is recommended.
+  oneof fuzziness {
+    // Variable fuzziness based on the match term length.
+    FuzzinessAuto fuzziness_auto = 15;
+
+    // Constant fuzziness with allowed range from 0, 1 and 2.
+    uint32 fuzziness_value = 16;
+  }
+}
+
+// Query which matches a list of clauses that are near to each other.
+message SpanNear {
+  // The number of allowed non matching terms within the span. For example, a
+  // slop of 2 when searching for "This is my dog" would allow a match on
+  // "This is my quick brown dog".
+  int32 slop = 1;
+
+  // Requires clauses to be matched in the order.
+  bool in_order = 2;
+
+  // Required. The clauses to be matched.
+  repeated Clause clauses = 3;
+
+  // Generic clause for use in span near queries.
+  message Clause {
+    // Generic clause matcher.
+    oneof match {
+      // A span near clause to match a phrase.
+      SpanNear span_near = 1;
+      // A span near clause to match a fuzzy term.
+      SpanFuzzy span_fuzzy = 2;
+      // A span near clause to match a term.
+      SpanTerm span_term = 3;
+    }
+  }
+}
+
+// Query which matches a span term exactly.
+message SpanTerm {
+  // Required. The value to be matched.
+  string value = 1;
+}
+
+// Query which matches a span term with fuzziness.
+message SpanFuzzy {
+  // Required. The value to be fuzzy matched.
+  string value = 1;
+
+  // Fuzziness controls the maximum edit distance that a similar term can have
+  // and be considered a match. For example, the edit distance between cat and
+  // bat would be 1 since only one letter is different. The edit distance
+  // between unity and united would be 2. Fuzziness auto is recommended.
+  oneof fuzziness {
+    // Variable fuzziness based on the match term length.
+    FuzzinessAuto fuzziness_auto = 10;
+
+    // Constant fuzziness with allowed range from 0, 1 and 2.
+    uint32 fuzziness_value = 11;
+  }
+}
