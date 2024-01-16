@@ -205,6 +205,11 @@ enum Permission {
     app: APPLICATION_AGENT
     features: ["Plugins"]
   }];
+  // Enables Agents to view plugins.
+  PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW = 343 [(annotations.perms.options) = {
+    app: APPLICATION_AGENT
+    features: ["Integration Links"]
+  }];
   // Enables Agents to view portals.
   PERMISSION_AGENT_PORTALS_VIEW = 340 [(annotations.perms.options) = {
     app: APPLICATION_AGENT

@@ -1733,6 +1733,9 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
         }
       ];
     };
