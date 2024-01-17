@@ -75,7 +75,18 @@ service WorkflowDefinitionPersistService {
       ];
     };
   }
-
+  // DeleteWorkflowDefinition deletes a flow definition from the database
+  rpc DeleteWorkflowDefinition(DeleteWorkflowDefinitionRequest) returns (DeleteWorkflowDefinitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/workflows/deleteworkflowdefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WORKFLOWS]
+        }
+      ];
+    };
+  }
   // ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
   rpc ValidateWorkflowDefinition(ValidateWorkflowDefinitionRequest) returns (ValidateWorkflowDefinitionResponse) {
     option (google.api.http).post = "/api/v1alpha1/workflows/validateworkflowdefinition";
@@ -100,6 +111,8 @@ message PersistedWorkflowDefinition {
   string application = 3;
   // this definition name
   string name = 4;
+  // labels can be used to group/tag flow definitions together into logical categories
+  repeated string labels = 9;
   // this definition description
   string description = 5;
   // the JSON serialized form of the flow definition
@@ -160,6 +173,18 @@ message UpdateWorkflowDefinitionRequest {
 // UpdateWorkflowDefinitionResponse is the response object for updating a flow definition
 message UpdateWorkflowDefinitionResponse {
   // flow_definition is the updated flow definition object
+  PersistedWorkflowDefinition workflow_definition = 1;
+}
+
+// DeleteWorkflowDefinitionRequest is the request object for deleting a flow definition
+message DeleteWorkflowDefinitionRequest {
+  // workflow_definition_id is the identifier for the flow definition to delete
+  string workflow_definition_id = 1;
+}
+
+// DeleteWorkflowDefinitionResponse is the response object for deleting a flow definition
+message DeleteWorkflowDefinitionResponse {
+  // workflow_definition is the deleted flow definition object
   PersistedWorkflowDefinition workflow_definition = 1;
 }
 
