@@ -156,6 +156,8 @@ message ListWorkflowDefinitionsRequest {
   string org_id = 1;
   // application is the application identifier to list flow definitions for. If this is specified, the output is filtered to only include flow definitions for the application
   string application = 2;
+  // labels can be used to filter grouped/tagged flow definitions
+  repeated string labels = 3;
 }
 
 // ListWorkflowDefinitionsResponse is the response object for listing flow definitions
