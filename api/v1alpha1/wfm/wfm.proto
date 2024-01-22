@@ -3315,6 +3315,7 @@ service WFM {
   // Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
   // If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
   // Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+  // DEPRECATED as of Jan/22/2024 - Use ReplaceAgentOnScheduleV1 instead.
   // Required permissions:
   //   NONE
   // Errors:
@@ -3322,6 +3323,27 @@ service WFM {
   //   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
   rpc ReplaceAgentOnSchedule(ReplaceAgentOnScheduleRes) returns (ReplaceAgentOnScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/replaceagentonschedule";
+    option (google.api.http).body = "*";
+    option deprecated = true;
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+  // If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+  // Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+  rpc ReplaceAgentOnScheduleV1(ReplaceAgentOnScheduleReq) returns (ReplaceAgentOnScheduleRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/replaceagentonschedulev1";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
