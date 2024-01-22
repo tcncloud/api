@@ -117,10 +117,12 @@ message PersistedWorkflowDefinition {
   string description = 5;
   // the JSON serialized form of the flow definition
   string definition = 6; // JSON serialized form of the proto definition
-  // create_time is the time the flow definition was created. Not used for the create request
+  // create_time is the time the flow definition was created. Not used for the update request
   google.protobuf.Timestamp create_time = 7;
   // update_time is the time the flow definition was last updated. Not used for the create request
   google.protobuf.Timestamp update_time = 8;
+  // delete_time is the time the flow definition was soft-deleted. Not used for the create request
+  google.protobuf.Timestamp delete_time = 10;
 
   // extra is a JSON serialized string that can be used to store extra data for the flow definition (e.g. UI positioning data)
   string extra = 100; //JSON serialized data for UI (e.g. nodes positioning)
