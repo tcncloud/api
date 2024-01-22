@@ -145,6 +145,7 @@ message EvaluationSection {
   google.protobuf.Timestamp created_at = 9; // time evaluation section was created at
   repeated EvaluationQuestion evaluation_questions = 10; // array of evaluation questions in a section
   repeated AutoEvaluationQuestion auto_evaluation_questions = 11; // array of auto evaluation questions in a section
+  bool skipped = 12; // whether the section is skipped (NOT included in score calculation)
 }
 
 // EvaluationQuestion is a question in an evaluation
