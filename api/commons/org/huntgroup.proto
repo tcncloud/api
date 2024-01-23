@@ -4,6 +4,7 @@ package api.commons.org;
 
 import "api/commons/country.proto";
 import "api/commons/org.proto";
+import "google/protobuf/timestamp.proto";
 
 // HuntGroupSettings contains all of the hunt group settings.
 message HuntGroupSettings {
@@ -246,6 +247,88 @@ message GeneralSettings {
   message PrepareStateCallDelivery {
     bool manual_dial = 1;
     bool preview_dial = 2;
+  }
+}
+
+// HuntGroupType represents the type of a hunt group.
+enum HuntGroupType {
+  // 0 explicitly means unspecified or invalid; equivalent to unconnected.
+  HUNT_GROUP_TYPE_UNSPECIFIED = 0;
+  // Connected hunt group.
+  HUNT_GROUP_TYPE_CONNECTED = 1;
+  // Softphone hunt group.
+  HUNT_GROUP_TYPE_SOFTPHONE = 2;
+}
+
+// HuntGroupDetails is the entity for hunt group details.
+message HuntGroupDetails {
+  // The hunt group general details.
+  GeneralDetails general_details = 1;
+  // The hunt group client info display template details.
+  ClientInfoDisplayTemplateDetails template_details = 2;
+  // A list of hunt group web link details.
+  repeated WebLinkDetails web_link_details = 3;
+  // A list of hunt group trigger details.
+  repeated TriggerDetails trigger_details = 4;
+  // A list of hunt group integration link details.
+  repeated IntegrationLinkDetails integration_link_details = 5;
+
+  // GeneralDetails is the entity for hunt group general details.
+  message GeneralDetails {
+    // The hunt group name
+    string name = 1;
+    // The hunt group description.
+    string description = 2;
+    // The hunt group type.
+    HuntGroupType type = 3;
+    // The hunt group last modified date.
+    google.protobuf.Timestamp modify_date = 4;
+    // The number of agents belong to the hunt group.
+    int64 agent_count = 5;
+  }
+
+  // ClientInfoDisplayTemplateDetails is the entity for hunt group client info display template details.
+  message ClientInfoDisplayTemplateDetails {
+    // The hunt group client info display template name.
+    string name = 1;
+    // The hunt group client info display template description.
+    string description = 2;
+    // Whether to display all fields in the hunt group client info display template.
+    bool display_all_fields = 3;
+    // The number of contact fields in the hunt group client info display template.
+    int64 defined_field_count = 4;
+  }
+
+  // WebLinkDetails is the entity for hunt group web link details.
+  message WebLinkDetails {
+    // The hunt group web link name.
+    string name = 1;
+    // The hunt group web link description.
+    string description = 2;
+    // The hunt group web link base url.
+    string base_url = 3;
+    // The number of the hunt group web link parameters.
+    int64 parameter_count = 4;
+  }
+
+  // TriggerDetails is the entity for hunt group trigger details.
+  message TriggerDetails {
+    // The hunt group trigger description.
+    string description = 1;
+    // The hunt group trigger agent status.
+    AgentStatus status = 2;
+    // The hunt group trigger duration.
+    int64 duration = 3;
+    // The hunt group trigger action.
+    TriggerAction action = 4;
+  }
+
+  // IntegrationLinkDetails is the entity for hunt group integration link details.
+  message IntegrationLinkDetails {
+    // The hunt group integration link name.
+    string name = 1;
+    // The hunt group integration link description.
+    string description = 2;
   }
 }
 

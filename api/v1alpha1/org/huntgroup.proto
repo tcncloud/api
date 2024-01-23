@@ -59,6 +59,58 @@ message UpdateHuntGroupSettingsRequest {
 // Response message for the UpdateHuntGroupSettings RPC method.
 message UpdateHuntGroupSettingsResponse {}
 
+// CreateHuntGroupRequest represents the request message for the CreateHuntGroup RPC method.
+message CreateHuntGroupRequest {
+  // The hunt group name.
+  string name = 1;
+  // The hunt group description.
+  string description = 2;
+  // The hunt group type.
+  api.commons.org.HuntGroupType type = 3;
+}
+
+// CreateHuntGroupResponse represents the response message for the CreateHuntGroup RPC method.
+message CreateHuntGroupResponse {
+  // The hunt group sid.
+  int64 hunt_group_sid = 1;
+}
+
+// UpdateHuntGroupGeneralDetailsRequest represents the request message for the UpdateHuntGroupGeneralDetails RPC method.
+message UpdateHuntGroupGeneralDetailsRequest {
+  // The hunt group sid.
+  int64 hunt_group_sid = 1;
+  // The hunt group name.
+  string name = 2;
+  // The hunt group description.
+  string description = 3;
+  // The hunt group type.
+  api.commons.org.HuntGroupType type = 4;
+}
+
+// UpdateHuntGroupGeneralDetailsResponse represents the response message for the UpdateHuntGroupGeneralDetails RPC method.
+message UpdateHuntGroupGeneralDetailsResponse {}
+
+// DeleteHuntGroupRequest represents the request message for the DeleteHuntGroup RPC method.
+message DeleteHuntGroupRequest {
+  // The hunt group sid.
+  int64 hunt_group_sid = 1;
+}
+
+// DeleteHuntGroupResponse represents the response message for the DeleteHuntGroup RPC method.
+message DeleteHuntGroupResponse {}
+
+// GetHuntGroupDetailsRequest is the request message for the GetHuntGroupDetails RPC method.
+message GetHuntGroupDetailsRequest {
+  // The hunt group sid.
+  int64 hunt_group_sid = 1;
+}
+
+// GetHuntGroupDetailsResponse is the response message for the GetHuntGroupDetails RPC method.
+message GetHuntGroupDetailsResponse {
+  // The hunt group details.
+  api.commons.org.HuntGroupDetails hunt_group_details = 1;
+}
+
 // Request messsage for getting the org related list of Caller ID Bucket Data.
 message ListCallerIdBucketsRequest {}
 

@@ -1523,6 +1523,59 @@ service Org {
     };
   }
 
+  // CreateHuntGroup is the RPC method for creating a hunt group.
+  // It will create a hunt group with the given general details.
+  rpc CreateHuntGroup(CreateHuntGroupRequest) returns (CreateHuntGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/createhuntgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT],
+        }
+      ];
+    };
+  }
+
+  // UpdateHuntGroupGeneralDetails is the RPC method for updating the general details of a hunt group.
+  rpc UpdateHuntGroupGeneralDetails(UpdateHuntGroupGeneralDetailsRequest) returns (UpdateHuntGroupGeneralDetailsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatehuntgroupgeneraldetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT],
+        }
+      ];
+    };
+  }
+
+  // DeleteHuntGroup is the RPC method for deleting a hunt group.
+  rpc DeleteHuntGroup(DeleteHuntGroupRequest) returns (DeleteHuntGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/deletehuntgroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT],
+        }
+      ];
+    };
+  }
+
+  // GetHuntGroupDetails returns the hunt group details for the given hunt group.
+  rpc GetHuntGroupDetails(GetHuntGroupDetailsRequest) returns (GetHuntGroupDetailsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/gethuntgroupdetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW],
+        }
+      ];
+    };
+  }
+
   // Lists caller id numbers with their associated region codes for the given
   // bucket.
   rpc ListCallerIdBuckets(ListCallerIdBucketsRequest) returns (ListCallerIdBucketsResponse) {
