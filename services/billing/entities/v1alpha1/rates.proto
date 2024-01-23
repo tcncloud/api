@@ -11,14 +11,10 @@ import "services/billing/entities/v1alpha1/modules.proto";
 message RateDefinition {
   // the resource identifier
   string rate_definition_id = 1;
-  // the feature this rate definition is a part of (i.e. event_type + config_type);
-  // should always be set unless adding a rate definition to the
-  // default billing plan.
-  string rate_definition_feature_id = 2;
-  // the group this rate definition is a part of (i.e. matching_rule + matching_config);
-  // should always be set unless adding a rate definition to the
-  // default billing plan.
-  string rate_definition_group_id = 3;
+  // unused
+  string rate_definition_feature_id = 2 [deprecated = true];
+  // unused
+  string rate_definition_group_id = 3 [deprecated = true];
   // the event type this definition rates
   api.commons.audit.EventType event_type = 4;
   // the config type of this definitioin
