@@ -6,23 +6,35 @@ package services.billing.entities.v1alpha1;
 // rate definition.
 enum MatchingRule {
   MATCHING_RULE_UNSPECIFIED = 0;
-  MATCHING_RULE_AREA_CODE = 1;
+  MATCHING_RULE_AREA_CODE = 1 [deprecated = true];
+  MATCHING_RULE_COUNTRY_PREFIX = 2;
 }
 
 // MatchingConfig represents the configuration for matching
 // an event to a rate definition.
 message MatchingConfig {
+  // the name of the matching configuration.
+  string name = 2;
+  // the configuration data.
   oneof config {
-    MatchingConfigAreaCode area_code = 1;
+    MatchingConfigAreaCode area_code = 1 [deprecated = true];
+    MatchingConfigCountryPrefix country_prefix = 100;
   }
 }
 
-// MatchingConfigAreaCode represents the configuration for
-// matching an event to a rate definition based on the area
-// code of the event.
 message MatchingConfigAreaCode {
-  // The name of this matching configuration.
-  string name = 1;
-  // The area codes to match.
-  repeated string area_codes = 2;
+  option deprecated = true;
+  string name = 1 [deprecated = true];
+  repeated string area_codes = 2 [deprecated = true];
+}
+
+// MatchingConfigCountryPrefix represents the configuration for matching
+// an event to a rate definition using the country code and a set of
+// prefixes. The longest prefix match is used.
+message MatchingConfigCountryPrefix {
+  // The country code to match.
+  int32 country_code = 1;
+  // The list of prefixes (if any) to match after successfully matching
+  // the country code.
+  repeated string prefixes = 2;
 }
