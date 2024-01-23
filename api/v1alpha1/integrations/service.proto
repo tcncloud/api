@@ -354,6 +354,18 @@ service Integrations {
       ];
     };
   }
+  // CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+  rpc CallEpicPatient(CallEpicPatientReq) returns (CallEpicPatientRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/callepicpatient";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+  // CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+  rpc HangUpEpicPatientCall(HangUpEpicPatientCallReq) returns (Empty) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/hangupepicpatientcall";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1242,4 +1254,40 @@ message GetPortalLinksByDateRangeReq {
 // GetPortalLinksByDateRangeRes returns a page of data
 message GetPortalLinksByDateRangeRes {
   repeated PortalLinkTransactionRow rows = 2;
+}
+
+message CallEpicPatientReq {
+  // The PhoneAgentID is the user’s ID in the phone system (TCN), which indicates to the phone system (TCN) which user is initiating a call.
+  // At least one of PhoneAgentID and OriginPhoneExtension must be populated.
+  // The property will always be sent, although it may not be populated.
+  string PhoneAgentID = 1;
+  // The extension used as the phone number for the call initiated from Epic.
+  // At least one of PhoneAgentID and OriginPhoneExtension must be populated.
+  // The property will always be sent, although it may not be populated.
+  string OriginPhoneExtension = 2;
+  // The phone number that should be dialed.
+  string PhoneNumber = 3;
+  // The internal ID of the record in Epic that represents this call.
+  // The phone system can store the ID to allow later linking of reports,
+  // and to update Epic with information about the call if necessary in the future.
+  // The property will always be sent, although it may not be populated.
+  string EpicCallID = 4;
+}
+
+message CallEpicPatientRes {
+  // A unique identifier for the call in the phone system. The VoiceSessionID.
+  string PhoneSystemCallID = 1;
+}
+
+message HangUpEpicPatientCallReq {
+  // The PhoneAgentID is the user’s ID in the phone system (TCN), which indicates to the phone system (TCN) which user is initiating a call.
+  // At least one of PhoneAgentID and OriginPhoneExtension must be populated.
+  // The property will always be sent, although it may not be populated.
+  string PhoneAgentID = 1;
+  // The extension used as the phone number for the call initiated from Epic.
+  // At least one of PhoneAgentID and OriginPhoneExtension must be populated.
+  // The property will always be sent, although it may not be populated.
+  string OriginPhoneExtension = 2;
+  // The internal ID of the record in Epic that represents this call.
+  string EpicCallID = 3;
 }
