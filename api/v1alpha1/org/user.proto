@@ -894,3 +894,75 @@ message GetUserSessionDataResponse {
   // A list of the labels associated with the user
   repeated api.commons.org.Label labels = 5;
 }
+
+// Request message for the RefreshMfaLockout rpc.
+message RefreshMfaLockoutRequest {
+  // The id of the user to refresh.
+  string user_id = 1;
+}
+
+// Response message for the RefreshMfaLockout rpc.
+message RefreshMfaLockoutResponse {
+  // The new time that the user must setup mfa by.
+  google.protobuf.Timestamp timeout = 1;
+}
+
+// Request message for the RefreshMfaLockoutByOrgId rpc.
+message RefreshMfaLockoutByOrgIdRequest {
+  // The id of the user to refresh.
+  string user_id = 1;
+  // The id of the org the user belongs to.
+  string org_id = 2;
+}
+
+// Response message for the RefreshMfaLockoutByOrgId rpc.
+message RefreshMfaLockoutByOrgIdResponse {
+  // The new time that the user must setup mfa by.
+  google.protobuf.Timestamp timeout = 1;
+}
+
+// Request message for the SetMfaTypeRequest rpc.
+message SetMfaTypeRequest {
+  oneof mfa_type {
+    api.commons.org.MfaInfo.OtpType otp = 1;
+  }
+}
+
+// Response message for the SetMfaTypeRequest rpc.
+message SetMfaTypeResponse {}
+
+// Request message for the EnableUserMfa rpc.
+message EnableUserMfaRequest {
+  // The user to enable mfa for.
+  string user_id = 1;
+  // Whether or not mfa is enabled for the user.
+  bool enabled = 2;
+}
+
+// Response message for the EnableUserMfa rpc.
+message EnableUserMfaResponse {}
+
+// Request message for the EnableMyUserMfa rpc.
+message EnableMyUserMfaRequest {}
+
+// Response message for the EnableUserMfa rpc.
+message EnableMyUserMfaResponse {}
+
+// Request message for the GetUserMfaInfo rpc.
+message GetUserMfaInfoRequest {
+  // The user to get the mfa info of.
+  string user_id = 1;
+}
+
+// Response message for the GetUserMfaInfo rpc.
+message GetUserMfaInfoResponse {
+  api.commons.org.MfaInfo info = 1;
+}
+
+// Response message for the GetMyUserMfaInfo rpc.
+message GetMyUserMfaInfoRequest {}
+
+// Request message for the GetMyUserMfaInfo rpc.
+message GetMyUserMfaInfoResponse {
+  api.commons.org.MfaInfo info = 1;
+}
