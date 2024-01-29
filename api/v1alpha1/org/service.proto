@@ -2469,4 +2469,95 @@ service Org {
       ];
     };
   }
+
+  // RefreshMfaLockout resets the lockout timer for the given user.
+  rpc RefreshMfaLockout(RefreshMfaLockoutRequest) returns (RefreshMfaLockoutResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/refreshmfalockout";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+  rpc RefreshMfaLockoutByOrgId(RefreshMfaLockoutByOrgIdRequest) returns (RefreshMfaLockoutByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/refreshmfalockoutbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SetMfaType sets the current user's mfa type.
+  rpc SetMfaType(SetMfaTypeRequest) returns (SetMfaTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/setmfatype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // EnableUserMfa enables or disables mfa for the given user
+  rpc EnableUserMfa(EnableUserMfaRequest) returns (EnableUserMfaResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/enableusermfa";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // EnableMyUserMfa enables mfa for the current user
+  rpc EnableMyUserMfa(EnableMyUserMfaRequest) returns (EnableMyUserMfaResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/enablemyusermfa";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // GetUserMfaInfo returns the mfa info for the given user.
+  rpc GetUserMfaInfo(GetUserMfaInfoRequest) returns (GetUserMfaInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/getusermfainfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetMyUserMfaInfo returns the mfa info for the current user.
+  rpc GetMyUserMfaInfo(GetMyUserMfaInfoRequest) returns (GetMyUserMfaInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/getmyusermfainfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
 }

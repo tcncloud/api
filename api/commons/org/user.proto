@@ -104,6 +104,35 @@ message User {
   bool email_verified = 401;
 }
 
+// MFA/2FA Information
+message MfaInfo {
+  // The org the user belongs to.
+  string org_id = 1;
+  // The user that the MFA info belongs to.
+  string user_id = 2;
+  // Whether or not MFA is enabled for the user.
+  bool mfa_enabled = 3;
+
+  oneof mfa_type {
+    NoneSelected none = 10;
+    OtpType otp = 11;
+  }
+
+  message NoneSelected {
+    // The time by wich the user must setup MFA
+    // to avoid being locked out.
+    google.protobuf.Timestamp timeout = 1;
+  }
+
+  message OtpType {
+    oneof delivery_method {
+      EmailDeliveryMethod email = 1;
+    }
+
+    message EmailDeliveryMethod {}
+  }
+}
+
 // Agent skill
 message Skill {
   int64 level = 1;
