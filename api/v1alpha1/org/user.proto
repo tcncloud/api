@@ -880,6 +880,9 @@ message GetUserSessionDataResponse {
     bool agent = 31;
     // a bool to determine whether or not user is account owner
     bool account_owner = 32;
+
+    // Timestamp beyond which the user is required to have multi factor authentication set up
+    google.protobuf.Timestamp mfa_timestamp = 33;
   }
 
   // The user the data is about
@@ -893,6 +896,8 @@ message GetUserSessionDataResponse {
   repeated api.commons.org.PermissionGroup permission_groups = 4;
   // A list of the labels associated with the user
   repeated api.commons.org.Label labels = 5;
+  // A boolean for if the organization allows multi factor authentication
+  bool org_allowed_mfa = 6;
 }
 
 // Request message for the RefreshMfaLockout rpc.
