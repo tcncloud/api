@@ -87,6 +87,46 @@ service PBXService {
     };
   }
 
+  // Returns details of the SIP Account associated with the sip_id
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc GetSIPAccount(GetSIPAccountRequest) returns (GetSIPAccountResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/getsipaccount";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Returns details of all SIP Accounts associated with the authenticated callers ORG
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc ListSIPAccounts(ListSIPAccountsRequest) returns (ListSIPAccountsResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/listsipaccounts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ];
+    };
+  }
+
   // Updates details of the SIP Account for the specific SIP Account within the authenticated callers ORG.
   // Allows for updating, activating, and deactivating a user.
   // Required permissions:
@@ -222,6 +262,7 @@ message SIPAccount {
   bool is_active = 2;
   string extension = 3;
   repeated string ring_group_ids = 4;
+  string org_user_id = 5;
 }
 
 message RingGroup {
@@ -240,6 +281,18 @@ message ListPBXUsersRequest {}
 
 message ListPBXUsersResponse {
   repeated PBXUser users = 1;
+}
+
+message ListSIPAccountsRequest {}
+
+message ListSIPAccountsResponse {
+  repeated SIPAccount sip_accounts = 1;
+}
+
+message GetSIPAccountRequest {}
+
+message GetSIPAccountResponse {
+  repeated SIPAccount sip_account = 1;
 }
 
 message GetPBXUserRequest {
