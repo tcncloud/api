@@ -62,6 +62,15 @@ message DeleteSkillGroupRequest {
 // Response message for the DeleteSkillGroup rpc.
 message DeleteSkillGroupResponse {}
 
+// Request message for the RemoveSkillFromAllGroups rpc.
+message RemoveSkillFromAllGroupsRequest {
+  // The skill sid of the skill to remove.
+  int64 skill_sid = 1;
+}
+
+// Response message for the RemoveSkillFromAllGroups rpc.
+message RemoveSkillFromAllGroupsResponse {}
+
 // Request message for the AssignSkillGroups rpc.
 message AssignSkillGroupsRequest {
   // The ids of the skill groups to be assigned.

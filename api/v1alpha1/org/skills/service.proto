@@ -72,6 +72,19 @@ service SkillsService {
     };
   }
 
+  // RemoveSkillFromAllGroups removes a skill from all skill groups which contain it.
+  rpc RemoveSkillFromAllGroups(RemoveSkillFromAllGroupsRequest) returns (RemoveSkillFromAllGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/removeskillfromallgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
   // AssignSkillGroups assigns a user to the given skill groups.
   rpc AssignSkillGroups(AssignSkillGroupsRequest) returns (AssignSkillGroupsResponse) {
     option (google.api.http).post = "/api/v1alpha1/skills/assignskillgroups";
