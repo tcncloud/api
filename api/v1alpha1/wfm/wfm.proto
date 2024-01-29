@@ -2521,6 +2521,27 @@ service WFM {
     };
   }
 
+  // Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+  // If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+  //   Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.Invalid: one or more fields in the request have invalid values.
+  //   -grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+  //   -grpc.Internal: error occurs when creating the shift instance or its members.
+  rpc CreateShiftInstanceWithSegments(CreateShiftInstanceWithSegmentsRequest) returns (CreateShiftInstanceWithSegmentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createshiftinstancewithsegments";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
   // Any shift segments will be split between the two shift instances at @time_to_split.
   // If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
@@ -2592,6 +2613,30 @@ service WFM {
   //   - grpc.Internal: error occurs when updating the shift instance.
   rpc UpdateShiftInstanceV2(UpdateShiftInstanceV2Req) returns (UpdateShiftInstanceV2Res) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancev2";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Runs diagnostics on the given @shift_instance for the org sending the request.
+  // If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+  // Otherwise, the shift will only be updated if there are no diagnostic errors.
+  // Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+  //
+  // Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+  // If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+  rpc UpdateShiftInstanceWithSegments(UpdateShiftInstanceWithSegmentsRequest) returns (UpdateShiftInstanceWithSegmentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancewithsegments";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -6238,6 +6283,24 @@ message CreateShiftInstanceV2Res {
   repeated Diagnostic diagnostics = 2;
 }
 
+// Request message for the CreateShiftInstanceWithSegments RPC.
+message CreateShiftInstanceWithSegmentsRequest {
+  // Shift instance with any member shift segments and shift segment call stats to create.
+  ShiftInstance shift_instance = 1;
+  // If set to true, it will create the shift regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not create the shift.
+  bool ignore_diagnostics_errors = 2;
+}
+
+// Response message for the CreateShiftInstanceWitSegments RPC.
+message CreateShiftInstanceWithSegmentsResponse {
+  // The newly created shift instance and any created shift instances and shift segment call stats.
+  ShiftInstance shift_instance = 1;
+  // Any diagnostics encountered when creating @shift_instance.
+  // If ignore_diagnostics_errors is true, then any diagnostic errors will be returned as warnings.
+  repeated Diagnostic diagnostics = 2;
+}
+
 // Request message for the SplitShiftInstance RPC
 message SplitShiftInstanceReq {
   // ID of the shift instance to split.
@@ -6319,6 +6382,24 @@ message UpdateShiftInstanceV2Res {
   // The updated shift instance.
   ShiftInstance shift_instance = 1;
   // A list of diagnostics for any errors encountered, which prevented the update.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the UpdateShiftInstanceWithSegments RPC.
+message UpdateShiftInstanceWithSegmentsRequest {
+  // Instance to update with member shift segments to replace.
+  // Any existing shift segments belonging to the instances will be deleted.
+  ShiftInstance shift_instance = 1;
+  // If set to true, it will update the shift instance regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not do the update.
+  bool ignore_diagnostics_errors = 2;
+}
+
+// Reponse message for the UpdateShiftInstanceWithSegments RPC.
+message UpdateShiftInstanceWithSegmentsResponse {
+  // Instance that was updated, with member shift segments and call stats.
+  ShiftInstance shift_instance = 1;
+  // A list of diagnostics for any errors encountered with the shift instance in the request.
   repeated Diagnostic diagnostics = 2;
 }
 
