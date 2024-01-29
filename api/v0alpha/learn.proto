@@ -181,6 +181,8 @@ message ContentRes {
   repeated LearnImage images = 3;
   // title of the article
   string title = 4;
+  // view total count
+  int64 total_view_count = 5;
 }
 
 // request to retreive last user edited learning pages content
