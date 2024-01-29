@@ -931,10 +931,23 @@ message SetMfaTypeRequest {
   oneof mfa_type {
     api.commons.org.MfaInfo.OtpType otp = 1;
   }
+
+  // The id of the user to set the mfa type for.
+  string user_id = 2;
 }
 
 // Response message for the SetMfaTypeRequest rpc.
 message SetMfaTypeResponse {}
+
+// Request message for the SetMyMfaTypeRequest rpc.
+message SetMyMfaTypeRequest {
+  oneof mfa_type {
+    api.commons.org.MfaInfo.OtpType otp = 1;
+  }
+}
+
+// Response message for the SetMyMfaTypeRequest rpc.
+message SetMyMfaTypeResponse {}
 
 // Request message for the EnableUserMfa rpc.
 message EnableUserMfaRequest {

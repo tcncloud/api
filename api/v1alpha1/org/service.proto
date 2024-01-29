@@ -2496,9 +2496,22 @@ service Org {
     };
   }
 
-  // SetMfaType sets the current user's mfa type.
+  // SetMfaType sets the given user's mfa type.
   rpc SetMfaType(SetMfaTypeRequest) returns (SetMfaTypeResponse) {
     option (google.api.http).post = "/api/v1alpha1/user/setmfatype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // SetMyMfaType sets the current user's mfa type.
+  rpc SetMyMfaType(SetMyMfaTypeRequest) returns (SetMyMfaTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/setmymfatype";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
