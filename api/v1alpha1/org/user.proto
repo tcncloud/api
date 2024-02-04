@@ -136,6 +136,8 @@ message GetMyUserResponse {
   repeated api.commons.org.Trust trusts = 11;
   // Whether the user is an account owner
   bool account_owner = 12;
+  // if the user email is verified
+  bool email_verified = 14;
 }
 
 // Request message for GetUser.
@@ -222,6 +224,8 @@ message GetUserResponse {
   bool password_reset_required = 28;
   // Whether the user is an account owner
   bool account_owner = 29;
+  // if the user's email is verified
+  bool email_verified = 30;
 }
 
 // Request message for GetUserByOrgId.
@@ -276,6 +280,8 @@ message GetUserByOrgIdResponse {
   repeated api.commons.org.Trust trusts = 21;
   // Whether the user is an account owner
   bool account_owner = 22;
+  // if the user's email is verified
+  bool email_verified = 23;
 }
 
 // Request message for listAgents rpc.
@@ -928,12 +934,12 @@ message RefreshMfaLockoutByOrgIdResponse {
 
 // Request message for the SetMfaTypeRequest rpc.
 message SetMfaTypeRequest {
-  oneof mfa_type {
-    api.commons.org.MfaInfo.OtpType otp = 1;
-  }
+  reserved 1, 2;
+  reserved "otp", "user_id";
 
-  // The id of the user to set the mfa type for.
-  string user_id = 2;
+  // The info object to pull the type from.
+  // The user id field must be provided.
+  api.commons.org.MfaInfo info = 3;
 }
 
 // Response message for the SetMfaTypeRequest rpc.
@@ -941,9 +947,10 @@ message SetMfaTypeResponse {}
 
 // Request message for the SetMyMfaTypeRequest rpc.
 message SetMyMfaTypeRequest {
-  oneof mfa_type {
-    api.commons.org.MfaInfo.OtpType otp = 1;
-  }
+  reserved 1;
+  reserved "otp";
+  // The info object to pull the type from.
+  api.commons.org.MfaInfo info = 2;
 }
 
 // Response message for the SetMyMfaTypeRequest rpc.
