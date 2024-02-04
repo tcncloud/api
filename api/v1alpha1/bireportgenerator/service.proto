@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package api.v1alpha1.bireportgenerator;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/bireportgenerator/entities.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+
+// BIReportGeneratorService is the service for generating BI reports.
+service BIReportGeneratorService {
+  // CreateReportJob creates a new report job.
+  rpc CreateReportJob(CreateReportJobRequest) returns (CreateReportJobResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/createreportjob";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_INSIGHTS_DASHBOARD_VIEW
+          ]
+        }
+      ];
+    };
+  }
+  // ListReportJobs lists report jobs.
+  rpc ListReportJobs(ListReportJobsRequest) returns (ListReportJobsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/listreportjobs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_INSIGHTS_DASHBOARD_VIEW
+          ]
+        }
+      ];
+    };
+  }
+  // UpdateReportJob updates a report job.
+  rpc UpdateReportJob(UpdateReportJobRequest) returns (UpdateReportJobResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/updatereportjob";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_INSIGHTS_DASHBOARD_VIEW
+          ]
+        }
+      ];
+    };
+  }
+  // DeleteReportJob deletes a report job.
+  rpc DeleteReportJob(DeleteReportJobRequest) returns (DeleteReportJobResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/deletereportjob";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_INSIGHTS_DASHBOARD_VIEW
+          ]
+        }
+      ];
+    };
+  }
+  // GetReportJob gets a report job.
+  rpc GetReportJob(GetReportJobRequest) returns (GetReportJobResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/getreportjob";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_DASHBOARDS_VIEW,
+            PERMISSION_INSIGHTS_DASHBOARD_VIEW
+          ]
+        }
+      ];
+    };
+  }
+}
+
+// CreateReportJobRequest is the request for creating a report job.
+message CreateReportJobRequest {
+  // The report job to create.
+  ReportJob report_job = 1;
+}
+
+// CreateReportJobResponse is the response for creating a report job.
+message CreateReportJobResponse {
+  // The created report job.
+  ReportJob report_job = 1;
+}
+
+// ListReportJobsRequest is the request for listing report jobs.
+message ListReportJobsRequest {}
+
+// ListReportJobsResponse is the response for listing report jobs.
+message ListReportJobsResponse {
+  // The report jobs.
+  repeated ReportJob report_jobs = 1;
+}
+
+// UpdateReportJobRequest is the request for updating a report job.
+message UpdateReportJobRequest {
+  // The report job to update.
+  ReportJob report_job = 1;
+
+  // The fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// UpdateReportJobResponse is the response for updating a report job.
+message UpdateReportJobResponse {
+  // The updated report job.
+  ReportJob report_job = 1;
+}
+
+// DeleteReportJobRequest is the request for deleting a report job.
+message DeleteReportJobRequest {
+  // id of the report job to delete.
+  string report_job_id = 1;
+}
+
+// DeleteReportJobResponse is the response for deleting a report job.
+message DeleteReportJobResponse {}
+
+// GetReportJobRequest is the request for getting a report job.
+message GetReportJobRequest {
+  // id of the report job to get.
+  string report_job_id = 1;
+}
+
+// GetReportJobResponse is the response for getting a report job.
+message GetReportJobResponse {
+  // The report job.
+  ReportJob report_job = 1;
+}

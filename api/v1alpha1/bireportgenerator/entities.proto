@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api.v1alpha1.bireportgenerator;
+
+import "api/commons/bireportgenerator.proto";
+import "api/commons/enums.proto";
+
+// ReportJob that can be scheduled to report dashboard data.
+message ReportJob {
+  // unique identifier for the report job
+  string report_job_id = 1;
+  // name of the report job
+  string name = 2;
+  // description of the report job
+  string description = 3;
+  // dashboard id to report
+  string dashboard_id = 4;
+  // timezone to use for the report schedule
+  string time_zone = 5;
+  // time period of data to report with
+  commons.TimePeriod time_period = 6;
+  // delivery times for the report
+  commons.DeliveryTimes delivery_times = 7;
+  // days filter to report on
+  commons.DayFilter day_filter = 8;
+  // months filter to report on
+  repeated commons.Month months = 9;
+  // format options for the report
+  commons.FormatOptions format_options = 10;
+  // delivery options for the report
+  commons.DeliveryOptions delivery_options = 11;
+  // whether the report job is active
+  bool is_active = 12;
+  // whether to send an empty report if no data is available
+  bool send_empty_report = 13;
+}
