@@ -289,7 +289,9 @@ message ListSIPAccountsResponse {
   repeated SIPAccount sip_accounts = 1;
 }
 
-message GetSIPAccountRequest {}
+message GetSIPAccountRequest {
+  string sip_account_id = 1;
+}
 
 message GetSIPAccountResponse {
   repeated SIPAccount sip_account = 1;
