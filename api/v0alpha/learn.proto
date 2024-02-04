@@ -183,6 +183,8 @@ message ContentRes {
   string title = 4;
   // view total count
   int64 total_view_count = 5;
+  // The user who edited the content last
+  string last_edited_user = 6;
 }
 
 // request to retreive last user edited learning pages content
