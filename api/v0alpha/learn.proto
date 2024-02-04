@@ -153,6 +153,32 @@ service Learn {
       ];
     };
   }
+
+  // create edit version
+  rpc CreateEditVersion(CreateEditVersionReq) returns (CreateEditVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/createeditversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // publish version
+  rpc PublishVersion(PublishVersionReq) returns (PublishVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/publishversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -364,3 +390,23 @@ message DeleteLearnPagesReq {
 
 // response to delete learn pages
 message DeleteLearnPagesRes {}
+
+// request to create edit version
+message CreateEditVersionReq {
+  // src version
+  string src_version = 1;
+  // dest version
+  string dest_version = 2;
+}
+
+// response to create edit version
+message CreateEditVersionRes {}
+
+// request to publish version
+message PublishVersionReq {
+  // publish version
+  string publish_version = 1;
+}
+
+// response to publish version
+message PublishVersionRes {}
