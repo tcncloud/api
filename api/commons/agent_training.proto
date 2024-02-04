@@ -20,6 +20,12 @@ message LearningOpportunity {
   LearningOpportunityStatus status = 13; // Current status (ex: OPEN, COMPLETED).
   LearningOpportunityOrigin origin = 14; // Origin (ie. opportunity created from).
   string creator_user_id = 15; // User id for the creator of the learning opportunity.
+
+  // (Optional) Identifier linking to the entity the opportunity was created from.
+  oneof origin_identifier {
+    int64 evaluation_id = 16; // (Scorecards) Evaluation created from.
+    int64 auto_evaluation_id = 17; // (Scorecards) Auto Evaluation created from.
+  }
 }
 
 // LearningOpportunityStatus describes the status of the learning opportunity.
