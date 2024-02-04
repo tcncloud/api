@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "google/protobuf/timestamp.proto";
+
+message DeliveryFailureEvent {
+  int64 delivery_definition_name = 1;
+  string org_id = 2;
+  int64 transaction_sid = 3;
+  repeated string attachment_names = 4;
+  google.protobuf.Timestamp failure_time = 5;
+  string failure_error_message = 6;
+  string definition = 7;
+  string original_payload = 8;
+}
+
+message DeliverySuccessEvent {
+  string delivery_definition_name = 1;
+  string org_id = 2;
+  int64 transaction_sid = 3;
+  repeated string attachment_names = 4;
+  google.protobuf.Timestamp success_time = 5;
+  string success_message = 6;
+}
