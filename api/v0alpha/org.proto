@@ -3239,6 +3239,8 @@ message UserDetails {
   api.commons.TimeZoneWrapper time_zone_override = 32;
   // email of the user. empty if none set
   string email = 34;
+  // if the user's email is verified
+  bool email_verified = 36;
 
   // Trusts assigned to the user.
   repeated api.commons.org.Trust trusts = 200;
