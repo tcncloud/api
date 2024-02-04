@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "api/commons/enums.proto";
+
+// RepeatFrequency is an enum for how often a report should be executed.
+enum RepeatFrequency {
+  REPEAT_FREQUENCY_UNSPECIFIED = 0;
+  REPEAT_FREQUENCY_ON_HOUR = 1;
+  REPEAT_FREQUENCY_15_MINUTES = 2;
+  REPEAT_FREQUENCY_30_MINUTES = 3;
+}
+
+// DayFilterType is an enum for the type of day filter.
+enum DayFilterType {
+  DAY_FILTER_TYPE_UNSPECIFIED = 0;
+  DAY_FILTER_TYPE_EVERY_DAY = 1;
+  DAY_FILTER_TYPE_DAY_OF_WEEK = 2;
+  DAY_FILTER_TYPE_DAY_OF_MONTH = 3;
+}
+
+// ReportFormat is an enum for the format of the report.
+enum ReportFormat {
+  REPORT_FORMAT_UNSPECIFIED = 0;
+  REPORT_FORMAT_CSV = 1;
+}
+
+// TimePeriodEnum is an enumeration of time period filters.
+enum TimePeriod {
+  TIME_PERIOD_UNSPECIFIED = 0;
+  TIME_PERIOD_TODAY = 1;
+  TIME_PERIOD_THIS_WEEK = 2;
+  TIME_PERIOD_THIS_MONTH = 3;
+  TIME_PERIOD_THIS_YEAR = 4;
+  TIME_PERIOD_THE_DAY_SO_FAR = 5;
+  TIME_PERIOD_WEEK_TO_DATE = 6;
+  TIME_PERIOD_MONTH_TO_DATE = 7;
+  TIME_PERIOD_YEAR_TO_DATE = 8;
+  TIME_PERIOD_YESTERDAY = 9;
+  TIME_PERIOD_DAY_BEFORE_YESTERDAY = 10;
+  TIME_PERIOD_THIS_DAY_LAST_WEEK = 11;
+  TIME_PERIOD_PREVIOUS_WEEK = 12;
+  TIME_PERIOD_PREVIOUS_MONTH = 13;
+  TIME_PERIOD_PREVIOUS_YEAR = 14;
+  TIME_PERIOD_LAST_15_MINUTES = 15;
+  TIME_PERIOD_LAST_30_MINUTES = 16;
+  TIME_PERIOD_LAST_1_HOUR = 17;
+  TIME_PERIOD_LAST_2_HOURS = 18;
+  TIME_PERIOD_LAST_3_HOURS = 19;
+  TIME_PERIOD_LAST_4_HOURS = 20;
+  TIME_PERIOD_LAST_6_HOURS = 21;
+  TIME_PERIOD_LAST_12_HOURS = 22;
+  TIME_PERIOD_LAST_24_HOURS = 23;
+  TIME_PERIOD_LAST_2_DAYS = 24;
+  TIME_PERIOD_LAST_3_DAYS = 25;
+  TIME_PERIOD_LAST_7_DAYS = 26;
+  TIME_PERIOD_LAST_2_WEEKS = 27;
+  TIME_PERIOD_LAST_30_DAYS = 28;
+  TIME_PERIOD_LAST_60_DAYS = 29;
+  TIME_PERIOD_LAST_90_DAYS = 30;
+  TIME_PERIOD_LAST_6_MONTHS = 31;
+  TIME_PERIOD_LAST_1_YEAR = 32;
+  TIME_PERIOD_LAST_2_YEARS = 33;
+  TIME_PERIOD_LAST_5_YEARS = 34;
+}
+
+// DeliveryTimes is a message for the delivery times of a report.
+message DeliveryTimes {
+  // seconds after midnight when the report should be delivered.
+  repeated int32 delivery_times = 2;
+  // repeat_frequency is the frequency of the report.
+  RepeatFrequency repeat_frequency = 3;
+}
+
+// DayOfWeekFilter filters the days of the week for a report.
+message DayOfWeekFilter {
+  // days_of_weeks is a list of days of the week.
+  repeated Weekday.Enum days_of_weeks = 1;
+  // weeks_of_months is a list of weeks of the month.
+  repeated int32 weeks_of_months = 2;
+}
+
+// DayOfMonthFilter filters the days of the month for a report.
+message DayOfMonthFilter {
+  // day_of_months is a list of days of the month.
+  repeated int32 day_of_months = 1;
+  // is_last_day_of_month is a flag for the last day of the month.
+  bool is_last_day_of_month = 2;
+}
+
+// DayFilter is used to specify days for a report to be delivered.
+message DayFilter {
+  // type is the type of day filter.
+  DayFilterType type = 1;
+  oneof filter {
+    // day_of_week_filter is the filter for days of the week.
+    DayOfWeekFilter day_of_week_filter = 2;
+    // day_of_month_filter is the filter for days of the month.
+    DayOfMonthFilter day_of_month_filter = 3;
+  }
+}
+
+// FormatOptions is a message for the format options of a report.
+message FormatOptions {
+  // report_format is the format of the report.
+  ReportFormat report_format = 1;
+  // filename_parts are the parts to build the filename.
+  repeated string filename_parts = 2;
+}
+
+// DeliveryOptions is a message for the delivery options of a report.
+message DeliveryOptions {
+  // transfer_config_sid is the transfer config sid to deliver the report.
+  int64 transfer_config_sid = 1;
+  // failure_notification_emails are the emails to notify on failure.
+  repeated string failure_notification_emails = 2;
+}
