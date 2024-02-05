@@ -205,10 +205,22 @@ enum EventType {
   TICKET_ACTION_STATE_CHANGE_EVENT = 605;
 
   TICKET_PARTICIPANT_EVENT = 606;
-  // Change For Create/Reply Comments
+  // ticket-create comment event
   TICKET_CREATE_COMMENT_EVENT = 607;
+  // ticket-reply comment event
   TICKET_REPLY_COMMENT_EVENT = 608;
-
+  // ticket-create-template event
+  TICKET_TEMPLATE_CREATE_EVENT = 609;
+  // ticket-edit-template event
+  TICKET_TEMPLATE_EDIT_EVENT = 610;
+  // ticket-close-template event
+  TICKET_TEMPLATE_CLOSE_EVENT = 611;
+  // ticket-assign-template event
+  TICKET_TEMPLATE_ASSIGN_EVENT = 612;
+  // ticket-state-change-template event
+  TICKET_TEMPLATE_STATE_CHANGE_EVENT = 613;
+  // ticket-project-state event
+  TICKET_PROJECT_STATE_CHANGE_EVENT = 614;
   // Compliance Events
   // rnd query event
   COMPLIANCE_RND_QUERY_EVENT = 700;
