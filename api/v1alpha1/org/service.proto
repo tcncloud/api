@@ -1885,6 +1885,60 @@ service Org {
     };
   }
 
+  // Hunt Group Scripts
+
+  // GetHuntGroupScript gets the hunt group script for a given hunt group
+  rpc GetHuntGroupScript(GetHuntGroupScriptRequest) returns (GetHuntGroupScriptResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/gethuntgroupscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW],
+        }
+      ];
+    };
+  }
+
+  // CreateHuntGroupScript adds a hunt group script within the given hunt group
+  rpc CreateHuntGroupScript(CreateHuntGroupScriptRequest) returns (CreateHuntGroupScriptResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/createhuntgroupscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateHuntGroupScript updates a hunt group script within the given hunt group
+  rpc UpdateHuntGroupScript(UpdateHuntGroupScriptRequest) returns (UpdateHuntGroupScriptResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatehuntgroupscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteHuntGroupScript removes a hunt group script within the given hunt group
+  rpc DeleteHuntGroupScript(DeleteHuntGroupScriptRequest) returns (DeleteHuntGroupScriptResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/deletehuntgroupscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
   // TRUSTS
 
   // CreateTrust creates a new trust.
