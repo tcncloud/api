@@ -179,6 +179,46 @@ service Learn {
       ];
     };
   }
+
+  // retrieve content from learning pages based on version
+  rpc ContentByVersion(ContentByVersionReq) returns (ContentRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/contentbyversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // update contents for learning pages by version
+  rpc UpdateByVersion(UpdateByVersionReq) returns (UpdateRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/updatebyversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // stream search content results in learning pages by version
+  // we allow all the logged in agents/admins to view search content
+  rpc ListSearchResultsByVersion(SearchContentByVersionReq) returns (stream SearchRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/listsearchresultsbyversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -412,3 +452,37 @@ message PublishVersionReq {
 
 // response to publish version
 message PublishVersionRes {}
+
+// request to retrieve learning pages content from the url by version
+message ContentByVersionReq {
+  string url = 1;
+  string locale = 2;
+  // by version
+  string version = 3;
+}
+
+//request to update learning pages content based on the url by version
+message UpdateByVersionReq {
+  string url = 1;
+  string locale = 2;
+  string content = 3;
+  string version = 4;
+
+  // commit message
+  string message = 12;
+
+  // title of the article
+  string title = 13;
+}
+
+// request to search content in learning pages based on version
+message SearchContentByVersionReq {
+  // search for the specific content in markdown contents
+  string search_content = 1;
+  // locale used for the markdown contents
+  string locale = 2;
+  // field mask to filter apps that are accessible to be searched
+  google.protobuf.FieldMask field_mask = 5;
+  // by version
+  string version = 6;
+}
