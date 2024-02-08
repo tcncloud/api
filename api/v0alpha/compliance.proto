@@ -901,6 +901,16 @@ service Compliance {
       ];
     };
   }
+
+  // Return the holidays that match the request.
+  // The method will return a stream of the matching holidays.
+  // Required permissions:
+  //      none
+  rpc QueryHolidays(QueryHolidaysRequest) returns (QueryHolidaysResponse) {
+    option (google.api.http).post = "/api/v0alpha/compliance/queryholidays";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
 
 // request used to process an outbound call against a rule set
@@ -1639,4 +1649,34 @@ message ProcessConsentListDeleteUploadRes {}
 
 message ProcessConsentListDeleteUploadMeta {
   google.protobuf.Timestamp time_started = 1;
+}
+
+message QueryHolidaysResponse {
+  repeated HolidayData rows = 1;
+}
+
+message HolidayData {
+  string date = 1;
+  string name = 2;
+  string year = 3;
+  string month = 4;
+  string day = 5;
+  string weekday = 6;
+  repeated string types = 7;
+  string is_observed = 8;
+  string country = 9;
+  repeated string states = 11;
+}
+
+message QueryHolidaysRequest {
+  string date = 1;
+  string name = 2;
+  string year = 3;
+  string month = 4;
+  string day = 5;
+  string weekday = 6;
+  string type = 7;
+  string is_observed = 8;
+  string country = 9;
+  string state = 11;
 }
