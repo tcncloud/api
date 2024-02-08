@@ -380,3 +380,48 @@ message UpdateAgentTriggersRequest {
 
 // UpdateAgentTriggersResponse is the response message for the UpdateAgentTriggers RPC method.
 message UpdateAgentTriggersResponse {}
+
+// The request message for GetHuntGroupScript
+message GetHuntGroupScriptRequest {
+  // The hunt group sid of where the script belongs
+  int64 hunt_group_sid = 1;
+}
+
+// The response message for GetHuntGroupScript
+message GetHuntGroupScriptResponse {
+  // The script for the given hunt group
+  api.commons.org.HuntGroupScript hunt_group_script = 1;
+}
+
+// The request message for CreateHuntGroupScript
+message CreateHuntGroupScriptRequest {
+  // The hunt group sid of where the script belongs
+  int64 hunt_group_sid = 1;
+  // The script to be created
+  api.commons.org.HuntGroupScript hunt_group_script = 2;
+}
+
+// The response message for CreateHuntGroupScript
+message CreateHuntGroupScriptResponse {}
+
+// The request message for UpdateHuntGroupScript
+message UpdateHuntGroupScriptRequest {
+  // The hunt group sid of where the script belongs
+  int64 hunt_group_sid = 1;
+  // The script to be created
+  api.commons.org.HuntGroupScript hunt_group_script = 2;
+}
+
+// The response message for UpdateHuntGroupScript
+message UpdateHuntGroupScriptResponse {}
+
+// The request message for DeleteHuntGroupScript
+message DeleteHuntGroupScriptRequest {
+  // The hunt group sid of where the script belongs
+  int64 hunt_group_sid = 1;
+  // The sid of the hunt group script to be deleted
+  int64 script_sid = 2;
+}
+
+// The response message for DeleteHuntGroupScript
+message DeleteHuntGroupScriptResponse {}

@@ -1205,3 +1205,179 @@ enum TriggerAction {
   // The action to execute an integration link
   TRIGGER_ACTION_EXECUTE_INTEGRATION_LINK = 5;
 }
+
+// HuntGroupScript represents a hunt group script
+message HuntGroupScript {
+  // The unique sid for the hunt group script
+  int64 script_sid = 1;
+  // The name of the hunt group script
+  string name = 2;
+  // The description of the hunt group script
+  string description = 3;
+  // Boolean describing whether or not to sue auto script progression
+  bool auto_script_progression = 4;
+  // Categorizes between HuntGroup and Campaign scripts
+  ScriptCategory script_category = 5;
+  // List of acts for a HuntGroupScript
+  repeated Act acts = 6;
+}
+
+// An act within a HuntGroupScript
+message Act {
+  // A list of Dispositions for an Act
+  repeated Disposition dispositions = 1;
+  // A list of Verbiages for an Act
+  repeated Verbiage verbiages = 2;
+  // A list of Conditional Navigations for an act
+  repeated ConditionalNavigation conditional_navigations = 3;
+  // The default target act for a conditional navigation
+  int64 default_conditional_navigation_target = 4;
+  // Recording behavior when arriving to a specific page/act
+  // Can be 3 values -1 means stop recording, 1 means start recording
+  // 0 means no change on recording behavior
+  int64 page_arrival_recording_control = 5;
+  // Recording behavior when exitig a specific page/act
+  int64 page_exit_recording_control = 6;
+}
+
+// A disposition within an Act
+message Disposition {
+  // A list of response strings for a disposition
+  repeated string response_options = 1;
+  // The header for the disposition
+  string header = 2;
+  // The prompt for the disposition
+  string prompt = 3;
+  // The order of the disposition
+  int64 order = 4;
+  // Required answer boolean for disposition
+  bool required = 5;
+  // The default response value for a desposition
+  string default_value = 6;
+  // Determines whether to bypass auto script progression
+  bool bypass_auto_script_progression = 7;
+  // The response type of the disposition
+  ScriptResponseType response_type = 8;
+  // The response evaluator if regex is selected as a response_type
+  int64 response_evaluator = 9;
+}
+
+// A verbiage within an Act
+message Verbiage {
+  // The order of the verbiage
+  int64 order = 1;
+  // The header of the verbiage
+  string header = 2;
+  // the body of the verbiage
+  string body = 3;
+}
+
+// A conditional navigation within an Act
+message ConditionalNavigation {
+  // The target act/page index of the ConditionalNavigation
+  int64 target_act_index = 1;
+  // The ComplexBooleanExpressionList of the ConditionalNavigation
+  ComplexBooleanExpressionList complex_boolean_expression_list = 2;
+}
+
+// ComplexBooleanExpressionList contains a list of complex boolean expressions
+message ComplexBooleanExpressionList {
+  // The list of complex boolean expressions for ComplexBooleanExpressionList
+  repeated ComplexBooleanExpression complex_boolean_expressions = 1;
+}
+
+// ComplexBooleanExpression contains a compare expression list
+message ComplexBooleanExpression {
+  // The compare expression list for ComplexBooleanExpression
+  CompareExpressionList compare_expression_list = 1;
+}
+
+// CompareExpressionList contains a list of simple compare expressions
+message CompareExpressionList {
+  // The list of simple compare expressions for a CompareExpressionList
+  repeated SimpleCompareExpression simple_compare_expression = 1;
+}
+
+// SimpleCompareExpression describes a simple compare expression
+message SimpleCompareExpression {
+  // The operator type of SimpleCompareExpression
+  CompareOperatorType operator_type = 1;
+  // The act index of the SimpleCompareExpression
+  int64 act_index = 2;
+  // The disposition header of the SimpleCompareExpression
+  string disposition_header = 3;
+  // The compare value of the SimpleCompareExpression
+  string compare_value = 4;
+}
+
+// ScriptCategory differentiates between Hunt Group and Campaign scripts
+enum ScriptCategory {
+  // Not specified
+  SCRIPT_CATEGORY_UNSPECIFIED = 0;
+  // Hunt Group script category
+  SCRIPT_CATEGORY_HUNT_GROUP = 1;
+  // Campaign script category
+  SCRIPT_CATEGORY_CAMPAIGN = 2;
+}
+
+// ScriptResponseType differentiates between script responses
+enum ScriptResponseType {
+  // Not specified
+  SCRIPT_RESPONSE_TYPE_UNSPECIFIED = 0;
+  // Drop down select menu
+  SCRIPT_RESPONSE_TYPE_DROP_DOWN_SELECT_MENU = 1;
+  // Multiple select menu
+  SCRIPT_RESPONSE_TYPE_MULTIPLE_SELECT_MENU = 2;
+  // Check boxes
+  SCRIPT_RESPONSE_TYPE_CHECK_BOXES = 3;
+  // Radio buttons
+  SCRIPT_RESPONSE_TYPE_RADIO_BUTTONS = 4;
+  // Text box
+  SCRIPT_RESPONSE_TYPE_TEXT_BOX = 5;
+  // Alphanumeric text box
+  SCRIPT_RESPONSE_TYPE_TEXT_BOX_ALPHANUMERIC = 6;
+  // Numerical only text box
+  SCRIPT_RESPONSE_TYPE_TEXT_BOX_NUMERICAL = 7;
+  // Text verification field
+  SCRIPT_RESPONSE_TYPE_TEXT_VERIFICATION_FIELD = 8;
+  // Text area
+  SCRIPT_RESPONSE_TYPE_TEXT_AREA = 9;
+  // Regular expression field
+  SCRIPT_RESPONSE_TYPE_REGULAR_EXPRESSION_FIELD = 10;
+  // Regular expression area
+  SCRIPT_RESPONSE_TYPE_REGULAR_EXPRESSION_AREA = 11;
+}
+
+// CompareOperatorType differentiates between operator types in a SimpleCompareExpression
+enum CompareOperatorType {
+  // Not specified
+  COMPARE_OPERATOR_TYPE_UNSPECIFIED = 0;
+  // Equals
+  COMPARE_OPERATOR_TYPE_EQUALS = 1;
+  // Not equals
+  COMPARE_OPERATOR_TYPE_NOT_EQUALS = 2;
+  // Greater than
+  COMPARE_OPERATOR_TYPE_GREATER_THAN = 3;
+  // Less than
+  COMPARE_OPERATOR_TYPE_LESS_THAN = 4;
+  // Greater than or equal to
+  COMPARE_OPERATOR_TYPE_GREATER_THAN_OR_EQUAL_TO = 5;
+  // Less than or equal to
+  COMPARE_OPERATOR_TYPE_LESS_THAN_OR_EQUAL_TO = 6;
+  // Text contains
+  COMPARE_OPERATOR_TYPE_CONTAINS = 7;
+  // Text does not contain
+  COMPARE_OPERATOR_TYPE_DOES_NOT_CONTAIN = 8;
+  // Blank
+  COMPARE_OPERATOR_TYPE_BLANK = 9;
+  // Not blank
+  COMPARE_OPERATOR_TYPE_NOT_BALNK = 10;
+  // Text starts with
+  COMPARE_OPERATOR_TYPE_STARTS_WITH = 11;
+  // Text does not start with
+  COMPARE_OPERATOR_TYPE_DOES_NOT_START_WITH = 12;
+  // Text ends with
+  COMPARE_OPERATOR_TYPE_ENDS_WITH = 13;
+  // Text does not end with
+  COMPARE_OPERATOR_TYPE_DOES_NOT_END_WITH = 14;
+}
