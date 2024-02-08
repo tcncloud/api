@@ -23,15 +23,16 @@ function modifyFiles(dirPath, depth) {
             modifyFiles(filePath, depth + 1);
         } else if (stat.isFile() && path.extname(file) === '.js') {
             // Modify .js files
-            const content = fs.readFileSync(filePath, 'utf8');
+            let content = fs.readFileSync(filePath, 'utf8');
             if (content.includes("var jspb = require('google-protobuf');")) {
                 const relativePath = '../'.repeat(depth) + 'global.js';
-                const replacement = `var jspb = require('google-protobuf');\nvar globalThis = require("${relativePath}");\nvar proto = globalThis.proto;`;
-                const newContent = content.replace(
+                const replacement = `var jspb = require('google-protobuf');\nvar localGlobalThis = require("${relativePath}");\nvar proto = localGlobalThis.proto;`;
+                content = content.replace("var global =", "var global = localGlobalThis || ");
+                content = content.replace(
                     "var jspb = require('google-protobuf');",
                     replacement
                 );
-                fs.writeFileSync(filePath, newContent, 'utf8');
+                fs.writeFileSync(filePath, content, 'utf8');
                 console.log(`Modified: ${filePath}`);
             }
         }
