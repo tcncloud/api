@@ -153,3 +153,26 @@ message UpdateUsersOnSkillGroupRequest {
 
 // Response message for the UpdateUsersOnSkillGroup rpc.
 message UpdateUsersOnSkillGroupResponse {}
+
+// Request message for the ListSkillsForCurrentAgent RPC.
+message ListSkillsForCurrentAgentRequest {}
+
+// Response message for the ListSkillsForCurrentAgent RPC.
+message ListSkillsForCurrentAgentResponse {
+  message AgentSkill {
+    int64 agent_skill_sid = 1;
+    string name = 2;
+    string description = 3;
+  }
+  // The returned list of skills belonging to the current agent.
+  repeated AgentSkill skills = 1;
+}
+
+// Response message for the GetAgentSkills RPC.
+message GetAgentSkillsRequest {}
+
+// Response message for the GetAgentSkills RPC.
+message GetAgentSkillsResponse {
+  // skills found for the given parameters, will be value pairs (name, level).
+  map<string, int64> skills = 1;
+}

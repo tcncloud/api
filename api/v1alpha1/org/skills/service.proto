@@ -175,4 +175,27 @@ service SkillsService {
       ];
     };
   }
+
+  // Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+  // Skills will be returned as a value pair (name, level).
+  // For agent skills, the name of each skill will be the agent_skill_sid.
+  // All other skills' names (hunt group and PBX) will be given special formats.
+  // The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+  //
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+  rpc GetAgentSkills(GetAgentSkillsRequest) returns (GetAgentSkillsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/getagentskills";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Returns a list of skills for the current agent.
+  rpc ListSkillsForCurrentAgent(ListSkillsForCurrentAgentRequest) returns (ListSkillsForCurrentAgentResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/listskillsforcurrentagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
