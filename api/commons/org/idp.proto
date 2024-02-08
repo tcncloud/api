@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package api.commons.org;
+
+// IdpClient represents an idp client.
+message IdpClient {
+  // The id of the client.
+  string idp_client_id = 1;
+  // The secret of the client.
+  // This field cannot be updated after creation.
+  string secret = 2;
+  // The clients allowed redirect uris.
+  repeated string redirect_uris = 3;
+  // The clients trusted peers
+  repeated string trusted_peers = 4;
+  // The name of the client.
+  string name = 5;
+}
