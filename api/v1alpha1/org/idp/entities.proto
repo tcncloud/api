@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.idp;
+
+import "api/commons/org/idp.proto";
+
+// CreateClientRequest is a request to make a client.
+message CreateClientRequest {
+  api.commons.org.IdpClient client = 1;
+}
+
+// CreateClientResponse returns the response from creating a client.
+message CreateClientResponse {
+  bool already_exists = 1;
+  api.commons.org.IdpClient client = 2;
+}
+
+// DeleteClientRequest is a request to delete a client.
+message DeleteClientRequest {
+  // The ID of the client.
+  string id = 1;
+}
+
+// DeleteClientResponse determines if the client is deleted successfully.
+message DeleteClientResponse {
+  bool not_found = 1;
+}
+
+// UpdateClientRequest is a request to update an existing client.
+message UpdateClientRequest {
+  api.commons.org.IdpClient client = 1;
+}
+
+// UpdateClientResponse returns the response from updating a client.
+message UpdateClientResponse {
+  bool not_found = 1;
+}
+
+// ListClientsRequest is a request to list all existing clients.
+message ListClientsRequest {}
+
+// ListClientsResponse returns the response from listing all clients.
+message ListClientsResponse {
+  repeated api.commons.org.IdpClient clients = 1;
+}

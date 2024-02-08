@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.idp;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/idp/entities.proto";
+import "google/api/annotations.proto";
+
+service IdpService {
+  // CreateClient creates a client.
+  rpc CreateClient(CreateClientRequest) returns (CreateClientResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/idp/client/create";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // UpdateClient updates an existing client
+  rpc UpdateClient(UpdateClientRequest) returns (UpdateClientResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/idp/client/update";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // DeleteClient deletes the provided client.
+  rpc DeleteClient(DeleteClientRequest) returns (DeleteClientResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/idp/client/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListClients returns all clients.
+  rpc ListClients(ListClientsRequest) returns (ListClientsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/idp/client/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+}
