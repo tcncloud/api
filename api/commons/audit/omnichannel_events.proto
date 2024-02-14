@@ -236,6 +236,13 @@ message OmnichannelCloseConversationEvent {
   string user_id = 4;
 }
 
+message OmnichannelTranscriptSavedEvent {
+  // the conversation sid of the transcript being saved
+  int64 conversation_sid = 1;
+  // the transcript path of the conversation
+  string transcript_path = 2;
+}
+
 // OmnichannelUpdateCampaignEvent - whenever a campaign is update
 message OmnichannelUpdateCampaignEvent {
   // campaign id
