@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics;
 
+import "api/v1alpha1/vanalytics/dncl_list.proto";
 import "api/v1alpha1/vanalytics/filter.proto";
 import "google/protobuf/field_mask.proto";
 
@@ -140,6 +141,10 @@ message Flag {
   // Required. Boolean expression of filters which a transcript must match
   // for this flag to be applied.
   BoolExpr bool_expr = 11;
+
+  // Optional. Specifies dncl lists to update
+  // if a transcript is flagged.
+  repeated DnclList dncl_list = 12;
 
   // BoolExpr defines a boolean expression of filters.
   message BoolExpr {

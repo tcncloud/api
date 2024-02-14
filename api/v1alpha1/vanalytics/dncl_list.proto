@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+import "api/commons/compliance.proto";
+
+message DnclList {
+  // Required. Dncl list id to add the item to.
+  string list_id = 2;
+
+  // Required. Specifies the dncl list content type.
+  api.commons.ContentType content_type = 3;
+
+  // Optional. Expected duration to keep item in DNCL.
+  DnclExpirePeriod expire_period = 4;
+
+  // Optional. Specifies how many expire periods
+  // to calculate. i.e. number of weeks.
+  uint64 expire_offset = 5;
+
+  // Optional. Specifies an agent response to get the scrub value from.
+  string agent_response_key = 6;
+}
+
+enum DnclExpirePeriod {
+  DNCL_EXPIRE_PERIOD_HOUR = 0;
+  DNCL_EXPIRE_PERIOD_DAY = 1;
+  DNCL_EXPIRE_PERIOD_WEEK = 2;
+  DNCL_EXPIRE_PERIOD_MONTH = 4;
+}
