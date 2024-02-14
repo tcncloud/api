@@ -3,6 +3,7 @@ syntax = "proto3";
 package wfo.vanalytics.v2;
 
 import "api/commons/acd.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
@@ -159,11 +160,18 @@ message Sms {
 
     // The text of the thread in segments.
     repeated Segment segments = 2;
+
+    // The user id of the participant on this thread.
+    string user_id = 3;
   }
 
   // A segment of text.
   message Segment {
+    // The text in the segment.
     string text = 1;
+
+    // The offset time duration from the beginning of the conversation.
+    google.protobuf.Duration offset = 2;
   }
 }
 
@@ -181,6 +189,21 @@ message Call {
   // The text from the call in threads.
   repeated Thread threads = 4;
 
+  // The silence stats for this call.
+  Silence silence = 5;
+
+  // The stats for when 2 participants are talking at the same time.
+  TalkOver talk_over = 6;
+
+  // The total time duration of talk time in this call.
+  google.protobuf.Duration talk_time = 7;
+
+  // The phone number that initiated the call.
+  string caller_id = 8;
+
+  // The hunt group name for the agent who made the call.
+  string group_name = 9;
+
   // A thread is the text from one participant.
   message Thread {
     // The unique identifier of the thread.
@@ -188,11 +211,80 @@ message Call {
 
     // The text of the thread in segments.
     repeated Segment segments = 2;
+
+    // The user id of the participant on this thread.
+    string user_id = 3;
   }
 
   // A segment of text.
   message Segment {
+    // The text in the segment.
     string text = 1;
+
+    // The offset time duration from the beginning of the conversation.
+    google.protobuf.Duration offset = 2;
+  }
+
+  // The talk over stats for the call.
+  message TalkOver {
+    // The talk over duration stats.
+    Duration duration = 1;
+
+    // The talk over occurence stats.
+    Occurrence occurrence = 2;
+
+    // The threshold in milliseconds of how much overlap is required
+    // before it is considered talk over.
+    uint32 threshold = 3;
+
+    // The talk over duration stats.
+    message Duration {
+      // The total talk over duration in the call.
+      google.protobuf.Duration total = 1;
+
+      // The largest talk over duration in the call.
+      google.protobuf.Duration max = 2;
+
+      // The percentage of talk over in the call.
+      uint32 percentage = 3;
+    }
+
+    // The talk over occurence stats.
+    message Occurrence {
+      // The total number of talk over occurences in the call.
+      uint32 total = 1;
+    }
+  }
+
+  // The silence stats for the call.
+  message Silence {
+    // The silence duration stats.
+    Duration duration = 1;
+
+    // The silence occurence stats.
+    Occurrence occurrence = 2;
+
+    // The threshold in milliseconds of how much time without talking is
+    // required before it is considered silence.
+    uint32 threshold = 3;
+
+    // The silence duration stats.
+    message Duration {
+      // The total silence duration in the call.
+      google.protobuf.Duration total = 1;
+
+      // The largest silence duration in the call.
+      google.protobuf.Duration max = 2;
+
+      // The percentage of silence in the call.
+      uint32 percentage = 3;
+    }
+
+    // The silence occurence stats.
+    message Occurrence {
+      // The total number of silence occurences in the call.
+      uint32 total = 1;
+    }
   }
 }
 
@@ -267,6 +359,15 @@ message TranscriptQuery {
   // Query constraints on threads.
   Threads threads = 4;
 
+  // Query constraints on flag summary.
+  FlagSummary flag_summary = 5;
+
+  // Query constraints on start time.
+  StartTime start_time = 6;
+
+  // Query constraints on delete time.
+  DeleteTime delete_time = 7;
+
   // Query constraints on transcript sid.
   message TranscriptSid {
     // Requires all transcript hits to have a transcript sid in the list.
@@ -299,6 +400,21 @@ message TranscriptQuery {
     // Query constraints on call type.
     CallType call_type = 3;
 
+    // Query constraints on silence.
+    Silence silence = 4;
+
+    // Query constraints on talk over.
+    TalkOver talk_over = 5;
+
+    // Query constraints on talk time.
+    TalkTime talk_time = 6;
+
+    // Query constraints on caller id.
+    CallerId caller_id = 7;
+
+    // Query constraints on group name.
+    GroupName group_name = 8;
+
     // Query constraints on call type.
     message CallType {
       // Requires all call specific transcript hits to have a call type in the
@@ -306,11 +422,25 @@ message TranscriptQuery {
       repeated api.commons.CallType.Enum any = 1;
     }
 
+    // Query constraints on group name.
+    message GroupName {
+      // Requires all call specific transcript hits to have a group name in the
+      // list.
+      repeated string any = 1;
+    }
+
     // Query constraints on call sid.
     message CallSid {
       // Requires all call specific transcript hits to have a call sid in the
       // list.
       repeated int64 any = 1;
+    }
+
+    // Query constraints on caller id.
+    message CallerId {
+      // Requires all call specific transcript hits to have a caller id in the
+      // list.
+      repeated string any = 1;
     }
 
     // Query constraints on audio time.
@@ -323,6 +453,138 @@ message TranscriptQuery {
       google.protobuf.Int32Value gt = 3;
       // Queries where less than.
       google.protobuf.Int32Value lt = 4;
+    }
+
+    // Query constraints on talk time.
+    message TalkTime {
+      // Queries where greater than or equal.
+      google.protobuf.Duration gte = 1;
+      // Queries where less than or equal.
+      google.protobuf.Duration lte = 2;
+      // Queries where greater than.
+      google.protobuf.Duration gt = 3;
+      // Queries where less than.
+      google.protobuf.Duration lt = 4;
+    }
+
+    // Query constraints on talk over.
+    message TalkOver {
+      // Query constraints on talk over duration total.
+      DurationTotal duration_total = 1;
+      // Query constraints on talk over duration max.
+      DurationMax duration_max = 2;
+      // Query constraints on talk over occurrence total.
+      OccurrenceTotal occurrence_total = 3;
+      // Query constraints on talk over duration percentage.
+      DurationPercentage duration_percentage = 4;
+
+      // Query constraints on total duration.
+      message DurationTotal {
+        // Queries where greater than or equal.
+        google.protobuf.Duration gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.Duration lte = 2;
+        // Queries where greater than.
+        google.protobuf.Duration gt = 3;
+        // Queries where less than.
+        google.protobuf.Duration lt = 4;
+      }
+
+      // Query constraints on max duration.
+      message DurationMax {
+        // Queries where greater than or equal.
+        google.protobuf.Duration gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.Duration lte = 2;
+        // Queries where greater than.
+        google.protobuf.Duration gt = 3;
+        // Queries where less than.
+        google.protobuf.Duration lt = 4;
+      }
+
+      // Query constraints on total occurences.
+      message OccurrenceTotal {
+        // Queries where greater than or equal.
+        google.protobuf.UInt32Value gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.UInt32Value lte = 2;
+        // Queries where greater than.
+        google.protobuf.UInt32Value gt = 3;
+        // Queries where less than.
+        google.protobuf.UInt32Value lt = 4;
+      }
+
+      // Query constraints on duration percentage.
+      message DurationPercentage {
+        // Queries where greater than or equal.
+        google.protobuf.UInt32Value gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.UInt32Value lte = 2;
+        // Queries where greater than.
+        google.protobuf.UInt32Value gt = 3;
+        // Queries where less than.
+        google.protobuf.UInt32Value lt = 4;
+      }
+    }
+
+    // Query constraints on silence.
+    message Silence {
+      // Query constraints on silence duration total.
+      DurationTotal duration_total = 1;
+      // Query constraints on silence duration max.
+      DurationMax duration_max = 2;
+      // Query constraints on silence occurrence total.
+      OccurrenceTotal occurrence_total = 3;
+      // Query constraints on silence duration percentage.
+      DurationPercentage duration_percentage = 4;
+
+      // Query constraints on total duration.
+      message DurationTotal {
+        // Queries where greater than or equal.
+        google.protobuf.Duration gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.Duration lte = 2;
+        // Queries where greater than.
+        google.protobuf.Duration gt = 3;
+        // Queries where less than.
+        google.protobuf.Duration lt = 4;
+      }
+
+      // Query constraints on max duration.
+      message DurationMax {
+        // Queries where greater than or equal.
+        google.protobuf.Duration gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.Duration lte = 2;
+        // Queries where greater than.
+        google.protobuf.Duration gt = 3;
+        // Queries where less than.
+        google.protobuf.Duration lt = 4;
+      }
+
+      // Query constraints on total occurences.
+      message OccurrenceTotal {
+        // Queries where greater than or equal.
+        google.protobuf.UInt32Value gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.UInt32Value lte = 2;
+        // Queries where greater than.
+        google.protobuf.UInt32Value gt = 3;
+        // Queries where less than.
+        google.protobuf.UInt32Value lt = 4;
+      }
+
+      // Query constraints on duration percentage.
+      message DurationPercentage {
+        // Queries where greater than or equal.
+        google.protobuf.UInt32Value gte = 1;
+        // Queries where less than or equal.
+        google.protobuf.UInt32Value lte = 2;
+        // Queries where greater than.
+        google.protobuf.UInt32Value gt = 3;
+        // Queries where less than.
+        google.protobuf.UInt32Value lt = 4;
+      }
     }
   }
 
@@ -341,11 +603,26 @@ message TranscriptQuery {
 
   // Query constraints on threads.
   message Threads {
+    // Query constraints on all threads in list.
+    repeated Threads and = 1;
+
+    // Query constraints on any threads in list.
+    repeated Threads or = 2;
+
     // Query constraints on thread id.
     Id id = 4;
 
     // Query constraints on thread text.
     Text text = 5;
+
+    // Query constraints on user id.
+    UserId user_id = 6;
+
+    // Query constraints on user id.
+    message UserId {
+      // Requires all transcript hits to have a user id in the list.
+      repeated string any = 1;
+    }
 
     // Query constraints on thread id.
     message Id {
@@ -360,7 +637,119 @@ message TranscriptQuery {
 
       // Query text phrases.
       SpanNear span_near = 2;
+
+      /*
+         Timespan determines where text must be matched within a transcript.
+          +------+------+-------------------------------------------+
+          | head | tail |              description                  |
+          +------+------+-------------------------------------------+
+          |    0 |    0 | match anywhere                            |
+          |  +30 |  +60 | match between (head + 30) and (head + 60) |
+          |    0 |  +30 | match between (head +  0) and (head + 30) |
+          |    0 |  -30 | match between (head +  0) and (tail - 30) |
+          |  -60 |  -30 | match between (tail - 60) and (tail - 30) |
+          |  -30 |    0 | match between (tail - 30) and (tail -  0) |
+          +------+------+-------------------------------------------+
+      */
+      Timespan timespan = 3;
+
+      // Query text that does not match.
+      bool not = 4;
+
+      // Timespan determines where text must be matched within a transcript.
+      message Timespan {
+        // The start offset to query text from.
+        google.protobuf.Duration head = 1;
+        // The end offset to query text from.
+        google.protobuf.Duration tail = 2;
+      }
     }
+  }
+
+  // FlagSummary defines a query on flag summary fields.
+  message FlagSummary {
+    // Optional. Queries need review.
+    NeedReview need_review = 1;
+
+    // Optional. Queries review status.
+    ReviewStatus review_status = 2;
+
+    // Optional. Queries flags.
+    Flags flags = 3;
+
+    // Optional. Queries count.
+    Count count = 4;
+
+    // NeedReview defines a query on need review fields.
+    message NeedReview {
+      // Optional. Queries flag sids.
+      FlagSids flag_sids = 1;
+
+      // FlagSids defines a query on flag sids.
+      message FlagSids {
+        // Optional. Must have any provided flag sids.
+        repeated int64 any = 1;
+      }
+    }
+
+    // ReviewStatus defines a query on review status.
+    message ReviewStatus {
+      // Optional. Must have any provided review status.
+      repeated wfo.vanalytics.v2.ReviewStatus any = 1;
+    }
+
+    // Flags defines a query on flags.
+    message Flags {
+      // Optional. Queries flag sid.
+      FlagSid flag_sid = 1;
+
+      // FlagSid defines a query on flag sid.
+      message FlagSid {
+        // Optional. Must have any of the provided flag sids.
+        repeated int64 any = 1;
+
+        // Optional. Must have all of the provided flag sids.
+        repeated int64 all = 2;
+      }
+    }
+
+    // Count defines a query on count.
+    message Count {
+      // Optional. Queries count greater than or equal.
+      google.protobuf.Int32Value gte = 1;
+      // Optional. Queries count less than or equal.
+      google.protobuf.Int32Value lte = 2;
+      // Optional. Queries count greater than.
+      google.protobuf.Int32Value gt = 3;
+      // Optional. Queries count less than.
+      google.protobuf.Int32Value lt = 4;
+      // Optional. Queries count equal to.
+      google.protobuf.Int32Value eq = 5;
+    }
+  }
+
+  // Query constraints on start time.
+  message StartTime {
+    // Queries where greater than or equal.
+    google.protobuf.Timestamp gte = 1;
+    // Queries where less than or equal.
+    google.protobuf.Timestamp lte = 2;
+    // Queries where greater than.
+    google.protobuf.Timestamp gt = 3;
+    // Queries where less than.
+    google.protobuf.Timestamp lt = 4;
+  }
+
+  // Query constraints on delete time.
+  message DeleteTime {
+    // Queries where greater than or equal.
+    google.protobuf.Timestamp gte = 1;
+    // Queries where less than or equal.
+    google.protobuf.Timestamp lte = 2;
+    // Queries where greater than.
+    google.protobuf.Timestamp gt = 3;
+    // Queries where less than.
+    google.protobuf.Timestamp lt = 4;
   }
 }
 
