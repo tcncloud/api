@@ -708,7 +708,7 @@ message DeliveryDefinition {
 
 message SFTPTransport {
   string host = 1;
-  int32 port = 2;
+  int32 port = 2 [deprecated = true];
   oneof credentials {
     PasswordRef password = 3;
     SSHKeyRef ssh_key = 4;
