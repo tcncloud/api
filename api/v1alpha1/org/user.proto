@@ -419,6 +419,10 @@ message ListUsersResponse {
     bool agent = 12;
     // A list of the trust ids the user has been assigned.
     repeated string trust_ids = 13;
+    // MfaInfo of the user.
+    api.commons.org.MfaInfo mfa_info = 14;
+    // Whether or not the users email is verified.
+    bool email_verified = 15;
   }
 
   // List of returned users with masked data.
@@ -461,6 +465,10 @@ message ListUsersByOrgIdResponse {
     bool agent = 11;
     // A list of the trust ids the user has been assigned.
     repeated string trust_ids = 12;
+    // MfaInfo of the user.
+    api.commons.org.MfaInfo mfa_info = 14;
+    // Whether or not the users email is verified.
+    bool email_verified = 15;
   }
 
   // List of returned users with masked data.
@@ -503,6 +511,10 @@ message ListUsersByRegionResponse {
     bool agent = 12;
     // A list of the trust ids the user has been assigned.
     repeated string trust_ids = 13;
+    // MfaInfo of the user.
+    api.commons.org.MfaInfo mfa_info = 14;
+    // Whether or not the users email is verified.
+    bool email_verified = 15;
   }
 
   // List of returned users with masked data.

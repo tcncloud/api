@@ -14,6 +14,7 @@ import "api/commons/omnichannel.proto";
 import "api/commons/org.proto";
 import "api/commons/org/agent_profile_group.proto";
 import "api/commons/org/trusts.proto";
+import "api/commons/org/user.proto";
 import "api/commons/org_preferences.proto";
 import "api/commons/perms.proto";
 import "google/api/annotations.proto";
@@ -3088,6 +3089,11 @@ message UserDescription {
 
   // Trusts assigned to the user.
   repeated api.commons.org.Trust trusts = 200;
+
+  // MfaInfo of the user.
+  api.commons.org.MfaInfo mfa_info = 201;
+  // Whether or not the users email is verified.
+  bool email_verified = 202;
 }
 
 message ListOrganizationUserDescriptionsRequest {}
