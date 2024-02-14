@@ -144,6 +144,8 @@ message AuditEvent {
     OmnichannelManualApproveTaskTimeoutEvent omnichannel_manual_approve_task_timeout_event = 360;
     //requeue of manual approve task
     OmnichannelManualApproveTaskRequeueEvent omnichannel_manual_approve_task_requeue_event = 361;
+    // transcript saved
+    OmnichannelTranscriptSavedEvent omnichannel_transcript_saved_event = 362;
 
     /// Asm events 400
     // agent logged into asm event

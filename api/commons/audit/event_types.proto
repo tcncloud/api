@@ -121,6 +121,8 @@ enum EventType {
   OMNICHANNEL_MANUAL_APPROVE_TASK_TIMEOUT = 360;
   //requeue of manual approve task
   OMNICHANNEL_MANUAL_APPROVE_TASK_REQUEUE = 361;
+  //transcript saved
+  OMNICHANNEL_TRANSCRIPT_SAVED = 362;
 
   // ASM
   // agent logs into asm
