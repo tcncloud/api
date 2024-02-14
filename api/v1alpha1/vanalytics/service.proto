@@ -12,6 +12,7 @@ import "api/v1alpha1/vanalytics/flag_snapshot.proto";
 import "api/v1alpha1/vanalytics/flag_transcript.proto";
 import "api/v1alpha1/vanalytics/flag_transcript_filter.proto";
 import "api/v1alpha1/vanalytics/transcript.proto";
+import "api/v1alpha1/vanalytics/transcript_summary.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -121,6 +122,21 @@ service Vanalytics {
   // ListAgentResponseValues lists transcript agent response values.
   rpc ListAgentResponseValues(ListAgentResponseValuesRequest) returns (ListAgentResponseValuesResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/listagentresponsevalues";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [TRANSCRIPT_SUMMARY] ======================================================
+
+  // GetTranscriptSummary gets a transcript summary for a provided transcript.
+  rpc GetTranscriptSummary(GetTranscriptSummaryRequest) returns (GetTranscriptSummaryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalytics/gettranscriptsummary";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [

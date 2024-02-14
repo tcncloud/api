@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package api.v1alpha1.vanalytics;
+
+// [GET] ==================================================================
+
+// GetTranscriptSummaryRequest is a request for getting a transcript summary.
+message GetTranscriptSummaryRequest {
+  // Required - transcript to get summary of.
+  int64 transcript_sid = 2;
+}
+
+// GetTranscriptSummaryResponse is a response for getting a transcript summary.
+message GetTranscriptSummaryResponse {
+  TranscriptSummary transcript_summary = 1;
+}
+
+// [RESOURCE] ==================================================================
+
+// TranscriptSummary is an AI generated summary based on a parent transcript.
+message TranscriptSummary {
+  // Summary content provided in multiple bullet points.
+  repeated string bullet_points = 1;
+}
