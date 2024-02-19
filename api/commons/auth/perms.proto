@@ -430,6 +430,11 @@ enum Permission {
     app: APPLICATION_INTEGRATIONS
     features: ["Journey Integrations"]
   }];
+  //Enables ability for key creation - only used by SROs and account managers
+  PERMISSIONS_INTEGRATIONS_KEY_CREATION = 1310 [(annotations.perms.options) = {
+    app: APPLICATION_INTEGRATIONS
+    features: ["Private Keys"]
+  }];
 
   /*
    * Work Force Management
