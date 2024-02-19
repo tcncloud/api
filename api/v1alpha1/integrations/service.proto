@@ -369,6 +369,18 @@ service Integrations {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+  // GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
+  rpc GenerateEpicKeyPairs(GenerateEpicKeyPairReq) returns (GenerateEpicKeyPairRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/generateepickeypairs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSIONS_INTEGRATIONS_KEY_CREATION]
+        }
+      ];
+    };
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1293,4 +1305,14 @@ message HangUpEpicPatientCallReq {
   string OriginPhoneExtension = 2;
   // The internal ID of the record in Epic that represents this call.
   string EpicCallID = 3;
+}
+
+message GenerateEpicKeyPairReq {
+  string org_id = 1;
+  string server = 2;
+}
+
+message GenerateEpicKeyPairRes {
+  string production_public_key = 1;
+  string non_production_public_key = 2;
 }
