@@ -1111,6 +1111,21 @@ service OmniApi {
       ];
     };
   }
+
+  // CreateManualTask - Creates a manual task.
+  // Required permissions:
+  // AGENT
+  rpc CreateManualTask(CreateManualTaskReq) returns (CreateManualTaskRes) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/createmanualtask";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
 }
 
 message SuggestResponseReq {
@@ -2193,4 +2208,20 @@ message UpdateWhatsAppNumberRequest {
 message UpdateWhatsAppNumberResponse {
   // whatsapp number details
   api.commons.WhatsAppNumber whatsapp_number = 1;
+}
+
+// CreateManualTaskReq - create a manual task
+message CreateManualTaskReq {
+  // campaign identifier
+  int64 campaign_sid = 1 [jstype = JS_STRING];
+  // campaign module identifier
+  int64 campaign_module_sid = 2 [jstype = JS_STRING];
+  // task data
+  api.commons.OmniTask task_data = 3;
+}
+
+// CreateManualTaskRes -
+message CreateManualTaskRes {
+  // ghost notifier reference identifier
+  string reference_id = 1;
 }
