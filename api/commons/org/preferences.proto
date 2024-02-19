@@ -710,3 +710,20 @@ message AdminClientPreferences {
   // List of allowed countries for the organization.
   repeated api.commons.Country allowed_countries = 19;
 }
+
+// BusinessHours or operating hours.
+message BusinessHours {
+  string org_id = 1;
+  string id = 2;
+  string name = 3;
+  string description = 4;
+  repeated Range ranges = 5;
+}
+
+// Range including start and end times.
+message Range {
+  int32 start_hour = 1;
+  int32 start_minute = 2;
+  int32 end_hour = 3;
+  int32 end_minute = 4;
+}
