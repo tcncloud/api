@@ -783,6 +783,8 @@ message ClientInfoDisplayTemplate {
   TemplateCategory template_category = 7;
   // The sid of the client info display template
   int64 client_info_display_template_sid = 8;
+  // The sid of the hunt group which the client info display template is associated with
+  int64 hunt_group_sid = 9;
 }
 
 // FieldStyle describes a particular field within a client info display
@@ -820,6 +822,24 @@ enum TemplateCategory {
   TEMPLATE_CATEGORY_HUNT_GROUP = 1;
   // 2 means a campaign client info display template
   TEMPLATE_CATEGORY_CAMPAIGN = 2;
+}
+
+// HuntGroupWithClientInfoTemplateData is the entity for a hunt group with its client info display template data.
+message HuntGroupWithClientInfoTemplateData {
+  // HuntGroup is the entity for a simplified hunt group details.
+  message HuntGroup {
+    // The hunt group sid.
+    int64 client_sid = 1;
+    // The hunt group name.
+    int64 hunt_group_sid = 2;
+    // The hunt group name.
+    string hunt_group_name = 3;
+  }
+
+  // The hunt group details.
+  HuntGroup hunt_group = 1;
+  // The hunt group client info display template details.
+  ClientInfoDisplayTemplate template = 2;
 }
 
 // A structure used for representing a web link
