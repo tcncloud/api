@@ -173,6 +173,8 @@ enum SmsNumberProvider {
   MEDIASAT_SMS_PROVIDER = 6;
   // TextLocal sms provider
   TEXTLOCAL_SMS_PROVIDER = 7;
+  // smartping sms provider
+  SMARTPING_SMS_PROVIDER = 8;
 }
 
 // OmniCampaignModuleType -
