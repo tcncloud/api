@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package services.omnichannel.api.entities.v1alpha1;
+
+message FlowPayload {
+  repeated FlowField fields = 1;
+}
+
+message FlowField {
+  FlowFieldName name = 1;
+  oneof value {
+    string user_input = 100;
+  }
+}
+
+enum FlowFieldName {
+  FIELD_NAME_UNSPECIFIED = 0;
+  FIELD_NAME_USER_INPUT = 1;
+}
