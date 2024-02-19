@@ -1846,6 +1846,49 @@ service Org {
     };
   }
 
+  // CopyHuntGroupClientInfoDisplayTemplate copies the client info display template from one hunt group to another.
+  // It will create a new template in the destination hunt group with the same settings as the source template if it doesn't already exist.
+  // Otherwise, it will update the existing template with the source template settings.
+  rpc CopyHuntGroupClientInfoDisplayTemplate(CopyHuntGroupClientInfoDisplayTemplateRequest) returns (CopyHuntGroupClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copyhuntgroupclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
+  // with the same settings as the source template from a hunt group.
+  rpc CreateCampaignClientInfoDisplayTemplate(CreateCampaignClientInfoDisplayTemplateRequest) returns (CreateCampaignClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/createcampaignclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+  // with their client info display template data based on the filter.
+  rpc ListHuntGroupsWithClientInfoTemplateData(ListHuntGroupsWithClientInfoTemplateDataRequest) returns (ListHuntGroupsWithClientInfoTemplateDataResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listhuntgroupswithclientinfotemplatedata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
   // ListAgentTriggers returns a list of agent triggers for the given hunt group.
   rpc ListAgentTriggers(ListAgentTriggersRequest) returns (ListAgentTriggersResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listagenttriggers";

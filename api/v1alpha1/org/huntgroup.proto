@@ -295,6 +295,53 @@ message DeleteHuntGroupClientInfoDisplayTemplateRequest {
 // Response message for DeleteHuntGroupClientInfoDisplayTemplate RPC method.
 message DeleteHuntGroupClientInfoDisplayTemplateResponse {}
 
+// CopyHuntGroupClientInfoDisplayTemplate is the request message for the CopyHuntGroupClientInfoDisplayTemplate RPC method.
+message CopyHuntGroupClientInfoDisplayTemplateRequest {
+  // The sid of the hunt group to copy the template to
+  int64 to_hunt_group_sid = 1;
+  // The client info display template to copy from the source hunt group
+  api.commons.org.ClientInfoDisplayTemplate template = 2;
+}
+
+// CopyHuntGroupClientInfoDisplayTemplateResponse is the response message for the CopyHuntGroupClientInfoDisplayTemplate RPC method.
+message CopyHuntGroupClientInfoDisplayTemplateResponse {}
+
+// CreateCampaignClientInfoDisplayTemplateRequest is the request message for the CreateCampaignClientInfoDisplayTemplate RPC method.
+message CreateCampaignClientInfoDisplayTemplateRequest {
+  // The client info display template to create for the campaign
+  api.commons.org.ClientInfoDisplayTemplate template = 1;
+}
+
+// CreateCampaignClientInfoDisplayTemplateResponse is the response message for the CreateCampaignClientInfoDisplayTemplate RPC method.
+message CreateCampaignClientInfoDisplayTemplateResponse {
+  // The sid of the created client info display template
+  int64 template_sid = 1;
+}
+
+// ListHuntGroupsWithClientInfoTemplateDataRequest is the request message for the ListHuntGroupsWithClientInfoTemplateData RPC method.
+message ListHuntGroupsWithClientInfoTemplateDataRequest {
+  // Filter is the entity for the filter to list the hunt groups with their client info display template.
+  enum Filter {
+    // FILTER_UNSPECIFIED is an unspecified filter.
+    FILTER_UNSPECIFIED = 0;
+    // FILTER_ALL returns all hunt groups whether they have a client info display template or not.
+    FILTER_ALL = 1;
+    // FILTER_WITH_TEMPLATE returns only all hunt groups that have a client info display template.
+    FILTER_HUNT_GROUPS_WITH_TEMPLATE = 2;
+    // FILTER_WITHOUT_TEMPLATE returns only all hunt groups that do not have a client info display template.
+    FILTER_HUNT_GROUPS_WITHOUT_TEMPLATE = 3;
+  }
+
+  // The filter to list the hunt groups with their client info display template.
+  Filter filter = 1;
+}
+
+// ListHuntGroupsWithClientInfoTemplateDataResponse is the response message for the ListHuntGroupsWithClientInfoTemplateData RPC method.
+message ListHuntGroupsWithClientInfoTemplateDataResponse {
+  // A list of hunt group with their client info display template data.
+  repeated api.commons.org.HuntGroupWithClientInfoTemplateData hunt_groups_with_template_data = 1;
+}
+
 // Request message for ListHuntGroupWebLinks
 message ListHuntGroupWebLinksRequest {
   // The hunt group sid of the desired web links
