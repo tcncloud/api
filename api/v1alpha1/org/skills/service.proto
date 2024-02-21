@@ -92,7 +92,7 @@ service SkillsService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT]
+          permissions: [PERMISSION_USER_EDIT]
         }
       ];
     };
@@ -118,7 +118,7 @@ service SkillsService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT]
+          permissions: [PERMISSION_USER_EDIT]
         }
       ];
     };
