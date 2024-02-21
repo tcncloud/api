@@ -232,6 +232,8 @@ message AuditEvent {
 
     // LMS Events class 900
     LMSPipelineFailureEvent lms_pipeline_failure_event = 900;
+    LMSPipelineNoOutputEvent lms_pipeline_no_output_event = 901;
+    LMSPipelineSuccessfulEvent lms_pipeline_successful_event = 902;
 
     // Billing Events class 1000
     BillingCommitBillingPlanEvent billing_commit_billing_plan_event = 1000;
