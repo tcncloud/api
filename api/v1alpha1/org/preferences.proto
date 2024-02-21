@@ -552,3 +552,47 @@ message ClearEmailUnsubscribeAcknowledgementRequest {}
 
 // Response for clearing email unsubscribe acknowledgement.
 message ClearEmailUnsubscribeAcknowledgementResponse {}
+
+// Request for persisting business hours.
+message CreateBusinessHoursRequest {
+  api.commons.org.BusinessHours business_hours = 1;
+}
+
+// Response for persisting business hours.
+message CreateBusinessHoursResponse {
+  string business_hours_id = 1;
+}
+
+// Request for updating business hours.
+message UpdateBusinessHoursRequest {
+  api.commons.org.BusinessHours business_hours = 1;
+}
+
+// Response for updating business hours.
+message UpdateBusinessHoursResponse {}
+
+// Request for deleting business hours.
+message DeleteBusinessHoursRequest {
+  string business_hours_id = 1;
+}
+
+// Response for deleting business hours.
+message DeleteBusinessHoursResponse {}
+
+// Request for listing business hours.
+message ListBusinessHoursRequest {}
+
+// Response for listing business hours.
+message ListBusinessHoursResponse {
+  repeated api.commons.org.BusinessHours business_hours_lists = 1;
+}
+
+// Request for fetching a business hours.
+message GetBusinessHoursRequest {
+  string business_hours_id = 1;
+}
+
+// Response for fetching a business hours.
+message GetBusinessHoursResponse {
+  api.commons.org.BusinessHours business_hours = 1;
+}

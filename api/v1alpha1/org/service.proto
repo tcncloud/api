@@ -2670,4 +2670,69 @@ service Org {
       ];
     };
   }
+
+  // CreateBusinessHours persists times businesses are available.
+  rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/create";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateBusinessHours persists changes to times businesses are available.
+  rpc UpdateBusinessHours(UpdateBusinessHoursRequest) returns (UpdateBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/update";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteBusinessHours removes business hours.
+  rpc DeleteBusinessHours(DeleteBusinessHoursRequest) returns (DeleteBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListBusinessHours returns all business hours for an Org.
+  rpc ListBusinessHours(ListBusinessHoursRequest) returns (ListBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetBusinessHours returns the business hours for the ID.
+  rpc GetBusinessHours(GetBusinessHoursRequest) returns (GetBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/get";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
 }
