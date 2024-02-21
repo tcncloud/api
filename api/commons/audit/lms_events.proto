@@ -8,3 +8,17 @@ message LMSPipelineFailureEvent {
   string file_name = 3;
   string failure_message = 4;
 }
+
+message LMSPipelineNoOutputEvent {
+  string element_id = 1;
+  string element_name = 2;
+  string file_name = 3;
+  string event_message = 4;
+}
+
+message LMSPipelineSuccessfulEvent {
+  string element_id = 1;
+  string element_name = 2;
+  string file_name = 3;
+  string event_message = 4;
+}
