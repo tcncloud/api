@@ -351,6 +351,10 @@ message ListAgentsResponse {
     api.commons.TimeZoneWrapper time_zone_override = 21;
     // The email of the agent. Empty if none set.
     string email = 22;
+    // Whether or not the agent's email is verified.
+    bool email_verified = 23;
+    // The agent's mfa information.
+    api.commons.org.MfaInfo mfa_info = 24;
   }
 
   // List of returned agents with masked data.
