@@ -114,5 +114,5 @@ message DeliveryOptions {
   // transfer_config_sid is the transfer config sid to deliver the report.
   int64 transfer_config_sid = 1;
   // failure_notification_emails are the emails to notify on failure.
-  repeated string failure_notification_emails = 2;
+  repeated string failure_notification_emails = 2 [deprecated = true];
 }

@@ -304,9 +304,11 @@ message PanelSource {
   // added for each new panel type used by multiple teams
   oneof panel_type {
     // Used for new BI insights in operator
-    string insight_id = 1;
+    string insight_id = 1 [deprecated = true];
     // Used for old insights in BI
     string legacy_insight_id = 2;
+    // Used for BI Insights in operator
+    string insight_resource_id = 3;
   }
 }
 

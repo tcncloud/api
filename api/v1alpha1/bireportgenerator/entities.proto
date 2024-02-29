@@ -4,6 +4,7 @@ package api.v1alpha1.bireportgenerator;
 
 import "api/commons/bireportgenerator.proto";
 import "api/commons/enums.proto";
+import "api/commons/org.proto";
 
 // ReportJob that can be scheduled to report dashboard data.
 message ReportJob {
@@ -14,9 +15,9 @@ message ReportJob {
   // description of the report job
   string description = 3;
   // dashboard id to report
-  string dashboard_id = 4;
+  string dashboard_id = 4 [deprecated = true];
   // timezone to use for the report schedule
-  string time_zone = 5;
+  string time_zone = 5 [deprecated = true];
   // time period of data to report with
   commons.TimePeriod time_period = 6;
   // delivery times for the report
@@ -33,4 +34,10 @@ message ReportJob {
   bool is_active = 12;
   // whether to send an empty report if no data is available
   bool send_empty_report = 13;
+  // dashboard resource id to report
+  string dashboard_resource_id = 14;
+  // time_zone_wrapper to use for the report schedule
+  commons.TimeZoneWrapper time_zone_wrapper = 15;
+  // hide csv footer
+  bool hide_csv_footer = 16;
 }
