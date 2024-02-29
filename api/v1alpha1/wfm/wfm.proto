@@ -1017,7 +1017,6 @@ service WFM {
   // The @client_node_sid of the new entity will be returned in the response.
   // The @schedule_scenario_sid must match the scenario of the parent call center node.
   // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-  // The @origin_sid must be set to nil, since this method can only make an original node.
   // Required permissions:
   //   NONE
   // Errors:
@@ -1062,7 +1061,6 @@ service WFM {
   // The @location_node_sid of the new entity will be returned in the response.
   // The @schedule_scenario_sid must match the scenario of the parent client node.
   // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-  // The @origin_sid must be set to nil, since this method can only make an original node.
   // Required permissions:
   //   NONE
   // Errors:
@@ -1107,7 +1105,6 @@ service WFM {
   // The @program_node_sid of the new entity will be returned in the response.
   // The @schedule_scenario_sid must match the scenario of the parent location node.
   // The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-  // The @origin_sid must be set to nil, since this method can only make an original node.
   // Required permissions:
   //   NONE
   // Errors:
@@ -2172,7 +2169,6 @@ service WFM {
   // Gets the published schedule for the corresponding @datetime_range for the org sending the request.
   // Will create a published schedule if it does not exist already for the org sending the request.
   // if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-  // if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
   // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
   // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
   // if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -2340,7 +2336,6 @@ service WFM {
   // Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
   // The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
   // if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-  // if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
   // @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
   // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
   // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
@@ -4381,7 +4376,7 @@ message CallCenterNode {
   repeated AgentGroup member_agent_groups = 12;
   // ID of the original Call Center Node that this node was copied from.
   // If this node is the original, field will be set as nil.
-  google.protobuf.Int64Value origin_sid = 13;
+  google.protobuf.Int64Value origin_sid = 13 [deprecated = true];
 }
 
 // Request message for the UpdateCallCenterNode RPC
@@ -4424,7 +4419,7 @@ message ClientNode {
   repeated AgentGroup member_agent_groups = 13;
   // ID of the original Client Node that this node was copied from.
   // If this node is the original, field will be set as nil.
-  google.protobuf.Int64Value origin_sid = 14;
+  google.protobuf.Int64Value origin_sid = 14 [deprecated = true];
 }
 
 // Request message for the CreateClientNode RPC
@@ -4482,7 +4477,7 @@ message LocationNode {
   repeated AgentGroup member_agent_groups = 15;
   // ID of the original Location Node that this node was copied from.
   // If this node is the original, field will be set as nil.
-  google.protobuf.Int64Value origin_sid = 16;
+  google.protobuf.Int64Value origin_sid = 16 [deprecated = true];
 }
 
 // Request message for the CreateLocationNode RPC
@@ -4540,7 +4535,7 @@ message ProgramNode {
   repeated SkillProficiency member_skill_proficiencies = 15;
   // ID of the original Program Node that this node was copied from.
   // If this node is the original, field will be set as nil.
-  google.protobuf.Int64Value origin_sid = 16;
+  google.protobuf.Int64Value origin_sid = 16 [deprecated = true];
   // The predicted calls of this skill profile category will be used when scheduling.
   commons.SkillProfileCategory skill_profile_category = 17;
 }
@@ -5877,7 +5872,7 @@ message ShiftInstance {
   // ID of shift template that this shift instance belongs to.
   int64 shift_template_sid = 5;
   // ID of the program node that the shift instance belongs to, which may be different that the one that the @parent_shift_template_sid belongs to.
-  int64 originating_program_node_sid = 6;
+  int64 originating_program_node_sid = 6 [deprecated = true];
   // ID of the schedule that this shift instance belongs to.
   // May either point to a published or draft schedule.
   int64 schedule_sid = 7;
@@ -5949,7 +5944,6 @@ message GetPublishedScheduleReq {
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
   bool include_activity = 6;
-  // The the shift instances will be associated with the origin node of @node_selector or the origin node of it's children program nodes.
   // Optional field, if left nil all matching the given parameters will be included.
   ParentEntity node_selector = 7;
 }
@@ -6148,7 +6142,6 @@ message GetDraftScheduleReq {
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
   bool include_activity = 7;
-  // The the shift instances will be associated with the origin node of @node_selector or the origin node of it's children program nodes.
   // Optional field, if left nil all matching the given parameters will be included.
   ParentEntity node_selector = 8;
 }
@@ -6494,7 +6487,7 @@ message PerformanceMetricParameter {
 message GetPerformanceMetricsReq {
   // The schedule that the performance metric should be associated with.
   commons.ScheduleSelector schedule_selector = 1;
-  // The origin node that the performance metrics should be associated with.
+  // The node that the performance metrics should be associated with.
   ParentEntity node_selector = 2;
   // The datetime range over which the metrics will be collected.
   commons.DatetimeRange datetime_range = 3;
