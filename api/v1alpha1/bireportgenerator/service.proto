@@ -16,10 +16,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_DASHBOARDS_VIEW,
-            PERMISSION_INSIGHTS_DASHBOARD_VIEW
-          ]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
       ];
     };
@@ -31,10 +28,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_DASHBOARDS_VIEW,
-            PERMISSION_INSIGHTS_DASHBOARD_VIEW
-          ]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
       ];
     };
@@ -46,10 +40,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_DASHBOARDS_VIEW,
-            PERMISSION_INSIGHTS_DASHBOARD_VIEW
-          ]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
       ];
     };
@@ -61,10 +52,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_DASHBOARDS_VIEW,
-            PERMISSION_INSIGHTS_DASHBOARD_VIEW
-          ]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
       ];
     };
@@ -76,10 +64,18 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_DASHBOARDS_VIEW,
-            PERMISSION_INSIGHTS_DASHBOARD_VIEW
-          ]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc GenerateReport(GenerateReportRequest) returns (GenerateReportResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/generatereport";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
       ];
     };
@@ -142,3 +138,12 @@ message GetReportJobResponse {
   // The report job.
   ReportJob report_job = 1;
 }
+
+// GenerateReportRequest is the request for generating a report.
+message GenerateReportRequest {
+  // The report job to generate the report for.
+  ReportJob report_job = 1;
+}
+
+// GenerateReportResponse is the response for generating a report.
+message GenerateReportResponse {}
