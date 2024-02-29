@@ -461,6 +461,24 @@ enum Permission {
     features: ["Agent Portal"]
   }];
 
+  // Enables access to the Adherence app as an Admin user.
+  PERMISSION_WFM_ADHERENCE_ADMIN = 1502 [(annotations.perms.options) = {
+    app: APPLICATION_WORK_FORCE_MANAGEMENT
+    features: ["Adherence"]
+  }];
+
+  // Enables access to the Adherence app as a Manager user.
+  PERMISSION_WFM_ADHERENCE_MANAGER = 1503 [(annotations.perms.options) = {
+    app: APPLICATION_WORK_FORCE_MANAGEMENT
+    features: ["Adherence"]
+  }];
+
+  // Enables access to the Adherence app as a Monitor user.
+  PERMISSION_WFM_ADHERENCE_MONITOR = 1504 [(annotations.perms.options) = {
+    app: APPLICATION_WORK_FORCE_MANAGEMENT
+    features: ["Adherence"]
+  }];
+
   /*
    * Scorecards
    */
