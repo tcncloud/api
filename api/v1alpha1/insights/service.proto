@@ -36,7 +36,7 @@ service Insights {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
         },
         {
-          permissions: [PERMISSION_INSIGHTS_DASHBOARD_EDIT]
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
       ];
     };
@@ -87,10 +87,10 @@ service Insights {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
         },
         {
-          permissions: [PERMISSION_INSIGHTS_DASHBOARD_VIEW]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         },
         {
-          permissions: [PERMISSION_INSIGHTS_DASHBOARD_EDIT]
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
       ];
     };
@@ -189,7 +189,7 @@ service Insights {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         },
         {
-          permissions: [PERMISSION_INSIGHTS_DASHBOARD_VIEW]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         },
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]

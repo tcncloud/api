@@ -295,11 +295,13 @@ enum Permission {
     features: ["Insight Builder"]
   }];
   // allows user to read insights for dashboards
+  // deprecated
   PERMISSION_INSIGHTS_DASHBOARD_VIEW = 607 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
     features: ["Dashboard Viewer"]
   }];
   // allows user to edit insights for dashboards
+  // deprecated
   PERMISSION_INSIGHTS_DASHBOARD_EDIT = 608 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
     features: ["Dashboard Builder"]
