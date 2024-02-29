@@ -7,6 +7,7 @@ import "api/commons/org/labels.proto";
 import "api/commons/org/permissions.proto";
 import "api/commons/org/trusts.proto";
 import "api/commons/org/user.proto";
+import "api/commons/org_preferences.proto";
 import "api/commons/perms.proto";
 import "api/commons/user.proto";
 import "google/protobuf/timestamp.proto";
@@ -920,6 +921,8 @@ message GetUserSessionDataResponse {
   repeated api.commons.org.Label labels = 5;
   // A boolean for if the organization allows multi factor authentication
   bool org_allowed_mfa = 6;
+  // The default locale preferences of the organization
+  api.commons.LocalePreferences locale_preferences = 7;
 }
 
 // Request message for the RefreshMfaLockout rpc.

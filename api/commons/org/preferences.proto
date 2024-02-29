@@ -21,8 +21,10 @@ message OrganizationPreferences {
   api.commons.Country default_country = 10;
   // Operating time zone of organization.
   api.commons.TimeZone time_zone = 11;
-  // Display language for users of the organization.
+  // Display language in Backoffice for users of the organization.
   api.commons.DisplayLanguage display_language = 12;
+  // Organization's locale preferences.
+  api.commons.LocalePreferences locale_preferences = 13;
 }
 
 // Preferences controlling direct agent properties.
