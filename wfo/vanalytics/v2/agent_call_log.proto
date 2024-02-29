@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "api/commons/acd.proto";
+
+// AgentCallLog resource.
+message AgentCallLog {
+  // actions are the agent call log actions.
+  repeated Action actions = 1;
+
+  // Action is an agent call log action.
+  message Action {
+    oneof kind {
+      // CallSkillsInitial are the initial call skills on a call.
+      CallSkillsInitial call_skills_initial = 1;
+      // CallEnded is the reason the call ended.
+      string call_ended = 2;
+    }
+  }
+
+  // CallSkillsInitial are the initial call skills on a call.
+  message CallSkillsInitial {
+    // need is all the call skills that are needed.
+    repeated string need = 1;
+    // want is all the call skills that are wanted.
+    repeated string want = 2;
+  }
+}
+
+// Query constraints on agent call log.
+message AgentCallLogQuery {
+  // Query constraints on call skills initial.
+  CallSkillsInitial call_skills_initial = 1;
+  // Query constraints on the reason the call ended.
+  CallEnded call_ended = 2;
+
+  // Query constraints on call skills initial.
+  message CallSkillsInitial {
+    // Query constraints on call skills initial need.
+    Need need = 1;
+    // Query constraints on call skills initial want.
+    Want want = 2;
+
+    // Query constraints on call skills initial need.
+    message Need {
+      // Requires all call specific transcript hits to have a needed agent
+      // call log in the list.
+      repeated string values = 1;
+      // Requires all values to match.
+      bool all = 2;
+    }
+
+    // Query constraints on call skills initial want.
+    message Want {
+      // Requires all call specific transcript hits to have a wanted agent
+      // call log in the list.
+      repeated string values = 1;
+      // Requires all values to match.
+      bool all = 2;
+    }
+  }
+
+  // Query constraints on the reason the call ended.
+  message CallEnded {
+    // Query constraints on the reason the call ended.
+    repeated api.commons.AgentCallLogCallEnded reasons = 1;
+  }
+}
