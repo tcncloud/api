@@ -116,6 +116,7 @@ message MfaInfo {
   oneof mfa_type {
     NoneSelected none = 10;
     OtpType otp = 11;
+    Duo duo = 12;
   }
 
   message NoneSelected {
@@ -130,6 +131,10 @@ message MfaInfo {
     }
 
     message EmailDeliveryMethod {}
+  }
+
+  message Duo {
+    string duo_username = 1;
   }
 }
 
