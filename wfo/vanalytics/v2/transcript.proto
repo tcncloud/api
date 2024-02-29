@@ -7,6 +7,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
+import "wfo/vanalytics/v2/agent_call_log.proto";
 
 // An enumeration of transcript communication channels.
 enum Channel {
@@ -204,6 +205,23 @@ message Call {
   // The hunt group name for the agent who made the call.
   string group_name = 9;
 
+  // The agent responses for this call.
+  map<string, AgentResponse> agent_response = 10;
+
+  // The hunt groups sids for this call.
+  repeated int64 hunt_group_sids = 11;
+
+  // The number format for numbers in the agent response for this call.
+  string number_format = 12;
+
+  // Agent call log for this call.
+  AgentCallLog agent_call_log = 13;
+
+  // AgentResponse contains the agent responses aka dispositions.
+  message AgentResponse {
+    repeated string values = 1;
+  }
+
   // A thread is the text from one participant.
   message Thread {
     // The unique identifier of the thread.
@@ -368,6 +386,127 @@ message TranscriptQuery {
   // Query constraints on delete time.
   DeleteTime delete_time = 7;
 
+  // Query constraints on phone.
+  Phone phone = 8;
+
+  // Query constraints on phone.
+  message Phone {
+    // Query constraints on phone country code.
+    Cc cc = 1;
+
+    // Query constraints on phone ndc (area code).
+    Ndc ndc = 2;
+
+    // Query constraints on phone subscriber number prefix.
+    Prefix prefix = 3;
+
+    // Query constraints on phone city.
+    City city = 4;
+
+    // Query constraints on phone iso2 country code.
+    Iso2 iso2 = 5;
+
+    // Query constraints on phone region code.
+    RegionCode region_code = 6;
+
+    // Query constraints on phone region name.
+    RegionName region_name = 7;
+
+    // Query constraints on phone time zone.
+    TimeZone time_zone = 8;
+
+    // Query constraints on phone number type.
+    Type type = 9;
+
+    // Query constraints on phone number utc.
+    Utc utc = 10;
+
+    // Query constraints on phone number location.
+    Location location = 11;
+
+    // Query constraints on raw phone number.
+    Raw raw = 12;
+
+    // Cc defines a query on the phone country code.
+    message Cc {
+      // Optional. Queries where cc in list provided.
+      repeated string any = 1;
+    }
+
+    // Ndc defines a query on the phone ndc.
+    message Ndc {
+      // Optional. Queries where ndc in list provided.
+      repeated string any = 1;
+    }
+
+    // Prefix defines a query on the phone prefix.
+    message Prefix {
+      // Optional. Queries where prefix in list provided.
+      repeated string any = 1;
+    }
+
+    // City defines a query on the phone city.
+    message City {
+      // Optional. Queries where city in list provided.
+      repeated string any = 1;
+    }
+
+    // Iso2 defines a query on the phone Iso2.
+    message Iso2 {
+      // Optional. Queries where iso2 in list provided.
+      repeated string any = 1;
+    }
+
+    // RegionCode defines a query on the phone region code.
+    message RegionCode {
+      // Optional. Queries where region code in list provided.
+      repeated string any = 1;
+    }
+
+    // RegionName defines a query on the phone region name.
+    message RegionName {
+      // Optional. Queries where region name in list provided.
+      repeated string any = 1;
+    }
+
+    // TimeZone defines a query on the phone time zone.
+    message TimeZone {
+      // Optional. Queries where time zone in list provided.
+      repeated string any = 1;
+    }
+
+    // Type defines a query on the phone type.
+    message Type {
+      // Optional. Queries where type in list provided.
+      repeated string any = 1;
+    }
+
+    // Utc defines a query on the phone utc.
+    message Utc {
+      // Optional. Queries where utc in list provided.
+      repeated float any = 1;
+    }
+
+    // Location defines a query on the phone location.
+    message Location {
+      ZipCodeProximity zip_code_proximity = 1;
+      message ZipCodeProximity {
+        // Required. Queries on phone number country code.
+        string country_code = 1;
+        // Required. Queries where phone location is within distance of zipcode.
+        string zip_code = 2;
+        // Required. Queries where phone location is within distance (km or mi) of zipcode. For example: 100km.
+        string distance = 3;
+      }
+    }
+
+    // Query constraints on raw phone number.
+    message Raw {
+      // Optional. Queries where phone number in list provided.
+      repeated string any = 1;
+    }
+  }
+
   // Query constraints on transcript sid.
   message TranscriptSid {
     // Requires all transcript hits to have a transcript sid in the list.
@@ -414,6 +553,89 @@ message TranscriptQuery {
 
     // Query constraints on group name.
     GroupName group_name = 8;
+
+    // Query constraints on agent response.
+    AgentResponse agent_response = 9;
+
+    // Query constraints on hunt group sids.
+    HuntGroupSids hunt_group_sids = 10;
+
+    // Query constraints on agent call log.
+    AgentCallLogQuery agent_call_log = 12;
+
+    // Query constraints on hunt group sids.
+    message HuntGroupSids {
+      // Requires all call specific transcript hits to have a hunt group sid
+      // in the list.
+      repeated int64 any = 1;
+    }
+
+    // Query constraints on agent response.
+    message AgentResponse {
+      // Optional. Groups AgentResponse conditions with logical and.
+      repeated AgentResponse and = 1;
+
+      // Optional. Groups AgentResponse conditions with logical or.
+      repeated AgentResponse or = 2;
+
+      // Optional. Queries for what does not match the agent response query.
+      bool not = 3;
+
+      // Optional. Key to query on.
+      Key key = 4;
+
+      // Optional. Queries values for the given keys. If no keys are provided then
+      // it will run the query on all values.
+      Values values = 5;
+
+      // Optional. Queries values as numbers for the given keys.
+      Numbers numbers = 6;
+
+      // Values defines a query on values.
+      message Values {
+        // Optional. Queries where value in list provided.
+        repeated string in = 1;
+
+        // Optional. Queries where value for key starts with given string.
+        string starts_with = 2;
+
+        // Optional. Queries where value for key contains given string.
+        string contains = 3;
+      }
+
+      // Numbers defines a query on values as numbers.
+      message Numbers {
+        // Optional. Queries where value in list provided.
+        repeated double in = 1;
+
+        // Optional. Queries where greater than or equal.
+        google.protobuf.DoubleValue gte = 2;
+
+        // Optional. Queries where less than or equal.
+        google.protobuf.DoubleValue lte = 3;
+
+        // Optional. Queries where greater than.
+        google.protobuf.DoubleValue gt = 4;
+
+        // Optional. Queries where less than.
+        google.protobuf.DoubleValue lt = 5;
+
+        // Optional. Queries where equal to.
+        google.protobuf.DoubleValue eq = 6;
+      }
+
+      // Key defines a query on the key.
+      message Key {
+        // Optional. Queries where key in list provided.
+        repeated string in = 1;
+
+        // Optional. Queries where key starts with given string.
+        string starts_with = 2;
+
+        // Optional. Queries where key contains given string.
+        string contains = 3;
+      }
+    }
 
     // Query constraints on call type.
     message CallType {
