@@ -3418,6 +3418,34 @@ service WFM {
       ];
     };
   }
+
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************ADHERENCE RPCS**********************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+
+  // A hello world endpoint to test the WFM Adherence App.
+  // Returns a string with a hello world message.
+  // Required permissions:
+  //   PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+  rpc HelloWorldWFMAdherence(HelloWorldWFMAdherenceRequest) returns (HelloWorldWFMAdherenceResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/helloworldwfmadherence";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ];
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -7024,4 +7052,19 @@ message ReplaceAgentOnScheduleRes {
   repeated ShiftInstance updated_shift_instances = 1;
   // Any diagnostics raised due to overlap conflicts.
   repeated Diagnostic diagnostics = 2;
+}
+
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+/**************************************************************ADHERENCE ENTITIES********************************************************************/
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+
+// Request message for the HelloWorldWFMAdherence RPC.
+message HelloWorldWFMAdherenceRequest {}
+
+// Response message for the HelloWorldWFMAdherence RPC.
+message HelloWorldWFMAdherenceResponse {
+  // A string containing the hello world message
+  string hello_message = 1;
 }
