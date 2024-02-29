@@ -219,6 +219,19 @@ service Learn {
       ];
     };
   }
+
+  // return diff by comparing file contens from any version
+  rpc ReviewFileVersions(ReviewFileVersionsReq) returns (ReviewFileVersionsRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/reviewfileversions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -485,4 +498,24 @@ message SearchContentByVersionReq {
   google.protobuf.FieldMask field_mask = 5;
   // by version
   string version = 6;
+}
+
+// request to retrieve diff after comparing file contents in different versions
+message ReviewFileVersionsReq {
+  // url to master version
+  string url = 1;
+  // version to be compared with
+  string version = 2;
+  // locale
+  string locale = 3;
+}
+
+// response to retrieve diff after comparing file contents in different versions
+message ReviewFileVersionsRes {
+  // existing file contents from master
+  string content = 1;
+  // diff contents between both master and passed version
+  string diff_content = 2;
+  // List containing image links from parsing both files
+  repeated LearnImage images = 3;
 }
