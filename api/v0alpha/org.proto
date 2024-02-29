@@ -4014,6 +4014,7 @@ message OrganizationPreferences {
   api.commons.Country default_country = 11; // Default country for organization
   api.commons.TimeZone time_zone = 12; // Organization's time zone
   api.commons.DisplayLanguage display_language = 13; // Default organization display language
+  api.commons.LocalePreferences locale_preferences = 14; // Default organization locale preferences
 }
 
 // Request for GetAgentPreferences

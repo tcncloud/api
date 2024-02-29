@@ -67,3 +67,18 @@ enum StandardReportFilter {
   FILTER_BY_MACHINE_HANGUP_AND_UNCONNECTED = 34; // WHERE_MACHINE_HANGUP_AND_UNCONNECTED
   FILTER_BY_EXCLUDING_CANCELED_AND_INVALID = 35; // WHERE_ALL_EXCLUDING_INVALID_AND_CANCELED
 }
+
+// LocalePreferences represents the organization's locale settings.
+message LocalePreferences {
+  // Display language in Operator for users of the organization.
+  // Must be a valid language tag supported in Operator.
+  // IETF BCP 47 - https://en.wikipedia.org/wiki/IETF_language_tag
+  string language_tag = 1;
+  // The direction of the script in Operator used in the organization.
+  // By default, it is set to false to indicate left-to-right.
+  bool use_script_direction_right_to_left = 2;
+  // The default currency used in the organization.
+  // Must be a valid currency code supported in Operator.
+  // ISO 4217 - https://en.wikipedia.org/wiki/ISO_4217.
+  string default_currency = 3;
+}
