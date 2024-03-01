@@ -23,6 +23,7 @@ enum Application {
   APPLICATION_WORK_FORCE_MANAGEMENT = 15;
   APPLICATION_WORKFLOWS = 16;
   APPLICATION_NEWSROOM = 17;
+  APPLICATION_CONTACTMANAGER = 18;
 }
 
 // Card contains license/permission card label constants.

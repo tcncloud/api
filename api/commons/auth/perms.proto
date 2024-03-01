@@ -578,4 +578,9 @@ enum Permission {
   PERMISSION_NEWSROOM_EDIT = 4200 [(annotations.perms.options) = {app: APPLICATION_NEWSROOM}];
   // Enables access to publish in Newsroom manager
   PERMISSION_NEWSROOM_PUBLISH = 4201;
+
+  // ACCESS the Contact Manager APP: Routing, Listing the Contact Manager, List,Get, KYC etc.
+  PERMISSION_CONTACTMANAGER_ADMIN = 5100 [(annotations.perms.options) = {app: APPLICATION_CONTACTMANAGER}];
+
+  PERMISSION_CONTACTMANAGER_APP = 5101 [(annotations.perms.options) = {app: APPLICATION_CONTACTMANAGER}];
 }

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package api.v1alpha1.contactmanager;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/contactmanager/contactmanager.proto";
+import "google/api/annotations.proto";
+service ContactManager {
+  rpc GetContactList(GetContactListRequest) returns (GetContactListResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/getcontactlist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
+
+  rpc ListContactEntryList(ListContactEntryListRequest) returns (ListContactEntryListResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/listcontactentrylist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
+
+  rpc GetEncContactEntry(GetEncContactEntryRequest) returns (GetEncContactEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/contactmanager/getenccontactentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
+
+  rpc GetKYCEncContactEntry(GetKYCEncContactEntryRequest) returns (GetKYCEncContactEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/contactmanager/getenccontactentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
+}
