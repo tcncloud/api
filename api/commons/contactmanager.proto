@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "google/protobuf/timestamp.proto";
+
+message ContactManagerEntry {
+  int64 contact_manager_entry_id = 1 [jstype = JS_STRING];
+  int64 contact_manager_entry_list_id = 2 [jstype = JS_STRING];
+  string key = 3;
+  string value = 4;
+  string type = 5;
+  google.protobuf.Timestamp date_created = 6;
+}
+
+message ContactManagerList {
+  int64 contact_manager_list_id = 1 [jstype = JS_STRING];
+  string org_id = 2;
+  int64 project_id = 3 [jstype = JS_STRING];
+  string file_name = 4;
+  string description = 5;
+  // List of Columns In The Contact List. UI to render table based on this list
+  repeated string list_details = 6;
+  int64 ttl = 7 [jstype = JS_STRING];
+  google.protobuf.Timestamp date_created = 8;
+}
+
+message ContactManagerEntryVal {
+  string type = 1;
+  string value = 2;
+}

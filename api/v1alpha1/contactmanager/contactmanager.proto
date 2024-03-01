@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package api.v1alpha1.contactmanager;
+
+import "api/commons/contactmanager.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+// New Proto's For Get and List - Contact List and Contact Entries
+message GetContactListRequest {
+  google.protobuf.FieldMask request_mask = 1;
+  string org_id = 2;
+  int64 project_id = 3 [jstype = JS_STRING];
+}
+
+message GetContactListResponse {
+  repeated api.commons.ContactManagerList contact_list = 1;
+}
+message ListContactEntryListRequest {
+  int64 contact_manager_list_id = 1 [jstype = JS_STRING];
+  string org_id = 2;
+  string project_id = 3;
+}
+
+// List all Unencrypted Data. Encrypted Data would be sent On Double Click of the Record
+// Seperate API to List All Encrypted Data
+message ListContactEntryListResponse {
+  repeated api.commons.ContactManagerEntry contact_entry = 1;
+}
+
+message GetEncContactEntryRequest {
+  int64 contact_manager_entry_id = 1 [jstype = JS_STRING];
+}
+
+message GetEncContactEntryResponse {
+  repeated api.commons.ContactManagerEntry contact_entry = 1;
+}
+
+message GetKYCEncContactEntryRequest {
+  int64 project_id = 1 [jstype = JS_STRING];
+  repeated api.commons.ContactManagerEntryVal entry_val = 2;
+  int64 min_kyc_limit = 3;
+}
+
+message GetKYCEncContactEntryResponse {
+  bool verified = 1;
+}
