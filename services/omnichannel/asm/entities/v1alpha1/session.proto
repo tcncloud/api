@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package services.omnichannel.asm.entities.v1alpha1;
+
+import "google/protobuf/timestamp.proto";
+
+message AsmSession {
+  // asm session sid
+  int64 asm_session_sid = 1;
+  // time the asm session started
+  google.protobuf.Timestamp asm_session_start = 4;
+  // time the asm session ended
+  google.protobuf.Timestamp asm_session_end = 5;
+  // voice session is there is one
+  VoiceSession voice_session = 6;
+}
+
+message VoiceSession {
+  // voice session sid
+  int64 voice_session_sid = 1;
+  // time the voice session started
+  google.protobuf.Timestamp voice_session_start = 2;
+  // time the voice session ended
+  google.protobuf.Timestamp voice_session_end = 3;
+}
+
+message VoiceRegistration {
+  // The pin used to log in via a connected phone
+  string username = 2;
+  // The pass used to log in via a connected phone
+  string password = 3;
+  // The extention appended
+  string dial_url = 4;
+  // pstn phone number that will be used for the agent to dial in
+  // if it's an empty string then the voip connection must be used
+  string pstn_phone = 5;
+  // default time zone -
+  string default_time_zone = 6;
+  // expiration Timestamp When the registration will expire
+  int64 expiration_timestamp = 7;
+}
+
+message AsmUserDetails {}

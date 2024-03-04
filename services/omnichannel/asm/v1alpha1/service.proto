@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package services.omnichannel.asm.v1alpha1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/omnichannel/asm/v1alpha1/entities.proto";
+
+service AsmService {
+  // Creates an agent session and enables the voice channel
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/createsession";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // Closes an asm session and all sub sessions
+  rpc EndSession(EndSessionRequest) returns (EndSessionResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/endsession";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // Gets an agent's current asm session
+  rpc GetCurrentSession(GetCurrentSessionRequest) returns (GetCurrentSessionResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/getcurrentsession";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // Updates the currently active subsession
+  rpc EnableVoice(EnableVoiceRequest) returns (EnableVoiceResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/enablevoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  rpc DisableVoice(DisableVoiceRequest) returns (DisableVoiceResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/disablevoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ];
+    };
+  }
+
+  // List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
+  rpc ListAsmUserDetails(ListAsmUserDetailsRequest) returns (ListAsmUserDetailsResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/listsessions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+}

@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package services.omnichannel.asm.v1alpha1;
+
+import "services/omnichannel/asm/entities/v1alpha1/session.proto";
+
+message CreateSessionRequest {}
+
+message CreateSessionResponse {
+  // asm session
+  services.omnichannel.asm.entities.v1alpha1.AsmSession asm_session = 1;
+}
+
+message EndSessionRequest {
+  // the asm session sid to be ended
+  int64 asm_session_sid = 1;
+  // reason why session is ended
+  string reason = 2;
+}
+
+message EndSessionResponse {}
+
+message GetCurrentSessionRequest {}
+
+message GetCurrentSessionResponse {
+  // current asm session
+  services.omnichannel.asm.entities.v1alpha1.AsmSession asm_session = 1;
+}
+
+message EnableVoiceRequest {
+  // asm session sid to start voice
+  int64 asm_session_sid = 1;
+  // hunt group voice session will be assigned to
+  int64 hunt_group_sid = 2;
+  // Skills voice session is going to requere.
+  map<string, int64> skills = 3;
+}
+
+message EnableVoiceResponse {
+  // voice session that was enabled
+  services.omnichannel.asm.entities.v1alpha1.VoiceSession voice_session = 1;
+  // the registration with new voice session
+  services.omnichannel.asm.entities.v1alpha1.VoiceRegistration voice_registration = 2;
+}
+
+message DisableVoiceRequest {
+  // asm session to have voice disabled.
+  int64 asm_session_sid = 1;
+}
+
+message DisableVoiceResponse {}
+
+message ListAsmUserDetailsRequest {}
+
+message ListAsmUserDetailsResponse {
+  // list of Sessions in the system with enrichments
+  repeated services.omnichannel.asm.entities.v1alpha1.AsmUserDetails sessions = 1;
+}
