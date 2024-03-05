@@ -96,7 +96,8 @@ message GetAuthenticationPreferencesResponse {
 message UpdateAuthenticationPreferencesRequest {
   // Authentication preferences entity.
   api.commons.org.AuthenticationPreferences authentication_preferences = 1;
-
+  // The duo client secret to be used for mfa
+  string duo_client_secret = 5;
   // Field mask for filtering each field.
   google.protobuf.FieldMask field_mask = 10;
 }
