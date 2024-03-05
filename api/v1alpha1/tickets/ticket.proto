@@ -143,12 +143,24 @@ message ListAllocatedTicketReq {
 
 // ListAvailableAgentTicketsResponse -
 message ListAvailableAgentTicketsResponse {
-  repeated int64 ticket_sid = 1 [jstype = JS_STRING];
+  repeated int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   repeated api.commons.Ticket ticket = 2;
 }
 
 // ListAvailableAgentTicketsRequest -
-message ListAvailableAgentTicketsRequest {}
+message ListAvailableAgentTicketsRequest {
+  google.protobuf.FieldMask select_field_mask = 1; //defines the ticket fields to be returned
+  AvailableTicketsFilter available_filter = 2;
+  int64 agent_view_limit = 3; //agent profile setting
+}
+
+// AvailableTicketsFilter
+message AvailableTicketsFilter {
+  repeated string agent_skill_id = 1; //list of agent's skills
+}
 
 // EditTicketRes - Response for EditTicketReq
 message EditTicketRes {
