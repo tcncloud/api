@@ -5,6 +5,7 @@ package api.commons;
 import "google/protobuf/timestamp.proto";
 
 message ContactManagerEntry {
+  option deprecated = true;
   int64 contact_manager_entry_id = 1 [jstype = JS_STRING];
   int64 contact_manager_entry_list_id = 2 [jstype = JS_STRING];
   string key = 3;
@@ -14,6 +15,7 @@ message ContactManagerEntry {
 }
 
 message ContactManagerList {
+  option deprecated = true;
   int64 contact_manager_list_id = 1 [jstype = JS_STRING];
   string org_id = 2;
   int64 project_id = 3 [jstype = JS_STRING];
@@ -26,6 +28,7 @@ message ContactManagerList {
 }
 
 message ContactManagerEntryVal {
+  option deprecated = true;
   string type = 1;
   string value = 2;
 }

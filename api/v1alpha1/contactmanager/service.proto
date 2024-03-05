@@ -31,7 +31,7 @@ service ContactManager {
   }
 
   rpc GetEncContactEntry(GetEncContactEntryRequest) returns (GetEncContactEntryResponse) {
-    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/contactmanager/getenccontactentry";
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/getenccontactentry";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -43,12 +43,24 @@ service ContactManager {
   }
 
   rpc GetKYCEncContactEntry(GetKYCEncContactEntryRequest) returns (GetKYCEncContactEntryResponse) {
-    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/contactmanager/getenccontactentry";
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/getkycenccontactentry";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+          permissions: [PERMISSION_CONTACTMANAGER_APP]
+        }
+      ];
+    };
+  }
+
+  rpc GetKYCKeys(GetKYCKeysRequest) returns (GetKYCKeysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/getkyckeys";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_APP]
         }
       ];
     };
