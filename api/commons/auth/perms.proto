@@ -274,16 +274,10 @@ enum Permission {
   }];
   // Enables writes for common library insights.
   // deprecated
-  PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE = 603 [(annotations.perms.options) = {
-    wip: true
-    app: APPLICATION_BUSINESS_INTELLIGENCE
-  }];
+  PERMISSION_INSIGHTS_COMMON_LIBRARY_MANAGE = 603 [deprecated = true];
   // Enables access to insights.
   // deprecated
-  PERMISSION_INSIGHTS_MANAGE = 604 [(annotations.perms.options) = {
-    app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: ["Insight Builder"]
-  }];
+  PERMISSION_INSIGHTS_MANAGE = 604 [deprecated = true];
   // allows access to read insights
   PERMISSION_INSIGHTS_INSIGHT_VIEW = 605 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE
@@ -296,16 +290,10 @@ enum Permission {
   }];
   // allows user to read insights for dashboards
   // deprecated
-  PERMISSION_INSIGHTS_DASHBOARD_VIEW = 607 [(annotations.perms.options) = {
-    app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: ["Dashboard Viewer"]
-  }];
+  PERMISSION_INSIGHTS_DASHBOARD_VIEW = 607 [deprecated = true];
   // allows user to edit insights for dashboards
   // deprecated
-  PERMISSION_INSIGHTS_DASHBOARD_EDIT = 608 [(annotations.perms.options) = {
-    app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: ["Dashboard Builder"]
-  }];
+  PERMISSION_INSIGHTS_DASHBOARD_EDIT = 608 [deprecated = true];
 
   /*
    * Room 303 messenger
