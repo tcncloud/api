@@ -130,6 +130,8 @@ message AuthenticationPreferences {
   // Whether or not to block login from users without a verified email.
   // This option is only used if two factor authentication is enabled.
   bool block_unverified_users = 14;
+  // Contains the settings needed to set up email mfa for an organization.
+  EmailMfaSettings email_mfa_settings = 15;
   // Contains the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
   DuoMfaSettings duo_mfa_settings = 16;
@@ -139,6 +141,12 @@ message AuthenticationPreferences {
   message DuoMfaSettings {
     string duo_client_id = 1;
     string duo_api_host = 2;
+    bool enabled = 3;
+  }
+
+  // A message containing the settings needed for email mfa for an organization.
+  message EmailMfaSettings {
+    bool enabled = 1;
   }
 }
 
