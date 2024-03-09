@@ -6,6 +6,7 @@ import "api/commons/enums.proto";
 
 // RepeatFrequency is an enum for how often a report should be executed.
 enum RepeatFrequency {
+  option deprecated = true;
   REPEAT_FREQUENCY_UNSPECIFIED = 0;
   REPEAT_FREQUENCY_ON_HOUR = 1;
   REPEAT_FREQUENCY_15_MINUTES = 2;
@@ -14,6 +15,7 @@ enum RepeatFrequency {
 
 // DayFilterType is an enum for the type of day filter.
 enum DayFilterType {
+  option deprecated = true;
   DAY_FILTER_TYPE_UNSPECIFIED = 0;
   DAY_FILTER_TYPE_EVERY_DAY = 1;
   DAY_FILTER_TYPE_DAY_OF_WEEK = 2;
@@ -67,6 +69,7 @@ enum TimePeriod {
 
 // DeliveryTimes is a message for the delivery times of a report.
 message DeliveryTimes {
+  option deprecated = true;
   // seconds after midnight when the report should be delivered.
   repeated int32 delivery_times = 2;
   // repeat_frequency is the frequency of the report.
@@ -75,6 +78,7 @@ message DeliveryTimes {
 
 // DayOfWeekFilter filters the days of the week for a report.
 message DayOfWeekFilter {
+  option deprecated = true;
   // days_of_weeks is a list of days of the week.
   repeated Weekday.Enum days_of_weeks = 1;
   // weeks_of_months is a list of weeks of the month.
@@ -83,6 +87,7 @@ message DayOfWeekFilter {
 
 // DayOfMonthFilter filters the days of the month for a report.
 message DayOfMonthFilter {
+  option deprecated = true;
   // day_of_months is a list of days of the month.
   repeated int32 day_of_months = 1;
   // is_last_day_of_month is a flag for the last day of the month.
@@ -91,6 +96,7 @@ message DayOfMonthFilter {
 
 // DayFilter is used to specify days for a report to be delivered.
 message DayFilter {
+  option deprecated = true;
   // type is the type of day filter.
   DayFilterType type = 1;
   oneof filter {
@@ -111,6 +117,7 @@ message FormatOptions {
 
 // DeliveryOptions is a message for the delivery options of a report.
 message DeliveryOptions {
+  option deprecated = true;
   // transfer_config_sid is the transfer config sid to deliver the report.
   int64 transfer_config_sid = 1;
   // failure_notification_emails are the emails to notify on failure.
