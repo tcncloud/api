@@ -9,6 +9,20 @@ import "google/protobuf/wrappers.proto";
 
 message Empty {}
 
+// CronExpression is a message for the cron expression of a report.
+message CronExpression {
+  // repeat_minutes is the minutes expression to repeat the report.
+  string repeat_minutes = 1;
+  // hours_of_day is the hours expression of the day to repeat the report.
+  string hours_of_day = 2;
+  // days_of_month is the days expression of the month to repeat the report.
+  string days_of_month = 3;
+  // months_of_year is the months expression of the year to repeat the report.
+  string months_of_year = 4;
+  // day_of_week is the day of the week expression to repeat the report.
+  string day_of_week = 5;
+}
+
 // nullable Int32
 message Int32Nullable {
   bool is_null = 1;

@@ -5,6 +5,7 @@ package api.v1alpha1.bireportgenerator;
 import "api/commons/bireportgenerator.proto";
 import "api/commons/enums.proto";
 import "api/commons/org.proto";
+import "api/commons/types.proto";
 
 // ReportJob that can be scheduled to report dashboard data.
 message ReportJob {
@@ -16,20 +17,20 @@ message ReportJob {
   string description = 3;
   // dashboard id to report
   string dashboard_id = 4 [deprecated = true];
-  // timezone to use for the report schedule
+  // time zone to use for the report schedule
   string time_zone = 5 [deprecated = true];
   // time period of data to report with
   commons.TimePeriod time_period = 6;
   // delivery times for the report
-  commons.DeliveryTimes delivery_times = 7;
+  commons.DeliveryTimes delivery_times = 7 [deprecated = true];
   // days filter to report on
-  commons.DayFilter day_filter = 8;
+  commons.DayFilter day_filter = 8 [deprecated = true];
   // months filter to report on
-  repeated commons.Month months = 9;
+  repeated commons.Month months = 9 [deprecated = true];
   // format options for the report
   commons.FormatOptions format_options = 10;
   // delivery options for the report
-  commons.DeliveryOptions delivery_options = 11;
+  commons.DeliveryOptions delivery_options = 11 [deprecated = true];
   // whether the report job is active
   bool is_active = 12;
   // whether to send an empty report if no data is available
@@ -40,4 +41,8 @@ message ReportJob {
   commons.TimeZoneWrapper time_zone_wrapper = 15;
   // hide csv footer
   bool hide_csv_footer = 16;
+  // transfer_config_sid to use for the report schedule
+  int64 transfer_config_sid = 17;
+  // cron expression for the report schedule
+  commons.CronExpression cron_expression = 18;
 }
