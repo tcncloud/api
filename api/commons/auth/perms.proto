@@ -199,6 +199,11 @@ enum Permission {
   // Enables downloading of voicemails.
   PERMISSION_VOICEMAIL_DOWNLOAD = 1401 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables agents to view manual approve tasks
+  // Enables Agents to view portals.
+  PERMISSION_AGENT_PORTALS_VIEW = 340 [(annotations.perms.options) = {
+    app: APPLICATION_AGENT
+    features: ["Portals"]
+  }];
   PERMISSION_MANUAL_APPROVE = 341 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables Agents to view plugins.
   PERMISSION_AGENT_PLUGINS_VIEW = 342 [(annotations.perms.options) = {
@@ -210,11 +215,8 @@ enum Permission {
     app: APPLICATION_AGENT
     features: ["Integration Links"]
   }];
-  // Enables Agents to view portals.
-  PERMISSION_AGENT_PORTALS_VIEW = 340 [(annotations.perms.options) = {
-    app: APPLICATION_AGENT
-    features: ["Portals"]
-  }];
+  // Enables agents to create manual conversations
+  PERMISSION_MANUAL_CONVERSATION = 344 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   /*
    * Voice Analytics
    */
