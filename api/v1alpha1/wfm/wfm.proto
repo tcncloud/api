@@ -1400,6 +1400,27 @@ service WFM {
     };
   }
 
+  // Creates an agent that is not assigned a tcn agent for the org sending the request.
+  // If @wfm_agent_sid_to_copy_agent_group_associations is set, it will also copy that agent's agent group associations to the new agent.
+  // Otherwise only the new agent will be created.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the @wfm_agent_sid_to_copy_agent_group_associations in the request is invalid.
+  //   - grpc.Internal: error occurs creating the agent or the memberships.
+  //   - grpc.NotFound: the given @wfm_agent_sid_to_copy_agent_group_associations doesn't exist for the org.
+  rpc CreateUnassignedWFMAgent(CreateUnassignedWFMAgentRequest) returns (CreateUnassignedWFMAgentResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createunassignedwfmagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
   // All of the entity's parameters that are not desired to be updated must be filled with their current values.
   // The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
@@ -1498,6 +1519,24 @@ service WFM {
   //  - grpc.Internal: error occours while listing the wfm_agent_sids.
   rpc ListWFMAgentSids(ListWFMAgentSidsReq) returns (ListWFMAgentSidsRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listwfmagentsids";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists all wfm agents that don't have a TCN agent assigned to them for the given @orgId.
+  // Member entities will not be returned.
+  // Required Permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the wfm agents.
+  rpc ListUnassignedWFMAgents(ListUnassignedWFMAgentsRequest) returns (ListUnassignedWFMAgentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listunassignedwfmagents";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -4828,6 +4867,20 @@ message WFMAgent {
   bool tcn_agent_is_enabled = 9;
 }
 
+// Request message for the CreateUnassignedWFMAgent RPC
+message CreateUnassignedWFMAgentRequest {
+  // ID of the wfm agent to copy the agent group associations onto the new agent.
+  google.protobuf.Int64Value wfm_agent_sid_to_copy_agent_group_associations = 1;
+  // Optional: name to give the agent, if left blank it will be given a random name in the form 'Unassigned Agent - <random_number>'.
+  string name = 2;
+}
+
+// Response message for CreateUnassignedWFMAgent RPC
+message CreateUnassignedWFMAgentResponse {
+  // ID of the newly created agent.
+  int64 wfm_agent_sid = 1;
+}
+
 // Request message for the UpdateWFMAgent RPC
 message UpdateWFMAgentReq {
   // Wfm agent to update.
@@ -4904,6 +4957,15 @@ message ListWFMAgentSidsRes {
   // Map of WFM agents found.
   // Key: tcn_agent_sid - Value: wfm_agent_sid.
   map<int64, int64> sids = 1;
+}
+
+// Request message for the ListUnassignedWFMAgents RPC
+message ListUnassignedWFMAgentsRequest {}
+
+// Response message for the ListUnassignedWFMAgents RPC
+message ListUnassignedWFMAgentsResponse {
+  // List of found wfm agents.
+  repeated WFMAgent wfm_agents = 1;
 }
 
 // Request message for the ListWFMAgentsAssociatedWithAgentGroup RPC
