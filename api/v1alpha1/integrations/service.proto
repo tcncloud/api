@@ -1308,8 +1308,10 @@ message HangUpEpicPatientCallReq {
 }
 
 message GenerateEpicKeyPairReq {
+  reserved 2;
+  reserved "server";
   string org_id = 1;
-  string server = 2;
+  repeated string servers = 3;
 }
 
 message GenerateEpicKeyPairRes {
