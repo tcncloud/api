@@ -139,6 +139,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/createinvoice";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -258,6 +259,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc DeleteInvoice(DeleteInvoiceRequest) returns (DeleteInvoiceResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/deleteinvoice";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -341,11 +343,10 @@ service BillingService {
 
   // Exports an invoice.
   // Required permissions:
-  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
   // Errors:
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.InvalidArgument: The request is invalid.
-  //   - grpc.NotFound: The specified invoice doesn't exist.
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc ExportInvoice(ExportInvoiceRequest) returns (ExportInvoiceResponse) {
@@ -354,7 +355,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+          permissions: [PERMISSION_TCN_BILLING_ADMIN]
         }
       ],
     };
@@ -415,6 +416,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc GetInvoice(GetInvoiceRequest) returns (GetInvoiceResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/getinvoice";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -476,6 +478,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/listinvoices";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -591,6 +594,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc UpdateInvoice(UpdateInvoiceRequest) returns (UpdateInvoiceResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/updateinvoice";
     option (google.api.http).body = "*";
     option (annotations.authz) = {

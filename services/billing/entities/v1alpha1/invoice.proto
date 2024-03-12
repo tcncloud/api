@@ -9,33 +9,40 @@ import "services/billing/entities/v1alpha1/product.proto";
 // Invoice represents a collection of invoice items
 // billed to an org for a given billing cycle.
 message Invoice {
-  // the invoice identifier
-  string invoice_id = 1;
+  string invoice_id = 1 [deprecated = true];
   // the billing cycle this invoice was created for
   string billing_cycle = 2;
   // the time this invoice was created
   google.protobuf.Timestamp create_time = 3;
-  // the time this invoice was last updated
-  google.protobuf.Timestamp update_time = 4;
-  // the time this invoice was deleted (if applicable)
-  google.protobuf.Timestamp delete_time = 5;
-  // the invoice items, where each product is
-  // a separate item.
+  google.protobuf.Timestamp update_time = 4 [deprecated = true];
+  google.protobuf.Timestamp delete_time = 5 [deprecated = true];
+  // the items on this invoice
   repeated InvoiceItem items = 6;
   // the url to download the invoice
   google.protobuf.StringValue url = 7;
+  // the client this invoice is for
+  string client_id = 8;
 }
 
 // InvoiceItem represents a single line item on an invoice.
 message InvoiceItem {
-  // the invoice item identifier
-  string invoice_item_id = 1;
+  string invoice_item_id = 1 [deprecated = true];
   // the product this item represents
   Product product = 2;
   // the price for this product
   double price = 3;
-  // the time this invoice item was created
-  google.protobuf.Timestamp create_time = 4;
-  // the time this invoice item was last updated
-  google.protobuf.Timestamp update_time = 5;
+  google.protobuf.Timestamp create_time = 4 [deprecated = true];
+  google.protobuf.Timestamp update_time = 5 [deprecated = true];
+  // description of the item
+  string description = 6;
+  // the time this item was made
+  google.protobuf.Timestamp date = 7;
+  // other data columns
+  repeated InvoiceItemColumn columns = 8;
+}
+
+// InvoiceItemColumn represents a single column on an invoice item.
+message InvoiceItemColumn {
+  string name = 1;
+  int64 value = 2;
 }
