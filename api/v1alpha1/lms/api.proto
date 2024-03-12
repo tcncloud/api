@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package api.v1alpha1.lms;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/lms/entities.proto";
+import "google/api/annotations.proto";
+
+service LMS {
+  rpc DeleteFileTemplate(DeleteFileTemplateRequest) returns (DeleteFileTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/lms/deletefiletemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/lms/getfiletemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/lms/listfiletemplates";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ParseFileTemplate(ParseFileTemplateRequest) returns (ParseFileTemplateResult) {
+    option (google.api.http).post = "/api/v1alpha1/lms/parsefiletemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/lms/updatefiletemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+}
+
+message DeleteFileTemplateRequest {
+  FileTemplateV2 file_template = 1;
+}
+message DeleteFileTemplateResponse {
+  FileTemplateV2 file_template = 1;
+}
+message GetFileTemplateRequest {
+  FileTemplateV2 file_template = 1;
+}
+message GetFileTemplateResponse {
+  FileTemplateV2 file_template = 1;
+}
+message ListFileTemplatesRequest {
+  FileTemplateV2 value = 1;
+  string last_id = 2;
+  int32 page_size = 3;
+}
+message ListFileTemplatesResponse {
+  repeated FileTemplateV2 file_templates = 1;
+}
+message ParseFileTemplateRequest {
+  oneof retrieve_by {
+    NewTemplate new_template = 1;
+    ExistingTemplate existing_template = 2;
+  }
+}
+message ParseFileTemplateResult {}
+message UpdateFileTemplateRequest {
+  FileTemplateV2 file_template = 1;
+}
+message UpdateFileTemplateResponse {
+  FileTemplateV2 file_template = 1;
+}
