@@ -801,6 +801,20 @@ service Compliance {
     };
   }
 
+  // Export consent list defined by ExportConsentListRequest message.
+  // The method will create a consent download file in CSV format and return a URL for download.
+  rpc ExportConsentList(ExportConsentListRequest) returns (ExportConsentListResponse) {
+    option (google.api.http).post = "/api/v0alpha/compliance/exportconsentlist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
+  }
+
   // List consent topics defined by ListConsentTopicsReq message.
   // Gets all of the unique consent topics.
   // The method will return a ListConsentTopicsRes message
@@ -1679,4 +1693,12 @@ message QueryHolidaysRequest {
   string is_observed = 8;
   string country = 9;
   string state = 11;
+}
+
+message ExportConsentListRequest {
+  string consent_profile_id = 1;
+}
+
+message ExportConsentListResponse {
+  string url = 1;
 }
