@@ -2738,6 +2738,10 @@ message EpicEntrypoint {
   repeated Field fields = 13;
   // If we should return one column as raw json and not any specified fields for file template
   bool raw_json = 14;
+  //non prod specifies which key, and which client id we are going to use.
+  bool non_prod = 15;
+  // auth server urls can be different from the group base url
+  string auth_server = 16;
 }
 
 // The types of entities that can be returned from Epic's bulk data api.
