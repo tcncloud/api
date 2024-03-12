@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package api.v1alpha1.lms;
+
+import "api/v0alpha/lms.proto";
+
+message FileTemplateV2 {
+  oneof template {
+    api.v0alpha.FileTemplate legacy_template = 1;
+    FileTemplate dock_template = 2;
+  }
+}
+message FileTemplates {
+  repeated FileTemplateV2 templates = 1;
+}
+message FileTemplate {
+  string org_id = 1;
+  int64 file_template_id = 2;
+  string filename = 3;
+  repeated Field fields = 4;
+  ParseOpts parse_opts = 5;
+  int64 foid = 6;
+}
+
+message Field {
+  string syntax_type = 1;
+  string presi_type = 2;
+  string name = 3;
+  string format = 4;
+  // example of a value for this field
+  string raw_value = 5;
+}
+
+message ParseOpts {
+  oneof ftype {
+    OptsCsv csv = 1;
+    OptsJson json = 2;
+    OptsJsonL jsonl = 3;
+    OptsFixed fixed = 4;
+    OptsParquet parquet = 5;
+  }
+}
+message OptsCsv {
+  bool has_header = 1;
+  int64 skip_rows = 2;
+  repeated string header = 3;
+  string separator = 4;
+}
+message OptsJson {
+  string records_root = 1;
+}
+message OptsJsonL {}
+message OptsFixed {
+  message Field {
+    // for fixed width files indicates the starting position of the data.
+    // if it is -1, starting position is one character after the previous fields
+    // starting position + length. if this is the first field and it is -1,
+    // starting position is 0
+    int32 starting_position = 13;
+    // for fixed width files indicates how many characters to the right of
+    // starting_position we will read. this field is required to be greater than
+    // 0.
+    int32 field_length = 14;
+  }
+  bool has_header = 1;
+  repeated Field header = 2;
+}
+message OptsParquet {}
+
+message NewTemplate {
+  string org_id = 1;
+  string filename = 2;
+  bytes data = 3;
+}
+message ExistingTemplate {
+  int64 file_template_id = 1;
+  ParseOpts parse_opts = 2;
+}
