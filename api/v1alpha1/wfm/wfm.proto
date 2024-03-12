@@ -1622,6 +1622,26 @@ service WFM {
     };
   }
 
+  // Removes the @wfm_agent_sid_to_remove from all future shifts for the org.
+  // If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+  // If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
+  // If the @wfm_agent_sid_to_remove is not currently inactive, it will be set as inactive.
+  // Required Permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, reassigning the shifts to that agent, or setting the agent to inactive.
+  rpc RemoveAgentFromFutureShifts(RemoveAgentFromFutureShiftsRequest) returns (RemoveAgentFromFutureShiftsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/removeagentfromfutureshifts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
   // Response will only contain:
   //    one element if build for a single @wfm_agent_sid.
@@ -5034,6 +5054,21 @@ message DeleteWFMAgentsMembershipsReq {
 // Response message for DeleteWFMAgentsMemberships RPC
 message DeleteWFMAgentsMembershipsRes {}
 
+// Request message for the RemoveAgentFromFutureShifts RPC
+message RemoveAgentFromFutureShiftsRequest {
+  // ID of the wfm agent sid to remove from the future schedules.
+  int64 wfm_agent_sid_to_remove = 1;
+  // If set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+  // If set to false, the shifts will just be deleted.
+  bool replace_with_new_unassigned_agent = 2;
+}
+
+// Response message for the RemoveAgentFromFutureShifts RPC
+message RemoveAgentFromFutureShiftsResponse {
+  // ID of the new unassigned agent if @replace_with_new_unassigned_agent was set to true.
+  google.protobuf.Int64Value unassigned_agent_sid = 1;
+}
+
 // DOW Placement
 message DOWPlacement {
   // Minute in the day for the placement to start.
@@ -6558,6 +6593,10 @@ message GetPerformanceMetricsReq {
   // The number of minutes to consolidate each metric interval into.
   // Must be a multiple of 5.
   int32 interval_width_in_minutes = 5;
+  // If set to true, the call stats will be recalculated for any changes made to the shift instances or segments on the schedule.
+  //    Requires that @node_selector be set to a call center node, as resync effects the entire schedule.
+  // If set to false, this step will be skipped.
+  bool resync_call_stats = 6;
 }
 
 // Response message for the GetPerformanceMetrics RPC.
