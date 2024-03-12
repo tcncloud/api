@@ -1063,6 +1063,7 @@ message Process {
     WebExchangeProcess web_exchange_process = 74;
     SplitCriteria split = 75;
     EpicEntrypoint epic_entry_point = 76;
+    ContactManagerSink contact_manager_sink = 77;
   }
 }
 
@@ -2316,6 +2317,21 @@ message ReshapeAction {
     Trim trim = 53;
     Extract extract = 54;
   }
+}
+
+message ContactManagerSink {
+  // project id snet to Conatactmanager when sink is ran
+  string project_id = 2;
+  // name sent to ContactManager when the sink is ran
+  string contact_list_name = 3;
+  // description to use for this contact list.
+  // Sent to contact manager when ran.
+  string contact_list_description = 4;
+  // time to live sent to contact manager
+  int64 ttl = 7;
+  // if blank we export all fields.
+  // if provided, we export only the fields listed here
+  repeated string fields = 8;
 }
 
 // stored as json in lms_history table
