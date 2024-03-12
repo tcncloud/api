@@ -238,14 +238,14 @@ message AuditEvent {
     // Billing Events class 1000
     BillingCommitBillingPlanEvent billing_commit_billing_plan_event = 1000;
     BillingCreateBillingPlanEvent billing_create_billing_plan_event = 1001;
-    BillingCreateInvoiceEvent billing_create_invoice_event = 1002;
+    BillingCreateInvoiceEvent billing_create_invoice_event = 1002 [deprecated = true];
     BillingCreateRateDefinitionEvent billing_create_rate_definition_event = 1003;
     BillingDeleteBillingPlanEvent billing_delete_billing_plan_event = 1004;
-    BillingDeleteInvoiceEvent billing_delete_invoice_event = 1005;
+    BillingDeleteInvoiceEvent billing_delete_invoice_event = 1005 [deprecated = true];
     BillingDeleteRateDefinitionEvent billing_delete_rate_definition_event = 1006;
     BillingExportInvoiceEvent billing_export_invoice_event = 1007;
     BillingUpdateBillingPlanEvent billing_update_billing_plan_event = 1008;
-    BillingUpdateInvoiceEvent billing_update_invoice_event = 1009;
+    BillingUpdateInvoiceEvent billing_update_invoice_event = 1009 [deprecated = true];
     BillingUpdateRateDefinitionEvent billing_update_rate_definition_event = 1010;
 
     // Delivery Events class 1100

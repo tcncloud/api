@@ -21,8 +21,9 @@ message BillingCreateBillingPlanEvent {
 
 // BillingCreateInvoiceEvent is fired when an invoice is created
 message BillingCreateInvoiceEvent {
-  string invoice = 1;
-  string user_id = 2;
+  option deprecated = true;
+  string invoice = 1 [deprecated = true];
+  string user_id = 2 [deprecated = true];
 }
 
 // BillingCreateRateDefinitionEvent is fired when a rate definition is created
@@ -39,8 +40,9 @@ message BillingDeleteBillingPlanEvent {
 
 // BillingDeleteInvoiceEvent is fired when an invoice is deleted
 message BillingDeleteInvoiceEvent {
-  string invoice_id = 1;
-  string user_id = 2;
+  option deprecated = true;
+  string invoice_id = 1 [deprecated = true];
+  string user_id = 2 [deprecated = true];
 }
 
 // BillingDeleteRateDefinitionEvent is fired when a rate definition is deleted
@@ -63,8 +65,9 @@ message BillingUpdateBillingPlanEvent {
 
 // BillingUpdateInvoiceEvent is fired when an invoice is updated
 message BillingUpdateInvoiceEvent {
-  string invoice = 1;
-  string user_id = 2;
+  option deprecated = true;
+  string invoice = 1 [deprecated = true];
+  string user_id = 2 [deprecated = true];
 }
 
 // BillingUpdateRateDefinitionEvent is fired when a rate definition is updated
