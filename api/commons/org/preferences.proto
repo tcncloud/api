@@ -4,9 +4,11 @@ package api.commons.org;
 
 import "api/commons/ana.proto";
 import "api/commons/country.proto";
+import "api/commons/enums.proto";
 import "api/commons/lms.proto";
 import "api/commons/org.proto";
 import "api/commons/org_preferences.proto";
+import "google/protobuf/timestamp.proto";
 
 //
 // General tab preferences.
@@ -733,17 +735,48 @@ message AdminClientPreferences {
 
 // BusinessHours or operating hours.
 message BusinessHours {
+  // The organization id of the BusinessHours object.
   string org_id = 1;
-  string id = 2;
-  string name = 3;
+  string id = 2 [deprecated = true];
+  string name = 3 [deprecated = true];
+  // The description of the BusinessHours object.
   string description = 4;
-  repeated Range ranges = 5;
+  repeated Range ranges = 5 [deprecated = true];
+  // The id of the BusinessHours object.
+  string business_hours_id = 6;
+  // The name of the BusinessHours object.
+  string business_hours_name = 7;
+  // The timezone.
+  api.commons.TimeZone timezone = 8;
+  // A list of time intervals of the BusinessHours object.
+  repeated DayInterval day_intervals = 9;
+  // A timestamp of when the BusinessHours object was last updated.
+  google.protobuf.Timestamp last_updated = 10;
 }
 
 // Range including start and end times.
 message Range {
+  option deprecated = true;
   int32 start_hour = 1;
   int32 start_minute = 2;
   int32 end_hour = 3;
   int32 end_minute = 4;
+}
+
+// TimeOfDay describes the time of day by hour and minute.
+message TimeOfDay {
+  // The hour of the day.
+  int32 hour = 1;
+  // The minute of the hour.
+  int32 minute = 2;
+}
+
+// DayInterval describes a time interval of a given day.
+message DayInterval {
+  // The specified day of the interval.
+  api.commons.Weekday.Enum day = 1;
+  // The starting time of the interval.
+  TimeOfDay start = 2;
+  // The ending time of the interval.
+  TimeOfDay end = 3;
 }
