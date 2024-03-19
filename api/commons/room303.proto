@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 enum RoomType {
   // Direct Message types - can be muliple users in a direct message
@@ -76,6 +77,9 @@ message Room {
 
   // room configuration details
   RoomConfig config = 10;
+
+  // Optional id of the permission group assigned to this room.
+  google.protobuf.StringValue permission_group_id = 11;
 }
 
 message Message {
