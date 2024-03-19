@@ -131,6 +131,10 @@ message OmniCampaignModuleConfig {
   OmniConversationSkills skills = 21;
   // whatsapp number
   WhatsAppNumber whatsapp_number = 22;
+  // ProviderMetadata
+  //  - SmartPing
+  //      content_id - the id of the premade message in the smartping system
+  map<string, string> provider_metadata = 23;
 }
 
 // SmsNumber
