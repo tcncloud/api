@@ -1585,6 +1585,27 @@ service WFM {
     };
   }
 
+  // Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
+  // The wfm agents must both belong to the org sending the request.
+  // Any existing membership associations on @target_wfm_agent_sid with be retained.
+  // Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org sending the request.
+  //   - grpc.Internal: error occurs when creating the associations.
+  rpc CopyWFMAgentMemberships(CopyWFMAgentMembershipsRequest) returns (CopyWFMAgentMembershipsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/copywfmagentmemberships";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
   // Required permissions:
   //   NONE
@@ -5031,6 +5052,17 @@ message CreateWFMAgentMembershipsReq {
 
 // Response message for CreateWFMAgentMemberships RPC
 message CreateWFMAgentMembershipsRes {}
+
+// Request message for the CopyWFMAgentMemberships RPC
+message CopyWFMAgentMembershipsRequest {
+  // ID of the wfm agent to copy the associations from.
+  int64 originating_wfm_agent_sid = 1;
+  // ID of the wfm agent to copy the associations to.
+  int64 target_wfm_agent_sid = 2;
+}
+
+// Response message for CopyWFMAgentMemberships RPC
+message CopyWFMAgentMembershipsResponse {}
 
 // Request message for the DeleteWFMAgentMemberships RPC
 message DeleteWFMAgentMembershipsReq {
