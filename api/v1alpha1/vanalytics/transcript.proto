@@ -5,6 +5,7 @@ package api.v1alpha1.vanalytics;
 import "api/commons/acd.proto";
 import "api/v1alpha1/vanalytics/aclpb/aclpb.proto";
 import "api/v1alpha1/vanalytics/expr.proto";
+import "api/v1alpha1/vanalytics/transcript_summary.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -677,6 +678,7 @@ message Transcript {
   google.protobuf.Timestamp delete_time = 20;
   string number_format = 21;
   map<string, AgentResponse> agent_response = 22;
+  TranscriptSummary summary = 24;
 }
 
 message Result {
