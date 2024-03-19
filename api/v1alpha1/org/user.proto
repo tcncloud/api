@@ -869,7 +869,8 @@ message GetUserSessionDataResponse {
 
     string auth_user_id = 17;
 
-    bool enable_mfa = 18;
+    reserved "enable_mfa";
+    reserved 18;
 
     // The user's first name.
     string first_name = 19;
@@ -1003,10 +1004,23 @@ message GetUserMfaInfoResponse {
   api.commons.org.MfaInfo info = 1;
 }
 
-// Response message for the GetMyUserMfaInfo rpc.
+// Request message for the GetMyUserMfaInfo rpc.
 message GetMyUserMfaInfoRequest {}
 
-// Request message for the GetMyUserMfaInfo rpc.
+// Response message for the GetMyUserMfaInfo rpc.
 message GetMyUserMfaInfoResponse {
   api.commons.org.MfaInfo info = 1;
+}
+
+// Request message for the GetMyAllowedMfaMethods rpc.
+message GetMyAllowedMfaMethodsRequest {}
+
+// Response message for the GetMyAllowedMfaMethods rpc.
+message GetMyAllowedMfaMethodsResponse {
+  // If the user is allowed to set up mfa
+  bool mfa_enabled = 1;
+  // If the user is allowed to set up email mfa
+  bool email_enabled = 2;
+  // If the user is allowed to set up duo mfa
+  bool duo_enabled = 3;
 }
