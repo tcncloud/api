@@ -2671,6 +2671,19 @@ service Org {
     };
   }
 
+  // GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
+  rpc GetMyAllowedMfaMethods(GetMyAllowedMfaMethodsRequest) returns (GetMyAllowedMfaMethodsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/getmyallowedmfamethods";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
   // CreateBusinessHours persists times businesses are available.
   rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/create";
