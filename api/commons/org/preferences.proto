@@ -735,13 +735,12 @@ message AdminClientPreferences {
 
 // BusinessHours or operating hours.
 message BusinessHours {
+  reserved 2, 3, 5;
+  reserved "id", "name", "ranges";
   // The organization id of the BusinessHours object.
   string org_id = 1;
-  string id = 2 [deprecated = true];
-  string name = 3 [deprecated = true];
   // The description of the BusinessHours object.
   string description = 4;
-  repeated Range ranges = 5 [deprecated = true];
   // The id of the BusinessHours object.
   string business_hours_id = 6;
   // The name of the BusinessHours object.

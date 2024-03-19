@@ -760,6 +760,110 @@ service Org {
     };
   }
 
+  // ListBusinessHours returns all business hours for an Org.
+  rpc ListBusinessHours(ListBusinessHoursRequest) returns (ListBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetBusinessHours returns the business hours for the ID.
+  rpc GetBusinessHours(GetBusinessHoursRequest) returns (GetBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/get";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // SetBusinessHours initializes a business hours object
+  rpc SetBusinessHours(SetBusinessHoursRequest) returns (SetBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/set";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT];
+        }
+      ];
+    };
+  }
+
+  // AddIntervalToBusinessHours adds a day interval to a business hours object
+  rpc AddIntervalToBusinessHours(AddIntervalToBusinessHoursRequest) returns (AddIntervalToBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/addinterval";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT];
+        }
+      ];
+    };
+  }
+
+  // RemoveIntervalFromBusinessHours removes a day interval from a business hours object
+  rpc RemoveIntervalFromBusinessHours(RemoveIntervalFromBusinessHoursRequest) returns (RemoveIntervalFromBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/removeinterval";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT];
+        }
+      ];
+    };
+  }
+
+  // UpdateBusinessHoursInfo updates the general info of a business hours object
+  rpc UpdateBusinessHoursInfo(UpdateBusinessHoursInfoRequest) returns (UpdateBusinessHoursInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/updateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT];
+        }
+      ];
+    };
+  }
+
+  // DeleteBusinessHours removes business hours.
+  rpc DeleteBusinessHours(DeleteBusinessHoursRequest) returns (DeleteBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT];
+        }
+      ];
+    };
+  }
+
+  // EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+  rpc EvaluateBusinessHours(EvaluateBusinessHoursRequest) returns (EvaluateBusinessHoursResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/evaluate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW];
+        }
+      ];
+    };
+  }
+
   // USER
 
   // CreateUser creates a new user and enables it for the region it is getting created in.
@@ -2705,45 +2809,6 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_EDIT]
-        }
-      ];
-    };
-  }
-
-  // DeleteBusinessHours removes business hours.
-  rpc DeleteBusinessHours(DeleteBusinessHoursRequest) returns (DeleteBusinessHoursResponse) {
-    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/delete";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_ORG_EDIT]
-        }
-      ];
-    };
-  }
-
-  // ListBusinessHours returns all business hours for an Org.
-  rpc ListBusinessHours(ListBusinessHoursRequest) returns (ListBusinessHoursResponse) {
-    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/list";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_ORG_VIEW]
-        }
-      ];
-    };
-  }
-
-  // GetBusinessHours returns the business hours for the ID.
-  rpc GetBusinessHours(GetBusinessHoursRequest) returns (GetBusinessHoursResponse) {
-    option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/get";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_ORG_VIEW]
         }
       ];
     };
