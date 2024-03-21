@@ -907,6 +907,8 @@ message GetUserSessionDataResponse {
 
     // Timestamp beyond which the user is required to have multi factor authentication set up
     google.protobuf.Timestamp mfa_timestamp = 33;
+    // Timestamp of of when a user must reset their password before
+    google.protobuf.Timestamp password_reset_date = 34;
   }
 
   // The user the data is about
