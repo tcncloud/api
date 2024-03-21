@@ -137,6 +137,10 @@ message AuthenticationPreferences {
   // Contains the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
   DuoMfaSettings duo_mfa_settings = 16;
+  // Org enables the ability to set the password reset interval
+  bool allow_force_password_reset_interval = 17;
+  // An interval in the form of days for users in the org to reset passwords
+  int32 password_reset_day_interval = 18;
 
   // A message containing the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
