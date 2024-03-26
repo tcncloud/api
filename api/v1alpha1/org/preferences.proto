@@ -579,10 +579,13 @@ message UpdateBusinessHoursResponse {
 }
 
 // Request for listing business hours.
-message ListBusinessHoursRequest {}
+message ListBusinessHoursRequest {
+  option deprecated = true;
+}
 
 // Response for listing business hours.
 message ListBusinessHoursResponse {
+  option deprecated = true;
   reserved 1;
   reserved "business_hours_lists";
   // The list of business hours
@@ -591,18 +594,21 @@ message ListBusinessHoursResponse {
 
 // Request for fetching a business hours.
 message GetBusinessHoursRequest {
+  option deprecated = true;
   // The id of the business hours object
   string business_hours_id = 1;
 }
 
 // Response for fetching a business hours.
 message GetBusinessHoursResponse {
+  option deprecated = true;
   // The retrieved business hours
   api.commons.org.BusinessHours business_hours = 1;
 }
 
 // Request for initializing a business hours object
 message SetBusinessHoursRequest {
+  option deprecated = true;
   // The name of the business hours
   string business_hours_name = 1;
   // The description of the business hours
@@ -615,12 +621,14 @@ message SetBusinessHoursRequest {
 
 // Response for initializing a business hours object
 message SetBusinessHoursResponse {
+  option deprecated = true;
   // The id of the new business hours
   string business_hours_id = 1;
 }
 
 // Request for adding an interval to a business hours object
 message AddIntervalToBusinessHoursRequest {
+  option deprecated = true;
   // The id of the business hours to add an interval
   string business_hours_id = 1;
   // The day interval to be added
@@ -628,10 +636,13 @@ message AddIntervalToBusinessHoursRequest {
 }
 
 // Response for adding an interval to a business hours object
-message AddIntervalToBusinessHoursResponse {}
+message AddIntervalToBusinessHoursResponse {
+  option deprecated = true;
+}
 
 // Request for removing an interval from a business hours object
 message RemoveIntervalFromBusinessHoursRequest {
+  option deprecated = true;
   // The id of the business hours to remove an interval
   string business_hours_id = 1;
   // The day interval to be removed
@@ -639,10 +650,13 @@ message RemoveIntervalFromBusinessHoursRequest {
 }
 
 // Response for removing an interval from a business hours object
-message RemoveIntervalFromBusinessHoursResponse {}
+message RemoveIntervalFromBusinessHoursResponse {
+  option deprecated = true;
+}
 
 // Request for updating the business hours info
 message UpdateBusinessHoursInfoRequest {
+  option deprecated = true;
   // The id of the business hours object
   string business_hours_id = 1;
   // The updated name of the business hours
@@ -656,25 +670,32 @@ message UpdateBusinessHoursInfoRequest {
 }
 
 // Response for updating the business hours info
-message UpdateBusinessHoursInfoResponse {}
+message UpdateBusinessHoursInfoResponse {
+  option deprecated = true;
+}
 
 // Request for deleting business hours.
 message DeleteBusinessHoursRequest {
+  option deprecated = true;
   // The id of the business hours object to be deleted
   string business_hours_id = 1;
 }
 
 // Response for deleting business hours.
-message DeleteBusinessHoursResponse {}
+message DeleteBusinessHoursResponse {
+  option deprecated = true;
+}
 
 // Request for EvaluateBusinessHours
 message EvaluateBusinessHoursRequest {
+  option deprecated = true;
   // The id of the business hours to evaluate
   string business_hours_id = 1;
 }
 
 // Response for EvaluateBusinessHours
 message EvaluateBusinessHoursResponse {
+  option deprecated = true;
   // Resulting boolean if the current time is within
   // a day interval of a business hours object
   bool within_range = 1;

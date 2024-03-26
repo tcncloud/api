@@ -762,6 +762,7 @@ service Org {
 
   // ListBusinessHours returns all business hours for an Org.
   rpc ListBusinessHours(ListBusinessHoursRequest) returns (ListBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/list";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -775,6 +776,7 @@ service Org {
 
   // GetBusinessHours returns the business hours for the ID.
   rpc GetBusinessHours(GetBusinessHoursRequest) returns (GetBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/get";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -788,6 +790,7 @@ service Org {
 
   // SetBusinessHours initializes a business hours object
   rpc SetBusinessHours(SetBusinessHoursRequest) returns (SetBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/set";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -801,6 +804,7 @@ service Org {
 
   // AddIntervalToBusinessHours adds a day interval to a business hours object
   rpc AddIntervalToBusinessHours(AddIntervalToBusinessHoursRequest) returns (AddIntervalToBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/addinterval";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -814,6 +818,7 @@ service Org {
 
   // RemoveIntervalFromBusinessHours removes a day interval from a business hours object
   rpc RemoveIntervalFromBusinessHours(RemoveIntervalFromBusinessHoursRequest) returns (RemoveIntervalFromBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/removeinterval";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -827,6 +832,7 @@ service Org {
 
   // UpdateBusinessHoursInfo updates the general info of a business hours object
   rpc UpdateBusinessHoursInfo(UpdateBusinessHoursInfoRequest) returns (UpdateBusinessHoursInfoResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/updateinfo";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -840,6 +846,7 @@ service Org {
 
   // DeleteBusinessHours removes business hours.
   rpc DeleteBusinessHours(DeleteBusinessHoursRequest) returns (DeleteBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/delete";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -853,6 +860,7 @@ service Org {
 
   // EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
   rpc EvaluateBusinessHours(EvaluateBusinessHoursRequest) returns (EvaluateBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/evaluate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2790,6 +2798,7 @@ service Org {
 
   // CreateBusinessHours persists times businesses are available.
   rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/create";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2803,6 +2812,7 @@ service Org {
 
   // UpdateBusinessHours persists changes to times businesses are available.
   rpc UpdateBusinessHours(UpdateBusinessHoursRequest) returns (UpdateBusinessHoursResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/businesshours/update";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
