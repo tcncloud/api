@@ -1898,6 +1898,37 @@ service Org {
     };
   }
 
+  // CopyHuntGroupIntegrationLink copies the integration link from one hunt group to another.
+  // It will create a new integration link in the destination hunt group with the same settings
+  // as the source integration link.
+  rpc CopyHuntGroupIntegrationLink(CopyHuntGroupIntegrationLinkRequest) returns (CopyHuntGroupIntegrationLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copyhuntgroupintegrationlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateHuntGroupIntegrationLinks updates the integration links for a hunt group.
+  // It will create any new integration links that do not already exist in the hunt group,
+  // update any existing integration links with the new settings, and delete any integration links
+  // that are not in the request.
+  rpc UpdateHuntGroupIntegrationLinks(UpdateHuntGroupIntegrationLinksRequest) returns (UpdateHuntGroupIntegrationLinksResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updatehuntgroupintegrationlinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ];
+    };
+  }
+
   // GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
   rpc GetHuntGroupClientInfoDisplayTemplate(GetHuntGroupClientInfoDisplayTemplateRequest) returns (GetHuntGroupClientInfoDisplayTemplateResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/gethuntgroupclientinfodisplaytemplate";
