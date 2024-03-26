@@ -942,6 +942,7 @@ message OmniTaskConfig {
   google.protobuf.Duration agent_timeout_duration = 3;
   string subject = 4;
   OmniMessagePayload message = 5;
+  string user_id = 6;
 }
 
 // OmniTaskState -
