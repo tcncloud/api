@@ -163,6 +163,8 @@ enum RequestMethod {
   REQUEST_METHOD_EXPERIAN_STELLA_ADD_USA_EPAY_TOKEN = 2011;
   REQUEST_METHOD_EXPERIAN_STELLA_PAYMENT_PLANS = 2012;
   REQUEST_METHOD_EXPERIAN_STELLA_AUTH = 2013;
+  REQUEST_METHOD_EXPERIAN_STELLA_CARD_ENTRY_TOKENIZATION = 2014;
+  REQUEST_METHOD_EXPERIAN_STELLA_PAYMENT_PLANS_BY_PATIENT = 2015;
 
   REQUEST_METHOD_NEWSCYCLE_LOGIN = 2101;
   REQUEST_METHOD_NEWSCYCLE_SEARCHPAGE = 2102;
@@ -764,6 +766,8 @@ message ExecuteFlow {
     ExecuteExperianStellaAddusaepaytoken experian_stella_add_usa_epay_token = 2011;
     ExecuteExperianStellaPaymentPlans experian_stella_payment_plans = 2012;
     ExecuteExperianStellaAuth experian_stella_auth = 2013;
+    ExecuteExperianStellaCardEntryTokenization experian_stella_card_entry_tokenization = 2014;
+    ExecuteExperianStellaPaymentPlansByPatient experian_stella_payment_plans_by_patient = 2015;
 
     ExecuteNewscycleLogin newscycle_login = 2101;
     ExecuteNewscycleSearchPage newscycle_search_page = 2102;
@@ -1085,6 +1089,8 @@ message ExecuteExperianStellaAchTokenization {}
 message ExecuteExperianStellaAddusaepaytoken {}
 message ExecuteExperianStellaPaymentPlans {}
 message ExecuteExperianStellaAuth {}
+message ExecuteExperianStellaCardEntryTokenization {}
+message ExecuteExperianStellaPaymentPlansByPatient {}
 
 message ExecuteNewscycleLogin {}
 message ExecuteNewscycleSearchPage {}
