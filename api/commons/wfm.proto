@@ -769,3 +769,24 @@ enum RealTimeManagementState {
   // The agent is logged out.
   LOGGED_OUT = 13;
 }
+
+// Represents an agents real time state over a period of time.
+message AgentStateSegment {
+  // The order that this agent state segment fits into the AgentStateSequence.
+  // Sequence starts at 0.
+  int32 order_in_rts = 1;
+  // The state of the agent during this segment.
+  repeated RealTimeManagementState states = 2;
+  // The width of this segment in minutes.
+  int32 width_in_minutes = 3;
+}
+
+// Represents a sequence of real time states for a WFM agent.
+message AgentStateSequence {
+  // ID of the agent that the real time state sequence relates to.
+  int64 wfm_agent_sid = 1;
+  // The datetime where the agent state sequence starts.
+  google.protobuf.Timestamp start_datetime = 2;
+  // The list of agent state segments that cover the length of the sequence.
+  repeated AgentStateSegment state_segments = 3;
+}
