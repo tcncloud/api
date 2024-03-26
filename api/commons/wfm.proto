@@ -718,3 +718,54 @@ message InitialSetupStatus {
   // Any message that a service has in regards to their current state.
   string message = 3;
 }
+
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+/**************************************************************** Adherence **********************************************************************/
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+
+// The RealTimeManagementState, which is translated as a reduced AgentStatus from the acd service.
+enum RealTimeManagementState {
+  // Not set.
+  UNSPECIFIED = 0;
+
+  // The agent is logged in.
+  LOGGED_IN = 1;
+
+  // Not Used for now.
+  // ACD_INBOUND_CALL = 2;
+
+  // Not Used for now.
+  // DIRECT_INBOUND_CALL = 3;
+
+  // The agent's call is on hold.
+  CALL_ON_HOLD = 4;
+
+  // Agent is on an outbound call.
+  OUTBOUND_CALL = 5;
+
+  // Not Used for now.
+  // INBOUND_CALL = 6;
+
+  // Agent is on a transfered call.
+  TRANSFER = 7;
+
+  // Agent is on a conference call.
+  CONFERENCE = 8;
+
+  // Agent is ready to accept a call.
+  READY = 9;
+
+  // Agent is not_ready to accept a call.
+  NOT_READY = 10;
+
+  // The agent is is the wrap up state.
+  WRAP_UP = 11;
+
+  // Not Used.
+  // AUX_STATE = 12;
+
+  // The agent is logged out.
+  LOGGED_OUT = 13;
+}
