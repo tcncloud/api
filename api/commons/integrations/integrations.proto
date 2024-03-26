@@ -266,6 +266,8 @@ enum RequestMethod {
   REQUEST_METHOD_PIANO_GET_PAYMENT = 3604;
   REQUEST_METHOD_PIANO_LIST_SUBSCRIPTION = 3605;
   REQUEST_METHOD_PIANO_LASTACCESS_CONVERSION = 3606;
+  REQUST_METHOD_PIANO_ADD_PAYMENT = 3607;
+  REQUEST_METHOD_PIANO_UPDATE_PAYMENT = 3608;
 
   REQUEST_METHOD_EPIC_GET_TOKEN = 3701;
   REQUEST_METHOD_EPIC_GET_PATIENT = 3702;
@@ -867,6 +869,8 @@ message ExecuteFlow {
     ExecutePianoGetPayment PIANO_GET_PAYMENT = 3604;
     ExecutePianoListSubscription PIANO_LIST_SUBSCRIPTION = 3605;
     ExecutePianoLastAccessConversion PIANO_LASTACCESS_CONVERSION = 3606;
+    ExacutePianoAddPayment PIANO_ADD_PAYMENT = 3607;
+    ExacutePianoUpdatePayment PIANO_UPDATE_PAYMENT = 3608;
 
     ExecuteEpicGetToken epic_get_token = 3701;
     ExecuteEpicGetPatient epic_get_patient = 3702;
@@ -1188,6 +1192,8 @@ message ExecutePianoUpdateSubscription {}
 message ExecutePianoGetPayment {}
 message ExecutePianoListSubscription {}
 message ExecutePianoLastAccessConversion {}
+message ExacutePianoAddPayment {}
+message ExacutePianoUpdatePayment {}
 
 message ExecuteEpicGetToken {}
 message ExecuteEpicGetPatient {}
