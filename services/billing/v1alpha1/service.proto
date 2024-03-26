@@ -406,6 +406,26 @@ service BillingService {
     };
   }
 
+  // Returns the billing plan history for the ORG or REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetBillingPlanHistory(GetBillingPlanHistoryRequest) returns (GetBillingPlanHistoryResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha1/getbillingplanhistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
   // Returns the specified invoice.
   // Required permissions:
   //   CUSTOMER_SUPPORT
