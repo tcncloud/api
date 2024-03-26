@@ -83,6 +83,7 @@ enum RequestMethod {
   REQUEST_METHOD_CIRCPRO_LAW_IMMEDIATEPAYMENT = 412;
   REQUEST_METHOD_CIRCPRO_LAW_UPDATEDATAWITHPAC = 413;
   REQUEST_METHOD_CIRCPRO_LAW_GETCUSTOMERS = 414;
+  REQUEST_METHOD_CIRCPRO_LAW_GET_PAYMENT_TYPES = 415;
 
   REQUEST_METHOD_AUTHORIZENET_CHARGECREDITCARD = 501;
   REQUEST_METHOD_AUTHORIZENET_DEBITBANKACCOUNT = 502;
@@ -684,6 +685,7 @@ message ExecuteFlow {
     ExecuteCircproLawImmediatePayment circpro_law_immediate_payment = 412;
     ExecuteCircproLawUpdateDataWithPac circpro_law_update_data_with_pac = 413;
     ExecuteCircproLawGetCustomers circpro_law_get_customers = 414;
+    ExecuteCircproLawGetPaymentTypes circpro_law_get_payment_types = 415;
 
     ExecuteAuthorizenetChargeCreditCard authorizenet_charge_credit_card = 501;
     ExecuteAuthorizenetDebitBankAccount authorizenet_debit_bank_account = 502;
@@ -1005,6 +1007,7 @@ message ExecuteCircproRestartUpdate {}
 message ExecuteCircproLawImmediatePayment {}
 message ExecuteCircproLawUpdateDataWithPac {}
 message ExecuteCircproLawGetCustomers {}
+message ExecuteCircproLawGetPaymentTypes {}
 
 message ExecuteAuthorizenetChargeCreditCard {}
 message ExecuteAuthorizenetDebitBankAccount {}
