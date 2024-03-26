@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.businesshours;
+
+import "api/commons/org.proto";
+import "api/commons/org/preferences.proto";
+import "google/protobuf/field_mask.proto";
+
+// Request for listing business hours.
+message ListBusinessHoursRequest {}
+
+// Response for listing business hours.
+message ListBusinessHoursResponse {
+  // The list of business hours
+  repeated api.commons.org.BusinessHours business_hours = 1;
+}
+
+// Request for fetching a business hours.
+message GetBusinessHoursRequest {
+  // The id of the business hours object
+  string business_hours_id = 1;
+}
+
+// Response for fetching a business hours.
+message GetBusinessHoursResponse {
+  // The retrieved business hours
+  api.commons.org.BusinessHours business_hours = 1;
+}
+
+// Request for initializing a business hours object
+message SetBusinessHoursRequest {
+  // The name of the business hours
+  string business_hours_name = 1;
+  // The description of the business hours
+  string description = 2;
+  // The list of day intervals for the business hours
+  repeated api.commons.org.DayInterval day_intervals = 3;
+  // The timezone of the business hours
+  api.commons.TimeZone timezone = 4;
+}
+
+// Response for initializing a business hours object
+message SetBusinessHoursResponse {
+  // The id of the new business hours
+  string business_hours_id = 1;
+}
+
+// Request for adding an interval to a business hours object
+message AddIntervalToBusinessHoursRequest {
+  // The id of the business hours to add an interval
+  string business_hours_id = 1;
+  // The day interval to be added
+  api.commons.org.DayInterval day_interval = 2;
+}
+
+// Response for adding an interval to a business hours object
+message AddIntervalToBusinessHoursResponse {}
+
+// Request for removing an interval from a business hours object
+message RemoveIntervalFromBusinessHoursRequest {
+  // The id of the business hours to remove an interval
+  string business_hours_id = 1;
+  // The day interval to be removed
+  api.commons.org.DayInterval day_interval = 2;
+}
+
+// Response for removing an interval from a business hours object
+message RemoveIntervalFromBusinessHoursResponse {}
+
+// Request for updating the business hours info
+message UpdateBusinessHoursInfoRequest {
+  // The id of the business hours object
+  string business_hours_id = 1;
+  // The updated name of the business hours
+  string business_hours_name = 2;
+  // The updated description of the business hours
+  string description = 3;
+  // The updated timezone of the business hours
+  api.commons.TimeZone timezone = 4;
+  // Field mask for the update request
+  google.protobuf.FieldMask field_mask = 5;
+}
+
+// Response for updating the business hours info
+message UpdateBusinessHoursInfoResponse {}
+
+// Request for deleting business hours.
+message DeleteBusinessHoursRequest {
+  // The id of the business hours object to be deleted
+  string business_hours_id = 1;
+}
+
+// Response for deleting business hours.
+message DeleteBusinessHoursResponse {}
+
+// Request for EvaluateBusinessHours
+message EvaluateBusinessHoursRequest {
+  // The id of the business hours to evaluate
+  string business_hours_id = 1;
+}
+
+// Response for EvaluateBusinessHours
+message EvaluateBusinessHoursResponse {
+  // Resulting boolean if the current time is within
+  // a day interval of a business hours object
+  bool within_range = 1;
+}
