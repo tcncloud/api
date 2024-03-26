@@ -13,8 +13,8 @@ message RateDefinition {
   string rate_definition_id = 1;
   // unused
   string rate_definition_feature_id = 2 [deprecated = true];
-  // unused
-  string rate_definition_group_id = 3 [deprecated = true];
+  // a group identifier for this rate definition; optional
+  string rate_definition_group_id = 3;
   // the event type this definition rates
   api.commons.audit.EventType event_type = 4;
   // the config type of this definitioin

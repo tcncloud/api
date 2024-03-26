@@ -5,6 +5,14 @@ package services.billing.entities.v1alpha1;
 import "google/protobuf/timestamp.proto";
 import "services/billing/entities/v1alpha1/rates.proto";
 
+// BillingPlanSnapshot represents a snapshot of a billing plan
+// during a specific time period
+message BillingPlanSnapshot {
+  google.protobuf.Timestamp start_date = 1;
+  google.protobuf.Timestamp end_date = 2;
+  repeated RateDefinition rates = 3;
+}
+
 // BillingPlan represents a collection of rate definitions
 message BillingPlan {
   // the billing plan identifier
