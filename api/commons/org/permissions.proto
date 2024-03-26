@@ -47,12 +47,16 @@ message License {
   annotations.perms.Application app = 1;
   // Individual cards for the application.
   repeated Card cards = 2;
+  // Name of the license (to be displayed in the UI)
+  string name = 3;
 
   message Card {
     // Card type.
     annotations.perms.Card type = 1;
     // List of permissions and features.
     repeated Permission permissions = 2;
+    // String version of the card/sub-section.
+    string name = 3;
   }
 
   message Permission {
@@ -61,5 +65,7 @@ message License {
     bool enabled = 2;
     // List of features granted by the permission.
     repeated string features = 3;
+    // String version of the permission.
+    string name = 4;
   }
 }
