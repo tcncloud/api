@@ -783,3 +783,50 @@ message DayInterval {
   // The ending time of the interval.
   TimeOfDay end = 3;
 }
+
+// MonthDayDate enables custom named dates.
+message MonthDayDate {
+  // A name for this date.
+  string date_name = 1;
+  // Month of the year.
+  api.commons.Month month = 2;
+  // Day of the month.
+  int32 day_of_month = 3;
+}
+
+// CountryHoliday holiday service name and country.
+message CountryHoliday {
+  // The name.
+  string holiday_name = 1;
+  // The country.
+  api.commons.Country country = 2;
+}
+
+// ProgrammedDay may be a named date or a holiday.
+message ProgrammedDay {
+  // A date or holiday
+  oneof DayType {
+    // Named date.
+    MonthDayDate day = 1;
+    // Holiday service holiday.
+    CountryHoliday holiday = 2;
+  }
+}
+
+// ProgrammedDates a list of dates or holidays.
+message ProgrammedDates {
+  // ID of the Org related to this.
+  string org_id = 1;
+  // Unique ID.
+  string programmed_dates_id = 2;
+  // Name of the list.
+  string programmed_dates_name = 3;
+  // Description of the list.
+  string description = 4;
+  // The timezone.
+  api.commons.TimeZone timezone = 5;
+  // The list of dates or holidays.
+  repeated ProgrammedDay days = 6;
+  // When the list was last updated.
+  google.protobuf.Timestamp last_updated = 7;
+}
