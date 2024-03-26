@@ -971,6 +971,8 @@ message IntegrationLink {
   repeated IntegrationLinkParameter parameters = 7;
   // The configuration name of the integration link.
   string configuration_name = 8;
+  // The sid of the hunt group which the integration link is associated with.
+  int64 hunt_group_sid = 9;
 }
 
 // IntegrationLinkParameter defines a parameter for an integration link.
