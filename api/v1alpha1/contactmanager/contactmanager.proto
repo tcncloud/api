@@ -38,19 +38,21 @@ message GetEncContactEntryResponse {
 
 message GetKYCEncContactEntryRequest {
   int64 project_id = 1 [jstype = JS_STRING];
-  repeated api.commons.ContactManagerEntryVal entry_val = 2;
-  int64 min_kyc_limit = 3;
+  repeated api.commons.ContactManagerEntryVal entry_val = 2 [deprecated = true];
+  int64 min_kyc_limit = 3 [deprecated = true];
+  repeated ContactManagerEntryVal kyc_response = 4;
 }
 
 message GetKYCEncContactEntryResponse {
   bool verified = 1;
+  repeated ContactManagerEntry contact_entry = 2;
 }
 
 message GetKYCKeysRequest {}
 
 message GetKYCKeysResponse {
   repeated string entry_type = 1;
-  int64 kyc_limit = 2;
+  int64 kyc_limit = 2 [deprecated = true];
 }
 
 // Common messages deprecated
