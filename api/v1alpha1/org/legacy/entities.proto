@@ -1128,6 +1128,7 @@ message AuthenticationPreferences {
   bool authorization_via_ip = 10; // Use IP based authentication
   repeated string allowed_ips = 11; // String array of allowed IP addresses
   string agent_api_key = 12; // Agent's API key (as UUID)
+  bool user_authorization_via_ip = 13; // Use IP based authentication per user
 }
 
 // Request for GetWebhookPreferences

@@ -2854,4 +2854,32 @@ service Org {
       ];
     };
   }
+
+  // AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+  // are required to authenticate with
+  rpc AddGroupedUserIPRestrictions(AddGroupedUserIPRestrictionsRequest) returns (AddGroupedUserIPRestrictionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/addgroupeduseriprestrictions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+  // are required to authenticate with
+  rpc RemoveGroupedUserIPRestrictions(RemoveGroupedUserIPRestrictionsRequest) returns (RemoveGroupedUserIPRestrictionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/removegroupeduseriprestrictions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
 }

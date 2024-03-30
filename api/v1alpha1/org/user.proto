@@ -1026,3 +1026,25 @@ message GetMyAllowedMfaMethodsResponse {
   // If the user is allowed to set up duo mfa
   bool duo_enabled = 3;
 }
+
+// Request message for the AddGroupedUserIPRestrictions rpc.
+message AddGroupedUserIPRestrictionsRequest {
+  // List of users that can only use the provided IPs.
+  repeated string user_ids = 1;
+  // List of IPs to whitelist for the associated group of users.
+  repeated string ips = 2;
+}
+
+// Response message for the AddGroupedUserIPRestrictions rpc.
+message AddGroupedUserIPRestrictionsResponse {}
+
+// Request message for the RemoveGroupedUserIPRestrictions rpc.
+message RemoveGroupedUserIPRestrictionsRequest {
+  // List of users to remove the restriction from.
+  repeated string user_ids = 1;
+  // List of IPs to un-restrict. Empty list will delete all restrictions
+  repeated string ips = 2;
+}
+
+// Response message for the RemoveGroupedUserIPRestrictions rpc.
+message RemoveGroupedUserIPRestrictionsResponse {}
