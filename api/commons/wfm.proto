@@ -778,7 +778,9 @@ message AgentStateSegment {
   // The state of the agent during this segment.
   repeated RealTimeManagementState states = 2;
   // The width of this segment in minutes.
-  int32 width_in_minutes = 3;
+  int32 width_in_minutes = 3 [deprecated = true];
+  // The width of this segment in seconds.
+  int32 width_in_seconds = 4;
 }
 
 // Represents a sequence of real time states for a WFM agent.
