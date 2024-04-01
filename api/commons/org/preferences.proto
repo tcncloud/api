@@ -141,6 +141,8 @@ message AuthenticationPreferences {
   bool allow_force_password_reset_interval = 17;
   // An interval in the form of days for users in the org to reset passwords
   int32 password_reset_day_interval = 18;
+  // Use IP based authorization per user.
+  bool user_authorization_via_ip = 19;
 
   // A message containing the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
