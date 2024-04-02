@@ -21,7 +21,7 @@ message Invoice {
   // the url to download the invoice
   google.protobuf.StringValue url = 7;
   // the client this invoice is for
-  string client_id = 8;
+  string client_id = 8 [deprecated = true];
 }
 
 // InvoiceItem represents a single line item on an invoice.
@@ -39,10 +39,13 @@ message InvoiceItem {
   google.protobuf.Timestamp date = 7;
   // other data columns
   repeated InvoiceItemColumn columns = 8;
+  // the client this item is for
+  string client_id = 9;
 }
 
 // InvoiceItemColumn represents a single column on an invoice item.
 message InvoiceItemColumn {
   string name = 1;
-  int64 value = 2;
+  int64 value = 2 [deprecated = true];
+  string column_value = 3;
 }

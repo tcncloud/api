@@ -87,6 +87,8 @@ message GetBillingPlanResponse {
 message GetBillingPlanHistoryRequest {
   string org_id = 1;
   repeated string group_ids = 2;
+  google.protobuf.Timestamp start_time = 3; // Optional: if not set, will use the beginning of time
+  google.protobuf.Timestamp end_time = 4; // Optional: if not set, will use the current time
 }
 
 message GetBillingPlanHistoryResponse {
