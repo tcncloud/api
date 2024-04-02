@@ -55,6 +55,9 @@ service OmniApi {
         },
         {
           permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
       ];
     };
@@ -257,6 +260,9 @@ service OmniApi {
       sets: [
         {
           permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
       ];
     };
