@@ -14,7 +14,8 @@ message GetContactListRequest {
 }
 
 message GetContactListResponse {
-  repeated api.commons.ContactManagerList contact_list = 1;
+  repeated api.commons.ContactManagerList contact_list = 1 [deprecated = true];
+  repeated ContactManagerList contact_manager_list = 2;
 }
 message ListContactEntryListRequest {
   int64 contact_manager_list_id = 1 [jstype = JS_STRING];
@@ -25,7 +26,8 @@ message ListContactEntryListRequest {
 // List all Unencrypted Data. Encrypted Data would be sent On Double Click of the Record
 // Seperate API to List All Encrypted Data
 message ListContactEntryListResponse {
-  repeated api.commons.ContactManagerEntry contact_entry = 1;
+  repeated api.commons.ContactManagerEntry contact_entry = 1 [deprecated = true];
+  repeated ContactManagerEntry contact_manager_entry = 2;
 }
 
 message GetEncContactEntryRequest {
@@ -33,7 +35,8 @@ message GetEncContactEntryRequest {
 }
 
 message GetEncContactEntryResponse {
-  repeated api.commons.ContactManagerEntry contact_entry = 1;
+  repeated api.commons.ContactManagerEntry contact_entry = 1 [deprecated = true];
+  repeated ContactManagerEntry contact_manager_entry = 2;
 }
 
 message GetKYCEncContactEntryRequest {
