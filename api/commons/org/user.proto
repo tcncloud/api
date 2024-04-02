@@ -102,6 +102,9 @@ message User {
 
   // Whether or not the user's email is verified.
   bool email_verified = 401;
+
+  // Whitelisted IPs for the user
+  repeated string whitelisted_ips = 402;
 }
 
 // MFA/2FA Information
