@@ -6,11 +6,14 @@ import "api/commons/room303.proto";
 import "api/commons/user.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 message CreateRoomRequest {
   string name = 1;
   api.commons.RoomType type = 2;
   repeated string members = 3;
+  // Optional id of the permission group assigned to this room.
+  google.protobuf.StringValue permission_group_id = 4;
 }
 
 // TODO: CreateRoomResponse
@@ -104,4 +107,13 @@ message GetGlobalConfigResponse {
   google.protobuf.Timestamp date_created = 3;
   // last edited on
   google.protobuf.Timestamp last_edited = 4;
+}
+
+// request to update room details
+message UpdateRoomRequest {
+  // room details to be updated
+  api.commons.Room room = 1;
+
+  // field mask for room options that needs updated
+  google.protobuf.FieldMask field_mask = 100;
 }

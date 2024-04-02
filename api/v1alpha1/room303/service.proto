@@ -352,4 +352,19 @@ service Room303API {
       ];
     };
   }
+
+  // allow room to be updated
+  rpc UpdateRoom(UpdateRoomRequest) returns (api.commons.Room) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/room303/room303api/updateroom"
+      body: "*"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ROOM303]
+        }
+      ];
+    };
+  }
 }
