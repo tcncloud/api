@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.observedholidays;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/observedholidays/entities.proto";
+import "google/api/annotations.proto";
+
+service ObservedHolidaysService {
+  // ListObservedHolidays returns all ObservedHolidays for an Org.
+  rpc ListObservedHolidays(ListObservedHolidaysRequest) returns (ListObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetObservedHolidays returns the ObservedHolidays for the ID.
+  rpc GetObservedHolidays(GetObservedHolidaysRequest) returns (GetObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/get";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // SetObservedHolidays creates a new ObservedHolidays for an Org.
+  rpc SetObservedHolidays(SetObservedHolidaysRequest) returns (SetObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/set";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // AddToObservedHolidays adds a new ObservedHolidays for an Org.
+  rpc AddToObservedHolidays(AddToObservedHolidaysRequest) returns (AddToObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/add";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RemoveObservedHolidays removes an existing ObservedHolidays from an Org.
+  rpc RemoveObservedHolidays(RemoveFromObservedHolidaysRequest) returns (RemoveFromObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/remove";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateObservedHolidaysInfo updates the general info for a specified ObservedHolidays.
+  rpc UpdateObservedHolidaysInfo(UpdateObservedHolidaysInfoRequest) returns (UpdateObservedHolidaysInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/updateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteObservedHolidays deletes an existing ObservedHolidays.
+  rpc DeleteObservedHolidays(DeleteObservedHolidaysRequest) returns (DeleteObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // EvaluateObservedHolidays evaluates the ObservedHolidays.
+  rpc EvaluateObservedHolidays(EvaluateObservedHolidaysRequest) returns (EvaluateObservedHolidaysResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/observedholidays/evaluate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+}
