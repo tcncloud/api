@@ -832,3 +832,32 @@ message ProgrammedDates {
   // When the list was last updated.
   google.protobuf.Timestamp last_updated = 7;
 }
+
+// ObservedHolidays a list of dates or holidays.
+message ObservedHolidays {
+  // ID of the Org related to this.
+  string org_id = 1;
+  // Unique ID.
+  string observed_holidays_id = 2;
+  // Name of the list.
+  string observed_holidays_name = 3;
+  // Description of the list.
+  string description = 4;
+  // The timezone.
+  api.commons.TimeZone timezone = 5;
+  // The list of dates or holidays.
+  repeated ObservedHoliday days = 6;
+  // When the list was last updated.
+  google.protobuf.Timestamp last_updated = 7;
+}
+
+// ObservedHoliday may be a named date or a holiday.
+message ObservedHoliday {
+  // A date or holiday
+  oneof DayType {
+    // Named date.
+    MonthDayDate day = 1;
+    // Holiday service holiday.
+    CountryHoliday holiday = 2;
+  }
+}

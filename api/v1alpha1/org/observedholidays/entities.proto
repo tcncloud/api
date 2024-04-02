@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.observedholidays;
+
+import "api/commons/org.proto";
+import "api/commons/org/preferences.proto";
+import "google/protobuf/field_mask.proto";
+
+// ListObservedHolidaysRequest is the request message for ListObservedHolidays
+message ListObservedHolidaysRequest {}
+
+// ListObservedHolidaysResponse is the response message for ListObservedHolidays
+message ListObservedHolidaysResponse {
+  // A list of ObservedHolidays
+  repeated api.commons.org.ObservedHolidays observed_holidays = 1;
+}
+
+// GetObservedHolidaysRequest is the request message for GetObservedHolidays
+message GetObservedHolidaysRequest {
+  // The ID of the desired ObservedHolidays
+  string observed_holidays_id = 1;
+}
+
+// GetObservedHolidaysResponse is the response message for GetObservedHolidays
+message GetObservedHolidaysResponse {
+  // The retrieved ObservedHolidays
+  api.commons.org.ObservedHolidays observed_holidays = 1;
+}
+
+// SetObservedHolidaysRequest is the request message for SetObservedHolidays
+message SetObservedHolidaysRequest {
+  // The name of the ObservedHolidays
+  string observed_holidays_name = 1;
+  // The description of the ObservedHolidays
+  string description = 2;
+  // The timezone of the ObservedHolidays
+  api.commons.TimeZone timezone = 3;
+  // The ObservedHoliday
+  repeated api.commons.org.ObservedHoliday days = 4;
+}
+
+// SetObservedHolidaysResponse is the response message for SetObservedHolidays
+message SetObservedHolidaysResponse {
+  // The ID of the created ObservedHolidays
+  string observed_holidays_id = 1;
+}
+
+// AddToObservedHolidaysRequest is the request message for AddToObservedHolidays
+message AddToObservedHolidaysRequest {
+  // The ID of the ObservedHolidays to be added to
+  string observed_holidays_id = 1;
+  // The ObservedHoliday to add (must not conflict with existing ObservedHoliday)
+  api.commons.org.ObservedHoliday day = 2;
+}
+
+// AddToObservedHolidaysResponse is the response message for AddToObservedHolidays
+message AddToObservedHolidaysResponse {}
+
+// RemoveFromObservedHolidaysRequest is request message for RemoveFromObservedHolidays
+message RemoveFromObservedHolidaysRequest {
+  // The ID of the ObservedHolidays to remove from
+  string observed_holidays_id = 1;
+  // The specified ObservedHoliday to remove (must already exist within the ObservedHoliday)
+  api.commons.org.ObservedHoliday day = 2;
+}
+
+// RemoveFromObservedHolidaysResponse is the response message for RemoveFromObservedHolidays
+message RemoveFromObservedHolidaysResponse {}
+
+// UpdateObservedHolidaysInfoRequest is the request message for UpdateObservedHolidaysInfo
+message UpdateObservedHolidaysInfoRequest {
+  // The ID of the ObservedHolidays to update
+  string observed_holidays_id = 1;
+  // The updated name of the ObservedHolidays
+  string observed_holidays_name = 2;
+  // The updated description of the ObservedHolidays
+  string description = 3;
+  // The updated timezone
+  api.commons.TimeZone timezone = 4;
+  // The FieldMask to determine which field to update
+  google.protobuf.FieldMask field_mask = 5;
+}
+
+// UpdateObservedHolidaysInfoResponse is the response message for UpdateObservedHolidaysInfo
+message UpdateObservedHolidaysInfoResponse {}
+
+// DeleteObservedHolidaysRequest is the request message for DeleteObservedHolidays
+message DeleteObservedHolidaysRequest {
+  // The ID of the ObservedHolidays to delete
+  string observed_holidays_id = 1;
+}
+
+// DeleteObservedHolidaysResponse is the response message for DeleteObservedHolidays
+message DeleteObservedHolidaysResponse {
+  // The ID of the deleted ObservedHolidays
+  string observed_holidays_id = 1;
+}
+
+// EvaluateObservedHolidaysRequest is the request message for EvaluateObservedHolidays
+message EvaluateObservedHolidaysRequest {
+  // The ID of the ObservedHolidays to evaluate
+  string observed_holidays_id = 1;
+}
+
+// EvaluateObservedHolidaysResponse is the response message for EvaluateObservedHolidays
+message EvaluateObservedHolidaysResponse {
+  // The boolean to determine if the date is matched within the ObservedHolidays
+  bool date_matched = 1;
+}
