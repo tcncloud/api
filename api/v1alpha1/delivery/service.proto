@@ -730,7 +730,8 @@ message Room303Transport {
     // this way we can use different types of room303 deliveries
     // in the future, support different api calls,
     // maybe support multiple groups etc
-    Room303SystemMessage system_message = 1;
+    Room303SystemMessage system_message = 1 [deprecated = true];
+    Room303SystemMessages system_messages = 2;
   }
 }
 message Room303SystemMessage {
@@ -743,6 +744,9 @@ message Room303SystemMessage {
     // user_id of the intended user
     string user_id = 3;
   }
+}
+message Room303SystemMessages {
+  repeated Room303SystemMessage system_messages = 1;
 }
 message SMSTransport {
   // must include country code and area code
