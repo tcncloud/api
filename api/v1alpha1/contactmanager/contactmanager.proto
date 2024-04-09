@@ -84,3 +84,20 @@ message ContactManagerEntryVal {
   string type = 1;
   string value = 2;
 }
+
+message AddContactEntryRequest {
+  int64 contact_manager_list_id = 1 [jstype = JS_STRING];
+  // List of entries of a given contact
+  repeated Entry entry = 2;
+}
+
+message Entry {
+  string name = 1;
+  string value = 2;
+  string type = 3;
+}
+
+message AddContactEntryResponse {
+  // contact_manager_entry_list_id
+  int64 contact_id = 1 [jstype = JS_STRING];
+}
