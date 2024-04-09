@@ -65,4 +65,19 @@ service ContactManager {
       ];
     };
   }
+
+  /**
+     Adds a new contact entry based on the provided request.
+  */
+  rpc AddContactEntry(AddContactEntryRequest) returns (AddContactEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/addcontactentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
 }
