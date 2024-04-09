@@ -54,6 +54,16 @@ message ListInsightsResponse {
   repeated Insight insights = 1; // Requested insights
 }
 
+// ListOrgInsightsRequest is the request to list insights for an org in support.
+message ListOrgInsightsRequest {
+  string org_id = 1; // Required - org id to list insights for
+}
+
+// ListOrgInsightsResponse contains the Insights that were listed.
+message ListOrgInsightsResponse {
+  repeated Insight insights = 1; // Requested insights
+}
+
 // UpdateInsightRequest is the request to update an insight.
 message UpdateInsightRequest {
   Insight insight = 1; // Required - insight to be updated
