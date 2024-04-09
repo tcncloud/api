@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package api.v1alpha1.classifier;
+
+import "api/v1alpha1/classifier/entities.proto";
+
+service ClassifierFileTemplates {
+  rpc ParseFile(ParseFileRequest) returns (ParseFileResponse);
+  rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse);
+  rpc DeleteFileTemplate(DeleteFileTemplateRequest) returns (DeleteFileTemplateResponse);
+  rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse);
+  rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse);
+}
+
+message ParseFileRequest {
+  message ReParseFile {
+    int64 file_template_id = 1;
+    ParseHints hints = 2;
+  }
+  oneof opt {
+    // the raw file, no more than 2mb
+    bytes raw_data = 3;
+    // reparse the file that exists for this template with new hints
+    ReParseFile reparse_file = 4;
+  }
+  string name = 5;
+}
+message ParseFileResponse {
+  FileTemplate file_template = 1;
+}
+message UpdateFileTemplateRequest {
+  FileTemplate file_template = 1;
+}
+message UpdateFileTemplateResponse {}
+message DeleteFileTemplateRequest {
+  int64 file_template = 1;
+}
+message DeleteFileTemplateResponse {}
+message ListFileTemplatesRequest {
+  // if empty we will start at begining/end of list
+  int64 prev_id = 1;
+  // sort ascending instead of descending
+  bool asc = 2;
+  // how many records to get
+  int32 page_size = 3;
+}
+message ListFileTemplatesResponse {
+  repeated FileTemplate file_templates = 1;
+}
+message GetFileTemplateRequest {
+  int64 file_template_id = 1;
+}
+message GetFileTemplateResponse {
+  FileTemplate file_template = 1;
+}

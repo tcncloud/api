@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package api.v1alpha1.classifier;
+
+import "api/commons/classifier.proto";
+
+message ClassifierEntityTypes {
+  repeated api.commons.ClassifierEntityType types = 1;
+}
+
+message ParseHints {
+  ParseOpts parse_opts = 1;
+  Constraints constraints = 2;
+}
+
+message FileTemplate {
+  message Field {
+    string syntax_type = 1;
+    api.commons.ClassifierEntityType entity_type = 2;
+    string name = 3;
+    string format = 4;
+    // example of a value for this field
+    string raw_value = 5;
+  }
+  int64 file_template_id = 1;
+  string filename = 2;
+  repeated Field fields = 3;
+  ParseOpts parse_opts = 4;
+  Constraints constraints = 5;
+  int64 foid = 6;
+}
+
+// details on how the data should be
+// parsed with respect to the file type
+message ParseOpts {
+  oneof ftype {
+    OptsCsv csv = 1;
+    OptsJson json = 2;
+    OptsJsonL jsonl = 3;
+    OptsFixed fixed = 4;
+    OptsParquet parquet = 5;
+  }
+}
+
+message OptsCsv {
+  bool has_header = 1;
+  int64 skip_rows = 2;
+  repeated string header = 3;
+  string separator = 4;
+}
+message OptsJson {
+  string records_root = 1;
+}
+message OptsJsonL {}
+message OptsFixed {
+  message FieldOpts {
+    // for fixed width files indicates the starting position of the data.
+    // if it is -1, starting position is one character after the previous fields
+    // starting position + length. if this is the first field and it is -1,
+    // starting position is 0
+    int32 starting_position = 13;
+    // for fixed width files indicates how many characters to the right of
+    // starting_position we will read. this field is required to be greater than
+    // 0.
+    int32 field_length = 14;
+  }
+  // field opts keyed by field name
+  map<string, FieldOpts> positions = 1;
+}
+message OptsParquet {}
+
+// these are options to forbid/allow certain
+// types from being guessed by Classifier
+message Constraints {
+  map<string, ClassifierEntityTypes> forbid = 1;
+  map<string, ClassifierEntityTypes> allow = 2;
+}
