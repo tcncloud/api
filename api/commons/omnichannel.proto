@@ -1119,6 +1119,7 @@ message OmniComplianceAction {
   repeated string keywords = 1;
   // confirmation for the config
   string confirmation_message = 2;
+  bool is_fuzzy_match = 3;
 }
 
 // OmniComplianceConfig -
