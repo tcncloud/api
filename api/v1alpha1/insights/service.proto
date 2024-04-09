@@ -42,6 +42,22 @@ service Insights {
     };
   }
 
+  // ListOrgInsights lists insights for an org. Used for support app.
+  rpc ListOrgInsights(ListOrgInsightsRequest) returns (ListOrgInsightsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/listorginsights";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
+            PERMISSION_INSIGHTS_INSIGHT_VIEW
+          ]
+        }
+      ];
+    };
+  }
+
   // UpdateInsight updates an existing insight
   rpc UpdateInsight(UpdateInsightRequest) returns (UpdateInsightResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/updateinsight";
