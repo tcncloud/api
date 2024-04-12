@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha2;
+
+// MatchingRule represents a rule for matching an event to a
+// rate definition.
+enum MatchingRule {
+  MATCHING_RULE_UNSPECIFIED = 0;
+  MATCHING_RULE_COUNTRY_PREFIX = 1;
+}
+
+// MatchingConfig represents the configuration for matching
+// an event to a rate definition.
+message MatchingConfig {
+  // the name of the matching configuration.
+  string name = 1;
+  // the configuration data.
+  oneof config {
+    MatchingConfigCountryPrefix country_prefix = 100;
+  }
+}
+
+// MatchingConfigCountryPrefix represents the configuration for matching
+// an event to a rate definition using the country code and a set of
+// prefixes. The longest prefix match is used.
+message MatchingConfigCountryPrefix {
+  // The country code to match.
+  int32 country_code = 1;
+  // The list of prefixes (if any) to match after successfully matching
+  // the country code.
+  repeated string prefixes = 2;
+}
