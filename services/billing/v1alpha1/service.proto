@@ -21,6 +21,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc CommitBillingPlan(CommitBillingPlanRequest) returns (CommitBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/commitbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -45,6 +46,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
   rpc CommitDefaultBillingPlan(CommitDefaultBillingPlanRequest) returns (CommitDefaultBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/commitdefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -68,6 +70,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc CreateBillingPlan(CreateBillingPlanRequest) returns (CreateBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/createbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -89,6 +92,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
   rpc CreateDefaultBillingPlan(CreateDefaultBillingPlanRequest) returns (CreateDefaultBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/createdefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -184,6 +188,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc DeleteBillingPlan(DeleteBillingPlanRequest) returns (DeleteBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/deletebillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -208,6 +213,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
   rpc DeleteDefaultBillingPlan(DeleteDefaultBillingPlanRequest) returns (DeleteDefaultBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/deletedefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -304,6 +310,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc DuplicateBillingPlan(DuplicateBillingPlanRequest) returns (DuplicateBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/duplicatebillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -327,6 +334,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc DuplicateDefaultBillingPlan(DuplicateDefaultBillingPlanRequest) returns (DuplicateDefaultBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/duplicatedefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -374,6 +382,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc GetActiveBillingPlan(GetActiveBillingPlanRequest) returns (GetActiveBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/getactivebillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -395,6 +404,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc GetBillingPlan(GetBillingPlanRequest) returns (GetBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/getbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -415,6 +425,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
   rpc GetBillingPlanHistory(GetBillingPlanHistoryRequest) returns (GetBillingPlanHistoryResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/getbillingplanhistory";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -478,6 +489,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc ListBillingPlans(ListBillingPlansRequest) returns (ListBillingPlansResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/listbillingplans";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -541,6 +553,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc UpdateBillingPlan(UpdateBillingPlanRequest) returns (UpdateBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/updatebillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -564,6 +577,7 @@ service BillingService {
   //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc UpdateDefaultBillingPlan(UpdateDefaultBillingPlanRequest) returns (UpdateDefaultBillingPlanResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/billing/v1alpha1/updatedefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {

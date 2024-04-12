@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha2;
+
+import "api/commons/audit/event_types.proto";
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha2/matching.proto";
+import "services/billing/entities/v1alpha2/modules.proto";
+
+// RateSnapshot represents a snapshot of rates for a given time period.
+message RateSnapshot {
+  google.protobuf.Timestamp start_date = 1;
+  google.protobuf.Timestamp end_date = 2;
+  repeated RateDefinition rates = 3;
+}
+
+message RateDefinition {
+  string rate_definition_id = 1;
+  api.commons.audit.EventType event_type = 2;
+  RateDefinitionConfigType config_type = 3;
+  MatchingRule matching_rule = 4;
+  MatchingConfig matching_config = 5;
+  // a hash of the matching rule and config
+  string matching_sha = 6;
+  google.protobuf.Timestamp create_time = 7;
+  google.protobuf.Timestamp update_time = 8;
+  google.protobuf.Timestamp delete_time = 9;
+  // the time this rate definition becomes effective (or now if not set)
+  google.protobuf.Timestamp effective_time = 10;
+  // the configuration for this definition
+  RateDefinitionConfig config = 11;
+  // a group identifier for this rate definition; optional
+  string group_id = 12;
+}
+
+message RateDefinitionConfig {
+  oneof config {
+    // omni (1000 - 1999)
+    BasicConfig agent_seats = 1000;
+
+    BasicConfig connected_inbox_poll = 1500;
+    BasicConfig connected_inbox_created = 1501;
+
+    BasicConfig agent_message_chat = 1600;
+    BasicUnitConfig agent_message_chat_size = 1601;
+    BasicConfig agent_message_chat_units = 1602;
+    BasicConfig agent_message_email = 1610;
+    BasicUnitConfig agent_message_email_size = 1611;
+    BasicConfig agent_message_email_units = 1612;
+    BasicConfig agent_message_sms = 1620;
+    BasicUnitConfig agent_message_sms_size = 1621;
+    BasicConfig agent_message_sms_units = 1622;
+
+    BasicConfig manager_message_chat = 1700;
+    BasicUnitConfig manager_message_chat_size = 1701;
+    BasicConfig manager_message_chat_units = 1702;
+    BasicConfig manager_message_email = 1710;
+    BasicUnitConfig manager_message_email_size = 1711;
+    BasicConfig manager_message_email_units = 1712;
+    BasicConfig manager_message_sms = 1720;
+    BasicUnitConfig manager_message_sms_size = 1721;
+    BasicConfig manager_message_sms_units = 1722;
+
+    BasicConfig system_message_chat = 1800;
+    BasicUnitConfig system_message_chat_size = 1801;
+    BasicConfig system_message_chat_units = 1802;
+    BasicConfig system_message_email = 1810;
+    BasicUnitConfig system_message_email_size = 1811;
+    BasicConfig system_message_email_units = 1812;
+    BasicConfig system_message_sms = 1820;
+    BasicUnitConfig system_message_sms_size = 1821;
+    BasicConfig system_message_sms_units = 1822;
+
+    BasicConfig customer_message_chat = 1900;
+    BasicUnitConfig customer_message_chat_size = 1901;
+    BasicConfig customer_message_chat_units = 1902;
+    BasicConfig customer_message_email = 1910;
+    BasicUnitConfig customer_message_email_size = 1911;
+    BasicConfig customer_message_email_units = 1912;
+    BasicConfig customer_message_sms = 1920;
+    BasicUnitConfig customer_message_sms_size = 1921;
+    BasicConfig customer_message_sms_units = 1922;
+
+    // compliance configs
+    BasicConfig compliance_rnd_query = 2000;
+    BasicConfig compliance_rnd_query_cached = 2001;
+  }
+}
+
+// RateDefinitionConfigType defines the type of configuration for a rate definition.
+enum RateDefinitionConfigType {
+  RATE_DEFINITION_CONFIG_TYPE_UNSPECIFIED = 0;
+  RATE_DEFINITION_CONFIG_TYPE_NOOP = 1;
+
+  // omni config types (1000-1999)
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_SEATS = 1000;
+
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CONNECTED_INBOX_POLL = 1500;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CONNECTED_INBOX_CREATED = 1501;
+
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT = 1600;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT_SIZE = 1601;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT_UNITS = 1602;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL = 1610;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL_SIZE = 1611;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL_UNITS = 1612;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS = 1620;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS_SIZE = 1621;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS_UNITS = 1622;
+
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT = 1700;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT_SIZE = 1701;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT_UNITS = 1702;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL = 1710;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL_SIZE = 1711;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL_UNITS = 1712;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS = 1720;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS_SIZE = 1721;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS_UNITS = 1722;
+
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT = 1800;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT_SIZE = 1801;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT_UNITS = 1802;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL = 1810;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL_SIZE = 1811;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL_UNITS = 1812;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS = 1820;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS_SIZE = 1821;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS_UNITS = 1822;
+
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT = 1900;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT_SIZE = 1901;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT_UNITS = 1902;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL = 1910;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL_SIZE = 1911;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL_UNITS = 1912;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS = 1920;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS_SIZE = 1921;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS_UNITS = 1922;
+
+  // compliance config types (2000-2999)
+  RATE_DEFINITION_CONFIG_TYPE_COMPLIANCE_RND_QUERY = 2000;
+  RATE_DEFINITION_CONFIG_TYPE_COMPLIANCE_RND_QUERY_CACHED = 2001;
+}

@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package services.billing.v1alpha2;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha2/rates.proto";
+import "services/billing/v1alpha2/core.proto";
+
+message CreateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha2.RateDefinition rate_definition = 2;
+}
+
+message CreateDefaultRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message CreateDefaultRateDefinitionsRequest {
+  repeated CreateDefaultRateDefinitionRequest rates = 1;
+}
+
+message CreateDefaultRateDefinitionsResponse {
+  repeated CreateDefaultRateDefinitionResponse rates = 1;
+}
+
+message CreateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha2.RateDefinition rate_definition = 2;
+}
+
+message CreateRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message CreateRateDefinitionsRequest {
+  repeated CreateRateDefinitionRequest rates = 1;
+}
+
+message CreateRateDefinitionsResponse {
+  repeated CreateRateDefinitionResponse rates = 1;
+}
+
+message DeleteDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteDefaultRateDefinitionResponse {}
+
+message DeleteDefaultRateDefinitionsRequest {
+  repeated string rate_definition_ids = 1;
+}
+
+message DeleteDefaultRateDefinitionsResponse {}
+
+message DeleteRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteRateDefinitionResponse {}
+
+message DeleteRateDefinitionsRequest {
+  repeated string rate_definition_ids = 1;
+}
+
+message DeleteRateDefinitionsResponse {}
+
+message GetRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message GetRateDefinitionResponse {
+  services.billing.entities.v1alpha2.RateDefinition rate_definition = 1;
+}
+
+message GetRateHistoryRequest {
+  string org_id = 1;
+  repeated string group_ids = 2;
+  google.protobuf.Timestamp start_time = 3; // Optional: if not set, will use the beginning of time
+  google.protobuf.Timestamp end_time = 4; // Optional: if not set, will use the current time
+}
+
+message GetRateHistoryResponse {
+  repeated services.billing.entities.v1alpha2.RateSnapshot snapshots = 1;
+}
+
+message ListActiveRateDefinitionsRequest {
+  string rate_definition_id = 1;
+  string filter = 2; // Optional: defaults to no filter
+  google.protobuf.FieldMask fields = 3; // Optional: defaults to all fields.
+  repeated Sort sort = 4; // Optional: defaults to no sort.
+  Page page = 5; // Optional: defaults to no paging.
+}
+
+message ListActiveRateDefinitionsResponse {
+  repeated services.billing.entities.v1alpha2.RateDefinition rate_definitions = 1;
+  string token = 2; // Optional: only present if paginating.
+}
+
+message ListRateDefinitionsRequest {
+  string rate_definition_id = 1;
+  string filter = 2; // Optional: defaults to no filter
+  google.protobuf.FieldMask fields = 3; // Optional: defaults to all fields.
+  repeated Sort sort = 4; // Optional: defaults to no sort.
+  Page page = 5; // Optional: defaults to no paging.
+}
+
+message ListRateDefinitionsResponse {
+  repeated services.billing.entities.v1alpha2.RateDefinition rate_definitions = 1;
+  string token = 2; // Optional: only present if paginating.
+}
+
+message UpdateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha2.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateDefaultRateDefinitionResponse {}
+
+message UpdateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha2.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_fields = 3;
+}
+
+message UpdateRateDefinitionResponse {}

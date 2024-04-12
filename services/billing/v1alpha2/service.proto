@@ -1,0 +1,340 @@
+syntax = "proto3";
+
+package services.billing.v1alpha2;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/billing/v1alpha2/invoices.proto";
+import "services/billing/v1alpha2/rates.proto";
+
+service BillingService {
+  // Creates a rate definition for the REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.AlreadyExists: A rate definition with the same data already exists.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateDefaultRateDefinition(CreateDefaultRateDefinitionRequest) returns (CreateDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/createdefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ],
+    };
+  }
+
+  // Creates rate definitions for the REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.AlreadyExists: A rate definition with the same data already exists.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateDefaultRateDefinitions(CreateDefaultRateDefinitionsRequest) returns (CreateDefaultRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/createdefaultratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ],
+    };
+  }
+
+  // Creates a rate definition for an ORG.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.AlreadyExists: A rate definition with the same data already exists.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc CreateRateDefinition(CreateRateDefinitionRequest) returns (CreateRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/createratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Creates rate definitions for an ORG.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.AlreadyExists: A rate definition with the same data already exists.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc CreateRateDefinitions(CreateRateDefinitionsRequest) returns (CreateRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/createratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Deletes a rate definition from the REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteDefaultRateDefinition(DeleteDefaultRateDefinitionRequest) returns (DeleteDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/deletedefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ],
+    };
+  }
+
+  // Deletes rate definitions from the REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteDefaultRateDefinitions(DeleteDefaultRateDefinitionsRequest) returns (DeleteDefaultRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/deletedefaultratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ],
+    };
+  }
+
+  // Deletes a rate definition from an ORG.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The specified rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc DeleteRateDefinition(DeleteRateDefinitionRequest) returns (DeleteRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/deleteratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Deletes rate definitions from an ORG.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The specified rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc DeleteRateDefinitions(DeleteRateDefinitionsRequest) returns (DeleteRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/deleteratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Exports an invoice.
+  // Required permissions:
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc ExportInvoice(ExportInvoiceRequest) returns (ExportInvoiceResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/exportinvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_BILLING_ADMIN]
+        }
+      ],
+    };
+  }
+
+  // Returns the specified rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The specified rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetRateDefinition(GetRateDefinitionRequest) returns (GetRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/getratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Returns the rate history for the ORG or REGION.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetRateHistory(GetRateHistoryRequest) returns (GetRateHistoryResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/getratehistory";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Lists active rate definitions.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListActiveRateDefinitions(ListActiveRateDefinitionsRequest) returns (ListActiveRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/listactiveratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Lists rate definitions.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListRateDefinitions(ListRateDefinitionsRequest) returns (ListRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/listratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+
+  // Updates a default rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The specified rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateDefaultRateDefinition(UpdateDefaultRateDefinitionRequest) returns (UpdateDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/updatedefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ],
+    };
+  }
+
+  // Updates a rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The specified rate definition doesn't exist.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateRateDefinition(UpdateRateDefinitionRequest) returns (UpdateRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha2/updateratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ],
+    };
+  }
+}
