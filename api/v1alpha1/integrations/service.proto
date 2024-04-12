@@ -1195,6 +1195,16 @@ message Portal {
   repeated string plugin_inst_ids = 7;
   PortalType ptype = 8;
   google.protobuf.Timestamp last_edited = 9;
+  // the portal definition this came from
+  string definition_name = 11;
+  // each item in "segments" represents a task for the user.
+  // the user must choose and complete one of the FlowChoices in each position
+  // in the "segments" array to be considered complete
+  PortalSegments portal_segments = 13;
+}
+
+message PortalSegments {
+  repeated PortalSegment portal_segments = 1;
 }
 
 message PortalText {
@@ -1317,4 +1327,67 @@ message GenerateEpicKeyPairReq {
 message GenerateEpicKeyPairRes {
   string production_public_key = 1;
   string non_production_public_key = 2;
+}
+
+// PortalSegment contains a set a flows where user must complete one of set.
+// usually this is selected by the user.
+// Example:
+// with payment portal, our payment step would have a WorkflowChoices like this:
+// PortalSegment{
+//  workflow_choices: [
+//    <Credit Card Workflow>,
+//    <ACH Workflow>,
+//    <PayPal Workflow>,
+//  ]
+// }
+// The user doesn't need to do all the choices, just needs to select one to complete.
+message PortalSegment {
+  repeated PortalWorkflow workflow_choices = 1;
+}
+
+// a PortalWorkflow is an entity that describes a set of segments that must be completed in sequence.
+// each segment is fed the data as input, and the result is merged on top of the input.
+// after completing all the segments successfully, we consider the flow completed.
+// A Flow also comes with the user defined template, form_fields, opts, and text.
+// None of these are required but will affect how the information is shown to the user.
+message PortalWorkflow {
+  // the global data for this flow.
+  // the portal_link data + the plugin_instance data
+  // make up the inital data set that is given to the Actions in "segments".
+  string plugin_instance_id = 1;
+  // the set of actions on the integrations api that must be executed in order
+  repeated Action actions = 2;
+  // the template that belongs with the result dataset.
+  Template template = 3;
+  // the data that appears on the user form. This is untrusted data.
+  repeated api.commons.integrations.FieldDefinition form_fields = 4;
+  // the data that controls optional functionality for some flows.
+  map<string, string> opts = 5;
+  // text presented to the user for this flow
+  string header_text = 6;
+  string footer_text = 7;
+  // if true we do not perform the actions in the "segments" array
+  // instead we check pass/fail demo conditions and return demo results
+  bool demo_mode = 8;
+  repeated Condition demo_fail_conditions = 9;
+  repeated Condition demo_pass_conditions = 10;
+  map<string, string> demo_results = 11;
+}
+
+// an Action is 1 api execution + optional rename of result data step.
+message Action {
+  string workflow_definition_name = 1;
+  // when a flow is executed if we find in the result any keys that match
+  // the keys in rename, we will rename the result keys to the matching
+  // value in rename map's.
+  map<string, string> rename = 4;
+}
+
+// template is a container for the different template types on each flow.
+// each flow definition can have 0-1 templates. Right now we only have Templates
+// on invoice flows, but that might not always be the case.
+message Template {
+  oneof val {
+    api.commons.integrations.Invoices invoice_template = 1;
+  }
 }
