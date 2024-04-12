@@ -308,6 +308,28 @@ service PortalManagerApi {
       ];
     };
   }
+  rpc ListPortalTypes(ListPortalTypesReq) returns (ListPortalTypesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listportaltypes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
+  rpc ListPortalWorkflows(ListPortalWorkflowsReq) returns (ListPortalWorkflowsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listportalworkflows";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
 }
 
 message UpsertPortalConfigReq {
@@ -513,4 +535,86 @@ message ListAvailablePaymentFieldsReq {
 // the available fields for the payment flow
 message ListAvailablePaymentFieldsRes {
   repeated api.commons.integrations.FieldDefinition payment_fields = 2;
+}
+
+message ListPortalTypesReq {}
+message ListPortalTypesResponse {
+  repeated PortalDefinition values = 1;
+}
+
+message ListPortalWorkflowsReq {}
+message ListPortalWorkflowsResponse {
+  repeated WorkflowDefinition values = 1;
+}
+
+// this describes a portal type. any created portals must conform to a
+// portal definition.
+message PortalDefinition {
+  // the name of this type of portal
+  string definition_name = 2;
+  // each FlowRequirement below represents a screen that must be presented
+  // to the user in order. All flows in the workflow_requirements must be completed in order.
+  // Payment portal would have 3 workflow_requirements:
+  // workflow_requirements: [
+  //   FlowRequirement{max_choices: 1, flow_type: VERIFICATION},
+  //   FlowRequirement{max_choices: 1, flow_type: INVOICE},
+  //   FlowRequirement{max_choices: 0, flow_type: PAYMENT},
+  // ]
+  repeated WorkflowRequirement workflow_requirements = 3;
+}
+message WorkflowRequirement {
+  // how many different flows the user can choose from on this step.
+  // 0 and below is interpreted as unlimited flows.
+  // example:
+  // PaymentPortal would have this set to 1 for verification flow and invoice flows
+  // and set to 0 for payment flows. This forces the user to verify exactly 1 way
+  // see exactly 1 invoice, and choose credit card, ach paypal, etc to pay.
+  int32 max_choices = 1;
+  // the flows for this step must be of this type
+  // FLOW_TYPE_UNKNOWN is interpreted as any flow type is acceptable
+  api.commons.integrations.FlowType flow_type = 2;
+}
+
+// this describes the requirements to build a Flow entity
+// that matches this description.  All created flows must
+// conform to a FlowDefinition.
+message WorkflowDefinition {
+  // the type of flow
+  api.commons.integrations.FlowType flow_type = 1;
+  // the name of this flow definition
+  string definition_name = 2;
+  // the api method performed for this flow.
+  api.commons.integrations.RequestMethod method = 3;
+  // the fields required to complete this flow
+  repeated api.commons.integrations.FieldDefinition req_fields = 4;
+  // the fields returned from this flows execution
+  repeated api.commons.integrations.FieldDefinition res_fields = 5;
+  // a subset of req_fields we suggest go in the plugin instance.
+  repeated api.commons.integrations.FieldDefinition plugin_fields = 6;
+  // a subset of req_fields we suggest go in the portal link
+  repeated api.commons.integrations.FieldDefinition link_fields = 7;
+  // a subset of req_fields we suggest come from some previously called flow.
+  // this is usually empty. Experian Payment flows do have this populated with
+  // data that comes from the experian query balance flow.
+  repeated api.commons.integrations.FieldDefinition prev_fields = 8;
+  // a subset of either req_fields OR res_fields that is suggested comes from the user.
+  // Example:
+  // verification flows would have a subset of the res_fields here, because
+  // we want to verify the user provided data against the api call's result.
+  // but
+  // payment flows would have a subset of req_fields here, because
+  // we want to take the payment fields from the user to make the api call.
+  // Some flows have no form fields. Invoice Flows and Execute Flows don't need
+  // a user form, so this is empty on those flows.
+  repeated api.commons.integrations.FieldDefinition form_fields = 9;
+  // The default template that can be used with the result data to make it pretty
+  // and grouped. Right now this is only used for invoices.
+  Template template = 10;
+  // Optional data that can be defined on Flow creation tine to affect the execution
+  // of the flow entity.
+  // Example:
+  // Experian flows have a 'use_invoice_account_number' field that is a boolean.
+  // if checked, we change the account number used for payment, rather than use the
+  // one provided in the portal link.
+  repeated api.commons.integrations.FieldDefinition opts = 11;
 }
