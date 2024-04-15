@@ -19,6 +19,19 @@ message CreateFlagTranscriptRequest {
 // CreateFlagTranscriptResponse is a response for creating a flag transcript.
 message CreateFlagTranscriptResponse {}
 
+// [DELETE] ====================================================================
+
+// DeleteFlagTranscriptRequest is a request for deleting a flag transcript.
+message DeleteFlagTranscriptRequest {
+  // Required. The org id of the flag transcripts to be deleted.
+  string org_id = 1;
+  // Required. The transcript sids for the flag transcripts to be deleted.
+  repeated int64 transcript_sids = 2;
+}
+
+// DeleteFlagTranscriptResponse is a response for deleting a flag transcript.
+message DeleteFlagTranscriptResponse {}
+
 // [SEARCH] ====================================================================
 
 // SearchFlagTranscriptsRequest is a request for searching flagged transcripts.
