@@ -68,3 +68,15 @@ message GetScorecardRequest {
 message GetScorecardResponse {
   api.commons.Scorecard scorecard = 1;
 }
+
+// [CUSTOMER SUPPORT ONLY] ================================
+
+// ListScorecardsByOrgIdRequest is the request for listing scorecards by certain criteria.
+message ListScorecardsByOrgIdRequest {
+  string org_id = 1; // Required. Specifies the org in which to list scorecards.
+  repeated string author_ids = 2; // Optional. Results include any of the authors
+  repeated int64 category_ids = 3; // Optional. Results include any of the categories listed.
+  repeated api.commons.ScorecardState states = 4; // Optional. Results include scorecard in any of the given states.
+  repeated api.commons.EvaluationType evaluation_types = 5; // Optional. Results include scorecard with any of the given types
+  repeated api.commons.CallType.Enum call_types = 6; // Optional. Results include scorecard with any of the given call types.
+}
