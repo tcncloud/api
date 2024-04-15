@@ -82,3 +82,20 @@ message GetLearningOpportunityRequest {
 message GetLearningOpportunityResponse {
   api.commons.LearningOpportunity learning_opportunity = 1;
 }
+
+// [CUSTOMER SUPPORT ONLY] =========================================================
+
+// ListLearningOpportunitiesByOrgIdRequest represents a request to list learning opportunities.
+message ListLearningOpportunitiesByOrgIdRequest {
+  string org_id = 1; // Required. Specifies the org id to filter learning opportunities by.
+  repeated api.commons.CallIdentifier call_identifiers = 2; // Optional - 'any of' if provided.
+  repeated int64 transcript_sids = 3; // Optional - 'any of' if provided.
+  repeated string agent_user_ids = 4; // Optional - 'any of' if provided.
+  api.commons.TimeFilter created_at = 5; // Optional.
+}
+
+// DeleteLearningOpportunityByOrgIdRequest represents a request to delete a learning opportunity.
+message DeleteLearningOpportunityByOrgIdRequest {
+  string org_id = 1;
+  int64 learning_opportunity_id = 3;
+}

@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package api.v1alpha1.scorecards;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/scorecards/auto_evaluation.proto";
+import "api/v1alpha1/scorecards/evaluation.proto";
+import "api/v1alpha1/scorecards/scorecard.proto";
+import "google/api/annotations.proto";
+
+// ScorecardsSupport provies customer support
+// specific endpoints for Scorecards.
+service ScorecardsSupport {
+  // ListEvaluationsByOrgId gets a list of evaluations by org id
+  rpc ListEvaluationsByOrgId(ListEvaluationsByOrgIdRequest) returns (ListEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/listevaluationsbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListAutoEvaluationsByOrgId gets a list of auto evaluations
+  rpc ListAutoEvaluationsByOrgId(ListAutoEvaluationsByOrgIdRequest) returns (ListAutoEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/listautoevaluationsbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // DeleteEvaluationByOrgId delete an evaluation in a specific org
+  rpc DeleteEvaluationByOrgId(DeleteEvaluationByOrgIdRequest) returns (DeleteEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/deleteevaluationbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // DeleteAutoEvaluationByOrgId deletes an auto evaluations
+  rpc DeleteAutoEvaluationByOrgId(DeleteAutoEvaluationByOrgIdRequest) returns (DeleteAutoEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/deleteautoevaluationbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListScorecardsByOrgId lists scorecards
+  rpc ListScorecardsByOrgId(ListScorecardsByOrgIdRequest) returns (ListScorecardsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/listscorecardsbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+}

@@ -88,3 +88,33 @@ message PreviewEvaluationScoreRequest {
 message PreviewEvaluationScoreResponse {
   api.commons.Evaluation evaluation = 1; // preview of scored evaluation
 }
+
+// [CUSTOMER SUPPORT ONLY] ================================
+
+// ListEvaluationsByOrgIdRequest is request to get list of evaluations
+message ListEvaluationsByOrgIdRequest {
+  string org_id = 1; // Required. Specifies the org id to filter evaluations by.
+  repeated string scorer_id = 2; // optional, list by scorer_id
+  api.commons.TimeFilter completed_at = 3; // optional, filter completed_at by a specific range
+  repeated int64 category_ids = 4; // optional, list by category_ids
+  repeated string agent_user_ids = 5; // Optional. List by agent user ids.
+  repeated int64 scorecard_ids = 6; // Optional. List by scorecard_ids
+
+  // Optional. Fields to return. Defaults to all evaluation fields (no sub entities).
+  //
+  // Example selecting score, section points, and question answers:
+  // {
+  //   paths: [
+  //     "score",
+  //     "evaluation_section.points",
+  //     "evaluation_section.evaluation_question.answers"
+  //   ]
+  // }
+  google.protobuf.FieldMask return_fields = 10;
+}
+
+// DeleteEvaluationByOrgIdRequest is request to delete an evaluation
+message DeleteEvaluationByOrgIdRequest {
+  string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
+  int64 evaluation_id = 2; // Required - unique id of evaluation to get
+}

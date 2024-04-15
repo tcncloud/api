@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package api.v1alpha1.agenttraining;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/agenttraining/learning_opportunity.proto";
+import "google/api/annotations.proto";
+
+// AgentTrainingSupportService provides customer support
+// endpoints for agent training.
+service AgentTrainingSupportService {
+  // ListLearningOpportunitiesByOrgId lists learning opportunities for a specific org.
+  rpc ListLearningOpportunitiesByOrgId(ListLearningOpportunitiesByOrgIdRequest) returns (ListLearningOpportunitiesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingsupportservice/listlearningopportunitiesbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // DeleteLearningOpportunityByOrgId deletes a learning opportunity in a specific org.
+  rpc DeleteLearningOpportunityByOrgId(DeleteLearningOpportunityByOrgIdRequest) returns (DeleteLearningOpportunityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingsupportservice/deletelearningopportunitybyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+}
