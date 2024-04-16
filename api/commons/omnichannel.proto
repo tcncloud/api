@@ -488,6 +488,8 @@ message OmniMessagePayload {
     OmniOffLoadedTextMessage off_loaded_text_message = 114;
     // canned message
     OmniCannedMessage canned_message = 115;
+    // data message
+    OmniDataMessage data_message = 116;
   }
 }
 
@@ -616,6 +618,13 @@ message OmniRequestQueueInformation {
 message OmniCannedMessage {
   // canned message id
   string canned_message_id = 1;
+}
+
+message OmniDataMessage {
+  // Data for flows, should always be json
+  string message = 1;
+  // Message id of the html form this is in reply to
+  int64 message_sid = 2 [jstype = JS_STRING];
 }
 
 enum OmniMessageStatus {
