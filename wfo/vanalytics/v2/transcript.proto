@@ -158,6 +158,12 @@ message Sms {
   // The phone data.
   Phone phone = 3;
 
+  // The phone number of the agent.
+  string caller_id = 4;
+
+  // The omni campain this sms belongs to.
+  int64 campaign_sid = 5;
+
   // The phone data.
   message Phone {
     // The raw phone number.
