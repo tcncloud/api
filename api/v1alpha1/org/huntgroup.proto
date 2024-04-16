@@ -407,6 +407,8 @@ message CopyHuntGroupIntegrationLinkResponse {}
 message UpdateHuntGroupIntegrationLinksRequest {
   // The list of integration links to update.
   repeated api.commons.org.IntegrationLink links = 1;
+  // The sid of the hunt group to update the integration links for.
+  int64 hunt_group_sid = 2;
 }
 
 // UpdateHuntGroupIntegrationLinksResponse is the response message for the UpdateHuntGroupIntegrationLinks RPC method.
