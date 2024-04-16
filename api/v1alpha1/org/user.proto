@@ -1048,3 +1048,18 @@ message RemoveGroupedUserIPRestrictionsRequest {
 
 // Response message for the RemoveGroupedUserIPRestrictions rpc.
 message RemoveGroupedUserIPRestrictionsResponse {}
+
+message ListUsersAllowedIpsRequest {
+  // list of user ids to get mapping of restricted ips
+  repeated string user_ids = 1;
+}
+
+message ListUsersAllowedIpsResponse {
+  // user id to allowed ips map
+  map<string, AllowedIps> user_allowed_ips_map = 1;
+
+  message AllowedIps {
+    // list of ips for a given user
+    repeated string ips = 1;
+  }
+}

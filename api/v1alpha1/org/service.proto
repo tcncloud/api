@@ -2882,4 +2882,17 @@ service Org {
       ];
     };
   }
+
+  // ListUsersAllowedIps -
+  rpc ListUsersAllowedIps(ListUsersAllowedIpsRequest) returns (ListUsersAllowedIpsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/listUsersAllowedIps";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
 }
