@@ -452,6 +452,17 @@ message AgentChatWidgetMessage {
   OmniConversationUserInformation user_information = 5;
   // the sender type of this message
   api.commons.OmniSenderType sender_type = 6;
+  // the message format
+  MessageFormat message_format = 7;
+}
+
+// MessageFormat -
+enum MessageFormat {
+  MESSAGE_FORMAT_UNSPECIFIED = 0; // default (plain text)
+  MESSAGE_FORMAT_HTML = 1;
+  // For forms from flows; should be sanitized, but keep form elements
+  // The frontend handles the form logic (the message can't have js)
+  MESSAGE_FORMAT_HTML_FORM = 2;
 }
 
 message OmniMessagePayload {
