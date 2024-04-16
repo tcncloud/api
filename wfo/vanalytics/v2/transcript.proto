@@ -3,6 +3,7 @@ syntax = "proto3";
 package wfo.vanalytics.v2;
 
 import "api/commons/acd.proto";
+import "api/commons/vanalytics.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -154,6 +155,15 @@ message Sms {
   // The text from the sms in threads.
   repeated Thread threads = 2;
 
+  // The phone data.
+  Phone phone = 3;
+
+  // The phone data.
+  message Phone {
+    // The raw phone number.
+    string raw = 12;
+  }
+
   // A thread is the text from one participant.
   message Thread {
     // The unique identifier of the thread.
@@ -216,6 +226,18 @@ message Call {
 
   // Agent call log for this call.
   AgentCallLog agent_call_log = 13;
+
+  // The phone data.
+  Phone phone = 14;
+
+  // The audio bytes for this call.
+  int64 audio_bytes = 16;
+
+  // The phone data.
+  message Phone {
+    // The raw phone number.
+    string raw = 12;
+  }
 
   // AgentResponse contains the agent responses aka dispositions.
   message AgentResponse {
@@ -960,6 +982,8 @@ message TranscriptQuery {
     google.protobuf.Timestamp gt = 3;
     // Queries where less than.
     google.protobuf.Timestamp lt = 4;
+    // Optional. Dynamic time period to match.
+    Moment moment = 5;
   }
 
   // Query constraints on delete time.
@@ -973,6 +997,15 @@ message TranscriptQuery {
     // Queries where less than.
     google.protobuf.Timestamp lt = 4;
   }
+}
+
+message Moment {
+  // Required. Timezone of the client.
+  string time_zone = 1;
+
+  // Optional. Dynamic time period to match which
+  // defaults to today.
+  api.commons.Interval interval = 2;
 }
 
 /*
