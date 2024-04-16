@@ -135,6 +135,11 @@ message OmniCampaignModuleConfig {
   //  - SmartPing
   //      content_id - the id of the premade message in the smartping system
   map<string, string> provider_metadata = 23;
+  // The country code and postal code field together determine timezone for email time based compliance rulesets
+  // country code
+  int32 country_code = 24;
+  // postal code field
+  string postal_code_field = 25;
 }
 
 // SmsNumber
