@@ -424,4 +424,52 @@ service Tickets {
       ];
     };
   }
+
+  // Public method to addEntityRef
+  rpc AddEntityRef(AddEntityRefRequest) returns (AddEntityRefResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/addentityref";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to listTicketsByEntityRef
+  rpc ListTicketsByEntityRef(ListTicketsByEntityRefRequest) returns (ListTicketsByEntityRefResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listticketsbyentityref";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
+  // Public method to listEntityRefsByTicket
+  rpc ListEntityRefsByTicket(ListEntityRefsByTicketRequest) returns (ListEntityRefsByTicketResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listentityrefsbyticket";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
 }
