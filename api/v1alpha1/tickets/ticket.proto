@@ -366,3 +366,33 @@ message ChangeTicketStatusRequest {
 message ChangeTicketStatusResponse {
   bool is_status_edited = 1;
 }
+
+message AddEntityRefRequest {
+  EntityRef entity_ref = 1; //be able to assign entity ref to a ticket
+}
+
+message AddEntityRefResponse {}
+
+message ListEntityRefsByTicketRequest {
+  string ticket_code = 1;
+}
+
+message ListEntityRefsByTicketResponse {
+  repeated EntityRef entity_ref = 1;
+}
+
+message ListTicketsByEntityRefRequest {
+  string uri = 1; //uri that uniquely identifies any entity associated with a ticket
+}
+
+message ListTicketsByEntityRefResponse {
+  repeated api.commons.Ticket tickets = 1;
+}
+
+//should this be in a separate folder / file
+message EntityRef {
+  string org_id = 1;
+  string region_id = 2;
+  string ticket_code = 3;
+  string uri = 4;
+}
