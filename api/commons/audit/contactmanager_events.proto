@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "api/v1alpha1/contactmanager/contactmanager.proto";
+
+message ContactManagerEntryAddEvent {}
+
+message ContactManagerEntryGetEncEvent {}
+
+message ContactManagerDeleteEvent {}
+
+message ContactManagerKycEvent {}
