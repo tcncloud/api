@@ -78,6 +78,7 @@ message ContactManagerList {
   repeated string list_details = 6;
   int64 ttl = 7 [jstype = JS_STRING];
   google.protobuf.Timestamp date_created = 8;
+  bool is_deleted = 9;
 }
 
 message ContactManagerEntryVal {

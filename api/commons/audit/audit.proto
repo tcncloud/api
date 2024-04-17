@@ -6,6 +6,7 @@ import "api/commons/audit/agent_training_events.proto";
 import "api/commons/audit/asm_events.proto";
 import "api/commons/audit/billing_events.proto";
 import "api/commons/audit/compliance_events.proto";
+import "api/commons/audit/contactmanager_events.proto";
 import "api/commons/audit/delivery_events.proto";
 import "api/commons/audit/event_types.proto";
 import "api/commons/audit/events.proto";
@@ -251,5 +252,11 @@ message AuditEvent {
     // Delivery Events class 1100
     DeliveryFailureEvent delivery_failure_event = 1100;
     DeliverySuccessEvent delivery_success_event = 1101;
+
+    // Contact Manager event
+    ContactManagerEntryAddEvent contact_manager_entry_add_event = 1200;
+    ContactManagerEntryGetEncEvent contact_manager_entry_get_enc_event = 1201;
+    ContactManagerDeleteEvent contact_manager_delete_event = 1202;
+    ContactManagerKycEvent contact_manager_kyc_event = 1203;
   }
 }
