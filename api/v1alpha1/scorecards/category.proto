@@ -98,3 +98,19 @@ message SampleAgentCall {
   google.protobuf.Duration silence = 6; // amount of silence in call
   string agent_user_id = 7; // user id of first agent on call
 }
+
+// SUPPORT
+
+// ListCategoriesByOrgIdRequest is the request to list categories by some criteria.
+message ListCategoriesByOrgIdRequest {
+  string org_id = 1; // Required. Specifies the org in which to list categories.
+  repeated string author_ids = 2; // Optional. Returns categories by any author.
+  repeated int64 skill_profiles = 3; // Optional. Returns categories with any skill.
+  CategoryType category_type = 4; // Required. Returns categories matching type.
+
+  enum CategoryType {
+    ANY = 0; // Default. Returns all category types.
+    SYSTEM = 1; // System created category (cannot be edited by users).
+    USER = 2; //  User created category.
+  }
+}
