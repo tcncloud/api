@@ -472,22 +472,46 @@ message UpdateAgentTriggersRequest {
 // UpdateAgentTriggersResponse is the response message for the UpdateAgentTriggers RPC method.
 message UpdateAgentTriggersResponse {}
 
+// The request message for ListHuntGroupScript
+message ListHuntGroupScriptsRequest {}
+
+// The response message for ListHuntGroupScript
+message ListHuntGroupScriptsResponse {
+  // The scripts belonging to an org
+  repeated api.commons.org.HuntGroupScript scripts = 1;
+}
+
 // The request message for GetHuntGroupScript
 message GetHuntGroupScriptRequest {
   // The hunt group sid of where the script belongs
-  int64 hunt_group_sid = 1;
+  int64 hunt_group_sid = 1 [deprecated = true];
+  // The sid of the script
+  int64 script_sid = 2;
 }
 
 // The response message for GetHuntGroupScript
 message GetHuntGroupScriptResponse {
+  // HuntGroupScriptDetails represents the details of a hunt group script.
+  message HuntGroupScriptDetails {
+    // The hunt group script
+    api.commons.org.HuntGroupScript script = 1;
+    // The hunt groups that have been assigned this script
+    repeated int64 hunt_group_sids = 2;
+    // The outbound broadcast templates that have been assigned this script
+    repeated int64 outbound_broadcast_template_sids = 3;
+    // The inbound broadcast templates that have been assigned this script
+    repeated int64 inbound_broadcast_template_sids = 4;
+  }
   // The script for the given hunt group
-  api.commons.org.HuntGroupScript hunt_group_script = 1;
+  api.commons.org.HuntGroupScript hunt_group_script = 1 [deprecated = true];
+  // The details of the hunt group script
+  HuntGroupScriptDetails script_details = 2;
 }
 
 // The request message for CreateHuntGroupScript
 message CreateHuntGroupScriptRequest {
   // The hunt group sid of where the script belongs
-  int64 hunt_group_sid = 1;
+  int64 hunt_group_sid = 1 [deprecated = true];
   // The script to be created
   api.commons.org.HuntGroupScript hunt_group_script = 2;
 }
@@ -498,9 +522,11 @@ message CreateHuntGroupScriptResponse {}
 // The request message for UpdateHuntGroupScript
 message UpdateHuntGroupScriptRequest {
   // The hunt group sid of where the script belongs
-  int64 hunt_group_sid = 1;
+  int64 hunt_group_sid = 1 [deprecated = true];
   // The script to be created
   api.commons.org.HuntGroupScript hunt_group_script = 2;
+  // The sid of the script to be updated
+  int64 script_sid = 3;
 }
 
 // The response message for UpdateHuntGroupScript
@@ -509,10 +535,32 @@ message UpdateHuntGroupScriptResponse {}
 // The request message for DeleteHuntGroupScript
 message DeleteHuntGroupScriptRequest {
   // The hunt group sid of where the script belongs
-  int64 hunt_group_sid = 1;
+  int64 hunt_group_sid = 1 [deprecated = true];
   // The sid of the hunt group script to be deleted
   int64 script_sid = 2;
 }
 
 // The response message for DeleteHuntGroupScript
 message DeleteHuntGroupScriptResponse {}
+
+// The request message for AssignScriptToHuntGroups
+message AssignScriptToHuntGroupsRequest {
+  // The script to be assigned
+  int64 script_sid = 1;
+  // The target hunt groups to assign the specified script
+  repeated int64 hunt_group_sids = 2;
+}
+
+// The response message for AssignScriptToHuntGroups
+message AssignScriptToHuntGroupsResponse {}
+
+// The request message for UnassignScriptFromHuntGroups
+message UnassignScriptFromHuntGroupsRequest {
+  // The script to be unassigned
+  int64 script_sid = 1;
+  // The target hunt groups to unassign the specified script
+  repeated int64 hunt_group_sids = 2;
+}
+
+// The response message for UnassignScriptFromHuntGroups
+message UnassignScriptFromHuntGroupsResponse {}
