@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "google/protobuf/timestamp.proto";
+import "wfo/vanalytics/v2/transcript.proto";
+
+// [RESOURCE] ==================================================================
+
+// Filter snapshot resource.
+message FilterSnapshot {
+  // Output only. The unique id of this filter snapshot.
+  int64 filter_snapshot_sid = 1;
+
+  // Output only. The unique id of this filter.
+  int64 filter_sid = 2;
+
+  // Required. The name of this filter. Must be non empty and unique across all
+  // filters within an organization.
+  string name = 3;
+
+  // Output only. Assigned by the server. The timestamp when this filter was
+  // created.
+  google.protobuf.Timestamp create_time = 6;
+
+  // Output only. The version of this filter.
+  int64 version = 7;
+
+  // The transcript query to be used to filter transcripts.
+  TranscriptQuery transcript_query = 8;
+}

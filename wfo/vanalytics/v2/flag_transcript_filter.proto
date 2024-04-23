@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "google/protobuf/field_mask.proto";
+import "wfo/vanalytics/v2/filter_snapshot.proto";
+import "wfo/vanalytics/v2/flag_snapshot.proto";
+
+// [LIST] ======================================================================
+
+// ListFlagTranscriptFiltersRequest is a request for listing flag transcript filters.
+message ListFlagTranscriptFiltersRequest {
+  // Required. The target transcript sid.
+  int64 transcript_sid = 2;
+
+  // Optional. Flag snapshot fields to include in response. All when empty.
+  google.protobuf.FieldMask flag_snapshot_mask = 3;
+
+  // Optional. Filter snapshot fields to include in response. All when empty.
+  google.protobuf.FieldMask filter_snapshot_mask = 4;
+}
+
+// ListFlagTranscriptFiltersResponse is a response for listing flag transcript filters.
+message ListFlagTranscriptFiltersResponse {
+  repeated FlagTranscriptFilter flag_transcript_filters = 1;
+}
+
+// [RESOURCE] ==================================================================
+
+// Flag transcript filter resource.
+message FlagTranscriptFilter {
+  // FlagSnapshot which flagged target transcript.
+  FlagSnapshot flag_snapshot = 1;
+
+  // FilterSnapshot which filtered target transcript.
+  FilterSnapshot filter_snapshot = 2;
+}

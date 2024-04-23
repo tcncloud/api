@@ -4,6 +4,9 @@ package wfo.vanalytics.v2;
 
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
+import "wfo/vanalytics/v2/filter.proto";
+import "wfo/vanalytics/v2/flag_filter.proto";
+import "wfo/vanalytics/v2/flag_transcript_filter.proto";
 import "wfo/vanalytics/v2/transcript.proto";
 
 service Vanalytics {
@@ -12,6 +15,104 @@ service Vanalytics {
   // achieved by making use of the given page token.
   rpc SearchTranscripts(SearchTranscriptsRequest) returns (SearchTranscriptsResponse) {
     option (google.api.http).post = "/wfo/vanalytics/v2/searchtranscripts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FILTER] ==================================================================
+
+  // CreateFilter creates a new filter. The filter contains a transcript query
+  // to filter transcripts.
+  rpc CreateFilter(CreateFilterRequest) returns (Filter) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/createfilter";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListFilters lists filters.
+  rpc ListFilters(ListFiltersRequest) returns (ListFiltersResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listfilters";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // UpdateFilter updates a filter transcript query and/or name.
+  rpc UpdateFilter(UpdateFilterRequest) returns (Filter) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/updatefilter";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // DeleteFilter deletes filter given a filter_sid.
+  rpc DeleteFilter(DeleteFilterRequest) returns (DeleteFilterResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/deletefilter";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // GetFilter gets filter given a filter_sid or name.
+  rpc GetFilter(GetFilterRequest) returns (Filter) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/getfilter";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FLAG_TRANSCRIPT_FILTER] ==================================================
+
+  // ListFlagTranscriptFilters lists flag transcript filters in an organization.
+  rpc ListFlagTranscriptFilters(ListFlagTranscriptFiltersRequest) returns (ListFlagTranscriptFiltersResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listflagtranscriptfilters";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FLAG_FILTER] =============================================================
+
+  // ListFlagFilters lists flag filter associations.
+  rpc ListFlagFilters(ListFlagFiltersRequest) returns (ListFlagFiltersResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listflagfilters";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
