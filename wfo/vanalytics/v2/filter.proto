@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "wfo/vanalytics/v2/transcript.proto";
+
+// [CREATE] ====================================================================
+
+message CreateFilterRequest {
+  // The filter resource to create.
+  Filter filter = 1;
+}
+
+// [LIST] ======================================================================
+
+message ListFiltersRequest {
+  // Optional. The number of filters to include in a single response. When not
+  // provided this defaults to 100.
+  uint32 page_size = 2;
+
+  // Optional. The order by which filters will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "name".
+  // Supported order by includes:
+  //   + (name)
+  //   + (name desc)
+  string order_by = 3;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 4;
+
+  oneof where {
+    // Optional. The filter by which to find other filters which have a conflicting
+    // name field.
+    Filter conflict = 5;
+
+    // Optional. Lists filters which are associated with given flag sid.
+    int64 flag_sid = 6;
+  }
+}
+
+message ListFiltersResponse {
+  // Token to retrieve the next page of filters, or empty if there are no
+  // more filters in the list.
+  string next_page_token = 1;
+
+  // List of filters which contains at most one request page_size.
+  repeated Filter filters = 2;
+}
+
+// [UPDATE] ====================================================================
+
+message UpdateFilterRequest {
+  // The new filter data.
+  Filter filter = 1;
+
+  // Optional. update_mask contains a list of paths to be updated. Possible paths include
+  // name and transcript_query. If no update_mask is provided it defaults to
+  // using both name and transcript_query.
+  google.protobuf.FieldMask update_mask = 2;
+
+  // The ID of the filter to be updated.
+  int64 filter_sid = 3;
+}
+
+// [DELETE] ====================================================================
+
+message DeleteFilterRequest {
+  // Required. The unique id of the filter to be deleted.
+  int64 filter_sid = 1;
+  // Optional. Return the filter that was deleted.
+  bool return = 3;
+}
+
+message DeleteFilterResponse {
+  // Optional. The filter that was deleted.
+  Filter filter = 1;
+}
+
+// [GET] =======================================================================
+
+message GetFilterRequest {
+  oneof where {
+    // The name of the filter.
+    string name = 3;
+
+    // The unique id of the filter.
+    int64 filter_sid = 4;
+  }
+}
+
+// [RESOURCE] ==================================================================
+
+// A filter resource in the Vanalytics API.
+message Filter {
+  // Output only. The unique id of this filter.
+  int64 filter_sid = 1;
+
+  // Required. The name of this filter. Must be non empty and unique across all
+  // filters within an organization.
+  string name = 2;
+
+  // Output only. The timestamp when this filter was created. Assigned by the
+  // server.
+  google.protobuf.Timestamp create_time = 5;
+
+  // Output only. The version of this filter.
+  int64 version = 6;
+
+  // The transcript query to be used to filter transcripts.
+  TranscriptQuery transcript_query = 7;
+}
