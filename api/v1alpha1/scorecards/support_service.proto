@@ -4,6 +4,7 @@ package api.v1alpha1.scorecards;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/scorecards/auto_evaluation.proto";
+import "api/v1alpha1/scorecards/category.proto";
 import "api/v1alpha1/scorecards/evaluation.proto";
 import "api/v1alpha1/scorecards/scorecard.proto";
 import "google/api/annotations.proto";
@@ -66,6 +67,19 @@ service ScorecardsSupport {
   // ListScorecardsByOrgId lists scorecards
   rpc ListScorecardsByOrgId(ListScorecardsByOrgIdRequest) returns (ListScorecardsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/listscorecardsbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListCategoriesByOrgId lists categories
+  rpc ListCategoriesByOrgId(ListCategoriesByOrgIdRequest) returns (ListCategoriesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/listcategoriesbyorgid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [

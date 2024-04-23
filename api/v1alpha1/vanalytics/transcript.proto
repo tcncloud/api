@@ -892,3 +892,21 @@ enum TranscriptReviewStatus {
 message AgentResponse {
   repeated string values = 1;
 }
+
+// [SUPPORT] ==================================================================
+
+// SearchByOrgIdRequest is a support-only request for searching transcripts by org id.
+message SearchByOrgIdRequest {
+  // Required. The organization id to search by.
+  string org_id = 1;
+  // Optional. The number of hits included in response.
+  // Will default to 10 if not provided
+  uint32 page_size = 2;
+  // Optional. The sort order.
+  Sort sort = 3;
+  // Optional. Transcript mask contains a list of transcript fields to be returned.
+  // If no transcript mask is provided it defaults to returning all fields.
+  google.protobuf.FieldMask transcript_mask = 4;
+  // Optional. Defines a query on flag summary.
+  SearchQuery.FlagSummary flag_summary = 5;
+}

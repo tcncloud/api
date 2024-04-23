@@ -4,12 +4,26 @@ package api.v1alpha1.vanalytics;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/vanalytics/flag_transcript.proto";
+import "api/v1alpha1/vanalytics/transcript.proto";
 import "google/api/annotations.proto";
 
 service VanalyticsSupport {
   // DeleteFlagTranscript deletes a flag transcript.
   rpc DeleteFlagTranscript(DeleteFlagTranscriptRequest) returns (DeleteFlagTranscriptResponse) {
     option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalyticssupport/deleteflagtranscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SearchByOrgId searches transcripts for a specific org.
+  rpc SearchByOrgId(SearchByOrgIdRequest) returns (SearchResponse) {
+    option (google.api.http).post = "/api/v1alpha1/vanalytics/vanalyticssupport/searchbyorgid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
