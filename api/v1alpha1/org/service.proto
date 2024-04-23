@@ -1799,6 +1799,19 @@ service Org {
     };
   }
 
+  // ListBroadcastTemplateGeneralDetails returns a list of broadcast templates for an organization
+  rpc ListBroadcastTemplateGeneralDetails(ListBroadcastTemplateGeneralDetailsRequest) returns (ListBroadcastTemplateGeneralDetailsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listbroadcasttemplategeneraldetails";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ];
+    };
+  }
+
   // Lists Agent Call Response Automatically added compliance rules for an Org.
   rpc ListAgentResponseAutoRules(ListAgentResponseAutoRulesRequest) returns (ListAgentResponseAutoRulesResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listagentresponseautorules";
