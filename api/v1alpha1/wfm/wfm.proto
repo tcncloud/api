@@ -3547,6 +3547,54 @@ service WFM {
       ];
     };
   }
+
+  // List org-level RealTimeManagementStates.
+  // Required permissions:
+  //   PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+  // Errors:
+  //   - grpc.Invalid: on invalid input.
+  //   - grpc.Internal: on unexpected error.
+  rpc ListRealTimeManagementStates(ListRealTimeManagementStatesRequest) returns (ListRealTimeManagementStatesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listrealtimemanagementstates";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ];
+    };
+  }
+
+  // List org-level RealTimeManagementStateColors.
+  // Required permissions:
+  //   PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+  // Errors:
+  //   - grpc.Invalid: on invalid input.
+  //   - grpc.Internal: on unexpected error.
+  rpc ListRealTimeManagementStateColors(ListRealTimeManagementStateColorsRequest) returns (ListRealTimeManagementStateColorsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listrealtimemanagementstatecolors";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ];
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -7214,6 +7262,14 @@ message ReplaceAgentOnScheduleRes {
 /****************************************************************************************************************************************************/
 /****************************************************************************************************************************************************/
 
+// An rgba color.
+message RgbaColor {
+  float red = 1; // [0.0, 1.0]
+  float green = 2; // [0.0, 1.0]
+  float blue = 3; // [0.0, 1.0]
+  float alpha = 4; // [0.0, 1.0]
+}
+
 // Request message for the HelloWorldWFMAdherence RPC.
 message HelloWorldWFMAdherenceRequest {}
 
@@ -7237,4 +7293,30 @@ message ListAgentStatesForDayRequest {
 message ListAgentStatesForDayResponse {
   // The list of requested agent states.
   repeated commons.AgentStateSequence agent_states = 1;
+}
+
+// Request message for ListRealTimeManagementStates.
+message ListRealTimeManagementStatesRequest {}
+
+// Response message for ListRealTimeManagementStates.
+message ListRealTimeManagementStatesResponse {
+  // The states.
+  repeated api.commons.RealTimeManagementState states = 1;
+}
+
+// Combines RealTimeManagementState and RgbaColor.
+message RealTimeManagementStateColor {
+  // The state.
+  api.commons.RealTimeManagementState state = 1;
+  // The color.
+  RgbaColor color = 2;
+}
+
+// Request message for ListRealTimeManagementStateColors.
+message ListRealTimeManagementStateColorsRequest {}
+
+// Response message for ListRealTimeManagementStateColors.
+message ListRealTimeManagementStateColorsResponse {
+  // The states and colors.
+  repeated RealTimeManagementStateColor state_colors = 1;
 }
