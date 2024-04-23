@@ -46,6 +46,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_PRIOCOMMERCE = 3900;
   INTEGRATION_TYPE_NAVIGA = 4000;
   INTEGRATION_TYPE_PAYNSECONDS = 4100;
+  INTEGRATION_TYPE_SUTHERLANDREV = 4200;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -305,6 +306,8 @@ enum RequestMethod {
   REQUEST_METHOD_NAVIGA_CHANGE_BILLING = 4002;
 
   REQUEST_METHOD_PAYNSECONDS_TOKENIZE_CARD = 4101;
+
+  REQUEST_METHOD_SUTHERLANDREV_PAYMENT_CONNECT = 4201;
 }
 
 enum TransactionType {
@@ -911,6 +914,8 @@ message ExecuteFlow {
     ExecuteNavigaChangeBilling naviga_change_billing = 4002;
 
     ExecutePaynsecondsTokenizeCard paynseconds_tokenize_card = 4101;
+
+    ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
   }
 }
 
@@ -1237,3 +1242,5 @@ message ExecuteNavigaCreatePayment {}
 message ExecuteNavigaChangeBilling {}
 
 message ExecutePaynsecondsTokenizeCard {}
+
+message ExecuteSutherlandrevPaymentConnect {}
