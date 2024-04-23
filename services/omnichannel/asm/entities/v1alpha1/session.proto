@@ -3,6 +3,7 @@ syntax = "proto3";
 package services.omnichannel.asm.entities.v1alpha1;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 message AsmSession {
   // asm session sid
@@ -40,4 +41,50 @@ message VoiceRegistration {
   int64 expiration_timestamp = 7;
 }
 
-message AsmUserDetails {}
+message AsmUserDetails {
+  // agents user id
+  string user_id = 1;
+  // agents name
+  string name = 2;
+  // the agents sid
+  int64 agent_sid = 3;
+  // enum of agents status
+  StatusState agent_status = 4;
+  // agents profile group name
+  string agent_profile_group_name = 5;
+  // the agents current conversation
+  int64 current_conversation_sid = 6 [jstype = JS_STRING];
+  // time from first customer message to agent response. between all conversations.
+  int64 average_customer_wait_time_seconds = 7;
+  // responste time between all conversations.
+  int64 average_time_to_respond_seconds = 8;
+  // last event time
+  google.protobuf.Timestamp last_event_time = 9;
+  // Agents Skills
+  map<string, int64> skills = 10;
+  // Asm Session Sid
+  google.protobuf.Int64Value asm_session_sid = 11;
+  // the list of response events
+  repeated DashboardAgentResponseEvent events = 12;
+}
+
+enum StatusState {
+  // unknown
+  STATUS_STATE_UNKNOWN = 0;
+  // no conversations assigned
+  WAITING = 1;
+  // conversations assigned but none open
+  IDLE = 2;
+  // conversation is open
+  CONVERSATION_OPEN = 3;
+}
+
+// The response event information for an agent
+message DashboardAgentResponseEvent {
+  // the time it took to respond in seconds
+  int64 response_time_seconds = 1;
+  // the time of the event
+  google.protobuf.Timestamp time = 2;
+  // whether or not this was the initial message sent by the agent
+  bool is_initial_agent_message = 3;
+}

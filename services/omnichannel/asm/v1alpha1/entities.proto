@@ -54,5 +54,7 @@ message ListAsmUserDetailsRequest {}
 
 message ListAsmUserDetailsResponse {
   // list of Sessions in the system with enrichments
-  repeated services.omnichannel.asm.entities.v1alpha1.AsmUserDetails sessions = 1;
+  repeated services.omnichannel.asm.entities.v1alpha1.AsmUserDetails sessions = 1 [deprecated = true];
+
+  repeated services.omnichannel.asm.entities.v1alpha1.AsmUserDetails asm_user_details = 2;
 }
