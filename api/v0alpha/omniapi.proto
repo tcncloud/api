@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v0alpha;
 
 import "annotations/authz.proto";
+import "api/commons/lms.proto";
 import "api/commons/omnichannel.proto";
 import "api/commons/types.proto";
 import "api/commons/wfm.proto";
@@ -1591,12 +1592,19 @@ message GetAvailableHeadersRes {
   repeated HeaderGroup headers = 1;
 }
 
+// Header - represents a header for a contact list
+message Header {
+  string name = 1;
+  api.commons.FieldType type = 2;
+}
+
 // HeaderGroup - represents a group of headers for a contact list
 message HeaderGroup {
   // the name of this group
   string name = 1;
+  repeated string headers = 2 [deprecated = true];
   // the headers provided by this group
-  repeated string headers = 2;
+  repeated Header list_headers = 3;
 }
 
 message ApproveTaskRequest {
