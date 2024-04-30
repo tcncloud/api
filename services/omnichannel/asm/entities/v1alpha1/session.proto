@@ -66,6 +66,8 @@ message AsmUserDetails {
   google.protobuf.Int64Value asm_session_sid = 11;
   // the list of response events
   repeated DashboardAgentResponseEvent events = 12;
+  // login time
+  google.protobuf.Timestamp login_time = 13;
 }
 
 enum StatusState {
