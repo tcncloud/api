@@ -980,6 +980,7 @@ message CreateScrubListReq {
   api.commons.ContentType content_type = 11;
   string country_code = 12;
   repeated api.commons.ScrubEntryDetails scrub_entry_details = 13;
+  bool durable = 14;
 }
 
 // AddScrubListEntries request message
