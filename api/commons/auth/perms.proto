@@ -104,6 +104,12 @@ enum Permission {
     card: CARD_LABELS
   }];
 
+  // Enables attachment of labels to entities
+  PERMISSION_LABEL_ATTACH = 151 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_LABELS
+  }];
+
   // Enables CRUD operations for Trusts.
   PERMISSION_TRUST_MANAGEMENT = 160 [(annotations.perms.options) = {
     wip: true

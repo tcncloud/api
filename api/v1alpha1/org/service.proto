@@ -2542,6 +2542,32 @@ service Org {
     };
   }
 
+  // AssignLabels assigns labels to a given permission group
+  rpc AssignLabels(AssignLabelsRequest) returns (AssignLabelsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/permissions/assignlabels";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RevokeLabels revokes labels from a given permission group
+  rpc RevokeLabels(RevokeLabelsRequest) returns (RevokeLabelsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/permissions/revokelabels";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
+        }
+      ];
+    };
+  }
+
   // AssignAccountOwnerPermissionToUser returns a user a permission group.
   rpc AssignAccountOwnerPermissionToUser(AssignAccountOwnerPermissionToUserRequest) returns (AssignAccountOwnerPermissionToUserResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/permissions/group/assignAccountOwner";

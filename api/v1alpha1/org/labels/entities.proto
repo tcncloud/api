@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.labels;
+
+import "api/commons/labels.proto";
+import "api/commons/org/labels.proto";
+import "google/protobuf/field_mask.proto";
+
+// Request message for the CreateLabel rpc.
+message CreateLabelRequest {
+  // The label object that will be created
+  api.commons.org.Label label = 1;
+}
+
+// Response message for the CreateLabel rpc.
+message CreateLabelResponse {
+  // The ID of the created label
+  string label_id = 1;
+}
+
+// Request message for the UpdateLabel rpc.
+message UpdateLabelRequest {
+  // The label object that will be updated
+  api.commons.org.Label label = 1;
+  // The field to be updated
+  google.protobuf.FieldMask field_mask = 3;
+}
+
+// Response message for the UpdateLabel rpc.
+message UpdateLabelResponse {
+  // The updated resource
+  api.commons.org.Label label = 1;
+}
+
+// Request message for the GetLabel rpc.
+message GetLabelRequest {
+  // The label id to get the label
+  string label_id = 1;
+}
+
+// Response message for the GetLabel rpc.
+message GetLabelResponse {
+  // The label that was requested
+  api.commons.org.Label label = 1;
+}
+
+// Request message for the ListLabels rpc.
+message ListLabelsRequest {}
+
+// Response message for the ListLabels rpc.
+message ListLabelsResponse {
+  // The labels for the users organization
+  repeated api.commons.org.Label label = 1;
+}
+
+// Request message for the DeleteLabel rpc.
+message DeleteLabelRequest {
+  // The label id to delete the label
+  string label_id = 1;
+}
+
+// Response message for the DeleteLabel rpc.
+message DeleteLabelResponse {}
+
+// Request message for the AttachLabel rpc.
+message AttachLabelRequest {
+  // The label id to delete the label
+  string label_id = 1;
+  // The ID of the entity that is being labeled
+  string entity_id = 2;
+  // The given entity type to attach the label to
+  api.commons.LabeledEntity entity_type = 3;
+}
+
+// Response message for the AttachLabel rpc.
+message AttachLabelResponse {}
+
+// Request message for the GetLabeledEntityMapRequest rpc.
+message GetLabeledEntityMapRequest {
+  // The entity type to get back
+  api.commons.LabeledEntity entity_type = 1;
+}
+
+// Response message for the GetLabeledEntityMapResponse rpc.
+message GetLabeledEntityMapResponse {
+  // The map of entity ID to its attached labels
+  map<string, EntityLabels> entity_map = 1;
+
+  message EntityLabels {
+    // Attached labels of a given entity
+    repeated api.commons.org.Label labels = 1;
+  }
+}
