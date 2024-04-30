@@ -11,3 +11,11 @@ enum EntityType {
   ENTITY_TYPE_USER = 1;
   ENTITY_TYPE_LMS_PIPELINE = 2;
 }
+
+// LabeledEntity is an enum that represents the different types of entities that can be labeled.
+enum LabeledEntity {
+  // LABELED_ENTITY_UNSPECIFIED is an unspecified entity type.
+  LABELED_ENTITY_UNSPECIFIED = 0;
+  // LABELED_ENTITY_SKILL_GROUP is a skill group entity type.
+  LABELED_ENTITY_SKILL_GROUP = 1;
+}

@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.labels;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/labels/entities.proto";
+import "google/api/annotations.proto";
+
+service LabelsService {
+  // CreateLabel creates a new label.
+  rpc CreateLabel(CreateLabelRequest) returns (CreateLabelResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/createlabel";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LABEL_MANAGEMENT]
+        }
+      ];
+    };
+  }
+  // GetLabel gets a single label
+  rpc GetLabel(GetLabelRequest) returns (GetLabelResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/getlabel";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+  // UpdateLabel updates a single label
+  rpc UpdateLabel(UpdateLabelRequest) returns (UpdateLabelResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/updatelabel";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LABEL_MANAGEMENT]
+        }
+      ];
+    };
+  }
+  // ListLabels lists all labels for a given organization
+  rpc ListLabels(ListLabelsRequest) returns (ListLabelsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/listlabels";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+  //   DeleteLabel deletes a single label
+  rpc DeleteLabel(DeleteLabelRequest) returns (DeleteLabelResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/deletelabel";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LABEL_MANAGEMENT]
+        }
+      ];
+    };
+  }
+  // AttachLabel attaches a label to a given entity type
+  rpc AttachLabel(AttachLabelRequest) returns (AttachLabelResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/attachlabel";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LABEL_ATTACH]
+        }
+      ];
+    };
+  }
+  // GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
+  rpc GetLabeledEntityMap(GetLabeledEntityMapRequest) returns (GetLabeledEntityMapResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/labels/getlabeledentitymap";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+}
