@@ -269,6 +269,9 @@ message Call {
 
     // The offset time duration from the beginning of the conversation.
     google.protobuf.Duration offset = 2;
+
+    // The duration of the segment.
+    google.protobuf.Duration duration = 3;
   }
 
   // The talk over stats for the call.
@@ -1102,4 +1105,18 @@ message SpanFuzzy {
     // Constant fuzziness with allowed range from 0, 1 and 2.
     uint32 fuzziness_value = 11;
   }
+}
+
+// [BULK_DELETE] ===============================================================
+
+// BulkDeleteTranscriptsRequest defines the bulk delete transcripts request.
+message BulkDeleteTranscriptsRequest {
+  // Required. A query which determines which transcripts to delete.
+  TranscriptQuery query = 1;
+}
+
+// BulkDeleteTranscriptsResponse defines the bulk delete transcripts response.
+message BulkDeleteTranscriptsResponse {
+  // The number of transcripts deleted.
+  uint32 total = 1;
 }

@@ -622,4 +622,17 @@ service Scorecards {
       ];
     };
   }
+
+  // RestoreEvaluation restores an evaluation previously deleted.
+  rpc RestoreEvaluation(RestoreEvaluationRequest) returns (RestoreEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/restoreevaluation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ];
+    };
+  }
 }

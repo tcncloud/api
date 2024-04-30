@@ -10,6 +10,8 @@ import "wfo/vanalytics/v2/flag_transcript_filter.proto";
 import "wfo/vanalytics/v2/transcript.proto";
 
 service Vanalytics {
+  // [TRANSCRIPT] ==============================================================
+
   // SearchTranscripts searches transcripts by search criteria. The search response
   // contains one page of transcript hits. Traversing the paginated hits is
   // achieved by making use of the given page token.
@@ -20,6 +22,19 @@ service Vanalytics {
       sets: [
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
+  rpc BulkDeleteTranscripts(BulkDeleteTranscriptsRequest) returns (BulkDeleteTranscriptsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/bulkdeletetranscripts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
         }
       ];
     };

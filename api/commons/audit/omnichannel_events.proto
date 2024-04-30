@@ -241,6 +241,8 @@ message OmnichannelTranscriptSavedEvent {
   int64 conversation_sid = 1;
   // the transcript path of the conversation
   string transcript_path = 2;
+  // the conversation of the transcript being saved.
+  api.commons.OmniConversation conversation = 3;
 }
 
 // OmnichannelUpdateCampaignEvent - whenever a campaign is update

@@ -73,6 +73,7 @@ message ListEvaluationsRequest {
   //   ]
   // }
   google.protobuf.FieldMask return_fields = 10;
+  bool is_deleted = 11; // Optional. If true, will only show deleted evaluations.
 }
 
 // ListEvaluationsResponse returns a list of evaluations
@@ -117,4 +118,15 @@ message ListEvaluationsByOrgIdRequest {
 message DeleteEvaluationByOrgIdRequest {
   string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
   int64 evaluation_id = 2; // Required - unique id of evaluation to get
+}
+
+// RestoreEvaluationRequest is request to restore a deleted evaluation
+message RestoreEvaluationRequest {
+  int64 evaluation_id = 2; // Required - unique id of evaluation to restore
+  string user_id = 3; // tcn user id of person performing request
+}
+
+// RestoreEvaluationReponse contains the restored evaluation
+message RestoreEvaluationResponse {
+  api.commons.Evaluation evaluation = 1; // restored evaluation
 }
