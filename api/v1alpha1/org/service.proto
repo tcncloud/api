@@ -2087,8 +2087,23 @@ service Org {
   // Hunt Group Scripts
 
   // ListHuntGroupScripts lists all hunt group scripts for the current organization.
+  // DEPRECATED. Use ListOrgHuntGroupScripts instead
   rpc ListHuntGroupScripts(ListHuntGroupScriptsRequest) returns (ListHuntGroupScriptsResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listhuntgroupscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW],
+        }
+      ];
+    };
+  }
+
+  // ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
+  rpc ListOrgHuntGroupScripts(ListHuntGroupScriptsRequest) returns (stream ListHuntGroupScriptsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listorghuntgroupscript";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
