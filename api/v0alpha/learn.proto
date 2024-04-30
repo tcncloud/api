@@ -245,6 +245,13 @@ service Learn {
       ];
     };
   }
+
+  // exports multiple pages of the learning center markdown as PDF file stream
+  rpc ExportManyStream(ExportManyReq) returns (stream ExportRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/exportmanystream";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
 
 // request to check if learning page url exists
