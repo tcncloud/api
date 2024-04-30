@@ -805,7 +805,10 @@ service OmniApi {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_OMNI_BOSS]
+          permissions: [
+            PERMISSION_OMNI_BOSS,
+            PERMISSION_MANUAL_CONVERSATION
+          ]
         }
       ];
     };
