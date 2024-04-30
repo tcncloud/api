@@ -47,6 +47,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_NAVIGA = 4000;
   INTEGRATION_TYPE_PAYNSECONDS = 4100;
   INTEGRATION_TYPE_SUTHERLANDREV = 4200;
+
+  INTEGRATION_TYPE_DEBUG = 5000;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -308,6 +310,13 @@ enum RequestMethod {
   REQUEST_METHOD_PAYNSECONDS_TOKENIZE_CARD = 4101;
 
   REQUEST_METHOD_SUTHERLANDREV_PAYMENT_CONNECT = 4201;
+
+  // just evaluates the request and sends back the data
+  // this is useful for CompositeValue types, or when we are wanting to see
+  // what a request would look like if it were to be called on a different method
+  REQUEST_METHOD_DEBUG_ECHO = 5001;
+  // this method takes a method id to another method and ensures the params are correct
+  REQUESET_METHOD_DEBUG_VALIDATE = 5002;
 }
 
 enum TransactionType {
