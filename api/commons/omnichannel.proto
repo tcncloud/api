@@ -429,6 +429,8 @@ message OmniMessage {
   api.commons.OmniSenderType sender_type = 21;
   // status message
   google.protobuf.StringValue status_message = 22;
+  // the message format
+  MessageFormat message_format = 23;
 }
 
 message CustomerChatWidgetMessage {
