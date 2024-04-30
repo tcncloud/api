@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package services.omnichannel.asm.v1alpha1;
 
+import "api/commons/event.proto";
 import "services/omnichannel/asm/entities/v1alpha1/session.proto";
 
 message CreateSessionRequest {}
@@ -58,3 +59,10 @@ message ListAsmUserDetailsResponse {
 
   repeated services.omnichannel.asm.entities.v1alpha1.AsmUserDetails asm_user_details = 2;
 }
+
+message PushEventsRequest {
+  int64 ams_session_sid = 1;
+  repeated api.commons.AsmEvent asm_events = 2;
+}
+
+message PushEventResponse {}

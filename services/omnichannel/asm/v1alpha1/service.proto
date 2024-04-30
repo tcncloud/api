@@ -83,4 +83,17 @@ service AsmService {
       ];
     };
   }
+
+  // puah events push a list of events
+  rpc PushEvents(PushEventsRequest) returns (PushEventResponse) {
+    option (google.api.http).post = "/services/omnichannel/asm/v1alpha1/pushevents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
 }
