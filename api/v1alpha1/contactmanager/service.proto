@@ -80,4 +80,19 @@ service ContactManager {
       ];
     };
   }
+
+  /**
+     Edits the fields of an existing contact entry...
+  */
+  rpc EditContactEntry(EditContactEntryRequest) returns (EditContactEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/editcontactentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ];
+    };
+  }
 }
