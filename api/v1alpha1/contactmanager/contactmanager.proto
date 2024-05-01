@@ -102,3 +102,18 @@ message AddContactEntryResponse {
   // contact_manager_entry_list_id
   int64 contact_id = 1 [jstype = JS_STRING];
 }
+
+message EditContactEntryRequest {
+  int64 contact_manager_list_id = 1;
+  int64 contact_manager_entry_id = 2;
+  repeated EditedEntry edited_entry = 3;
+}
+
+message EditedEntry {
+  int64 contact_manager_entry_list_id = 1;
+  string name = 2;
+  string value = 3; // The new value to be updated
+  string type = 4;
+}
+
+message EditContactEntryResponse {}
