@@ -24,6 +24,7 @@ enum DayFilterType {
 
 // ReportFormat is an enum for the format of the report.
 enum ReportFormat {
+  option deprecated = true;
   REPORT_FORMAT_UNSPECIFIED = 0;
   REPORT_FORMAT_CSV = 1;
 }
@@ -109,6 +110,7 @@ message DayFilter {
 
 // FormatOptions is a message for the format options of a report.
 message FormatOptions {
+  option deprecated = true;
   // report_format is the format of the report.
   ReportFormat report_format = 1;
   // filename_parts are the parts to build the filename.
@@ -122,4 +124,33 @@ message DeliveryOptions {
   int64 transfer_config_sid = 1;
   // failure_notification_emails are the emails to notify on failure.
   repeated string failure_notification_emails = 2 [deprecated = true];
+}
+
+// FilenamePartType is an enum for the type of filename part.
+enum FilenamePartType {
+  FILENAME_PART_TYPE_UNSPECIFIED = 0;
+  FILENAME_PART_TYPE_DASHBOARD_NAME = 1;
+  FILENAME_PART_TYPE_JOB_NAME = 2;
+  FILENAME_PART_TYPE_INSIGHT_NAME = 3;
+  FILENAME_PART_TYPE_DATE_TIME_FILTER_TEXT = 4;
+  FILENAME_PART_TYPE_START_DATE_TIME = 5;
+  FILENAME_PART_TYPE_END_DATE_TIME = 6;
+  FILENAME_PART_TYPE_REPORT_DATE_TIME = 7;
+  FILENAME_PART_TYPE_STATIC_TEXT = 8;
+}
+
+// FilenamePart is a message for a part of the filename.
+message FilenamePart {
+  // type is the type of the filename part.
+  FilenamePartType type = 1;
+  // static_text is the static text for the filename part.
+  string static_text = 2;
+}
+
+// TransferOptions is a message for the transfer options of a report.
+message TransferOptions {
+  // transfer_config_sid is the delivery definition used to deliver reports.
+  string transfer_config_sid = 1;
+  // filename_parts are the parts to build the filename.
+  repeated FilenamePart filename_parts = 2;
 }
