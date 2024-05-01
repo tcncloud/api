@@ -264,6 +264,9 @@ service OmniApi {
         },
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_MANUAL_CONVERSATION]
         }
       ];
     };
@@ -805,10 +808,10 @@ service OmniApi {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_OMNI_BOSS,
-            PERMISSION_MANUAL_CONVERSATION
-          ]
+          permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_MANUAL_CONVERSATION]
         }
       ];
     };
