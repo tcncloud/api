@@ -28,7 +28,7 @@ message ReportJob {
   // months filter to report on
   repeated commons.Month months = 9 [deprecated = true];
   // format options for the report
-  commons.FormatOptions format_options = 10;
+  commons.FormatOptions format_options = 10 [deprecated = true];
   // delivery options for the report
   commons.DeliveryOptions delivery_options = 11 [deprecated = true];
   // whether the report job is active
@@ -41,8 +41,10 @@ message ReportJob {
   commons.TimeZoneWrapper time_zone_wrapper = 15;
   // hide csv footer
   bool hide_csv_footer = 16;
-  // transfer_config_sid to use for the report schedule
-  int64 transfer_config_sid = 17;
+  // transfer_config_sid to use for the report delivery
+  int64 transfer_config_sid = 17 [deprecated = true];
   // cron expression for the report schedule
   commons.CronExpression cron_expression = 18;
+  // transfer_options are options used for the report delivery
+  commons.TransferOptions transfer_options = 19;
 }
