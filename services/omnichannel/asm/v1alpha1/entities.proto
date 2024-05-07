@@ -61,8 +61,9 @@ message ListAsmUserDetailsResponse {
 }
 
 message PushEventsRequest {
-  int64 ams_session_sid = 1;
+  int64 ams_session_sid = 1 [deprecated = true];
   repeated api.commons.AsmEvent asm_events = 2;
+  int64 asm_session_sid = 3;
 }
 
 message PushEventResponse {}
