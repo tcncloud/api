@@ -6,7 +6,7 @@ import "annotations/perms/license.proto";
 import "api/commons/auth/perms.proto";
 import "api/commons/perms.proto";
 
-// PermiissionGroup defines the permission group entity.
+// PermissionGroup defines the permission group entity.
 message PermissionGroup {
   // Unique id for this permission group.
   string permission_group_id = 1;
@@ -20,6 +20,8 @@ message PermissionGroup {
   repeated api.commons.auth.Permission permissions = 5;
   // Restricts users from modifying this group.
   bool read_only = 6;
+  // A list of label ids that are assigned to this group.
+  repeated string label_ids = 7;
 }
 
 // P3PermissionGroup entity.

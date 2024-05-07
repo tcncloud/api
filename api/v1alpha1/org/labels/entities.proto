@@ -64,7 +64,7 @@ message DeleteLabelResponse {}
 
 // Request message for the AttachLabel rpc.
 message AttachLabelRequest {
-  // The label id to delete the label
+  // The label id to attach to the entity
   string label_id = 1;
   // The ID of the entity that is being labeled
   string entity_id = 2;
@@ -74,6 +74,19 @@ message AttachLabelRequest {
 
 // Response message for the AttachLabel rpc.
 message AttachLabelResponse {}
+
+// Request message for the DetachLabel rpc.
+message DetachLabelRequest {
+  // The label id to detach from the entity
+  string label_id = 1;
+  // The ID of the entity that will have the label detached
+  string entity_id = 2;
+  // The entity type to detach the label from
+  api.commons.LabeledEntity entity_type = 3;
+}
+
+// Response message for the DetachLabel rpc.
+message DetachLabelResponse {}
 
 // Request message for the GetLabeledEntityMapRequest rpc.
 message GetLabeledEntityMapRequest {
