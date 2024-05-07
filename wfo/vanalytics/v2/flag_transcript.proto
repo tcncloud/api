@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package wfo.vanalytics.v2;
+
+import "wfo/vanalytics/v2/flag.proto";
+import "wfo/vanalytics/v2/transcript.proto";
+
+// [CREATE] ====================================================================
+
+// CreateFlagTranscriptRequest is a request for creating a flag transcript.
+message CreateFlagTranscriptRequest {
+  // Required. The transcript sids to be flagged.
+  repeated int64 transcript_sids = 1;
+
+  // Required. The flag for flagging the transcripts.
+  Flag flag = 2;
+}
+
+// CreateFlagTranscriptResponse is a response for creating a flag transcript.
+message CreateFlagTranscriptResponse {}

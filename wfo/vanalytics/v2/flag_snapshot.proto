@@ -101,6 +101,9 @@ message FlagSnapshot {
     // Optional. Boolean or operator.
     repeated BoolExpr or = 2;
 
+    // Optional. Filter to match.
+    Filter filter = 3;
+
     // Optional. Boolean not operator.
     BoolExpr not = 4;
 
