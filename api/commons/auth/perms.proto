@@ -302,6 +302,11 @@ enum Permission {
   // allows user to edit insights for dashboards
   // deprecated
   PERMISSION_INSIGHTS_DASHBOARD_EDIT = 608 [deprecated = true];
+  // Enables write access to automated reports
+  PERMISSION_REPORT_GENERATOR_EDIT = 609 [(annotations.perms.options) = {
+    app: APPLICATION_BUSINESS_INTELLIGENCE
+    features: ["Report Generator"]
+  }];
 
   /*
    * Room 303 messenger
