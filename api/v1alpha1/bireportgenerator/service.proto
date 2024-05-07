@@ -6,6 +6,7 @@ import "annotations/authz.proto";
 import "api/v1alpha1/bireportgenerator/entities.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 // BIReportGeneratorService is the service for generating BI reports.
 service BIReportGeneratorService {
@@ -16,7 +17,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -28,7 +29,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -40,7 +41,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -52,7 +53,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -64,7 +65,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -75,7 +76,7 @@ service BIReportGeneratorService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_DASHBOARDS_VIEW]
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
       ];
     };
@@ -143,6 +144,8 @@ message GetReportJobResponse {
 message GenerateReportRequest {
   // The report job to generate the report for.
   ReportJob report_job = 1;
+  // When to send the report as
+  google.protobuf.Timestamp send_as_of_date = 2;
 }
 
 // GenerateReportResponse is the response for generating a report.
