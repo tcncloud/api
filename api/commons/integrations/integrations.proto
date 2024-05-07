@@ -925,6 +925,9 @@ message ExecuteFlow {
     ExecutePaynsecondsTokenizeCard paynseconds_tokenize_card = 4101;
 
     ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
+
+    ExecuteDebugEcho debug_echo = 5001;
+    ExecuteDebugValidate debug_validate = 5002;
   }
 }
 
@@ -1253,3 +1256,6 @@ message ExecuteNavigaChangeBilling {}
 message ExecutePaynsecondsTokenizeCard {}
 
 message ExecuteSutherlandrevPaymentConnect {}
+
+message ExecuteDebugEcho {}
+message ExecuteDebugValidate {}
