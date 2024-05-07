@@ -4,12 +4,63 @@ package wfo.vanalytics.v2;
 
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "wfo/vanalytics/v2/correction.proto";
 import "wfo/vanalytics/v2/filter.proto";
+import "wfo/vanalytics/v2/flag.proto";
 import "wfo/vanalytics/v2/flag_filter.proto";
+import "wfo/vanalytics/v2/flag_review.proto";
+import "wfo/vanalytics/v2/flag_snapshot.proto";
+import "wfo/vanalytics/v2/flag_transcript.proto";
 import "wfo/vanalytics/v2/flag_transcript_filter.proto";
 import "wfo/vanalytics/v2/transcript.proto";
+import "wfo/vanalytics/v2/transcript_summary.proto";
 
 service Vanalytics {
+  // Audit audits the used transcription audio time for a client. The window
+  // of time to audit can be widened or narrowed using the request since and
+  // until fields.
+  rpc Audit(AuditRequest) returns (AuditResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/vanalytics/audit";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // GetRecordingUrl gets a signed url to download a transcript recording.
+  rpc GetRecordingUrl(GetRecordingUrlRequest) returns (GetRecordingUrlResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/getrecordingurl";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
+        }
+      ];
+    };
+  }
+
+  // ListBillingSpan lists billing spans.
+  rpc ListBillingSpan(ListBillingSpanRequest) returns (ListBillingSpanResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listbillingspan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
   // [TRANSCRIPT] ==============================================================
 
   // SearchTranscripts searches transcripts by search criteria. The search response
@@ -35,6 +86,60 @@ service Vanalytics {
       sets: [
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
+        }
+      ];
+    };
+  }
+
+  // BulkRestoreTranscripts bulk restores transcripts matching the provided query.
+  rpc BulkRestoreTranscripts(BulkRestoreTranscriptsRequest) returns (BulkRestoreTranscriptsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/bulkrestoretranscripts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
+        }
+      ];
+    };
+  }
+
+  // ListTranscriptGroupNames lists transcript group names.
+  rpc ListTranscriptGroupNames(ListTranscriptGroupNamesRequest) returns (ListTranscriptGroupNamesResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listtranscriptgroupnames";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListAgentResponseValues lists transcript agent response values.
+  rpc ListAgentResponseValues(ListAgentResponseValuesRequest) returns (ListAgentResponseValuesResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listagentresponsevalues";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [TRANSCRIPT_SUMMARY] ======================================================
+
+  // GetTranscriptSummary gets a transcript summary for a provided transcript.
+  rpc GetTranscriptSummary(GetTranscriptSummaryRequest) returns (GetTranscriptSummaryResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/gettranscriptsummary";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ];
     };
@@ -137,4 +242,270 @@ service Vanalytics {
       ];
     };
   }
+
+  // [FLAG] ====================================================================
+
+  // GetFlag gets a flag.
+  rpc GetFlag(GetFlagRequest) returns (Flag) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/getflag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // CreateFlag creates a new flag.
+  rpc CreateFlag(CreateFlagRequest) returns (Flag) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/createflag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListFlags lists flags in an organization.
+  rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listflags";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // UpdateFlag updates a flag.
+  rpc UpdateFlag(UpdateFlagRequest) returns (Flag) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/updateflag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // DeleteFlag deletes the flag identified by the given flag_sid.
+  rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/deleteflag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FLAG_REVIEW] =============================================================
+
+  // CreateFlagReview creates a flag review.
+  rpc CreateFlagReview(CreateFlagReviewRequest) returns (FlagReview) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/createflagreview";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // BulkCreateFlagReview creates flag reviews.
+  rpc BulkCreateFlagReview(BulkCreateFlagReviewRequest) returns (BulkCreateFlagReviewResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/bulkcreateflagreview";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListFlagReviews lists reviews in an organization.
+  rpc ListFlagReviews(ListFlagReviewsRequest) returns (ListFlagReviewsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listflagreviews";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FLAG_TRANSCRIPT] =========================================================
+
+  // CreateFlagTranscript creates a flag transcript.
+  rpc CreateFlagTranscript(CreateFlagTranscriptRequest) returns (CreateFlagTranscriptResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/createflagtranscript";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [FLAG_SNAPSHOT] ===========================================================
+
+  // ListFlagSnapshots lists flag snapshots in an organization.
+  rpc ListFlagSnapshots(ListFlagSnapshotsRequest) returns (ListFlagSnapshotsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listflagsnapshots";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // [CORRECTION] =========================================================
+
+  // CreateCorrection creates a correction.
+  rpc CreateCorrection(CreateCorrectionRequest) returns (CreateCorrectionResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/createcorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // GetCorrection gets a correction.
+  rpc GetCorrection(GetCorrectionRequest) returns (Correction) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/getcorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // DeleteCorrection deletes a correction.
+  rpc DeleteCorrection(DeleteCorrectionRequest) returns (DeleteCorrectionResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/deletecorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // ListCorrections lists corrections.
+  rpc ListCorrections(ListCorrectionsRequest) returns (ListCorrectionsResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/listcorrections";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+
+  // UpdateCorrection updates a correction.
+  rpc UpdateCorrection(UpdateCorrectionRequest) returns (UpdateCorrectionResponse) {
+    option (google.api.http).post = "/wfo/vanalytics/v2/updatecorrection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ];
+    };
+  }
+}
+
+message AuditRequest {
+  google.protobuf.Timestamp since = 2;
+  google.protobuf.Timestamp until = 3;
+}
+
+message AuditResponse {
+  // audio time in seconds within billing period
+  double audio_time = 1;
+  // billed_audio time in seconds within billing period
+  double billed_audio_time = 2;
+  // last_usage is the date of the last transcription
+  // within the billing period
+  google.protobuf.Timestamp last_usage = 3;
+  // billed_transcripts is the number of billed transcripts
+  // within the billing period
+  int64 billed_transcripts = 4;
+}
+
+message GetRecordingUrlRequest {
+  int64 transcript_sid = 2;
+  // Optional. Defaults to "wav". Can be "", "wav" or "mp3".
+  string kind = 4;
+}
+
+message GetRecordingUrlResponse {
+  string url = 1;
+}
+
+message ListBillingSpanRequest {
+  // Optional. Page size is based on months from now. Defaults to 12.
+  uint32 page_size = 1;
+  // Optional. The next_page_token returned from a previous List request, if any.
+  // When provided all other request fields are ignored.
+  string page_token = 2;
+}
+
+message ListBillingSpanResponse {
+  // Token to retrieve the next page of billing spans, or empty if there are no
+  // more billing spans in the list.
+  string next_page_token = 1;
+  // List of billing spans which contains at most one request page_size.
+  repeated BillingSpan spans = 2;
+}
+
+message BillingSpan {
+  // Number of calls/transcripts in the billing period.
+  int64 calls = 1;
+  // Total hours in the billing period. Each call is rounded up to
+  // the next 15 seconds and the total for the month is rounded up to
+  // the next hour.
+  int64 hours = 2;
+  // Cost is the total cost for the billing period.
+  double cost = 3;
+  // Start time is the start time of the billing span. Transcripts in this span
+  // must have create_time >= start_time.
+  google.protobuf.Timestamp start_time = 4;
+  // End time is the end time of the billing span. Transcripts in this span must
+  // have a create_time < end_time.
+  google.protobuf.Timestamp end_time = 5;
 }

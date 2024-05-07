@@ -9,6 +9,7 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "wfo/vanalytics/v2/agent_call_log.proto";
+import "wfo/vanalytics/v2/transcript_summary.proto";
 
 // An enumeration of transcript communication channels.
 enum Channel {
@@ -51,6 +52,9 @@ message Transcript {
 
   // The unique identifier of the transcript.
   int64 transcript_sid = 17;
+
+  // The summary for the transcript.
+  TranscriptSummary summary = 18;
 }
 
 // FlagSummary defines a summary of flags which were applied to a transcript.
@@ -1119,4 +1123,48 @@ message BulkDeleteTranscriptsRequest {
 message BulkDeleteTranscriptsResponse {
   // The number of transcripts deleted.
   uint32 total = 1;
+}
+
+// [BULK_RESTORE] ===============================================================
+
+// BulkRestoreTranscriptsRequest defines the bulk restore transcripts request.
+message BulkRestoreTranscriptsRequest {
+  // Required. A query which determines which transcripts to restore.
+  TranscriptQuery query = 1;
+}
+
+// BulkRestoreTranscriptsResponse defines the bulk restore transcripts response.
+message BulkRestoreTranscriptsResponse {
+  // The number of transcripts restored.
+  uint32 total = 1;
+}
+
+// [LIST GROUP NAMES] ===========================================================
+
+// ListTranscriptGroupNamesRequest is a request for listing group names.
+message ListTranscriptGroupNamesRequest {}
+
+// ListTranscriptGroupNamesResponse is a response for listing group names.
+message ListTranscriptGroupNamesResponse {
+  // Group names are the transcript group names.
+  repeated TranscriptGroupName group_names = 1;
+}
+
+// TranscriptGroupName is the transcript group name.
+message TranscriptGroupName {
+  // value is a group name value.
+  string value = 1;
+}
+
+// [LIST AGENT RESPONSE VALUES] ===========================================================
+
+// ListAgentResponseValuesRequest is a request for listing agent reponse values.
+message ListAgentResponseValuesRequest {
+  string key = 2;
+}
+
+// ListAgentResponseValuesResponse is a response for listing agent response values.
+message ListAgentResponseValuesResponse {
+  // Values are the transcript agent response values.
+  repeated string values = 1;
 }
