@@ -18,4 +18,6 @@ enum LabeledEntity {
   LABELED_ENTITY_UNSPECIFIED = 0;
   // LABELED_ENTITY_SKILL_GROUP is a skill group entity type.
   LABELED_ENTITY_SKILL_GROUP = 1;
+  // LABELED_ENTITY_USER is a user entity type.
+  LABELED_ENTITY_USER = 2;
 }
