@@ -150,7 +150,7 @@ message FlagSummary {
 // Sms specific transcript metadata.
 message Sms {
   // The unique identifier of the sms conversation.
-  int64 conversation_sid = 1;
+  int64 conversation_sid = 1 [jstype = JS_STRING];
 
   // The text from the sms in threads.
   repeated Thread threads = 2;
@@ -850,7 +850,7 @@ message TranscriptQuery {
     message ConversationSid {
       // Requires all sms specific transcript hits to have a conversation sid
       // in the list.
-      repeated int64 any = 1;
+      repeated int64 any = 1 [jstype = JS_STRING];
     }
   }
 
