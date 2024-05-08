@@ -15,13 +15,24 @@ service ClassifierFileTemplates {
 message ParseFileRequest {
   message ReParseFile {
     int64 file_template_id = 1;
-    ParseHints hints = 2;
+    ParseHints hints = 2 [deprecated = true];
+    Opts opts = 3;
+  }
+  message ParseWithHints {
+    // the raw file, no more than 2mb
+    bytes raw_data = 7;
+    Opts opts = 8;
   }
   oneof opt {
     // the raw file, no more than 2mb
+    // use raw_data if file is simple.
+    // a header immediately followed by data
     bytes raw_data = 3;
     // reparse the file that exists for this template with new hints
     ReParseFile reparse_file = 4;
+    // parse with hints if file is not
+    // a header immediately followed by data
+    ParseWithHints parse_with_hints = 6;
   }
   string name = 5;
 }
