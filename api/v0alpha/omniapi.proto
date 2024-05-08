@@ -267,6 +267,9 @@ service OmniApi {
         },
         {
           permissions: [PERMISSION_MANUAL_CONVERSATION]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
@@ -866,6 +869,9 @@ service OmniApi {
       sets: [
         {
           permissions: [PERMISSION_OMNI_BOSS]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
@@ -1135,6 +1141,9 @@ service OmniApi {
       sets: [
         {
           permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_TICKETS_APP]
         }
       ];
     };
