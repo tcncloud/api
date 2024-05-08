@@ -619,6 +619,8 @@ message AgentState {
   int64 asm_session_sid = 18;
   // indicates if the agent is muted or not
   bool agent_is_muted = 19;
+  // uuid for the agent state
+  string uuid = 20;
 }
 
 // enum used to represent a dtmf tone
