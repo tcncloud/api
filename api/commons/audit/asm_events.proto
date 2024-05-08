@@ -4,6 +4,7 @@ package api.commons.audit;
 
 import "api/commons/asm.proto";
 import "api/commons/omnichannel.proto";
+import "google/protobuf/timestamp.proto";
 
 ///
 /// This file contains events from Class 400
@@ -66,6 +67,8 @@ message AsmAgentStateChangedEvent {
   api.commons.StatusState new_status = 3;
   // the agent's old status
   api.commons.StatusState old_status = 4;
+  // duration of old status in milliseconds
+  int64 old_status_duration_milliseconds = 5;
 }
 
 // AsmAgentLogoutEvent - whenever an agent logs out of asm
