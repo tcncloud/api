@@ -8,11 +8,6 @@ message ClassifierEntityTypes {
   repeated api.commons.ClassifierEntityType types = 1;
 }
 
-message ParseHints {
-  ParseOpts parse_opts = 1;
-  Constraints constraints = 2;
-}
-
 message FileTemplate {
   message Field {
     string syntax_type = 1;
@@ -25,9 +20,20 @@ message FileTemplate {
   int64 file_template_id = 1;
   string filename = 2;
   repeated Field fields = 3;
-  ParseOpts parse_opts = 4;
-  Constraints constraints = 5;
+  ParseOpts parse_opts = 4 [deprecated = true];
+  Constraints constraints = 5 [deprecated = true];
   int64 foid = 6;
+  Opts opts = 7;
+}
+
+message Opts {
+  // map from field name to date format
+  // e.g: "dob": yyyy/mm/dd
+  map<string, string> date_formats = 1;
+  // keys are old field names, values are new field names
+  map<string, string> rename_fields = 2;
+  ParseOpts parse_opts = 3;
+  Constraints constraints = 4;
 }
 
 // details on how the data should be
@@ -66,6 +72,7 @@ message OptsFixed {
   }
   // field opts keyed by field name
   map<string, FieldOpts> positions = 1;
+  bool has_header = 2;
 }
 message OptsParquet {}
 
@@ -74,4 +81,9 @@ message OptsParquet {}
 message Constraints {
   map<string, ClassifierEntityTypes> forbid = 1;
   map<string, ClassifierEntityTypes> allow = 2;
+}
+
+message ParseHints {
+  ParseOpts parse_opts = 1;
+  Constraints constraints = 2;
 }
