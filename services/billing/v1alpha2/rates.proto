@@ -27,6 +27,7 @@ message CreateDefaultRateDefinitionsResponse {
 message CreateRateDefinitionRequest {
   string rate_definition_id = 1;
   services.billing.entities.v1alpha2.RateDefinition rate_definition = 2;
+  string default_rate_definition_id = 3;
 }
 
 message CreateRateDefinitionResponse {
