@@ -2167,6 +2167,7 @@ service WFM {
   // The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
   // @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
   // Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
+  // If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
   rpc BuildDraftSchedule(BuildDraftScheduleReq) returns (BuildDraftScheduleRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/builddraftschedule";
     option (google.api.http).body = "*";
@@ -5975,6 +5976,9 @@ message BuildDraftScheduleReq {
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
   bool include_activity = 9;
+  // Set to true to automatically generate agents to meet the requirements of the shift templates min and max agents.
+  // Otherwise, no agents will be generated to meet these requirements.
+  bool auto_generate_agents = 10;
 }
 
 // Response message for the BuildDraftSchedule RPC
