@@ -272,6 +272,8 @@ message HuntGroupDetails {
   repeated TriggerDetails trigger_details = 4;
   // A list of hunt group integration link details.
   repeated IntegrationLinkDetails integration_link_details = 5;
+  // The assigned script details.
+  ScriptDetails script_details = 6;
 
   // GeneralDetails is the entity for hunt group general details.
   message GeneralDetails {
@@ -329,6 +331,22 @@ message HuntGroupDetails {
     string name = 1;
     // The hunt group integration link description.
     string description = 2;
+  }
+
+  // ScriptDetails is the entity to describe the features of a script assigned to the hunt group.
+  message ScriptDetails {
+    // The sid of the script assigned to the hunt group.
+    int64 script_sid = 1;
+    // The name of the script.
+    string name = 2;
+    // The desciption of the script.
+    string description = 3;
+    // The number of acts that the script contains.
+    int64 act_count = 4;
+    // The number of dispositions that the script contains.
+    int64 disposition_count = 5;
+    // The number of verbiages that the script contains.
+    int64 verbiage_count = 6;
   }
 }
 
