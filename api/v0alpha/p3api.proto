@@ -1000,14 +1000,24 @@ message GetAgentHuntGroupReq {
   int64 hunt_group_sid = 1;
 }
 
+// HuntGroup describes a hunt group in an organization.
 message HuntGroup {
+  // The sid of the hunt group.
   int64 hunt_group_sid = 1;
+  // The client sid of the hunt group.
   int64 client_sid = 2;
+  // The name of the hunt group.
   string name = 3;
+  // The description of the hunt group.
   google.protobuf.StringValue description = 4;
+  // The last time the hunt group was modified.
   google.protobuf.Timestamp modify_date = 5;
+  // The type of hunt group, connected or softphone.
   api.commons.HuntGroupType.Enum type = 6;
+  // The number of agents in the hunt group.
   int64 agent_count = 7;
+  // The number of agents that have this hunt group's skill.
+  int64 hunt_group_skill_agent_count = 8;
 }
 
 message GetAgentSkillsReq {
