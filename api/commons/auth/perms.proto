@@ -122,7 +122,6 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_HUNT_GROUPS
     features: [
-      "Group Scripts",
       "Pause Options",
       "Web Link Templates",
       "Group Extensions",
@@ -134,6 +133,22 @@ enum Permission {
   PERMISSION_HUNTGROUP_EDIT = 1901 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_HUNT_GROUPS
+  }];
+
+  // Enables access to get agent scripts properties and settings.
+  PERMISSION_AGENT_SCRIPTS_VIEW = 1950 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_AGENT_SCRIPTS
+    features: [
+      "Hunt Group Scripts",
+      "Campaign Scripts"
+    ]
+  }];
+
+  // Enables access to update agent scripts properties and settings.
+  PERMISSION_AGENT_SCRIPTS_EDIT = 1951 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_AGENT_SCRIPTS
   }];
 
   // Enables access to get and list soundboard files.
@@ -223,6 +238,11 @@ enum Permission {
   }];
   // Enables agents to create manual conversations
   PERMISSION_MANUAL_CONVERSATION = 344 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Enables Agents to change their own hunt group
+  PERMISSION_CHANGE_OWN_HUNT_GROUP = 360 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Enables Agents to change their own skill groups
+  PERMISSION_CHANGE_OWN_SKILL_GROUPS = 361 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+
   /*
    * Voice Analytics
    */
