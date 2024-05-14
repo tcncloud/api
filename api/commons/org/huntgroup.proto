@@ -1350,6 +1350,20 @@ message SimpleCompareExpression {
   string compare_value = 4;
 }
 
+// ResponseEvalutor manages regex
+message ResponseEvaluator {
+  // ID of the response evaluator.
+  string response_evaluator_id = 1;
+  // Org ID the response evaluator is associated with.
+  string org_id = 2;
+  // Name of the evaluator.
+  string name = 3;
+  // The evaluator description, optional.
+  string description = 4;
+  // Regex pattern.
+  string regular_expression = 5;
+}
+
 // ScriptCategory differentiates between Hunt Group and Campaign scripts
 enum ScriptCategory {
   // Not specified

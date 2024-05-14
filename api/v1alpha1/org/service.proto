@@ -2988,4 +2988,64 @@ service Org {
       ];
     };
   }
+
+  rpc ListResponseEvaluators(ListResponseEvaluatorsRequest) returns (ListResponseEvaluatorsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/listresponseevaluators";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  rpc GetResponseEvaluator(GetResponseEvaluatorRequest) returns (GetResponseEvaluatorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/getresponseevaluator";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  rpc CreateResponseEvaluator(CreateResponseEvaluatorRequest) returns (CreateResponseEvaluatorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/createresponseevaluator";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  rpc UpdateResponseEvaluator(UpdateResponseEvaluatorRequest) returns (UpdateResponseEvaluatorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/updateresponseevaluator";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  rpc DeleteResponseEvaluator(DeleteResponseEvaluatorRequest) returns (DeleteResponseEvaluatorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/deleteresponseevaluator";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
 }
