@@ -850,6 +850,7 @@ enum OmniTaskStatus {
   OMNI_TASK_SENDING_INCOMPLETE = 111; // the task began the process of sending but did not complete
   OMNI_TASK_SENT = 120; // the task successfully sent
   OMNI_TASK_RECEIVED = 130; // the task was received by the destination
+  OMNI_TASK_CANCELLED = 140; // the task was cancelled
 }
 
 // OmniCustomUnsubscribeLink -

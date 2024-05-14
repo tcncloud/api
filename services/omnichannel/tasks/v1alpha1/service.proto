@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package services.omnichannel.tasks.v1alpha1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/omnichannel/tasks/v1alpha1/entities.proto";
+
+service TasksService {
+  rpc CancelTasks(CancelTasksRequest) returns (CancelTasksResponse) {
+    option (google.api.http).post = "/services/omnichannel/tasks/v1alpha1/canceltasks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ],
+    };
+  }
+}
