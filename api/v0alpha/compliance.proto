@@ -150,7 +150,7 @@ service Compliance {
   // The method will return a ScrubListRes message that will
   // contain the results.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE or PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS
   rpc AddScrubListEntries(AddScrubListEntriesReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/addscrublistentries";
     option (google.api.http).body = "*";
@@ -169,7 +169,7 @@ service Compliance {
   // Update scrub list entry defined by UpdateScrubEntryReq message.
   // The method will update a scrub list entry with the specified fields
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE
   rpc UpdateScrubEntry(UpdateScrubEntryReq) returns (UpdateScrubEntryRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/updatescrubentry";
     option (google.api.http).body = "*";
@@ -286,6 +286,21 @@ service Compliance {
     };
   }
 
+  // Download a scrub list defined by ScrubListDownloadRequest message.
+  // Required permissions:
+  //      PERMISSION_COMPLIANCE
+  rpc ScrubListDownload(ScrubListDownloadRequest) returns (google.longrunning.Operation) {
+    option (google.api.http).post = "/api/v0alpha/compliance/scrublistdownload";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ];
+    };
+  }
+
   rpc ProcessScrubListDeleteUpload(ProcessScrubListDeleteUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processscrublistdeleteupload";
     option (google.api.http).body = "*";
@@ -312,7 +327,7 @@ service Compliance {
 
   // Purge entries from a scrub list defined by PurgeScrubListReq message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE
   rpc PurgeScrubList(PurgeScrubListReq) returns (PurgeScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/purgescrublist";
     option (google.api.http).body = "*";
@@ -700,9 +715,25 @@ service Compliance {
   // Process a consent delete list defined by DeleteConsentReq message
   // The method will return a google.protobuf.Empty message
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc ProcessConsentListDeleteUpload(ProcessConsentListDeleteUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processconsentlistdeleteupload";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE_CONSENT]
+        }
+      ];
+    };
+  }
+
+  // Download a consent list defined by ConsentListDownloadRequest message
+  // The method will return a google.longrunning.Operation message
+  // Required permissions:
+  //      PERMISSION_COMPLIANCE_CONSENT
+  rpc ConsentListDownload(ConsentListDownloadRequest) returns (google.longrunning.Operation) {
+    option (google.api.http).post = "/api/v0alpha/compliance/consentlistdownload";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -718,7 +749,7 @@ service Compliance {
   // consent_profile_id field.
   // The method will return a google.protobuf.Empty message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc EnableConsentProfile(EnableConsentProfileReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/enableconsentprofile";
     option (google.api.http).body = "*";
@@ -736,7 +767,7 @@ service Compliance {
   // consent_profile_id field.
   // The method will return a google.protobuf.Empty message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc DisableConsentProfile(DisableConsentProfileReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/disableconsentprofile";
     option (google.api.http).body = "*";
@@ -755,7 +786,7 @@ service Compliance {
   // containing consent_profile_id, profile_name, the number of consents
   // belonging to the profile, and disabled.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc ListConsentProfiles(ListConsentProfilesReq) returns (ListConsentProfilesRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listconsentprofiles";
     option (google.api.http).body = "*";
@@ -772,7 +803,7 @@ service Compliance {
   // The method will return a GetConsentUploadUrlRes messages
   // containing a url with which to upload an import file.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc GetConsentUploadUrl(GetConsentUploadUrlReq) returns (GetConsentUploadUrlRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsentuploadurl";
     option (google.api.http).body = "*";
@@ -788,7 +819,7 @@ service Compliance {
   // Process consent upload defined by ProcessConsentUploadReq message.
   // The method will process an uploaded consent file.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc ProcessConsentUpload(ProcessConsentUploadReq) returns (google.longrunning.Operation) {
     option (google.api.http).post = "/api/v0alpha/compliance/processconsentupload";
     option (google.api.http).body = "*";
@@ -820,7 +851,7 @@ service Compliance {
   // The method will return a ListConsentTopicsRes message
   // containing topic, org_id, and deleted.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc ListConsentTopics(ListConsentTopicsReq) returns (ListConsentTopicsRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/listconsenttopics";
     option (google.api.http).body = "*";
@@ -837,7 +868,7 @@ service Compliance {
   // for the specified topic and org_id.
   // The method will return a ConsentTopic message/entity.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc GetConsentTopic(GetConsentTopicReq) returns (ConsentTopic) {
     option (google.api.http).post = "/api/v0alpha/compliance/getconsenttopic";
     option (google.api.http).body = "*";
@@ -853,7 +884,7 @@ service Compliance {
   // Create a consent topic defined by ConsentTopic
   // message.  The method will return an Empty message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc CreateConsentTopic(ConsentTopic) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/createconsenttopic";
     option (google.api.http).body = "*";
@@ -869,7 +900,7 @@ service Compliance {
   // Delete a consent topic defined by ConsentTopic message.
   // The method will return an Empty message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc DeleteConsentTopic(ConsentTopic) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/deleteconsenttopic";
     option (google.api.http).body = "*";
@@ -885,7 +916,7 @@ service Compliance {
   // Update a consent topic defined by UpdateConsentTopicReq message.
   // The method will return an Empty message.
   // Required permissions:
-  //      EXECUTE_DO_NOT_CALL_LIST
+  //      PERMISSION_COMPLIANCE_CONSENT
   rpc UpdateConsentTopic(UpdateConsentTopicReq) returns (Empty) {
     option (google.api.http).post = "/api/v0alpha/compliance/updateconsenttopic";
     option (google.api.http).body = "*";
@@ -1702,4 +1733,12 @@ message ExportConsentListRequest {
 
 message ExportConsentListResponse {
   string url = 1;
+}
+
+message ScrubListDownloadRequest {
+  string list_id = 4;
+}
+
+message ConsentListDownloadRequest {
+  string consent_profile_id = 4;
 }
