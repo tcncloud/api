@@ -4230,6 +4230,9 @@ message CallCenterNode {
   // ID of the original Call Center Node that this node was copied from.
   // If this node is the original, field will be set as nil.
   google.protobuf.Int64Value origin_sid = 13 [deprecated = true];
+
+  // the shrinkage percentage [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  google.protobuf.FloatValue shrinkage = 14;
 }
 
 // Request message for the UpdateCallCenterNode RPC
@@ -4273,6 +4276,9 @@ message ClientNode {
   // ID of the original Client Node that this node was copied from.
   // If this node is the original, field will be set as nil.
   google.protobuf.Int64Value origin_sid = 14 [deprecated = true];
+
+  // the shrinkage percentage [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  google.protobuf.FloatValue shrinkage = 15;
 }
 
 // Request message for the CreateClientNode RPC
@@ -4311,9 +4317,9 @@ message LocationNode {
   // Timezone of this node.
   commons.TimeZone time_zone_val = 6;
   // Indicates whether on not the @shrinkage_value is a percentage (true=percentage, false=agents).
-  bool shrinkage_is_percentage = 7;
+  bool shrinkage_is_percentage = 7 [deprecated = true];
   // Value of the shrinkage.
-  int32 shrinkage_value = 8;
+  int32 shrinkage_value = 8 [deprecated = true];
   // ID of the schedule scenario that the location node belongs to.
   int64 schedule_scenario_sid = 9;
   // Program Nodes associated with @location_node_sid.
@@ -4331,6 +4337,9 @@ message LocationNode {
   // ID of the original Location Node that this node was copied from.
   // If this node is the original, field will be set as nil.
   google.protobuf.Int64Value origin_sid = 16 [deprecated = true];
+
+  // the shrinkage percentage [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  google.protobuf.FloatValue shrinkage = 17;
 }
 
 // Request message for the CreateLocationNode RPC
@@ -4367,9 +4376,9 @@ message ProgramNode {
   // Datetime that the node was set to inactive, if not set then the node is currently active.
   google.protobuf.Timestamp datetime_set_to_inactive = 5;
   // Indicates whether on not the @shrinkage_value is a percentage (true=percentage, false=agents).
-  bool shrinkage_is_percentage = 6;
+  bool shrinkage_is_percentage = 6 [deprecated = true];
   // Value of the shrinkage. Either 0-100 if @shrinkage_is_percentage is true, or a value greater than 0 otherwise.
-  int32 shrinkage_value = 7;
+  int32 shrinkage_value = 7 [deprecated = true];
   // ID of the schedule scenario that the program node belongs to.
   int64 schedule_scenario_sid = 8;
   // Any shift templates associated with @program_node_sid.
@@ -4391,6 +4400,9 @@ message ProgramNode {
   google.protobuf.Int64Value origin_sid = 16 [deprecated = true];
   // The predicted calls of this skill profile category will be used when scheduling.
   commons.SkillProfileCategory skill_profile_category = 17;
+
+  // the shrinkage percentage [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  google.protobuf.FloatValue shrinkage = 18;
 }
 
 // Request message for the CreateProgramNode RPC
@@ -5806,6 +5818,9 @@ message ShiftInstance {
   repeated ShiftSegment shift_segments = 10;
   // The shift template used to create this shift instance.
   ShiftTemplate shift_template = 11;
+
+  // the percentage shrinkage expected for this shift [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  float planned_shrinkage_percent = 12;
 }
 
 // ShiftSegmentCallStat.
