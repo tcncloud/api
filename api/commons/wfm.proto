@@ -551,6 +551,22 @@ enum DiagnosticCode {
   // 'Attempt To Build Schedules For Invalid Parent Node' type.
   // The diagnostic is reporting an attemplt to build a schedule for an invalid Parent Node.
   ATTEMPT_TO_BUILD_SCHEDULES_FOR_INVALID_PARENT_NODE = 66;
+  // DiagnosticCodeSchedulableAgentsDoNotMeetTemplateMinimum integer value for a diagnostic coded as
+  // 'Schedulable Agents do not meet Tamplate Minimum' type.
+  // The diagnostic is reporting that agents will be auto generated upon building the schedule, unless added manually or agent generation is toggled off.
+  SCHEDULABLE_AGENTS_DO_NOT_MEET_TEMPLATE_MINIMUM = 67;
+  // DiagnosticCodeSchedulableAgentsDoNotMeetTemplateMaximum integer value for a diagnostic coded as
+  // 'Schedulable Agents do not meet Template Maximum' type.
+  // The diagnostic is reporting that agents may be auto generated upon building the schedule, unless added manually or agent generation is toggled off.
+  SCHEDULABLE_AGENTS_DO_NOT_MEET_TEMPLATE_MAXIMUM = 68;
+  // DiagnosticNoOpenTimesInheritedByProgram integer value for a diagnostic coded as
+  // 'No Open Times were set or inherited by Program' type
+  // The diagnostic is reporting that the program does not have any open time values set directly or through inheritance.
+  NO_OPEN_TIMES_SET_OR_INHERITED_BY_PROGRAM = 69;
+  // DiagnosticTourAgentCollectionsNeededToScheduleTour integer value for a diagnostic coded as
+  // 'Cannot generate shifts for Tour Shift Template that has no Agent Collections for Tour Patterns' type.
+  // The diagnostic is reporting that there are no tour agent collections, which are required to schedule the tour pattern.
+  TOUR_AGENT_COLLECTIONS_NEEDED_TO_SCHEDULE_TOUR = 70;
 }
 
 // Enum representing the type of a performance metric.
