@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.users;
+
+import "api/commons/org/agent_profile_group.proto";
+
+// Request message for the GetAgentProfileGroup rpc.
+message GetAgentProfileGroupRequest {
+  // ID of the agent profile group.
+  string agent_profile_group_id = 1;
+}
+
+// Response message for the GetAgentProfileGroup rpc.
+message GetAgentProfileGroupResponse {
+  // Agent response group corresponding to the ID.
+  api.commons.org.AgentProfileGroup agent_profile_group = 1;
+}
+
+// Request message for the UpdateAgentProfileGroup rpc.
+message UpdateAgentProfileGroupRequest {
+  // Agent response group to update
+  api.commons.org.AgentProfileGroup agent_profile_group = 1;
+}
+
+// Response message for the UpdateAgentProfileGroup rpc.
+message UpdateAgentProfileGroupResponse {}
+
+// Request message for the ListAgentProfileGroups rpc.
+message ListAgentProfileGroupsRequest {}
+
+// Response message for the ListAgentProfileGroups rpc.
+message ListAgentProfileGroupsResponse {
+  // List of agent profile groups belonging to the org ID.
+  repeated api.commons.org.AgentProfileGroup agent_profile_groups = 1;
+}
+
+// Request message for the CreateAgentProfileGroup rpc.
+message CreateAgentProfileGroupRequest {
+  // Agent profile group to create.
+  api.commons.org.AgentProfileGroup agent_profile_group = 1;
+}
+
+// Response message for the CreateAgentProfileGroup rpc.
+message CreateAgentProfileGroupResponse {
+  // Created agent profile group.
+  string agent_profile_group_id = 1;
+}
+
+// Request message for the DeleteAgentProfileGroup rpc.
+message DeleteAgentProfileGroupRequest {
+  // Agent profile group ID to delete.
+  string agent_profile_group_id = 1;
+}
+
+// Response message for the DeleteAgentProfileGroup rpc.
+message DeleteAgentProfileGroupResponse {}
+
+// Request message for the AssignAgentProfileGroups rpc.
+message AssignAgentProfileGroupsRequest {
+  // Agent profile group ID to assign to provided users.
+  string agent_profile_group_id = 1;
+  // List of user IDs to assign to the agent profile group
+  repeated string user_ids = 2;
+}
+
+// Response message for the AssignAgentProfileGroups rpc.
+message AssignAgentProfileGroupsResponse {}
