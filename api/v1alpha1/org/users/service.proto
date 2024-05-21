@@ -1,0 +1,886 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.users;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/users/agent_profile_group.proto";
+import "api/v1alpha1/org/users/auth_token.proto";
+import "api/v1alpha1/org/users/notifications.proto";
+import "api/v1alpha1/org/users/users.proto";
+import "google/api/annotations.proto";
+
+service UsersService {
+  // CreateUser creates a new user and enables it for the region it is getting created in.
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_CREATE]
+        }
+      ];
+    };
+  }
+
+  // CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
+  rpc CreateDelegatedUser(CreateDelegatedUserRequest) returns (CreateDelegatedUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createdelegateduser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // GetMyUser returns a single user by provided claims.
+  rpc GetMyUser(GetMyUserRequest) returns (GetMyUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getmyuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // GetUser returns a single user by UserId or by AgentSid.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetUserByOrgId returns a single user by UserId and OrgId
+  // Requires Customer Support permission and allows cross Org requests.
+  rpc GetUserByOrgId(GetUserByOrgIdRequest) returns (GetUserByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuserbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListAgents returns a list of Agents.
+  rpc ListAgents(ListAgentsRequest) returns (stream ListAgentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listagents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // ListPublicUsers returns a list of users with limited data for most applications.
+  rpc ListPublicUsers(ListPublicUsersRequest) returns (stream ListPublicUsersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listpublicusers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS]
+        }
+      ];
+    };
+  }
+
+  // ListUsers returns a list of users.
+  rpc ListUsers(ListUsersRequest) returns (stream ListUsersResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // ListUsersByOrgId returns a list of users.
+  rpc ListUsersByOrgId(ListUsersByOrgIdRequest) returns (stream ListUsersByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusersbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ListUsersByRegion returns a list of usersByRegion.
+  rpc ListUsersByRegion(ListUsersByRegionRequest) returns (stream ListUsersByRegionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusersbyregion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // UpdateMyUser updates a user.
+  rpc UpdateMyUser(UpdateMyUserRequest) returns (UpdateMyUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updatemyuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // UpdateUser updates a user.
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateuser";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserLabels updates a user's labels to be the passed in set of labels.
+  rpc UpdateUserLabels(UpdateUserLabelsRequest) returns (UpdateUserLabelsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateuserlabels";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserCallerId updates a user.
+  rpc UpdateUserCallerId(UpdateUserCallerIdRequest) returns (UpdateUserCallerIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateusercallerid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_AGENT_CALLER_ID]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserDisabled updates whether a user is disabled.
+  rpc UpdateUserDisabled(UpdateUserDisabledRequest) returns (UpdateUserDisabledResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateuserdisabled";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // UpdateUserDisabledByOrgId updates a user is disabled.
+  rpc UpdateUserDisabledByOrgId(UpdateUserDisabledByOrgIdRequest) returns (UpdateUserDisabledByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateuserdisabledbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // GetMyUserPasswordResetLink updates a user's password.
+  rpc GetMyUserPasswordResetLink(GetMyUserPasswordResetLinkRequest) returns (GetMyUserPasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getmyuserpasswordresetlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
+        }
+      ];
+    };
+  }
+
+  // GetUserPasswordResetLink gets a link to update a user's password.
+  rpc GetUserPasswordResetLink(GetUserPasswordResetLinkRequest) returns (GetUserPasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuserpasswordresetlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
+  rpc GetUserPasswordResetLinkByOrgId(GetUserPasswordResetLinkByOrgIdRequest) returns (GetUserPasswordResetLinkByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuserpasswordresetlinkbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // CreatePasswordResetLink creates a password reset link for the given user id.
+  rpc CreatePasswordResetLink(CreatePasswordResetLinkRequest) returns (CreatePasswordResetLinkResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createpasswordresetlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
+  rpc CreatePasswordResetLinkByOrgId(CreatePasswordResetLinkByOrgIdRequest) returns (CreatePasswordResetLinkByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createpasswordresetlinkbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Used to be called GetUserBlocked
+  // GetUserLoginInfo gets information about a user's login.
+  rpc GetUserLoginInfo(GetUserLoginInfoRequest) returns (GetUserLoginInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuserlogininfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // GetUserEmailVerified gets whether the user's email is verified.
+  rpc GetUserEmailVerified(GetUserEmailVerifiedRequest) returns (GetUserEmailVerifiedResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuseremailverified";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // GetUserEmailVerifiedByOrgId gets whether the user's email is verified.
+  rpc GetUserEmailVerifiedByOrgId(GetUserEmailVerifiedByOrgIdRequest) returns (GetUserEmailVerifiedByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getuseremailverifiedbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // ResetMyPassword resets the user's password.
+  rpc ResetMyPassword(ResetMyPasswordRequest) returns (ResetMyPasswordResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/resetmypassword";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
+        }
+      ];
+    };
+  }
+
+  // ResetUserPassword resets the user's password.
+  rpc ResetUserPassword(ResetUserPasswordRequest) returns (ResetUserPasswordResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/resetuserpassword";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ResetUserPasswordByOrgId resets the user's password.
+  rpc ResetUserPasswordByOrgId(ResetUserPasswordByOrgIdRequest) returns (ResetUserPasswordByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/resetuserpasswordbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SendUserEmailVerification sends a verification email to the user.
+  rpc SendUserEmailVerification(SendUserEmailVerificationRequest) returns (SendUserEmailVerificationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/senduseremailverification";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // SendUserEmailVerificationByOrgId sends a verification email to the user.
+  rpc SendUserEmailVerificationByOrgId(SendUserEmailVerificationByOrgIdRequest) returns (SendUserEmailVerificationByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/senduseremailverificationbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SendPasswordReset sends a password reset email to the user.
+  rpc SendPasswordReset(SendPasswordResetRequest) returns (SendPasswordResetResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/sendpasswordreset";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // SendPasswordResetByOrgId sends a password reset email to the user.
+  rpc SendPasswordResetByOrgId(SendPasswordResetByOrgIdRequest) returns (SendPasswordResetByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/sendpasswordresetbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // GetUserSessionData returns data for the front end's session state
+  rpc GetUserSessionData(GetUserSessionDataRequest) returns (GetUserSessionDataResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getusersessiondata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // AGENT PROFILE GROUPS
+
+  // GetAgentProfileGroup returns an agent profile group by id
+  rpc GetAgentProfileGroup(GetAgentProfileGroupRequest) returns (GetAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getagentprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // ListAgentProfileGroups returns the agent profile groups associated with the current organization
+  rpc ListAgentProfileGroups(ListAgentProfileGroupsRequest) returns (ListAgentProfileGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listagentprofilegroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // UpdateAgentProfileGroup updates an AgentProfileGroup. Can only update if user is in same org as AgentProfileGroup
+  rpc UpdateAgentProfileGroup(UpdateAgentProfileGroupRequest) returns (UpdateAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateagentprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // CreateAgentProfileGroup creates an AgentProfileGroup. Can only create if user is in same org as AgentProfileGroup
+  rpc CreateAgentProfileGroup(CreateAgentProfileGroupRequest) returns (CreateAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createagentprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteAgentProfileGroup deletes an AgentProfileGroup. Can only delete if user is in same org as AgentProfileGroup
+  rpc DeleteAgentProfileGroup(DeleteAgentProfileGroupRequest) returns (DeleteAgentProfileGroupResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/deleteagentprofilegroup";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // AssignAgentProfileGroups assigns a list of users to an AgentProfileGroup. Can only use if everything is in the same organization.
+  rpc AssignAgentProfileGroups(AssignAgentProfileGroupsRequest) returns (AssignAgentProfileGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/assignagentprofilegroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ];
+    };
+  }
+
+  // NOTIFICATIONS
+
+  // Creates a new user subscription.
+  rpc AddUserSubscription(AddUserSubscriptionRequest) returns (AddUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/addusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // Creates a new user subscription for a specified user with in requested users org.
+  rpc AddUserSubscriptionByUserId(AddUserSubscriptionByUserIdRequest) returns (AddUserSubscriptionByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/addusersubscriptionbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Gets a user subscription.
+  rpc GetUserSubscription(GetUserSubscriptionRequest) returns (GetUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Gets a user subscription for a specified user with in requested users org.
+  rpc GetUserSubscriptionByUserId(GetUserSubscriptionByUserIdRequest) returns (GetUserSubscriptionByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getusersubscriptionbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Updates a user subscription for the current user
+  rpc UpdateUserSubscription(UpdateUserSubscriptionRequest) returns (UpdateUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // Updates a user subscription for a given user id
+  rpc UpdateUserSubscriptionByUserId(UpdateUserSubscriptionByUserIdRequest) returns (UpdateUserSubscriptionByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/updateusersubscriptionbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Remove a user subscription.
+  rpc RemoveUserSubscription(RemoveUserSubscriptionRequest) returns (RemoveUserSubscriptionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/removeusersubscription";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // Remove a user subscription by a given user id
+  rpc RemoveUserSubscriptionByUserId(RemoveUserSubscriptionByUserIdRequest) returns (RemoveUserSubscriptionByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/removeusersubscriptionbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // Bulk methods; interact with more than one user subscription
+
+  // Lists user subscriptions.
+  rpc ListUserSubscriptions(ListUserSubscriptionsRequest) returns (ListUserSubscriptionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusersubscriptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Lists user subscriptions.
+  rpc ListUserSubscriptionsByUserId(ListUserSubscriptionsByUserIdRequest) returns (ListUserSubscriptionsByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusersubscriptionsbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // Lists subscriptions for multiple users in an org.
+  rpc ListOrgSubscriptions(ListOrgSubscriptionsRequest) returns (ListOrgSubscriptionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listorgsubscriptions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // AUTH TOKEN
+  // CreateAuthToken creates an auth token for the current user.
+  rpc CreateAuthToken(CreateAuthTokenRequest) returns (CreateAuthTokenResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createauthtoken";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // CreateAuthTokenByUserId creates an auth token for the given user.
+  rpc CreateAuthTokenByUserId(CreateAuthTokenByUserIdRequest) returns (CreateAuthTokenByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/createauthtokenbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListAuthTokens list tokens of current user.
+  rpc ListAuthTokens(ListAuthTokensRequest) returns (ListAuthTokensResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listauthtokens";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // ListAuthTokensByUserId list tokens of given user.
+  rpc ListAuthTokensByUserId(ListAuthTokensByUserIdRequest) returns (ListAuthTokensByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listauthtokensbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // SetAuthTokenExpiration sets expiration back one year for current user.
+  rpc SetAuthTokenExpiration(SetAuthTokenExpirationRequest) returns (SetAuthTokenExpirationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/setauthtokenexpiration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+  rpc SetAuthTokenExpirationByUserId(SetAuthTokenExpirationByUserIdRequest) returns (SetAuthTokenExpirationByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/setauthtokenexpirationbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteAuthToken deletes a given auth token for the current user.
+  rpc DeleteAuthToken(DeleteAuthTokenRequest) returns (DeleteAuthTokenResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/deleteauthtoken";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // DeleteAuthTokenByUserId deletes a given auth token for the given user.
+  rpc DeleteAuthTokenByUserId(DeleteAuthTokenByUserIdRequest) returns (DeleteAuthTokenByUserIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/deleteauthtokenbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RefreshMfaLockout resets the lockout timer for the given user.
+  rpc RefreshMfaLockout(RefreshMfaLockoutRequest) returns (RefreshMfaLockoutResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/refreshmfalockout";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+  rpc RefreshMfaLockoutByOrgId(RefreshMfaLockoutByOrgIdRequest) returns (RefreshMfaLockoutByOrgIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/refreshmfalockoutbyorgid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // SetMfaType sets the given user's mfa type.
+  rpc SetMfaType(SetMfaTypeRequest) returns (SetMfaTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/setmfatype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // SetMyMfaType sets the current user's mfa type.
+  rpc SetMyMfaType(SetMyMfaTypeRequest) returns (SetMyMfaTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/setmymfatype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // EnableUserMfa enables or disables mfa for the given user
+  rpc EnableUserMfa(EnableUserMfaRequest) returns (EnableUserMfaResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/enableusermfa";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // EnableMyUserMfa enables mfa for the current user
+  rpc EnableMyUserMfa(EnableMyUserMfaRequest) returns (EnableMyUserMfaResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/enablemyusermfa";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // GetUserMfaInfo returns the mfa info for the given user.
+  rpc GetUserMfaInfo(GetUserMfaInfoRequest) returns (GetUserMfaInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getusermfainfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+
+  // GetMyUserMfaInfo returns the mfa info for the current user.
+  rpc GetMyUserMfaInfo(GetMyUserMfaInfoRequest) returns (GetMyUserMfaInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/getmyusermfainfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
+  // AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+  // are required to authenticate with
+  rpc AddGroupedUserIPRestrictions(AddGroupedUserIPRestrictionsRequest) returns (AddGroupedUserIPRestrictionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/addgroupeduseriprestrictions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+  // are required to authenticate with
+  rpc RemoveGroupedUserIPRestrictions(RemoveGroupedUserIPRestrictionsRequest) returns (RemoveGroupedUserIPRestrictionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/removegroupeduseriprestrictions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListUsersAllowedIps returns the list of allowed IPs for the user.
+  rpc ListUsersAllowedIps(ListUsersAllowedIpsRequest) returns (ListUsersAllowedIpsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/users/listusersallowedips";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        }
+      ];
+    };
+  }
+}
