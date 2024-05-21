@@ -211,6 +211,7 @@ message RemovePermissionFromAllPermissionGroupsResponse {}
 
 // Request message for the AssignLabelsRequest RPC.
 message AssignLabelsRequest {
+  option deprecated = true;
   // Ids of labels getting assigned to a permission group
   repeated string label_ids = 1;
   // Id of the permission group to be assigned labels.
@@ -218,10 +219,13 @@ message AssignLabelsRequest {
 }
 
 // Response message for the AssignLabelsResponse RPC.
-message AssignLabelsResponse {}
+message AssignLabelsResponse {
+  option deprecated = true;
+}
 
 // Request message for the RevokeLabelsRequest RPC.
 message RevokeLabelsRequest {
+  option deprecated = true;
   // Ids of labels getting revoked from a permission group
   repeated string label_ids = 1;
   // Id of the permission group to have labels revoked.
@@ -229,4 +233,6 @@ message RevokeLabelsRequest {
 }
 
 // Response message for the RevokeLabelsResponse RPC.
-message RevokeLabelsResponse {}
+message RevokeLabelsResponse {
+  option deprecated = true;
+}
