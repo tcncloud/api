@@ -126,6 +126,8 @@ message Evaluation {
 
   repeated CustomField custom_fields = 17; // Custom key-value fields.
 
+  string deleted_by = 18; // tcn user id of person who deleted evaluation
+
   // CustomField represents a custom key-value pair defined by users.
   message CustomField {
     string key = 1; // Keys are defined on scorecard.
