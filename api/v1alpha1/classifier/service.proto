@@ -2,14 +2,66 @@ syntax = "proto3";
 
 package api.v1alpha1.classifier;
 
+import "annotations/authz.proto";
 import "api/v1alpha1/classifier/entities.proto";
+import "google/api/annotations.proto";
 
 service ClassifierFileTemplates {
-  rpc ParseFile(ParseFileRequest) returns (ParseFileResponse);
-  rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse);
-  rpc DeleteFileTemplate(DeleteFileTemplateRequest) returns (DeleteFileTemplateResponse);
-  rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse);
-  rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse);
+  rpc ParseFile(ParseFileRequest) returns (ParseFileResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/file_templates/parse";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/file_templates/update";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc DeleteFileTemplate(DeleteFileTemplateRequest) returns (DeleteFileTemplateResponse) {
+    option (google.api.http).delete = "/api/v1alpha1/classifier/file_templates/delete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/file_templates/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
+  rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/file_templates/get";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 message ParseFileRequest {
