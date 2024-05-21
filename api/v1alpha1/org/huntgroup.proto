@@ -564,3 +564,58 @@ message UnassignScriptFromHuntGroupsRequest {
 
 // The response message for UnassignScriptFromHuntGroups
 message UnassignScriptFromHuntGroupsResponse {}
+
+// Request for the ListResponseEvaluators RPC.
+message ListResponseEvaluatorsRequest {}
+
+// Response for the ListResponseEvaluators RPC.
+message ListResponseEvaluatorsResponse {
+  // List of response evaluators for the organization.
+  repeated api.commons.org.ResponseEvaluator evaluators = 1;
+}
+
+// Request for the GetResponseEvaluator RPC.
+message GetResponseEvaluatorRequest {
+  // ID of the requested response evaluator.
+  string evaluator_id = 1;
+}
+
+// Response for the GetResponseEvaluator RPC.
+message GetResponseEvaluatorResponse {
+  // Requested evaluator.
+  api.commons.org.ResponseEvaluator evaluator = 1;
+}
+
+// Request for the CreateResponseEvaluator RPC.
+message CreateResponseEvaluatorRequest {
+  // Response evaluator to create. response_evaluator_id
+  // will be generated
+  api.commons.org.ResponseEvaluator evaluator = 1;
+}
+
+// Response for the CreateResponseEvaluator RPC.
+message CreateResponseEvaluatorResponse {
+  // Created response evaluator.
+  api.commons.org.ResponseEvaluator evaluator = 1;
+}
+
+// Request for the UpdateResponseEvaluator RPC.
+message UpdateResponseEvaluatorRequest {
+  // Response evaluator to update, must provide full entity.
+  api.commons.org.ResponseEvaluator evaluator = 1;
+}
+
+// Response for the UpdateResponseEvaluator RPC.
+message UpdateResponseEvaluatorResponse {
+  // Updated response evaluator.
+  api.commons.org.ResponseEvaluator evaluator = 1;
+}
+
+// Request for the DeleteResponseEvaluator RPC.
+message DeleteResponseEvaluatorRequest {
+  // ID of the evaluator to delete. Will be hard deleted.
+  string evaluator_id = 1;
+}
+
+// Response for the DeleteResponseEvaluator RPC.
+message DeleteResponseEvaluatorResponse {}

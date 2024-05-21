@@ -3,7 +3,9 @@ syntax = "proto3";
 package api.v1alpha1.integrations;
 
 import "annotations/authz.proto";
+import "api/commons/acd.proto";
 import "api/commons/integrations/integrations.proto";
+import "api/commons/org/huntgroup.proto";
 import "api/commons/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
@@ -379,6 +381,17 @@ service Integrations {
           permissions: [PERMISSIONS_INTEGRATIONS_KEY_CREATION]
         }
       ];
+    };
+  }
+  rpc PopulateIntegrationLink(PopulateIntegrationLinkReq) returns (PopulateIntegrationLinkRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/populateintegrationlink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
+        }
+      ]
     };
   }
 }
@@ -1390,4 +1403,17 @@ message Template {
   oneof val {
     api.commons.integrations.Invoices invoice_template = 1;
   }
+}
+
+message PopulateIntegrationLinkReq {
+  int64 client_sid = 1;
+  int64 agent_sid = 2;
+  int64 call_sid = 3;
+  .api.commons.CallType.Enum call_type = 4;
+  string scheduled_callback_id = 5;
+  api.commons.org.IntegrationLink integration_link = 6; // all params above are going to use MailMerge to populate the fields on integration link
+}
+
+message PopulateIntegrationLinkRes {
+  api.commons.org.IntegrationLink integration_link = 1;
 }

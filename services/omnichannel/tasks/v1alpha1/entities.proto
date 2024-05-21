@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package services.omnichannel.tasks.v1alpha1;
+
+import "api/commons/omnichannel.proto";
+
+message CancelTasksRequest {
+  repeated int64 task_sid = 1 [jstype = JS_STRING];
+}
+
+message CancelTasksResponse {}
