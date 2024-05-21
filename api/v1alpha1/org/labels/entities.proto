@@ -104,3 +104,25 @@ message GetLabeledEntityMapResponse {
     repeated api.commons.org.Label labels = 1;
   }
 }
+
+// AssignLabelsRequest is the message for the AssignLabelsRequest RPC.
+message AssignLabelsRequest {
+  // Ids of labels getting assigned to a permission group.
+  repeated string label_ids = 1;
+  // Id of the permission group to be assigned labels.
+  string permission_group_id = 2;
+}
+
+// Response message for the AssignLabelsResponse RPC.
+message AssignLabelsResponse {}
+
+// Request message for the RevokeLabelsRequest RPC.
+message RevokeLabelsRequest {
+  // Ids of labels getting revoked from a permission group.
+  repeated string label_ids = 1;
+  // Id of the permission group to have labels revoked.
+  string permission_group_id = 2;
+}
+
+// Response message for the RevokeLabelsResponse RPC.
+message RevokeLabelsResponse {}
