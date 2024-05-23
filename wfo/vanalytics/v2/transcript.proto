@@ -598,6 +598,21 @@ message TranscriptQuery {
     // Query constraints on agent call log.
     AgentCallLogQuery agent_call_log = 12;
 
+    // Query constraints on audio bytes.
+    AudioBytes audio_bytes = 13;
+
+    // AudioBytes defines a query on audio_bytes.
+    message AudioBytes {
+      // Optional. Queries where greater than or equal.
+      google.protobuf.Int64Value gte = 1;
+      // Optional. Queries where less than or equal.
+      google.protobuf.Int64Value lte = 2;
+      // Optional. Queries where greater than.
+      google.protobuf.Int64Value gt = 3;
+      // Optional. Queries where less than.
+      google.protobuf.Int64Value lt = 4;
+    }
+
     // Query constraints on hunt group sids.
     message HuntGroupSids {
       // Requires all call specific transcript hits to have a hunt group sid
