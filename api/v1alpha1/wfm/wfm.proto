@@ -6358,6 +6358,9 @@ message UpdateShiftInstanceV2Req {
   // if true and the shift instance already is locked, the instance will not have any fields updated.
   // If false, will unlock a currently locked shift instance and allow it to be updated.
   bool is_locked = 5;
+
+  // the percentage shrinkage expected for this shift [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  float planned_shrinkage_percent = 6;
 }
 
 // Response message for the UpdateShiftInstanceV2 RPC
