@@ -80,6 +80,8 @@ message GeneralSettings {
 
   // Enable envision agent screen recording. `Use Agent Screen Recording`
   bool enable_envision_screen_recording = 300;
+  // Read only- shows if the Agent Screen Recording is enabled for the Org
+  bool agent_screen_recording = 301;
 
   // HOLD SETTINGS
 
