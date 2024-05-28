@@ -803,8 +803,14 @@ message MonthDayDate {
 message CountryHoliday {
   // The name.
   string holiday_name = 1;
-  // The country.
-  api.commons.Country country = 2;
+  // The country.  Deprecated.
+  api.commons.Country country = 2 [deprecated = true];
+  // The country name from holiday service.
+  string country_name = 3;
+  // The type of holiday- eg. National, religious.
+  repeated string types = 4;
+  // The specific sub-regions of the country that celebrate the holiday.
+  repeated string states = 5;
 }
 
 // ProgrammedDay may be a named date or a holiday.

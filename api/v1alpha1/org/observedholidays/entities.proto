@@ -5,6 +5,7 @@ package api.v1alpha1.org.observedholidays;
 import "api/commons/org.proto";
 import "api/commons/org/preferences.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 // ListObservedHolidaysRequest is the request message for ListObservedHolidays
 message ListObservedHolidaysRequest {}
@@ -106,4 +107,6 @@ message EvaluateObservedHolidaysRequest {
 message EvaluateObservedHolidaysResponse {
   // The boolean to determine if the date is matched within the ObservedHolidays
   bool date_matched = 1;
+  // indicates how long this result can be used.
+  google.protobuf.Timestamp result_expiration = 2;
 }
