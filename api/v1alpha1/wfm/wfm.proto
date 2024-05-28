@@ -3225,6 +3225,44 @@ service WFM {
     };
   }
 
+  // Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
+  // The @petition_comment must be set with a value.
+  // The @requested_datetime_ranges may not overlap each other.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when creating the time off request.
+  //   - grpc.NotFound: the @wfm_agent_sid does not exist for the org sending the request.
+  rpc CreateAgentLeavePetition(CreateAgentLeavePetitionRequest) returns (CreateAgentLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createagentleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
+  // If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+  // If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+  // If no agent leave petitions are found for the given parameters, an empty slice will be returned.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when listing the agent leave petitions.
+  rpc ListAgentLeavePetitions(ListAgentLeavePetitionsRequest) returns (ListAgentLeavePetitionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listagentleavepetitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
   /****************************************************************ADHERENCE RPCS**********************************************************************/
@@ -7080,4 +7118,40 @@ message ListRealTimeManagementStateColorsRequest {}
 message ListRealTimeManagementStateColorsResponse {
   // The states and colors.
   repeated RealTimeManagementStateColor state_colors = 1;
+}
+
+// Request message for CreateAgentLeavePetition.
+message CreateAgentLeavePetitionRequest {
+  // All datetime ranges being requested for the time off.
+  // No overlap is allowed between the datetime ranges.
+  repeated commons.DatetimeRange requested_datetime_ranges = 1;
+  // A comment describing the reason for the time off request.
+  string petition_comment = 2;
+  // The wfm agent requesting the time off.
+  int64 wfm_agent_sid = 3;
+}
+
+// Response message for CreateAgentLeavePetition.
+message CreateAgentLeavePetitionResponse {
+  // The newly created agent leave petition.
+  commons.AgentLeavePetition agent_leave_petition = 1;
+}
+
+// Request message for ListAgentLeavePetitions.
+message ListAgentLeavePetitionsRequest {
+  // The wfm agents to list agent leave petitions for.
+  // If no SIDs are provided, all agent leave petitions within the @datetime_range will be returned.
+  repeated int64 wfm_agent_sids = 1;
+  // Datetime range over which agent leave petitions should be retrieved.
+  // Any agent leave petitions overlapping the datetime range may be returned.
+  commons.DatetimeRange datetime_range = 2;
+  // If true, archived agent leave petitions will be included in the response.
+  // Otherwise, no archived requests will be included in the response.
+  bool include_archived = 3;
+}
+
+// Response message for ListAgentLeavePetitions.
+message ListAgentLeavePetitionsResponse {
+  // All agent leave petitions requests matching the parameters in the request.
+  repeated commons.AgentLeavePetition agent_leave_petitions = 1;
 }
