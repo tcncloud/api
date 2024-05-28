@@ -2108,7 +2108,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
         }
       ];
     };
@@ -2121,7 +2121,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
         }
       ];
     };
@@ -2134,7 +2134,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
@@ -2147,7 +2147,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
@@ -2160,7 +2160,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
