@@ -141,6 +141,17 @@ message ListAllocatedTicketReq {
   option deprecated = true;
 }
 
+// ListAgentTicketsResponse -
+message ListAgentTicketsResponse {
+  repeated api.commons.Ticket ticket = 1;
+}
+
+// ListAgentTicketsRequest -
+message ListAgentTicketsRequest {
+  google.protobuf.FieldMask select_field_mask = 1; //defines the ticket fields to be returned
+  google.protobuf.FieldMask filter_mask = 2; //defines the search by field
+}
+
 // ListAvailableAgentTicketsResponse -
 message ListAvailableAgentTicketsResponse {
   repeated int64 ticket_sid = 1 [

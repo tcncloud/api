@@ -262,6 +262,19 @@ service Tickets {
     };
   }
 
+  //public method - to return list of available tickets to pick for an Agent
+  rpc ListAgentTickets(ListAgentTicketsRequest) returns (ListAgentTicketsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listagenttickets";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ];
+    };
+  }
+
   // public method to fetch list of skills for a tickets user
   rpc ListSkills(ListSkillsRequest) returns (ListSkillsResponse) {
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listskills";
