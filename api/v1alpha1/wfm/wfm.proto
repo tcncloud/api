@@ -3267,7 +3267,7 @@ service WFM {
   // If the leave petition has the status of APPROVED_PETITION, and a portion of the petitions @requested_datetime_ranges lies
   //   in the future, the petition must be canceled first, or the request will error.
   // Errors:
-  //   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, or is already archived.
+  //   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, still pending, or is already archived.
   //   - grpc.Internal: error occurs when archiving the agent leave petition.
   //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
   rpc ArchiveAgentLeavePetition(ArchiveAgentLeavePetitionRequest) returns (ArchiveAgentLeavePetitionResponse) {
