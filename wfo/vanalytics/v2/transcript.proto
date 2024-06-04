@@ -193,6 +193,15 @@ message Sms {
 
     // The offset time duration from the beginning of the conversation.
     google.protobuf.Duration offset = 2;
+
+    // The attachments associated with the segment.
+    repeated Attachment attachments = 3;
+
+    // Attachment metadata.
+    message Attachment {
+      // The unique identifier of the attachment.
+      int64 attachment_sid = 1;
+    }
   }
 }
 
