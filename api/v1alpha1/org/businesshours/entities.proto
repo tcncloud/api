@@ -5,6 +5,7 @@ package api.v1alpha1.org.businesshours;
 import "api/commons/org.proto";
 import "api/commons/org/preferences.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 // Request for listing business hours.
 message ListBusinessHoursRequest {}
@@ -104,4 +105,6 @@ message EvaluateBusinessHoursResponse {
   // Resulting boolean if the current time is within
   // a day interval of a business hours object
   bool within_range = 1;
+  // indicates how long this result can be used.
+  google.protobuf.Timestamp result_expiration = 2;
 }

@@ -50,44 +50,56 @@ message RateDefinitionConfig {
     BasicConfig agent_message_chat = 1600;
     BasicUnitConfig agent_message_chat_size = 1601;
     BasicConfig agent_message_chat_units = 1602;
+    BasicUnitConfig agent_message_chat_size_total = 1603;
     BasicConfig agent_message_email = 1610;
     BasicUnitConfig agent_message_email_size = 1611;
     BasicConfig agent_message_email_units = 1612;
+    BasicUnitConfig agent_message_email_size_total = 1613;
     BasicConfig agent_message_sms = 1620;
     BasicUnitConfig agent_message_sms_size = 1621;
     BasicConfig agent_message_sms_units = 1622;
+    BasicUnitConfig agent_message_sms_size_total = 1623;
 
     BasicConfig manager_message_chat = 1700;
     BasicUnitConfig manager_message_chat_size = 1701;
     BasicConfig manager_message_chat_units = 1702;
+    BasicUnitConfig manager_message_chat_size_total = 1703;
     BasicConfig manager_message_email = 1710;
     BasicUnitConfig manager_message_email_size = 1711;
     BasicConfig manager_message_email_units = 1712;
+    BasicUnitConfig manager_message_email_size_total = 1713;
     BasicConfig manager_message_sms = 1720;
     BasicUnitConfig manager_message_sms_size = 1721;
     BasicConfig manager_message_sms_units = 1722;
+    BasicUnitConfig manager_message_sms_size_total = 1723;
 
     BasicConfig system_message_chat = 1800;
     BasicUnitConfig system_message_chat_size = 1801;
     BasicConfig system_message_chat_units = 1802;
+    BasicUnitConfig system_message_chat_size_total = 1803;
     BasicConfig system_message_email = 1810;
     BasicUnitConfig system_message_email_size = 1811;
     BasicConfig system_message_email_units = 1812;
+    BasicUnitConfig system_message_email_size_total = 1813;
     BasicConfig system_message_sms = 1820;
     BasicUnitConfig system_message_sms_size = 1821;
     BasicConfig system_message_sms_units = 1822;
+    BasicUnitConfig system_message_sms_size_total = 1823;
 
     BasicConfig customer_message_chat = 1900;
     BasicUnitConfig customer_message_chat_size = 1901;
     BasicConfig customer_message_chat_units = 1902;
+    BasicUnitConfig customer_message_chat_size_total = 1903;
     BasicConfig customer_message_email = 1910;
     BasicUnitConfig customer_message_email_size = 1911;
     BasicConfig customer_message_email_units = 1912;
+    BasicUnitConfig customer_message_email_size_total = 1913;
     BasicConfig customer_message_sms = 1920;
     BasicUnitConfig customer_message_sms_size = 1921;
     BasicConfig customer_message_sms_units = 1922;
+    BasicUnitConfig customer_message_sms_size_total = 1923;
 
-    // compliance configs
+    // compliance configs (2000 - 2999)
     BasicConfig compliance_rnd_query = 2000;
     BasicConfig compliance_rnd_query_cached = 2001;
   }
@@ -107,42 +119,54 @@ enum RateDefinitionConfigType {
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT = 1600;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT_SIZE = 1601;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT_UNITS = 1602;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_CHAT_SIZE_TOTAL = 1603;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL = 1610;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL_SIZE = 1611;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL_UNITS = 1612;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_EMAIL_SIZE_TOTAL = 1613;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS = 1620;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS_SIZE = 1621;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS_UNITS = 1622;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_AGENT_MESSAGE_SMS_SIZE_TOTAL = 1623;
 
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT = 1700;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT_SIZE = 1701;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT_UNITS = 1702;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_CHAT_SIZE_TOTAL = 1703;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL = 1710;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL_SIZE = 1711;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL_UNITS = 1712;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_EMAIL_SIZE_TOTAL = 1713;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS = 1720;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS_SIZE = 1721;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS_UNITS = 1722;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_MANAGER_MESSAGE_SMS_SIZE_TOTAL = 1723;
 
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT = 1800;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT_SIZE = 1801;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT_UNITS = 1802;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_CHAT_SIZE_TOTAL = 1803;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL = 1810;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL_SIZE = 1811;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL_UNITS = 1812;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_EMAIL_SIZE_TOTAL = 1813;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS = 1820;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS_SIZE = 1821;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS_UNITS = 1822;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_SYSTEM_MESSAGE_SMS_SIZE_TOTAL = 1823;
 
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT = 1900;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT_SIZE = 1901;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT_UNITS = 1902;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_CHAT_SIZE_TOTAL = 1903;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL = 1910;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL_SIZE = 1911;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL_UNITS = 1912;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_EMAIL_SIZE_TOTAL = 1913;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS = 1920;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS_SIZE = 1921;
   RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS_UNITS = 1922;
+  RATE_DEFINITION_CONFIG_TYPE_OMNI_CUSTOMER_MESSAGE_SMS_SIZE_TOTAL = 1923;
 
   // compliance config types (2000-2999)
   RATE_DEFINITION_CONFIG_TYPE_COMPLIANCE_RND_QUERY = 2000;

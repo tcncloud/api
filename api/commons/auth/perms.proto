@@ -307,10 +307,8 @@ enum Permission {
   // deprecated
   PERMISSION_INSIGHTS_MANAGE = 604 [deprecated = true];
   // allows access to read insights
-  PERMISSION_INSIGHTS_INSIGHT_VIEW = 605 [(annotations.perms.options) = {
-    app: APPLICATION_BUSINESS_INTELLIGENCE
-    features: ["Insight Builder"]
-  }];
+  // deprecated
+  PERMISSION_INSIGHTS_INSIGHT_VIEW = 605 [deprecated = true];
   // allows access to edit insights
   PERMISSION_INSIGHTS_INSIGHT_EDIT = 606 [(annotations.perms.options) = {
     app: APPLICATION_BUSINESS_INTELLIGENCE

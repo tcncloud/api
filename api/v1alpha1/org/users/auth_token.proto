@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.users;
+
+import "api/commons/org/auth_token.proto";
+
+// Request message for the CreateAuthToken rpc.
+message CreateAuthTokenRequest {}
+
+// Response message for the CreateAuthToken rpc.
+message CreateAuthTokenResponse {
+  // Newly generated auth token.
+  api.commons.org.AuthToken auth_token = 1;
+}
+
+// Request message for the CreateAuthTokenByUserId rpc.
+message CreateAuthTokenByUserIdRequest {
+  // User id creating new token for.
+  string user_id = 1;
+}
+
+// Response message for the CreateAuthTokenByUserId rpc.
+message CreateAuthTokenByUserIdResponse {
+  // Newly generated auth token.
+  api.commons.org.AuthToken auth_token = 1;
+}
+
+// Request message for the ListAuthTokensRequest rpc.
+message ListAuthTokensRequest {}
+
+// Response message for the ListAuthTokensResponse rpc.
+message ListAuthTokensResponse {
+  // List of current users' auth tokens.
+  repeated api.commons.org.AuthToken auth_tokens = 1;
+}
+
+// Request message for the ListAuthTokensByUserIdRequest rpc.
+message ListAuthTokensByUserIdRequest {
+  // User id to get list of auth tokens.
+  string user_id = 1;
+}
+
+// Response message for the ListAuthTokensByUserIdResponse rpc.
+message ListAuthTokensByUserIdResponse {
+  // List of requested users auth tokens.
+  repeated api.commons.org.AuthToken auth_tokens = 1;
+}
+
+// Request message for the SetAuthTokenExpirationRequest rpc.
+message SetAuthTokenExpirationRequest {
+  // Token to reset expiration for that belongs to the current user.
+  string token = 1;
+}
+
+// Response message for the SetAuthTokenExpirationResponse rpc.
+message SetAuthTokenExpirationResponse {}
+
+// Request message for the SetAuthTokenExpirationByUserIdRequest rpc.
+message SetAuthTokenExpirationByUserIdRequest {
+  // Token to reset expiration for that belongs to the given user.
+  string token = 1;
+  // User token belongs to.
+  string user_id = 2;
+}
+
+// Response message for the SetAuthTokenExpirationByUserIdResponse rpc.
+message SetAuthTokenExpirationByUserIdResponse {}
+
+// Request message for the DeleteAuthTokenRequest rpc.
+message DeleteAuthTokenRequest {
+  // Token to delete for current user.
+  string token = 1;
+}
+
+// Response message for the DeleteAuthTokenResponse rpc.
+message DeleteAuthTokenResponse {}
+
+// Request message for the DeleteAuthTokenByUserIdRequest rpc.
+message DeleteAuthTokenByUserIdRequest {
+  // Token to delete.
+  string token = 1;
+  // User token belongs to.
+  string user_id = 2;
+}
+
+// Response message for the DeleteAuthTokenByUserIdResponse rpc.
+message DeleteAuthTokenByUserIdResponse {}

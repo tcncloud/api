@@ -33,7 +33,7 @@ service Insights {
           permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
         },
         {
-          permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
         },
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
@@ -51,7 +51,7 @@ service Insights {
         {
           permissions: [
             PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN,
-            PERMISSION_INSIGHTS_INSIGHT_VIEW
+            PERMISSION_DASHBOARDS_VIEW
           ]
         }
       ];
@@ -98,9 +98,6 @@ service Insights {
       sets: [
         {
           permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
         },
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
@@ -206,9 +203,6 @@ service Insights {
         },
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
-        },
-        {
-          permissions: [PERMISSION_INSIGHTS_INSIGHT_VIEW]
         }
       ];
     };

@@ -16,12 +16,13 @@ message Invoice {
 // InvoiceItem represents a single line item on an invoice.
 message InvoiceItem {
   string client_id = 1;
-  Product product = 2;
+  Product product = 2 [deprecated = true];
   string description = 3;
   google.protobuf.Timestamp date = 4;
   double price = 5 [deprecated = true];
   repeated InvoiceItemColumn columns = 6;
   google.type.Decimal rated_amount = 7;
+  string product_id = 8;
 }
 
 // InvoiceItemColumn represents a single column on an invoice item.
@@ -31,6 +32,7 @@ message InvoiceItemColumn {
 }
 
 enum Product {
+  option deprecated = true;
   PRODUCT_UNSPECIFIED = 0;
 
   PRODUCT_OMNI = 200;

@@ -551,6 +551,22 @@ enum DiagnosticCode {
   // 'Attempt To Build Schedules For Invalid Parent Node' type.
   // The diagnostic is reporting an attemplt to build a schedule for an invalid Parent Node.
   ATTEMPT_TO_BUILD_SCHEDULES_FOR_INVALID_PARENT_NODE = 66;
+  // DiagnosticCodeSchedulableAgentsDoNotMeetTemplateMinimum integer value for a diagnostic coded as
+  // 'Schedulable Agents do not meet Tamplate Minimum' type.
+  // The diagnostic is reporting that agents will be auto generated upon building the schedule, unless added manually or agent generation is toggled off.
+  SCHEDULABLE_AGENTS_DO_NOT_MEET_TEMPLATE_MINIMUM = 67;
+  // DiagnosticCodeSchedulableAgentsDoNotMeetTemplateMaximum integer value for a diagnostic coded as
+  // 'Schedulable Agents do not meet Template Maximum' type.
+  // The diagnostic is reporting that agents may be auto generated upon building the schedule, unless added manually or agent generation is toggled off.
+  SCHEDULABLE_AGENTS_DO_NOT_MEET_TEMPLATE_MAXIMUM = 68;
+  // DiagnosticNoOpenTimesInheritedByProgram integer value for a diagnostic coded as
+  // 'No Open Times were set or inherited by Program' type
+  // The diagnostic is reporting that the program does not have any open time values set directly or through inheritance.
+  NO_OPEN_TIMES_SET_OR_INHERITED_BY_PROGRAM = 69;
+  // DiagnosticTourAgentCollectionsNeededToScheduleTour integer value for a diagnostic coded as
+  // 'Cannot generate shifts for Tour Shift Template that has no Agent Collections for Tour Patterns' type.
+  // The diagnostic is reporting that there are no tour agent collections, which are required to schedule the tour pattern.
+  TOUR_AGENT_COLLECTIONS_NEEDED_TO_SCHEDULE_TOUR = 70;
 }
 
 // Enum representing the type of a performance metric.
@@ -791,4 +807,47 @@ message AgentStateSequence {
   google.protobuf.Timestamp start_datetime = 2;
   // The list of agent state segments that cover the length of the sequence.
   repeated AgentStateSegment state_segments = 3;
+}
+
+// The AgentLeavePetitionStatus, which is the current state of an agent's AgentLeavePetition for the scheduler service.
+enum AgentLeavePetitionStatus {
+  // Not Set.
+  UNSPECIFIED_PETITION_STATUS = 0;
+  // The petition is pending approval.
+  PENDING_PETITION = 1;
+  // The petition has been approved.
+  APPROVED_PETITION = 2;
+  // The petition has been denied.
+  DENIED_PETITION = 3;
+  // The petition has been cancelled.
+  CANCELLED_PETITION = 4;
+}
+
+// Represents an agent's request for time off.
+message AgentLeavePetition {
+  // ID of the agent leave petition.
+  int64 agent_leave_petition_id = 1;
+  // ID of the agent requesting the time off.
+  int64 wfm_agent_sid = 2;
+  // Current status of the time off request.
+  AgentLeavePetitionStatus petition_status = 3;
+  // A comment sent by agent when the time off was requested.
+  string petition_comment = 4;
+  // A response from the manager when the request was approved or denied.
+  // This field is null by default.
+  string response_comment = 5;
+  // A list of datetime ranges to be blocked off on the schedule.
+  repeated DatetimeRange requested_datetime_ranges = 6;
+  // The timestamp from when the request was created.
+  google.protobuf.Timestamp created_time = 7;
+  // The timestamp from when the timestamp was archived, if it has been archived.
+  // This field is null by default.
+  google.protobuf.Timestamp archived_time = 8;
+  // The timestamp from when the timestamp was resolved, if it has been resolved.
+  // The request is resolved when it is either approved or denied.
+  // This field is null by default.
+  google.protobuf.Timestamp resolved_time = 9;
+  // The user ID of the manager who approved or denied the request.
+  // This field is null by default.
+  string resolved_by_user_id = 10;
 }

@@ -144,6 +144,9 @@ message AuthenticationPreferences {
   // Use IP based authorization per user.
   bool user_authorization_via_ip = 19;
 
+  // Restrict sso users from logging in via username and password.
+  bool force_sso_provider = 20;
+
   // A message containing the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
   message DuoMfaSettings {
@@ -800,8 +803,14 @@ message MonthDayDate {
 message CountryHoliday {
   // The name.
   string holiday_name = 1;
-  // The country.
-  api.commons.Country country = 2;
+  // The country.  Deprecated.
+  api.commons.Country country = 2 [deprecated = true];
+  // The country name from holiday service.
+  string country_name = 3;
+  // The type of holiday- eg. National, religious.
+  repeated string types = 4;
+  // The specific sub-regions of the country that celebrate the holiday.
+  repeated string states = 5;
 }
 
 // ProgrammedDay may be a named date or a holiday.

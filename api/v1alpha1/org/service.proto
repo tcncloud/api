@@ -2108,7 +2108,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
         }
       ];
     };
@@ -2121,7 +2121,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
         }
       ];
     };
@@ -2134,7 +2134,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
@@ -2147,7 +2147,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
@@ -2160,7 +2160,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT]
+          permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
       ];
     };
@@ -2559,6 +2559,7 @@ service Org {
 
   // AssignLabels assigns labels to a given permission group
   rpc AssignLabels(AssignLabelsRequest) returns (AssignLabelsResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/permissions/assignlabels";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2572,6 +2573,7 @@ service Org {
 
   // RevokeLabels revokes labels from a given permission group
   rpc RevokeLabels(RevokeLabelsRequest) returns (RevokeLabelsResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/permissions/revokelabels";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
