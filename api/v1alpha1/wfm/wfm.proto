@@ -3263,6 +3263,25 @@ service WFM {
     };
   }
 
+  // Archives an agent leave petition with the given @agent_leave_petition_id for the org sending the request.
+  // If the leave petition has the status of APPROVED_PETITION, and a portion of the petitions @requested_datetime_ranges lies
+  //   in the future, the petition must be canceled first, or the request will error.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, or is already archived.
+  //   - grpc.Internal: error occurs when archiving the agent leave petition.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+  rpc ArchiveAgentLeavePetition(ArchiveAgentLeavePetitionRequest) returns (ArchiveAgentLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/archiveagentleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
   /****************************************************************ADHERENCE RPCS**********************************************************************/
@@ -7155,3 +7174,12 @@ message ListAgentLeavePetitionsResponse {
   // All agent leave petitions requests matching the parameters in the request.
   repeated commons.AgentLeavePetition agent_leave_petitions = 1;
 }
+
+// Request message for the ArchiveAgentLeavePetition.
+message ArchiveAgentLeavePetitionRequest {
+  // ID of the agent leave petition to archive.
+  int64 agent_leave_petition_id = 1;
+}
+
+// Response message for the ArchiveAgentLeavePetition.
+message ArchiveAgentLeavePetitionResponse {}
