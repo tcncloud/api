@@ -12,6 +12,7 @@ message RateSnapshot {
   google.protobuf.Timestamp start_date = 1;
   google.protobuf.Timestamp end_date = 2;
   repeated RateDefinition rates = 3;
+  string user_id = 4;
 }
 
 message RateDefinition {
