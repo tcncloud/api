@@ -1364,10 +1364,8 @@ message PortalSegment {
 // A Flow also comes with the user defined template, form_fields, opts, and text.
 // None of these are required but will affect how the information is shown to the user.
 message PortalWorkflow {
-  // the global data for this flow.
-  // the portal_link data + the plugin_instance data
-  // make up the inital data set that is given to the Actions in "segments".
-  string plugin_instance_id = 1;
+  reserved 1;
+  reserved "plugin_instance_id";
   // the set of actions on the integrations api that must be executed in order
   repeated Action actions = 2;
   // the template that belongs with the result dataset.
@@ -1389,11 +1387,16 @@ message PortalWorkflow {
 
 // an Action is 1 api execution + optional rename of result data step.
 message Action {
+  reserved 4;
+  reserved "rename";
   string workflow_definition_name = 1;
+  // the global data for this action.
+  string plugin_instance_id = 2;
   // when a flow is executed if we find in the result any keys that match
-  // the keys in rename, we will rename the result keys to the matching
-  // value in rename map's.
-  map<string, string> rename = 4;
+  // the keys in rename, we will restructure the keys to the matching
+  // value in these map's.
+  map<string, string> restructure_before = 5;
+  map<string, string> restructure_after = 6;
 }
 
 // template is a container for the different template types on each flow.
