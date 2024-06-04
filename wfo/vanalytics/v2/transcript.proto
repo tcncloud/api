@@ -195,7 +195,7 @@ message Sms {
     google.protobuf.Duration offset = 2;
 
     // The attachments associated with the segment.
-    repeated Attachment attachments = 1;
+    repeated Attachment attachments = 3;
 
     // Attachment metadata.
     message Attachment {
