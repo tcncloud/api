@@ -66,7 +66,7 @@ service ClassifierFileTemplates {
 
 message ParseFileRequest {
   message ReParseFile {
-    int64 file_template_id = 1;
+    int64 file_template_id = 1 [jstype = JS_STRING];
     ParseHints hints = 2 [deprecated = true];
     Opts opts = 3;
   }
@@ -96,12 +96,12 @@ message UpdateFileTemplateRequest {
 }
 message UpdateFileTemplateResponse {}
 message DeleteFileTemplateRequest {
-  int64 file_template = 1;
+  int64 file_template = 1 [jstype = JS_STRING];
 }
 message DeleteFileTemplateResponse {}
 message ListFileTemplatesRequest {
   // if empty we will start at begining/end of list
-  int64 prev_id = 1;
+  int64 prev_id = 1 [jstype = JS_STRING];
   // sort ascending instead of descending
   bool asc = 2;
   // how many records to get
@@ -111,7 +111,7 @@ message ListFileTemplatesResponse {
   repeated FileTemplate file_templates = 1;
 }
 message GetFileTemplateRequest {
-  int64 file_template_id = 1;
+  int64 file_template_id = 1 [jstype = JS_STRING];
 }
 message GetFileTemplateResponse {
   FileTemplate file_template = 1;
