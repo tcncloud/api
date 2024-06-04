@@ -252,6 +252,19 @@ service Learn {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+
+  // list all the different versions
+  rpc ListVersions(ListVersionsReq) returns (ListVersionsRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/listversions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -554,4 +567,16 @@ message ReviewVersionRes {
   string diff_urls = 1;
   // diff of file names between both versions
   string diff_file_names = 2;
+}
+
+// request to list all the learning pages in different versions
+message ListVersionsReq {
+  // locale
+  string locale = 1;
+}
+
+// response to list all the learning pages in different versions
+message ListVersionsRes {
+  // all the existing versions
+  repeated string versions = 1;
 }
