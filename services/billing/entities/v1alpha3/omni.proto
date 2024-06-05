@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha3;
+
+import "services/billing/entities/v1alpha3/matching.proto";
+import "services/billing/entities/v1alpha3/modules.proto";
+
+message OmniSmsConfig {
+  CountryCodePrefix prefixes = 1;
+  BasicConfig config = 2;
+}
+
+message OmniSmsUnitConfig {
+  CountryCodePrefix prefixes = 1;
+  BasicUnitConfig config = 2;
+}

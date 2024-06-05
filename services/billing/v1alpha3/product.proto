@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package services.billing.v1alpha3;
+
+import "services/billing/entities/v1alpha3/rates.proto";
+
+message ListProductsRequest {}
+
+message ListProductsResponse {
+  repeated services.billing.entities.v1alpha3.Product products = 1;
+}
