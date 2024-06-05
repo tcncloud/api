@@ -3,7 +3,7 @@ syntax = "proto3";
 package wfo.vanalytics.v2;
 
 import "api/commons/acd.proto";
-import "api/commons/compliance.proto";
+import "api/commons/omnichannel.proto";
 import "api/commons/vanalytics.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
@@ -34,7 +34,7 @@ message Transcript {
   reserved 11;
 
   // The communication channel of the transcript.
-  api.commons.Channel channel = 12;
+  api.commons.ChannelType channel = 12;
 
   // The time the transcript was started.
   google.protobuf.Timestamp start_time = 13;
@@ -555,7 +555,7 @@ message TranscriptQuery {
   // Query constraints on channel.
   message Channel {
     // Requires all transcript hits to have a channel in the list.
-    repeated api.commons.Channel any = 1;
+    repeated api.commons.ChannelType any = 1;
   }
 
   // Query constraints on metadata.
