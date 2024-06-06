@@ -53,7 +53,7 @@ RUN case $(uname -s) in \
     esac && \
     case $(uname -m) in \
     "x86_64") HOSTARCH="x64" \
-    curl -L -o /usr/local/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.5.1/protoc-3.5.1-linux-x86_64.exe && chmod +x /usr/local/bin/protoc ;; \
+    curl -L -o /usr/local/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.20.3/protoc-3.20.3-linux-x86_64.exe && chmod +x /usr/local/bin/protoc ;; \
     *) echo "Unknown ARCH $(uname -m)" ;; esac
 
 ## install protoc-gen-grpc-java
@@ -79,7 +79,7 @@ ENV PATH=$PATH:/home/vscode/go/bin
 # RUN cat mod | grep -v "tcncloud.net" > go.mod && \
 #     go mod edit -module=git.tcncloud.net/m/protos && \
 #     go mod download && rm -f go.mod mod go.sum
-RUN go install github.com/bufbuild/buf/cmd/buf@v1.18.0
+RUN go install github.com/bufbuild/buf/cmd/buf@latest
 
 
 # install poetry

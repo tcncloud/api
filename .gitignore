@@ -15,3 +15,5 @@ pytcnapi
 *.py
 *.py?
 .DS_Store
+
+/tcnapi-jdk*/

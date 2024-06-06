@@ -1,12 +1,19 @@
-version: v1
+version: v2
 managed:
   enabled: true
-  java_package_prefix:
-    default: com.tcn.cloud.api
-    except:
-      - buf.build/googleapis/googleapis
+  override:
+    - file_option: java_package_prefix
+      value: com.tcn.cloud.api
+    # - file_option: java_package_prefix
+      # module: buf.build/googleapis/googleapis
+      # value: com.google.protobuf
 plugins:
-  - plugin: grpc-java
+  - local: protoc-gen-grpc-java
     out: tcnapi-jdk6/src/main/java
-  - plugin: java
+  - protoc_builtin: java
     out: tcnapi-jdk6/src/main/java
+inputs:
+  - directory: .
+  - module: buf.build/protocolbuffers/wellknowntypes
+  - module: buf.build/googleapis/googleapis
+

@@ -1,9 +1,7 @@
-version: v1
+version: v2
 plugins:
-  - plugin: buf.build/bufbuild/es
+  - remote: buf.build/bufbuild/es
     out: tcnapi-connect-es/src
-    opt: 
-      # Add more plugin options here
-      - target=js+dts
-  - plugin: buf.build/bufbuild/connect-es
+    opt: target=js+dts
+  - remote: buf.build/bufbuild/connect-es
     out: tcnapi-connect-es/src

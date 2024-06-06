@@ -1,14 +1,14 @@
-version: v1
+version: v2
 managed:
   enabled: true
-  java_package_prefix:
-    default: com.tcn.cloud.api
-    except:
-      - buf.build/googleapis/googleapis
+  disable:
+    - file_option: java_package
+      module: buf.build/googleapis/googleapis
+  override:
+    - file_option: java_package_prefix
+      value: com.tcn.cloud.api
 plugins:
-  - plugin: buf.build/grpc/java:v1.57.1
+  - remote: buf.build/grpc/java:v1.57.1
     out: tcnapi-jdk8/src/main/java
-  - plugin: buf.build/protocolbuffers/java:v23.4
+  - remote: buf.build/protocolbuffers/java:v23.4
     out: tcnapi-jdk8/src/main/java
-
-
