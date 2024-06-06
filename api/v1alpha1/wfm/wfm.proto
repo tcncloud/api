@@ -3246,6 +3246,7 @@ service WFM {
 
   // Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
   // If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+  // If no @datetime_range is provided, petitions will be returned across all datetimes.
   // If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
   // If no agent leave petitions are found for the given parameters, an empty slice will be returned.
   // Errors:
