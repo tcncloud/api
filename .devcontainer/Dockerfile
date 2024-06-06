@@ -1,8 +1,26 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 # Install the xz-utils package
 RUN apt update -y && apt install -y wget curl xz-utils build-essential \
-    python3 python3-pip python3-venv python3-poetry git git-lfs fd-find \
+    python3 python3-pip python3-venv python3-poetry git-lfs fd-find \
     openjdk-8-jdk-headless
+
+## Install Git Manually. The default version is 2.45.1 which introduced some breaking changes. We are manually installing the patched version (2.45.2) and can remove this when the ubuntu team releases the patch.
+RUN apt update -y && apt install -y \
+    libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc make curl \
+    && apt-get clean autoclean \
+    && apt-get autoremove --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+RUN curl -L https://github.com/git/git/archive/refs/tags/v2.45.2.tar.gz -o /tmp/git.tar.gz \
+    && tar -zxf /tmp/git.tar.gz -C /tmp 
+
+WORKDIR /tmp/git-2.45.2
+RUN make prefix=/usr/local all \
+    && make prefix=/usr/local install 
+
+WORKDIR /tmp/
+RUN rm -rf /tmp/git.tar.gz && sudo rm -rf /tmp/git-2.45.2
+## End custom Git Install
 
 ## install GOLANG
 RUN case $(uname -s) in \

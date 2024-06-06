@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.trusts;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/agent_profile_group.proto";
+import "api/v1alpha1/org/auth_token.proto";
+import "api/v1alpha1/org/huntgroup.proto";
+import "api/v1alpha1/org/labels.proto";
+import "api/v1alpha1/org/notifications.proto";
+import "api/v1alpha1/org/organization.proto";
+import "api/v1alpha1/org/p3_permissions.proto";
+import "api/v1alpha1/org/permissions.proto";
+import "api/v1alpha1/org/preferences.proto";
+import "api/v1alpha1/org/trusts.proto";
+import "api/v1alpha1/org/user.proto";
+import "google/api/annotations.proto";
+
+service TrustsService {
+  // CreateTrust creates a new trust.
+  rpc CreateTrust(CreateTrustRequest) returns (CreateTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/createtrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // AcceptTrust accepts an incoming trust.
+  rpc AcceptTrust(AcceptTrustRequest) returns (AcceptTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/accepttrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // RejectTrust rejects an incoming trust.
+  rpc RejectTrust(RejectTrustRequest) returns (RejectTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/rejecttrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // GetTrust returns a single trust by trust id.
+  rpc GetTrust(GetTrustRequest) returns (GetTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/gettrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // ListIncomingTrusts returns all pending trusts that are being granted
+  // to the org of the currently logged in user.
+  rpc ListIncomingTrusts(ListIncomingTrustsRequest) returns (ListIncomingTrustsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/list/listincomingtrusts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // ListGivenTrusts returns all trusts that have been given out for
+  // the currently logged in user's org. The returned list will contain
+  // accepted, pending, and rejected trusts.
+  rpc ListGivenTrusts(ListGivenTrustsRequest) returns (ListGivenTrustsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/list/listgiventrusts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // ListAssignableTrusts returns all accepted trusts that are being granted
+  // to the org of the currently logged in user.
+  rpc ListAssignableTrusts(ListAssignableTrustsRequest) returns (ListAssignableTrustsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/list/listassignabletrusts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // DeleteTrust deletes a trust by trust id. Only trusts where the current
+  // org is the grantor can be deleted by this endpoint.
+  rpc DeleteTrust(DeleteTrustRequest) returns (DeleteTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/deletetrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // AssignTrust assigns a trust to the given user ids.
+  rpc AssignTrust(AssignTrustRequest) returns (AssignTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/assigntrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+
+  // UnassignTrust unassigns a trust from the given user id.
+  rpc UnassignTrust(UnassignTrustRequest) returns (UnassignTrustResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/trusts/unassigntrust";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TRUST_MANAGEMENT]
+        }
+      ];
+    };
+  }
+}

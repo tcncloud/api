@@ -330,6 +330,17 @@ service PortalManagerApi {
       ];
     };
   }
+  rpc ListAllActionDefinitions(ListAllActionDefinitionsReq) returns (ListAllActionDefinitionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/listallactiondefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
 }
 
 message UpsertPortalConfigReq {
@@ -575,13 +586,31 @@ message WorkflowRequirement {
   api.commons.integrations.FlowType flow_type = 2;
 }
 
+message ListAllActionDefinitionsReq {}
+
+message ListAllActionDefinitionsResponse {
+  repeated ActionDefinition values = 1;
+}
+
+message WorkflowDefinition {
+  // Payment, Invoice, or other type of flow
+  api.commons.integrations.FlowType flow_type = 1;
+  // the name of this workflow definition
+  string definition_name = 2;
+  reserved 3 to 11;
+  reserved "method", "req_fields", "res_fields", "plugin_fields", "link_fields", "prev_fields", "form_fields", "template", "opts";
+
+  // the list of choices that can be selected for an action during the workflow execution
+  repeated ActionDefinition action_definitions = 12;
+}
+
 // this describes the requirements to build a Flow entity
 // that matches this description.  All created flows must
 // conform to a FlowDefinition.
-message WorkflowDefinition {
+message ActionDefinition {
   // the type of flow
   api.commons.integrations.FlowType flow_type = 1;
-  // the name of this flow definition
+  // the name of this action definition
   string definition_name = 2;
   // the api method performed for this flow.
   api.commons.integrations.RequestMethod method = 3;

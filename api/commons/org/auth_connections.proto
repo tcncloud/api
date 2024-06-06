@@ -43,6 +43,13 @@ message AuthConnectionSettings {
   message SecretExpiration {
     google.protobuf.Timestamp date = 1;
   }
+
+  // resource_url is used as an extra parameter on oidc requests.
+  // It may be required for certain ADFS configuration.
+  string resource_url = 100;
+
+  // use_government_azure reflects whether or not an azure connection uses the government endpoints.
+  bool use_government_azure = 101;
 }
 
 // GroupItem defines settings mapped to a single group.

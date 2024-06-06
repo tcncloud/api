@@ -17,7 +17,7 @@ message FileTemplate {
     // example of a value for this field
     string raw_value = 5;
   }
-  int64 file_template_id = 1;
+  int64 file_template_id = 1 [jstype = JS_STRING];
   string filename = 2;
   repeated Field fields = 3;
   ParseOpts parse_opts = 4 [deprecated = true];
