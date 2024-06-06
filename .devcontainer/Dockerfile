@@ -79,7 +79,7 @@ ENV PATH=$PATH:/home/vscode/go/bin
 # RUN cat mod | grep -v "tcncloud.net" > go.mod && \
 #     go mod edit -module=git.tcncloud.net/m/protos && \
 #     go mod download && rm -f go.mod mod go.sum
-RUN go install github.com/bufbuild/buf/cmd/buf@latest
+RUN go install github.com/bufbuild/buf/cmd/buf@1.32.2
 
 
 # install poetry
