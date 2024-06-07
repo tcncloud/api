@@ -33,7 +33,8 @@ RUN case ${TARGETARCH} in \
     chmod +x /usr/local/bin/protoc-gen-grpc-java && \
     cd /usr/local && \
     unzip /tmp/protoc.zip && \
-    rm /tmp/protoc.zip 
+    rm /tmp/protoc.zip && \
+    npm install -g ts-protoc-gen
 
 
 # ENTRYPOINT [ "/bin/bash", "-c" ]
