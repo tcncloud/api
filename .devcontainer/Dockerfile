@@ -36,14 +36,14 @@ RUN case ${TARGETARCH} in \
     rm /tmp/protoc.zip 
 
 
-ENTRYPOINT [ "/bin/bash", "-c" ]
+# ENTRYPOINT [ "/bin/bash", "-c" ]
 
 # # Install the xz-utils package
 # RUN apt update -y && apt install -y wget curl xz-utils build-essential \
 #     python3 python3-pip python3-venv python3-poetry git-lfs fd-find \
 #     openjdk-8-jdk-headless
 
-# ## Install Git Manually. The default version is 2.45.1 which introduced some breaking changes. We are manually installing the patched version (2.45.2) and can remove this when the ubuntu team releases the patch.
+# ## Install Git Manually.  default version is 2.45.1 which introduced some breaking changes. We are manually installing the patched version (2.45.2) and can remove this when the ubuntu team releases the patch.
 # RUN apt update -y && apt install -y \
 #     libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc make curl \
 #     && apt-get clean autoclean \
