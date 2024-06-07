@@ -15,20 +15,18 @@ RUN apt update -y && \
     nodejs npm \
     unzip \
     && apt-get clean autoclean 
-    # build-essential \
-    # python3 python3-pip python3-venv python3-poetry git-lfs \
-    # openjdk-8-jdk-headless \
+
 RUN case ${TARGETARCH} in \
     "arm64") \
-        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.11.0-$TARGETOS-aarch_64.zip && \
+        wget -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.11.0-$TARGETOS-aarch_64.zip && \
         wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-aarch_64.exe \
         ;; \
     "amd64") \
-        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-x86_64.zip && \
+        wget -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-x86_64.zip && \
         wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-x86_64.exe  \
         ;; \
     *) \
-        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-$TARGETARCH.zip && \
+        wget -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-$TARGETARCH.zip && \
         wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-$TARGETARCH.exe \
         ;; \
     esac && \
