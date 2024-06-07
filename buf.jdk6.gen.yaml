@@ -10,6 +10,8 @@ managed:
 plugins:
   - local: protoc-gen-grpc-java
     out: tcnapi-jdk6/src/main/java
+  # - remote: buf.build/grpc/java:v1.50.0
+    # out: tcnapi-jdk6/src/main/java
   - protoc_builtin: java
     out: tcnapi-jdk6/src/main/java
 inputs:

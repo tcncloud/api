@@ -1,33 +1,41 @@
-FROM bufbuild/buf:latest
+FROM golang:latest as bufbuild
+
+RUN go install github.com/bufbuild/buf/cmd/buf@v1.32.2
+
+FROM ubuntu:latest
 ARG TARGETARCH
 ARG TARGETOS
 
-
+COPY --from=bufbuild /go/bin/buf /usr/local/bin/buf
 #ENV XARCH=$TARGETARCH
 #ENV XOS=$TARGETOS
 
+RUN apt update -y && \
+    apt install -y wget curl xz-utils \
+    nodejs npm \
+    unzip \
+    && apt-get clean autoclean 
+    # build-essential \
+    # python3 python3-pip python3-venv python3-poetry git-lfs \
+    # openjdk-8-jdk-headless \
 RUN case ${TARGETARCH} in \
     "arm64") \
-        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.20.3/protoc-3.20.3-$TARGETOS-aarch_64.zip \
+        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.11.0-$TARGETOS-aarch_64.zip && \
+        wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-aarch_64.exe \
         ;; \
     "amd64") \
-        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.20.3/protoc-3.20.3-$TARGETOS-x86_64.zip \
+        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-x86_64.zip && \
+        wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-x86_64.exe  \
         ;; \
     *) \
-        # wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.20.3/protoc-3.20.3-$TARGETOS-$TARGETARCH.zip \
+        wget -S -O /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.11.0/protoc-3.20.3-$TARGETOS-$TARGETARCH.zip && \
+        wget -O /usr/local/bin/protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.26.0/protoc-gen-grpc-java-1.26.0-$TARGETOS-$TARGETARCH.exe \
         ;; \
     esac && \
+    chmod +x /usr/local/bin/protoc-gen-grpc-java && \
     cd /usr/local && \
     unzip /tmp/protoc.zip && \
-    rm /tmp/protoc.zip && \
-    apk --no-cache add \
-    python3 python3-dev py3-pip \
-    xz curl bash \
-    git git-lfs \
-    go \
-    nodejs npm \
-    && \
-    npm install -g ts-protoc-gen
+    rm /tmp/protoc.zip 
 
 
 ENTRYPOINT [ "/bin/bash", "-c" ]
@@ -86,7 +94,7 @@ ENTRYPOINT [ "/bin/bash", "-c" ]
 #     esac && \
 #     case $(uname -m) in \
 #     "x86_64") HOSTARCH="x64" \
-#     curl -L -o /usr/local/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.20.3/protoc-3.20.3-linux-x86_64.exe && chmod +x /usr/local/bin/protoc ;; \
+#     curl -L -o /usr/local/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.11.0/protoc-3.20.3-linux-x86_64.exe && chmod +x /usr/local/bin/protoc ;; \
 #     *) echo "Unknown ARCH $(uname -m)" ;; esac
 
 # ## install protoc-gen-grpc-java
