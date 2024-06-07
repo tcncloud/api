@@ -30,7 +30,7 @@ RUN case ${TARGETARCH} in \
     npm install -g ts-protoc-gen
 
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash", "-c" ]
 
 # # Install the xz-utils package
 # RUN apt update -y && apt install -y wget curl xz-utils build-essential \
