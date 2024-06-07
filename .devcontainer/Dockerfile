@@ -22,7 +22,7 @@ RUN case ${TARGETARCH} in \
     rm /tmp/protoc.zip && \
     apk --no-cache add \
     python3 python3-dev py3-pip \
-    xz curl \
+    xz curl bash \
     git git-lfs \
     go \
     nodejs npm \
@@ -30,7 +30,7 @@ RUN case ${TARGETARCH} in \
     npm install -g ts-protoc-gen
 
 
-ENTRYPOINT [ "/bin/sh" ]
+ENTRYPOINT [ "/bin/bash" ]
 
 # # Install the xz-utils package
 # RUN apt update -y && apt install -y wget curl xz-utils build-essential \
