@@ -2,6 +2,7 @@ node_modules
 package-lock.json
 api-go
 tcnapi-jdk8
+tcnapi-jdk6
 tcnapi-connect-es
 tcnapi-grpc-web
 pytcnapi
