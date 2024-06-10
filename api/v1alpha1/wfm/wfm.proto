@@ -3294,7 +3294,7 @@ service WFM {
   //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is not pending approval.
   //   - grpc.Internal: error occurs when resolving the agent leave petition, or adding time off shifts to the agent's schedule.
   //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
-  rpc ResolveAgentLeavePetition (ResolveAgentLeavePetitionRequest) returns (ResolveAgentLeavePetitionResponse) {
+  rpc ResolveAgentLeavePetition(ResolveAgentLeavePetitionRequest) returns (ResolveAgentLeavePetitionResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/resolveagentleavepetition";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -3313,7 +3313,7 @@ service WFM {
   //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
   //   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts to the agent's schedule.
   //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
-  rpc CancelAgentLeavePetition (CancelAgentLeavePetitionRequest) returns (CancelAgentLeavePetitionResponse) {
+  rpc CancelAgentLeavePetition(CancelAgentLeavePetitionRequest) returns (CancelAgentLeavePetitionResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/cancelagentleavepetition";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -3324,7 +3324,6 @@ service WFM {
       ];
     };
   }
-
 
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
