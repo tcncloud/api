@@ -3290,6 +3290,10 @@ service WFM {
   // If a petition is approved, time off shifts will be added to the agent's schedule across the requested_datetime_ranges.
   // If @retain_partial_shifts is true, partial shifts overlapping the requested_datetime_ranges will have the remaining portion of the shift retained.
   // If @retain_partial_shifts is false, the entirety of shifts overlapping the requested_datetime_ranges range will be deleted.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is not pending approval.
+  //   - grpc.Internal: error occurs when resolving the agent leave petition, or adding time off shifts to the agent's schedule.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
   rpc ResolveAgentLeavePetition (ResolveAgentLeavePetitionRequest) returns (ResolveAgentLeavePetitionResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/resolveagentleavepetition";
     option (google.api.http).body = "*";
@@ -3305,6 +3309,10 @@ service WFM {
   // Cancels the given @agent_leave_petition_id for the organization sending the request.
   // If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
   //   but any desired shifts must be added by the user after that leave is canceled.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+  //   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts to the agent's schedule.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
   rpc CancelAgentLeavePetition (CancelAgentLeavePetitionRequest) returns (CancelAgentLeavePetitionResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/cancelagentleavepetition";
     option (google.api.http).body = "*";
