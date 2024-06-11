@@ -10,4 +10,23 @@ message ContactManagerEntryGetEncEvent {}
 
 message ContactManagerDeleteEvent {}
 
-message ContactManagerKycEvent {}
+//payload for add/edit/decrypt
+message ContactManagerEntryEvent {
+  int64 ContactManagerListId = 1; //contact manager list id
+  int64 ContactManagerEntryId = 2; //contact manager entry id
+  repeated int64 ContactManagerEntryListIds = 3; //entry list Ids added/edited/decrypted
+}
+
+//payload for contact list upload
+message ContactManagerListUploadEvent {
+  int64 ContactManagerListId = 1; //contact manager list id
+  int64 NumberOfContactsUploaded = 2; //number of contacts inserted
+}
+
+//payload for decrypt of ContactManagerEntry during KYC
+message ContactManagerKycEvent {
+  int64 ContactManagerListId = 1; //contact manager list id
+  int64 ContactManagerEntryId = 2; //contact manager entry id
+  repeated string types = 3; // kyc key (non pii) types
+  repeated int64 ContactManagerEntryListIds = 4; //entry list Ids decrypted
+}
