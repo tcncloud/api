@@ -111,3 +111,12 @@ message DeleteAutoEvaluationByOrgIdRequest {
   string org_id = 1; // Required - org id of auto evaluations
   int64 auto_evaluation_id = 2; // Required - unique id of auto evalution to delete.
 }
+
+// BulkDeleteAutoEvaluationsRequest is a request to delete auto evaluations
+message BulkDeleteAutoEvaluationsRequest {
+  string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
+  repeated int64 auto_evaluation_ids = 2; // Required - unique id of evaluation to get
+}
+
+// BulkDeleteAutoEvaluationsResponse is a response with deleted evaluations
+message BulkDeleteAutoEvaluationsResponse {}

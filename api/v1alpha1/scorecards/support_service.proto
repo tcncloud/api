@@ -38,6 +38,32 @@ service ScorecardsSupport {
     };
   }
 
+  // BulkDeleteEvaluations deletes a set of evaluations in a given org.
+  rpc BulkDeleteEvaluations(BulkDeleteEvaluationsRequest) returns (BulkDeleteEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/bulkdeleteevaluations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // BulkDeleteAutoEvaluations deletes a set of auto evaluations in a given org.
+  rpc BulkDeleteAutoEvaluations(BulkDeleteAutoEvaluationsRequest) returns (BulkDeleteAutoEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/bulkdeleteautoevaluations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
   // DeleteEvaluationByOrgId delete an evaluation in a specific org
   rpc DeleteEvaluationByOrgId(DeleteEvaluationByOrgIdRequest) returns (DeleteEvaluationResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecardssupport/deleteevaluationbyorgid";
