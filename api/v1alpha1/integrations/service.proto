@@ -1383,13 +1383,13 @@ message PortalWorkflow {
   repeated Condition demo_fail_conditions = 9;
   repeated Condition demo_pass_conditions = 10;
   map<string, string> demo_results = 11;
+  string workflow_definition_name = 12;
 }
 
 // an Action is 1 api execution + optional rename of result data step.
 message Action {
-  reserved 4;
-  reserved "rename";
-  string workflow_definition_name = 1;
+  reserved 1, 4;
+  reserved "rename", "workflow_definition_name";
   // the global data for this action.
   string plugin_instance_id = 2;
   // when a flow is executed if we find in the result any keys that match
@@ -1397,6 +1397,7 @@ message Action {
   // value in these map's.
   map<string, string> restructure_before = 5;
   map<string, string> restructure_after = 6;
+  string action_definition_name = 7;
 }
 
 // template is a container for the different template types on each flow.

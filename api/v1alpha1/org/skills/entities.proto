@@ -176,3 +176,30 @@ message GetAgentSkillsResponse {
   // skills found for the given parameters, will be value pairs (name, level).
   map<string, int64> skills = 1;
 }
+
+// Request message for the ListAssignedSkillGroups RPC.
+message ListAssignedSkillGroupsRequest {}
+
+// Response message for the ListAssignedSkillGroups RPC.
+message ListAssignedSkillGroupsResponse {
+  // The returned list of skill groups for current user
+  repeated api.commons.org.SkillGroup skill_groups = 1;
+}
+
+// Request message for the AssignOwnSkillGroups rpc.
+message AssignOwnSkillGroupsRequest {
+  // The ids of the skill groups to be assigned.
+  repeated string skill_group_ids = 1;
+}
+
+// Response message for the AssignOwnSkillGroups rpc.
+message AssignOwnSkillGroupsResponse {}
+
+// Request message for the RevokeOwnSkillGroups rpc.
+message RevokeOwnSkillGroupsRequest {
+  // The ids of the skill groups to be revoked.
+  repeated string skill_group_ids = 1;
+}
+
+// Response message for the RevokeOwnSkillGroups rpc.
+message RevokeOwnSkillGroupsResponse {}

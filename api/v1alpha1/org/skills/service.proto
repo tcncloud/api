@@ -28,6 +28,9 @@ service SkillsService {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
         }
       ];
     };
@@ -197,5 +200,38 @@ service SkillsService {
     option (google.api.http).post = "/api/v1alpha1/skills/listskillsforcurrentagent";
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Returns a list of skills for the current user.
+  rpc ListAssignedSkillGroups(ListAssignedSkillGroupsRequest) returns (ListAssignedSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/listassignedskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // AssignOwnSkillGroups updates the current users skill groups
+  rpc AssignOwnSkillGroups(AssignOwnSkillGroupsRequest) returns (AssignOwnSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/assignownskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
+        }
+      ];
+    };
+  }
+
+  // RevokeOwnSkillGroups updates the current users skill groups
+  rpc RevokeOwnSkillGroups(RevokeOwnSkillGroupsRequest) returns (RevokeOwnSkillGroupsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/skills/revokeownskillgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
+        }
+      ];
+    };
   }
 }
