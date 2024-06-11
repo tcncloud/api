@@ -3,6 +3,7 @@ syntax = "proto3";
 package wfo.vanalytics.v2;
 
 import "api/commons/acd.proto";
+import "api/commons/omnichannel.proto";
 import "api/commons/vanalytics.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
@@ -10,12 +11,6 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "wfo/vanalytics/v2/agent_call_log.proto";
 import "wfo/vanalytics/v2/transcript_summary.proto";
-
-// An enumeration of transcript communication channels.
-enum Channel {
-  CHANNEL_CALL = 0;
-  CHANNEL_SMS = 1;
-}
 
 // An enumeration of a flagged transcripts review statuses. Todo means there
 // are flags that need review and have not been reviewed. Done means every flag
@@ -39,7 +34,7 @@ message Transcript {
   reserved 11;
 
   // The communication channel of the transcript.
-  Channel channel = 12;
+  api.commons.ChannelType channel = 12;
 
   // The time the transcript was started.
   google.protobuf.Timestamp start_time = 13;
@@ -560,7 +555,7 @@ message TranscriptQuery {
   // Query constraints on channel.
   message Channel {
     // Requires all transcript hits to have a channel in the list.
-    repeated wfo.vanalytics.v2.Channel any = 1;
+    repeated api.commons.ChannelType any = 1;
   }
 
   // Query constraints on metadata.
