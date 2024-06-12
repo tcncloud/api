@@ -415,6 +415,8 @@ message StandaloneReq {
   string locale = 1;
   // categorize the articles
   string category = 2;
+  // version
+  string version = 3;
 }
 
 // standalone articles
@@ -440,6 +442,8 @@ message DeleteStandaloneReq {
   string locale = 1;
   // list of article names
   repeated string article_names = 2;
+  // version
+  string version = 3;
 }
 
 // response to delete standalone articles
@@ -449,6 +453,8 @@ message DeleteStandaloneRes {}
 message SnippetReq {
   // locale used for the markdown contents
   string locale = 1;
+  // version
+  string version = 3;
 }
 
 // response to get snippets
@@ -474,6 +480,8 @@ message DeleteLearnPagesReq {
   string locale = 1;
   // list of learning urls to be deleted
   repeated string url = 2;
+  // version
+  string version = 3;
 }
 
 // response to delete learn pages
@@ -485,10 +493,15 @@ message CreateEditVersionReq {
   string src_version = 1;
   // dest version
   string dest_version = 2;
+  // dest version name
+  string dest_version_name = 3;
 }
 
 // response to create edit version
-message CreateEditVersionRes {}
+message CreateEditVersionRes {
+  // details about version
+  VersionDetails version_details = 1;
+}
 
 // request to publish version
 message PublishVersionReq {
@@ -497,7 +510,10 @@ message PublishVersionReq {
 }
 
 // response to publish version
-message PublishVersionRes {}
+message PublishVersionRes {
+  // details about version
+  VersionDetails version_details = 1;
+}
 
 // request to retrieve learning pages content from the url by version
 message ContentByVersionReq {
@@ -579,4 +595,20 @@ message ListVersionsReq {
 message ListVersionsRes {
   // all the existing versions
   repeated string versions = 1;
+  // all the details about versions
+  repeated VersionDetails version_details = 2;
+}
+
+// version details
+message VersionDetails {
+  // version
+  string version = 1;
+  // version name
+  string version_name = 2;
+  // version creation date
+  google.protobuf.Timestamp date_created = 3;
+  // version publised date
+  google.protobuf.Timestamp date_published = 4;
+  // published status
+  string status = 5;
 }
