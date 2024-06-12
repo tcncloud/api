@@ -120,6 +120,7 @@ message MfaInfo {
     NoneSelected none = 10;
     OtpType otp = 11;
     Duo duo = 12;
+    TotpType totp = 13;
   }
 
   message NoneSelected {
@@ -138,6 +139,12 @@ message MfaInfo {
 
   message Duo {
     string duo_username = 1;
+  }
+
+  // TotpType is the type of MFA that uses a time-based one-time password.
+  message TotpType {
+    // The secret key that is generated when the user sets up the authenticator.
+    string secret_key = 1;
   }
 }
 

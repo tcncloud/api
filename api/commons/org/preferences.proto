@@ -143,9 +143,10 @@ message AuthenticationPreferences {
   int32 password_reset_day_interval = 18;
   // Use IP based authorization per user.
   bool user_authorization_via_ip = 19;
-
   // Restrict sso users from logging in via username and password.
   bool force_sso_provider = 20;
+  // Whether or not to enable TOTP for 2FA.
+  bool enable_totp = 21;
 
   // A message containing the settings needed to set up a duo mfa client for an organization.
   // The duo client secret is not included here - it only exists on the update api.
