@@ -1064,6 +1064,7 @@ message Process {
     SplitCriteria split = 75;
     EpicEntrypoint epic_entry_point = 76;
     ContactManagerSink contact_manager_sink = 77;
+    Sum sum = 78;
   }
 }
 
@@ -2334,6 +2335,16 @@ message ContactManagerSink {
   // how long the data uploaded to this list lives for
   // if nil we default to the duration for 30 days
   google.protobuf.Duration lifetime = 9;
+}
+
+message Sum {
+  // field to sum
+  string field = 1;
+  // new_name for the summed field
+  string new_name = 2;
+  // conditions to limit which record's fields will be summed
+  // we will AND these together
+  FilterOperation filter = 4;
 }
 
 // stored as json in lms_history table
