@@ -24,5 +24,5 @@ message TranscriptSummary {
   // Summary content provided in multiple bullet points.
   repeated string bullet_points = 1;
   // Status of the summary.
-  commons.TranscriptSummaryStatus status = 2;
+  api.commons.TranscriptSummaryStatus status = 2;
 }
