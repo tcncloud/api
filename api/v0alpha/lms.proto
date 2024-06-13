@@ -2342,9 +2342,17 @@ message Sum {
   string field = 1;
   // new_name for the summed field
   string new_name = 2;
+  // optional group_by to aggregate data
+  // before summing the desired field
+  GroupBy group_by = 3;
   // conditions to limit which record's fields will be summed
   // we will AND these together
   FilterOperation filter = 4;
+}
+
+message GroupBy {
+  // fields to group data by
+  repeated string fields = 1;
 }
 
 // stored as json in lms_history table
