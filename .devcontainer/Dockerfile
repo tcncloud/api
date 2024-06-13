@@ -11,7 +11,7 @@ COPY --from=bufbuild /go/bin/buf /usr/local/bin/buf
 #ENV XOS=$TARGETOS
 
 RUN apt update -y && \
-    apt install -y wget curl xz-utils \
+    apt install -y wget jq curl xz-utils \
     nodejs npm \
     unzip \
     && apt-get clean autoclean 
