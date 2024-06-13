@@ -2,15 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.vanalytics;
 
-// TranscriptSummaryStatus defines a set of possible statuses
-// in which transcript summaries may exist.
-enum TranscriptSummaryStatus {
-  QUEUED = 0;
-  QUEUED_ERRORED = -1;
-  SUMMARIZED = 1;
-  SUMMARIZED_ERRORED = -2;
-  VISIBLE = 2;
-}
+import "api/commons/vanalytics.proto";
 
 // [GET] ==================================================================
 
@@ -32,5 +24,5 @@ message TranscriptSummary {
   // Summary content provided in multiple bullet points.
   repeated string bullet_points = 1;
   // Status of the summary.
-  TranscriptSummaryStatus status = 2;
+  commons.TranscriptSummaryStatus status = 2;
 }

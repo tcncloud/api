@@ -16,3 +16,25 @@ enum Interval {
   LAST_90_DAYS = 9;
   LAST_180_DAYS = 10;
 }
+
+// TranscriptSummaryStatus defines a set of possible statuses
+// in which transcript summaries may exist.
+enum TranscriptSummaryStatus {
+  // Initial - Summary is currently
+  // queued and awaiting generation.
+  QUEUED = 0;
+
+  // Summary could not be generated.
+  QUEUED_ERRORED = -1;
+
+  // Summary has been generated.
+  // Waiting to be added to transcript.
+  SUMMARIZED = 1;
+
+  // Summary could not be added to transcript.
+  SUMMARIZED_ERRORED = -2;
+
+  // Summary is generated and visible
+  // as part of the transcript.
+  VISIBLE = 2;
+}
