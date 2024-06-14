@@ -1635,6 +1635,7 @@ message GetAvailableHeadersRes {
 
 // GetOmniExchangeElementsRequest - request to retrieve all omni exchange elements for contact lists
 message GetOmniExchangeElementsRequest {}
+
 // GetOmniExchangeElementsResult
 message GetOmniExchangeElementsResult {
   // the available contact list headers
