@@ -346,6 +346,32 @@ service OmniApi {
     };
   }
 
+  // GetOmniExchangeElements - retrieves all omni exchange elements from lms service
+  rpc GetOmniExchangeElements(GetOmniExchangeElementsRequest) returns (GetOmniExchangeElementsResult) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getomniexchangeelements";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
+  // GetFieldsForElement - takes an omni exchange element and returns fields for it
+  rpc GetFieldsForElement(GetFieldsForElementRequest) returns (GetFieldsForElementResult) {
+    option (google.api.http).post = "/api/v0alpha/omniapi/getfieldsforelement";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ];
+    };
+  }
+
   // ApproveTask approves a task.
   rpc ApproveTask(ApproveTaskRequest) returns (ApproveTaskResponse) {
     option (google.api.http).post = "/api/v0alpha/omniapi/approvetask";
@@ -1605,6 +1631,26 @@ message GetAvailableHeadersReq {}
 message GetAvailableHeadersRes {
   // the available contact list headers
   repeated HeaderGroup headers = 1;
+}
+
+// GetOmniExchangeElementsRequest - request to retrieve all omni exchange elements for contact lists
+message GetOmniExchangeElementsRequest {}
+// GetOmniExchangeElementsResult
+message GetOmniExchangeElementsResult {
+  // the available contact list headers
+  repeated OmniExchange headers = 1;
+}
+message OmniExchange {
+  string exchange_id = 1;
+  string name = 2;
+}
+
+// GetFieldsForElementRequest request to retrieve all fields for an omni exchange
+message GetFieldsForElementRequest {
+  OmniExchange exchange = 1;
+}
+message GetFieldsForElementResult {
+  repeated Header headers = 1;
 }
 
 // Header - represents a header for a contact list
