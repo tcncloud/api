@@ -461,7 +461,7 @@ message SnippetReq {
   // locale used for the markdown contents
   string locale = 1;
   // version
-  string version = 3;
+  string version = 2;
 }
 
 // response to get snippets
