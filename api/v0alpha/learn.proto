@@ -211,13 +211,7 @@ service Learn {
   rpc ListSearchResultsByVersion(SearchContentByVersionReq) returns (stream SearchRes) {
     option (google.api.http).post = "/api/v0alpha/learn/listsearchresultsbyversion";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_LEARN_EDIT]
-        }
-      ];
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // return diff by comparing file contens from any version
@@ -256,6 +250,19 @@ service Learn {
   // list all the different versions
   rpc ListVersions(ListVersionsReq) returns (ListVersionsRes) {
     option (google.api.http).post = "/api/v0alpha/learn/listversions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // returns urls as a stream after comparing version contents between both versions
+  rpc ReviewVersionStream(ReviewVersionReq) returns (stream ReviewVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/reviewversionstream";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -577,7 +584,7 @@ message ReviewVersionReq {
   string locale = 2;
 }
 
-// response to list of differences after comparing different versions
+// response to list of differences after comparing different version contents
 message ReviewVersionRes {
   // diff of urls between both versions
   string diff_urls = 1;
