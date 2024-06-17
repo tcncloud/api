@@ -590,6 +590,10 @@ message ReviewVersionRes {
   string diff_urls = 1;
   // diff of file names between both versions
   string diff_file_names = 2;
+  // src version content
+  string src_content = 3;
+  // dest version content
+  string dest_content = 4;
 }
 
 // request to list all the learning pages in different versions
