@@ -28,8 +28,8 @@ message GhostNotification {
     AgentDirectedCallHangupAlert directed_call_hangup = 8;
     // notification about the current state of queued call for an agent
     AgentQueuedCallsNotification agent_queued_calls_notification = 9;
-    // alert that an auth token is about to expire
-    api.commons.org.AuthTokenNotification auth_token_notification = 10;
+    // notification that an auth token is about to expire
+    api.commons.org.AuthTokenExpiration auth_token_expiration = 10;
     // ... undetermined other possible payloads
   }
 }

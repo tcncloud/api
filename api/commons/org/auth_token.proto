@@ -16,8 +16,8 @@ message AuthToken {
   google.protobuf.Timestamp expiration = 4;
 }
 
-// AuthTokenNotification is used to notify the user about an auth token expiration
-message AuthTokenNotification {
+// AuthTokenExpiration is used to notify the user about an auth token expiration
+message AuthTokenExpiration {
   // The token that is expiring
   string token = 1;
   // The token expiration
