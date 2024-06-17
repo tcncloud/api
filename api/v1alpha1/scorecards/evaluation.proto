@@ -123,11 +123,14 @@ message DeleteEvaluationByOrgIdRequest {
 // BulkDeleteEvaluationsRequest is a request to delete evaluations
 message BulkDeleteEvaluationsRequest {
   string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
-  repeated int64 evaluation_ids = 2; // Required - unique id of evaluation to get
+  repeated int64 evaluation_ids = 2; // Optional. Unique ids of evaluations to delete.
+  api.commons.TimeFilter completed_at = 3; // Optional. Delete evaluations in a specific range.
 }
 
 // BulkDeleteEvaluationsResponse is a response with deleted evaluations
-message BulkDeleteEvaluationsResponse {}
+message BulkDeleteEvaluationsResponse {
+  repeated int64 evaluation_ids = 1; // List of ids for deleted evaluations.
+}
 
 // RestoreEvaluationRequest is request to restore a deleted evaluation
 message RestoreEvaluationRequest {
