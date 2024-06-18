@@ -34,7 +34,6 @@ enum TranscriptSummaryStatus {
   // Summary could not be added to transcript.
   TRANSCRIPT_SUMMARY_SUMMARIZED_ERRORED = -2;
 
-  // Summary is generated and visible
-  // as part of the transcript.
+  // Summary is generated and visible.
   TRANSCRIPT_SUMMARY_VISIBLE = 2;
 }
