@@ -265,6 +265,32 @@ service Learn {
       ];
     };
   }
+
+  // returns urls as a stream after comparing version contents between both versions
+  rpc ReviewVersionStream(ReviewVersionReq) returns (stream ReviewVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/reviewversionstream";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
+
+  // delete version from learn
+  rpc DeleteVersion(DeleteVersionReq) returns (DeleteVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/deleteversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -415,6 +441,8 @@ message StandaloneReq {
   string locale = 1;
   // categorize the articles
   string category = 2;
+  // version
+  string version = 3;
 }
 
 // standalone articles
@@ -440,6 +468,8 @@ message DeleteStandaloneReq {
   string locale = 1;
   // list of article names
   repeated string article_names = 2;
+  // version
+  string version = 3;
 }
 
 // response to delete standalone articles
@@ -449,6 +479,8 @@ message DeleteStandaloneRes {}
 message SnippetReq {
   // locale used for the markdown contents
   string locale = 1;
+  // version
+  string version = 2;
 }
 
 // response to get snippets
@@ -474,6 +506,8 @@ message DeleteLearnPagesReq {
   string locale = 1;
   // list of learning urls to be deleted
   repeated string url = 2;
+  // version
+  string version = 3;
 }
 
 // response to delete learn pages
@@ -485,10 +519,15 @@ message CreateEditVersionReq {
   string src_version = 1;
   // dest version
   string dest_version = 2;
+  // dest version name
+  string dest_version_name = 3;
 }
 
 // response to create edit version
-message CreateEditVersionRes {}
+message CreateEditVersionRes {
+  // details about version
+  VersionDetails version_details = 1;
+}
 
 // request to publish version
 message PublishVersionReq {
@@ -497,7 +536,10 @@ message PublishVersionReq {
 }
 
 // response to publish version
-message PublishVersionRes {}
+message PublishVersionRes {
+  // details about version
+  VersionDetails version_details = 1;
+}
 
 // request to retrieve learning pages content from the url by version
 message ContentByVersionReq {
@@ -561,12 +603,16 @@ message ReviewVersionReq {
   string locale = 2;
 }
 
-// response to list of differences after comparing different versions
+// response to list of differences after comparing different version contents
 message ReviewVersionRes {
   // diff of urls between both versions
   string diff_urls = 1;
   // diff of file names between both versions
   string diff_file_names = 2;
+  // src version content
+  string src_content = 3;
+  // dest version content
+  string dest_content = 4;
 }
 
 // request to list all the learning pages in different versions
@@ -579,4 +625,31 @@ message ListVersionsReq {
 message ListVersionsRes {
   // all the existing versions
   repeated string versions = 1;
+  // all the details about versions
+  repeated VersionDetails version_details = 2;
 }
+
+// version details
+message VersionDetails {
+  // version
+  string version = 1;
+  // version name
+  string version_name = 2;
+  // version creation date
+  google.protobuf.Timestamp date_created = 3;
+  // version publised date
+  google.protobuf.Timestamp date_published = 4;
+  // published status
+  string status = 5;
+}
+
+// request to delete version
+message DeleteVersionReq {
+  // locale used for the markdown contents
+  string locale = 1;
+  // version
+  string version = 2;
+}
+
+// response to delete version
+message DeleteVersionRes {}
