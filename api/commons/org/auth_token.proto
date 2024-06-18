@@ -18,6 +18,7 @@ message AuthToken {
 
 // AuthTokenExpiration is used to notify the user about an auth token expiration
 message AuthTokenExpiration {
+  option deprecated = true;
   // The token that is expiring
   string token = 1;
   // The token expiration
