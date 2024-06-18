@@ -2922,6 +2922,21 @@ service Org {
     };
   }
 
+  // GenerateTOTPSecret generates a new TOTP secret key for the current user and
+  // returns it with a url to be displayed as a QR code that can be scanned
+  // by an authenticator app.
+  rpc GenerateTOTPSecret(GenerateTOTPSecretRequest) returns (GenerateTOTPSecretResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/generatetotpsecret";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
   // CreateBusinessHours persists times businesses are available.
   rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
     option deprecated = true;
