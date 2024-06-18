@@ -4,9 +4,17 @@ package api.commons.audit;
 
 import "api/v1alpha1/contactmanager/contactmanager.proto";
 
-message ContactManagerEntryAddEvent {}
+message ContactManagerEntryAddEvent {
+  ContactManagerEntryEvent addEvent = 1; //add event
+}
 
-message ContactManagerEntryGetEncEvent {}
+message ContactManagerEntryGetEncEvent {
+  ContactManagerEntryEvent viewEvent = 1; //View event
+}
+
+message ContactManagerEntryEditEvent {
+  ContactManagerEntryEvent editEvent = 1; //edit event
+}
 
 message ContactManagerDeleteEvent {}
 
