@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package wfo.vanalytics.v2;
 
+import "api/commons/vanalytics.proto";
+
 // [GET] ==================================================================
 
 // GetTranscriptSummaryRequest is a request for getting a transcript summary.
@@ -21,4 +23,6 @@ message GetTranscriptSummaryResponse {
 message TranscriptSummary {
   // Summary content provided in multiple bullet points.
   repeated string bullet_points = 1;
+  // Status of the summary.
+  api.commons.TranscriptSummaryStatus status = 2;
 }
