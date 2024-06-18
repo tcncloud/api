@@ -1064,7 +1064,7 @@ message Process {
     SplitCriteria split = 75;
     EpicEntrypoint epic_entry_point = 76;
     ContactManagerSink contact_manager_sink = 77;
-    Sum sum = 78;
+    SumProcess sum = 78;
   }
 }
 
@@ -2337,7 +2337,7 @@ message ContactManagerSink {
   google.protobuf.Duration lifetime = 9;
 }
 
-message Sum {
+message SumProcess {
   // field to sum
   string field = 1;
   // new_name for the summed field
