@@ -129,7 +129,7 @@ message BulkDeleteEvaluationsRequest {
 
 // BulkDeleteEvaluationsResponse is a response with deleted evaluations
 message BulkDeleteEvaluationsResponse {
-  repeated int64 evaluation_ids = 1; // List of ids for deleted evaluations.
+  int64 count = 1; // Number of evaluations deleted
 }
 
 // RestoreEvaluationRequest is request to restore a deleted evaluation

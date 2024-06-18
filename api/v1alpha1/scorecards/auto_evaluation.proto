@@ -121,5 +121,5 @@ message BulkDeleteAutoEvaluationsRequest {
 
 // BulkDeleteAutoEvaluationsResponse is a response with deleted evaluations
 message BulkDeleteAutoEvaluationsResponse {
-  repeated int64 auto_evaluation_ids = 1; // List of auto evaluations deleted.
+  int64 count = 1; // Number of auto evaluations deleted.
 }
