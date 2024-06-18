@@ -142,10 +142,7 @@ message MfaInfo {
   }
 
   // TotpType is the type of MFA that uses a time-based one-time password.
-  message TotpType {
-    // The secret key that is generated when the user sets up the authenticator.
-    string secret_key = 1;
-  }
+  message TotpType {}
 }
 
 // Agent skill
