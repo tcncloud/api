@@ -22,18 +22,18 @@ enum Interval {
 enum TranscriptSummaryStatus {
   // Initial - Summary is currently
   // queued and awaiting generation.
-  TRANSCRIPT_SUMMARY_QUEUED = 0;
+  TRANSCRIPT_SUMMARY_STATUS_QUEUED = 0;
 
   // Summary could not be generated.
-  TRANSCRIPT_SUMMARY_QUEUED_ERRORED = -1;
+  TRANSCRIPT_SUMMARY_STATUS_QUEUED_ERRORED = -1;
 
   // Summary has been generated.
   // Waiting to be added to transcript.
-  TRANSCRIPT_SUMMARY_SUMMARIZED = 1;
+  TRANSCRIPT_SUMMARY_STATUS_SUMMARIZED = 1;
 
   // Summary could not be added to transcript.
-  TRANSCRIPT_SUMMARY_SUMMARIZED_ERRORED = -2;
+  TRANSCRIPT_SUMMARY_STATUS_SUMMARIZED_ERRORED = -2;
 
   // Summary is generated and visible.
-  TRANSCRIPT_SUMMARY_VISIBLE = 2;
+  TRANSCRIPT_SUMMARY_STATUS_VISIBLE = 2;
 }
