@@ -35,7 +35,12 @@ message ListEnabledProjectsRes {
 // ListTicketAuditLogReq -
 message ListTicketAuditLogReq {
   // ticket_sid  scoping filter
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
+  // ticket_code
+  string ticket_code = 16;
 }
 
 // ListTicketAuditLogRes -
