@@ -84,6 +84,8 @@ message OmniCampaignModule {
     google.protobuf.Int64Value pending_task_count = 5;
     // the number of tasks that failed
     google.protobuf.Int64Value failed_task_count = 6;
+    // the number of tasks that are canceled
+    google.protobuf.Int64Value canceled_task_count = 7;
   }
 }
 

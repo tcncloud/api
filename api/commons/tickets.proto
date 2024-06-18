@@ -7,7 +7,10 @@ import "google/protobuf/timestamp.proto";
 // Ticket - Fields for Ticket creation, List tickets and view ticket
 message Ticket {
   // The snowflake id of a ticket row
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // The imported/enabled ticket_project project_sid from omni.project
   int64 project_sid = 2 [jstype = JS_STRING];
   // project_title
@@ -160,7 +163,10 @@ message TicketAction {
   // To be Deprecated Later
   CallbackContext callback_context = 3;
   // ticket id from ticket table
-  int64 ticket_id = 4 [jstype = JS_STRING];
+  int64 ticket_id = 4 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // Start Date of the ACTION
   google.protobuf.Timestamp start_ts = 5;
   // Expiry date of the ACTION
@@ -185,6 +191,8 @@ message TicketAction {
   }
   // Action Type
   ActionType action_type = 15;
+  // ticket_code
+  string ticket_code = 16;
 }
 
 // Message for Voice Callback Context
@@ -243,7 +251,10 @@ message Comment {
   // The snowflake id of a comment row in ticket_comment.
   int64 comment_sid = 1 [jstype = JS_STRING];
   // The ticket reference where the comment was added.
-  int64 ticket_sid = 2 [jstype = JS_STRING];
+  int64 ticket_sid = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // The comment text
   string comment = 3;
   // commenter by id
@@ -252,11 +263,16 @@ message Comment {
   string created_by_name = 5;
   // created by date
   google.protobuf.Timestamp created_by_date = 6;
+  // ticket_code
+  string ticket_code = 7;
 }
 
 // CloseTicket - Fields for closing a Ticket
 message CloseTicket {
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   int64 status = 2;
   // The comment text
   string comment = 3;
@@ -264,6 +280,8 @@ message CloseTicket {
   int64 from_status = 4;
   // commenter by id
   string created_by_id = 5; // used in creating comment
+  // ticket_code
+  string ticket_code = 6;
 }
 
 // ConfirmClose - Boolean response for closing a Ticket
@@ -322,12 +340,17 @@ message ReplyComment {
   // The snowflake id of a comment row in ticket_comment.
   int64 comment_sid = 1 [jstype = JS_STRING];
   // The ticket reference where the comment was added.
-  int64 ticket_sid = 2 [jstype = JS_STRING];
+  int64 ticket_sid = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // The comment text
   string reply = 3;
   // commenter by id
   string created_by_id = 4; // used in creating comment
   google.protobuf.Timestamp created_by_date = 5;
+  // ticket_code
+  string ticket_code = 6;
 }
 
 // ConfirmReplyComment -
@@ -345,21 +368,31 @@ message TicketAuditLog {
   // Logged event
   string event = 3;
   // ticket_sid
-  int64 ticket_sid = 4 [jstype = JS_STRING];
+  int64 ticket_sid = 4 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // event_type
   string event_type = 5;
   // used in creating comment
   string created_by_id = 6;
   // created by date
   google.protobuf.Timestamp created_by_date = 7;
+  // ticket_code
+  string ticket_code = 8;
 }
 
 // EditTicket - Fields for Edit Ticket , listing attributes of a ticket which can be edited
 message EditTicket {
   // The ticket reference where the comment was added.
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // The comment text
   EditAttribute edit_value = 2;
+  // ticket_code
+  string ticket_code = 3;
 }
 
 message EditAttribute {

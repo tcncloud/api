@@ -117,11 +117,16 @@ message EditTicketReq {
 // EditTicketReq would be deprecated
 message EditMaskTicketReq {
   // Ticket Id
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // Ticket Object
   api.commons.Ticket edit_value = 2;
   // Field to be edited in DB
   repeated google.protobuf.FieldMask edited_fields_mask = 3;
+  // ticket_code
+  string ticket_code = 4;
 }
 
 // EditMaskTicketRes - Response for EditMaskTicketReq
@@ -201,7 +206,12 @@ message AssignTicketRes {
 
 // ViewTicketReq -
 message ViewTicketReq {
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
+  // ticket_code
+  string ticket_code = 2;
 }
 
 // ViewTicketRes -
@@ -215,10 +225,15 @@ message ViewTicketRes {
 message CreateCommentReq {
   // ticket Id of the comment to be created.
 
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
 
   // description of the comment
   string comment = 2;
+  // ticket_code
+  string ticket_code = 3;
 }
 
 // CreateCommenttRes - Response from CreateComment BE API
@@ -230,11 +245,16 @@ message CreateCommentRes {
 // CloseTicketReq - Close Ticket Request Messages
 message CloseTicketReq {
   // ticket Id of the ticket which needs to be closed
-  int64 ticket_sid = 1 [jstype = JS_STRING];
+  int64 ticket_sid = 1 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // description of the comment
   string comment = 2;
   // from status of the ticket
   int64 from_status = 3 [jstype = JS_STRING];
+  // ticket_code
+  string ticket_code = 4;
 }
 
 // CloseTicketRes - Close Ticket Response Messages
@@ -296,11 +316,16 @@ message ReplyCommentReq {
   // The snowflake id of a comment row in ticket_comment.
   int64 comment_sid = 1 [jstype = JS_STRING];
   // The ticket reference where the comment was added.
-  int64 ticket_sid = 2 [jstype = JS_STRING];
+  int64 ticket_sid = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // The comment text
   string reply = 3;
   // commenter by id
   string created_by_id = 4; // used in creating comment
+  // ticket_code
+  string ticket_code = 5;
 }
 
 // ReplyCommentRes - Reply Comment Response Messages
@@ -353,8 +378,13 @@ message CreateTicketActionResponse {
 }
 message CloseTicketActionRequest {
   int64 ticket_action_id = 1 [jstype = JS_STRING];
-  int64 ticket_id = 2 [jstype = JS_STRING];
+  int64 ticket_id = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   string comment = 3;
+  // ticket_code
+  string ticket_code = 4;
 }
 
 message CloseTicketActionResponse {
