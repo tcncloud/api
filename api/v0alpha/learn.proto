@@ -582,8 +582,6 @@ message ReviewVersionReq {
   string version = 1;
   // locale
   string locale = 2;
-  // url
-  string url = 3;
 }
 
 // response to list of differences after comparing different version contents
