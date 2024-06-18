@@ -211,7 +211,13 @@ service Learn {
   rpc ListSearchResultsByVersion(SearchContentByVersionReq) returns (stream SearchRes) {
     option (google.api.http).post = "/api/v0alpha/learn/listsearchresultsbyversion";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
   }
 
   // return diff by comparing file contens from any version
