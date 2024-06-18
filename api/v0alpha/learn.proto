@@ -272,6 +272,19 @@ service Learn {
       ];
     };
   }
+
+  // delete version from learn
+  rpc DeleteVersion(DeleteVersionReq) returns (DeleteVersionRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/deleteversion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ];
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -623,3 +636,14 @@ message VersionDetails {
   // published status
   string status = 5;
 }
+
+// request to delete version
+message DeleteVersionReq {
+  // locale used for the markdown contents
+  string locale = 1;
+  // version
+  string version = 2;
+}
+
+// response to delete version
+message DeleteVersionRes {}
