@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v0alpha;
 
 import "annotations/authz.proto";
+import "annotations/perms/license.proto";
 import "api/commons/org.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -171,6 +172,45 @@ service Dashboards {
             PERMISSION_SUPPORT_TCN_DASHBOARDS_ADMIN,
             PERMISSION_DASHBOARDS_EDIT
           ]
+        }
+      ];
+    };
+  }
+
+  // CreateApplicationDashboard assigns a dashboard to an application
+  rpc CreateApplicationDashboard(CreateApplicationDashboardRequest) returns (CreateApplicationDashboardResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/CreateApplicationDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ];
+    };
+  }
+
+  // ListApplicationDashboards lists applications and their assigned dashboards
+  rpc ListApplicationsDashboards(ListApplicationsDashboardsRequest) returns (ListApplicationsDashboardsResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/ListApplicationsDashboards";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ];
+    };
+  }
+
+  // DeleteApplicationDashboard removes a dashboard from an application
+  rpc DeleteApplicationDashboard(DeleteApplicationDashboardRequest) returns (DeleteApplicationDashboardResponse) {
+    option (google.api.http).post = "/api/v0alpha/dashboards/DeleteApplicationDashboard";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
       ];
     };
@@ -438,3 +478,39 @@ message TimeSpan {
     google.protobuf.Timestamp end = 2;
   }
 }
+
+// CreateApplicationDashboardRequest assigns a dashboard to an application
+message CreateApplicationDashboardRequest {
+  string dashboard_resource_id = 1; // dashboard resource id
+  string org_id = 2; // org id for ownership
+  annotations.perms.Application application = 3; // application enum
+}
+
+// CreateApplicationDashboardResponse is idempotent
+message CreateApplicationDashboardResponse {}
+
+// ListApplicationDashboardsRequest lists apps and assigned dashboards
+message ListApplicationsDashboardsRequest {}
+
+// ApplicationDashboards wraps a list of dashboards for a specific application
+message ApplicationDashboards {
+  // application dashboard id
+  annotations.perms.Application application = 1; // application enum
+  repeated DashboardSummary dashboard_summaries = 2; // dashboards assigned to application
+}
+
+// ListApplicationsDashboardsResponse used in ListApplicationDashboards rpc'
+message ListApplicationsDashboardsResponse {
+  repeated ApplicationDashboards application_dashboards = 1; // list of application dashboards
+}
+
+// DeleteApplicationDashboardRequest used in DeleteApplicationDashboard rpc
+message DeleteApplicationDashboardRequest {
+  // application dashboard id
+  annotations.perms.Application application = 1; // application enum
+  string dashboard_resource_id = 2; // dashboard resource id
+  string org_id = 3; // org id for ownership
+}
+
+// DeleteApplicationDashboardResponse used in DeleteApplicationDashboard rpc
+message DeleteApplicationDashboardResponse {}
