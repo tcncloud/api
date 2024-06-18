@@ -66,7 +66,7 @@ message UpdateDefaultBillingPlanResponse {}
 // rates
 
 message CreateDefaultRateDefinitionRequest {
-  string billing_plan_id = 1;
+  string rate_definition_id = 1;
   services.billing.entities.v1alpha3.RateDefinition rate_definition = 2;
 }
 

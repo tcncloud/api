@@ -38,7 +38,7 @@ service BillingService {
   }
 
   // --------------------------------------------------------------------------
-  // Org Plans
+  // Billing Plans
 
   // Applies a draft billing plan.
   // Required permissions:
@@ -102,7 +102,7 @@ service BillingService {
     };
   }
 
-  // Gets a billing plan for an ORG.
+  // Gets a billing plan.
   // Required permissions:
   //   CUSTOMER_SUPPORT
   // Errors:
@@ -111,8 +111,8 @@ service BillingService {
   //   - grpc.NotFound: The billing plan was not found.
   //   - grpc.PermissionDenied: The caller does not have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
-  rpc GetOrgBillingPlan(GetOrgBillingPlanRequest) returns (GetOrgBillingPlanResponse) {
-    option (google.api.http).post = "/services/billing/v1alpha3/getorgbillingplan";
+  rpc GetBillingPlan(GetBillingPlanRequest) returns (GetBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha3/getbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -123,7 +123,7 @@ service BillingService {
     };
   }
 
-  // Lists billing plans for ORGs.
+  // Lists billing plans.
   // Required permissions:
   //   CUSTOMER_SUPPORT
   // Errors:
@@ -131,8 +131,8 @@ service BillingService {
   //   - grpc.InvalidArgument: The request is invalid.
   //   - grpc.PermissionDenied: The caller does not have the required permissions.
   //   - grpc.Unavailable: The operation is currently unavailable.
-  rpc ListOrgBillingPlans(ListOrgBillingPlansRequest) returns (ListOrgBillingPlansResponse) {
-    option (google.api.http).post = "/services/billing/v1alpha3/listorgbillingplans";
+  rpc ListBillingPlans(ListBillingPlansRequest) returns (ListBillingPlansResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha3/listbillingplans";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -316,7 +316,7 @@ service BillingService {
   }
 
   // --------------------------------------------------------------------------
-  // Org Rate Definitions
+  // Rate Definitions
 
   // Creates a new rate definition.
   // Required permissions:
