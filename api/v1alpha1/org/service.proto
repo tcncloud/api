@@ -2965,6 +2965,45 @@ service Org {
     };
   }
 
+  // CreateCertificateInfo creates a new certificate info for the current organization.
+  rpc CreateCertificateInfo(CreateCertificateInfoRequest) returns (CreateCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/createcertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: []
+        }
+      ];
+    };
+  }
+
+  // DeleteCertificateInfo deletes a certificate info for the current organization.
+  rpc DeleteCertificateInfo(DeleteCertificateInfoRequest) returns (DeleteCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/deletecertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: []
+        }
+      ];
+    };
+  }
+
+  // ListCertificateInfo returns a list of certificate info for the current organization.
+  rpc ListCertificateInfo(ListCertificateInfoRequest) returns (ListCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/listcertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: []
+        }
+      ];
+    };
+  }
+
   // AddGroupedUserIPRestrictions adds a user or list of user's IPs they
   // are required to authenticate with
   rpc AddGroupedUserIPRestrictions(AddGroupedUserIPRestrictionsRequest) returns (AddGroupedUserIPRestrictionsResponse) {
