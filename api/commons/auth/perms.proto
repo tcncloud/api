@@ -24,6 +24,7 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_ORGANIZATION
   }];
+
   // Enables viewing organization related views and data using the
   // organization tools.
   PERMISSION_ORG_VIEW = 101 [(annotations.perms.options) = {
@@ -34,6 +35,13 @@ enum Permission {
       "Campaign Settings",
       "Preferences"
     ]
+  }];
+
+  // Enables creating new TLS certificate, deleting and viewing organization's certificate info.
+  PERMISSION_CERTIFICATE_MANAGEMENT = 102 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_ORGANIZATION
+    features: ["Preferences"]
   }];
 
   // Enables user account imitation for users within the p3 client hierarchy.
@@ -48,21 +56,25 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_USERS
   }];
+  
   // Enables ability to edit users.
   PERMISSION_USER_EDIT = 119 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_USERS
   }];
+  
   // Enable ability for user to change their own password.
   PERMISSION_USER_EDIT_PASSWORD = 120 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_USERS
   }];
+  
   // Enable ability for user to change their user options.
   PERMISSION_USER_EDIT_OPTIONS = 121 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
     card: CARD_USERS
   }];
+  
   // Allows viewing and editing delegated login connections.
   PERMISSION_LOGIN_CONNECTIONS = 260 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
@@ -74,6 +86,7 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_AGENTS
   }];
+  
   // Enables access to agent management app for assigning skills,
   // huntgroup, etc.
   PERMISSION_AGENT_MANAGEMENT = 400 [(annotations.perms.options) = {
@@ -129,6 +142,7 @@ enum Permission {
       "Display Limited Keys"
     ]
   }];
+  
   // Enables access to update hunt group properties and settings.
   PERMISSION_HUNTGROUP_EDIT = 1901 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
@@ -156,6 +170,7 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_SOUNDBOARD
   }];
+  
   // Enables access to create, update, or delete soundboard files.
   PERMISSION_SOUNDBOARD_EDIT = 1701 [(annotations.perms.options) = {
     app: APPLICATION_ORGANIZATION
