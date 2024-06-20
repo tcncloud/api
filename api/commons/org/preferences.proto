@@ -871,3 +871,19 @@ message ObservedHoliday {
     CountryHoliday holiday = 2;
   }
 }
+
+// CertificateInfo contains the organization's certificate information.
+message CertificateInfo {
+  // The id of the organization.
+  string org_id = 1;
+  // The certificate name.
+  string name = 2;
+  // The certificate description.
+  string description = 3;
+  // The certificate hash/fingerprint.
+  string hash = 4;
+  // The certificate expiration date.
+  google.protobuf.Timestamp expiration_date = 5;
+  // The certificate creation date.
+  google.protobuf.Timestamp creation_date = 6;
+}

@@ -700,3 +700,35 @@ message EvaluateBusinessHoursResponse {
   // a day interval of a business hours object
   bool within_range = 1;
 }
+
+// CreateCertificateInfoRequest is the request for creating a certificate info.
+message CreateCertificateInfoRequest {
+  // The name of the certificate info to be created.
+  string name = 1;
+  // The description of the certificate info to be created.
+  string description = 2;
+}
+
+// CreateCertificateInfoResponse is the response for creating a certificate info.
+message CreateCertificateInfoResponse {
+  // The base-64 encoded certificate that was created.
+  string encoded_certificate = 1;
+}
+
+// DeleteCertificateInfoRequest is the request for deleting a certificate info.
+message DeleteCertificateInfoRequest {
+  // The hash/fingerprint of the certificate info to be deleted.
+  string hash = 1;
+}
+
+// DeleteCertificateInfoResponse is the response for deleting a certificate info.
+message DeleteCertificateInfoResponse {}
+
+// ListCertificateInfoRequest is the request for listing certificate info.
+message ListCertificateInfoRequest {}
+
+// ListCertificateInfoResponse is the response for listing certificate info.
+message ListCertificateInfoResponse {
+  // The list of certificate info.
+  repeated api.commons.org.CertificateInfo certificate_info_list = 1;
+}
