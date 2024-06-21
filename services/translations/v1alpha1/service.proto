@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package services.translations.v1alpha1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/translations/v1alpha1/entities.proto";
+
+service TranslationsService {
+  //
+  // Required permissions:
+  //   Any Authenticated User (TODO: Validate this assumption)
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.AlreadyExists : This template is already translated for the given context and language.
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc TranslateTemplate(TranslateTemplateRequest) returns (TranslateTemplateResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/translatetemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+}
