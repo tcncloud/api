@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package services.translations.v1alpha1;
+
+// TranslateTemplateRequest is the request message for the Translate method.
+// Takes a template, context, and language to translate to.
+message TranslateTemplateRequest {
+  // The template to translate.
+  string template = 1;
+
+  // The context of the template.
+  string context = 2;
+}
+
+// TranslateTemplateResponse is the response message for the Translate method.
+message TranslateTemplateResponse {
+  repeated Translation translations = 1;
+}
+
+// Translation is the core entity of the translation service.
+message Translation {
+  // The ID of the translation.
+  string translation_id = 1;
+
+  // The template.
+  string template = 2;
+
+  // The context of the template.
+  string context = 3;
+
+  // The BCP 47 language tag of the translation.
+  string language_tag = 4;
+
+  // The LLM translation.
+  string llm_translation = 5;
+
+  // The manual translation if exixts.
+  string manual_translation = 6;
+}
