@@ -888,4 +888,6 @@ message CertificateInfo {
   google.protobuf.Timestamp expiration_date = 6;
   // The certificate creation date.
   google.protobuf.Timestamp creation_date = 7;
+  // The requestor of the certificate (user id or automated system)
+  string request_by = 8;
 }
