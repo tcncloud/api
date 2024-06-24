@@ -874,16 +874,18 @@ message ObservedHoliday {
 
 // CertificateInfo contains the organization's certificate information.
 message CertificateInfo {
+  // The id of the certificate info.
+  string certificate_info_id = 1;
   // The id of the organization.
-  string org_id = 1;
+  string org_id = 2;
   // The certificate name.
-  string name = 2;
+  string name = 3;
   // The certificate description.
-  string description = 3;
+  string description = 4;
   // The certificate hash/fingerprint.
-  string hash = 4;
+  string hash = 5;
   // The certificate expiration date.
-  google.protobuf.Timestamp expiration_date = 5;
+  google.protobuf.Timestamp expiration_date = 6;
   // The certificate creation date.
-  google.protobuf.Timestamp creation_date = 6;
+  google.protobuf.Timestamp creation_date = 7;
 }

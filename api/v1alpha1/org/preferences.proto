@@ -717,8 +717,8 @@ message CreateCertificateInfoResponse {
 
 // DeleteCertificateInfoRequest is the request for deleting a certificate info.
 message DeleteCertificateInfoRequest {
-  // The hash/fingerprint of the certificate info to be deleted.
-  string hash = 1;
+  // The id of the certificate info to delete.
+  string certificate_info_id = 1;
 }
 
 // DeleteCertificateInfoResponse is the response for deleting a certificate info.
