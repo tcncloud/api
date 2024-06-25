@@ -399,7 +399,7 @@ service Integrations {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-         {
+        {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         },
         {
