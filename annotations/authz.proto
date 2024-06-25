@@ -28,4 +28,12 @@ message Permissions {
 
 message PermissionSet {
   repeated api.commons.auth.Permission permissions = 1;
+  optional Taint taint = 2;
+}
+
+message Taint {
+  // id of the request message field that will be checked.
+  optional int32 id = 1;
+  // value that the request mesage field with id is required to match.
+  optional int32 value = 2;
 }
