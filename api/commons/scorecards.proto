@@ -120,6 +120,8 @@ message Evaluation {
   repeated EvaluationSection evaluation_sections = 9;
   google.protobuf.Timestamp completed_at = 10; // time evaluation was completed
 
+  google.protobuf.Timestamp deleted_at = 12; // time evaluation was deleted
+
   string agent_user_id = 13; // user_id of the agent being evaluated
   api.commons.CallType.Enum call_type = 14; // call type of call being evaluated
   int64 transcript_sid = 15; // optional - transcript sid associated with evaluation
@@ -127,6 +129,7 @@ message Evaluation {
   repeated CustomField custom_fields = 17; // Custom key-value fields.
 
   string deleted_by = 18; // tcn user id of person who deleted evaluation
+  bool is_recoverable = 20; // whether the evaluation can be recovered or not.
 
   // CustomField represents a custom key-value pair defined by users.
   message CustomField {
@@ -303,6 +306,7 @@ message Scorecard {
   bool is_ad_hoc = 16 [deprecated = true]; // Deprecated. Use Ad Hoc category.
   repeated string custom_field_keys = 19; // Optional. Set of unique keys for custom key-value fields.
   repeated api.commons.CallType.Enum call_types = 20; // call types supported by scorecard
+  google.protobuf.Timestamp updated_at = 21; // time scorecard was last updated
 }
 
 // AutoQuestion represents an automatically scored question.
