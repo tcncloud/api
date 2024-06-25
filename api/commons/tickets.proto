@@ -393,6 +393,8 @@ message EditTicket {
   EditAttribute edit_value = 2;
   // ticket_code
   string ticket_code = 3;
+  // ticket_action_id
+  int64 ticket_action_id = 4;
 }
 
 message EditAttribute {
