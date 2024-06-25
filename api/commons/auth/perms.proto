@@ -438,6 +438,9 @@ enum Permission {
     ]
   }];
 
+  // enables write access in omni boss app and dashboards.
+  PERMISSION_OMNI_BOSS_EDIT = 1201 [(annotations.perms.options) = {app: APPLICATION_OMNI_BOSS}];
+
   PERMISSION_OMNI_PORTALS_VIEW = 1210 [(annotations.perms.options) = {
     app: APPLICATION_OMNI_BOSS
     features: ["Portals"]
