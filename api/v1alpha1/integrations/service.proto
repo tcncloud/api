@@ -1364,16 +1364,14 @@ message PortalSegment {
 // A Flow also comes with the user defined template, form_fields, opts, and text.
 // None of these are required but will affect how the information is shown to the user.
 message PortalWorkflow {
-  reserved 1;
-  reserved "plugin_instance_id";
+  reserved 1, 5;
+  reserved "plugin_instance_id", "opts";
   // the set of actions on the integrations api that must be executed in order
   repeated Action actions = 2;
   // the template that belongs with the result dataset.
   Template template = 3;
   // the data that appears on the user form. This is untrusted data.
   repeated api.commons.integrations.FieldDefinition form_fields = 4;
-  // the data that controls optional functionality for some flows.
-  map<string, string> opts = 5;
   // text presented to the user for this flow
   string header_text = 6;
   string footer_text = 7;
@@ -1398,6 +1396,8 @@ message Action {
   map<string, string> restructure_before = 5;
   map<string, string> restructure_after = 6;
   string action_definition_name = 7;
+  // the data that controls optional functionality for some flows.
+  map<string, string> opts = 8;
 }
 
 // template is a container for the different template types on each flow.
