@@ -47,6 +47,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_NAVIGA = 4000;
   INTEGRATION_TYPE_PAYNSECONDS = 4100;
   INTEGRATION_TYPE_SUTHERLANDREV = 4200;
+  INTEGRATION_TYPE_FINVI = 4300;
 
   INTEGRATION_TYPE_DEBUG = 5000;
 }
@@ -310,6 +311,17 @@ enum RequestMethod {
   REQUEST_METHOD_PAYNSECONDS_TOKENIZE_CARD = 4101;
 
   REQUEST_METHOD_SUTHERLANDREV_PAYMENT_CONNECT = 4201;
+
+  REQUEST_METHOD_FINVI_CREATE_CUSTOMER = 4301;
+  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_DETAILS = 4302;
+  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TOKEN_DETAILS = 4303;
+  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TOKENS = 4304;
+  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TRANSACTIONS = 4305;
+  REQUEST_METHOD_FINVI_QUERY_CUSTOMERS = 4306;
+  REQUEST_METHOD_FINVI_QUERY_TRANSACTION_DETAILS = 4307;
+  REQUEST_METHOD_FINVI_QUERY_TRANSACTIONS = 4308;
+  REQUEST_METHOD_FINVI_REMOVE_CUSTOMER_TOKEN = 4309;
+  REQUEST_METHOD_FINVI_UPDATE_CUSTOMER = 4310;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -926,6 +938,17 @@ message ExecuteFlow {
 
     ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
 
+    ExecuteFinviCreateCustomer finvi_create_customer = 4301;
+    ExecuteFinviQueryCustomerDetails finvi_query_customer_details = 4302;
+    ExecuteFinviQueryCustomerTokenDetails finvi_query_customer_token_details = 4303;
+    ExecuteFinviQueryQueryCustomerTokens finvi_query_customer_tokens = 4304;
+    ExecuteFinviQueryCustomerTransactions finvi_query_customer_transactions = 4305;
+    ExecuteFinviQueryCustomers finvi_query_customers = 4306;
+    ExecuteFinviQueryQueryTransactionDetails finvi_query_transaction_details = 4307;
+    ExecuteFinviQueryTransactions finvi_query_transactions = 4308;
+    ExecuteFinviRemoveCustomerToken finvi_remove_customer_token = 4309;
+    ExecuteFinviUpdateCustomer finvi_update_customer = 4310;
+
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
   }
@@ -1259,3 +1282,14 @@ message ExecuteSutherlandrevPaymentConnect {}
 
 message ExecuteDebugEcho {}
 message ExecuteDebugValidate {}
+
+message ExecuteFinviCreateCustomer {}
+message ExecuteFinviQueryCustomerDetails {}
+message ExecuteFinviQueryCustomerTokenDetails {}
+message ExecuteFinviQueryQueryCustomerTokens {}
+message ExecuteFinviQueryCustomerTransactions {}
+message ExecuteFinviQueryCustomers {}
+message ExecuteFinviQueryQueryTransactionDetails {}
+message ExecuteFinviQueryTransactions {}
+message ExecuteFinviRemoveCustomerToken {}
+message ExecuteFinviUpdateCustomer {}
