@@ -1041,6 +1041,15 @@ message GenerateTOTPSecretResponse {
   string qr_code_url = 2;
 }
 
+// VerifyTOTPCodeRequest is the request message for the VerifyTOTPCode rpc.
+message VerifyTOTPCodeRequest {
+  // The TOTP code the user has entered.
+  string code = 1;
+}
+
+// VerifyTOTPCodeResponse is the response message for the VerifyTOTPCode rpc.
+message VerifyTOTPCodeResponse {}
+
 // Request message for the AddGroupedUserIPRestrictions rpc.
 message AddGroupedUserIPRestrictionsRequest {
   // List of users that can only use the provided IPs.

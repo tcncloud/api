@@ -2937,6 +2937,19 @@ service Org {
     };
   }
 
+  // VerifyTOTPCode validates that the given TOTP code and verifies that the user has setup TOTP correctly.
+  rpc VerifyTOTPCode(VerifyTOTPCodeRequest) returns (VerifyTOTPCodeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/user/verifytotpcode";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+        }
+      ];
+    };
+  }
+
   // CreateBusinessHours persists times businesses are available.
   rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
     option deprecated = true;
