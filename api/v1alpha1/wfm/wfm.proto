@@ -1242,6 +1242,24 @@ service WFM {
     };
   }
 
+  // Gets the on call scheduling activity for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.NotFound: the on call scheduling activity for the org is not found.
+  //   -grpc.Internal: error occurs when getting on call scheduling activity.
+  rpc GetOnCallSchedulingActivity(GetOnCallSchedulingActivityReq) returns (GetOnCallSchedulingActivityRes) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getoncallschedulingactivity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   // Creates an agent group with the provided parameters.
   // A successful response should contain the @agent_group_sid of the newly created entity.
   // The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -4692,6 +4710,14 @@ message ListCandidateSchedulingActivitiesReq {
 // Response message for the ListCandidateSchedulingActivitiesRes RPC
 message ListCandidateSchedulingActivitiesRes {
   repeated SchedulingActivity scheduling_activities = 1;
+}
+
+// Request message for the GetOnCallSchedulingActivity RPC
+message GetOnCallSchedulingActivityReq {}
+
+message GetOnCallSchedulingActivityRes {
+  // The on call scheduling activity
+  SchedulingActivity on_call_scheduling_activity = 1;
 }
 
 // Represents a group of agents that have the same parent and other common properties.
