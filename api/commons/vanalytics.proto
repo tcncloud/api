@@ -37,3 +37,11 @@ enum TranscriptSummaryStatus {
   // Summary is generated and visible.
   TRANSCRIPT_SUMMARY_STATUS_VISIBLE = 2;
 }
+
+// TranscriptSentimentTone enumerates the possible sentiment tones.
+enum TranscriptSentimentTone {
+  TRANSCRIPT_SENTIMENT_TONE_UNKNOWN = 0;
+  TRANSCRIPT_SENTIMENT_TONE_NEGATIVE = 1;
+  TRANSCRIPT_SENTIMENT_TONE_NEUTRAL = 2;
+  TRANSCRIPT_SENTIMENT_TONE_POSITIVE = 3;
+}
