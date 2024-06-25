@@ -179,6 +179,9 @@ message Sms {
 
     // The user id of the participant on this thread.
     string user_id = 3;
+
+    // The sentiment of the thread.
+    Sentiment sentiment = 4;
   }
 
   // A segment of text.
@@ -268,6 +271,9 @@ message Call {
 
     // The user id of the participant on this thread.
     string user_id = 3;
+
+    // The sentiment of the thread.
+    Sentiment sentiment = 4;
   }
 
   // A segment of text.
@@ -342,6 +348,48 @@ message Call {
       // The total number of silence occurences in the call.
       uint32 total = 1;
     }
+  }
+}
+
+// The sentiment of a thread.
+message Sentiment {
+  // Overall sentiment estimate for the thread.
+  Estimate overall = 1;
+
+  // Worst dominating tone across thread samples.
+  api.commons.TranscriptSentimentTone worst = 2;
+
+  // Dominant tone across thread samples.
+  api.commons.TranscriptSentimentTone dominant = 3;
+
+  // Last dominating tone of the thread samples.
+  api.commons.TranscriptSentimentTone last = 4;
+
+  // Samples of the thread, split by offset and duration.
+  repeated Sample samples = 5;
+
+  // A sentiment sample.
+  message Sample {
+    // Estimate for the sample.
+    Estimate estimate = 1;
+
+    // Offset of the sample.
+    google.protobuf.Duration offset = 2;
+
+    // Duration of the sample (may be empty for certain transcript kinds).
+    google.protobuf.Duration duration = 3;
+  }
+
+  // A sentiment estimate.
+  message Estimate {
+    // Portion of text deemed positive.
+    float positive = 1;
+
+    // Portion of text deemed neutral.
+    float neutral = 2;
+
+    // Portion of text deemed negative.
+    float negative = 3;
   }
 }
 

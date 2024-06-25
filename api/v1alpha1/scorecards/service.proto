@@ -184,6 +184,9 @@ service Scorecards {
     option (annotations.authz) = {
       sets: [
         {
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
+        },
+        {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         },
         {
