@@ -394,6 +394,20 @@ service Integrations {
       ]
     };
   }
+  rpc ProcessWorkflow(ProcessWorkflowReq) returns (ProcessWorkflowRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/processworkflow";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+         {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1420,4 +1434,24 @@ message PopulateIntegrationLinkReq {
 
 message PopulateIntegrationLinkRes {
   api.commons.org.IntegrationLink integration_link = 1;
+}
+
+message ProcessWorkflowReq{
+  // portal link id is optional depending on the type of portal being processed
+  // if it is specified, we merge in the link data to the request params
+  string portal_link_id = 1;
+  string portal_id = 2;
+  // segment tells us which workflow segment needs processing 
+  int32 segment = 3;
+  // which choice in the workflow array to be processed
+  int32 choice = 4;
+  // params are what the user fills out before it is processed. 
+  // It will be merged with plugin instance data and potentially link data
+  map<string, Value> params = 5;
+}
+
+message ProcessWorkflowRes{
+  bool success = 1;
+  // the response data from the process
+  map<string, Value> data = 2;
 }
