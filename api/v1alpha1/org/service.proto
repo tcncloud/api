@@ -2973,7 +2973,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CERTIFICATE_MANAGEMENT]
+          permissions: [PERMISSION_ORG_EDIT]
         }
       ];
     };
@@ -2986,7 +2986,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CERTIFICATE_MANAGEMENT]
+          permissions: [PERMISSION_ORG_EDIT]
         }
       ];
     };
@@ -2999,7 +2999,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_CERTIFICATE_MANAGEMENT]
+          permissions: [PERMISSION_ORG_EDIT]
         }
       ];
     };
