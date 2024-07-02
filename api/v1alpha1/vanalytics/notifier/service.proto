@@ -16,7 +16,7 @@ service Notifier {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 }

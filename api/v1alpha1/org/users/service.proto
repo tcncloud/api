@@ -19,7 +19,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_CREATE]
         }
-      ];
+      ]
     };
   }
 
@@ -39,7 +39,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -52,7 +52,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -66,7 +66,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -79,7 +79,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -95,7 +95,7 @@ service UsersService {
         {
           permissions: [PERMISSION_SCORECARDS]
         }
-      ];
+      ]
     };
   }
 
@@ -108,7 +108,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -121,7 +121,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -134,7 +134,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -147,7 +147,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -160,7 +160,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -173,7 +173,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -186,7 +186,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_AGENT_CALLER_ID]
         }
-      ];
+      ]
     };
   }
 
@@ -199,7 +199,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -212,7 +212,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -225,7 +225,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
-      ];
+      ]
     };
   }
 
@@ -238,7 +238,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -251,7 +251,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -264,7 +264,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -277,7 +277,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -291,7 +291,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -304,7 +304,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -317,7 +317,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -330,7 +330,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
-      ];
+      ]
     };
   }
 
@@ -343,7 +343,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -356,7 +356,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -369,7 +369,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -382,7 +382,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -395,7 +395,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -408,7 +408,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -430,7 +430,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -443,7 +443,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -456,7 +456,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -469,7 +469,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -482,7 +482,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -495,7 +495,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -510,7 +510,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -523,7 +523,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -543,7 +543,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -556,7 +556,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -569,7 +569,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -582,7 +582,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -595,7 +595,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -617,7 +617,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -630,7 +630,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -644,7 +644,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -657,7 +657,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -670,7 +670,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -683,7 +683,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -696,7 +696,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -709,7 +709,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -722,7 +722,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -735,7 +735,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -748,7 +748,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -761,7 +761,7 @@ service UsersService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -774,7 +774,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -787,7 +787,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -800,7 +800,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -813,7 +813,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -826,7 +826,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -839,7 +839,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -853,7 +853,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -867,7 +867,7 @@ service UsersService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -880,7 +880,7 @@ service UsersService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 }

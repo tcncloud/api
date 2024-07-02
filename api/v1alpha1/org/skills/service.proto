@@ -16,7 +16,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -32,7 +32,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
         }
-      ];
+      ]
     };
   }
 
@@ -45,7 +45,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -58,7 +58,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -71,7 +71,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -84,7 +84,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -97,7 +97,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -110,7 +110,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -123,7 +123,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -136,7 +136,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -149,7 +149,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -162,7 +162,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -175,7 +175,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -218,7 +218,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
         }
-      ];
+      ]
     };
   }
 
@@ -231,7 +231,7 @@ service SkillsService {
         {
           permissions: [PERMISSION_CHANGE_OWN_SKILL_GROUPS]
         }
-      ];
+      ]
     };
   }
 }

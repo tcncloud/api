@@ -21,7 +21,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -34,7 +34,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -47,7 +47,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -60,7 +60,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -73,7 +73,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -86,7 +86,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -99,7 +99,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -112,7 +112,7 @@ service ScorecardsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 }

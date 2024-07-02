@@ -22,7 +22,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // GetDashboard retrieves a dashboard by the given ID and orgID and fetches its associated panels
@@ -34,7 +34,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetDefaultDashboard(GetDefaultDashboardRequest) returns (Dashboard) {
@@ -45,7 +45,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
-      ];
+      ]
     };
   }
   // ListDashboards retrieves all dashboard summaries for the given organization
@@ -57,7 +57,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListProductTypes(ListProductTypesRequest) returns (ListProductTypesResult) {
@@ -68,7 +68,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
-      ];
+      ]
     };
   }
   // Deletes a given dashboard
@@ -83,7 +83,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // Sets a dashboard as the user's default
@@ -98,7 +98,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // UpdateDashboard updates a dashboard
@@ -113,7 +113,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // UpdateDashboardTitleAndDescription updates a dashboards title and description
@@ -128,7 +128,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // UpdateDashboardView updates a dashboards view with the given view
@@ -143,7 +143,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // UpdateDashboardLayout replaces a dashboards layout with a given layout
@@ -158,7 +158,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
   // PublishDashboard publishes a dashboard
@@ -173,7 +173,7 @@ service Dashboards {
             PERMISSION_DASHBOARDS_EDIT
           ]
         }
-      ];
+      ]
     };
   }
 
@@ -186,7 +186,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -199,7 +199,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -212,7 +212,7 @@ service Dashboards {
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
-      ];
+      ]
     };
   }
 }

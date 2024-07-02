@@ -22,7 +22,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -43,7 +43,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -62,7 +62,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -83,7 +83,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -104,7 +104,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -123,7 +123,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -145,7 +145,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -169,7 +169,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -191,7 +191,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -212,7 +212,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -232,7 +232,7 @@ service PBXService {
         {
           permissions: [PERMISSION_PBX_MANAGER_EDIT]
         }
-      ];
+      ]
     };
   }
 }

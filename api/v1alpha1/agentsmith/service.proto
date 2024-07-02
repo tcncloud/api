@@ -22,7 +22,7 @@ service AgentSmith {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 }

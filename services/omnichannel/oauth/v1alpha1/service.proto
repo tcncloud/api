@@ -15,7 +15,7 @@ service OauthService {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ],
+      ]
     };
   }
 }

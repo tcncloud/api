@@ -22,7 +22,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -34,7 +34,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -46,7 +46,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -58,7 +58,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -70,7 +70,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -82,7 +82,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -94,7 +94,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -106,7 +106,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -118,7 +118,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -130,7 +130,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -142,7 +142,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -162,7 +162,7 @@ service Compliance {
         {
           permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -178,7 +178,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -193,7 +193,7 @@ service Compliance {
         {
           permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -208,7 +208,7 @@ service Compliance {
         {
           permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -220,7 +220,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -231,7 +231,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -243,7 +243,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -258,7 +258,7 @@ service Compliance {
         {
           permissions: [PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -270,7 +270,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -282,7 +282,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -297,7 +297,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -309,7 +309,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -321,7 +321,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -336,7 +336,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -349,7 +349,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -361,7 +361,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -374,7 +374,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -387,7 +387,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -400,7 +400,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -413,7 +413,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -426,7 +426,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -439,7 +439,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -452,7 +452,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -465,7 +465,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -478,7 +478,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -491,7 +491,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -504,7 +504,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -518,7 +518,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE]
         }
-      ];
+      ]
     };
   }
 
@@ -544,7 +544,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -572,7 +572,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -589,7 +589,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -606,7 +606,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -623,7 +623,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -640,7 +640,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -663,7 +663,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -680,7 +680,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -708,7 +708,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -724,7 +724,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -740,7 +740,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -758,7 +758,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -776,7 +776,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -795,7 +795,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -812,7 +812,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -828,7 +828,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -842,7 +842,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -860,7 +860,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -877,7 +877,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -893,7 +893,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -909,7 +909,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -925,7 +925,7 @@ service Compliance {
         {
           permissions: [PERMISSION_COMPLIANCE_CONSENT]
         }
-      ];
+      ]
     };
   }
 
@@ -943,7 +943,7 @@ service Compliance {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 

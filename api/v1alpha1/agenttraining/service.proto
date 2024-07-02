@@ -16,7 +16,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_SCORECARDS_LEARNING_OPPORTUNITIES]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_SCORECARDS_LEARNING_OPPORTUNITIES]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -55,7 +55,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -68,7 +68,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_SCORECARDS_LEARNING_OPPORTUNITIES]
         }
-      ];
+      ]
     };
   }
 
@@ -81,7 +81,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_SCORECARDS_LEARNING_OPPORTUNITIES]
         }
-      ];
+      ]
     };
   }
 
@@ -94,7 +94,7 @@ service AgentTrainingService {
         {
           permissions: [PERMISSION_SCORECARDS_LEARNING_OPPORTUNITIES]
         }
-      ];
+      ]
     };
   }
 }

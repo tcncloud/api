@@ -17,7 +17,7 @@ service Soundboard {
         {
           permissions: [PERMISSION_SOUNDBOARD_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -33,7 +33,7 @@ service Soundboard {
         {
           permissions: [PERMISSION_SOUNDBOARD_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -47,7 +47,7 @@ service Soundboard {
         {
           permissions: [PERMISSION_SOUNDBOARD_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -60,7 +60,7 @@ service Soundboard {
         {
           permissions: [PERMISSION_SOUNDBOARD_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -73,7 +73,7 @@ service Soundboard {
         {
           permissions: [PERMISSION_SOUNDBOARD_EDIT]
         }
-      ];
+      ]
     };
   }
 }

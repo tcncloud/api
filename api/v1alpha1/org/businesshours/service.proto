@@ -16,7 +16,7 @@ service BusinessHoursService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service BusinessHoursService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -40,9 +40,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -53,9 +53,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -66,9 +66,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -79,9 +79,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -92,9 +92,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -105,9 +105,9 @@ service BusinessHoursService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_VIEW];
+          permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 }

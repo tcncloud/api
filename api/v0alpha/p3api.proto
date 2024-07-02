@@ -54,7 +54,7 @@ service P3Api {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -69,7 +69,7 @@ service P3Api {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -84,7 +84,7 @@ service P3Api {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -98,7 +98,7 @@ service P3Api {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -120,7 +120,7 @@ service P3Api {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -136,7 +136,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -184,7 +184,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -201,7 +201,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -219,7 +219,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -236,7 +236,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -254,7 +254,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -319,7 +319,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -334,7 +334,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -352,7 +352,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -370,7 +370,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -385,7 +385,7 @@ service P3Api {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -595,7 +595,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -678,7 +678,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -688,7 +688,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -698,7 +698,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -738,7 +738,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+        {permissions: PERMISSION_AGENT_MANAGEMENT}]
     };
   }
 
@@ -753,7 +753,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+        {permissions: PERMISSION_AGENT_MANAGEMENT}]
     };
   }
 
@@ -775,7 +775,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_TCN_BILLING}];
+        {permissions: PERMISSION_TCN_BILLING}]
     };
   }
 
@@ -799,7 +799,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+        {permissions: PERMISSION_AGENT_MANAGEMENT}]
     };
   }
 
@@ -814,7 +814,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_AGENT_MANAGEMENT}];
+        {permissions: PERMISSION_AGENT_MANAGEMENT}]
     };
   }
 
@@ -836,7 +836,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}]
     };
   }
 
@@ -851,7 +851,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}]
     };
   }
 
@@ -866,7 +866,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}];
+        {permissions: PERMISSION_TCN_ADMIN_SETTINGS}]
     };
   }
 
@@ -880,7 +880,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -896,7 +896,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -912,7 +912,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -929,7 +929,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_EDIT}];
+        {permissions: PERMISSION_ORG_EDIT}]
     };
   }
 
@@ -941,7 +941,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_CUSTOMER_SUPPORT}];
+        {permissions: PERMISSION_CUSTOMER_SUPPORT}]
     };
   }
 
@@ -951,7 +951,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -961,7 +961,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -971,7 +971,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -981,7 +981,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}];
+        {permissions: PERMISSION_ORG_VIEW}]
     };
   }
 
@@ -991,7 +991,7 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_OMNI_BOSS}];
+        {permissions: PERMISSION_OMNI_BOSS}]
     };
   }
 }

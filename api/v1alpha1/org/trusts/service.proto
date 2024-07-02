@@ -26,7 +26,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -39,7 +39,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -52,7 +52,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -65,7 +65,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -79,7 +79,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -94,7 +94,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -108,7 +108,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -122,7 +122,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -135,7 +135,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -148,7 +148,7 @@ service TrustsService {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 }

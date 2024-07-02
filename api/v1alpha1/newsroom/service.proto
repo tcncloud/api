@@ -19,7 +19,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -32,7 +32,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -45,7 +45,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -58,7 +58,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -71,7 +71,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_PUBLISH]
         }
-      ];
+      ]
     };
   }
 
@@ -84,7 +84,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -97,7 +97,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -110,7 +110,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -123,7 +123,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -136,7 +136,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -149,7 +149,7 @@ service NewsroomAPI {
         {
           permissions: [PERMISSION_NEWSROOM_VIEW]
         }
-      ];
+      ]
     };
   }
 }

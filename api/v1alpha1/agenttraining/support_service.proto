@@ -18,7 +18,7 @@ service AgentTrainingSupportService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -31,7 +31,7 @@ service AgentTrainingSupportService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 }

@@ -15,7 +15,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse) {
@@ -26,7 +26,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse) {
@@ -37,7 +37,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ParseFileTemplate(ParseFileTemplateRequest) returns (ParseFileTemplateResult) {
@@ -48,7 +48,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse) {
@@ -59,7 +59,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 }

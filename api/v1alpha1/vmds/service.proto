@@ -15,7 +15,7 @@ service VmdsService {
         {
           permissions: [PERMISSION_VOICEMAIL_DOWNLOAD]
         }
-      ];
+      ]
     };
   }
 }

@@ -67,7 +67,7 @@ service Vmds {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 

@@ -28,7 +28,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -44,7 +44,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_AGENT_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -57,7 +57,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -74,7 +74,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -87,7 +87,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
         }
-      ];
+      ]
     };
   }
 
@@ -100,7 +100,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_TRANSCRIPT_DELETE]
         }
-      ];
+      ]
     };
   }
 
@@ -113,7 +113,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -126,7 +126,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -141,7 +141,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -157,7 +157,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -170,7 +170,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -183,7 +183,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -196,7 +196,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -209,7 +209,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -224,7 +224,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -239,7 +239,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -254,7 +254,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -267,7 +267,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -280,7 +280,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -293,7 +293,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -306,7 +306,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -321,7 +321,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -334,7 +334,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -347,7 +347,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -362,7 +362,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -377,7 +377,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -392,7 +392,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -405,7 +405,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -418,7 +418,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -431,7 +431,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 
@@ -444,7 +444,7 @@ service Vanalytics {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
         }
-      ];
+      ]
     };
   }
 }

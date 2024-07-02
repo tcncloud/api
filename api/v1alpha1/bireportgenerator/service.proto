@@ -19,7 +19,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
   // ListReportJobs lists report jobs.
@@ -31,7 +31,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
   // UpdateReportJob updates a report job.
@@ -43,7 +43,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
   // DeleteReportJob deletes a report job.
@@ -55,7 +55,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
   // GetReportJob gets a report job.
@@ -67,7 +67,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GenerateReport(GenerateReportRequest) returns (GenerateReportResponse) {
@@ -78,7 +78,7 @@ service BIReportGeneratorService {
         {
           permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
         }
-      ];
+      ]
     };
   }
 }

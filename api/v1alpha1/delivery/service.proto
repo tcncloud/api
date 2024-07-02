@@ -19,7 +19,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListTransferConfigs(ListTransferConfigsReq) returns (ListTransferConfigsRes) {
@@ -30,7 +30,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListTransferConfigsByCredentialID(ListTransferConfigsByCredentialIDReq) returns (ListTransferConfigsByCredentialIDRes) {
@@ -41,7 +41,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateTransferConfig(UpdateTransferConfigReq) returns (UpdateTransferConfigRes) {
@@ -52,7 +52,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteTransferConfig(DeleteTransferConfigReq) returns (DeleteTransferConfigRes) {
@@ -63,7 +63,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetTransferConfig(GetTransferConfigReq) returns (GetTransferConfigRes) {
@@ -74,7 +74,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetTransferConfigByName(GetTransferConfigByNameReq) returns (GetTransferConfigByNameRes) {
@@ -85,7 +85,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListHistory(ListHistoryReq) returns (ListHistoryRes) {
@@ -96,7 +96,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListHistoryByTransferConfig(ListHistoryByTransferConfigReq) returns (ListHistoryByTransferConfigRes) {
@@ -107,7 +107,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListCredentials(ListCredentialsReq) returns (ListCredentialsRes) {
@@ -118,7 +118,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetCredential(GetCredentialReq) returns (GetCredentialRes) {
@@ -129,7 +129,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc CreateCredential(CreateCredentialReq) returns (CreateCredentialRes) {
@@ -140,7 +140,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteCredential(DeleteCredentialReq) returns (DeleteCredentialRes) {
@@ -151,7 +151,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc UpdateCredential(UpdateCredentialReq) returns (UpdateCredentialRes) {
@@ -162,7 +162,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc CreateDeliveryDefinition(CreateDeliveryDefinitionReq) returns (CreateDeliveryDefinitionRes) {
@@ -173,7 +173,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteDeliveryDefinition(DeleteDeliveryDefinitionReq) returns (DeleteDeliveryDefinitionRes) {
@@ -184,7 +184,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetDeliveryDefinition(GetDeliveryDefinitionReq) returns (GetDeliveryDefinitionRes) {
@@ -195,7 +195,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetDeliveryDefinitionByName(GetDeliveryDefinitionByNameReq) returns (GetDeliveryDefinitionByNameRes) {
@@ -206,7 +206,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListDeliveryDefinitions(ListDeliveryDefinitionsReq) returns (ListDeliveryDefinitionsRes) {
@@ -217,7 +217,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListDeliveryDefinitionsByCredentialID(ListDeliveryDefinitionsByCredentialIDReq) returns (ListDeliveryDefinitionsByCredentialIDRes) {
@@ -228,7 +228,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateDeliveryDefinition(UpdateDeliveryDefinitionReq) returns (UpdateDeliveryDefinitionRes) {
@@ -239,7 +239,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc CreateEncryption(CreateEncryptionReq) returns (CreateEncryptionRes) {
@@ -250,7 +250,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteEncryption(DeleteEncryptionReq) returns (DeleteEncryptionRes) {
@@ -261,7 +261,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetEncryption(GetEncryptionReq) returns (GetEncryptionRes) {
@@ -272,7 +272,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListEncryptions(ListEncryptionsReq) returns (ListEncryptionsRes) {
@@ -283,7 +283,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateEncryption(UpdateEncryptionReq) returns (UpdateEncryptionRes) {
@@ -294,7 +294,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListSMSNumbers(ListSMSNumbersReq) returns (ListSMSNumbersRes) {
@@ -305,7 +305,7 @@ service DeliveryApi {
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 }

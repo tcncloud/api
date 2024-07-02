@@ -24,7 +24,7 @@ service Integrations {
         {
           permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -37,7 +37,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetIntegrationTransactionReport(GetIntegrationTransactionReportReq) returns (GetIntegrationTransactionReportRes) {
@@ -51,7 +51,7 @@ service Integrations {
         {
           permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetIntegrationTransactionReportData(GetIntegrationTransactionReportDataReq) returns (GetIntegrationTransactionReportDataRes) {
@@ -62,7 +62,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc SearchPastTransactions(SearchPastTransactionsRequest) returns (SearchPastTransactionsResponse) {
@@ -76,7 +76,7 @@ service Integrations {
         {
           permissions: [PERMISSION_AGENT_PLUGINS_VIEW]
         }
-      ];
+      ]
     };
   }
   // GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
@@ -88,7 +88,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
@@ -100,7 +100,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // search integration transactions
@@ -125,7 +125,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -138,7 +138,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -151,7 +151,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -164,7 +164,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -180,7 +180,7 @@ service Integrations {
         {
           permissions: [PERMISSION_AGENT_PLUGINS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -195,7 +195,7 @@ service Integrations {
         {
           permissions: [PERMISSION_AGENT_PLUGINS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -208,7 +208,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListJourneyConfigs(ListJourneyConfigsReq) returns (IntegrationConfigs) {
@@ -219,7 +219,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListNonJourneyConfigs(ListNonJourneyConfigsReq) returns (IntegrationConfigs) {
@@ -230,7 +230,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO all services looking for payment portal configs should be using the
@@ -244,7 +244,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO better signature
@@ -257,7 +257,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdatePortalConfig(PortalConfig) returns (Empty) {
@@ -268,7 +268,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO better signature
@@ -281,7 +281,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO better signature
@@ -294,7 +294,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO deprecate
@@ -306,7 +306,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO deprecate
@@ -318,7 +318,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // TODO deprecate. use CreatePortalLinks on the PortalManagerApi
@@ -332,7 +332,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // takes a year in YYYY format and returns the summary of transaction for that year
@@ -344,7 +344,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // Lists integration templates that use the passed in integration config
@@ -356,7 +356,7 @@ service Integrations {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
@@ -380,7 +380,7 @@ service Integrations {
         {
           permissions: [PERMISSIONS_INTEGRATIONS_KEY_CREATION]
         }
-      ];
+      ]
     };
   }
   rpc PopulateIntegrationLink(PopulateIntegrationLinkReq) returns (PopulateIntegrationLinkRes) {

@@ -16,7 +16,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -36,7 +36,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -56,7 +56,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -69,7 +69,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_LABEL_ATTACH]
         }
-      ];
+      ]
     };
   }
 
@@ -82,7 +82,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_LABEL_ATTACH]
         }
-      ];
+      ]
     };
   }
 
@@ -102,7 +102,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -115,7 +115,7 @@ service LabelsService {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 }
