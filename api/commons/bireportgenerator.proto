@@ -145,6 +145,8 @@ message FilenamePart {
   FilenamePartType type = 1;
   // static_text is the static text for the filename part.
   string static_text = 2;
+  // date_parts are the parts to format the date times.
+  repeated string date_parts = 3;
 }
 
 // TransferOptions is a message for the transfer options of a report.
