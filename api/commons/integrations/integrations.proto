@@ -627,6 +627,8 @@ message PaymentFlow {
     PaymentPriocommerceAch priocommerce_ach = 14;
     PaymentVisionCC paymentvision_cc = 15;
     PaymentVisionACH paymentvision_ach = 16;
+    PaymentStellaCc paymentstella_cc = 17;
+    PaymentStellaECheck paymentstella_echeck = 18;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
@@ -1025,6 +1027,9 @@ message PaymentPriocommerceAch {}
 
 message PaymentVisionCC {}
 message PaymentVisionACH {}
+
+message PaymentStellaCc {}
+message PaymentStellaECheck {}
 
 // execute flows
 message ExecuteBraintreeCreditSale {}
