@@ -3301,6 +3301,48 @@ service WFM {
     };
   }
 
+  // Resolves the given @agent_leave_petition_id, setting the given parameters, for the org sending the request.
+  // May only resolve leave petitions that currently have a PENDING_PETITION status.
+  // May only set the @petition_status to APPROVED_PETITION or DENIED_PETITION.
+  // If a petition is approved, time off shifts will be added to the agent's schedule across the requested_datetime_ranges.
+  // If @retain_partial_shifts is true, partial shifts overlapping the requested_datetime_ranges will have the remaining portion of the shift retained,
+  //    if the remaining portion of the shift is at least 30 minutes in length.
+  // If @retain_partial_shifts is false, the entirety of shifts overlapping the requested_datetime_ranges range will be deleted.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is not pending approval.
+  //   - grpc.Internal: error occurs when resolving the agent leave petition, or modifying the agent's schedule.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+  rpc ResolveAgentLeavePetition(ResolveAgentLeavePetitionRequest) returns (ResolveAgentLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/resolveagentleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
+  // Cancels the given @agent_leave_petition_id for the organization sending the request.
+  // If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+  //   but any desired shifts must be added by the user after that leave is canceled.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+  //   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+  rpc CancelAgentLeavePetition(CancelAgentLeavePetitionRequest) returns (CancelAgentLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/cancelagentleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ];
+    };
+  }
+
   /****************************************************************************************************************************************************/
   /****************************************************************************************************************************************************/
   /****************************************************************ADHERENCE RPCS**********************************************************************/
@@ -7246,3 +7288,29 @@ message ArchiveAgentLeavePetitionRequest {
 
 // Response message for the ArchiveAgentLeavePetition.
 message ArchiveAgentLeavePetitionResponse {}
+
+// Request message for the ResolveAgentLeavePetition.
+message ResolveAgentLeavePetitionRequest {
+  // ID of the agent leave petition to approve or deny.
+  int64 agent_leave_petition_id = 1;
+  // The status to resolve the petition to.
+  commons.AgentLeavePetitionStatus petition_status = 2;
+  // An optional comment to explain the approval or denial of the leave petition.
+  string response_comment = 3;
+  // If true, partial shifts overlapping the requested_datetime_ranges will have the remaining portion of the shift retained
+  //    if the remaining portion is at least 30 minutes wide.
+  // If false, the entirety of shifts overlapping the requested_datetime_ranges will be deleted.
+  bool retain_partial_shifts = 4;
+}
+
+// Response message for the ResolveAgentLeavePetition.
+message ResolveAgentLeavePetitionResponse {}
+
+// Request message for the CancelAgentLeavePetition.
+message CancelAgentLeavePetitionRequest {
+  // ID of the agent leave petition to cancel.
+  int64 agent_leave_petition_id = 1;
+}
+
+// Response message for the CancelAgentLeavePetition.
+message CancelAgentLeavePetitionResponse {}
