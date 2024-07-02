@@ -24,7 +24,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   // Remove room member (kick), the room member will not receive notifications from that room
@@ -38,7 +38,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   // List the members of this room
@@ -52,7 +52,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   // Set a room member as admin, you must be a room admin in order to do this.
@@ -66,7 +66,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   // adds new member to a room and does not require the member to be admin
@@ -80,7 +80,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   // gets the member entity from the provided room if it exists
@@ -94,7 +94,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -115,7 +115,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc EditMessage(EditMessageRequest) returns (EditMessageResponse) {
@@ -128,7 +128,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse) {
@@ -141,7 +141,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse) {
@@ -154,7 +154,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc StreamMessageUpdates(StreamMessageUpdatesRequest) returns (stream StreamMessageUpdatesResponse) {
@@ -167,7 +167,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc GetUnreadStats(GetUnreadStatsRequest) returns (GetUnreadStatsResponse) {
@@ -180,7 +180,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc MarkMessageRead(MarkMessageReadRequest) returns (MarkMessageReadResponse) {
@@ -193,7 +193,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc MarkAllMessagesRead(MarkAllMessagesReadRequest) returns (MarkAllMessagesReadResponse) {
@@ -206,7 +206,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc BulkMarkMessageRead(BulkMarkMessageReadRequest) returns (BulkMarkMessageReadResponse) {
@@ -219,7 +219,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -236,7 +236,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc GetRoom(GetRoomRequest) returns (api.commons.Room) {
@@ -249,7 +249,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc ListAllRooms(ListAllRoomsRequest) returns (ListRoomsResponse) {
@@ -262,7 +262,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -276,7 +276,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
   rpc ArchiveRoom(ArchiveRoomRequest) returns (api.commons.Room) {
@@ -289,7 +289,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -304,7 +304,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -319,7 +319,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -334,7 +334,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303_SUPERVISOR]
         }
-      ];
+      ]
     };
   }
 
@@ -349,7 +349,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 
@@ -364,7 +364,7 @@ service Room303API {
         {
           permissions: [PERMISSION_ROOM303]
         }
-      ];
+      ]
     };
   }
 }

@@ -29,7 +29,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -57,7 +57,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -78,7 +78,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -103,7 +103,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -129,7 +129,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -151,7 +151,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -173,7 +173,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -196,7 +196,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -224,7 +224,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -251,7 +251,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -273,7 +273,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -296,7 +296,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -318,7 +318,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -345,7 +345,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -365,7 +365,7 @@ service BillingService {
         {
           permissions: [PERMISSION_TCN_BILLING_ADMIN]
         }
-      ],
+      ]
     };
   }
 
@@ -390,7 +390,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -412,7 +412,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -433,7 +433,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -455,7 +455,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -476,7 +476,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -497,7 +497,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -518,7 +518,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -538,7 +538,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -561,7 +561,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -588,7 +588,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -614,7 +614,7 @@ service BillingService {
             PERMISSION_TCN_BILLING_ADMIN
           ]
         }
-      ],
+      ]
     };
   }
 
@@ -636,7 +636,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 
@@ -659,7 +659,7 @@ service BillingService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ],
+      ]
     };
   }
 }

@@ -17,7 +17,7 @@ service VanalyticsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -30,7 +30,7 @@ service VanalyticsSupport {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 }

@@ -24,7 +24,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -40,7 +40,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -53,7 +53,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -66,7 +66,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -82,7 +82,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -95,7 +95,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -108,7 +108,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -121,7 +121,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -134,7 +134,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -147,7 +147,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -160,7 +160,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -173,7 +173,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -192,7 +192,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -205,7 +205,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -218,7 +218,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -231,7 +231,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -244,7 +244,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -257,7 +257,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -270,7 +270,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -283,7 +283,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -296,7 +296,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -309,7 +309,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -322,7 +322,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -335,7 +335,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -348,7 +348,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -361,7 +361,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -374,7 +374,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -387,7 +387,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -400,7 +400,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -413,7 +413,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -426,7 +426,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -439,7 +439,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -452,7 +452,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -466,7 +466,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -479,7 +479,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -492,7 +492,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -505,7 +505,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -518,7 +518,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -531,7 +531,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -544,7 +544,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -557,7 +557,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
-      ];
+      ]
     };
   }
 
@@ -570,7 +570,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -583,7 +583,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -596,7 +596,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -609,7 +609,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -622,7 +622,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 
@@ -635,7 +635,7 @@ service Scorecards {
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
-      ];
+      ]
     };
   }
 }

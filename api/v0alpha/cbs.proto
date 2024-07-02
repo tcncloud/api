@@ -28,7 +28,7 @@ service CBS {
           // Agents are allowed to create callbacks on the agent page.
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -79,7 +79,7 @@ service CBS {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -96,7 +96,7 @@ service CBS {
           // Our apps allow agents to get scheduled callbacks on the agent page
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -109,7 +109,7 @@ service CBS {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -122,7 +122,7 @@ service CBS {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 }

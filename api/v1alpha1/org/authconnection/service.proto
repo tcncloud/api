@@ -16,7 +16,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -43,7 +43,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -56,7 +56,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -69,7 +69,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -82,7 +82,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -95,7 +95,7 @@ service AuthConnectionService {
         {
           permissions: [PERMISSION_LOGIN_CONNECTIONS]
         }
-      ];
+      ]
     };
   }
 }

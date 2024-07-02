@@ -16,7 +16,7 @@ service IdpService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service IdpService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service IdpService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -55,7 +55,7 @@ service IdpService {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 }

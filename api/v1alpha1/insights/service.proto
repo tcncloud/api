@@ -19,7 +19,7 @@ service Insights {
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -38,7 +38,7 @@ service Insights {
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -54,7 +54,7 @@ service Insights {
             PERMISSION_DASHBOARDS_VIEW
           ]
         }
-      ];
+      ]
     };
   }
 
@@ -70,7 +70,7 @@ service Insights {
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -86,7 +86,7 @@ service Insights {
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -105,7 +105,7 @@ service Insights {
         {
           permissions: [PERMISSION_DASHBOARDS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -121,7 +121,7 @@ service Insights {
             PERMISSION_INSIGHTS_INSIGHT_EDIT
           ]
         }
-      ];
+      ]
     };
   }
 
@@ -137,7 +137,7 @@ service Insights {
             PERMISSION_INSIGHTS_INSIGHT_EDIT
           ]
         }
-      ];
+      ]
     };
   }
 
@@ -153,7 +153,7 @@ service Insights {
             PERMISSION_INSIGHTS_INSIGHT_EDIT
           ]
         }
-      ];
+      ]
     };
   }
 
@@ -169,7 +169,7 @@ service Insights {
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -185,7 +185,7 @@ service Insights {
         {
           permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -204,7 +204,7 @@ service Insights {
         {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -220,7 +220,7 @@ service Insights {
             PERMISSION_INSIGHTS_INSIGHT_EDIT
           ]
         }
-      ];
+      ]
     };
   }
 }

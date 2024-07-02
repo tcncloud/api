@@ -77,7 +77,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -90,7 +90,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -103,7 +103,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -116,7 +116,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -129,7 +129,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -150,7 +150,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -163,7 +163,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -176,7 +176,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -189,7 +189,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -202,7 +202,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -216,7 +216,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -229,7 +229,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -242,7 +242,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -262,7 +262,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -275,7 +275,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -288,7 +288,7 @@ service Learn {
         {
           permissions: [PERMISSION_LEARN_EDIT]
         }
-      ];
+      ]
     };
   }
 }

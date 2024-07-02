@@ -67,7 +67,7 @@ service AsmApi {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -80,7 +80,7 @@ service AsmApi {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -93,7 +93,7 @@ service AsmApi {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 
@@ -109,7 +109,7 @@ service AsmApi {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 
@@ -122,7 +122,7 @@ service AsmApi {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 }

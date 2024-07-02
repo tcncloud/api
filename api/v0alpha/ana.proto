@@ -21,7 +21,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
   // Admin
@@ -39,7 +39,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
   // sets the length of analytics history the client can view
@@ -51,7 +51,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
   // set default time filter for given ana account
@@ -60,8 +60,8 @@ service Ana {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultTimeFilter";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      wip: true;
-      no_permissions: true;
+      wip: true
+      no_permissions: true
     };
   }
   // sets the dashboard that is shown by default for neo
@@ -70,8 +70,8 @@ service Ana {
     option (google.api.http).post = "/api/v0alpha/ana/admin/SetDefaultDashboard";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
-      wip: true;
-      no_permissions: true;
+      wip: true
+      no_permissions: true
     };
   }
 
@@ -85,7 +85,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -98,7 +98,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -111,7 +111,7 @@ service Ana {
         {
           permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
         }
-      ];
+      ]
     };
   }
 
@@ -125,7 +125,7 @@ service Ana {
         {
           permissions: [PERMISSION_TCN_BILLING]
         }
-      ];
+      ]
     };
   }
 
@@ -139,7 +139,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -153,7 +153,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -167,7 +167,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -180,7 +180,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -194,7 +194,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -208,7 +208,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -222,7 +222,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -236,7 +236,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -250,7 +250,7 @@ service Ana {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -263,7 +263,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -276,7 +276,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -289,7 +289,7 @@ service Ana {
         {
           permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
         }
-      ];
+      ]
     };
   }
 
@@ -303,7 +303,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -317,7 +317,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -331,7 +331,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -345,7 +345,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
   // gets the client's data visibility as exists in the elasticsearch data;
@@ -358,7 +358,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -371,7 +371,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -384,7 +384,7 @@ service Ana {
         {
           permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
         }
-      ];
+      ]
     };
   }
 
@@ -404,7 +404,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -421,7 +421,7 @@ service Ana {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -434,7 +434,7 @@ service Ana {
         {
           permissions: [PERMISSION_BUSINESS_INTELLIGENCE]
         }
-      ];
+      ]
     };
   }
 }

@@ -18,7 +18,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
   // Public Method to edit a ticket.
@@ -30,7 +30,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -43,7 +43,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -57,7 +57,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -71,7 +71,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -84,7 +84,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -97,7 +97,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -110,7 +110,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -123,7 +123,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
   // Public Method to create a sla.
@@ -135,7 +135,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -151,7 +151,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -164,7 +164,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -180,7 +180,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -193,7 +193,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -206,7 +206,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -219,7 +219,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
   // Public Method to edit a ticket.
@@ -232,7 +232,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -245,7 +245,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -258,7 +258,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -271,7 +271,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -284,7 +284,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -297,7 +297,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -310,7 +310,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -323,7 +323,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
   // Public method to assign a ticket
@@ -335,7 +335,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -348,7 +348,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -361,7 +361,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -374,7 +374,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -390,7 +390,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -403,7 +403,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_ADMIN]
         }
-      ];
+      ]
     };
   }
 
@@ -419,7 +419,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
   // Public method to list all Action Types
@@ -434,7 +434,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -450,7 +450,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -466,7 +466,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 
@@ -482,7 +482,7 @@ service Tickets {
         {
           permissions: [PERMISSION_TICKETS_APP]
         }
-      ];
+      ]
     };
   }
 }

@@ -29,7 +29,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -55,7 +55,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -69,7 +69,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -82,7 +82,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -95,7 +95,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -108,7 +108,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -121,7 +121,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -134,7 +134,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -147,7 +147,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -160,7 +160,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -176,7 +176,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -190,7 +190,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -203,7 +203,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -217,7 +217,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -230,7 +230,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -243,7 +243,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -256,7 +256,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -269,7 +269,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -282,7 +282,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -295,7 +295,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -309,7 +309,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -323,7 +323,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -337,7 +337,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -351,7 +351,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -365,7 +365,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -379,7 +379,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -393,7 +393,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -407,7 +407,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -421,7 +421,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -435,7 +435,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -449,7 +449,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -463,7 +463,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -476,7 +476,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -489,7 +489,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -502,7 +502,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -515,7 +515,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -528,7 +528,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -541,7 +541,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -554,7 +554,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -567,7 +567,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -580,7 +580,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -593,7 +593,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -606,7 +606,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -619,7 +619,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -632,7 +632,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -645,7 +645,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -658,7 +658,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -672,7 +672,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -686,7 +686,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -699,7 +699,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -714,7 +714,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -728,7 +728,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -742,7 +742,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -756,7 +756,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -770,7 +770,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -784,7 +784,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -796,9 +796,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -810,9 +810,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -824,9 +824,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -838,9 +838,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -852,9 +852,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_EDIT];
+          permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -866,9 +866,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_VIEW];
+          permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -883,7 +883,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_CREATE]
         }
-      ];
+      ]
     };
   }
 
@@ -903,7 +903,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -916,7 +916,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -930,7 +930,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -943,7 +943,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -959,7 +959,7 @@ service Org {
         {
           permissions: [PERMISSION_SCORECARDS]
         }
-      ];
+      ]
     };
   }
 
@@ -972,7 +972,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -985,7 +985,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -998,7 +998,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1011,7 +1011,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1024,7 +1024,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1037,7 +1037,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1050,7 +1050,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_AGENT_CALLER_ID]
         }
-      ]; // TODO: Revisit this
+      ]
     };
   }
 
@@ -1063,7 +1063,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1076,7 +1076,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1089,7 +1089,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
-      ];
+      ]
     };
   }
 
@@ -1102,7 +1102,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1115,7 +1115,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1128,7 +1128,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1141,7 +1141,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1155,7 +1155,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1168,7 +1168,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1181,7 +1181,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1194,7 +1194,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
-      ];
+      ]
     };
   }
 
@@ -1207,7 +1207,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1220,7 +1220,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1233,7 +1233,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1246,7 +1246,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1259,7 +1259,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1272,7 +1272,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -1294,7 +1294,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1307,7 +1307,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1320,7 +1320,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1333,7 +1333,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1346,7 +1346,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1359,7 +1359,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1376,7 +1376,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1389,7 +1389,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1409,7 +1409,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1422,7 +1422,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1435,7 +1435,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1448,7 +1448,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1461,7 +1461,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1483,7 +1483,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1496,7 +1496,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1510,7 +1510,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1523,7 +1523,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1536,7 +1536,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1549,7 +1549,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1562,7 +1562,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1575,7 +1575,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1588,7 +1588,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -1601,7 +1601,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1617,7 +1617,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1631,7 +1631,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1643,9 +1643,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT],
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1656,9 +1656,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT],
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1669,9 +1669,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT],
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1682,9 +1682,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1698,7 +1698,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1714,7 +1714,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -1730,7 +1730,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -1743,7 +1743,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1756,7 +1756,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1769,7 +1769,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1782,7 +1782,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1795,7 +1795,7 @@ service Org {
         {
           permissions: [PERMISSION_COPY_TO_ORGANIZATION]
         }
-      ];
+      ]
     };
   }
 
@@ -1808,7 +1808,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1821,7 +1821,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1834,7 +1834,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1847,7 +1847,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1860,7 +1860,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1873,7 +1873,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1886,7 +1886,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1899,7 +1899,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1915,7 +1915,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1930,7 +1930,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1946,7 +1946,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1959,7 +1959,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -1972,7 +1972,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1985,7 +1985,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -1998,7 +1998,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2013,7 +2013,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2027,7 +2027,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2041,7 +2041,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2052,9 +2052,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2065,9 +2065,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT],
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2078,9 +2078,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_EDIT],
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2095,9 +2095,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_HUNTGROUP_VIEW],
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2108,9 +2108,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2121,9 +2121,9 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW],
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2136,7 +2136,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2149,7 +2149,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2162,7 +2162,7 @@ service Org {
         {
           permissions: [PERMISSION_AGENT_SCRIPTS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2175,7 +2175,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2188,7 +2188,7 @@ service Org {
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2203,7 +2203,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2216,7 +2216,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2229,7 +2229,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2242,7 +2242,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2256,7 +2256,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2271,7 +2271,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2285,7 +2285,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2299,7 +2299,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2312,7 +2312,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2325,7 +2325,7 @@ service Org {
         {
           permissions: [PERMISSION_TRUST_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2340,7 +2340,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2353,7 +2353,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2366,7 +2366,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2379,7 +2379,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2392,7 +2392,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2405,7 +2405,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2418,7 +2418,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2432,7 +2432,7 @@ service Org {
         {
           permissions: [PERMISSION_LABEL_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -2445,7 +2445,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2474,7 +2474,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2487,7 +2487,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2500,7 +2500,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2513,7 +2513,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2527,7 +2527,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2540,7 +2540,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
         }
-      ];
+      ]
     };
   }
 
@@ -2553,7 +2553,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
         }
-      ];
+      ]
     };
   }
 
@@ -2567,7 +2567,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2581,7 +2581,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2594,7 +2594,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2607,7 +2607,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2621,7 +2621,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2635,7 +2635,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2648,7 +2648,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2662,7 +2662,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2675,7 +2675,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2689,7 +2689,7 @@ service Org {
         {
           permissions: [PERMISSION_TCN_ADMIN_SETTINGS]
         }
-      ];
+      ]
     };
   }
 
@@ -2705,7 +2705,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2719,7 +2719,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2732,7 +2732,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2746,7 +2746,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2760,7 +2760,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2773,7 +2773,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2787,7 +2787,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
         }
-      ];
+      ]
     };
   }
 
@@ -2801,7 +2801,7 @@ service Org {
         {
           permissions: [PERMISSION_PERMISSION_GROUP_ASSIGN]
         }
-      ];
+      ]
     };
   }
 
@@ -2814,7 +2814,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2827,7 +2827,7 @@ service Org {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 
@@ -2840,7 +2840,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2853,7 +2853,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2866,7 +2866,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2879,7 +2879,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2892,7 +2892,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -2905,7 +2905,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2918,7 +2918,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2933,7 +2933,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2946,7 +2946,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT_OPTIONS]
         }
-      ];
+      ]
     };
   }
 
@@ -2960,7 +2960,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2974,7 +2974,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -2988,7 +2988,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3001,7 +3001,20 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
+    };
+  }
+
+  // RevokeCertificateInfo deletes a certificate info for the current organization.
+  rpc RevokeCertificateInfo(RevokeCertificateInfoRequest) returns (RevokeCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/revokecertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
     };
   }
 
@@ -3014,7 +3027,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3028,7 +3041,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3042,7 +3055,7 @@ service Org {
         {
           permissions: [PERMISSION_USER_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3055,7 +3068,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -3067,7 +3080,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -3079,7 +3092,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -3091,7 +3104,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3103,7 +3116,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -3115,7 +3128,7 @@ service Org {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 }

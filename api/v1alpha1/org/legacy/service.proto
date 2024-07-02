@@ -30,7 +30,7 @@ service OrgLegacy {
         {
           permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
-      ];
+      ]
     };
   }
 }

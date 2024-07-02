@@ -34,7 +34,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
   // Streams back statuses for the desired filter
@@ -46,7 +46,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT_MANAGEMENT]
         }
-      ];
+      ]
     };
   }
 
@@ -58,7 +58,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -105,7 +105,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -118,7 +118,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -131,7 +131,7 @@ service Asm {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 
@@ -147,7 +147,7 @@ service Asm {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 
@@ -160,7 +160,7 @@ service Asm {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 }

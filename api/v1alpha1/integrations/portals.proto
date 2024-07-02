@@ -19,7 +19,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPortalConfigs(ListPortalConfigsReq) returns (ListPortalConfigsRes) {
@@ -30,7 +30,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetPortalConfig(GetPortalConfigReq) returns (GetPortalConfigRes) {
@@ -41,7 +41,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc DeletePortalConfig(DeletePortalConfigReq) returns (DeletePortalConfigRes) {
@@ -52,7 +52,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdatePortalConfigLogo(UpdatePortalConfigLogoReq) returns (UpdatePortalConfigLogoRes) {
@@ -63,7 +63,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetPortalConfigLogo(GetPortalConfigLogoReq) returns (GetPortalConfigLogoRes) {
@@ -74,7 +74,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // portal links
@@ -86,7 +86,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetPortalLink(GetPortalLinkReq) returns (GetPortalLinkRes) {
@@ -97,7 +97,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc DeletePortalLink(DeletePortalLinkReq) returns (DeletePortalLinkRes) {
@@ -108,7 +108,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc CreatePortalLinks(CreatePortalLinksReq) returns (CreatePortalLinksRes) {
@@ -125,7 +125,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   // portals
@@ -137,7 +137,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetPortal(GetPortalReq) returns (GetPortalRes) {
@@ -154,7 +154,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc DeletePortal(DeletePortalReq) returns (DeletePortalRes) {
@@ -165,7 +165,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPortals(ListPortalsReq) returns (ListPortalsRes) {
@@ -182,7 +182,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListDetailedPortals(ListDetailedPortalsReq) returns (ListDetailedPortalsRes) {
@@ -199,7 +199,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetDetailedPortal(GetDetailedPortalReq) returns (GetDetailedPortalRes) {
@@ -216,7 +216,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   // PluginInstances
@@ -228,7 +228,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetPluginInstance(GetPluginInstanceReq) returns (GetPluginInstanceRes) {
@@ -239,7 +239,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc DeletePluginInstance(DeletePluginInstanceReq) returns (DeletePluginInstanceRes) {
@@ -250,7 +250,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPluginInstance(ListPluginInstanceReq) returns (ListPluginInstanceRes) {
@@ -264,7 +264,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_AGENT_PLUGINS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListFlowFieldNames(ListFlowFieldNamesReq) returns (ListFlowFieldNamesRes) {
@@ -281,7 +281,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_OMNI_PORTALS_VIEW]
         }
-      ];
+      ]
     };
   }
   // returns the default form fields for verification flow
@@ -293,7 +293,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   // returns the default form fields for payment flow
@@ -305,7 +305,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPortalTypes(ListPortalTypesReq) returns (ListPortalTypesResponse) {
@@ -316,7 +316,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPortalWorkflows(ListPortalWorkflowsReq) returns (ListPortalWorkflowsResponse) {
@@ -327,7 +327,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListAllActionDefinitions(ListAllActionDefinitionsReq) returns (ListAllActionDefinitionsResponse) {
@@ -338,7 +338,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListPluginsByMethod(ListPluginsByMethodReq) returns (ListPluginsByMethodRes) {
@@ -349,7 +349,7 @@ service PortalManagerApi {
         {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
-      ];
+      ]
     };
   }
 }

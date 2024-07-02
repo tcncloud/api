@@ -16,7 +16,7 @@ service AsmService {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service AsmService {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service AsmService {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -55,7 +55,7 @@ service AsmService {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -67,7 +67,7 @@ service AsmService {
         {
           permissions: [PERMISSION_AGENT]
         }
-      ];
+      ]
     };
   }
 
@@ -80,7 +80,7 @@ service AsmService {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 
@@ -93,7 +93,7 @@ service AsmService {
         {
           permissions: [PERMISSION_OMNI_BOSS]
         }
-      ];
+      ]
     };
   }
 }

@@ -23,7 +23,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc CreateFileTemplate(FileTemplate) returns (FileTemplate) {
@@ -34,7 +34,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListFileTemplates(GetFileTemplatesReq) returns (stream FileTemplate) {
@@ -45,7 +45,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateFileTemplate(FileTemplate) returns (FileTemplate) {
@@ -56,7 +56,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteFileTemplate(FileTemplate) returns (FileTemplate) {
@@ -67,7 +67,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetFileTemplate(FileTemplate) returns (FileTemplate) {
@@ -78,7 +78,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -90,7 +90,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListFields(ListFieldsReq) returns (Fields) {
@@ -101,7 +101,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetField(Field) returns (Field) {
@@ -112,7 +112,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc UpdateField(UpdateFieldReq) returns (Field) {
@@ -123,7 +123,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteField(Field) returns (Field) {
@@ -134,7 +134,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListAvailableFieldsByElementId(ListAvailableFieldsByElementIdReq) returns (ProcessFields) {
@@ -145,7 +145,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ListFieldsForElement(ListFieldsForElementReq) returns (ListFieldsForElementRes) {
@@ -156,7 +156,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -168,7 +168,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -181,7 +181,7 @@ service LMS {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -193,7 +193,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetHistory(GetHistoryReq) returns (GetHistoryRes) {
@@ -204,7 +204,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc CreateElement(Element) returns (Element) {
@@ -215,7 +215,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListElements(ListElementsReq) returns (stream Element) {
@@ -226,7 +226,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc GetElement(ElementPK) returns (Element) {
@@ -237,7 +237,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateElement(Element) returns (Element) {
@@ -248,7 +248,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteElement(Element) returns (Element) {
@@ -259,7 +259,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   // CopyPipelineUpstream copies an Element and all of its' parents
@@ -271,7 +271,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   // CopyPipelineDownstream copies an Element and all of its' children
@@ -283,7 +283,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ProcessElement(ProcessElementReq) returns (google.protobuf.Empty) {
@@ -294,7 +294,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ProcessList(ProcessListRequest) returns (ProcessListResponse) {
@@ -305,7 +305,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc StreamList(stream StreamListRequest) returns (StreamListResponse) {
@@ -316,7 +316,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetAvailableFields(google.protobuf.Empty) returns (ProcessFields) {
@@ -327,7 +327,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   // returns queue events for the last 30 minutes
@@ -339,7 +339,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ViewQueue(ViewQueueReq) returns (Events) {
@@ -350,7 +350,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc Autocomplete(ParseReq) returns (ParseRes) {
@@ -361,7 +361,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -373,7 +373,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -385,7 +385,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -397,7 +397,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -415,7 +415,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc UpdateCollection(CollectionMetadata) returns (google.protobuf.Empty) {
@@ -436,7 +436,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
   rpc ResetCollection(ResetCollectionReq) returns (google.protobuf.Empty) {
@@ -487,7 +487,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -542,7 +542,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -555,7 +555,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -568,22 +568,22 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
   //SampleEndpoint is to test that values come through to the api appropriately
   rpc SampleEndpoint(SampleRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v0alpha/lms/sample";
-      body: "*";
+      post: "/api/v0alpha/lms/sample"
+      body: "*"
     };
     option (annotations.authz) = {
       sets: [
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -596,7 +596,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -608,7 +608,7 @@ service LMS {
         {
           permissions: [PERMISSION_LMS_VIEW]
         }
-      ];
+      ]
     };
   }
 }

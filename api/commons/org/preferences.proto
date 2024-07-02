@@ -892,4 +892,6 @@ message CertificateInfo {
   string request_by = 8;
   // Whether the certificate info is deleted.
   bool deleted = 9;
+  // Whether or not the certifcate has been revoked
+  bool revoked = 10;
 }

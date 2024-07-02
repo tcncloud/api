@@ -16,7 +16,7 @@ service Srec {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service Srec {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service Srec {
         {
           permissions: [PERMISSION_VOICE_ANALYTICS_SCREEN_RECORDING_DELETE]
         }
-      ];
+      ]
     };
   }
 }

@@ -15,7 +15,7 @@ service ClassifierFileTemplates {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc UpdateFileTemplate(UpdateFileTemplateRequest) returns (UpdateFileTemplateResponse) {
@@ -26,7 +26,7 @@ service ClassifierFileTemplates {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc DeleteFileTemplate(DeleteFileTemplateRequest) returns (DeleteFileTemplateResponse) {
@@ -37,7 +37,7 @@ service ClassifierFileTemplates {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc ListFileTemplates(ListFileTemplatesRequest) returns (ListFileTemplatesResponse) {
@@ -48,7 +48,7 @@ service ClassifierFileTemplates {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
   rpc GetFileTemplate(GetFileTemplateRequest) returns (GetFileTemplateResponse) {
@@ -59,7 +59,7 @@ service ClassifierFileTemplates {
         {
           permissions: [PERMISSION_LMS_EDIT]
         }
-      ];
+      ]
     };
   }
 }

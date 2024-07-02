@@ -32,7 +32,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
 
@@ -45,7 +45,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
 
@@ -59,7 +59,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
 
@@ -72,7 +72,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
   // DeleteWorkflowDefinition deletes a flow definition from the database
@@ -84,7 +84,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
   // ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
@@ -96,7 +96,7 @@ service WorkflowDefinitionPersistService {
         {
           permissions: [PERMISSION_WORKFLOWS]
         }
-      ];
+      ]
     };
   }
 }

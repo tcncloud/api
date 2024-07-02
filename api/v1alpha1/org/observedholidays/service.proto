@@ -16,7 +16,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -29,7 +29,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 
@@ -42,7 +42,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -55,7 +55,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -68,7 +68,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -81,7 +81,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -94,7 +94,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_EDIT]
         }
-      ];
+      ]
     };
   }
 
@@ -107,7 +107,7 @@ service ObservedHolidaysService {
         {
           permissions: [PERMISSION_ORG_VIEW]
         }
-      ];
+      ]
     };
   }
 }
