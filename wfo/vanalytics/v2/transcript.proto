@@ -34,7 +34,7 @@ message Transcript {
   reserved 11;
 
   // The communication channel of the transcript.
-  api.commons.ChannelType channel = 12;
+  api.commons.ChannelType channel = 12 [deprecated = true];
 
   // The time the transcript was started.
   google.protobuf.Timestamp start_time = 13;
@@ -456,7 +456,7 @@ message TranscriptQuery {
   TranscriptSid transcript_sid = 1;
 
   // Query constraints on channel.
-  Channel channel = 2;
+  Channel channel = 2 [deprecated = true];
 
   // Query constraints on metadata.
   Metadata metadata = 3;
@@ -475,6 +475,9 @@ message TranscriptQuery {
 
   // Query constraints on phone.
   Phone phone = 8;
+
+  // Query constraints on channel type.
+  Channel channel_type = 9;
 
   // Query constraints on phone.
   message Phone {
