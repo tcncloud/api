@@ -26,9 +26,12 @@ message ContactManagerEntryEvent {
 }
 
 //payload for contact list upload
+//payload for contact list upload
 message ContactManagerListUploadEvent {
-  int64 ContactManagerListId = 1; //contact manager list id
-  int64 NumberOfContactsUploaded = 2; //number of contacts inserted
+  int64 ContactManagerListId = 1; // Contact manager list ID
+  int64 NumberOfContactsUploaded = 2; // Number of contacts received from LMS
+  int64 NumberOfSuccessfulContactsUploaded = 3; // Number of contacts inserted
+  int64 NumberOfFailedContacts = 4; // Number of contacts failed to be inserted
 }
 
 //payload for decrypt of ContactManagerEntry during KYC
