@@ -7,16 +7,131 @@ import "google/api/annotations.proto";
 import "services/translations/v1alpha1/entities.proto";
 
 service TranslationsService {
-  //
+  // Translate a template for a given context and language.
   // Required permissions:
   //   Any Authenticated User (TODO: Validate this assumption)
   // Errors:
-  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
   //   - grpc.AlreadyExists : This template is already translated for the given context and language.
   //   - grpc.InvalidArgument: The request is not valid.
   rpc TranslateTemplate(TranslateTemplateRequest) returns (TranslateTemplateResponse) {
     option (google.api.http).post = "/services/translations/v1alpha1/translatetemplate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Management support calls
+
+  // Lists translations by context/language
+  // Required permissions:
+  //  - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  //   - grpc.NotFound: No templates found for the given context and language.
+  rpc ListTranslations(ListTranslationsRequest) returns (ListTranslationsResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/listtranslations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Overrides the translation for a given translationID
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc UpdateTranslation(UpdateTranslationRequest) returns (UpdateTranslationResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/updatetranslation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Re-run the LLM translation for a given translationID
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc TriggerLLMTranslation(TriggerLLMTranslationRequest) returns (TriggerLLMTranslationResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/triggerllmtranslation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // re-run all translations for a given context (WARNING - this should be ran sparingly as it is a heavy operation and costs money)
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc TriggerLLMTranslations(TriggerLLMTranslationsRequest) returns (TriggerLLMTranslationsResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/triggerllmtranslations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // set/get context system message to give more tuned LLMs when translating for that context (WARNING - this overrides the previous system message for the context if exists)
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc SetSystemMessage(SetSystemMessageRequest) returns (SetSystemMessageResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/setsystemmessage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+  rpc GetSystemMessage(GetSystemMessageRequest) returns (GetSystemMessageResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/getsystemmessage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
+  }
+
+  // Gives a translation for a system message, template and language with no side effects (Used for testing system messages)
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc TestSystemMessage(TestSystemMessageRequest) returns (TestSystemMessageResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/testsystemmessage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ];
+    };
   }
 }
