@@ -293,6 +293,8 @@ message GetDashboardRequest {
   string dashboard_id = 1;
   // resource id of the dashboard
   string resource_id = 2;
+  // application retrieving the dashboard
+  annotations.perms.Application application = 3;
 }
 
 // CreateDashboardRequest used in the CreateDashboard rpc
