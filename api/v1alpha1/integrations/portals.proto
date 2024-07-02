@@ -341,6 +341,17 @@ service PortalManagerApi {
       ];
     };
   }
+  rpc ListPluginsByMethod(ListPluginsByMethodReq) returns (ListPluginsByMethodRes) {
+    option (google.api.http).post = "/api/v1alpha1/portalmanager/listpluginsbymethod";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ];
+    };
+  }
 }
 
 message UpsertPortalConfigReq {
@@ -646,4 +657,12 @@ message ActionDefinition {
   // if checked, we change the account number used for payment, rather than use the
   // one provided in the portal link.
   repeated api.commons.integrations.FieldDefinition opts = 11;
+}
+
+message ListPluginsByMethodReq {
+  api.commons.integrations.RequestMethod method_id = 1;
+}
+
+message ListPluginsByMethodRes {
+  repeated PluginInstance entities = 1;
 }
