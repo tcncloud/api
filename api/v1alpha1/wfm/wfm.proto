@@ -5707,8 +5707,10 @@ message PublishedSchedule {
   google.protobuf.Timestamp last_updated_at = 3;
   // Shifts that this schedule has.
   repeated ShiftInstance shift_instances = 4;
+  // Deprecated. Performance metrics that this schedule has.
+  repeated PerformanceMetric performance_metrics = 5 [deprecated = true];
   // Performance metrics that this schedule has.
-  repeated PerformanceMetric performance_metrics = 5;
+  repeated PerformanceMetricV2 performance_metrics_v2 = 6;
 }
 
 // Represents a draft schedule
@@ -5732,18 +5734,22 @@ message DraftSchedule {
   // The following field is only return of List requests of the entity.
   // Shifts that this schedule has.
   repeated ShiftInstance shift_instances = 8;
-  // Performance metrics that this schedule has.
-  repeated PerformanceMetric performance_metrics = 9;
+  // Deprecated. Performance metrics that this schedule has.
+  repeated PerformanceMetric performance_metrics = 9 [deprecated = true];
   // Schedule Scenario of the draft schedule.
   int64 schedule_scenario_sid = 10;
+  // Performance metrics that this schedule has.
+  repeated PerformanceMetricV2 performance_metrics_v2 = 11;
 }
 
+// Deprecated.
 // PerformanceMetricForSkillCollection.
 // Not a top-level entity:
 // * No primary-key field.
 // * No org_id field.
 // * No rpc endpoints, part of PerformanceMetric only.
 message PerformanceMetricForSkillCollection {
+  option deprecated = true;
   // Datetime range over which the metrics were determined.
   api.commons.DatetimeRange date_range = 1;
   // The total calls required over the @date_range, as determined by the forecast.
@@ -5775,8 +5781,10 @@ message PerformanceMetricForSkillCollection {
   api.commons.SkillProfileCategory skill_collection = 13;
 }
 
+// Deprecated.
 // Represents a performance metric
 message PerformanceMetric {
+  option deprecated = true;
   // Datetime range over which the metrics were determined.
   api.commons.DatetimeRange date_range = 1;
   // The total calls required over the @date_range, as determined by the forecast.
@@ -5816,8 +5824,8 @@ message PerformanceMetric {
 message PerformanceMetricForSkillCollectionV2 {
   // Datetime range over which the metrics were determined.
   api.commons.DatetimeRange date_range = 1;
-  float total_fte_intervals_required = 2;
-  float total_fte_intervals_achieved = 3;
+  float total_fte_intervals_required = 2 [deprecated = true];
+  float total_fte_intervals_achieved = 3 [deprecated = true];
   int32 num_intervals_with_call_ftes = 4;
   int32 num_intervals_with_shift_ftes = 5;
   int32 num_intervals_with_call_ftes_but_no_shifts = 6;
@@ -5837,14 +5845,21 @@ message PerformanceMetricForSkillCollectionV2 {
   repeated ServiceLevelInterval service_level_intervals = 13;
   // Pointer to skill collection.
   api.commons.SkillProfileCategory skill_collection = 14;
+
+  // The total FTE required over the @date_range, as determined by the forecast.
+  float total_required_fte = 15;
+  // The total FTE the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte = 16;
+  // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
+  float total_productive_fte = 17;
 }
 
 // PerformanceMetricV2.
 message PerformanceMetricV2 {
   // Datetime range over which the metrics were determined.
   api.commons.DatetimeRange date_range = 1;
-  float total_fte_intervals_required = 2;
-  float total_fte_intervals_achieved = 3;
+  float total_fte_intervals_required = 2 [deprecated = true];
+  float total_fte_intervals_achieved = 3 [deprecated = true];
   int32 num_intervals_with_call_ftes = 4;
   int32 num_intervals_with_shift_ftes = 5;
   int32 num_intervals_with_call_ftes_but_no_shifts = 6;
@@ -5864,6 +5879,13 @@ message PerformanceMetricV2 {
   repeated ServiceLevelInterval service_level_intervals = 13;
   // Per-skill metrics.
   repeated PerformanceMetricForSkillCollectionV2 metrics_by_skill_collection = 14;
+
+  // The total FTE required over the @date_range, as determined by the forecast.
+  float total_required_fte = 15;
+  // The total FTE the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte = 16;
+  // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
+  float total_productive_fte = 17;
 }
 
 // Represents a service level interval.
@@ -5874,8 +5896,10 @@ message ServiceLevelInterval {
   float service_level_achieved = 2;
 }
 
+// Deprecated.
 // Represents an fte required vs achieved interval.
 message FTERequiredVsAchievedInterval {
+  option deprecated = true;
   // The start time of the interval.
   google.protobuf.Timestamp start_datetime = 1;
   // Number of required calls in the interval.
@@ -5886,8 +5910,14 @@ message FTERequiredVsAchievedInterval {
 
 message FTERequiredVsAchievedOccupancyInterval {
   google.protobuf.Timestamp start_datetime = 1;
-  float required_fte_occupancy = 2;
-  float achieved_fte_occupancy = 3;
+  float required_fte_occupancy = 2 [deprecated = true];
+  float achieved_fte_occupancy = 3 [deprecated = true];
+  // Number of required FTE in the interval.
+  float required_fte = 4;
+  // Number of achieved FTE's in the interval.
+  float achieved_fte = 5;
+  // Count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
+  float productive_fte = 6;
 }
 
 // Represents fte required
@@ -6323,8 +6353,10 @@ message CreateShiftInstanceReq {
 message CreateShiftInstanceRes {
   // Shift instance that was created.
   ShiftInstance shift_instance = 1;
+  // Deprecated. Performance metrics that this shift instance has.
+  repeated PerformanceMetric performance_metrics = 2 [deprecated = true];
   // Performance metrics that this shift instance has.
-  repeated PerformanceMetric performance_metrics = 2;
+  repeated PerformanceMetricV2 performance_metrics_v2 = 3;
 }
 
 // Request message for the CreateShiftInstanceV2 RPC
@@ -6425,8 +6457,10 @@ message UpdateShiftInstanceReq {
 message UpdateShiftInstanceRes {
   // Shift instance that was updated.
   ShiftInstance shift_instance = 1;
+  // Deprecated. Performance metrics that this shift instance has.
+  repeated PerformanceMetric performance_metrics = 2 [deprecated = true];
   // Performance metrics that this shift instance has.
-  repeated PerformanceMetric performance_metrics = 2;
+  repeated PerformanceMetricV2 performance_metrics_v2 = 3;
 }
 
 // Request message for the UpdateShiftInstanceV2 RPC
@@ -6554,8 +6588,10 @@ message GetPerformanceMetricsReq {
 
 // Response message for the GetPerformanceMetrics RPC.
 message GetPerformanceMetricsRes {
+  // Deprecated. Requested set of performance metrics.
+  repeated PerformanceMetric performance_metrics = 1 [deprecated = true];
   // Requested set of performance metrics.
-  repeated PerformanceMetric performance_metrics = 1;
+  repeated PerformanceMetricV2 performance_metrics_v2 = 2;
 }
 
 message SchedulingTarget {
