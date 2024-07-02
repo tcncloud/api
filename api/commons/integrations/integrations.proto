@@ -454,6 +454,9 @@ enum Validation {
   // regular expression must be specified using 'FieldDefintion.format'.
   // The default regular expression is '.*' (match anything).
   VALIDATION_REGEX = 402;
+
+  VALIDATION_ROUTING = 501;
+  VALIDATION_ACCOUNT = 502;
 }
 
 enum InvoiceDisplayType {
