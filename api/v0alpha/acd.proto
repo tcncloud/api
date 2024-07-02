@@ -18,6 +18,7 @@ package api.v0alpha;
 
 import "annotations/authz.proto";
 import "api/commons/acd.proto";
+import "api/v1alpha1/integrations/service.proto";
 import "google/api/annotations.proto";
 
 // Service for interacting with TCN's Agent Call Distribution system.
@@ -474,6 +475,73 @@ service Acd {
           permissions: [PERMISSION_AGENT]
         }
       ];
+    };
+  }
+
+  rpc StartSecureForm(StartSecureFormReq) returns (StartSecureFormRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/startsecureform";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+  rpc CollectSecureFormField(CollectSecureFormFieldReq) returns (stream CollectSecureFormFieldRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/collectsecureformfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+  rpc ResetSecureFormField(ResetSecureFormFieldReq) returns (ResetSecureFormFieldRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/resetsecureformfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+  rpc AcceptSecureFormField(AcceptSecureFormFieldReq) returns (AcceptSecureFormFieldRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/acceptsecureformfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+  rpc ProcessSecureForm(ProcessSecureFormReq) returns (ProcessSecureFormRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/processsecureform";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+  rpc FinishSecureFormHandling(FinishSecureFormHandlingReq) returns (FinishSecureFormHandlingRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/finishsecureformhandling";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
     };
   }
 }
@@ -940,3 +1008,39 @@ message AgentUnmuteRequest {
 }
 
 message AgentUnmuteReply {}
+
+message StartSecureFormReq {
+  string portal_id = 1;
+}
+message StartSecureFormRes {}
+
+message CollectSecureFormFieldReq {
+  string field_name = 1;
+}
+message CollectSecureFormFieldRes {}
+
+message ResetSecureFormFieldReq {}
+message ResetSecureFormFieldRes {}
+
+message AcceptSecureFormFieldReq {}
+message AcceptSecureFormFieldRes {}
+
+message ProcessSecureFormReq {
+  map<string, api.v1alpha1.integrations.Value> values = 1;
+  string portal_id = 2;
+  // segment tells us which workflow segment needs processing
+  int32 segment = 3;
+  // which choice in the workflow array to be processed
+  int32 choice = 4;
+}
+message ProcessSecureFormRes {
+  bool success = 1;
+  // the response data from the process
+  map<string, api.v1alpha1.integrations.Value> data = 2;
+}
+
+message FinishSecureFormHandlingReq {
+  string reason = 1;
+  map<string, api.v1alpha1.integrations.Value> data = 2;
+}
+message FinishSecureFormHandlingRes {}
