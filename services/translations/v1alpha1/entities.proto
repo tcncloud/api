@@ -2,21 +2,6 @@ syntax = "proto3";
 
 package services.translations.v1alpha1;
 
-// TranslateTemplateRequest is the request message for the Translate method.
-// Takes a template, context, and language to translate to.
-message TranslateTemplateRequest {
-  // The template to translate.
-  string template = 1;
-
-  // The context of the template.
-  string context = 2;
-}
-
-// TranslateTemplateResponse is the response message for the Translate method.
-message TranslateTemplateResponse {
-  repeated Translation translations = 1;
-}
-
 // Translation is the core entity of the translation service.
 message Translation {
   // The ID of the translation.
@@ -37,3 +22,115 @@ message Translation {
   // The manual translation if exixts.
   string manual_translation = 6;
 }
+
+// TranslateTemplateRequest is the request message for the Translate method.
+// Takes a template, context, and translates to all available languages.
+message TranslateTemplateRequest {
+  // The template to translate.
+  string template = 1;
+
+  // The context of the template.
+  string context = 2;
+}
+
+// TranslateTemplateResponse is the response message for the Translate method.
+message TranslateTemplateResponse {
+  repeated Translation translations = 1;
+}
+
+// ListTranslationsRequest is the request message for the ListTranslations method.
+// Takes a context and language tag and returns all translations.
+message ListTranslationsRequest {
+  // The context of the translations.
+  string context = 1;
+
+  // The BCP 47 language tag of the translations.
+  string language_tag = 2;
+}
+
+// ListTranslationsResponse is the response message for the ListTranslations method.
+message ListTranslationsResponse {
+  repeated Translation translations = 1;
+}
+
+// UpdateTranslationRequest is the request message for the UpdateTranslation method.
+// Takes a translation ID and a new translation.
+message UpdateTranslationRequest {
+  // The ID of the translation to update.
+  string translation_id = 1;
+
+  // The new translation.
+  string translation = 2;
+}
+
+// UpdateTranslationResponse is the response message for the UpdateTranslation method.
+message UpdateTranslationResponse {
+  // The updated translation.
+  Translation translation = 1;
+}
+
+// TriggerLLMTranslationRequest is the request message for the TriggerLLMTranslation method.
+// Takes a translation ID and triggers the LLM translation.
+message TriggerLLMTranslationRequest {
+  // The ID of the translation to trigger the LLM translation.
+  string translation_id = 1;
+}
+
+// TriggerLLMTranslationResponse is the response message for the TriggerLLMTranslation method.
+message TriggerLLMTranslationResponse {
+  // The updated translation.
+  Translation translation = 1;
+}
+
+// SetSystemMessageRequest is the request message for the SetSystemMessage method.
+// Takes a context and a system message.
+message SetSystemMessageRequest {
+  // The context to set the system message for.
+  string context = 1;
+
+  // The system message.
+  string system_message = 2;
+}
+
+// SetSystemMessageResponse is the response message for the SetSystemMessage method.
+message SetSystemMessageResponse {}
+
+// GetSystemMessageRequest is the request message for the GetSystemMessage method.
+// Takes a context and returns the system message.
+message GetSystemMessageRequest {
+  // The context to get the system message for.
+  string context = 1;
+}
+
+// GetSystemMessageResponse is the response message for the GetSystemMessage method.
+message GetSystemMessageResponse {
+  // The system message.
+  string system_message = 1;
+}
+
+// TestSystemMessageRequest is the request message for the TestSystemMessage method.
+// Takes a system message, template, and language tag and returns the translation.
+message TestSystemMessageRequest {
+  // The system message to test.
+  string system_message = 1;
+
+  // The template to test.
+  string template = 2;
+
+  // The BCP 47 language tag of the translation.
+  string language_tag = 3;
+}
+
+// TestSystemMessageResponse is the response message for the TestSystemMessage method.
+message TestSystemMessageResponse {
+  // The translation.
+  string translation = 1;
+}
+
+// TriggerLLMTranslationsRequest is the request message for the TriggerLLMTranslations method.
+message TriggerLLMTranslationsRequest {
+  // The context to trigger the LLM translations for.
+  string context = 1;
+}
+
+message TriggerLLMTranslationsResponse {}
