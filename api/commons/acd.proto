@@ -93,6 +93,9 @@ message AgentStatus {
 
     // interim state for cold agent transfer
     COLD_AGENT_TRANSFER_STARTED = 39;
+
+    // the agent is moving through a portal
+    SECURE_FORM_HANDLING = 40;
   }
 }
 
@@ -121,6 +124,8 @@ message CallerStatus {
     CALLER_TRANSFER_MERGED_CALLER = 18;
     // when the transfer is accepted and the agent leaves the transfer
     CALLER_PEERED = 19;
+    // the caller is inputting values through dtmf tones
+    SECURE_FORM_HANDLING_COLLECT = 20;
   }
 }
 
