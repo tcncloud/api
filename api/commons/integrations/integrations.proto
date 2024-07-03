@@ -322,6 +322,18 @@ enum RequestMethod {
   REQUEST_METHOD_FINVI_QUERY_TRANSACTIONS = 4308;
   REQUEST_METHOD_FINVI_REMOVE_CUSTOMER_TOKEN = 4309;
   REQUEST_METHOD_FINVI_UPDATE_CUSTOMER = 4310;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_AUTH = 4311;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_CAPTURE = 4312;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_CREDIT = 4313;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_REFUND = 4314;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_SALE = 4315;
+  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_VALIDATE = 4316;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_AUTH = 4317;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_CAPTURE = 4318;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_CREDIT = 4319;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_REFUND = 4320;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_SALE = 4321;
+  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_VALIDATE = 4322;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -953,6 +965,18 @@ message ExecuteFlow {
     ExecuteFinviQueryTransactions finvi_query_transactions = 4308;
     ExecuteFinviRemoveCustomerToken finvi_remove_customer_token = 4309;
     ExecuteFinviUpdateCustomer finvi_update_customer = 4310;
+    ExecuteFinviCreateTransactionAuth finvi_create_transaction_auth = 4311;
+    ExecuteFinviCreateTransactionCapture finvi_create_transaction_capture = 4312;
+    ExecuteFinviCreateTransactionCredit finvi_create_transaction_credit = 4313;
+    ExecuteFinviCreateTransactionRefund finvi_create_transaction_refund = 4314;
+    ExecuteFinviCreateTransactionSale finvi_create_transaction_sale = 4315;
+    ExecuteFinviCreateTransactionValidate finvi_create_transaction_validate = 4316;
+    ExecuteFinviProcessNewTransactionAuth finvi_process_new_transaction_auth = 4317;
+    ExecuteFinviProcessNewTransactionCapture finvi_process_new_transaction_capture = 4318;
+    ExecuteFinviProcessNewTransactionCredit finvi_process_new_transaction_credit = 4319;
+    ExecuteFinviProcessNewTransactionRefund finvi_process_new_transaction_refund = 4320;
+    ExecuteFinviProcessNewTransactionSale finvi_process_new_transaction_sale = 4321;
+    ExecuteFinviProcessNewTransactionValidate finvi_process_new_transaction_validate = 4322;
 
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
@@ -1301,3 +1325,15 @@ message ExecuteFinviQueryQueryTransactionDetails {}
 message ExecuteFinviQueryTransactions {}
 message ExecuteFinviRemoveCustomerToken {}
 message ExecuteFinviUpdateCustomer {}
+message ExecuteFinviCreateTransactionAuth {}
+message ExecuteFinviCreateTransactionCapture {}
+message ExecuteFinviCreateTransactionCredit {}
+message ExecuteFinviCreateTransactionRefund {}
+message ExecuteFinviCreateTransactionSale {}
+message ExecuteFinviCreateTransactionValidate {}
+message ExecuteFinviProcessNewTransactionAuth {}
+message ExecuteFinviProcessNewTransactionCapture {}
+message ExecuteFinviProcessNewTransactionCredit {}
+message ExecuteFinviProcessNewTransactionRefund {}
+message ExecuteFinviProcessNewTransactionSale {}
+message ExecuteFinviProcessNewTransactionValidate {}
