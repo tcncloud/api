@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.agenttraining;
 
 import "api/commons/agent_training.proto";
+import "api/commons/dashboards.proto";
 import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
@@ -81,6 +82,16 @@ message GetLearningOpportunityRequest {
 // GetLearningOpportunityResponse represents the gotten learning opportunity.
 message GetLearningOpportunityResponse {
   api.commons.LearningOpportunity learning_opportunity = 1;
+}
+
+// ListDashboardsRequest represents a request to list dashboards.
+message ListDashboardsRequest {
+  string org_id = 1;
+}
+
+// ListDashboardsResponse represents the listed dashboards.
+message ListDashboardsResponse {
+  repeated api.commons.DashboardSummary dashboards = 1;
 }
 
 // [CUSTOMER SUPPORT ONLY] =========================================================
