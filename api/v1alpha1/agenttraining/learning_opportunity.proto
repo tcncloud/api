@@ -85,9 +85,7 @@ message GetLearningOpportunityResponse {
 }
 
 // ListDashboardsRequest represents a request to list dashboards.
-message ListDashboardsRequest {
-  string org_id = 1;
-}
+message ListDashboardsRequest {}
 
 // ListDashboardsResponse represents the listed dashboards.
 message ListDashboardsResponse {
