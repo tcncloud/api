@@ -2,18 +2,10 @@ syntax = "proto3";
 
 package api.commons;
 
-// Dashboard summary
-message DashboardSummary {
-  // unique ID for this dashboard
-  string dashboard_id = 1;
-  // required dashboard title
+// Dashboard represents a dashboard.
+message Dashboard {
+  // The resource id of the dashboard.
+  string id = 1;
+  // The title of the dashboard.
   string title = 2;
-  // optional dashboard description
-  string description = 3;
-  // number of associated panels
-  int32 panel_count = 4;
-  // resource id of the dashboard
-  string resource_id = 5;
-  // standard dashboard flag
-  bool standard_dashboard = 6;
 }
