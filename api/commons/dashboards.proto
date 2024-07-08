@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package api.commons;
 
-// Dashboard represents a dashboard.
-message Dashboard {
+// DashboardReference containst he info needed to get a dashboard.
+message DashboardReference {
   // The resource id of the dashboard.
   string resource_id = 1;
   // The title of the dashboard.
