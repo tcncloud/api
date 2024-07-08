@@ -5,7 +5,7 @@ package api.commons;
 // Dashboard represents a dashboard.
 message Dashboard {
   // The resource id of the dashboard.
-  string id = 1;
+  string resource_id = 1;
   // The title of the dashboard.
   string title = 2;
 }
