@@ -125,6 +125,10 @@ message BulkDeleteEvaluationsRequest {
   string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
   repeated int64 evaluation_ids = 2; // Optional. Unique ids of evaluations to delete.
   api.commons.TimeFilter completed_at = 3; // Optional. Delete evaluations in a specific range.
+  repeated int64 category_ids = 4; // Optional. Filter by category ids.
+  repeated string agent_user_ids = 5; // Optional. Filter by agent user ids.
+  repeated int64 scorecard_ids = 6; // Optional. Filter by scorecard ids.
+  repeated string scorer_id = 7; // Optional. Filter by scorer id.
 }
 
 // BulkDeleteEvaluationsResponse is a response with deleted evaluations
