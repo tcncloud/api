@@ -83,6 +83,19 @@ message GetLearningOpportunityResponse {
   api.commons.LearningOpportunity learning_opportunity = 1;
 }
 
+// ListDashboardsRequest represents a request to list dashboards.
+message ListDashboardsRequest {}
+
+// ListDashboardsResponse represents the listed dashboards.
+message ListDashboardsResponse {
+  repeated Dashboard dashboards = 1;
+
+  message Dashboard {
+    string resource_id = 1;
+    string title = 2;
+  }
+}
+
 // [CUSTOMER SUPPORT ONLY] =========================================================
 
 // ListLearningOpportunitiesByOrgIdRequest represents a request to list learning opportunities.
