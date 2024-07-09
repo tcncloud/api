@@ -89,7 +89,12 @@ message ListDashboardsRequest {}
 
 // ListDashboardsResponse represents the listed dashboards.
 message ListDashboardsResponse {
-  repeated api.commons.DashboardReference dashboards = 1;
+  repeated Dashboard dashboards = 1;
+
+  message Dashboard {
+    string resource_id = 1;
+    string title = 2;
+  }
 }
 
 // [CUSTOMER SUPPORT ONLY] =========================================================
