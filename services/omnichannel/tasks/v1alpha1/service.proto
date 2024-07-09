@@ -18,4 +18,15 @@ service TasksService {
       ]
     };
   }
+  rpc BulkCancelTasks(BulkCancelTasksRequest) returns (BulkCancelTasksResponse) {
+    option (google.api.http).post = "/services/omnichannel/tasks/v1alpha1/bulkcanceltasks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
 }
