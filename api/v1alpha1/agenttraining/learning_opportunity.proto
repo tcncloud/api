@@ -3,7 +3,6 @@ syntax = "proto3";
 package api.v1alpha1.agenttraining;
 
 import "api/commons/agent_training.proto";
-import "api/commons/dashboards.proto";
 import "api/commons/scorecards.proto";
 import "google/protobuf/field_mask.proto";
 
