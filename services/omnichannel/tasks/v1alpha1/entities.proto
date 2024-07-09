@@ -9,3 +9,14 @@ message CancelTasksRequest {
 }
 
 message CancelTasksResponse {}
+
+message BulkCancelTasksRequest {
+  // filter follows google's aip 160 and currently supports:
+  //  - campaign_sid = {int}
+  string filter = 1;
+}
+
+message BulkCancelTasksResponse {
+  //send back ghost notifier reference ID
+  string ghost_reference_id = 1;
+}
