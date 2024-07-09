@@ -157,6 +157,8 @@ message GetPublishedArticleByIdResponse {
 message UserActivityRequest {
   // the unique published article identifier
   int64 published_article_sid = 1 [jstype = JS_STRING];
+  // this flag determines whether to allow news article popups while imitating/impersonating
+  bool force = 2;
 }
 
 // Response to user activity updates
