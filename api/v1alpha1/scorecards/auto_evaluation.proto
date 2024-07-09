@@ -117,6 +117,10 @@ message BulkDeleteAutoEvaluationsRequest {
   string org_id = 1; // Required. Specifies the org in which to delete the evaluation.
   repeated int64 auto_evaluation_ids = 2; // Optional. Unique ids of auto evaluations to delete.
   api.commons.TimeFilter completed_at = 3; // Optional. Delete auto evaluations in a specific range.
+  repeated int64 scorecard_ids = 4; // Optional - filter by scorecard ids.
+  repeated int64 category_ids = 5; // Optional - filter by category ids.
+  repeated string agent_user_ids = 6; // Optional - filter by agent user ids.
+  repeated api.commons.RiskLevel risk_levels = 7; // Optional - filter by risk level.
 }
 
 // BulkDeleteAutoEvaluationsResponse is a response with deleted evaluations
