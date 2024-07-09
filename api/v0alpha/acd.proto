@@ -1011,18 +1011,24 @@ message AgentUnmuteReply {}
 
 message StartSecureFormReq {
   string portal_id = 1;
+  int64 voice_session_sid = 2;
 }
 message StartSecureFormRes {}
 
 message CollectSecureFormFieldReq {
   string field_name = 1;
+  int64 voice_session_sid = 2;
 }
 message CollectSecureFormFieldRes {}
 
-message ResetSecureFormFieldReq {}
+message ResetSecureFormFieldReq {
+  int64 voice_session_sid = 1;
+}
 message ResetSecureFormFieldRes {}
 
-message AcceptSecureFormFieldReq {}
+message AcceptSecureFormFieldReq {
+  int64 voice_session_sid = 1;
+}
 message AcceptSecureFormFieldRes {}
 
 message ProcessSecureFormReq {
@@ -1032,6 +1038,7 @@ message ProcessSecureFormReq {
   int32 segment = 3;
   // which choice in the workflow array to be processed
   int32 choice = 4;
+  int64 voice_session_sid = 5;
 }
 message ProcessSecureFormRes {
   bool success = 1;
@@ -1042,5 +1049,6 @@ message ProcessSecureFormRes {
 message FinishSecureFormHandlingReq {
   string reason = 1;
   map<string, api.v1alpha1.integrations.Value> data = 2;
+  int64 voice_session_sid = 3;
 }
 message FinishSecureFormHandlingRes {}
