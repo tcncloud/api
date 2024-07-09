@@ -48,6 +48,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_PAYNSECONDS = 4100;
   INTEGRATION_TYPE_SUTHERLANDREV = 4200;
   INTEGRATION_TYPE_FINVI = 4300;
+  INTEGRATION_TYPE_NAVIGA_DTI_CIRC = 4400;
+  INTEGRATION_TYPE_NAVIGA_DTI_CS = 4500;
 
   INTEGRATION_TYPE_DEBUG = 5000;
 }
@@ -334,6 +336,22 @@ enum RequestMethod {
   REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_REFUND = 4320;
   REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_SALE = 4321;
   REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_VALIDATE = 4322;
+
+  REQUEST_METHOD_NAVIGA_DTI_CIRC_CREATE_PAYMENT = 4401;
+  REQUEST_METHOD_NAVIGA_DTI_CIRC_CHANGE_BILLING = 4402;
+
+  REQUEST_METHOD_NAVIGA_DTI_CS_AUTO_RENEW_INFO = 4501;
+  REQUEST_METHOD_NAVIGA_DTI_CS_AUTO_TRAN = 4502;
+  REQUEST_METHOD_NAVIGA_DTI_CS_BILLING_INFO = 4503;
+  REQUEST_METHOD_NAVIGA_DTI_CS_LOGIN = 4504;
+  REQUEST_METHOD_NAVIGA_DTI_CS_PAY_INFO = 4505;
+  REQUEST_METHOD_NAVIGA_DTI_CS_PAY_TRAN = 4506;
+  REQUEST_METHOD_NAVIGA_DTI_CS_RENEW_INFO = 4507;
+  REQUEST_METHOD_NAVIGA_DTI_CS_SEARCH_PAGE = 4508;
+  REQUEST_METHOD_NAVIGA_DTI_CS_SERVICE_ERROR_INFO = 4509;
+  REQUEST_METHOD_NAVIGA_DTI_CS_SERVICE_ERROR_TRANS = 4510;
+  REQUEST_METHOD_NAVIGA_DTI_CS_STOP_INFO = 4511;
+  REQUEST_METHOD_NAVIGA_DTI_CS_STOP_TRANS = 4512;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -978,6 +996,22 @@ message ExecuteFlow {
     ExecuteFinviProcessNewTransactionSale finvi_process_new_transaction_sale = 4321;
     ExecuteFinviProcessNewTransactionValidate finvi_process_new_transaction_validate = 4322;
 
+    ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
+    ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
+
+    ExecuteNavigaDTICSAutoRenewInfo naviga_dti_cs_auto_renew_info = 4501;
+    ExecuteNavigaDTICSAutoTran naviga_dti_cs_auto_tran = 4502;
+    ExecuteNavigaDTICSBillingInfo naviga_dti_cs_billing_info = 4503;
+    ExecuteNavigaDTICSLogin naviga_dti_cs_login = 4504;
+    ExecuteNavigaDTICSPayInfo naviga_dti_cs_pay_info = 4505;
+    ExecuteNavigaDTICSPayTran naviga_dti_cs_pay_tran = 4506;
+    ExecuteNavigaDTICSRenewInfo naviga_dti_cs_renew_info = 4507;
+    ExecuteNavigaDTICSSearchPage naviga_dti_cs_search_page = 4508;
+    ExecuteNavigaDTICSServiceErrorInfo naviga_dti_cs_service_error_info = 4509;
+    ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
+    ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
+    ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
+
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
   }
@@ -1337,3 +1371,19 @@ message ExecuteFinviProcessNewTransactionCredit {}
 message ExecuteFinviProcessNewTransactionRefund {}
 message ExecuteFinviProcessNewTransactionSale {}
 message ExecuteFinviProcessNewTransactionValidate {}
+
+message ExecuteNavigaDTICircCreatePayment {}
+message ExecuteNavigaDTICircChangeBilling {}
+
+message ExecuteNavigaDTICSAutoRenewInfo {}
+message ExecuteNavigaDTICSAutoTran {}
+message ExecuteNavigaDTICSBillingInfo {}
+message ExecuteNavigaDTICSLogin {}
+message ExecuteNavigaDTICSPayInfo {}
+message ExecuteNavigaDTICSPayTran {}
+message ExecuteNavigaDTICSRenewInfo {}
+message ExecuteNavigaDTICSSearchPage {}
+message ExecuteNavigaDTICSServiceErrorInfo {}
+message ExecuteNavigaDTICSServiceErrorTrans {}
+message ExecuteNavigaDTICSStopInfo {}
+message ExecuteNavigaDTICSStopTrans {}
