@@ -10,6 +10,11 @@ enum SchemaType {
     SCHEMA_TYPE_STRING = 5;
     SCHEMA_TYPE_BOOL = 6;
     SCHEMA_TYPE_TIMESTAMP = 7;
+
+    SCHEMA_TYPE_INT_ARRAY = 8;
+    SCHEMA_TYPE_FLOAT_ARRAY = 9;
+    SCHEMA_TYPE_STRING_ARRAY = 10;
+    SCHEMA_TYPE_BOOL_ARRAY = 11;
 }
 
 // DatasourceType is an enum for the type of a datasource.
