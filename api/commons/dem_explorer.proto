@@ -29,6 +29,7 @@ message SchemaField {
   string name = 1;
   SchemaType column_type = 2;
   bool is_primary_key = 3;
+  bool is_low_cardinality = 4;
 }
 
 // Schema is a schema for a datasource.
