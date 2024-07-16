@@ -44,17 +44,27 @@ enum OperationType {
   OPERATION_TYPE_SUFFIX = 3;
   // Duration format type
   OPERATION_TYPE_DURATION = 4;
+  // Add operation
   OPERATION_TYPE_ADD = 5;
+  // Subract operation
   OPERATION_TYPE_SUBTRACT = 6;
+  // Multiply operation
   OPERATION_TYPE_MULTIPLY = 7;
+  // Divide operation
   OPERATION_TYPE_DIVIDE = 8;
+  // Format number operation
   OPERATION_TYPE_FORMAT_NUMBER = 9;
+  // Precision operation
   OPERATION_TYPE_PRECISION = 10;
 }
 
+// ColumnSort specifies how a column should be sorted
 enum ColumnSort {
+  // Unspecified
   COLUMN_SORT_UNSPECIFIED = 0;
+  // Ascending order
   COLUMN_SORT_ASCENDING = 1;
+  // Descending order
   COLUMN_SORT_DESCENDING = 2;
 }
 
@@ -100,6 +110,7 @@ message TableColumnConfig {
 
 // FormatSeries contains the series of operations for a column operation
 message FormatSeries {
+  // The series of format parts
   repeated string format_parts = 1;
 }
 
@@ -108,7 +119,9 @@ message ColumnOperation {
   // Operation type
   OperationType operation_type = 1;
   oneof operation_value {
+    // Float value for operation
     double float_value = 2;
+    // Series values for operation
     FormatSeries format_series = 3;
   }
 }
