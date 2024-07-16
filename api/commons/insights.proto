@@ -34,10 +34,6 @@ enum OutputConfigurationType {
 enum OutputConfigurationColumnFormatType {
   // Unspecified
   OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_UNSPECIFIED = 0;
-  // Percentage format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_PERCENTAGE = 1;
-  // Dollars format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DOLLARS = 2;
   // Date format type
   OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DATE = 3;
   // Prefix format type
@@ -48,13 +44,12 @@ enum OutputConfigurationColumnFormatType {
   OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION = 6;
   // Duration seconds format type
   OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION_SECONDS = 7;
-  // Number format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_NUMBER = 8;
 }
 
 enum ColumnSort {
-  COLUMN_SORT_ASCENDING = 0;
-  COLUMN_SORT_DESCENDING = 1;
+  COLUMN_SORT_UNSPECIFIED = 0;
+  COLUMN_SORT_ASCENDING = 1;
+  COLUMN_SORT_DESCENDING = 2;
 }
 
 // Enum for Column Summary Type
@@ -81,8 +76,8 @@ message TableVisualization {
 
 // Message for Table Column Configuration
 message TableColumnConfig {
-  // Key for the table column
-  string key = 1;
+  // Name for the table column
+  string column_name = 1;
   // Width of the column
   int64 column_width = 2;
   // Flag to hide the column
