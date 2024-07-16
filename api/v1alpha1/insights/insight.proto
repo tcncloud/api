@@ -215,7 +215,9 @@ message GetOutputConfigurationResponse {
 
 // Request message for SetDefaultOutputConfiguration
 message SetDefaultOutputConfigurationRequest {
+  // Insight id
   string insight_id = 1;
+  // Output configuration id
   string output_configuration_id = 2;
 }
 
@@ -224,10 +226,12 @@ message SetDefaultOutputConfigurationResponse {}
 
 // Request message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationRequest {
+  // Insight id
   string insight_id = 1;
 }
 
 // Response message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationResponse {
+  // Default ouptut configuration
   OutputConfiguration output_configuration = 1;
 }
