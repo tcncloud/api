@@ -326,7 +326,7 @@ service Insights {
     };
   }
 
-  // GetDefaultOutputConfiguration gets an output configuration
+  // GetDefaultOutputConfiguration gets the default output configuration for an insight
   rpc GetDefaultOutputConfiguration(GetDefaultOutputConfigurationRequest) returns (GetDefaultOutputConfigurationResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/getdefaultoutputconfiguration";
     option (google.api.http).body = "*";
