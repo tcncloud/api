@@ -142,13 +142,13 @@ message OutputConfiguration {
   // Insight ID associated with the output configuration
   string insight_id = 5;
   // is_default flag for the output configuration
-  bool is_default = 8;
+  bool is_default = 6;
   // Body of the output configuration
   oneof body {
     // Blob data for the output configuration
-    string blob = 6;
+    string blob = 7;
     // Table visualization data for the output configuration
-    api.commons.TableVisualization table_visualization = 7;
+    api.commons.TableVisualization table_visualization = 8;
   }
 }
 
@@ -213,17 +213,21 @@ message GetOutputConfigurationResponse {
   OutputConfiguration output_configuration = 1;
 }
 
+// Request message for SetDefaultOutputConfiguration
 message SetDefaultOutputConfigurationRequest {
   string insight_id = 1;
   string output_configuration_id = 2;
 }
 
+// Response message for SetDefaultOutputConfiguration
 message SetDefaultOutputConfigurationResponse {}
 
+// Request message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationRequest {
   string insight_id = 1;
 }
 
+// Response message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationResponse {
-  OutputConfiguration output_configuration_id = 1;
+  OutputConfiguration output_configuration = 1;
 }

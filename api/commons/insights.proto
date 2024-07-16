@@ -37,22 +37,21 @@ enum OperationType {
   // Unspecified
   OPERATION_TYPE_UNSPECIFIED = 0;
   // Date format type
-  OPERATION_TYPE_DATE = 3;
+  OPERATION_TYPE_DATE = 1;
   // Prefix format type
-  OPERATION_TYPE_PREFIX = 4;
+  OPERATION_TYPE_PREFIX = 2;
   // Suffix format type
-  OPERATION_TYPE_SUFFIX = 5;
+  OPERATION_TYPE_SUFFIX = 3;
   // Duration format type
-  OPERATION_TYPE_DURATION = 6;
-  
-  OPERATION_TYPE_ADD = 8;
-  OPERATION_TYPE_SUBTRACT = 9;
-  OPERATION_TYPE_MULTIPLY = 10;
-  OPERATION_TYPE_DIVIDE = 11;
-  OPERATION_TYPE_FORMAT_NUMBER = 12;
-  OPERATION_TYPE_PRECISION = 13;
-}
+  OPERATION_TYPE_DURATION = 4;
 
+  OPERATION_TYPE_ADD = 5;
+  OPERATION_TYPE_SUBTRACT = 6;
+  OPERATION_TYPE_MULTIPLY = 7;
+  OPERATION_TYPE_DIVIDE = 8;
+  OPERATION_TYPE_FORMAT_NUMBER = 9;
+  OPERATION_TYPE_PRECISION = 10;
+}
 
 enum ColumnSort {
   COLUMN_SORT_UNSPECIFIED = 0;
@@ -100,11 +99,9 @@ message TableColumnConfig {
   ColumnSort sort_direction = 8;
 }
 
-
-
 // Operation value
 message FormatSeries {
-  repeated string format_parts = 2;
+  repeated string format_parts = 1;
 }
 
 // Message for Operation
@@ -112,10 +109,7 @@ message Operation {
   // Operation type
   OperationType operation_type = 1;
   oneof operation_value {
-    float64 float_value = 3;
-    FormatSeries format_series = 4;
+    double float_value = 2;
+    FormatSeries format_series = 3;
   }
 }
-
-
-
