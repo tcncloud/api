@@ -309,4 +309,39 @@ service Insights {
       ]
     };
   }
+
+  // SetDefaultOutputConfiguration sets the specified output configuration to default
+  rpc SetDefaultOutputConfiguration(SetDefaultOutputConfigurationRequest) returns (SetDefaultOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/setdefaultoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // GetDefaultOutputConfiguration gets an output configuration
+  rpc GetDefaultOutputConfiguration(GetDefaultOutputConfigurationRequest) returns (GetDefaultOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/getdefaultoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
+  }
 }

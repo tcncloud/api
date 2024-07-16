@@ -90,7 +90,7 @@ message TableColumnConfig {
   // Renames the column name
   string renamed_as = 4;
   // Operations to be performed on the column
-  repeated Operation operations = 5;
+  repeated OperationType operations = 5;
   // Summary for the column (AVG, SUM, MIN, MAX)
   api.commons.OutputConfigurationColumnSummaryType column_summary = 6;
   // Description of the column
