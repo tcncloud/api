@@ -7,13 +7,11 @@ import "api/commons/insights.proto";
 // Message for Output Configuration
 message OutputConfiguration {
   // Unique identifier for the output configuration
-  string output_configuration_id = 1;
+  string output_configuration_id = 2;
   // Title of the output configuration
-  string output_configuration_title = 2;
+  string output_configuration_title = 3;
   // Type of the output configuration
-  api.commons.OutputConfigurationType output_configuration_type = 3;
-  // Organization ID associated with the output configuration
-  string org_id = 4;
+  api.commons.OutputConfigurationType output_configuration_type = 4;
   // Insight ID associated with the output configuration
   string insight_id = 5;
   // Body of the output configuration
@@ -21,40 +19,8 @@ message OutputConfiguration {
     // Blob data for the output configuration
     string blob = 6;
     // Table visualization data for the output configuration
-    TableVisualization table_visualization = 7;
+    api.commons.TableVisualization table_visualization = 7;
   }
-}
-
-// Message for Table Visualization
-message TableVisualization {
-  // Map of table column details
-  map<string, TableColumnConfig> table_column_details = 1;
-  // Default width for columns in the table
-  int64 default_column_width = 2;
-  // Flag for sorting by a single column
-  bool single_column_sort = 3;
-}
-
-// Message for Table Column Configuration
-message TableColumnConfig {
-  // Key for the table column
-  string key = 1;
-  // Width of the column
-  int64 column_width = 2;
-  // Flag to hide the column
-  bool hide_column = 3;
-  // Label for the column
-  string label = 4;
-  // Format type for the column
-  api.commons.OutputConfigurationColumnFormatType column_format_type = 5;
-  // Format values for the column
-  repeated string column_format_values = 6;
-  // Summary for the column (AVG, SUM, MIN, MAX)
-  api.commons.OutputConfigurationColumnSummaryType column_summary = 7;
-  // Description of the column
-  string description = 8;
-  // Order of the column
-  int64 order = 9;
 }
 
 // Request for listing output configurations

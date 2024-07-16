@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.insights;
 
 import "api/commons/insights.proto";
+import "api/v1alpha1/insights/output_configuration.proto";
 import "google/protobuf/field_mask.proto";
 
 // Insight is a data handling entity used to process data
@@ -18,6 +19,7 @@ message Insight {
   api.commons.InsightPermissionType insight_permission_type = 8; // Required - enum type used to deserialize body
   string resource_id = 9; // unique resource id of the insight
   bool standard_insight = 10; // whether the insight is a standard insight
+  repeated OutputConfiguration output_configurations = 11; // the output configurations for the insight
 }
 
 // PublishInsightRequest is the request to publish an insight.

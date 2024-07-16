@@ -52,6 +52,11 @@ enum OutputConfigurationColumnFormatType {
   OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_NUMBER = 8;
 }
 
+enum ColumnSort {
+  COLUMN_SORT_ASCENDING = 0;
+  COLUMN_SORT_DESCENDING = 1;
+}
+
 // Enum for Column Summary Type
 enum OutputConfigurationColumnSummaryType {
   // Unspecified
@@ -64,4 +69,36 @@ enum OutputConfigurationColumnSummaryType {
   OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN = 3;
   // Summary type Maximum
   OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX = 4;
+}
+
+// Message for Table Visualization
+message TableVisualization {
+  // Map of table column details
+  map<string, TableColumnConfig> table_column_details = 1;
+  // Default width for columns in the table
+  int64 default_column_width = 2;
+}
+
+// Message for Table Column Configuration
+message TableColumnConfig {
+  // Key for the table column
+  string key = 1;
+  // Width of the column
+  int64 column_width = 2;
+  // Flag to hide the column
+  bool hide_column = 3;
+  // Label for the column
+  string label = 4;
+  // Format type for the column
+  api.commons.OutputConfigurationColumnFormatType column_format_type = 5;
+  // Format values for the column
+  repeated string column_format_values = 6;
+  // Summary for the column (AVG, SUM, MIN, MAX)
+  api.commons.OutputConfigurationColumnSummaryType column_summary = 7;
+  // Description of the column
+  string description = 8;
+  // Order of the column
+  int64 order = 9;
+  // The sorting direction of the column
+  ColumnSort sort_direction = 10;
 }
