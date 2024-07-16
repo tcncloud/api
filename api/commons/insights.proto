@@ -99,7 +99,7 @@ message TableColumnConfig {
   ColumnSort sort_direction = 8;
 }
 
-// Operation value
+// FormatSeries contains the series of operations for a column operation
 message FormatSeries {
   repeated string format_parts = 1;
 }
