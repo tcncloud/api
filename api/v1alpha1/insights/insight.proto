@@ -132,7 +132,7 @@ message ListVfsSchemasResponse {
   repeated GetVfsSchemaResponse vfs_schemas = 1; // Array of vfs schemas
 }
 
-// Message for Output Configuration
+// Output configuration provides formatting options in post processing
 message OutputConfiguration {
   // Unique identifier for the output configuration
   string output_configuration_id = 2;
@@ -151,14 +151,54 @@ message OutputConfiguration {
   }
 }
 
+// Request for creating a new output configuration
+message CreateOutputConfigurationRequest {
+  // Output configuration to create
+  OutputConfiguration output_configuration = 1;
+}
+
+// Response for creating a new output configuration
+message CreateOutputConfigurationResponse {
+  // The created output configuration
+  OutputConfiguration output_configuration = 1;
+}
+
 // Request for listing output configurations
-message ListOutputConfigurationsRequest {}
+message ListOutputConfigurationsRequest {
+  // The insight id to list output configurations for
+  string insight_id = 1;
+}
 
 // Response for listing output configurations
 message ListOutputConfigurationsResponse {
   // The requested output configurations
   repeated OutputConfiguration output_configurations = 1;
 }
+
+// Request for updating an existing output configuration
+message UpdateOutputConfigurationRequest {
+  // Output configuration identifier
+  string output_configuration_id = 1;
+  // Field mask to update specified fields
+  google.protobuf.FieldMask update_mask = 2;
+  // Updated output configuration
+  OutputConfiguration output_configuration = 3;
+}
+
+// Response for updating an existing output configuration
+message UpdateOutputConfigurationResponse {
+  // Updated output configuration
+  OutputConfiguration output_configuration = 1;
+}
+
+// Request for deleting an output configuration
+message DeleteOutputConfigurationRequest {
+  // Output configuration identifier
+  string output_configuration_id = 1;
+}
+
+// Response for deleting an output configuration
+message DeleteOutputConfigurationResponse {}
 
 // Request for getting a specific output configuration
 message GetOutputConfigurationRequest {
@@ -171,32 +211,3 @@ message GetOutputConfigurationResponse {
   // The requested output configuration
   OutputConfiguration output_configuration = 1;
 }
-
-// Request for creating a new output configuration
-message CreateOutputConfigurationRequest {
-  // Output configuration to create
-  OutputConfiguration output_configuration = 1;
-}
-
-// Response for creating a new output configuration
-message CreateOutputConfigurationResponse {}
-
-// Request for updating an existing output configuration
-message UpdateOutputConfigurationRequest {
-  // Output configuration identifier
-  string output_configuration_id = 1;
-  // Updated output configuration
-  OutputConfiguration output_configuration = 3;
-}
-
-// Response for updating an existing output configuration
-message UpdateOutputConfigurationResponse {}
-
-// Request for deleting an output configuration
-message DeleteOutputConfigurationRequest {
-  // Output configuration identifier
-  string output_configuration_id = 1;
-}
-
-// Response for deleting an output configuration
-message DeleteOutputConfigurationResponse {}

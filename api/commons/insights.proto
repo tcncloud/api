@@ -87,8 +87,8 @@ message TableColumnConfig {
   int64 column_width = 2;
   // Flag to hide the column
   bool hide_column = 3;
-  // Label for the column
-  string label = 4;
+  // Renames the column name
+  string renamed_as = 4;
   // Format type for the column
   api.commons.OutputConfigurationColumnFormatType column_format_type = 5;
   // Format values for the column

@@ -224,38 +224,89 @@ service Insights {
     };
   }
 
-  // ListOutputConfigurations lists output configurations
-  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (ListOutputConfigurationsResponse) {
-    option (google.api.http).post = "/api/v1alpha1/insights/insights/listoutputconfigurations";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
-  }
-
-  // GetOutputConfiguration gets an output configuration
-  rpc GetOutputConfiguration(GetOutputConfigurationRequest) returns (GetOutputConfigurationResponse) {
-    option (google.api.http).post = "/api/v1alpha1/insights/insights/getoutputconfiguration";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
-  }
-
   // CreateOutputConfiguration creates an output configuration
   rpc CreateOutputConfiguration(CreateOutputConfigurationRequest) returns (CreateOutputConfigurationResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/createoutputconfiguration";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // ListOutputConfigurations lists output configurations
+  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (ListOutputConfigurationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/listoutputconfigurations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
   }
 
   // UpdateOutputConfiguration updates an output configuration
   rpc UpdateOutputConfiguration(UpdateOutputConfigurationRequest) returns (UpdateOutputConfigurationResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/updateoutputconfiguration";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
   }
 
   // DeleteOutputConfiguration deletes an output configuration
   rpc DeleteOutputConfiguration(DeleteOutputConfigurationRequest) returns (DeleteOutputConfigurationResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/deleteoutputconfiguration";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // GetOutputConfiguration gets an output configuration
+  rpc GetOutputConfiguration(GetOutputConfigurationRequest) returns (GetOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/getoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
   }
 }
