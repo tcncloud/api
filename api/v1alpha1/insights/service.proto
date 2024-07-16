@@ -4,6 +4,7 @@ package api.v1alpha1.insights;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/insights/insight.proto";
+import "api/v1alpha1/insights/output_configuration.proto";
 import "google/api/annotations.proto";
 
 service Insights {
@@ -222,5 +223,35 @@ service Insights {
         }
       ]
     };
+  }
+
+  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (ListOutputConfigurationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/listoutputconfigurations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  rpc GetOutputConfiguration(GetOutputConfigurationRequest) returns (GetOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/getoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  rpc CreateOutputConfiguration(CreateOutputConfigurationRequest) returns (CreateOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/createoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  rpc UpdateOutputConfiguration(UpdateOutputConfigurationRequest) returns (UpdateOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/updateoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  rpc DeleteOutputConfiguration(DeleteOutputConfigurationRequest) returns (DeleteOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/deleteoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
