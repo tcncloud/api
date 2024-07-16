@@ -4,7 +4,6 @@ package api.v1alpha1.insights;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/insights/insight.proto";
-import "api/v1alpha1/insights/output_configuration.proto";
 import "google/api/annotations.proto";
 
 service Insights {
