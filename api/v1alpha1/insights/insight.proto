@@ -18,7 +18,6 @@ message Insight {
   api.commons.InsightPermissionType insight_permission_type = 8; // Required - enum type used to deserialize body
   string resource_id = 9; // unique resource id of the insight
   bool standard_insight = 10; // whether the insight is a standard insight
-  repeated OutputConfiguration output_configurations = 11; // the output configurations for the insight
 }
 
 // PublishInsightRequest is the request to publish an insight.
@@ -142,6 +141,8 @@ message OutputConfiguration {
   api.commons.OutputConfigurationType output_configuration_type = 4;
   // Insight ID associated with the output configuration
   string insight_id = 5;
+  // is_default flag for the output configuration
+  bool is_default = 8;
   // Body of the output configuration
   oneof body {
     // Blob data for the output configuration
@@ -210,4 +211,19 @@ message GetOutputConfigurationRequest {
 message GetOutputConfigurationResponse {
   // The requested output configuration
   OutputConfiguration output_configuration = 1;
+}
+
+message SetDefaultOutputConfigurationRequest {
+  string insight_id = 1;
+  string output_configuration_id = 2;
+}
+
+message SetDefaultOutputConfigurationResponse {}
+
+message GetDefaultOutputConfigurationRequest {
+  string insight_id = 1;
+}
+
+message GetDefaultOutputConfigurationResponse {
+  OutputConfiguration output_configuration_id = 1;
 }

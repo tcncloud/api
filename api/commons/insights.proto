@@ -28,23 +28,31 @@ enum OutputConfigurationType {
   OUTPUT_CONFIGURATION_TYPE_TABLE = 1;
   // Output configuration for multi-series format
   OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES = 2;
+  // Output configuration for pie chart format
+  OUTPUT_CONFIGURATION_TYPE_PIE_CHART = 3;
 }
 
 // Enum for Column Format Type
-enum OutputConfigurationColumnFormatType {
+enum OperationType {
   // Unspecified
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_UNSPECIFIED = 0;
+  OPERATION_TYPE_UNSPECIFIED = 0;
   // Date format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DATE = 3;
+  OPERATION_TYPE_DATE = 3;
   // Prefix format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_PREFIX = 4;
+  OPERATION_TYPE_PREFIX = 4;
   // Suffix format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_SUFFIX = 5;
+  OPERATION_TYPE_SUFFIX = 5;
   // Duration format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION = 6;
-  // Duration seconds format type
-  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION_SECONDS = 7;
+  OPERATION_TYPE_DURATION = 6;
+  
+  OPERATION_TYPE_ADD = 8;
+  OPERATION_TYPE_SUBTRACT = 9;
+  OPERATION_TYPE_MULTIPLY = 10;
+  OPERATION_TYPE_DIVIDE = 11;
+  OPERATION_TYPE_FORMAT_NUMBER = 12;
+  OPERATION_TYPE_PRECISION = 13;
 }
+
 
 enum ColumnSort {
   COLUMN_SORT_UNSPECIFIED = 0;
@@ -69,9 +77,7 @@ enum OutputConfigurationColumnSummaryType {
 // Message for Table Visualization
 message TableVisualization {
   // Map of table column details
-  map<string, TableColumnConfig> table_column_details = 1;
-  // Default width for columns in the table
-  int64 default_column_width = 2;
+  repeated TableColumnConfig table_column_details = 1;
 }
 
 // Message for Table Column Configuration
@@ -84,16 +90,32 @@ message TableColumnConfig {
   bool hide_column = 3;
   // Renames the column name
   string renamed_as = 4;
-  // Format type for the column
-  api.commons.OutputConfigurationColumnFormatType column_format_type = 5;
-  // Format values for the column
-  repeated string column_format_values = 6;
+  // Operations to be performed on the column
+  repeated Operation operations = 5;
   // Summary for the column (AVG, SUM, MIN, MAX)
-  api.commons.OutputConfigurationColumnSummaryType column_summary = 7;
+  api.commons.OutputConfigurationColumnSummaryType column_summary = 6;
   // Description of the column
-  string description = 8;
-  // Order of the column
-  int64 order = 9;
+  string description = 7;
   // The sorting direction of the column
-  ColumnSort sort_direction = 10;
+  ColumnSort sort_direction = 8;
 }
+
+
+
+// Operation value
+message FormatSeries {
+  repeated string format_parts = 2;
+}
+
+// Message for Operation
+message Operation {
+  // Operation type
+  OperationType operation_type = 1;
+  oneof operation_value {
+    float64 float_value = 3;
+    FormatSeries format_series = 4;
+  }
+}
+
+
+
