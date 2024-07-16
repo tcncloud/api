@@ -39,6 +39,21 @@ service TranslationsService {
     };
   }
 
+  // Lists localization languages
+  // Required permissions:
+  //  - PERMISSION_CUSTOMER_SUPPORT
+  rpc ListLanguages(ListLanguagesRequest) returns (ListLanguagesResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/listlanguages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
   // Overrides the translation for a given translationID
   // Required permissions:
   //   - PERMISSION_CUSTOMER_SUPPORT
