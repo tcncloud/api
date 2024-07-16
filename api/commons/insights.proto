@@ -19,3 +19,49 @@ enum InsightVfsSchemaType {
   INSIGHT_VFS_SCHEMA_TYPE_BOOLEAN = 3; // data type for bool
   INSIGHT_VFS_SCHEMA_TYPE_DATETIME = 4; // data type for datetime
 }
+
+// Enum for different types of output configurations
+enum OutputConfigurationType {
+  // Unspecified type
+  OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+  // Output configuration for table format
+  OUTPUT_CONFIGURATION_TYPE_TABLE = 1;
+  // Output configuration for multi-series format
+  OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES = 2;
+}
+
+// Enum for Column Format Type
+enum OutputConfigurationColumnFormatType {
+  // Unspecified
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_UNSPECIFIED = 0;
+  // Percentage format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_PERCENTAGE = 1;
+  // Dollars format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DOLLARS = 2;
+  // Date format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DATE = 3;
+  // Prefix format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_PREFIX = 4;
+  // Suffix format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_SUFFIX = 5;
+  // Duration format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION = 6;
+  // Duration seconds format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_DURATION_SECONDS = 7;
+  // Number format type
+  OUTPUT_CONFIGURATION_COLUMN_FORMAT_TYPE_NUMBER = 8;
+}
+
+// Enum for Column Summary Type
+enum OutputConfigurationColumnSummaryType {
+  // Unspecified
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED = 0;
+  // Sumamry type Average
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_AVG = 1;
+  // Summary type Summation
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_SUM = 2;
+  // Summary type Minimum
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN = 3;
+  // Summary type Maximum
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX = 4;
+}

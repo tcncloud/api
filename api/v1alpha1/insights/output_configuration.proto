@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+import "api/commons/insights.proto";
+package api.v1alpha1.insights;
+
+// Message for Output Configuration
+message OutputConfiguration {
+  // Unique identifier for the output configuration
+  string output_configuration_id = 1;
+  // Title of the output configuration
+  string output_configuration_title = 2;
+  // Type of the output configuration
+  api.commons.OutputConfigurationType output_configuration_type = 3;
+  // Organization ID associated with the output configuration
+  string org_id = 4;
+  // Insight ID associated with the output configuration
+  string insight_id = 5;
+  // Body of the output configuration
+  oneof body {
+    // Blob data for the output configuration
+    string blob = 6;
+    // Table visualization data for the output configuration
+    TableVisualization table_visualization = 7;
+  }
+}
+
+// Message for Table Visualization
+message TableVisualization {
+  // Map of table column details
+  map<string, TableColumnConfig> table_column_details = 1;
+  // Default width for columns in the table
+  int64 default_column_width = 2;
+  // Flag for sorting by a single column
+  bool single_column_sort = 3;
+}
+
+// Message for Table Column Configuration
+message TableColumnConfig {
+  // Key for the table column
+  string key = 1;
+  // Width of the column
+  int64 column_width = 2;
+  // Flag to hide the column
+  bool hide_column = 3;
+  // Label for the column
+  string label = 4;
+  // Format type for the column
+  api.commons.OutputConfigurationColumnFormatType column_format_type = 5;
+  // Format values for the column
+  repeated string column_format_values = 6;
+  // Summary for the column (AVG, SUM, MIN, MAX)
+  api.commons.OutputConfigurationColumnSummaryType column_summary = 7;
+  // Description of the column
+  string description = 8;
+  // Order of the column
+  int64 order = 9;
+}
+
+// Request for listing output configurations
+message ListOutputConfigurationsRequest {}
+
+// Response for listing output configurations
+message ListOutputConfigurationsResponse {
+  // The requested output configurations
+  repeated OutputConfiguration output_configurations = 1;
+}
+
+// Request for getting a specific output configuration
+message GetOutputConfigurationRequest {
+  // Output configuration identifier
+  string output_configuration_id = 1;
+}
+
+// Response for getting a specific output configuration
+message GetOutputConfigurationResponse {
+  // The requested output configuration
+  OutputConfiguration output_configuration = 1;
+}
+
+// Request for creating a new output configuration
+message CreateOutputConfigurationRequest {
+  // Output configuration to create
+  OutputConfiguration output_configuration = 1;
+}
+
+// Response for creating a new output configuration
+message CreateOutputConfigurationResponse {}
+
+// Request for updating an existing output configuration
+message UpdateOutputConfigurationRequest {
+  // Output configuration identifier
+  string output_configuration_id = 1;
+  // Updated output configuration
+  OutputConfiguration output_configuration = 3;
+}
+
+// Response for updating an existing output configuration
+message UpdateOutputConfigurationResponse {}
+
+// Request for deleting an output configuration
+message DeleteOutputConfigurationRequest {
+  // Output configuration identifier
+  string output_configuration_id = 1;
+}
+
+// Response for deleting an output configuration
+message DeleteOutputConfigurationResponse {}
