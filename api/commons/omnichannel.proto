@@ -148,7 +148,7 @@ message OmniCampaignModuleConfig {
 
 message ConversationTimeoutMessageConfig {
   bool is_disabled = 1;
-  string msg = 1;
+  string msg = 2;
 }
 
 // SmsNumber
