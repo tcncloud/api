@@ -142,6 +142,13 @@ message OmniCampaignModuleConfig {
   int32 country_code = 24;
   // postal code field
   string postal_code_field = 25;
+  // allows the user to configure a custom message for when a conversation times out, or to disable the message all together
+  ConversationTimeoutMessageConfig timeout_message_config = 26;
+}
+
+message ConversationTimeoutMessageConfig {
+  bool is_disabled = 1;
+  string msg = 1;
 }
 
 // SmsNumber
