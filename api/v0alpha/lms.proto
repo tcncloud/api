@@ -611,6 +611,29 @@ service LMS {
       ]
     };
   }
+  // List pools is a unary call to show finvi pools through exile
+  rpc ListPools(ListPoolsRequest) returns (ListPoolsResponse) {
+    option (google.api.http).post = "/api/v0alpha/lms/pools";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ]
+    };
+  }
+}
+
+message ListPoolsRequest {}
+
+message ListPoolsResponse {
+  repeated Pool pools = 1;
+}
+
+message Pool {
+  string id = 1;
+  string desc = 3;
 }
 
 message GetPublicKeyReq {}
@@ -1065,6 +1088,7 @@ message Process {
     EpicEntrypoint epic_entry_point = 76;
     ContactManagerSink contact_manager_sink = 77;
     SumProcess sum = 78;
+    FinviEntrypoint finvi_entrypoint = 79;
   }
 }
 
@@ -2839,4 +2863,15 @@ message SampleRequest {
 
 message EHREntityType {
   EpicEntityType epic_entity = 1;
+}
+
+message FinviEntrypoint {
+  // the pool we are going to pull into the lms pipeline
+  string pool_id = 1;
+  // how often we attempt to pull in data if the pool is OK status, and we don't have a  pull in progress
+  string cron_interval = 2;
+  // if true we do not do anything when cron rings
+  bool disabled = 3;
+  // Specifies the timezone to be used by the cron
+  string timezone = 4;
 }
