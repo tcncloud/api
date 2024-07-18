@@ -1,0 +1,19 @@
+syntax="proto3";
+
+package api.v1alpha1.explorer;
+
+import "api/v1alpha1/explorer/entities.proto";
+
+// ExplorerService is the service for the explorer API.
+service ExplorerService {
+    ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
+}
+
+// ListDatasourceSchemasRequest is the request to list datasource schemas.
+message ListDatasourceSchemasRequest {
+}
+
+// ListDatasourceSchemasResponse contains datasources and their schemas.
+message ListDatasourceSchemasResponse {
+    repeated api.commons.Schema schemas = 1;
+}

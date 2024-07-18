@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.commons;
+package api.v1alpha1.explorer;
 
 // SchemaType is an enum for the type of a schema field.
 enum SchemaType {
