@@ -3443,6 +3443,95 @@ service WFM {
       ]
     };
   }
+
+  // Creates the given @color for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @color are invalid.
+  //   - grpc.Internal: error occurs when creating the given @color or an rgba with @color.name already exists.
+  rpc CreateRgbaColor(CreateRgbaColorRequest) returns (CreateRgbaColorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/creatergbacolor";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Lists all rbga colors for the org sending the request.
+  // Errors:
+  //   - grpc.Internal: error occurs when listing the @colors.
+  rpc ListRgbaColors(ListRgbaColorsRequest) returns (ListRgbaColorsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listrgbacolors";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Updates the given @color for the org sending the request.
+  // Returns the updated rgba color after it has been updated.
+  // Errors:
+  //   - grpc.Internal: error occurs when updating the rgba color, or getting the updated color.
+  //   - grpc.NotFound: the color with @color.rgba_color_id does not exist.
+  rpc UpdateRgbaColor(UpdateRgbaColorRequest) returns (UpdateRgbaColorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatergbacolor";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Delete the rgba color with the @rgba_color_id for the org sending the request.
+  // Deletes any real time management state colors that are using @rgba_color_id, leaving them with their default colors.option
+  // Errors:
+  //  - grpc.Invalid: the @rgba_color_id is invalid or does not exist.
+  //  - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
+  rpc DeleteRgbaColor(DeleteRgbaColorRequest) returns (DeleteRgbaColorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletergbacolor";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -7346,3 +7435,45 @@ message CancelAgentLeavePetitionResponse {
   // The canceled Agent Leave Petition.
   api.commons.AgentLeavePetition agent_leave_petition = 1;
 }
+
+// Request message for CreateRgbaColor.
+message CreateRgbaColorRequest {
+  // The RGBA color to create.
+  RgbaColor color = 1;
+}
+
+// Response message for CreateRgbaColor.
+message CreateRgbaColorResponse {
+  // ID of the newly created rgba color
+  int64 rgba_color_id = 1;
+}
+
+// Request message for ListRgbaColors.
+message ListRgbaColorsRequest {}
+
+// Response message for ListRgbaColors.
+message ListRgbaColorsResponse {
+  // The rgba colors for the @org_id.
+  repeated RgbaColor colors = 1;
+}
+
+// Request message for UpdateRgbaColor.
+message UpdateRgbaColorRequest {
+  // The rgba color to update.
+  RgbaColor color = 1;
+}
+
+// Response message for UpdateRgbaColor.
+message UpdateRgbaColorResponse {
+  // The updated rgba color.
+  RgbaColor color = 1;
+}
+
+// Request message for DeleteRgbaColor.
+message DeleteRgbaColorRequest {
+  // ID of the rgba color to delete.
+  int64 rgba_color_id = 1;
+}
+
+// Request message for DeleteRgbaColor.
+message DeleteRgbaColorResponse {}
