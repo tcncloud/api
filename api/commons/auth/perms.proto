@@ -80,7 +80,7 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_USERS
   }];
-  
+
   // Enables access to agent management app for assigning skills,
   // huntgroup, etc.
   PERMISSION_AGENT_MANAGEMENT = 400 [(annotations.perms.options) = {
