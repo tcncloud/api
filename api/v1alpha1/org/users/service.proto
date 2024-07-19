@@ -655,7 +655,7 @@ service UsersService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT]
+          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
         }
       ]
     };
@@ -681,7 +681,7 @@ service UsersService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ORG_VIEW]
+          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
         }
       ]
     };
@@ -707,7 +707,7 @@ service UsersService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT]
+          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
         }
       ]
     };
@@ -733,7 +733,7 @@ service UsersService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT]
+          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
         }
       ]
     };
