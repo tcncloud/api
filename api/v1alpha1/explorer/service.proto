@@ -16,7 +16,7 @@ message ListDatasourceSchemasRequest {
 
 // ListDatasourceSchemasResponse contains datasources and their schemas.
 message ListDatasourceSchemasResponse {
-    repeated api.v1alpha1..Schema schemas = 1;
+    repeated api.v1alpha1.explorer.Schema schemas = 1;
 }
 
 // QueryDatasourceRequest is the request to query a datasource.
