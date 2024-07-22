@@ -41,9 +41,9 @@ message Schema {
 
 // Parameter is a parameter for a query.
 message Parameters {
-    message Parameter {
-        string value = 2;
-        string data_type = 3;
-    }
-    map<string, Parameter> parameters = 1;
+  message Parameter {
+    string value = 2;
+    string data_type = 3;
+  }
+  map<string, Parameter> parameters = 1;
 }
