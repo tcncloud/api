@@ -24,7 +24,7 @@ message QueryDatasourceRequest {
     // datasource_name is the name of the datasource to query.
     string datasource_name = 1;
     // datasource_type is the type of the datasource to query.
-    api.commons.DatasourceType datasource_type = 2;
+    api.v1alpha1.explorer.DatasourceType datasource_type = 2;
     // query is the query to execute.
     oneof query {
         // pipeline to be compiled to prql
