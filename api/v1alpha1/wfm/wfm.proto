@@ -7453,7 +7453,7 @@ message ListRgbaColorsRequest {}
 
 // Response message for ListRgbaColors.
 message ListRgbaColorsResponse {
-  // The rgba colors for the @org_id.
+  // The rgba colors for the org sending the request.
   repeated RgbaColor colors = 1;
 }
 
