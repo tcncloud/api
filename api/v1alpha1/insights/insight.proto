@@ -260,8 +260,10 @@ message OutputConfiguration {
 
 // Request for creating a new output configuration
 message CreateOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Output configuration to create
-  OutputConfiguration output_configuration = 1;
+  OutputConfiguration output_configuration = 2;
 }
 
 // Response for creating a new output configuration
@@ -272,8 +274,10 @@ message CreateOutputConfigurationResponse {
 
 // Request for listing output configurations
 message ListOutputConfigurationsRequest {
+  // Org Id for the output configurations
+  string org_id = 1;
   // The insight id to list output configurations for
-  string insight_id = 1;
+  string insight_id = 2;
 }
 
 // Response for listing output configurations
@@ -284,12 +288,14 @@ message ListOutputConfigurationsResponse {
 
 // Request for updating an existing output configuration
 message UpdateOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Output configuration identifier
-  string output_configuration_id = 1;
+  string output_configuration_id = 2;
   // Field mask to update specified fields
-  google.protobuf.FieldMask update_mask = 2;
+  google.protobuf.FieldMask update_mask = 3;
   // Updated output configuration
-  OutputConfiguration output_configuration = 3;
+  OutputConfiguration output_configuration = 4;
 }
 
 // Response for updating an existing output configuration
@@ -300,8 +306,10 @@ message UpdateOutputConfigurationResponse {
 
 // Request for deleting an output configuration
 message DeleteOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Output configuration identifier
-  string output_configuration_id = 1;
+  string output_configuration_id = 2;
 }
 
 // Response for deleting an output configuration
@@ -309,8 +317,10 @@ message DeleteOutputConfigurationResponse {}
 
 // Request for getting a specific output configuration
 message GetOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Output configuration identifier
-  string output_configuration_id = 1;
+  string output_configuration_id = 2;
 }
 
 // Response for getting a specific output configuration
@@ -321,10 +331,12 @@ message GetOutputConfigurationResponse {
 
 // Request message for SetDefaultOutputConfiguration
 message SetDefaultOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Insight id
-  string insight_id = 1;
+  string insight_id = 2;
   // Output configuration id
-  string output_configuration_id = 2;
+  string output_configuration_id = 3;
 }
 
 // Response message for SetDefaultOutputConfiguration
@@ -332,8 +344,10 @@ message SetDefaultOutputConfigurationResponse {}
 
 // Request message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationRequest {
+  // Org Id for the output configuration
+  string org_id = 1;
   // Insight id
-  string insight_id = 1;
+  string insight_id = 2;
 }
 
 // Response message for GetDefaultOutputConfiguration
