@@ -131,6 +131,112 @@ message ListVfsSchemasResponse {
   repeated GetVfsSchemaResponse vfs_schemas = 1; // Array of vfs schemas
 }
 
+// Enum for different types of output configurations
+enum OutputConfigurationType {
+  // Unspecified type
+  OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+  // Output configuration for table format
+  OUTPUT_CONFIGURATION_TYPE_TABLE = 1;
+  // Output configuration for multi-series format
+  OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES = 2;
+  // Output configuration for pie chart format
+  OUTPUT_CONFIGURATION_TYPE_PIE_CHART = 3;
+}
+
+// Enum for Column Format Type
+enum OperationType {
+  // Unspecified
+  OPERATION_TYPE_UNSPECIFIED = 0;
+  // Date format type
+  OPERATION_TYPE_DATE = 1;
+  // Prefix format type
+  OPERATION_TYPE_PREFIX = 2;
+  // Suffix format type
+  OPERATION_TYPE_SUFFIX = 3;
+  // Duration format type
+  OPERATION_TYPE_DURATION = 4;
+  // Add operation
+  OPERATION_TYPE_ADD = 5;
+  // Subract operation
+  OPERATION_TYPE_SUBTRACT = 6;
+  // Multiply operation
+  OPERATION_TYPE_MULTIPLY = 7;
+  // Divide operation
+  OPERATION_TYPE_DIVIDE = 8;
+  // Format number operation
+  OPERATION_TYPE_FORMAT_NUMBER = 9;
+  // Precision operation
+  OPERATION_TYPE_PRECISION = 10;
+}
+
+// ColumnSort specifies how a column should be sorted
+enum ColumnSort {
+  // Unspecified
+  COLUMN_SORT_UNSPECIFIED = 0;
+  // Ascending order
+  COLUMN_SORT_ASCENDING = 1;
+  // Descending order
+  COLUMN_SORT_DESCENDING = 2;
+}
+
+// Enum for Column Summary Type
+enum OutputConfigurationColumnSummaryType {
+  // Unspecified
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED = 0;
+  // Sumamry type Average
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_AVG = 1;
+  // Summary type Summation
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_SUM = 2;
+  // Summary type Minimum
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN = 3;
+  // Summary type Maximum
+  OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX = 4;
+}
+
+// Message for Table Visualization
+message TableVisualization {
+  // Map of table column details
+  repeated TableColumnConfig table_column_details = 1;
+}
+
+// Message for Table Column Configuration
+message TableColumnConfig {
+  // Name for the table column
+  string column_name = 1;
+  // Width of the column
+  int64 column_width = 2;
+  // Flag to hide the column
+  bool hide_column = 3;
+  // Renames the column name
+  string renamed_as = 4;
+  // Operations to be performed on the column
+  repeated ColumnOperation operations = 5;
+  // Summary for the column (AVG, SUM, MIN, MAX)
+  OutputConfigurationColumnSummaryType column_summary = 6;
+  // Description of the column
+  string description = 7;
+  // The sorting direction of the column
+  ColumnSort sort_direction = 8;
+}
+
+// FormatSeries contains the series of operations for a column operation
+message FormatSeries {
+  // The series of format parts
+  repeated string format_parts = 1;
+}
+
+// Message for ColumnOperation
+message ColumnOperation {
+  // Operation type
+  OperationType operation_type = 1;
+  oneof operation_value {
+    // Float value for operation
+    double float_value = 2;
+    // Series values for operation
+    FormatSeries format_series = 3;
+  }
+}
+
 // Output configuration provides formatting options in post processing
 message OutputConfiguration {
   // Unique identifier for the output configuration
@@ -138,7 +244,7 @@ message OutputConfiguration {
   // Title of the output configuration
   string output_configuration_title = 3;
   // Type of the output configuration
-  api.commons.OutputConfigurationType output_configuration_type = 4;
+  OutputConfigurationType output_configuration_type = 4;
   // Insight ID associated with the output configuration
   string insight_id = 5;
   // is_default flag for the output configuration
@@ -148,7 +254,7 @@ message OutputConfiguration {
     // Blob data for the output configuration
     string blob = 7;
     // Table visualization data for the output configuration
-    api.commons.TableVisualization table_visualization = 8;
+    TableVisualization table_visualization = 8;
   }
 }
 
