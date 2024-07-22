@@ -38,3 +38,12 @@ message Schema {
   DatasourceType datasource_type = 2;
   repeated SchemaField fields = 3;
 }
+
+// Parameter is a parameter for a query.
+message Parameters {
+    message Parameter {
+        string value = 2;
+        string data_type = 3;
+    }
+    map<string, Parameter> parameters = 1;
+}
