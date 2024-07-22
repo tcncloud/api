@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 // ExplorerService is the service for the explorer API.
 service ExplorerService {
-    ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
+    rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
