@@ -3245,6 +3245,10 @@ service WFM {
   // Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
   // The @petition_comment must be set with a value.
   // The @requested_datetime_ranges may not overlap each other.
+  // The number of working hours requested off should be set in @requested_hours_off.
+  // The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+  //   for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+  // The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
   // Errors:
   //   - grpc.Invalid: the request data is invalid.
   //   - grpc.Internal: error occurs when creating the time off request.
@@ -3307,7 +3311,10 @@ service WFM {
   // If a petition is approved, time off shifts will be added to the agent's schedule across the requested_datetime_ranges.
   // If @retain_partial_shifts is true, partial shifts overlapping the requested_datetime_ranges will have the remaining portion of the shift retained,
   //    if the remaining portion of the shift is at least 30 minutes in length.
-  // If @retain_partial_shifts is false, the entirety of shifts overlapping the requested_datetime_ranges range will be deleted.
+  // If @retain_partial_shifts is false, the entirety of shifts overlapping the requested_datetime_ranges range will be deleted or transfered depending on @replace_with_unassigned_agent.
+  // If @replace_with_unassigned_agent is true, an unassigned agent sid will be assigned to the covered shifts instead of deleting them.
+  // When @replace_with_unassigned_agent is true, if @retain_partial_shifts is also true, only the portion of the shift in the requested datetime ranges will be transfered.
+  // When @replace_with_unassigned_agent is true, if @retain_partial_shifts is false, the entirety of any overlapping shifts will be transfered.
   // Errors:
   //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is not pending approval.
   //   - grpc.Internal: error occurs when resolving the agent leave petition, or modifying the agent's schedule.
@@ -4736,6 +4743,8 @@ message SchedulingActivity {
   google.protobuf.Int64Value activity_sid = 3;
   // The non skill activity associated with @activity_sid if @is_skill_activity is false.
   NonSkillActivity member_non_skill_activity = 4;
+  // Distinguishes if this is a special scheduling activity.
+  commons.SchedulingActivityClassification activity_classification = 5;
 }
 
 // Request message for the ListCandidateSchedulingActivitiesReq RPC
@@ -5237,6 +5246,9 @@ message OpenTimesPattern {
   DatetimePattern datetime_pattern = 3;
   // ID of the schedule scenario that the open times pattern belongs to.
   int64 schedule_scenario_sid = 4;
+  // An optional value to relate the open times pattern to a specific type of scheduling activity, such as time off.
+  // If left as nil, this will be treated as a standard open times pattern.
+  google.protobuf.Int64Value scheduling_activity_sid = 5;
 }
 
 // Request message for the CreateOpenTimesPattern RPC
@@ -5319,6 +5331,9 @@ message AgentAvailabilityPattern {
   DatetimePattern datetime_pattern = 3;
   // ID of the schedule scenario that this agent availability pattern belongs to.
   int64 schedule_scenario_sid = 4;
+  // An optional value to relate the availability pattern to a specific type of scheduling activity, such as time off.
+  // If left as nil, this will be treated as a standard agent availability pattern.
+  google.protobuf.Int64Value scheduling_activity_sid = 5;
 }
 
 // Request message for the AgentAvailabilityPattern RPC
@@ -7253,6 +7268,10 @@ message CreateAgentLeavePetitionRequest {
   string petition_comment = 2;
   // The wfm agent requesting the time off.
   int64 wfm_agent_sid = 3;
+  // The number of working hours requested off.
+  // This does not need to relate directly to the datetime range being requested off,
+  // For example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+  float requested_hours_off = 4;
 }
 
 // Response message for CreateAgentLeavePetition.
@@ -7287,7 +7306,10 @@ message ArchiveAgentLeavePetitionRequest {
 }
 
 // Response message for the ArchiveAgentLeavePetition.
-message ArchiveAgentLeavePetitionResponse {}
+message ArchiveAgentLeavePetitionResponse {
+  // The archived Agent Leave Petition.
+  api.commons.AgentLeavePetition agent_leave_petition = 1;
+}
 
 // Request message for the ResolveAgentLeavePetition.
 message ResolveAgentLeavePetitionRequest {
@@ -7299,12 +7321,19 @@ message ResolveAgentLeavePetitionRequest {
   string response_comment = 3;
   // If true, partial shifts overlapping the requested_datetime_ranges will have the remaining portion of the shift retained
   //    if the remaining portion is at least 30 minutes wide.
-  // If false, the entirety of shifts overlapping the requested_datetime_ranges will be deleted.
+  // If false, the entirety of shifts overlapping the requested_datetime_ranges will be deleted or transfered, depending on @replace_with_unassigned_agent.
   bool retain_partial_shifts = 4;
+  // If @replace_with_unassigned_agent is true, an unassigned agent sid will be assigned to the shifts instead of deleting them.
+  // If @retain_partial_shifts is also true, only the portion of the shift in the requested datetime ranges will be transfered.
+  // if @retain_partial_shifts is false, the entirety of any overlapping shifts will be transfered.
+  bool replace_with_unassigned_agent = 5;
 }
 
 // Response message for the ResolveAgentLeavePetition.
-message ResolveAgentLeavePetitionResponse {}
+message ResolveAgentLeavePetitionResponse {
+  // The resolved Agent Leave Petition.
+  api.commons.AgentLeavePetition agent_leave_petition = 1;
+}
 
 // Request message for the CancelAgentLeavePetition.
 message CancelAgentLeavePetitionRequest {
@@ -7313,4 +7342,7 @@ message CancelAgentLeavePetitionRequest {
 }
 
 // Response message for the CancelAgentLeavePetition.
-message CancelAgentLeavePetitionResponse {}
+message CancelAgentLeavePetitionResponse {
+  // The canceled Agent Leave Petition.
+  api.commons.AgentLeavePetition agent_leave_petition = 1;
+}

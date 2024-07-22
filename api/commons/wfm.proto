@@ -850,4 +850,18 @@ message AgentLeavePetition {
   // The user ID of the manager who approved or denied the request.
   // This field is null by default.
   string resolved_by_user_id = 10;
+  // The number of working hours requested off.
+  // This does not need to relate directly to the datetime range being requested off,
+  // For example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+  float requested_hours_off = 11;
+}
+
+// The SchedulingActivityClassification, which is used to distinguish use cases for the Scheduling Activity.
+enum SchedulingActivityClassification {
+  // This wraps a generic Skill or Non Skill Activity.
+  STANDARD_SCHEDULING_ACTIVITY = 0;
+  // This wraps the On Call Skill Activity.
+  ON_CALL_ACTIVITY = 1;
+  // The wraps the Time Off Non Skill Activity.
+  TIME_OFF_ACTIVITY = 2;
 }

@@ -134,3 +134,18 @@ message TriggerLLMTranslationsRequest {
 }
 
 message TriggerLLMTranslationsResponse {}
+
+// Req/Res for listing languages
+message ListLanguagesRequest {}
+message ListLanguagesResponse {
+  repeated LocalizationLanguage languages = 1;
+}
+
+// The core language object for localization
+message LocalizationLanguage {
+  // The BCP 47 language tag.
+  string language_tag = 1;
+
+  // The name of the language.
+  string english_name = 2;
+}
