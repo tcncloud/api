@@ -8,6 +8,7 @@ import "google/protobuf/timestamp.proto";
 // ExplorerService is the service for the explorer API.
 service ExplorerService {
   rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
+  rpc Query(QueryRequest) returns (QueryResponse);
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
@@ -18,8 +19,8 @@ message ListDatasourceSchemasResponse {
   repeated api.v1alpha1.explorer.Schema schemas = 1;
 }
 
-// QueryDatasourceRequest is the request to query a datasource.
-message QueryDatasourceRequest {
+// QueryRequest is the request to query a datasource.
+message QueryRequest {
   // datasource_name is the name of the datasource to query.
   string datasource_name = 1;
   // datasource_type is the type of the datasource to query.
@@ -48,8 +49,8 @@ message QueryDatasourceRequest {
   string comment = 11;
 }
 
-// QueryDatasourceResponse contains the result of a datasource query.
-message QueryDatasourceResponse {
+// QueryResponse contains the result of a datasource query.
+message QueryResponse {
   // result_url is the URL to the result of the query.
   string result_url = 1;
   // result_size_bytes is the size of the result in bytes.
