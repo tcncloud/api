@@ -141,6 +141,12 @@ message ListLanguagesResponse {
   repeated LocalizationLanguage languages = 1;
 }
 
+// Req/Res for listing contexts
+message ListContextsRequest {}
+message ListContextsResponse {
+  repeated string contexts = 1;
+}
+
 // The core language object for localization
 message LocalizationLanguage {
   // The BCP 47 language tag.
