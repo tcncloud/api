@@ -30,7 +30,6 @@ service TranslationsService {
   rpc ListTranslations(ListTranslationsRequest) returns (ListTranslationsResponse) {
     option (google.api.http).post = "/services/translations/v1alpha1/listtranslations";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {no_permissions: true};
     option (annotations.authz) = {
       sets: [
         {
