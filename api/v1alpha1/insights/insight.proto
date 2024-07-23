@@ -284,8 +284,6 @@ message ListOutputConfigurationsResponse {
 
 // Request for updating an existing output configuration
 message UpdateOutputConfigurationRequest {
-  // resource id for the output configuration
-  string resource_id = 1;
   // Field mask to update specified fields
   google.protobuf.FieldMask update_mask = 2;
   // Updated output configuration
