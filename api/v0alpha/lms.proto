@@ -2596,8 +2596,6 @@ message Search {
   bool case_sensitive = 5 [deprecated = true];
   // the value of the term we are searching for
   string value = 6;
-  // the type of the term we are searching for
-  string field_type = 7;
 }
 
 message PaginatedSearchRes {
