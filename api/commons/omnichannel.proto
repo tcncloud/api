@@ -146,8 +146,11 @@ message OmniCampaignModuleConfig {
   ConversationTimeoutMessageConfig timeout_message_config = 26;
 }
 
+// allows the user to configure a custom message for when a conversation times out, or to disable the message all together
 message ConversationTimeoutMessageConfig {
+  // disables timeout messages altogether, defaults at false for no change is previous behavior
   bool is_disabled = 1;
+  // Msg is the configurable message for the timeout. If msg is left blank, the canned message is sent
   string msg = 2;
 }
 
