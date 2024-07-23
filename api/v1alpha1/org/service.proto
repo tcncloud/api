@@ -1521,7 +1521,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
+          permissions: [PERMISSION_USER_EDIT]
         }
       ]
     };
@@ -1547,7 +1547,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
+          permissions: [PERMISSION_ORG_VIEW]
         }
       ]
     };
@@ -1573,7 +1573,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
+          permissions: [PERMISSION_USER_EDIT]
         }
       ]
     };
@@ -1599,7 +1599,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_ACCESS_TOKEN_MANAGMENT]
+          permissions: [PERMISSION_USER_EDIT]
         }
       ]
     };
