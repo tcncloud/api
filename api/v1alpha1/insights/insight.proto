@@ -260,10 +260,8 @@ message OutputConfiguration {
 
 // Request for creating a new output configuration
 message CreateOutputConfigurationRequest {
-  // The org that the output configuration belongs to
-  string org_id = 1;
-  // Output configuration to create
-  OutputConfiguration output_configuration = 2;
+  // Output configuration to be create
+  OutputConfiguration output_configuration = 1;
 }
 
 // Response for creating a new output configuration
