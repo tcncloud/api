@@ -74,6 +74,13 @@ enum Permission {
     app: APPLICATION_ORGANIZATION
     card: CARD_AGENTS
   }];
+
+  // Allows for viewing and editing users within an orgs access tokens
+  PERMISSION_ACCESS_TOKEN_MANAGMENT = 123 [(annotations.perms.options) = {
+    app: APPLICATION_ORGANIZATION
+    card: CARD_USERS
+  }];
+
   // Enables access to agent management app for assigning skills,
   // huntgroup, etc.
   PERMISSION_AGENT_MANAGEMENT = 400 [(annotations.perms.options) = {
