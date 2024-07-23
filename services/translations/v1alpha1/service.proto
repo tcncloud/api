@@ -9,7 +9,7 @@ import "services/translations/v1alpha1/entities.proto";
 service TranslationsService {
   // Translate a template for a given context and language.
   // Required permissions:
-  //   Any Authenticated User (TODO: Validate this assumption)
+  //   Any Authenticated User
   // Errors:
   //   - grpc.AlreadyExists : This template is already translated for the given context and language.
   //   - grpc.InvalidArgument: The request is not valid.
@@ -41,9 +41,18 @@ service TranslationsService {
 
   // Lists localization languages
   // Required permissions:
-  //  - PERMISSION_CUSTOMER_SUPPORT
+  //  - Any Authenticated User
   rpc ListLanguages(ListLanguagesRequest) returns (ListLanguagesResponse) {
     option (google.api.http).post = "/services/translations/v1alpha1/listlanguages";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+
+  // Lists localization contexts
+  // Required permissions:
+  //  - PERMISSION_CUSTOMER_SUPPORT
+  rpc ListContexts(ListContextsRequest) returns (ListContextsResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/listcontexts";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
