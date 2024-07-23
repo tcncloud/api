@@ -241,7 +241,7 @@ service Insights {
   }
 
   // ListOutputConfigurations lists output configurations for an insight
-  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (stream ListOutputConfigurationsResponse) {
+  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (ListOutputConfigurationsResponse) {
     option (google.api.http).post = "/api/v1alpha1/insights/insights/listoutputconfigurations";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
