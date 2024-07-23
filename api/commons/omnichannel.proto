@@ -150,7 +150,7 @@ message OmniCampaignModuleConfig {
 message ConversationTimeoutMessageConfig {
   // disables timeout messages altogether, defaults at false for no change is previous behavior
   bool is_disabled = 1;
-  // Msg is the configurable message for the timeout. If msg is left blank, the canned message is sent
+  // msg is the configurable message for the timeout. If msg is left blank, the canned message is sent
   string msg = 2;
 }
 
