@@ -223,4 +223,125 @@ service Insights {
       ]
     };
   }
+
+  // CreateOutputConfiguration creates an output configuration
+  rpc CreateOutputConfiguration(CreateOutputConfigurationRequest) returns (CreateOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/createoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // ListOutputConfigurations lists output configurations for an insight
+  rpc ListOutputConfigurations(ListOutputConfigurationsRequest) returns (stream ListOutputConfigurationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/listoutputconfigurations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UpdateOutputConfiguration updates an output configuration
+  rpc UpdateOutputConfiguration(UpdateOutputConfigurationRequest) returns (UpdateOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/updateoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // DeleteOutputConfiguration deletes an output configuration
+  rpc DeleteOutputConfiguration(DeleteOutputConfigurationRequest) returns (DeleteOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/deleteoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // GetOutputConfiguration gets an output configuration
+  rpc GetOutputConfiguration(GetOutputConfigurationRequest) returns (GetOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/getoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
+  }
+
+  // SetDefaultOutputConfiguration sets the specified output configuration to default
+  rpc SetDefaultOutputConfiguration(SetDefaultOutputConfigurationRequest) returns (SetDefaultOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/setdefaultoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_INSIGHTS_INSIGHT_EDIT]
+        }
+      ]
+    };
+  }
+
+  // GetDefaultOutputConfiguration gets the default output configuration for an insight
+  rpc GetDefaultOutputConfiguration(GetDefaultOutputConfigurationRequest) returns (GetDefaultOutputConfigurationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/insights/insights/getdefaultoutputconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_DASHBOARDS_EDIT]
+        }
+      ]
+    };
+  }
 }
