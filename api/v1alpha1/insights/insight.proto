@@ -272,7 +272,7 @@ message CreateOutputConfigurationResponse {
 
 // Request for listing output configurations
 message ListOutputConfigurationsRequest {
-  // insight resource id to get output configurations for
+  // Insight resource id to get output configurations for
   string insight_resource_id = 1;
 }
 
@@ -298,7 +298,7 @@ message UpdateOutputConfigurationResponse {
 
 // Request for deleting an output configuration
 message DeleteOutputConfigurationRequest {
-  // resource Id for the output configuration
+  // Resource Id of the output configuration to delete
   string resource_id = 1;
 }
 
@@ -307,7 +307,7 @@ message DeleteOutputConfigurationResponse {}
 
 // Request for getting a specific output configuration
 message GetOutputConfigurationRequest {
-  // resource Id for the output configuration
+  // Resource Id of the output configuration
   string resource_id = 1;
 }
 
@@ -319,7 +319,7 @@ message GetOutputConfigurationResponse {
 
 // Request message for SetDefaultOutputConfiguration
 message SetDefaultOutputConfigurationRequest {
-  // resource id for the output configuration
+  // resource id of the output configuration
   string resource_id = 1;
   // Insight resource id
   string insight_resource_id = 2;
@@ -330,7 +330,7 @@ message SetDefaultOutputConfigurationResponse {}
 
 // Request message for GetDefaultOutputConfiguration
 message GetDefaultOutputConfigurationRequest {
-  // Insight resource id for default output configuration
+  // Insight resource id of default output configuration
   string insight_resource_id = 1;
 }
 
