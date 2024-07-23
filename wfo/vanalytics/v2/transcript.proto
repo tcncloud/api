@@ -50,6 +50,14 @@ message Transcript {
 
   // The summary for the transcript.
   TranscriptSummary summary = 18;
+
+  // Skills attached to the transcript.
+  message Skills {
+    // "Must-have" skills.
+    repeated string need = 1;
+    // "Nice-to-have" skills.
+    repeated string want = 2;
+  }
 }
 
 // FlagSummary defines a summary of flags which were applied to a transcript.
@@ -478,6 +486,27 @@ message TranscriptQuery {
 
   // Query constraints on channel type.
   Channel channel_type = 9;
+
+  // Query constraints on skills.
+  SkillsQuery skills = 10;
+
+  // Query constraints on skills.
+  message SkillsQuery {
+    // Match against "must-have" skills.
+    Skills need = 1;
+    // Match against "nice-to-have" skills.
+    Skills want = 2;
+    // Match against groups of skills with logical OR.
+    repeated SkillsQuery or = 3;
+
+    // Skills represents a set of skills.
+    message Skills {
+      // Must match any one of the skills in the set.
+      repeated string any = 1;
+      // Must match all skills in the set.
+      repeated string all = 2;
+    }
+  }
 
   // Query constraints on phone.
   message Phone {
@@ -919,10 +948,18 @@ message TranscriptQuery {
   message Sms {
     // Query constraints on conversation sid.
     ConversationSid conversation_sid = 1;
+    // Query constraints on campaign sid.
+    CampaignSid campaign_sid = 2;
 
     // Query constraints on conversation sid.
     message ConversationSid {
       // Requires all sms specific transcript hits to have a conversation sid
+      // in the list.
+      repeated int64 any = 1 [jstype = JS_STRING];
+    }
+
+    message CampaignSid {
+      // Requires all sms specific transcript hits to have a campaign sid
       // in the list.
       repeated int64 any = 1 [jstype = JS_STRING];
     }
