@@ -2867,6 +2867,8 @@ message Extension {
     string first_name = 2;
     string last_name = 3;
     string user_id = 4;
+    // Whether the agent associated with this extension is archived.
+    bool archived = 5;
   }
 
   message HuntGroup {
@@ -2875,6 +2877,8 @@ message Extension {
     // and UpdateExtension. If this field is set for those calls it
     // will be overwritten.
     string hunt_group_name = 2;
+    // Whether the hunt group associated with this extension is archived.
+    bool archived = 3;
   }
 
   message Email {
