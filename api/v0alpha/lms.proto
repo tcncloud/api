@@ -2582,7 +2582,7 @@ message Search {
   // Example:
   // Searching "term" would also match "temr"
   // Not compatible with a substring match
-  int64 fuzziness = 2;
+  int64 fuzziness = 2 [deprecated = true];
   // Checks if a subset of the content matches
   // Example:
   // Searching "but" would also match "rebuttal"
@@ -2593,7 +2593,9 @@ message Search {
   // Searching "term" would match everything NOT including "term"
   bool negate = 4;
   // Specifies if we should be case sensitive
-  bool case_sensitive = 5;
+  bool case_sensitive = 5 [deprecated = true];
+  // the value of the term we are searching for
+  string value = 6;
 }
 
 message PaginatedSearchRes {
