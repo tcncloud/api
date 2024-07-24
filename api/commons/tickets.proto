@@ -30,13 +30,13 @@ message Ticket {
   // The created Date of the Ticket Object
   google.protobuf.Timestamp created_by_date = 10;
   // due-date
-  google.protobuf.Timestamp due_date = 11;
+  google.protobuf.Timestamp due_date = 11 [deprecated = true];
   // A list of users assigned to this ticket.
-  string assignee_list = 12; // note: bound to re-factor later.
+  string assignee_list = 12 [deprecated = true]; // note: bound to re-factor later.
   // A list of conversation context meatadata
   repeated Metadata metadata = 14;
   // A list of skills assotiated with a ticket
-  repeated Skills ticket_skills = 15;
+  repeated Skills ticket_skills = 15 [deprecated = true];
   // Status - Ticket status : 1 open, 2 doing, 3 close etc
   int64 status = 16;
   // A list of sla  assotiated with a ticket
@@ -145,6 +145,7 @@ enum TicketStatus {
 }
 
 enum PhoneNumberType {
+  option deprecated = true;
   // Mobile Phone NUmber
   MOBILE = 0;
   // Geographic OR Other Number
@@ -161,7 +162,7 @@ message TicketAction {
   int64 action_id = 2 [jstype = JS_STRING];
   // Attributes for a callback Action
   // To be Deprecated Later
-  CallbackContext callback_context = 3;
+  CallbackContext callback_context = 3 [deprecated = true];
   // ticket id from ticket table
   int64 ticket_id = 4 [
     jstype = JS_STRING,
@@ -233,6 +234,7 @@ message Metadata {
 
 // Skills - Field for a skill set assigned to a ticket
 message Skills {
+  option deprecated = true;
   string skill_id = 1;
   // Mandatory = 0, Preferred = 1
   bool is_preferred = 2;
@@ -286,6 +288,7 @@ message CloseTicket {
 
 // ConfirmClose - Boolean response for closing a Ticket
 message ConfirmClose {
+  option deprecated = true;
   int64 status = 1;
 }
 
@@ -356,7 +359,7 @@ message ReplyComment {
 // ConfirmReplyComment -
 message ConfirmReplyComment {
   // boolean value to confirm edit comment
-  bool is_created = 1;
+  bool is_created = 1 [deprecated = true];
 }
 
 // TicketAuditLog -
@@ -382,7 +385,7 @@ message TicketAuditLog {
   string ticket_code = 8;
 }
 
-// EditTicket - Fields for Edit Ticket , listing attributes of a ticket which can be edited
+// EditTicket - ** Only used in auditlog as a payload **
 message EditTicket {
   // The ticket reference where the comment was added.
   int64 ticket_sid = 1 [
@@ -394,7 +397,7 @@ message EditTicket {
   // ticket_code
   string ticket_code = 3;
   // ticket_action_id
-  int64 ticket_action_id = 4;
+  int64 ticket_action_id = 4 [jstype = JS_STRING];
 }
 
 message EditAttribute {

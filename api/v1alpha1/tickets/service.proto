@@ -23,6 +23,7 @@ service Tickets {
   }
   // Public Method to edit a ticket.
   rpc EditTicket(EditTicketReq) returns (EditTicketRes) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -50,6 +51,7 @@ service Tickets {
   // Public method to assign ticket
   // Would be deprecated
   rpc AssignTicket(AssignTicketReq) returns (AssignTicketRes) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignticket";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -212,6 +214,7 @@ service Tickets {
 
   // Public method to assign a ticket
   rpc AssignSelf(CreateSelfAssignReq) returns (CreateSelfAssignRes) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignself";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -316,6 +319,7 @@ service Tickets {
 
   // Public method to assign a ticket action
   rpc AssignTicketAction(AssignTicketActionRequest) returns (AssignTicketActionResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/assignticketaction";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -341,6 +345,7 @@ service Tickets {
 
   // Public method to change the Status of a ticket
   rpc ChangeTicketStatus(ChangeTicketStatusRequest) returns (ChangeTicketStatusResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/changeticketstatus";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -424,6 +429,7 @@ service Tickets {
   }
   // Public method to list all Action Types
   rpc GetPhoneNumberType(GetPhoneNumberTypeRequest) returns (GetPhoneNumberTypeResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/tickets/tickets/getphonenumbertype";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
