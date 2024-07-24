@@ -25,13 +25,13 @@ message CreateTicketReq {
   // A list of conversation context meatadatgit stata
   repeated api.commons.Metadata metadata = 9;
   // A list of skills assotiated with a ticket
-  repeated api.commons.Skills ticket_skills = 10;
+  repeated api.commons.Skills ticket_skills = 10 [deprecated = true];
   // Status - Ticket status : 1 open, 2 doing, 3 close etc
   int64 status = 11;
   // A list of sla assotiated with a ticket
   repeated api.commons.Sla ticket_sla = 12;
   bool assign_self = 13;
-  string assign_other = 14;
+  string assign_other = 14 [deprecated = true];
   repeated api.commons.TicketAction ticket_action = 15;
   // assignee list
   repeated string ticket_assignee = 16;
@@ -53,7 +53,7 @@ message EditTicketTemplateRequest {
 }
 
 message EditTicketTemplateResponse {
-  bool is_edited = 1;
+  bool is_edited = 1 [deprecated = true];
 }
 
 message ListTicketTemplateRequest {
@@ -78,7 +78,7 @@ message AssignProjectTemplateRequest {
 }
 
 message AssignProjectTemplateResponse {
-  bool is_assigned = 1;
+  bool is_assigned = 1 [deprecated = true];
 }
 
 // CreateTicketRes - Response from CreateTicket BE API
@@ -97,10 +97,12 @@ message GetActionTypeResponse {
 
 // Reqiest For Phone Number Validation - Mobile/Other/Invalid
 message GetPhoneNumberTypeRequest {
+  option deprecated = true;
   string phone_number = 1;
 }
 
 message GetPhoneNumberTypeResponse {
+  option deprecated = true;
   api.commons.PhoneNumberType phone_type = 1;
 }
 
@@ -132,7 +134,7 @@ message EditMaskTicketReq {
 // EditMaskTicketRes - Response for EditMaskTicketReq
 // EditTicketRes would be deprecated
 message EditMaskTicketRes {
-  bool is_edited = 1;
+  bool is_edited = 1 [deprecated = true];
 }
 
 // ListAllocatedTicketRes -
@@ -180,6 +182,7 @@ message AvailableTicketsFilter {
 
 // EditTicketRes - Response for EditTicketReq
 message EditTicketRes {
+  option deprecated = true;
   bool is_edited = 1;
 }
 
@@ -192,6 +195,7 @@ message ListTicketsRes {
 
 // AssignTicketReq
 message AssignTicketReq {
+  option deprecated = true;
   int64 ticket_sid = 1 [jstype = JS_STRING];
   string assignee_list = 2;
   string assigned_id = 3;
@@ -199,6 +203,7 @@ message AssignTicketReq {
 
 // AssignTicketRes
 message AssignTicketRes {
+  option deprecated = true;
   int64 ticket_sid = 1 [jstype = JS_STRING];
   string assignee_list = 2;
   string assigned_id = 3;
@@ -252,14 +257,17 @@ message CloseTicketReq {
   // description of the comment
   string comment = 2;
   // from status of the ticket
-  int64 from_status = 3 [jstype = JS_STRING];
+  int64 from_status = 3 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   // ticket_code
   string ticket_code = 4;
 }
 
 // CloseTicketRes - Close Ticket Response Messages
 message CloseTicketRes {
-  bool is_status = 1;
+  bool is_status = 1 [deprecated = true];
 }
 
 // Create CreateSlaReq  - Create Sla Request From Client
@@ -271,7 +279,7 @@ message CreateSlaReq {
   // description of the sla
   string description = 3;
   // sla interval
-  int64 interval = 4;
+  int64 interval = 4 [deprecated = true];
   // SLA Duration
   api.commons.Duration duration = 5;
 }
@@ -336,11 +344,13 @@ message ReplyCommentRes {
 
 // CreateSelfAssignReq -
 message CreateSelfAssignReq {
+  option deprecated = true;
   int64 ticket_sid = 1 [jstype = JS_STRING];
 }
 
 // CreateSelfAssignRes -
 message CreateSelfAssignRes {
+  option deprecated = true;
   bool is_assigned = 1;
 }
 
@@ -382,29 +392,33 @@ message CloseTicketActionRequest {
     jstype = JS_STRING,
     deprecated = true
   ];
-  string comment = 3;
+  string comment = 3 [deprecated = true];
   // ticket_code
   string ticket_code = 4;
 }
 
 message CloseTicketActionResponse {
-  bool is_closed = 1;
+  bool is_closed = 1 [deprecated = true];
 }
 
 message AssignTicketActionRequest {
+  option deprecated = true;
   int64 ticket_action_id = 1 [jstype = JS_STRING];
 }
 
 message AssignTicketActionResponse {
+  option deprecated = true;
   bool is_assigned = 1;
 }
 
 message ChangeTicketStatusRequest {
+  option deprecated = true;
   int64 ticket_id = 1 [jstype = JS_STRING];
   int64 status_id = 2 [jstype = JS_STRING];
   api.commons.TicketStatus ticket_status = 3;
 }
 message ChangeTicketStatusResponse {
+  option deprecated = true;
   bool is_status_edited = 1;
 }
 

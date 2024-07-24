@@ -20,7 +20,7 @@ message EnableProjectReq {
 // EnableProjectRes - Indicates result of the project enable request
 message EnableProjectRes {
   // result of project mapped to ticket was successful
-  bool success = 1;
+  bool success = 1 [deprecated = true];
 }
 
 // ListEnabledProjectsReq - Request to list enabled projects in ticketing system
