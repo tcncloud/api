@@ -26,6 +26,10 @@ message CertificateInfo {
   bool deleted = 9;
   // Whether or not the certifcate has been revoked
   bool revoked = 10;
+  // The id of the configuration info associated with the certificate.
+  string configuration_info_id = 11;
+  // The number of times the certificate has been renewed.
+  int64 renewal_instance = 12;
 }
 
 // ConfigurationInfo contains the organization's configuration information
