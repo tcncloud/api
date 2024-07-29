@@ -2980,7 +2980,7 @@ service Org {
 
   // CreateCertificateInfo creates a new TLS certificate and
   // returns the certificate info for the current organization.
-  // DEPRECATED: Use CreateCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
+  // DEPRECATED: Use api.v1alpha1.org.exile_manager.CreateCertificateInfo instead
   rpc CreateCertificateInfo(CreateCertificateInfoRequest) returns (CreateCertificateInfoResponse) {
     option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/createcertificateinfo";
@@ -2995,7 +2995,7 @@ service Org {
   }
 
   // DeleteCertificateInfo deletes a certificate info for the current organization.
-  // DEPRECATED: Use DeleteCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
+  // DEPRECATED: Use api.v1alpha1.org.exile_manager.DeleteCertificateInfo instead
   rpc DeleteCertificateInfo(DeleteCertificateInfoRequest) returns (DeleteCertificateInfoResponse) {
     option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/deletecertificateinfo";
@@ -3010,7 +3010,7 @@ service Org {
   }
 
   // RevokeCertificateInfo deletes a certificate info for the current organization.
-  // DEPRECATED: Use RevokeCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
+  // DEPRECATED: Use api.v1alpha1.org.exile_manager.RevokeCertificateInfo instead
   rpc RevokeCertificateInfo(RevokeCertificateInfoRequest) returns (RevokeCertificateInfoResponse) {
     option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/revokecertificateinfo";
@@ -3025,7 +3025,7 @@ service Org {
   }
 
   // ListCertificateInfo returns a list of certificate info for the current organization.
-  // DEPRECATED: Use ListCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
+  // DEPRECATED: Use api.v1alpha1.org.exile_manager.ListCertificateInfo instead
   rpc ListCertificateInfo(ListCertificateInfoRequest) returns (ListCertificateInfoResponse) {
     option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/listcertificateinfo";

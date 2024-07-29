@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.exile_manager;
+
+import "api/commons/org/preferences.proto";
+
+// CreateCertificateInfoRequest is the request for creating a certificate info.
+message CreateCertificateInfoRequest {
+  // The name of the certificate info to be created.
+  string name = 1;
+  // The description of the certificate info to be created.
+  string description = 2;
+}
+
+// CreateCertificateInfoResponse is the response for creating a certificate info.
+message CreateCertificateInfoResponse {
+  // The base-64 encoded certificate that was created.
+  string encoded_certificate = 1;
+}
+
+// DeleteCertificateInfoRequest is the request for deleting a certificate info.
+message DeleteCertificateInfoRequest {
+  // The id of the certificate info to delete.
+  string certificate_info_id = 1;
+}
+
+// DeleteCertificateInfoResponse is the response for deleting a certificate info.
+message DeleteCertificateInfoResponse {}
+
+// RevokeCertificateInfoRequest is the request for revoking a certificate info.
+message RevokeCertificateInfoRequest {
+  // The id of the certificate info to delete.
+  string certificate_info_id = 1;
+}
+
+// RevokeCertificateInfoResponse is the response for revoking a certificate info.
+message RevokeCertificateInfoResponse {}
+
+// ListCertificateInfoRequest is the request for listing certificate info.
+message ListCertificateInfoRequest {}
+
+// ListCertificateInfoResponse is the response for listing certificate info.
+message ListCertificateInfoResponse {
+  // The list of certificate info.
+  repeated api.commons.org.CertificateInfo certificate_info_list = 1;
+}

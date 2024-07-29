@@ -702,7 +702,7 @@ message EvaluateBusinessHoursResponse {
 }
 
 // CreateCertificateInfoRequest is the request for creating a certificate info.
-// DEPRECATED: Use CreateCertificateInfoRequest from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.CreateCertificateInfoRequest instead
 message CreateCertificateInfoRequest {
   option deprecated = true;
   // The name of the certificate info to be created.
@@ -712,7 +712,7 @@ message CreateCertificateInfoRequest {
 }
 
 // CreateCertificateInfoResponse is the response for creating a certificate info.
-// DEPRECATED: Use CreateCertificateInfoResponse from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.CreateCertificateInfoResponse instead
 message CreateCertificateInfoResponse {
   option deprecated = true;
   // The base-64 encoded certificate that was created.
@@ -720,7 +720,7 @@ message CreateCertificateInfoResponse {
 }
 
 // DeleteCertificateInfoRequest is the request for deleting a certificate info.
-// DEPRECATED: Use DeleteCertificateInfoRequest from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.DeleteCertificateInfoRequest instead
 message DeleteCertificateInfoRequest {
   option deprecated = true;
   // The id of the certificate info to delete.
@@ -728,13 +728,13 @@ message DeleteCertificateInfoRequest {
 }
 
 // DeleteCertificateInfoResponse is the response for deleting a certificate info.
-// DEPRECATED: Use DeleteCertificateInfoResponse from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.DeleteCertificateInfoResponse instead
 message DeleteCertificateInfoResponse {
   option deprecated = true;
 }
 
 // RevokeCertificateInfoRequest is the request for revoking a certificate info.
-// DEPRECATED: Use RevokeCertificateInfoRequest from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.RevokeCertificateInfoRequest instead
 message RevokeCertificateInfoRequest {
   option deprecated = true;
   // The id of the certificate info to delete.
@@ -742,19 +742,19 @@ message RevokeCertificateInfoRequest {
 }
 
 // RevokeCertificateInfoResponse is the response for revoking a certificate info.
-// DEPRECATED: Use RevokeCertificateInfoResponse from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.RevokeCertificateInfoResponse instead
 message RevokeCertificateInfoResponse {
   option deprecated = true;
 }
 
 // ListCertificateInfoRequest is the request for listing certificate info.
-// DEPRECATED: Use ListCertificateInfoRequest from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.ListCertificateInfoRequest instead
 message ListCertificateInfoRequest {
   option deprecated = true;
 }
 
 // ListCertificateInfoResponse is the response for listing certificate info.
-// DEPRECATED: Use ListCertificateInfoResponse from api/v1alpha1/org/exile_manager/entities.proto
+// DEPRECATED: Use api.v1alpha1.org.exile_manager.ListCertificateInfoResponse instead
 message ListCertificateInfoResponse {
   option deprecated = true;
   // The list of certificate info.
