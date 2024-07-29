@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package api.v1alpha1.org.exile_manager;
+
+import "annotations/authz.proto";
+import "api/v1alpha1/org/exile_manager/entities.proto";
+import "google/api/annotations.proto";
+
+service ExileManagerService {
+  // CreateCertificateInfo creates a new TLS certificate and
+  // returns the certificate info for the current organization.
+  rpc CreateCertificateInfo(CreateCertificateInfoRequest) returns (CreateCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/createcertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
+
+  // DeleteCertificateInfo deletes a certificate info for the current organization.
+  rpc DeleteCertificateInfo(DeleteCertificateInfoRequest) returns (DeleteCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/deletecertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
+
+  // RevokeCertificateInfo deletes a certificate info for the current organization.
+  rpc RevokeCertificateInfo(RevokeCertificateInfoRequest) returns (RevokeCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/revokecertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
+
+  // ListCertificateInfo returns a list of certificate info for the current organization.
+  rpc ListCertificateInfo(ListCertificateInfoRequest) returns (ListCertificateInfoResponse) {
+    option (google.api.http).post = "/api/v1alpha1/org/preferences/listcertificateinfo";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
+}
