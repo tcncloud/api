@@ -2980,7 +2980,9 @@ service Org {
 
   // CreateCertificateInfo creates a new TLS certificate and
   // returns the certificate info for the current organization.
+  // DEPRECATED: Use CreateCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
   rpc CreateCertificateInfo(CreateCertificateInfoRequest) returns (CreateCertificateInfoResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/createcertificateinfo";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2993,7 +2995,9 @@ service Org {
   }
 
   // DeleteCertificateInfo deletes a certificate info for the current organization.
+  // DEPRECATED: Use DeleteCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
   rpc DeleteCertificateInfo(DeleteCertificateInfoRequest) returns (DeleteCertificateInfoResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/deletecertificateinfo";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -3006,7 +3010,9 @@ service Org {
   }
 
   // RevokeCertificateInfo deletes a certificate info for the current organization.
+  // DEPRECATED: Use RevokeCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
   rpc RevokeCertificateInfo(RevokeCertificateInfoRequest) returns (RevokeCertificateInfoResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/revokecertificateinfo";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -3019,7 +3025,9 @@ service Org {
   }
 
   // ListCertificateInfo returns a list of certificate info for the current organization.
+  // DEPRECATED: Use ListCertificateInfo from api/v1alpha1/org/exile_manager/service.proto
   rpc ListCertificateInfo(ListCertificateInfoRequest) returns (ListCertificateInfoResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/preferences/listcertificateinfo";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
