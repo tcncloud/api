@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.org.exile_manager;
 
-import "api/commons/org/perferences.proto";
+import "api/commons/org/preferences.proto";
 
 // CreateCertificateInfoRequest is the request for creating a certificate info.
 message CreateCertificateInfoRequest {
