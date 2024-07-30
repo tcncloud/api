@@ -27,3 +27,28 @@ message CreateCertificateConfigurationResponse {
   // The id of the configuration info that was created.
   string configuration_info_id = 1;
 }
+
+// UpdateCertificateConfigurationRequest is the request to update a certificate configuration.
+message UpdateCertificateConfigurationRequest {
+  // The id of the configuration info to update.
+  string configuration_info_id = 1;
+  // The configuration name.
+  string name = 2;
+  // The configuration description.
+  string description = 3;
+  // The type of configuration info.
+  CertificateConfigurationType type = 4;
+  // The parameters of the configuration info.
+  // This is a JSON string with the following information:
+  //   1. Database Host
+  //   2. Database URL
+  //   3. Database Port
+  //   4. Database Username
+  //   5. Database Password
+  //   6. Max Number Connections
+  //   7. Max Number Exile Jobs
+  string parameters = 5;
+}
+
+// UpdateCertificateConfigurationResponse is the response to updating a certificate configuration.
+message UpdateCertificateConfigurationResponse {}
