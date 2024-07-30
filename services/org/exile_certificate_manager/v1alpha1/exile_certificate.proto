@@ -32,7 +32,7 @@ message RevokeExileCertificateResponse {}
 message AssignExileConfigurationRequest {
   // The id of the exile certificate to update.
   string exile_certificate_id = 1;
-  // The id of the certificate configuration to assign.
+  // The id of the exile configuration to assign.
   string exile_configuration_id = 2;
 }
 
