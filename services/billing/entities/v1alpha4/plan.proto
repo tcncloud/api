@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha4;
+
+import "google/protobuf/timestamp.proto";
+
+message BillingPlan {
+  string billing_plan_id = 1;
+  string title = 2;
+  BillingPlanType type = 3;
+  bool is_draft = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp create_time = 6;
+  google.protobuf.Timestamp update_time = 7;
+  google.protobuf.Timestamp delete_time = 8;
+  string user_id = 9;
+  // Optional. if set, this billing plan is for the org, and as
+  // a draft can only be applied to that org.
+  string org_id = 10;
+}
+
+enum BillingPlanType {
+  BILLING_PLAN_TYPE_UNSPECIFIED = 0;
+  BILLING_PLAN_TYPE_DEFAULT = 1;
+  BILLING_PLAN_TYPE_ORG = 2;
+}

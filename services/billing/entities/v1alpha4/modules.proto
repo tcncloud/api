@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha4;
+
+import "google/protobuf/wrappers.proto";
+import "google/type/decimal.proto";
+
+// BasicConfig represents the basic config for a rating module when
+// there is no other data needed
+message BasicConfig {
+  // Required. the amount to rate a single event
+  google.type.Decimal rate = 1;
+  // Optional. the precision to use (in decimal places) when calculating
+  // the rate. For example, a rate of 1.234 with a precision of 2 would
+  // be billed as 1.23. If not set, will round to nearest whole number.
+  int32 precision = 2;
+}
+
+// BasicUnitConfig represents basic config for a rating module that
+// rates based on event units
+message BasicUnitConfig {
+  // Required. the size of an individual unit. For example, a unit
+  // size of 300 (with bytes as a unit of measurement) and an event
+  // of size 400 bytes will get billed as if it were 2 units.
+  int64 unit_size = 1;
+  // Optional. the minimum number of units to rate; for example, a
+  // unit size of 5 seconds and a min_units of 2 would mean that
+  // any event less than 10 seconds would be billed as if it were
+  // two units (10 seconds). This is per event.
+  google.protobuf.Int64Value min_units = 2;
+  // Optional. the maximum number of units to rate; for example, a
+  // unit size of 5 seconds and a max_units of 2 would mean that
+  // any event more than 10 seconds would be billed as if it were
+  // two units (10 seconds). This is per event.
+  google.protobuf.Int64Value max_units = 3;
+  // Required. the amount to rate each unit
+  google.type.Decimal rate = 4;
+  // Optional. the precision to use (in decimal places) when calculating
+  // the rate. For example, a rate of 1.234 with a precision of 2 would
+  // be billed as 1.23. If not set, will round to nearest whole number.
+  int32 precision = 5;
+}
