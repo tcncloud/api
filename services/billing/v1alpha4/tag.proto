@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "google/protobuf/field_mask.proto";
+import "services/billing/entities/v1alpha4/tags.proto";
+import "services/billing/v1alpha4/core.proto";
+
+message CreateBillingTagRequest {
+  string billing_tag_id = 1;
+  services.billing.entities.v1alpha4.BillingTag billing_tag = 2;
+}
+
+message CreateBillingTagResponse {
+  string billing_tag_id = 1;
+}
+
+message DeleteBillingTagRequest {
+  string billing_tag_id = 1;
+}
+
+message DeleteBillingTagResponse {}
+
+message GetBillingTagRequest {
+  string billing_tag_id = 1;
+}
+
+message GetBillingTagResponse {
+  services.billing.entities.v1alpha4.BillingTag billing_tag = 1;
+}
+
+message ListBillingTagsRequest {
+  string billing_tag_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListBillingTagsResponse {
+  repeated services.billing.entities.v1alpha4.BillingTag billing_tags = 1;
+  string token = 2;
+}
+
+message UpdateBillingTagRequest {
+  string billing_tag_id = 1;
+  services.billing.entities.v1alpha4.BillingTag billing_tag = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateBillingTagResponse {}

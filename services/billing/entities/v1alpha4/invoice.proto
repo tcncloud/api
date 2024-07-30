@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha4;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/type/decimal.proto";
+
+message Invoice {
+  string billing_cycle = 1;
+  google.protobuf.Timestamp create_time = 2;
+  repeated InvoiceRow rows = 3;
+  google.protobuf.StringValue download_url = 4;
+}
+
+message InvoiceRow {
+  repeated InvoiceColumn columns = 1;
+}
+
+message InvoiceColumn {
+  string name = 1;
+  string value = 2;
+}

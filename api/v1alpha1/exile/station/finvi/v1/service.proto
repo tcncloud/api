@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package api.v1alpha1.exile.station.finvi.v1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+
+service GenericFinviService {
+  // Displays a given record from a pool to the specified user.
+  rpc PopAccount(PopAccountReq) returns (PopAccountRes) {
+    option (google.api.http).post = "/api/v1alpha1/exile/station/finvi/v1/genericfinviservice/popaccount";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
+}
+
+message PopAccountReq {
+  reserved 1, 2;
+  string record_id = 10;
+  string user_id = 11;
+  // optional
+  string alternate_id = 12;
+  // (call_sid, call_type) is primary key
+  int64 call_sid = 13;
+  string call_type = 14;
+}
+
+message PopAccountRes {
+  int64 job_id = 1;
+  // if true only job_id and async will be populated.
+  // all other data on the response will be sent as jsonl to the async handler
+  bool async = 2;
+  // TBD
+}

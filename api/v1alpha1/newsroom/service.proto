@@ -152,4 +152,17 @@ service NewsroomAPI {
       ]
     };
   }
+
+  // upload newsroom image for the news article
+  rpc UploadNewsArticleImage(UploadNewsArticleImageRequest) returns (UploadNewsArticleImageResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/uploadnewsarticleimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_EDIT]
+        }
+      ]
+    };
+  }
 }

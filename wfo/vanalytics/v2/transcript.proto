@@ -206,7 +206,7 @@ message Sms {
     // Attachment metadata.
     message Attachment {
       // The unique identifier of the attachment.
-      int64 attachment_sid = 1;
+      int64 attachment_sid = 1 [jstype = JS_STRING];
     }
   }
 }

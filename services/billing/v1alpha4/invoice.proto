@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha4/invoice.proto";
+
+message ExportInvoiceRequest {
+  InvoiceFormat format = 1;
+  google.protobuf.Timestamp invoice_date = 2;
+}
+
+message ExportInvoiceResponse {
+  services.billing.entities.v1alpha4.Invoice invoice = 1;
+}
+
+enum InvoiceFormat {
+  INVOICE_FORMAT_UNSPECIFIED = 0;
+  INVOICE_FORMAT_CSV = 1;
+}

@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha4/plan.proto";
+import "services/billing/entities/v1alpha4/rates.proto";
+import "services/billing/v1alpha4/core.proto";
+
+message ApplyDefaultBillingPlanDraftRequest {
+  string billing_plan_id = 1;
+  google.protobuf.Timestamp start_time = 2;
+  repeated string org_ids = 3; // Optional. If not set, apply to all orgs.
+}
+
+message ApplyDefaultBillingPlanDraftResponse {
+  repeated string billing_plan_ids = 1;
+}
+
+message CreateDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 2;
+}
+
+message CreateDefaultBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message DeleteDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message DeleteDefaultBillingPlanResponse {}
+
+message GetDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message GetDefaultBillingPlanResponse {
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 1;
+}
+
+message ListDefaultBillingPlansRequest {
+  string billing_plan_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListDefaultBillingPlansResponse {
+  repeated services.billing.entities.v1alpha4.BillingPlan billing_plans = 1;
+  string token = 2;
+}
+
+message UpdateDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateDefaultBillingPlanResponse {}
+
+// --------------------------------------------------------------------------
+// rates
+
+message CreateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 2;
+}
+
+message CreateDefaultRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message DeleteDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteDefaultRateDefinitionResponse {}
+
+message GetDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message GetDefaultRateDefinitionResponse {
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 1;
+}
+
+message ListDefaultRateDefinitionsRequest {
+  string rate_definition_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListDefaultRateDefinitionsResponse {
+  repeated services.billing.entities.v1alpha4.RateDefinition rate_definitions = 1;
+  string token = 2;
+}
+
+message UpdateDefaultRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateDefaultRateDefinitionResponse {}

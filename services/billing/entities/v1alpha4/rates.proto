@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha4;
+
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha4/products.proto";
+import "services/billing/entities/v1alpha4/tags.proto";
+
+message RateDefinition {
+  string rate_definition_id = 1;
+  string sku_id = 2;
+  BillingTag billing_tag = 3;
+  ProductConfig config = 4;
+  bool is_draft = 5;
+  bool is_overwrite = 6;
+  google.protobuf.Timestamp create_time = 7;
+  google.protobuf.Timestamp update_time = 8;
+  google.protobuf.Timestamp delete_time = 9;
+}
+
+message MatchingRule {
+  string matching_rule_id = 1;
+  ProductConfig config = 2;
+  google.protobuf.Timestamp create_time = 3;
+  google.protobuf.Timestamp delete_time = 4;
+  google.protobuf.Timestamp update_time = 5;
+}

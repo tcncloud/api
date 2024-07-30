@@ -1,0 +1,804 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/billing/v1alpha4/defaults.proto";
+import "services/billing/v1alpha4/invoice.proto";
+import "services/billing/v1alpha4/matching_rule.proto";
+import "services/billing/v1alpha4/plan.proto";
+import "services/billing/v1alpha4/tag.proto";
+
+service BillingService {
+  // --------------------------------------------------------------------------
+  // Billing Plans
+
+  // Applies a draft billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The draft billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ApplyBillingPlanDraft(ApplyBillingPlanDraftRequest) returns (ApplyBillingPlanDraftResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/applybillingplandraft";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Creates a new billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateBillingPlan(CreateBillingPlanRequest) returns (CreateBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/createbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Deletes a billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteBillingPlan(DeleteBillingPlanRequest) returns (DeleteBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deletebillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Gets a billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetBillingPlan(GetBillingPlanRequest) returns (GetBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Lists billing plans.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListBillingPlans(ListBillingPlansRequest) returns (ListBillingPlansResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listbillingplans";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Updates a billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateBillingPlan(UpdateBillingPlanRequest) returns (UpdateBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updatebillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Default BillingPlans
+
+  // Applies a default draft billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The draft billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ApplyDefaultBillingPlanDraft(ApplyDefaultBillingPlanDraftRequest) returns (ApplyDefaultBillingPlanDraftResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/applydefaultbillingplandraft";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Creates a new default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateDefaultBillingPlan(CreateDefaultBillingPlanRequest) returns (CreateDefaultBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/createdefaultbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Deletes a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteDefaultBillingPlan(DeleteDefaultBillingPlanRequest) returns (DeleteDefaultBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deletedefaultbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Gets a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The default billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetDefaultBillingPlan(GetDefaultBillingPlanRequest) returns (GetDefaultBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getdefaultbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Lists default billing plans.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListDefaultBillingPlans(ListDefaultBillingPlansRequest) returns (ListDefaultBillingPlansResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listdefaultbillingplans";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Updates a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateDefaultBillingPlan(UpdateDefaultBillingPlanRequest) returns (UpdateDefaultBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updatedefaultbillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Rate Definitions
+
+  // Creates a new rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateRateDefinition(CreateRateDefinitionRequest) returns (CreateRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/createratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Deletes a rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteRateDefinition(DeleteRateDefinitionRequest) returns (DeleteRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deleteratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Gets a rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetRateDefinition(GetRateDefinitionRequest) returns (GetRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Lists rate definitions.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListRateDefinitions(ListRateDefinitionsRequest) returns (ListRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Updates a rate definition.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateRateDefinition(UpdateRateDefinitionRequest) returns (UpdateRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updateratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Default Rate Definitions
+
+  // Creates a new rate definition for a default plan.
+  //   - Creating a rate definition on an existing SKU: the sku_id must be provided.
+  //   - Creating a rate definition on a new SKU: the product must be provided and the sku_id omitted.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateDefaultRateDefinition(CreateDefaultRateDefinitionRequest) returns (CreateDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/createdefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Deletes a rate definition for a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteDefaultRateDefinition(DeleteDefaultRateDefinitionRequest) returns (DeleteDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deletedefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Gets a rate definition for a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetDefaultRateDefinition(GetDefaultRateDefinitionRequest) returns (GetDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getdefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Lists rate definitions for a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListDefaultRateDefinitions(ListDefaultRateDefinitionsRequest) returns (ListDefaultRateDefinitionsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listdefaultratedefinitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Updates a rate definition for a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The rate definition was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateDefaultRateDefinition(UpdateDefaultRateDefinitionRequest) returns (UpdateDefaultRateDefinitionResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updatedefaultratedefinition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Matching Rule
+
+  // Creates a new matching rule.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateMatchingRule(CreateMatchingRuleRequest) returns (CreateMatchingRuleResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/creatematchingrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Deletes a matching rule.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The matching rule was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteMatchingRule(DeleteMatchingRuleRequest) returns (DeleteMatchingRuleResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deletematchingrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Gets a matching rule.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The matching rule was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetMatchingRule(GetMatchingRuleRequest) returns (GetMatchingRuleResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getmatchingrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Lists matching rules.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListMatchingRules(ListMatchingRulesRequest) returns (ListMatchingRulesResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listmatchingrules";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Updates a matching rule.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The matching rule was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateMatchingRule(UpdateMatchingRuleRequest) returns (UpdateMatchingRuleResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updatematchingrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Billing Tags
+
+  // Creates a new billing tag.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CreateBillingTag(CreateBillingTagRequest) returns (CreateBillingTagResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/createbillingtag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Deletes a billing tag.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing tag was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc DeleteBillingTag(DeleteBillingTagRequest) returns (DeleteBillingTagResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/deletebillingtag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Gets a billing tag.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing tag was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc GetBillingTag(GetBillingTagRequest) returns (GetBillingTagResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/getbillingtag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Lists billing tags.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc ListBillingTags(ListBillingTagsRequest) returns (ListBillingTagsResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/listbillingtags";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Updates a billing tag.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing tag was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc UpdateBillingTag(UpdateBillingTagRequest) returns (UpdateBillingTagResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/updatebillingtag";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // Invoice
+
+  // Exports an invoice.
+  // Required permissions:
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc ExportInvoice(ExportInvoiceRequest) returns (ExportInvoiceResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/exportinvoice";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TCN_BILLING_ADMIN]
+        }
+      ]
+    };
+  }
+}

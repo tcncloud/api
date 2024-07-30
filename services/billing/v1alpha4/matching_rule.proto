@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "google/protobuf/field_mask.proto";
+import "services/billing/entities/v1alpha4/rates.proto";
+import "services/billing/v1alpha4/core.proto";
+
+message CreateMatchingRuleRequest {
+  string matching_rule_id = 1;
+  services.billing.entities.v1alpha4.MatchingRule matching_rule = 2;
+}
+
+message CreateMatchingRuleResponse {
+  string matching_rule_id = 1;
+}
+
+message DeleteMatchingRuleRequest {
+  string matching_rule_id = 1;
+}
+
+message DeleteMatchingRuleResponse {}
+
+message GetMatchingRuleRequest {
+  string matching_rule_id = 1;
+}
+
+message GetMatchingRuleResponse {
+  services.billing.entities.v1alpha4.MatchingRule matching_rule = 1;
+}
+
+message ListMatchingRulesRequest {
+  string matching_rule_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListMatchingRulesResponse {
+  repeated services.billing.entities.v1alpha4.MatchingRule matching_rules = 1;
+  string token = 2;
+}
+
+message UpdateMatchingRuleRequest {
+  string matching_rule_id = 1;
+  services.billing.entities.v1alpha4.MatchingRule matching_rule = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateMatchingRuleResponse {}
