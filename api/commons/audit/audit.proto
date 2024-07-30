@@ -49,6 +49,7 @@ message AuditEvent {
     VanaBillingReportEvent vana_billing_report_event = 202;
     VanaFlagSummaryEvent vana_flag_summary_event = 203;
     VanaPhraseCorrectionEvent vana_phrase_correction_event = 204;
+    VanaCreateTranscriptEvent vana_create_transcript_event = 205;
 
     /// Omnichannel Events class 300
     OmnichannelCreateProjectEvent omnichannel_create_project_event = 300;
