@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package services.org.exile_certificate_manager.v1;
+package services.org.exile_certificate_manager.v1alpha1;
 
 import "google/protobuf/field_mask.proto";
-import "services/org/exile_certificate_manager/v1/entities.proto";
+import "services/org/exile_certificate_manager/v1alpha1/entities.proto";
 
 // CreateCertificateConfigurationRequest is the request to create a certificate configuration.
 message CreateCertificateConfigurationRequest {
@@ -14,7 +14,7 @@ message CreateCertificateConfigurationRequest {
   // The type of certificate configuration.
   CertificateConfigurationType type = 3;
   // The parameters of the certificate configuration.
-  // See services.org.exile_certificate_manager.v1.CertificateConfiguration
+  // See services.org.exile_certificate_manager.v1alpha1.CertificateConfiguration
   // for the required information.
   string parameters = 4;
 }

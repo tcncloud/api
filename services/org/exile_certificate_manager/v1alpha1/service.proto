@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package services.org.exile_certificate_manager.v1;
+package services.org.exile_certificate_manager.v1alpha1;
 
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
-import "services/org/exile_certificate_manager/v1/certificate_configuration.proto";
-import "services/org/exile_certificate_manager/v1/certificate_info.proto";
+import "services/org/exile_certificate_manager/v1alpha1/certificate_configuration.proto";
+import "services/org/exile_certificate_manager/v1alpha1/certificate_info.proto";
 
 // ExileCertificateManagerService is the service for managing organization's certificate info.
 service ExileCertificateManagerService {

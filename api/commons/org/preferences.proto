@@ -873,7 +873,7 @@ message ObservedHoliday {
 }
 
 // CertificateInfo contains the organization's certificate information.
-// DEPRECATED: Use services.org.exile_certificate_manager.v1.CertificateInfo instead.
+// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.CertificateInfo instead.
 message CertificateInfo {
   option deprecated = true;
   // The id of the certificate info.

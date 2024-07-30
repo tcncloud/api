@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package services.org.exile_certificate_manager.v1;
+package services.org.exile_certificate_manager.v1alpha1;
 
 import "google/protobuf/field_mask.proto";
-import "services/org/exile_certificate_manager/v1/entities.proto";
+import "services/org/exile_certificate_manager/v1alpha1/entities.proto";
 
 // CreateCertificateInfoRequest is the request for creating a certificate info.
 message CreateCertificateInfoRequest {
