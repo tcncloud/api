@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package services.billing.v1alpha4;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha4/plan.proto";
+import "services/billing/entities/v1alpha4/rates.proto";
+import "services/billing/v1alpha4/core.proto";
+
+message ApplyBillingPlanDraftRequest {
+  string billing_plan_id = 1;
+  google.protobuf.Timestamp start_time = 2;
+  repeated string org_ids = 3; // Optional. If not set, apply to all orgs.
+}
+
+message ApplyBillingPlanDraftResponse {
+  repeated string billing_plan_ids = 1;
+}
+
+message CreateBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 2;
+}
+
+message CreateBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
+message DeleteBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message DeleteBillingPlanResponse {}
+
+message GetBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message GetBillingPlanResponse {
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 1;
+}
+
+message ListBillingPlansRequest {
+  string billing_plan_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListBillingPlansResponse {
+  repeated services.billing.entities.v1alpha4.BillingPlan billing_plans = 1;
+  string token = 2;
+}
+
+message UpdateBillingPlanRequest {
+  string billing_plan_id = 1;
+  services.billing.entities.v1alpha4.BillingPlan billing_plan = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateBillingPlanResponse {}
+
+// --------------------------------------------------------------------------
+// rates
+
+message CreateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 2;
+}
+
+message CreateRateDefinitionResponse {
+  string rate_definition_id = 1;
+}
+
+message DeleteRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message DeleteRateDefinitionResponse {}
+
+message GetRateDefinitionRequest {
+  string rate_definition_id = 1;
+}
+
+message GetRateDefinitionResponse {
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 1;
+}
+
+message ListRateDefinitionsRequest {
+  string rate_definition_id = 1;
+  string filter = 2;
+  google.protobuf.FieldMask fields = 3;
+  repeated Sort sort = 4;
+  Page page = 5;
+}
+
+message ListRateDefinitionsResponse {
+  repeated services.billing.entities.v1alpha4.RateDefinition rate_definitions = 1;
+  string token = 2;
+}
+
+message UpdateRateDefinitionRequest {
+  string rate_definition_id = 1;
+  services.billing.entities.v1alpha4.RateDefinition rate_definition = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateRateDefinitionResponse {}

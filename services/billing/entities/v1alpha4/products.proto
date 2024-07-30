@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package services.billing.entities.v1alpha4;
+
+import "services/billing/entities/v1alpha4/modules.proto";
+import "services/billing/entities/v1alpha4/omni.proto";
+
+message ProductConfig {
+  oneof config {
+    // communications (1000-9999)
+    // omni (1000 - 1999)
+    BasicConfig communications_omni_chat_agent_message_unit = 1000;
+    BasicUnitConfig communications_omni_chat_agent_attachment = 1001;
+    BasicUnitConfig communications_omni_chat_agent_accumulated_attachments = 1002;
+
+    BasicConfig communications_omni_chat_customer_message_unit = 1010;
+    BasicUnitConfig communications_omni_chat_customer_attachment = 1011;
+    BasicUnitConfig communications_omni_chat_customer_accumulated_attachments = 1012;
+
+    BasicConfig communications_omni_chat_manager_message_unit = 1020;
+    BasicUnitConfig communications_omni_chat_manager_attachment = 1021;
+    BasicUnitConfig communications_omni_chat_manager_accumulated_attachments = 1022;
+
+    BasicConfig communications_omni_chat_system_message_unit = 1030;
+    BasicUnitConfig communications_omni_chat_system_attachment = 1031;
+    BasicUnitConfig communications_omni_chat_system_accumulated_attachments = 1032;
+
+    BasicConfig communications_omni_email_agent_message_unit = 1100;
+    BasicUnitConfig communications_omni_email_agent_size = 1101;
+    BasicUnitConfig communications_omni_email_agent_accumulated_size = 1102;
+
+    BasicConfig communications_omni_email_customer_message_unit = 1110;
+    BasicUnitConfig communications_omni_email_customer_size = 1111;
+    BasicUnitConfig communications_omni_email_customer_accumulated_size = 1112;
+
+    BasicConfig communications_omni_email_manager_message_unit = 1120;
+    BasicUnitConfig communications_omni_email_manager_size = 1121;
+    BasicUnitConfig communications_omni_email_manager_accumulated_size = 1122;
+
+    BasicConfig communications_omni_email_system_message_unit = 1130;
+    BasicUnitConfig communications_omni_email_system_size = 1131;
+    BasicUnitConfig communications_omni_email_system_accumulated_size = 1132;
+
+    OmniSmsConfig communications_omni_sms_agent_message_unit = 1200;
+    OmniSmsUnitConfig communications_omni_sms_agent_attachment = 1201;
+    OmniSmsUnitConfig communications_omni_sms_agent_accumulated_attachments = 1202;
+
+    OmniSmsConfig communications_omni_sms_customer_message_unit = 1210;
+    OmniSmsUnitConfig communications_omni_sms_customer_attachment = 1211;
+    OmniSmsUnitConfig communications_omni_sms_customer_accumulated_attachments = 1212;
+
+    OmniSmsConfig communications_omni_sms_manager_message_unit = 1220;
+    OmniSmsUnitConfig communications_omni_sms_manager_attachment = 1221;
+    OmniSmsUnitConfig communications_omni_sms_manager_accumulated_attachments = 1222;
+
+    OmniSmsConfig communications_omni_sms_system_message_unit = 1230;
+    OmniSmsUnitConfig communications_omni_sms_system_attachment = 1231;
+    OmniSmsUnitConfig communications_omni_sms_system_accumulated_attachments = 1232;
+
+    BasicConfig communications_omni_agent_seats = 1300;
+
+    BasicConfig communications_omni_resources_connected_inbox_poll = 1400;
+    BasicConfig communications_omni_resources_connected_inbox_created = 1401;
+
+    // data management (10000 - 19999)
+    // compliance (10000 - 10999)
+    BasicConfig data_management_compliance_compliance_rnd_query = 10000;
+    BasicConfig data_management_compliance_compliance_rnd_query_cached = 10001;
+  }
+}
