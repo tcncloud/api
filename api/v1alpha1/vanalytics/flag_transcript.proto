@@ -25,8 +25,32 @@ message CreateFlagTranscriptResponse {}
 message DeleteFlagTranscriptRequest {
   // Required. The org id of the flag transcripts to be deleted.
   string org_id = 1;
-  // Required. The transcript sids for the flag transcripts to be deleted.
-  repeated int64 transcript_sids = 2;
+
+  // Deprecated. Use string filter instead.
+  repeated int64 transcript_sids = 2 [deprecated = true];
+
+  /*
+     Optional. The standard list filter as described in https://google.aip.dev/160.
+     Multiple comparisons can be provided when separated with a logical AND
+     operator. Supported fields, operators and functions are listed below.
+
+     +----------------------------+-----------+--------------+-----------+
+     |                      field |      type |    operators | functions |
+     +----------------------------+-----------+--------------+-----------+
+     |             transcript_sid |   integer |            = |       any |
+     |                 start_time | timestamp | >=, <=, >, < | timestamp |
+     |         flag_summary.count |   integer | >=, <=, >, < |           |
+     | flag_summary.review_status |      enum |            = |       any |
+     +----------------------------+-----------+--------------+-----------+
+
+     Examples:
+       transcript_sid = any(1, 2, 3)
+
+       flag_summary.count > 0 AND
+       flag_summary.review_status = any(done, none) AND
+       start_time >= timestamp('2012-04-21T11:30:00-04:00')
+  */
+  string filter = 3;
 }
 
 // DeleteFlagTranscriptResponse is a response for deleting a flag transcript.
