@@ -52,3 +52,12 @@ message UpdateCertificateConfigurationRequest {
 
 // UpdateCertificateConfigurationResponse is the response to updating a certificate configuration.
 message UpdateCertificateConfigurationResponse {}
+
+// DeleteCertificateConfigurationRequest is the request to delete a certificate configuration.
+message DeleteCertificateConfigurationRequest {
+  // The id of the configuration info to delete.
+  string configuration_info_id = 1;
+}
+
+// DeleteCertificateConfigurationResponse is the response to deleting a certificate configuration.
+message DeleteCertificateConfigurationResponse {}
