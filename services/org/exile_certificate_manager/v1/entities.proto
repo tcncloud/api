@@ -32,9 +32,9 @@ message CertificateInfo {
   int64 renewal_instance = 12;
 }
 
-// ConfigurationInfo contains the organization's configuration information
-// for its certificates.
-message ConfigurationInfo {
+// CertificateConfiguration contains the organization's configuration
+// information for its certificates.
+message CertificateConfiguration {
   // The id of the configuration info.
   string configuration_info_id = 1;
   // The id of the organization.
@@ -44,15 +44,29 @@ message ConfigurationInfo {
   // The configuration description.
   string description = 4;
   // The type of configuration info.
-  ConfigurationInfoType type = 5;
+  CertificateConfigurationType type = 5;
   // The parameters of the configuration info.
+  // This is a JSON string with the following information:
+  //   1. Database Host
+  //   2. Database URL
+  //   3. Database Port
+  //   4. Database Username
+  //   5. Database Password
+  //   6. Max Number Connections
+  //   7. Max Number Exile Jobs
   string parameters = 6;
 }
 
-// ConfigurationInfoType defines the types of configuration info.
-enum ConfigurationInfoType {
-  CONFIGURATION_INFO_TYPE_UNSPECIFIED = 0;
-  CONFIGURATION_INFO_TYPE_DUMMY_ONE = 1;
-  CONFIGURATION_INFO_TYPE_DUMMY_TWO = 2;
-  CONFIGURATION_INFO_TYPE_DUMMY_THREE = 3;
+// CertificateConfigurationType defines the types of configuration info.
+enum CertificateConfigurationType {
+  // Type Unspecified means the configuration type is not set.
+  CERTIFICATE_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+  // Type None specifies that the configuration will not have any parameters.
+  CERTIFICATE_CONFIGURATION_TYPE_NONE = 1;
+  // Type Artiva HCX specifies the configuration for Artiva HCX (parameters required).
+  CERTIFICATE_CONFIGURATION_TYPE_ARTIVA_HCX = 2;
+  // Type Artiva RM specifies the configuration for Artiva RM (parameters required).
+  CERTIFICATE_CONFIGURATION_TYPE_ARTIVA_RM = 3;
+  // Type FACS specifies the configuration for FACS (parameters required).
+  CERTIFICATE_CONFIGURATION_TYPE_FACS = 4;
 }
