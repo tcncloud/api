@@ -20,6 +20,7 @@ import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 // A service for creating and reading learning material
 service Learn {
@@ -291,6 +292,19 @@ service Learn {
       ]
     };
   }
+
+  // upload image for learning articles
+  rpc UploadStaticImage(UploadStaticImageReq) returns (UploadStaticImageRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/uploadstaticimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ]
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -383,6 +397,8 @@ message LearnImage {
   string content = 2;
   // download image url
   string download_url = 3;
+  // temp id for the image
+  google.protobuf.StringValue temp_id = 4;
 }
 
 // response to upload url for static images
@@ -653,3 +669,15 @@ message DeleteVersionReq {
 
 // response to delete version
 message DeleteVersionRes {}
+
+// request to upload image for learning articles
+message UploadStaticImageReq {
+  // image details
+  LearnImage image = 1;
+}
+
+// response to upload image for learning articles
+message UploadStaticImageRes {
+  // updated image details
+  LearnImage image = 1;
+}
