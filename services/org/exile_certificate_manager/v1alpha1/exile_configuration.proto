@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package services.org.exile_certificate_manager.v1alpha1;
+
+import "google/protobuf/field_mask.proto";
+import "services/org/exile_certificate_manager/v1alpha1/entities.proto";
+
+// CreateExileConfigurationRequest is the request to create a exile configuration
+message CreateExileConfigurationRequest {
+  // The configuration name.
+  string name = 1;
+  // The configuration description.
+  string description = 2;
+  // The type of exile configuration
+  ExileConfigurationType type = 3;
+  // The parameters of the exile configuration
+  // See services.org.exile_certificate_manager.v1alpha1.ExileConfiguration
+  // for the required information.
+  string parameters = 4;
+}
+
+// CreateExileConfigurationResponse is the response to creating a exile configuration
+message CreateExileConfigurationResponse {
+  // The id of the exile configuration that was created.
+  string exile_configuration_id = 1;
+}
+
+// UpdateExileConfigurationRequest is the request to update a exile configuration
+message UpdateExileConfigurationRequest {
+  // The exile configuration to update.
+  ExileConfiguration configuration = 1;
+  // The fields to update.
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// UpdateExileConfigurationResponse is the response to updating a exile configuration
+message UpdateExileConfigurationResponse {}
+
+// DeleteExileConfigurationRequest is the request to delete a exile configuration
+message DeleteExileConfigurationRequest {
+  // The id of the exile configuration to delete.
+  string exile_configuration_id = 1;
+}
+
+// DeleteExileConfigurationResponse is the response to deleting a exile configuration
+message DeleteExileConfigurationResponse {}
+
+// ListExileConfigurationsRequest is the request to list exile configurations.
+message ListExileConfigurationsRequest {
+  // The fields on the entity to include in the response.
+  google.protobuf.FieldMask field_mask = 1;
+}
+
+// ListExileConfigurationsResponse is the response to listing exile configurations.
+message ListExileConfigurationsResponse {
+  // The list of exile configurations.
+  repeated ExileConfiguration exile_configurations = 1;
+}

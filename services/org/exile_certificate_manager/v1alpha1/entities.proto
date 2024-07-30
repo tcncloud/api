@@ -4,10 +4,10 @@ package services.org.exile_certificate_manager.v1alpha1;
 
 import "google/protobuf/timestamp.proto";
 
-// CertificateInfo contains the organization's certificate information.
-message CertificateInfo {
+// ExileCertificate contains the organization's exile certificate.
+message ExileCertificate {
   // The id of the certificate info.
-  string certificate_info_id = 1;
+  string exile_certificate_id = 1;
   // The id of the organization.
   string org_id = 2;
   // The certificate name.
@@ -27,25 +27,24 @@ message CertificateInfo {
   // Whether or not the certifcate has been revoked
   bool revoked = 10;
   // The id of the certificate configuration associated with the certificate.
-  string certificate_configuration_id = 11;
+  string exile_configuration_id = 11;
   // The number of times the certificate has been renewed.
   int64 renewal_instance = 12;
 }
 
-// CertificateConfiguration contains the organization's configuration
-// information for its certificates.
-message CertificateConfiguration {
-  // The id of the certificate configuration.
-  string certificate_configuration_id = 1;
+// ExileConfiguration contains the organization's exile configuration for its certificates.
+message ExileConfiguration {
+  // The id of the exile configuration
+  string exile_configuration_id = 1;
   // The id of the organization.
   string org_id = 2;
   // The configuration name.
   string name = 3;
   // The configuration description.
   string description = 4;
-  // The type of certificate configuration.
-  CertificateConfigurationType type = 5;
-  // The parameters of the certificate configuration.
+  // The type of exile configuration
+  ExileConfigurationType type = 5;
+  // The parameters of the exile configuration
   // This is a JSON string with the following information:
   //   1. Database Host
   //   2. Database URL
@@ -57,16 +56,16 @@ message CertificateConfiguration {
   string parameters = 6;
 }
 
-// CertificateConfigurationType defines the types of certificate configuration.
-enum CertificateConfigurationType {
+// ExileConfigurationType defines the types of exile configuration
+enum ExileConfigurationType {
   // Type Unspecified means the configuration type is not set.
-  CERTIFICATE_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+  EXILE_CONFIGURATION_TYPE_UNSPECIFIED = 0;
   // Type None specifies that the configuration will not have any parameters.
-  CERTIFICATE_CONFIGURATION_TYPE_NONE = 1;
+  EXILE_CONFIGURATION_TYPE_NONE = 1;
   // Type Artiva HCX specifies the configuration for Artiva HCX (parameters required).
-  CERTIFICATE_CONFIGURATION_TYPE_ARTIVA_HCX = 2;
+  EXILE_CONFIGURATION_TYPE_ARTIVA_HCX = 2;
   // Type Artiva RM specifies the configuration for Artiva RM (parameters required).
-  CERTIFICATE_CONFIGURATION_TYPE_ARTIVA_RM = 3;
+  EXILE_CONFIGURATION_TYPE_ARTIVA_RM = 3;
   // Type FACS specifies the configuration for FACS (parameters required).
-  CERTIFICATE_CONFIGURATION_TYPE_FACS = 4;
+  EXILE_CONFIGURATION_TYPE_FACS = 4;
 }

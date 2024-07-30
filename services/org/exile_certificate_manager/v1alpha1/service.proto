@@ -4,15 +4,15 @@ package services.org.exile_certificate_manager.v1alpha1;
 
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
-import "services/org/exile_certificate_manager/v1alpha1/certificate_configuration.proto";
-import "services/org/exile_certificate_manager/v1alpha1/certificate_info.proto";
+import "services/org/exile_certificate_manager/v1alpha1/exile_certificate.proto";
+import "services/org/exile_certificate_manager/v1alpha1/exile_configuration.proto";
 
-// ExileCertificateManagerService is the service for managing organization's certificate info.
+// ExileCertificateManagerService is the service for managing organization's exile ceritificate.
 service ExileCertificateManagerService {
-  // CreateCertificateInfo creates a new TLS certificate and
-  // returns the certificate info for the current organization.
-  rpc CreateCertificateInfo(CreateCertificateInfoRequest) returns (CreateCertificateInfoResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/createcertificateinfo";
+  // CreateExileCertificate creates a new TLS certificate and
+  // returns the exile ceritificate for the current organization.
+  rpc CreateExileCertificate(CreateExileCertificateRequest) returns (CreateExileCertificateResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/createexilecertificate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -23,9 +23,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // DeleteCertificateInfo deletes a certificate info for the current organization.
-  rpc DeleteCertificateInfo(DeleteCertificateInfoRequest) returns (DeleteCertificateInfoResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/deletecertificateinfo";
+  // RevokeExileCertificate deletes a exile ceritificate for the current organization.
+  rpc RevokeExileCertificate(RevokeExileCertificateRequest) returns (RevokeExileCertificateResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/revokeexilecertificate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -36,9 +36,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // RevokeCertificateInfo deletes a certificate info for the current organization.
-  rpc RevokeCertificateInfo(RevokeCertificateInfoRequest) returns (RevokeCertificateInfoResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/revokecertificateinfo";
+  // AssignExileConfiguration assigns a configuration to a certificate.
+  rpc AssignExileConfiguration(AssignExileConfigurationRequest) returns (AssignExileConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/assignexileconfiguration";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -49,9 +49,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // AssignCertificateConfiguration assigns a configuration to a certificate.
-  rpc AssignCertificateConfiguration(AssignCertificateConfigurationRequest) returns (AssignCertificateConfigurationResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/assigncertificateconfiguration";
+  // UnassignExileConfiguration unassigns a configuration from a certificate.
+  rpc UnassignExileConfiguration(UnassignExileConfigurationRequest) returns (UnassignExileConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/unassignexileconfiguration";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -62,9 +62,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // UnassignCertificateConfiguration unassigns a configuration from a certificate.
-  rpc UnassignCertificateConfiguration(UnassignCertificateConfigurationRequest) returns (UnassignCertificateConfigurationResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/unassigncertificateconfiguration";
+  // ListExileCertificates returns a list of exile ceritificate for the current organization.
+  rpc ListExileCertificates(ListExileCertificatesRequest) returns (ListExileCertificatesResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/listexilecertificate";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -75,9 +75,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // ListCertificateInfo returns a list of certificate info for the current organization.
-  rpc ListCertificateInfo(ListCertificateInfoRequest) returns (ListCertificateInfoResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/listcertificateinfo";
+  // CreateExileConfiguration creates a new exile configuration for the current organization.
+  rpc CreateExileConfiguration(CreateExileConfigurationRequest) returns (CreateExileConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/createexileconfiguration";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -88,9 +88,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // CreateCertificateConfiguration creates a new certificate configuration for the current organization.
-  rpc CreateCertificateConfiguration(CreateCertificateConfigurationRequest) returns (CreateCertificateConfigurationResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/createcertificateconfiguration";
+  // UpdateExileConfiguration updates a exile configuration for the current organization.
+  rpc UpdateExileConfiguration(UpdateExileConfigurationRequest) returns (UpdateExileConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/updateexileconfiguration";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -101,23 +101,10 @@ service ExileCertificateManagerService {
     };
   }
 
-  // UpdateCertificateConfiguration updates a certificate configuration for the current organization.
-  rpc UpdateCertificateConfiguration(UpdateCertificateConfigurationRequest) returns (UpdateCertificateConfigurationResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/updatecertificateconfiguration";
-    option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_ORG_EDIT]
-        }
-      ]
-    };
-  }
-
-  // DeleteCertificateConfiguration deletes a certificate configuration for the current organization.
+  // DeleteExileConfiguration deletes a exile configuration for the current organization.
   // The configuration can only be deleted if it is not assigned to any certificates.
-  rpc DeleteCertificateConfiguration(DeleteCertificateConfigurationRequest) returns (DeleteCertificateConfigurationResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/deletecertificateconfiguration";
+  rpc DeleteExileConfiguration(DeleteExileConfigurationRequest) returns (DeleteExileConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/deleteexileconfiguration";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -128,9 +115,9 @@ service ExileCertificateManagerService {
     };
   }
 
-  // ListCertificateConfigurations returns a list of certificate configurations for the current organization.
-  rpc ListCertificateConfigurations(ListCertificateConfigurationsRequest) returns (ListCertificateConfigurationsResponse) {
-    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/listcertificateconfigurations";
+  // ListExileConfigurations returns a list of exile configurations for the current organization.
+  rpc ListExileConfigurations(ListExileConfigurationsRequest) returns (ListExileConfigurationsResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1alpha1/listexileconfigurations";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
