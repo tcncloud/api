@@ -101,3 +101,8 @@ message VanaPhraseCorrectionEvent {
   // Required. Channel that the words were spoken on.
   uint32 channel = 6;
 }
+
+// VanaCreateTranscriptEvent represents a newly created transcript.
+message VanaCreateTranscriptEvent {
+  int64 transcript_sid = 1;
+}
