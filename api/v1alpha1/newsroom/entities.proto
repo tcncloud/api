@@ -5,6 +5,7 @@ package api.v1alpha1.newsroom;
 import "api/commons/newsroom.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 // Request to create news article
 message CreateNewsArticleRequest {
@@ -196,6 +197,8 @@ message NewsArticleImage {
   string image_reference_id = 5;
   // image type
   string image_type = 6;
+  // temp id for the image
+  google.protobuf.StringValue temp_id = 7;
 }
 
 // response to uploaded image
@@ -214,4 +217,16 @@ message ListImagesForNewsArticleRequest {
 message ListImagesForNewsArticleResponse {
   // images for the news article
   repeated NewsArticleImage news_article_images = 1;
+}
+
+// request to upload image for the news article
+message UploadNewsArticleImageRequest {
+  // image details
+  NewsArticleImage image = 1;
+}
+
+// response after uploading image for the news article
+message UploadNewsArticleImageResponse {
+  // uploaded image details
+  NewsArticleImage image = 1;
 }
