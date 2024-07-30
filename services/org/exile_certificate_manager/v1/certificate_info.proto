@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package services.org.exile_certificate_manager.v1;
 
+import "google/protobuf/timestamp.proto";
 import "services/org/exile_certificate_manager/v1/entities.proto";
 
 // CreateCertificateInfoRequest is the request for creating a certificate info.
@@ -57,7 +58,10 @@ message UnassignCertificateConfigurationRequest {
 message UnassignCertificateConfigurationResponse {}
 
 // ListCertificateInfoRequest is the request for listing certificate info.
-message ListCertificateInfoRequest {}
+message ListCertificateInfoRequest {
+  // The fields on the entity to include in the response.
+  google.protobuf.FieldMask field_mask = 1;
+}
 
 // ListCertificateInfoResponse is the response for listing certificate info.
 message ListCertificateInfoResponse {

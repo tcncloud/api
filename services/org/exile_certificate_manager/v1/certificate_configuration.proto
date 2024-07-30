@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package services.org.exile_certificate_manager.v1;
 
-import "services/org/exile_certificate_manager/v1/entities.proto";
 import "google/protobuf/field_mask.proto";
+import "services/org/exile_certificate_manager/v1/entities.proto";
 
 // CreateCertificateConfigurationRequest is the request to create a certificate configuration.
 message CreateCertificateConfigurationRequest {
@@ -46,7 +46,10 @@ message DeleteCertificateConfigurationRequest {
 message DeleteCertificateConfigurationResponse {}
 
 // ListCertificateConfigurationsRequest is the request to list certificate configurations.
-message ListCertificateConfigurationsRequest {}
+message ListCertificateConfigurationsRequest {
+  // The fields on the entity to include in the response.
+  google.protobuf.FieldMask field_mask = 1;
+}
 
 // ListCertificateConfigurationsResponse is the response to listing certificate configurations.
 message ListCertificateConfigurationsResponse {
