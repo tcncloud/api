@@ -62,5 +62,5 @@ message ListCertificateInfoRequest {}
 // ListCertificateInfoResponse is the response for listing certificate info.
 message ListCertificateInfoResponse {
   // The list of certificate info.
-  repeated services.org.exile_certificate_manager.v1.CertificateInfo certificate_info_list = 1;
+  repeated CertificateInfo certificate_info_list = 1;
 }

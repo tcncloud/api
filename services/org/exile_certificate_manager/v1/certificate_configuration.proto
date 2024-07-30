@@ -58,5 +58,5 @@ message ListCertificateConfigurationsRequest {}
 // ListCertificateConfigurationsResponse is the response to listing certificate configurations.
 message ListCertificateConfigurationsResponse {
   // The list of certificate configurations.
-  repeated services.org.exile_certificate_manager.v1.CertificateConfiguration certificate_configurations = 1;
+  repeated CertificateConfiguration certificate_configurations = 1;
 }
