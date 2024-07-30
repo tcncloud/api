@@ -60,4 +60,30 @@ service ExileCertificateManagerService {
       ]
     };
   }
+
+  // AssignCertificateConfiguration assigns a configuration to a certificate.
+  rpc AssignCertificateConfiguration(AssignCertificateConfigurationRequest) returns (AssignCertificateConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1/assigncertificateconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UnassignCertificateConfiguration unassigns a configuration from a certificate.
+  rpc UnassignCertificateConfiguration(UnassignCertificateConfigurationRequest) returns (UnassignCertificateConfigurationResponse) {
+    option (google.api.http).post = "/services/org/exilecertificatemanager/v1/unassigncertificateconfiguration";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_ORG_EDIT]
+        }
+      ]
+    };
+  }
 }

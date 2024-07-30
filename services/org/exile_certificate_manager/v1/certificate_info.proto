@@ -44,3 +44,23 @@ message ListCertificateInfoResponse {
   // The list of certificate info.
   repeated services.org.exile_certificate_manager.v1.CertificateInfo certificate_info_list = 1;
 }
+
+// AssignCertificateConfigurationRequest is the request for assigning a certificate configuration.
+message AssignCertificateConfigurationRequest {
+  // The id of the certificate info to update.
+  string certificate_info_id = 1;
+  // The id of the configuration info to assign.
+  string configuration_info_id = 2;
+}
+
+// AssignCertificateConfigurationResponse is the response for assigning a certificate configuration.
+message AssignCertificateConfigurationResponse {}
+
+// UnassignCertificateConfigurationRequest is the request for unassigning a certificate configuration.
+message UnassignCertificateConfigurationRequest {
+  // The id of the certificate info to update.
+  string certificate_info_id = 1;
+}
+
+// UnassignCertificateConfigurationResponse is the response for unassigning a certificate configuration.
+message UnassignCertificateConfigurationResponse {}
