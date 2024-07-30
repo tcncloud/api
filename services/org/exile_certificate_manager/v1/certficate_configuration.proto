@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package services.org.exile_certificate_manager.v1;
 
+import "services/org/exile_certificate_manager/v1/entities.proto";
+
 // CreateCertificateConfigurationRequest is the request to create a certificate configuration.
 message CreateCertificateConfigurationRequest {
   // The configuration name.
@@ -11,14 +13,8 @@ message CreateCertificateConfigurationRequest {
   // The type of configuration info.
   CertificateConfigurationType type = 3;
   // The parameters of the configuration info.
-  // This is a JSON string with the following information:
-  //   1. Database Host
-  //   2. Database URL
-  //   3. Database Port
-  //   4. Database Username
-  //   5. Database Password
-  //   6. Max Number Connections
-  //   7. Max Number Exile Jobs
+  // See services.org.exile_certificate_manager.v1.CertificateConfiguration
+  // for the required information.
   string parameters = 4;
 }
 
@@ -39,14 +35,8 @@ message UpdateCertificateConfigurationRequest {
   // The type of configuration info.
   CertificateConfigurationType type = 4;
   // The parameters of the configuration info.
-  // This is a JSON string with the following information:
-  //   1. Database Host
-  //   2. Database URL
-  //   3. Database Port
-  //   4. Database Username
-  //   5. Database Password
-  //   6. Max Number Connections
-  //   7. Max Number Exile Jobs
+  // See services.org.exile_certificate_manager.v1.CertificateConfiguration
+  // for the required information.
   string parameters = 5;
 }
 
@@ -61,3 +51,12 @@ message DeleteCertificateConfigurationRequest {
 
 // DeleteCertificateConfigurationResponse is the response to deleting a certificate configuration.
 message DeleteCertificateConfigurationResponse {}
+
+// ListCertificateConfigurationsRequest is the request to list certificate configurations.
+message ListCertificateConfigurationsRequest {}
+
+// ListCertificateConfigurationsResponse is the response to listing certificate configurations.
+message ListCertificateConfigurationsResponse {
+  // The list of certificate configurations.
+  repeated services.org.exile_certificate_manager.v1.CertificateConfiguration certificate_configurations = 1;
+}

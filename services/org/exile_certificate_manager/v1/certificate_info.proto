@@ -36,15 +36,6 @@ message RevokeCertificateInfoRequest {
 // RevokeCertificateInfoResponse is the response for revoking a certificate info.
 message RevokeCertificateInfoResponse {}
 
-// ListCertificateInfoRequest is the request for listing certificate info.
-message ListCertificateInfoRequest {}
-
-// ListCertificateInfoResponse is the response for listing certificate info.
-message ListCertificateInfoResponse {
-  // The list of certificate info.
-  repeated services.org.exile_certificate_manager.v1.CertificateInfo certificate_info_list = 1;
-}
-
 // AssignCertificateConfigurationRequest is the request for assigning a certificate configuration.
 message AssignCertificateConfigurationRequest {
   // The id of the certificate info to update.
@@ -64,3 +55,12 @@ message UnassignCertificateConfigurationRequest {
 
 // UnassignCertificateConfigurationResponse is the response for unassigning a certificate configuration.
 message UnassignCertificateConfigurationResponse {}
+
+// ListCertificateInfoRequest is the request for listing certificate info.
+message ListCertificateInfoRequest {}
+
+// ListCertificateInfoResponse is the response for listing certificate info.
+message ListCertificateInfoResponse {
+  // The list of certificate info.
+  repeated services.org.exile_certificate_manager.v1.CertificateInfo certificate_info_list = 1;
+}
