@@ -1,3 +1,29 @@
 syntax = "proto3";
 
 package services.org.exile_certificate_manager.v1;
+
+// CreateCertificateConfigurationRequest is the request to create a certificate configuration.
+message CreateCertificateConfigurationRequest {
+  // The configuration name.
+  string name = 1;
+  // The configuration description.
+  string description = 2;
+  // The type of configuration info.
+  CertificateConfigurationType type = 3;
+  // The parameters of the configuration info.
+  // This is a JSON string with the following information:
+  //   1. Database Host
+  //   2. Database URL
+  //   3. Database Port
+  //   4. Database Username
+  //   5. Database Password
+  //   6. Max Number Connections
+  //   7. Max Number Exile Jobs
+  string parameters = 4;
+}
+
+// CreateCertificateConfigurationResponse is the response to creating a certificate configuration.
+message CreateCertificateConfigurationResponse {
+  // The id of the configuration info that was created.
+  string configuration_info_id = 1;
+}
