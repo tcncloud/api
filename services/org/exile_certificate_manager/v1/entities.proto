@@ -26,8 +26,8 @@ message CertificateInfo {
   bool deleted = 9;
   // Whether or not the certifcate has been revoked
   bool revoked = 10;
-  // The id of the configuration info associated with the certificate.
-  string configuration_info_id = 11;
+  // The id of the certificate configuration associated with the certificate.
+  string certificate_configuration_id = 11;
   // The number of times the certificate has been renewed.
   int64 renewal_instance = 12;
 }
@@ -35,17 +35,17 @@ message CertificateInfo {
 // CertificateConfiguration contains the organization's configuration
 // information for its certificates.
 message CertificateConfiguration {
-  // The id of the configuration info.
-  string configuration_info_id = 1;
+  // The id of the certificate configuration.
+  string certificate_configuration_id = 1;
   // The id of the organization.
   string org_id = 2;
   // The configuration name.
   string name = 3;
   // The configuration description.
   string description = 4;
-  // The type of configuration info.
+  // The type of certificate configuration.
   CertificateConfigurationType type = 5;
-  // The parameters of the configuration info.
+  // The parameters of the certificate configuration.
   // This is a JSON string with the following information:
   //   1. Database Host
   //   2. Database URL
@@ -57,7 +57,7 @@ message CertificateConfiguration {
   string parameters = 6;
 }
 
-// CertificateConfigurationType defines the types of configuration info.
+// CertificateConfigurationType defines the types of certificate configuration.
 enum CertificateConfigurationType {
   // Type Unspecified means the configuration type is not set.
   CERTIFICATE_CONFIGURATION_TYPE_UNSPECIFIED = 0;

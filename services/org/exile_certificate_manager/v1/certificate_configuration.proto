@@ -3,6 +3,7 @@ syntax = "proto3";
 package services.org.exile_certificate_manager.v1;
 
 import "services/org/exile_certificate_manager/v1/entities.proto";
+import "google/protobuf/field_mask.proto";
 
 // CreateCertificateConfigurationRequest is the request to create a certificate configuration.
 message CreateCertificateConfigurationRequest {
@@ -10,9 +11,9 @@ message CreateCertificateConfigurationRequest {
   string name = 1;
   // The configuration description.
   string description = 2;
-  // The type of configuration info.
+  // The type of certificate configuration.
   CertificateConfigurationType type = 3;
-  // The parameters of the configuration info.
+  // The parameters of the certificate configuration.
   // See services.org.exile_certificate_manager.v1.CertificateConfiguration
   // for the required information.
   string parameters = 4;
@@ -20,24 +21,16 @@ message CreateCertificateConfigurationRequest {
 
 // CreateCertificateConfigurationResponse is the response to creating a certificate configuration.
 message CreateCertificateConfigurationResponse {
-  // The id of the configuration info that was created.
-  string configuration_info_id = 1;
+  // The id of the certificate configuration that was created.
+  string certificate_configuration_id = 1;
 }
 
 // UpdateCertificateConfigurationRequest is the request to update a certificate configuration.
 message UpdateCertificateConfigurationRequest {
-  // The id of the configuration info to update.
-  string configuration_info_id = 1;
-  // The configuration name.
-  string name = 2;
-  // The configuration description.
-  string description = 3;
-  // The type of configuration info.
-  CertificateConfigurationType type = 4;
-  // The parameters of the configuration info.
-  // See services.org.exile_certificate_manager.v1.CertificateConfiguration
-  // for the required information.
-  string parameters = 5;
+  // The certificate configuration to update.
+  CertificateConfiguration configuration = 1;
+  // The fields to update.
+  google.protobuf.FieldMask field_mask = 2;
 }
 
 // UpdateCertificateConfigurationResponse is the response to updating a certificate configuration.
@@ -45,8 +38,8 @@ message UpdateCertificateConfigurationResponse {}
 
 // DeleteCertificateConfigurationRequest is the request to delete a certificate configuration.
 message DeleteCertificateConfigurationRequest {
-  // The id of the configuration info to delete.
-  string configuration_info_id = 1;
+  // The id of the certificate configuration to delete.
+  string certificate_configuration_id = 1;
 }
 
 // DeleteCertificateConfigurationResponse is the response to deleting a certificate configuration.

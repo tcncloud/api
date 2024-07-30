@@ -40,7 +40,7 @@ message RevokeCertificateInfoResponse {}
 message AssignCertificateConfigurationRequest {
   // The id of the certificate info to update.
   string certificate_info_id = 1;
-  // The id of the configuration info to assign.
+  // The id of the certificate configuration to assign.
   string configuration_info_id = 2;
 }
 
