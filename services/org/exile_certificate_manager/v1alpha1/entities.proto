@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 
 // ExileCertificate contains the organization's exile certificate.
 message ExileCertificate {
-  // The id of the certificate info.
+  // The id of the exile certificate.
   string exile_certificate_id = 1;
   // The id of the organization.
   string org_id = 2;
@@ -22,14 +22,12 @@ message ExileCertificate {
   google.protobuf.Timestamp creation_date = 7;
   // The requestor of the certificate (user ID or automated system)
   string request_by = 8;
-  // Whether the certificate info is deleted.
-  bool deleted = 9;
   // Whether or not the certifcate has been revoked
-  bool revoked = 10;
-  // The id of the certificate configuration associated with the certificate.
-  string exile_configuration_id = 11;
+  bool revoked = 9;
+  // The id of the exile configuration associated with the certificate.
+  string exile_configuration_id = 10;
   // The number of times the certificate has been renewed.
-  int64 renewal_instance = 12;
+  int64 renewal_instance = 11;
 }
 
 // ExileConfiguration contains the organization's exile configuration for its certificates.
