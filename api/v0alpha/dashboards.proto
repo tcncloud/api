@@ -352,6 +352,8 @@ message PanelSource {
     // Used for BI Insights in operator
     string insight_resource_id = 3;
   }
+  // Used for selecting which output configuration to display in the dashboard
+  string output_configuration_resource_id = 4;
 }
 
 // Dashboard contains all fields for a dashboard
