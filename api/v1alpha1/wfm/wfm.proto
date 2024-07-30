@@ -3422,12 +3422,57 @@ service WFM {
     };
   }
 
-  // List org-level RealTimeManagementStateColors.
+  // Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
   // Errors:
-  //   - grpc.Invalid: on invalid input.
-  //   - grpc.Internal: on unexpected error.
+  //   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
+  //   - grpc.NotFound: the given @rgba_color_id does not exist.
+  rpc UpsertRealTimeManagementStateColor(UpsertRealTimeManagementStateColorRequest) returns (UpsertRealTimeManagementStateColorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/upsertrealtimemanagementstatecolor";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // List org assigned colors for real-time management states.
+  // Any states that do not have an assigned state color will have their system default state color returned instead.
+  // Errors:
+  //  - grpc.Internal: error occurs when listing the real-time management state colors.
   rpc ListRealTimeManagementStateColors(ListRealTimeManagementStateColorsRequest) returns (ListRealTimeManagementStateColorsResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listrealtimemanagementstatecolors";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Deletes the state color for the given @state for the org sending the request.
+  // The state will be associated with the system default color.
+  // Errors:
+  //  - grpc.Invalid: the @state is invalid or is not associated with an @rbg_color_id.
+  //  - grpc.Internal: error occurs when deleting the state color fails.
+  rpc DeleteRealTimeManagementStateColor(DeleteRealTimeManagementStateColorRequest) returns (DeleteRealTimeManagementStateColorResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleterealtimemanagementstatecolor";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7339,14 +7384,38 @@ message RealTimeManagementStateColor {
   RgbaColor color = 2;
 }
 
+// Request message for UpsertRealTimeManagementStateColor
+message UpsertRealTimeManagementStateColorRequest {
+  // The state to associate with @rgba_color_id.
+  api.commons.RealTimeManagementState state = 1;
+  // The rgba_color_id to create a state color association with.
+  int64 rgba_color_id = 2;
+}
+
+// Response message for UpsertRealTimeManagementStateColor
+message UpsertRealTimeManagementStateColorResponse {
+  // The resulting real time management state color.
+  RealTimeManagementStateColor state_color = 1;
+}
+
 // Request message for ListRealTimeManagementStateColors.
 message ListRealTimeManagementStateColorsRequest {}
 
 // Response message for ListRealTimeManagementStateColors.
 message ListRealTimeManagementStateColorsResponse {
-  // The states and colors.
+  // The states and their associated colors.
   repeated RealTimeManagementStateColor state_colors = 1;
 }
+
+// Request message for DeleteRealTimeManagementStateColor.
+message DeleteRealTimeManagementStateColorRequest {
+  // State to delete the state color association for.
+  // State will be associated with the system default color instead.
+  api.commons.RealTimeManagementState state = 1;
+}
+
+// Response message for DeleteRealTimeManagementStateColor.
+message DeleteRealTimeManagementStateColorResponse {}
 
 // Request message for CreateAgentLeavePetition.
 message CreateAgentLeavePetitionRequest {
