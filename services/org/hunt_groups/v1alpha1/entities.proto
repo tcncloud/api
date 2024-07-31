@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package services.org.hunt_groups.v1alpha1;
+
+import "api/commons/org/huntgroup.proto";
+
+// ExileLink defines a link between a hunt group and the exile service.
+message ExileLink {
+  // The sid or the unique ID of the exile link stored in the database.
+  int64 parameter_sid = 1;
+  // The sid of the hunt group which the exile link is associated with.
+  int64 hunt_group_sid = 2;
+  // The display name of the exile link.
+  string name = 3;
+  // The description of the exile link.
+  string description = 4;
+  // The order of the exile link, used when displaying.
+  int64 order = 5;
+  // The parameter data for inbound calls.
+  ExileLinkData inbound_data = 6;
+  // The parameter data for outbound calls.
+  ExileLinkData outbound_data = 7;
+}
+
+// ExileLinkData to be passed to exile.
+message ExileLinkData {
+  ExileLinkParameter record_id = 1;
+  ExileLinkParameter alternate_id = 2;
+}
+
+// ExileLinkParameter describes the data or data source.
+message ExileLinkParameter {
+  // The ID for the contact field.
+  int64 contact_field_sid = 1;
+  // The helper value of the parameter.
+  string helper_value = 2;
+  // The source type of the parameter.
+  api.commons.org.ParameterSourceType parameter_source_type = 3;
+}
+
+message ListHuntGroupExileLinksRequest {
+  // The hunt group sid of the desired exile links
+  int64 hunt_group_sid = 1;
+}
+
+message ListHuntGroupExileLinksResponse {
+  // The links for exile
+  repeated ExileLink exile_links = 1;
+}
