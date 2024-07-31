@@ -123,3 +123,13 @@ message EditedEntry {
 }
 
 message EditContactEntryResponse {}
+
+message ListContactsByEntityRequest {
+  int64 project_id = 1 [jstype = JS_STRING]; //Project Id of the contact
+  int64 entity_id = 2; //Id of entity to be referenced with Contact, e.g: Ticket Code
+}
+
+message ListContactsByEntityResponse {
+  // Contacts associated to the entity
+  repeated ContactManagerEntry contact_manager_entry = 1;
+}

@@ -95,4 +95,22 @@ service ContactManager {
       ]
     };
   }
+
+  /**
+     List contacts for entity
+  */
+  rpc ListContactsByEntity(ListContactsByEntityRequest) returns (ListContactsByEntityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/listcontactsbyentity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CONTACTMANAGER_ADMIN,
+            PERMISSION_CONTACTMANAGER_APP
+          ]
+        }
+      ]
+    };
+  }
 }

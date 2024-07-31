@@ -35,6 +35,7 @@ message CreateTicketReq {
   repeated api.commons.TicketAction ticket_action = 15;
   // assignee list
   repeated string ticket_assignee = 16;
+  int64 contact_entry_id = 17 [jstype = JS_STRING];
 }
 
 //
@@ -129,6 +130,7 @@ message EditMaskTicketReq {
   repeated google.protobuf.FieldMask edited_fields_mask = 3;
   // ticket_code
   string ticket_code = 4;
+  int64 contact_entry_id = 17 [jstype = JS_STRING];
 }
 
 // EditMaskTicketRes - Response for EditMaskTicketReq
