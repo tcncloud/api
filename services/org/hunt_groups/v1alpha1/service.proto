@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package services.org.hunt_groups.v1alpha1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "services/org/hunt_groups/v1alpha1/entities.proto";
+
+// HuntGroupsService
+service HuntGroupsService {
+  rpc ListHuntGroupExileLinks(ListHuntGroupExileLinksRequest) returns (ListHuntGroupExileLinksResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listhuntgroupexilelinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ]
+    };
+  }
+}
