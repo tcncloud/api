@@ -12,7 +12,9 @@ service ExplorerService {
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
-message ListDatasourceSchemasRequest {}
+message ListDatasourceSchemasRequest {
+  repeated string datasource_names = 1;
+}
 
 // ListDatasourceSchemasResponse contains datasources and their schemas.
 message ListDatasourceSchemasResponse {
@@ -47,6 +49,8 @@ message QueryRequest {
   string ui_trace_id = 10;
   // comment is the comment for the query.
   string comment = 11;
+  // format is the format of the result.
+  string format = 12;
 }
 
 // QueryResponse contains the result of a datasource query.

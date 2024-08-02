@@ -30,6 +30,7 @@ message SchemaField {
   SchemaType column_type = 2;
   bool is_primary_key = 3;
   bool is_low_cardinality = 4;
+  string column_description = 5;
 }
 
 // Schema is a schema for a datasource.
@@ -37,6 +38,7 @@ message Schema {
   string name = 1;
   DatasourceType datasource_type = 2;
   repeated SchemaField fields = 3;
+  string table_description = 4;
 }
 
 // Parameter is a parameter for a query.
