@@ -22,8 +22,8 @@ service Projects {
   }
 
   // Public method to get project by project Id
-  rpc GetProjectById(GetProjectByIdRequest) returns (GetProjectByIdResponse) {
-    option (google.api.http).post = "/api/v1alpha1/projects/projects/getprojectbyid";
+  rpc GetProjectById(GetProjectRequest) returns (GetProjectResponse) {
+    option (google.api.http).post = "/api/v1alpha1/projects/projects/getproject";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [

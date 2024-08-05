@@ -20,7 +20,7 @@ message ListProjectsResponse {
 }
 
 // get single project based on id and mask used to getting particular data example:OmniProjectComplianceConfig
-message GetProjectByIdRequest {
+message GetProjectRequest {
   // project id
   int64 project_sid = 1 [jstype = JS_STRING];
   // field mask for selecting particular response data (optional)
@@ -28,7 +28,7 @@ message GetProjectByIdRequest {
 }
 
 // respond back to single project based on project id
-message GetProjectByIdResponse {
+message GetProjectResponse {
   // project details
   Project project = 1;
 }
