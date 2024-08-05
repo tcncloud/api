@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package api.v1alpha1.projects;
+
+import "google/api/expr/v1alpha1/syntax.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+// request used to get a list of projects
+message ListProjectsRequest {
+  // adding filter
+  google.api.expr.v1alpha1.ParsedExpr filter = 1;
+}
+
+// response used listing all projects
+message ListProjectsResponse {
+  // the list of projects
+  repeated Project projects = 1;
+}
+
+// get single project based on id and mask used to getting particular data example:OmniProjectComplianceConfig
+message GetProjectByIdRequest {
+  // project id
+  int64 project_sid = 1 [jstype = JS_STRING];
+  // field mask for selecting particular response data (optional)
+  google.protobuf.FieldMask field_mask = 2;
+}
+
+// respond back to single project based on project id
+message GetProjectByIdResponse {
+  // project details
+  Project project = 1;
+}
+
+// Project -
+message Project {
+  // project identifier
+  int64 project_sid = 1 [jstype = JS_STRING];
+  // project name
+  string name = 2;
+  // project description
+  string description = 3;
+  // project status
+  ProjectStatus status = 4;
+  // creation date
+  google.protobuf.Timestamp date_created = 5;
+  // compliance configuration
+  OmniProjectComplianceConfig compliance_config = 6;
+}
+
+// - compliance config for projects
+message OmniProjectComplianceConfig {
+  // compliance configuration for an email
+  OmniComplianceConfig email = 1;
+  // compliance configuration for sms
+  OmniComplianceConfig sms = 2;
+  // compliance configuration for whatsapp
+  OmniComplianceConfig whatsapp = 3;
+}
+
+// OmniComplianceConfig -
+message OmniComplianceConfig {
+  // opting in to different compliance settings
+  OmniComplianceAction opt_in = 1;
+  // opting out of different compliance settings
+  OmniComplianceAction opt_out = 2;
+  // help regarding compliance settings
+  OmniComplianceAction help = 3;
+  // information regarding compliance settings
+  OmniComplianceAction information = 4;
+  // scrub list identifier
+  string scrub_list_id = 5;
+  // rule set identifier
+  google.protobuf.StringValue rule_set_id = 6;
+}
+
+// OmniComplianceAction - configuration action for omni compliance
+message OmniComplianceAction {
+  // a list of config keywords
+  repeated string keywords = 1;
+  // confirmation for the config
+  string confirmation_message = 2;
+  bool is_fuzzy_match = 3;
+}
+
+enum ProjectStatus {
+  PROJECT_STATUS_UNKNOWN = 0;
+  PROJECT_STATUS_OPEN = 17000; //Project status is Open
+  PROJECT_STATUS_CLOSED = 17010; //Project status is Closed
+}
