@@ -25,7 +25,7 @@ message Translation {
   string manual_translation = 6;
 
   // Creation time of the translation.
-  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp create_time = 7;
 }
 
 // The core language object for localization
