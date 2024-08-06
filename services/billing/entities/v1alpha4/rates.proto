@@ -9,13 +9,14 @@ import "services/billing/entities/v1alpha4/tags.proto";
 message RateDefinition {
   string rate_definition_id = 1;
   string sku_id = 2;
-  BillingTag billing_tag = 3;
+  BillingTag billing_tag = 3 [deprecated = true];
   ProductConfig config = 4;
   bool is_draft = 5;
   bool is_overwrite = 6;
   google.protobuf.Timestamp create_time = 7;
   google.protobuf.Timestamp update_time = 8;
   google.protobuf.Timestamp delete_time = 9;
+  string billing_tag_id = 10;
 }
 
 message MatchingRule {
