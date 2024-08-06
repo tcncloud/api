@@ -57,7 +57,7 @@ message QueryRequest {
   // comment is the comment for the query.
   string comment = 11;
   // format is the format of the result.
-  string format = 12;
+  api.v1alpha1.explorer.ExportFormat format = 12;
 }
 
 // QueryResponse contains the result of a datasource query.
