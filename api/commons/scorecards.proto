@@ -17,7 +17,8 @@ enum CategoryType {
 // It is not a boolean because it might grow (i.e. MIXED).
 enum EvaluationType {
   EVALUATE_MANUAL = 0; // a person must fill out (score) the scorecard
-  EVALUATE_AUTO = 1; // the system fills out (scores) the scorecard
+  EVALUATE_AUTO = 1; // AKA (Auto) Flag Evaluation. Completed by the system. Produces risk level.
+  EVALUATE_SMART = 2; // Completed by the system. Produces point total and score percentage.
 }
 
 // ScoreType is how the score is calculated.
