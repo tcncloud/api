@@ -6062,6 +6062,10 @@ message PerformanceMetricForSkillCollectionV2 {
   float total_achieved_fte = 16;
   // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float total_productive_fte = 17;
+  // The total FTE, minus shrinkage, the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte_with_shrinkage_applied = 18;
+  // Total count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float total_productive_fte_with_shrinkage_applied = 19;
 }
 
 // PerformanceMetricV2.
@@ -6096,6 +6100,10 @@ message PerformanceMetricV2 {
   float total_achieved_fte = 16;
   // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float total_productive_fte = 17;
+  // The total FTE, minus shrinkage, the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte_with_shrinkage_applied = 18;
+  // Total count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float total_productive_fte_with_shrinkage_applied = 19;
 }
 
 // Represents a service level interval.
@@ -6128,6 +6136,10 @@ message FTERequiredVsAchievedOccupancyInterval {
   float achieved_fte = 5;
   // Count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float productive_fte = 6;
+  // Number of achieved FTE's, minus shrinkage, in the interval.
+  float achieved_fte_with_shrinkage_applied = 7;
+  // Count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float productive_fte_with_shrinkage_applied = 8;
 }
 
 // Represents fte required
