@@ -7340,6 +7340,8 @@ message RgbaColor {
   float blue = 3; // [0.0, 1.0]
   float alpha = 4; // [0.0, 1.0]
   string name = 5;
+  // ID of the rgba color.
+  int64 rgba_color_id = 6;
 }
 
 // Request message for the HelloWorldWFMAdherence RPC.
