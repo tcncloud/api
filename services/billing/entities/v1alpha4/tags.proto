@@ -10,5 +10,18 @@ message BillingTag {
   google.protobuf.Timestamp create_time = 3;
   google.protobuf.Timestamp update_time = 4;
   google.protobuf.Timestamp delete_time = 5;
-  string category = 6;
+  string category = 6 [deprecated = true];
+  Category billing_category = 7;
+}
+
+enum Category {
+  CATEGORY_UNSPECIFIED = 0;
+
+  CATEGORY_COMMUNICATIONS_OMNI_CHAT = 100;
+  CATEGORY_COMMUNICATIONS_OMNI_EMAIL = 101;
+  CATEGORY_COMMUNICATIONS_OMNI_SMS = 102;
+  CATEGORY_COMMUNICATIONS_OMNI_AGENT = 103;
+  CATEGORY_COMMUNICATIONS_OMNI_RESOURCES = 104;
+
+  CATEGORY_DATA_MANAGEMENT_COMPLIANCE_COMPLIANCE = 200;
 }
