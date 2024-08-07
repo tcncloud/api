@@ -130,7 +130,7 @@ message EditMaskTicketReq {
   repeated google.protobuf.FieldMask edited_fields_mask = 3;
   // ticket_code
   string ticket_code = 4;
-  int64 contact_entry_id = 17 [jstype = JS_STRING];
+  int64 contact_entry_id = 5 [jstype = JS_STRING];
 }
 
 // EditMaskTicketRes - Response for EditMaskTicketReq
