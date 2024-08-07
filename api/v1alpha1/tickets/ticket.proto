@@ -451,3 +451,23 @@ message EntityRef {
   string ticket_code = 3;
   string uri = 4;
 }
+
+enum ActionTypes {
+  // NA
+  NA = 0;
+  // CALLBACK
+  Callback = 1;
+  // EMAIBACK
+  Emailback = 2;
+  // SMSBACK
+  Smsback = 3;
+}
+
+enum SLAConditions {
+  // NA
+  None = 0;
+  // Respond
+  Respond = 1;
+  // Resolve
+  Resolve = 2;
+}
