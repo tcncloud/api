@@ -105,10 +105,10 @@ service ContactManager {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CONTACTMANAGER_ADMIN,
-            PERMISSION_CONTACTMANAGER_APP
-          ]
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_APP]
         }
       ]
     };
