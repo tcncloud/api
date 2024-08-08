@@ -2352,6 +2352,7 @@ service WFM {
   // Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
   // If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
   // If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+  // If @include_shift_segment_call_stats is set to true then the related shift segment call stats for the shift segments will be returned in the call stats by skill collection field on the shift segments.
   // If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
   // @include_shift_segments must be true to take effect.
   // If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
@@ -2570,6 +2571,25 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the data.
   rpc ListShiftInstanceSidsForAgent(ListShiftInstanceSidsForAgentReq) returns (ListShiftInstanceSidsForAgentRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesidsforagent";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Lists the shift_instance_sids for the Shift Instances associated with the given @datetime_range and @schedule_selector.
+  // If @node_selector is set, only shifts sids related to the given @node_selector will be listed.
+  // If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the node they are associated with.
+  // If @node_selector is set, the @schedule_scenario_sid must be set to match @node_selector.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when getting the data.
+  rpc ListShiftInstanceSidsForSchedule(ListShiftInstanceSidsForScheduleRequest) returns (ListShiftInstanceSidsForScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listshiftinstancesidsforschedule";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -6042,6 +6062,10 @@ message PerformanceMetricForSkillCollectionV2 {
   float total_achieved_fte = 16;
   // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float total_productive_fte = 17;
+  // The total FTE, minus shrinkage, the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte_with_shrinkage_applied = 18;
+  // Total count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float total_productive_fte_with_shrinkage_applied = 19;
 }
 
 // PerformanceMetricV2.
@@ -6076,6 +6100,10 @@ message PerformanceMetricV2 {
   float total_achieved_fte = 16;
   // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float total_productive_fte = 17;
+  // The total FTE, minus shrinkage, the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte_with_shrinkage_applied = 18;
+  // Total count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float total_productive_fte_with_shrinkage_applied = 19;
 }
 
 // Represents a service level interval.
@@ -6108,6 +6136,10 @@ message FTERequiredVsAchievedOccupancyInterval {
   float achieved_fte = 5;
   // Count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
   float productive_fte = 6;
+  // Number of achieved FTE's, minus shrinkage, in the interval.
+  float achieved_fte_with_shrinkage_applied = 7;
+  // Count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float productive_fte_with_shrinkage_applied = 8;
 }
 
 // Represents fte required
@@ -6486,6 +6518,9 @@ message ListShiftInstancesBySidReq {
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity and include_shift_segments are also set to true.
   bool include_activity = 5;
+  // Set to true to include shift segment call stats in each of the returned shift segments.
+  // Only effective when @include_shift_segments is also set to true.
+  bool include_shift_segment_call_stats = 6;
 }
 
 // Response message for the ListShiftInstancesBySid RPC
@@ -6728,6 +6763,24 @@ message ListShiftInstanceSidsForAgentReq {
 
 // ListShiftInstanceSidsForAgent response RPC.
 message ListShiftInstanceSidsForAgentRes {
+  // Requested shift instance sids.
+  repeated int64 shift_instance_sids = 1;
+}
+
+// Request message for the ListShiftInstanceSidsForSchedule RPC
+message ListShiftInstanceSidsForScheduleRequest {
+  // Schedule to get the shift instance sids from.
+  commons.ScheduleSelector schedule_selector = 1;
+  // The datetime range over which to get the shift instance sids.
+  commons.DatetimeRange datetime_range = 2;
+  // Optional field, if left nil all shift sids matching the given parameters will be included.
+  ParentEntity node_selector = 3;
+  // Only required if @node_selector is not nil.
+  int64 schedule_scenario_sid = 4;
+}
+
+// ListShiftInstanceSidsForSchedule response RPC.
+message ListShiftInstanceSidsForScheduleResponse {
   // Requested shift instance sids.
   repeated int64 shift_instance_sids = 1;
 }
@@ -7340,6 +7393,8 @@ message RgbaColor {
   float blue = 3; // [0.0, 1.0]
   float alpha = 4; // [0.0, 1.0]
   string name = 5;
+  // ID of the rgba color.
+  int64 rgba_color_id = 6;
 }
 
 // Request message for the HelloWorldWFMAdherence RPC.

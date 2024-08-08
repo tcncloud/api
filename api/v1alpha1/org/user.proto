@@ -926,6 +926,8 @@ message GetUserSessionDataResponse {
   bool org_allowed_mfa = 6;
   // The default locale preferences of the organization
   api.commons.LocalePreferences locale_preferences = 7;
+  // The billing ID of the organization the user belongs to.
+  string billing_id = 8;
 }
 
 // Request message for the RefreshMfaLockout rpc.
