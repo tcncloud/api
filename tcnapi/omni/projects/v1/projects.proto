@@ -4,12 +4,10 @@ package tcnapi.omni.projects.v1;
 
 import "google/protobuf/timestamp.proto";
 
-
-
 // Project -
 message Project {
   // project identifier
-  string project_id = 1 ;
+  string project_id = 1;
   // project name
   string name = 2;
   // project description
