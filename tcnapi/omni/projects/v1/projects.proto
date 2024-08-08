@@ -22,9 +22,9 @@ message Project {
   // project identifier
   string name = 1 [(google.api.field_behavior) = IDENTIFIER];
   // project title
-  string title = 2;
+  string title = 2 [(google.api.field_behavior) = REQUIRED];
   // project description
-  string description = 3;
+  string description = 3 [(google.api.field_behavior) = OPTIONAL];
   // project state
   State state = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
   // creation date

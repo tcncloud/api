@@ -1,3 +1,7 @@
+// (-- api-linter: core::0133::request-id-field=disabled
+//     aip.dev/not-precedent: We want all ids to get generated
+//     by the system and not by the user. --)
+
 syntax = "proto3";
 
 package tcnapi.omni.projects.v1;
@@ -34,6 +38,35 @@ message ListProjectsResponse {
 
 // get single project based on name and mask used to getting particular data
 message GetProjectRequest {
+  // the name of the project
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "projects.omni.tcnapi.com/Project"
+  ];
+}
+
+// request used to create a project
+message CreateProjectRequest {
+  // the parent of the project
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).child_type = "projects.omni.tcnapi.com/Project"
+  ];
+
+  // the project to be created
+  Project project = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// request used to update a project
+message UpdateProjectRequest {
+  // the project to be updated
+  Project project = 1 [(google.api.field_behavior) = REQUIRED];
+  // the update mask
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL]; 
+}
+
+// request used to delete a project
+message DeleteProjectRequest {
   // the name of the project
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
