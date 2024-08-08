@@ -2,24 +2,22 @@ syntax = "proto3";
 
 package tcnapi.omni.projects.v1;
 
-option java_package = "com.tcnapi.omni.projects.v1";
-option java_multiple_files = true;
-option java_outer_classname = "ServiceProto";
-
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "tcnapi/omni/projects/v1/entities.proto";
 import "tcnapi/omni/projects/v1/projects.proto";
 
+option java_multiple_files = true;
+option java_outer_classname = "ServiceProto";
+option java_package = "com.tcnapi.omni.projects.v1";
+
 // Projects service is the public api for the omni/projects service.
 service Projects {
   // Public method to list projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.method_signature) = "parent";
-    option (google.api.http) = {
-      get: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"
-    };
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"};
     option (annotations.authz) = {
       sets: [
         {
@@ -32,9 +30,7 @@ service Projects {
   // Public method to get a project
   rpc GetProject(GetProjectRequest) returns (Project) {
     option (google.api.method_signature) = "name";
-    option (google.api.http) = {
-      get: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"
-    };
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"};
     option (annotations.authz) = {
       sets: [
         {
