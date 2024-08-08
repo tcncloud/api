@@ -4,6 +4,7 @@ package tcnapi.omni.projects.v1;
 
 import "annotations/authz.proto";
 import "google/api/annotations.proto";
+import "tcnapi/omni/projects/v1/entities.proto";
 import "tcnapi/omni/projects/v1/projects.proto";
 
 // Projects service is the public api for the omni/projects service.
