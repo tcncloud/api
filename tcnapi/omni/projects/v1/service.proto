@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package tcnapi.omni.projects.v1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "tcnapi/omni/projects/v1/projects.proto";
+
+// Projects service is the public api for the omni/projects service.
+service Projects {
+  // Public method to list projects
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.http).post = "/tcnapi/omni/projects/v1/listprojects";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  // Public method to get project by project Id
+  rpc GetProjectById(GetProjectRequest) returns (GetProjectResponse) {
+    option (google.api.http).post = "/tcnapi/omni/projects/v1/getprojectbyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+}
