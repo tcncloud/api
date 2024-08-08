@@ -2,33 +2,41 @@ syntax = "proto3";
 
 package tcnapi.omni.projects.v1;
 
-import "google/api/expr/v1alpha1/syntax.proto";
 import "google/protobuf/field_mask.proto";
-import "google/protobuf/wrappers.proto";
 import "tcnapi/omni/projects/v1/projects.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+
+option java_package = "com.tcnapi.omni.projects.v1";
+option java_multiple_files = true;
+option java_outer_classname = "EntitiesProto";
 
 // request used to get a list of projects
 message ListProjectsRequest {
-  // adding filter
-  google.api.expr.v1alpha1.ParsedExpr filter = 1;
+  // the parent of the listed projects
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).child_type = "projects.omni.tcnapi.com/Project"
+  ];
+  // returned page
+  int32 page_size = 2 [(google.api.field_behavior) = OPTIONAL];
+  // used to specify the page token
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // response used listing all projects
 message ListProjectsResponse {
   // the list of projects
   repeated Project projects = 1;
+  // the next page token
+  string next_page_token = 2;
 }
 
-// get single project based on id and mask used to getting particular data
+// get single project based on name and mask used to getting particular data
 message GetProjectRequest {
-  // project id
-  string project_id = 1;
-  // field mask for selecting particular response data (optional)
-  google.protobuf.FieldMask field_mask = 2;
-}
-
-// respond back to single project based on project id
-message GetProjectResponse {
-  // project details
-  Project project = 1;
+  // the name of the project
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "projects.omni.tcnapi.com/Project"
+  ];
 }

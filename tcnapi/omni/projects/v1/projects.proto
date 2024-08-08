@@ -2,24 +2,42 @@ syntax = "proto3";
 
 package tcnapi.omni.projects.v1;
 
+option java_package = "com.tcnapi.omni.projects.v1";
+option java_multiple_files = true;
+option java_outer_classname = "ProjectsProto";
+
 import "google/protobuf/timestamp.proto";
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
 
 // Project -
 message Project {
+  option (google.api.resource) = {
+    type: "projects.omni.tcnapi.com/Project"
+    pattern: "org/{org}/region/{region}/projects/{project}"
+    plural: "projects",
+    singular: "project",
+  };
+
   // project identifier
-  string project_id = 1;
-  // project name
-  string name = 2;
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+  // project title
+  string title = 2;
   // project description
   string description = 3;
-  // project status
-  ProjectStatus status = 4;
+  // project state
+  State state = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
   // creation date
-  google.protobuf.Timestamp date_created = 5;
+  google.protobuf.Timestamp create_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+  
+  // This enum represents the state of a project
+  enum State {
+    // Project state is Unknown
+    STATE_UNSPECIFIED = 0;
+    // Project state is Open
+    STATE_OPEN = 17000;
+    // Project state is Closed
+    STATE_CLOSED = 17010; 
+  }
 }
 
-enum ProjectStatus {
-  PROJECT_STATUS_UNKNOWN = 0;
-  PROJECT_STATUS_OPEN = 17000; //Project status is Open
-  PROJECT_STATUS_CLOSED = 17010; //Project status is Closed
-}
