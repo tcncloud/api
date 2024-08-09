@@ -3,14 +3,21 @@ syntax = "proto3";
 package api.v1alpha1.explorer;
 
 import "api/v1alpha1/explorer/entities.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 // ExplorerService is the service for the explorer API.
 service ExplorerService {
   // ListDatasourceSchemas lists all accessible datasources and their schemas.
-  rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
+  rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse) {
+    option (google.api.http).post = "/api/v1alpha1/explorer/explorer/listdatasourceschemas";
+    option (google.api.http).body = "*";
+  }
   // Query queries a datasource.
-  rpc Query(QueryRequest) returns (QueryResponse);
+  rpc Query(QueryRequest) returns (QueryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/explorer/explorer/query";
+    option (google.api.http).body = "*";
+  }
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
