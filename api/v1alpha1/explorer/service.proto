@@ -7,15 +7,24 @@ import "google/protobuf/timestamp.proto";
 
 // ExplorerService is the service for the explorer API.
 service ExplorerService {
+  // ListDatasourceSchemas lists all accessible datasources and their schemas.
   rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse);
+  // Query queries a datasource.
   rpc Query(QueryRequest) returns (QueryResponse);
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
-message ListDatasourceSchemasRequest {}
+message ListDatasourceSchemasRequest {
+  // datasource_names is a table name filter for the datasources to list.
+  repeated string datasource_names = 1;
+  // datasource_type is the type of the datasource to list.
+  // If not specified, all datasources will be listed.
+  api.v1alpha1.explorer.DatasourceType datasource_type = 2;
+}
 
 // ListDatasourceSchemasResponse contains datasources and their schemas.
 message ListDatasourceSchemasResponse {
+  // list of schemas
   repeated api.v1alpha1.explorer.Schema schemas = 1;
 }
 
@@ -47,6 +56,8 @@ message QueryRequest {
   string ui_trace_id = 10;
   // comment is the comment for the query.
   string comment = 11;
+  // format is the format of the result.
+  api.v1alpha1.explorer.ExportFormat format = 12;
 }
 
 // QueryResponse contains the result of a datasource query.
