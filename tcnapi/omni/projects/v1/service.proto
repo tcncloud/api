@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package tcnapi.omni.projects.v1;
+
+import "annotations/authz.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "tcnapi/omni/projects/v1/entities.proto";
+import "tcnapi/omni/projects/v1/projects.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "ServiceProto";
+option java_package = "com.tcnapi.omni.projects.v1";
+
+// Projects service is the public api for the omni/projects service.
+service Projects {
+  // Method to list projects
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.method_signature) = "parent";
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  // Method to get a rpoject
+  rpc GetProject(GetProjectRequest) returns (Project) {
+    option (google.api.method_signature) = "name";
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  // Method to create a project
+  rpc CreateProject(CreateProjectRequest) returns (Project) {
+    option (google.api.method_signature) = "parent,project";
+    option (google.api.http) = {
+      post: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"
+      body: "project"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  // Method to update a project
+  rpc UpdateProject(UpdateProjectRequest) returns (Project) {
+    option (google.api.method_signature) = "project,update_mask";
+    option (google.api.http) = {
+      patch: "/tcnapi/omni/projects/v1/{project.name=org/*/region/*/projects/*}"
+      body: "project"
+    };
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  // Method to delete a project
+  rpc DeleteProject(DeleteProjectRequest) returns (Project) {
+    option (google.api.method_signature) = "name";
+    option (google.api.http) = {delete: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"};
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+}

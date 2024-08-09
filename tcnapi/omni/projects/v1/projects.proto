@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package tcnapi.omni.projects.v1;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "ProjectsProto";
+option java_package = "com.tcnapi.omni.projects.v1";
+
+// Project -
+message Project {
+  option (google.api.resource) = {
+    type: "projects.omni.tcnapi.com/Project"
+    pattern: "org/{org}/region/{region}/projects/{project}"
+    plural: "projects"
+    singular: "project"
+  };
+
+  // project identifier
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+  // project title
+  string title = 2 [(google.api.field_behavior) = REQUIRED];
+  // project description
+  string description = 3 [(google.api.field_behavior) = REQUIRED];
+  // project state
+  State state = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // creation date
+  google.protobuf.Timestamp create_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // This enum represents the state of a project
+  enum State {
+    // Project state is Unknown
+    STATE_UNSPECIFIED = 0;
+    // Project state is Open
+    STATE_OPEN = 17000;
+    // Project state is Closed
+    STATE_CLOSED = 17010;
+  }
+}
