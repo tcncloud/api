@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package services.translations.v1alpha1;
 
+import "google/protobuf/timestamp.proto";
+
 // Translation is the core entity of the translation service.
 message Translation {
   // The ID of the translation.
@@ -21,6 +23,30 @@ message Translation {
 
   // The manual translation if exixts.
   string manual_translation = 6;
+
+  // Creation time of the translation.
+  google.protobuf.Timestamp create_time = 7;
+}
+
+// The core language object for localization
+message LocalizationLanguage {
+  // The BCP 47 language tag.
+  string language_tag = 1;
+
+  // The name of the language.
+  string english_name = 2;
+}
+
+// The core context object for localization
+message LocalizationContext {
+  // The context.
+  string context = 1;
+
+  // The system message.
+  string system_message = 2; // API not enabled for v1 of localization
+
+  // The enabled status of the context.
+  bool enabled = 3;
 }
 
 // TranslateTemplateRequest is the request message for the Translate method.
@@ -144,14 +170,26 @@ message ListLanguagesResponse {
 // Req/Res for listing contexts
 message ListContextsRequest {}
 message ListContextsResponse {
-  repeated string contexts = 1;
+  // This is still populated for backwards compatibility
+  repeated string contexts = 1; // Use ListContextsResponse.localization_contexts instead
+
+  repeated LocalizationContext localization_contexts = 2;
 }
 
-// The core language object for localization
-message LocalizationLanguage {
-  // The BCP 47 language tag.
-  string language_tag = 1;
-
-  // The name of the language.
-  string english_name = 2;
+// Req/Res for enabling a context
+message EnableContextRequest {
+  string context = 1;
 }
+message EnableContextResponse {}
+
+// Req/Res for disabling a context
+message DisableContextRequest {
+  string context = 1;
+}
+message DisableContextResponse {}
+
+// Req/Res for bulk deleting translations
+message BulkDeleteTranslationsRequest {
+  repeated string translation_ids = 1;
+}
+message BulkDeleteTranslationsResponse {}

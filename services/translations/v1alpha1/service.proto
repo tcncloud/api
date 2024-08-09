@@ -158,4 +158,56 @@ service TranslationsService {
       ]
     };
   }
+
+  // enable a context for LLM translations
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  //   - grpc.NotFound: No context found
+  rpc EnableContext(EnableContextRequest) returns (EnableContextResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/enablecontext";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // disable a context for LLM translations
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc DisableContext(DisableContextRequest) returns (DisableContextResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/disablecontext";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
+  // Bulk delete translations
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  rpc BulkDeleteTranslations(BulkDeleteTranslationsRequest) returns (BulkDeleteTranslationsResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/bulkdeletetranslations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
 }
