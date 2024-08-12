@@ -984,28 +984,45 @@ message ExecuteFlow {
 
     ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
 
-    ExecuteSwervepayCreateCustomer swervepay_create_customer = 4301;
-    ExecuteSwervepayQueryCustomerDetails swervepay_query_customer_details = 4302;
-    ExecuteSwervepayQueryCustomerTokenDetails swervepay_query_customer_token_details = 4303;
-    ExecuteSwervepayQueryQueryCustomerTokens swervepay_query_customer_tokens = 4304;
-    ExecuteSwervepayQueryCustomerTransactions swervepay_query_customer_transactions = 4305;
-    ExecuteSwervepayQueryCustomers swervepay_query_customers = 4306;
-    ExecuteSwervepayQueryQueryTransactionDetails swervepay_query_transaction_details = 4307;
-    ExecuteSwervepayQueryTransactions swervepay_query_transactions = 4308;
-    ExecuteSwervepayRemoveCustomerToken swervepay_remove_customer_token = 4309;
-    ExecuteSwervepayUpdateCustomer swervepay_update_customer = 4310;
-    ExecuteSwervepayCreateTransactionAuth swervepay_create_transaction_auth = 4311;
-    ExecuteSwervepayCreateTransactionCapture swervepay_create_transaction_capture = 4312;
-    ExecuteSwervepayCreateTransactionCredit swervepay_create_transaction_credit = 4313;
-    ExecuteSwervepayCreateTransactionRefund swervepay_create_transaction_refund = 4314;
-    ExecuteSwervepayCreateTransactionSale swervepay_create_transaction_sale = 4315;
-    ExecuteSwervepayCreateTransactionValidate swervepay_create_transaction_validate = 4316;
-    ExecuteSwervepayProcessNewTransactionAuth swervepay_process_new_transaction_auth = 4317;
-    ExecuteSwervepayProcessNewTransactionCapture swervepay_process_new_transaction_capture = 4318;
-    ExecuteSwervepayProcessNewTransactionCredit swervepay_process_new_transaction_credit = 4319;
-    ExecuteSwervepayProcessNewTransactionRefund swervepay_process_new_transaction_refund = 4320;
-    ExecuteSwervepayProcessNewTransactionSale swervepay_process_new_transaction_sale = 4321;
-    ExecuteSwervepayProcessNewTransactionValidate swervepay_process_new_transaction_validate = 4322;
+    
+    ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
+    ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
+    
+    ExecuteNavigaDTICSAutoRenewInfo naviga_dti_cs_auto_renew_info = 4501;
+    ExecuteNavigaDTICSAutoTran naviga_dti_cs_auto_tran = 4502;
+    ExecuteNavigaDTICSBillingInfo naviga_dti_cs_billing_info = 4503;
+    ExecuteNavigaDTICSLogin naviga_dti_cs_login = 4504;
+    ExecuteNavigaDTICSPayInfo naviga_dti_cs_pay_info = 4505;
+    ExecuteNavigaDTICSPayTran naviga_dti_cs_pay_tran = 4506;
+    ExecuteNavigaDTICSRenewInfo naviga_dti_cs_renew_info = 4507;
+    ExecuteNavigaDTICSSearchPage naviga_dti_cs_search_page = 4508;
+    ExecuteNavigaDTICSServiceErrorInfo naviga_dti_cs_service_error_info = 4509;
+    ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
+    ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
+    ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
+    
+    ExecuteSwervepayCreateCustomer swervepay_create_customer = 4601;
+    ExecuteSwervepayQueryCustomerDetails swervepay_query_customer_details = 4602;
+    ExecuteSwervepayQueryCustomerTokenDetails swervepay_query_customer_token_details = 4603;
+    ExecuteSwervepayQueryQueryCustomerTokens swervepay_query_customer_tokens = 4604;
+    ExecuteSwervepayQueryCustomerTransactions swervepay_query_customer_transactions = 4605;
+    ExecuteSwervepayQueryCustomers swervepay_query_customers = 4606;
+    ExecuteSwervepayQueryQueryTransactionDetails swervepay_query_transaction_details = 4607;
+    ExecuteSwervepayQueryTransactions swervepay_query_transactions = 4608;
+    ExecuteSwervepayRemoveCustomerToken swervepay_remove_customer_token = 4609;
+    ExecuteSwervepayUpdateCustomer swervepay_update_customer = 4610;
+    ExecuteSwervepayCreateTransactionAuth swervepay_create_transaction_auth = 4611;
+    ExecuteSwervepayCreateTransactionCapture swervepay_create_transaction_capture = 4612;
+    ExecuteSwervepayCreateTransactionCredit swervepay_create_transaction_credit = 4613;
+    ExecuteSwervepayCreateTransactionRefund swervepay_create_transaction_refund = 4614;
+    ExecuteSwervepayCreateTransactionSale swervepay_create_transaction_sale = 4615;
+    ExecuteSwervepayCreateTransactionValidate swervepay_create_transaction_validate = 4616;
+    ExecuteSwervepayProcessNewTransactionAuth swervepay_process_new_transaction_auth = 4617;
+    ExecuteSwervepayProcessNewTransactionCapture swervepay_process_new_transaction_capture = 4618;
+    ExecuteSwervepayProcessNewTransactionCredit swervepay_process_new_transaction_credit = 4619;
+    ExecuteSwervepayProcessNewTransactionRefund swervepay_process_new_transaction_refund = 4620;
+    ExecuteSwervepayProcessNewTransactionSale swervepay_process_new_transaction_sale = 4621;
+    ExecuteSwervepayProcessNewTransactionValidate swervepay_process_new_transaction_validate = 4622;
 
     ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
     ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
