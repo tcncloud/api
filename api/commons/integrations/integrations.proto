@@ -1000,6 +1000,22 @@ message ExecuteFlow {
     ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
     ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
 
+    ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
+    ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
+
+    ExecuteNavigaDTICSAutoRenewInfo naviga_dti_cs_auto_renew_info = 4501;
+    ExecuteNavigaDTICSAutoTran naviga_dti_cs_auto_tran = 4502;
+    ExecuteNavigaDTICSBillingInfo naviga_dti_cs_billing_info = 4503;
+    ExecuteNavigaDTICSLogin naviga_dti_cs_login = 4504;
+    ExecuteNavigaDTICSPayInfo naviga_dti_cs_pay_info = 4505;
+    ExecuteNavigaDTICSPayTran naviga_dti_cs_pay_tran = 4506;
+    ExecuteNavigaDTICSRenewInfo naviga_dti_cs_renew_info = 4507;
+    ExecuteNavigaDTICSSearchPage naviga_dti_cs_search_page = 4508;
+    ExecuteNavigaDTICSServiceErrorInfo naviga_dti_cs_service_error_info = 4509;
+    ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
+    ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
+    ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
+
     ExecuteSwervepayCreateCustomer swervepay_create_customer = 4601;
     ExecuteSwervepayQueryCustomerDetails swervepay_query_customer_details = 4602;
     ExecuteSwervepayQueryCustomerTokenDetails swervepay_query_customer_token_details = 4603;
@@ -1022,22 +1038,6 @@ message ExecuteFlow {
     ExecuteSwervepayProcessNewTransactionRefund swervepay_process_new_transaction_refund = 4620;
     ExecuteSwervepayProcessNewTransactionSale swervepay_process_new_transaction_sale = 4621;
     ExecuteSwervepayProcessNewTransactionValidate swervepay_process_new_transaction_validate = 4622;
-
-    ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
-    ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
-
-    ExecuteNavigaDTICSAutoRenewInfo naviga_dti_cs_auto_renew_info = 4501;
-    ExecuteNavigaDTICSAutoTran naviga_dti_cs_auto_tran = 4502;
-    ExecuteNavigaDTICSBillingInfo naviga_dti_cs_billing_info = 4503;
-    ExecuteNavigaDTICSLogin naviga_dti_cs_login = 4504;
-    ExecuteNavigaDTICSPayInfo naviga_dti_cs_pay_info = 4505;
-    ExecuteNavigaDTICSPayTran naviga_dti_cs_pay_tran = 4506;
-    ExecuteNavigaDTICSRenewInfo naviga_dti_cs_renew_info = 4507;
-    ExecuteNavigaDTICSSearchPage naviga_dti_cs_search_page = 4508;
-    ExecuteNavigaDTICSServiceErrorInfo naviga_dti_cs_service_error_info = 4509;
-    ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
-    ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
-    ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
 
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
