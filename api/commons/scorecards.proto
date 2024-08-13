@@ -104,6 +104,7 @@ message Category {
   repeated CallType.Enum call_types = 10 [deprecated = true]; // Deprecated. Use scorecard.call_types
   bool is_system = 11; // whether a category is a system category (read only)
   CategoryType category_type = 12; // Type of category, (skill calls or manual calls)
+  repeated int64 skill_profile_group_sids = 13; // skill_profile_group_sids related to category
 }
 
 // Evaluation represents a evaluated scorecard.
