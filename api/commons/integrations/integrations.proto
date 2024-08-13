@@ -50,6 +50,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_FINVI = 4300;
   INTEGRATION_TYPE_NAVIGA_DTI_CIRC = 4400;
   INTEGRATION_TYPE_NAVIGA_DTI_CS = 4500;
+  INTEGRATION_TYPE_SWERVEPAY = 4600;
 
   INTEGRATION_TYPE_DEBUG = 5000;
 }
@@ -314,34 +315,12 @@ enum RequestMethod {
 
   REQUEST_METHOD_SUTHERLANDREV_PAYMENT_CONNECT = 4201;
 
-  REQUEST_METHOD_FINVI_CREATE_CUSTOMER = 4301;
-  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_DETAILS = 4302;
-  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TOKEN_DETAILS = 4303;
-  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TOKENS = 4304;
-  REQUEST_METHOD_FINVI_QUERY_CUSTOMER_TRANSACTIONS = 4305;
-  REQUEST_METHOD_FINVI_QUERY_CUSTOMERS = 4306;
-  REQUEST_METHOD_FINVI_QUERY_TRANSACTION_DETAILS = 4307;
-  REQUEST_METHOD_FINVI_QUERY_TRANSACTIONS = 4308;
-  REQUEST_METHOD_FINVI_REMOVE_CUSTOMER_TOKEN = 4309;
-  REQUEST_METHOD_FINVI_UPDATE_CUSTOMER = 4310;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_AUTH = 4311;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_CAPTURE = 4312;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_CREDIT = 4313;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_REFUND = 4314;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_SALE = 4315;
-  REQUEST_METHOD_FINVI_CREATE_TRANSACTION_VALIDATE = 4316;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_AUTH = 4317;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_CAPTURE = 4318;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_CREDIT = 4319;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_REFUND = 4320;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_SALE = 4321;
-  REQUEST_METHOD_FINVI_PROCESS_NEW_TRANSACTION_VALIDATE = 4322;
-  REQUEST_METHOD_FINVI_EXILE_QUERY_RECORDS = 4323;
-  REQUEST_METHOD_FINVI_EXILE_READ_FIELDS = 4324;
-  REQUEST_METHOD_FINVI_EXILE_WRITE_FIELDS = 4325;
-  REQUEST_METHOD_FINVI_EXILE_EXECUTE_LOGIC = 4326;
-  REQUEST_METHOD_FINVI_EXILE_CREATE_PAYMENT = 4327;
-  REQUEST_METHOD_FINVI_EXILE_POP_ACCOUNT = 4328;
+  REQUEST_METHOD_FINVI_EXILE_QUERY_RECORDS = 4301;
+  REQUEST_METHOD_FINVI_EXILE_READ_FIELDS = 4302;
+  REQUEST_METHOD_FINVI_EXILE_WRITE_FIELDS = 4303;
+  REQUEST_METHOD_FINVI_EXILE_EXECUTE_LOGIC = 4304;
+  REQUEST_METHOD_FINVI_EXILE_CREATE_PAYMENT = 4305;
+  REQUEST_METHOD_FINVI_EXILE_POP_ACCOUNT = 4306;
 
   REQUEST_METHOD_NAVIGA_DTI_CIRC_CREATE_PAYMENT = 4401;
   REQUEST_METHOD_NAVIGA_DTI_CIRC_CHANGE_BILLING = 4402;
@@ -358,6 +337,29 @@ enum RequestMethod {
   REQUEST_METHOD_NAVIGA_DTI_CS_SERVICE_ERROR_TRANS = 4510;
   REQUEST_METHOD_NAVIGA_DTI_CS_STOP_INFO = 4511;
   REQUEST_METHOD_NAVIGA_DTI_CS_STOP_TRANS = 4512;
+
+  REQUEST_METHOD_SWERVEPAY_CREATE_CUSTOMER = 4601;
+  REQUEST_METHOD_SWERVEPAY_QUERY_CUSTOMER_DETAILS = 4602;
+  REQUEST_METHOD_SWERVEPAY_QUERY_CUSTOMER_TOKEN_DETAILS = 4603;
+  REQUEST_METHOD_SWERVEPAY_QUERY_CUSTOMER_TOKENS = 4604;
+  REQUEST_METHOD_SWERVEPAY_QUERY_CUSTOMER_TRANSACTIONS = 4605;
+  REQUEST_METHOD_SWERVEPAY_QUERY_CUSTOMERS = 4606;
+  REQUEST_METHOD_SWERVEPAY_QUERY_TRANSACTION_DETAILS = 4607;
+  REQUEST_METHOD_SWERVEPAY_QUERY_TRANSACTIONS = 4608;
+  REQUEST_METHOD_SWERVEPAY_REMOVE_CUSTOMER_TOKEN = 4609;
+  REQUEST_METHOD_SWERVEPAY_UPDATE_CUSTOMER = 4610;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_AUTH = 4611;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_CAPTURE = 4612;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_CREDIT = 4613;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_REFUND = 4614;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_SALE = 4615;
+  REQUEST_METHOD_SWERVEPAY_CREATE_TRANSACTION_VALIDATE = 4616;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_AUTH = 4617;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_CAPTURE = 4618;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_CREDIT = 4619;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_REFUND = 4620;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_SALE = 4621;
+  REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_VALIDATE = 4622;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -665,9 +667,9 @@ message PaymentFlow {
     PaymentVisionACH paymentvision_ach = 16;
     PaymentStellaCc paymentstella_cc = 17;
     PaymentStellaECheck paymentstella_echeck = 18;
-    PaymentFinviCC finvi_cc = 19;
+    PaymentSwervePayCC swervePay_cc = 19;
     // Had to skip ID 20 here because it is already used for payment_fields
-    PaymentFinviACH finvi_ach = 21;
+    PaymentSwervePayACH swervePay_ach = 21;
   }
   // the fields the user will use for the payment form
   // must be a subset of fields that is enough data to make the api call.
@@ -982,28 +984,12 @@ message ExecuteFlow {
 
     ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
 
-    ExecuteFinviCreateCustomer finvi_create_customer = 4301;
-    ExecuteFinviQueryCustomerDetails finvi_query_customer_details = 4302;
-    ExecuteFinviQueryCustomerTokenDetails finvi_query_customer_token_details = 4303;
-    ExecuteFinviQueryQueryCustomerTokens finvi_query_customer_tokens = 4304;
-    ExecuteFinviQueryCustomerTransactions finvi_query_customer_transactions = 4305;
-    ExecuteFinviQueryCustomers finvi_query_customers = 4306;
-    ExecuteFinviQueryQueryTransactionDetails finvi_query_transaction_details = 4307;
-    ExecuteFinviQueryTransactions finvi_query_transactions = 4308;
-    ExecuteFinviRemoveCustomerToken finvi_remove_customer_token = 4309;
-    ExecuteFinviUpdateCustomer finvi_update_customer = 4310;
-    ExecuteFinviCreateTransactionAuth finvi_create_transaction_auth = 4311;
-    ExecuteFinviCreateTransactionCapture finvi_create_transaction_capture = 4312;
-    ExecuteFinviCreateTransactionCredit finvi_create_transaction_credit = 4313;
-    ExecuteFinviCreateTransactionRefund finvi_create_transaction_refund = 4314;
-    ExecuteFinviCreateTransactionSale finvi_create_transaction_sale = 4315;
-    ExecuteFinviCreateTransactionValidate finvi_create_transaction_validate = 4316;
-    ExecuteFinviProcessNewTransactionAuth finvi_process_new_transaction_auth = 4317;
-    ExecuteFinviProcessNewTransactionCapture finvi_process_new_transaction_capture = 4318;
-    ExecuteFinviProcessNewTransactionCredit finvi_process_new_transaction_credit = 4319;
-    ExecuteFinviProcessNewTransactionRefund finvi_process_new_transaction_refund = 4320;
-    ExecuteFinviProcessNewTransactionSale finvi_process_new_transaction_sale = 4321;
-    ExecuteFinviProcessNewTransactionValidate finvi_process_new_transaction_validate = 4322;
+    ExecuteFinviExileQueryRecords finvi_exile_query_records = 4301;
+    ExecuteFinviExileReadFields finvi_exile_read_fields = 4302;
+    ExecuteFinviExileWriteFields finvi_exile_write_fields = 4303;
+    ExecuteFinviExileExecuteLogic finvi_exile_execute_logic = 4304;
+    ExecuteFinviExileCreatePayment finvi_exile_create_payment = 4305;
+    ExecuteFinviExilePopAccount finvi_exile_pop_account = 4306;
 
     ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
     ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
@@ -1020,6 +1006,45 @@ message ExecuteFlow {
     ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
     ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
     ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
+
+    ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
+    ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
+
+    ExecuteNavigaDTICSAutoRenewInfo naviga_dti_cs_auto_renew_info = 4501;
+    ExecuteNavigaDTICSAutoTran naviga_dti_cs_auto_tran = 4502;
+    ExecuteNavigaDTICSBillingInfo naviga_dti_cs_billing_info = 4503;
+    ExecuteNavigaDTICSLogin naviga_dti_cs_login = 4504;
+    ExecuteNavigaDTICSPayInfo naviga_dti_cs_pay_info = 4505;
+    ExecuteNavigaDTICSPayTran naviga_dti_cs_pay_tran = 4506;
+    ExecuteNavigaDTICSRenewInfo naviga_dti_cs_renew_info = 4507;
+    ExecuteNavigaDTICSSearchPage naviga_dti_cs_search_page = 4508;
+    ExecuteNavigaDTICSServiceErrorInfo naviga_dti_cs_service_error_info = 4509;
+    ExecuteNavigaDTICSServiceErrorTrans naviga_dti_cs_service_error_trans = 4510;
+    ExecuteNavigaDTICSStopInfo naviga_dti_cs_stop_info = 4511;
+    ExecuteNavigaDTICSStopTrans naviga_dti_cs_stop_trans = 4512;
+
+    ExecuteSwervepayCreateCustomer swervepay_create_customer = 4601;
+    ExecuteSwervepayQueryCustomerDetails swervepay_query_customer_details = 4602;
+    ExecuteSwervepayQueryCustomerTokenDetails swervepay_query_customer_token_details = 4603;
+    ExecuteSwervepayQueryQueryCustomerTokens swervepay_query_customer_tokens = 4604;
+    ExecuteSwervepayQueryCustomerTransactions swervepay_query_customer_transactions = 4605;
+    ExecuteSwervepayQueryCustomers swervepay_query_customers = 4606;
+    ExecuteSwervepayQueryQueryTransactionDetails swervepay_query_transaction_details = 4607;
+    ExecuteSwervepayQueryTransactions swervepay_query_transactions = 4608;
+    ExecuteSwervepayRemoveCustomerToken swervepay_remove_customer_token = 4609;
+    ExecuteSwervepayUpdateCustomer swervepay_update_customer = 4610;
+    ExecuteSwervepayCreateTransactionAuth swervepay_create_transaction_auth = 4611;
+    ExecuteSwervepayCreateTransactionCapture swervepay_create_transaction_capture = 4612;
+    ExecuteSwervepayCreateTransactionCredit swervepay_create_transaction_credit = 4613;
+    ExecuteSwervepayCreateTransactionRefund swervepay_create_transaction_refund = 4614;
+    ExecuteSwervepayCreateTransactionSale swervepay_create_transaction_sale = 4615;
+    ExecuteSwervepayCreateTransactionValidate swervepay_create_transaction_validate = 4616;
+    ExecuteSwervepayProcessNewTransactionAuth swervepay_process_new_transaction_auth = 4617;
+    ExecuteSwervepayProcessNewTransactionCapture swervepay_process_new_transaction_capture = 4618;
+    ExecuteSwervepayProcessNewTransactionCredit swervepay_process_new_transaction_credit = 4619;
+    ExecuteSwervepayProcessNewTransactionRefund swervepay_process_new_transaction_refund = 4620;
+    ExecuteSwervepayProcessNewTransactionSale swervepay_process_new_transaction_sale = 4621;
+    ExecuteSwervepayProcessNewTransactionValidate swervepay_process_new_transaction_validate = 4622;
 
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
@@ -1361,28 +1386,35 @@ message ExecuteSutherlandrevPaymentConnect {}
 message ExecuteDebugEcho {}
 message ExecuteDebugValidate {}
 
-message ExecuteFinviCreateCustomer {}
-message ExecuteFinviQueryCustomerDetails {}
-message ExecuteFinviQueryCustomerTokenDetails {}
-message ExecuteFinviQueryQueryCustomerTokens {}
-message ExecuteFinviQueryCustomerTransactions {}
-message ExecuteFinviQueryCustomers {}
-message ExecuteFinviQueryQueryTransactionDetails {}
-message ExecuteFinviQueryTransactions {}
-message ExecuteFinviRemoveCustomerToken {}
-message ExecuteFinviUpdateCustomer {}
-message ExecuteFinviCreateTransactionAuth {}
-message ExecuteFinviCreateTransactionCapture {}
-message ExecuteFinviCreateTransactionCredit {}
-message ExecuteFinviCreateTransactionRefund {}
-message ExecuteFinviCreateTransactionSale {}
-message ExecuteFinviCreateTransactionValidate {}
-message ExecuteFinviProcessNewTransactionAuth {}
-message ExecuteFinviProcessNewTransactionCapture {}
-message ExecuteFinviProcessNewTransactionCredit {}
-message ExecuteFinviProcessNewTransactionRefund {}
-message ExecuteFinviProcessNewTransactionSale {}
-message ExecuteFinviProcessNewTransactionValidate {}
+message ExecuteFinviExileQueryRecords {}
+message ExecuteFinviExileReadFields {}
+message ExecuteFinviExileWriteFields {}
+message ExecuteFinviExileExecuteLogic {}
+message ExecuteFinviExileCreatePayment {}
+message ExecuteFinviExilePopAccount {}
+
+message ExecuteSwervepayCreateCustomer {}
+message ExecuteSwervepayQueryCustomerDetails {}
+message ExecuteSwervepayQueryCustomerTokenDetails {}
+message ExecuteSwervepayQueryQueryCustomerTokens {}
+message ExecuteSwervepayQueryCustomerTransactions {}
+message ExecuteSwervepayQueryCustomers {}
+message ExecuteSwervepayQueryQueryTransactionDetails {}
+message ExecuteSwervepayQueryTransactions {}
+message ExecuteSwervepayRemoveCustomerToken {}
+message ExecuteSwervepayUpdateCustomer {}
+message ExecuteSwervepayCreateTransactionAuth {}
+message ExecuteSwervepayCreateTransactionCapture {}
+message ExecuteSwervepayCreateTransactionCredit {}
+message ExecuteSwervepayCreateTransactionRefund {}
+message ExecuteSwervepayCreateTransactionSale {}
+message ExecuteSwervepayCreateTransactionValidate {}
+message ExecuteSwervepayProcessNewTransactionAuth {}
+message ExecuteSwervepayProcessNewTransactionCapture {}
+message ExecuteSwervepayProcessNewTransactionCredit {}
+message ExecuteSwervepayProcessNewTransactionRefund {}
+message ExecuteSwervepayProcessNewTransactionSale {}
+message ExecuteSwervepayProcessNewTransactionValidate {}
 
 message ExecuteNavigaDTICircCreatePayment {}
 message ExecuteNavigaDTICircChangeBilling {}
