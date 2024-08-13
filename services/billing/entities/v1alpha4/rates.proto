@@ -3,6 +3,7 @@ syntax = "proto3";
 package services.billing.entities.v1alpha4;
 
 import "google/protobuf/timestamp.proto";
+import "services/billing/entities/v1alpha4/matching.proto";
 import "services/billing/entities/v1alpha4/products.proto";
 import "services/billing/entities/v1alpha4/tags.proto";
 
@@ -21,8 +22,11 @@ message RateDefinition {
 
 message MatchingRule {
   string matching_rule_id = 1;
-  ProductConfig config = 2;
+  ProductConfig config = 2 [deprecated = true];
   google.protobuf.Timestamp create_time = 3;
   google.protobuf.Timestamp delete_time = 4;
   google.protobuf.Timestamp update_time = 5;
+  oneof matching_config {
+    CountryCodePrefix country_code_prefix = 100;
+  }
 }
