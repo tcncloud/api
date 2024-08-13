@@ -217,3 +217,39 @@ enum TriggerAction {
   // The action to execute an exile link
   TRIGGER_ACTION_EXECUTE_EXILE_LINK = 6;
 }
+
+// ListHuntGroupAgentTriggersRequest is the request message for the ListHuntGroupAgentTriggers rpc.
+message ListHuntGroupAgentTriggersRequest {
+  // The sid of the hunt group to list the triggers for
+  int64 hunt_group_sid = 1;
+}
+
+// ListHuntGroupAgentTriggersResponse is the response message for the ListHuntGroupAgentTriggers rpc.
+message ListHuntGroupAgentTriggersResponse {
+  // The list of agent triggers for the hunt group
+  repeated AgentTrigger agent_triggers = 1;
+}
+
+// CopyHuntGroupAgentTriggerRequest is the request message for the CopyHuntGroupAgentTrigger rpc.
+message CopyHuntGroupAgentTriggerRequest {
+  // The sid of the hunt group from which the trigger is copied
+  int64 from_hunt_group_sid = 1;
+  // The sid of the hunt group to which the trigger is copied
+  int64 to_hunt_group_sid = 2;
+  // The agent trigger to copy
+  AgentTrigger agent_trigger = 3;
+}
+
+// CopyHuntGroupAgentTriggerResponse is the response message for the CopyHuntGroupAgentTrigger rpc.
+message CopyHuntGroupAgentTriggerResponse {}
+
+// UpdateHuntGroupAgentTriggersRequest is the request message for the UpdateHuntGroupAgentTriggers rpc.
+message UpdateHuntGroupAgentTriggersRequest {
+  // The sid of the hunt group to update the trigger for
+  int64 hunt_group_sid = 1;
+  // The list of agent triggers to update
+  repeated AgentTrigger agent_triggers = 2;
+}
+
+// UpdateHuntGroupAgentTriggersResponse is the response message for the UpdateHuntGroupAgentTriggers rpc.
+message UpdateHuntGroupAgentTriggersResponse {}
