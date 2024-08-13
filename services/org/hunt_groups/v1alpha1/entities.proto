@@ -4,6 +4,10 @@ package services.org.hunt_groups.v1alpha1;
 
 import "api/commons/org/huntgroup.proto";
 
+//
+// Exile Link
+//
+
 // ExileLink defines a link between a hunt group and the exile service.
 message ExileLink {
   // The sid or the unique ID of the exile link stored in the database.

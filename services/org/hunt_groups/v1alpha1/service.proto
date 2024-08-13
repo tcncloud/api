@@ -8,6 +8,10 @@ import "services/org/hunt_groups/v1alpha1/entities.proto";
 
 // HuntGroupsService is the service for managing hunt groups and their related entities.
 service HuntGroupsService {
+  //
+  // Exile Link
+  //
+
   // ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
   rpc ListHuntGroupExileLinks(ListHuntGroupExileLinksRequest) returns (ListHuntGroupExileLinksResponse) {
     option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listhuntgroupexilelinks";

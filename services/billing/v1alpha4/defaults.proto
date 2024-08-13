@@ -18,6 +18,14 @@ message ApplyDefaultBillingPlanDraftResponse {
   repeated string billing_plan_ids = 1;
 }
 
+message CloneDefaultBillingPlanRequest {
+  string billing_plan_id = 1;
+}
+
+message CloneDefaultBillingPlanResponse {
+  string billing_plan_id = 1;
+}
+
 message CreateDefaultBillingPlanRequest {
   string billing_plan_id = 1;
   services.billing.entities.v1alpha4.BillingPlan billing_plan = 2;

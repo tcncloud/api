@@ -6,13 +6,13 @@ import "services/billing/entities/v1alpha4/matching.proto";
 import "services/billing/entities/v1alpha4/modules.proto";
 
 message OmniSmsConfig {
-  string name = 1;
+  string name = 1 [deprecated = true];
   CountryCodePrefix prefixes = 2;
   BasicConfig config = 3;
 }
 
 message OmniSmsUnitConfig {
-  string name = 1;
+  string name = 1 [deprecated = true];
   CountryCodePrefix prefixes = 2;
   BasicUnitConfig config = 3;
 }
