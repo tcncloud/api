@@ -238,17 +238,18 @@ message AuditEvent {
     LMSPipelineSuccessfulEvent lms_pipeline_successful_event = 902;
 
     // Billing Events class 1000
-    BillingCommitBillingPlanEvent billing_commit_billing_plan_event = 1000;
-    BillingCreateBillingPlanEvent billing_create_billing_plan_event = 1001;
+    BillingCommitBillingPlanEvent billing_commit_billing_plan_event = 1000 [deprecated = true];
+    BillingCreateBillingPlanEvent billing_create_billing_plan_event = 1001 [deprecated = true];
     BillingCreateInvoiceEvent billing_create_invoice_event = 1002 [deprecated = true];
-    BillingCreateRateDefinitionEvent billing_create_rate_definition_event = 1003;
-    BillingDeleteBillingPlanEvent billing_delete_billing_plan_event = 1004;
+    BillingCreateRateDefinitionEvent billing_create_rate_definition_event = 1003 [deprecated = true];
+    BillingDeleteBillingPlanEvent billing_delete_billing_plan_event = 1004 [deprecated = true];
     BillingDeleteInvoiceEvent billing_delete_invoice_event = 1005 [deprecated = true];
-    BillingDeleteRateDefinitionEvent billing_delete_rate_definition_event = 1006;
-    BillingExportInvoiceEvent billing_export_invoice_event = 1007;
-    BillingUpdateBillingPlanEvent billing_update_billing_plan_event = 1008;
+    BillingDeleteRateDefinitionEvent billing_delete_rate_definition_event = 1006 [deprecated = true];
+    BillingExportInvoiceEvent billing_export_invoice_event = 1007 [deprecated = true];
+    BillingUpdateBillingPlanEvent billing_update_billing_plan_event = 1008 [deprecated = true];
     BillingUpdateInvoiceEvent billing_update_invoice_event = 1009 [deprecated = true];
-    BillingUpdateRateDefinitionEvent billing_update_rate_definition_event = 1010;
+    BillingUpdateRateDefinitionEvent billing_update_rate_definition_event = 1010 [deprecated = true];
+    BillingRatedItemsGeneratedEvent billing_rated_items_generated_event = 1011;
 
     // Delivery Events class 1100
     DeliveryFailureEvent delivery_failure_event = 1100;

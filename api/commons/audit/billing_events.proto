@@ -9,12 +9,14 @@ package api.commons.audit;
 
 // BillingCommitBillingPlanEvent is fired when a billing plan is committed
 message BillingCommitBillingPlanEvent {
+  option deprecated = true;
   string billing_plan_id = 1;
   string user_id = 2;
 }
 
 // BillingCreateBillingPlanEvent is fired when a billing plan is created
 message BillingCreateBillingPlanEvent {
+  option deprecated = true;
   string billing_plan = 1;
   string user_id = 2;
 }
@@ -28,12 +30,14 @@ message BillingCreateInvoiceEvent {
 
 // BillingCreateRateDefinitionEvent is fired when a rate definition is created
 message BillingCreateRateDefinitionEvent {
+  option deprecated = true;
   string rate_definition = 1;
   string user_id = 2;
 }
 
 // BillingDeleteBillingPlanEvent is fired when a billing plan is deleted
 message BillingDeleteBillingPlanEvent {
+  option deprecated = true;
   string billing_plan_id = 1;
   string user_id = 2;
 }
@@ -47,18 +51,21 @@ message BillingDeleteInvoiceEvent {
 
 // BillingDeleteRateDefinitionEvent is fired when a rate definition is deleted
 message BillingDeleteRateDefinitionEvent {
+  option deprecated = true;
   string rate_definition_id = 1;
   string user_id = 2;
 }
 
 // BillingExportInvoiceEvent is fired when an invoice is exported
 message BillingExportInvoiceEvent {
+  option deprecated = true;
   string invoice_id = 1;
   string user_id = 2;
 }
 
 // BillingUpdateBillingPlanEvent is fired when a billing plan is updated
 message BillingUpdateBillingPlanEvent {
+  option deprecated = true;
   string billing_plan = 1;
   string user_id = 2;
 }
@@ -72,6 +79,21 @@ message BillingUpdateInvoiceEvent {
 
 // BillingUpdateRateDefinitionEvent is fired when a rate definition is updated
 message BillingUpdateRateDefinitionEvent {
+  option deprecated = true;
   string rate_definition = 1;
   string user_id = 2;
+}
+
+message BillingRatedItemsGeneratedEvent {
+  repeated RatedItem rated_items = 1;
+
+  message RatedItem {
+    string rated_item_id = 1;
+    string billing_cycle = 2;
+    string event_log_id = 3;
+    string module_name = 4;
+    string org_id = 5;
+    string rate_definition_id = 6;
+    string sku_id = 7;
+  }
 }
