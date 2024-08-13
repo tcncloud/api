@@ -8,6 +8,7 @@ import "services/org/hunt_groups/v1alpha1/entities.proto";
 
 // HuntGroupsService
 service HuntGroupsService {
+  // ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
   rpc ListHuntGroupExileLinks(ListHuntGroupExileLinksRequest) returns (ListHuntGroupExileLinksResponse) {
     option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listhuntgroupexilelinks";
     option (google.api.http).body = "*";
@@ -15,6 +16,37 @@ service HuntGroupsService {
       sets: [
         {
           permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ]
+    };
+  }
+
+  // CopyHuntGroupExileLink copies an exile link from one hunt group to another.
+  // It will create a new exile link in the destination hunt group with the same
+  // settings/parameters as the source exile link.
+  rpc CopyHuntGroupExileLink(CopyHuntGroupExileLinkRequest) returns (CopyHuntGroupExileLinkResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/copyhuntgroupexilelink";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UpdateHuntGroupExileLinks updates the exile links for a hunt group.
+  // It will create any new exile links that do not already exist in the hunt group,
+  // update any existing exile links with the new settings/parameters, and
+  // delete any exile links that are not in the request.
+  rpc UpdateHuntGroupExileLinks(UpdateHuntGroupExileLinksRequest) returns (UpdateHuntGroupExileLinksResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/updatehuntgroupexilelinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
         }
       ]
     };

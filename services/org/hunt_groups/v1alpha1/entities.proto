@@ -24,7 +24,9 @@ message ExileLink {
 
 // ExileLinkData to be passed to exile.
 message ExileLinkData {
+  // The record ID of the data.
   ExileLinkParameter record_id = 1;
+  // The alternate ID of the data.
   ExileLinkParameter alternate_id = 2;
 }
 
@@ -38,12 +40,36 @@ message ExileLinkParameter {
   api.commons.org.ParameterSourceType parameter_source_type = 3;
 }
 
+// ListHuntGroupExileLinksRequest is the request for ListHuntGroupExileLinks rpc.
 message ListHuntGroupExileLinksRequest {
   // The hunt group sid of the desired exile links
   int64 hunt_group_sid = 1;
 }
 
+// ListHuntGroupExileLinksResponse is the response for ListHuntGroupExileLinks rpc.
 message ListHuntGroupExileLinksResponse {
   // The links for exile
   repeated ExileLink exile_links = 1;
 }
+
+// CopyHuntGroupExileLinkRequest is the request message for the CopyHuntGroupExileLink rpc.
+message CopyHuntGroupExileLinkRequest {
+  // The sid of the hunt group to copy the exile link to.
+  int64 to_hunt_group_sid = 1;
+  // The exile link to copy from the source hunt group.
+  ExileLink exile_link = 2;
+}
+
+// CopyHuntGroupExileLinkResponse is the response message for the CopyHuntGroupExileLink rpc.
+message CopyHuntGroupExileLinkResponse {}
+
+// UpdateHuntGroupExileLinksRequest is the request message for the UpdateHuntGroupExileLinks rpc.
+message UpdateHuntGroupExileLinksRequest {
+  // The sid of the hunt group to update the exile links for.
+  int64 hunt_group_sid = 1;
+  // The list of exile links to update.
+  repeated ExileLink exile_links = 2;
+}
+
+// UpdateHuntGroupExileLinksResponse is the response message for the UpdateHuntGroupExileLinks RPC method.
+message UpdateHuntGroupExileLinksResponse {}
