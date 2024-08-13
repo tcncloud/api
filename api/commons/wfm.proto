@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 // Represents the skill types that a client's skills can be.
 message SkillType {
@@ -864,4 +865,203 @@ enum SchedulingActivityClassification {
   ON_CALL_ACTIVITY = 1;
   // The wraps the Time Off Non Skill Activity.
   TIME_OFF_ACTIVITY = 2;
+}
+
+// ID and type of a config entity.
+message ConfigEntity {
+  // ID of the config entity.
+  int64 entity_sid = 1 [jstype = JS_STRING];
+  // Type of entity that the @entity_sid will reference.
+  commons.ConfigEntityType entity_type = 2;
+}
+
+// Supported mediums to be used when delivering notifications about violations of adherence rules.
+enum AdherenceRuleNotificationMedium {
+  // UI notification.
+  ADHERENCE_RULE_NOTIFICATION_MEDIUM_IN_PRODUCT = 0;
+  // Email will be sent to the specified user.
+  ADHERENCE_RULE_NOTIFICATION_MEDIUM_EMAIL = 1;
+}
+
+// Represents a configuration for adherence rule notifications.
+message AdherenceRuleNotificationConfig {
+  // ID of the notification config.
+  int64 adherence_rule_notification_config_id = 1 [jstype = JS_STRING];
+  // Name of the notification config.
+  string name = 2;
+}
+
+// Represents a user entry for a notification.
+message AdherenceRuleNotificationConfigEntry {
+  // ID of the notification config entry.
+  int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
+  // ID of the notification config that this entry belongs to.
+  int64 adherence_rule_notification_config_id = 2 [jstype = JS_STRING];
+  // ID of the user ID that will receive this notification.
+  string recipient_user_id = 3;
+  // Medium to be used for deliving the notification.
+  AdherenceRuleNotificationMedium notification_medium = 4;
+  // Number of seconds to wait to trigger this notification entry after the rule that uses this config was violated.
+  int32 seconds_to_wait_for_no_response = 5;
+}
+
+// Types of requirements for adherence rules.
+enum AdherenceRuleRequirementType {
+  // Rule is not used.
+  ADHERENCE_RULE_REQUIREMENT_TYPE_NOT_USED = 0;
+  // Rule is optional.
+  ADHERENCE_RULE_REQUIREMENT_TYPE_OPTIONAL = 1;
+  // Rule is mandatory.
+  ADHERENCE_RULE_REQUIREMENT_TYPE_MANDATORY = 2;
+}
+
+// Types of ranges that an adherence rule can cover.
+enum AdherenceRuleRange {
+  // Range starts at the beggining of each day.
+  ADHERENCE_RULE_RANGE_START_OF_DAY = 0;
+  // Range starts at the beggining of each week.
+  ADHERENCE_RULE_RANGE_START_OF_WEEK = 1;
+  // Range starts at the beggining of each month.
+  ADHERENCE_RULE_RANGE_START_OF_MONTH = 2;
+  // Range starts from the current time to the end of the day.
+  ADHERENCE_RULE_RANGE_REST_OF_DAY = 3;
+  // Custom range, if set the @custom_range field on the rule itself must be set.
+  ADHERENCE_RULE_RANGE_CUSTOM_DATE_RANGE = 4;
+}
+
+// Types of departmental rule actions.
+enum AdherenceDepartmentalRuleActionType {
+  // Number of calls answered.
+  ADHERENCE_DEPARTMENTAL_RULE_ACTION_TYPE_CALLS_ANSWERED = 0;
+}
+
+// Represents a departmental rule action.
+message AdherenceDepartmentalRuleAction {
+  // Type of ths action.
+  AdherenceDepartmentalRuleActionType action_type = 1;
+}
+
+// Conditions compared when evaluating adherence rules.
+enum AdherenceRuleCondition {
+  // Left operand is greater than right.
+  ADHERENCE_RULE_CONDITION_GREATER_THAN = 0;
+  // Left operand is greater than or equal to right.
+  ADHERENCE_RULE_CONDITION_GREATER_THAN_EQUAL = 1;
+  // Left operand is less than right.
+  ADHERENCE_RULE_CONDITION_LESS_THAN = 2;
+  // Left operand is less than or equal to right.
+  ADHERENCE_RULE_CONDITION_LESS_THAN_EQUAL = 3;
+}
+
+// Units supported in adherence rule condition evaluations.
+enum AdherenceRuleUnit {
+  // Represents number of seconds.
+  ADHERENCE_RULE_UNIT_SECONDS = 0;
+  // Represents number of minutes.
+  ADHERENCE_RULE_UNIT_MINUTES = 1;
+  // Represents number of calls.
+  ADHERENCE_RULE_UNIT_CALLS = 2;
+  // Represents a percentage.
+  ADHERENCE_RULE_UNIT_PERCENTAGE = 3;
+}
+
+// Represents an adherence departmental rule.
+message AdherenceDepartmentalRule {
+  // ID of this departmental rule.
+  int64 adherence_departmental_rule_id = 1 [jstype = JS_STRING];
+  // Name of this departmental rule.
+  string name = 2;
+  // Config entity that the rule applies to, supported ones are:
+  // CALL_CENTER_NODE, CLIENT_NODE, LOCATION_NODE, PROGRAM_NODE, SHIFT_TEMPLATE, AGENT_GROUP.
+  ConfigEntity selected_entity = 3;
+  // Specifies the requirement type of this rule.
+  AdherenceRuleRequirementType rule_requirement_type = 4;
+  // ID of the notification config that this rule will use/follow.
+  int64 adherence_rule_notification_config_id = 5 [jstype = JS_STRING];
+  // Range that this rule will be applied at.
+  AdherenceRuleRange rule_range = 6;
+  // Custom date range to apply the rule, must only be set when @rule_range is CUSTOM_DATE_RANGE.
+  DatetimeRange custom_range = 7;
+}
+
+// Represents an adherence departmental rule clause.
+message AdherenceDepartmentalRuleClause {
+  // ID of this departmental rule clause.
+  int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
+  // ID of the departmental rule that this clause belongs to.
+  int64 adherence_departmental_rule_id = 2 [jstype = JS_STRING];
+  // Action that this departmental rule clause evaluates.
+  AdherenceDepartmentalRuleAction action = 3;
+  // Condition that will be evaluated between the @action and the @amount.
+  AdherenceRuleCondition condition = 4;
+  // Amount to evaluate.
+  int32 amount = 5;
+  // Unit that the @amount is on.
+  AdherenceRuleUnit unit = 6;
+  // Optional amount to evaluate e.g:
+  // drops below <80%> calls answered in <10> seconds will be - amount: 80, unit: percentage, per_amount: 10, per_unit: seconds.
+  google.protobuf.Int32Value per_amount = 7;
+  // Unit that the @per_amount is on, only used when the @per_amount is set.
+  AdherenceRuleUnit per_unit = 8;
+}
+
+// Represents an adherence agent rule.
+message AdherenceAgentRule {
+  // ID of this agent rule.
+  int64 adherence_agent_rule_id = 1 [jstype = JS_STRING];
+  // Name of this agent rule.
+  string name = 2;
+  // Config entity that the rule applies to, supported ones are:
+  // CALL_CENTER_NODE, CLIENT_NODE, LOCATION_NODE, PROGRAM_NODE, AGENT_GROUP, WFM_AGENT, SHIFT_TEMPLATE.
+  ConfigEntity selected_entity = 3;
+  // Specifies the requirement type of this rule.
+  AdherenceRuleRequirementType rule_requirement_type = 4;
+  // ID of the notification config that this rule will use/follow.
+  int64 adherence_rule_notification_config_id = 5 [jstype = JS_STRING];
+}
+
+// Types of agent rule actions.
+enum AdherenceAgentRuleActionType {
+  // Action type for the agent state of wrap up.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_WRAP_UP = 0;
+  // Action type for the agent state of waiting.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_WAITING = 1;
+  // Action type for the agent state of manual dial.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_MANUAL_DIAL = 2;
+  // Action type for the agent state of preview dial.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_PREVIEW_DIAL = 3;
+  // Action type for answering calls.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_ANSWER_CALLS = 4;
+  // Action type for the agent state of on call.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_ON_CALL = 5;
+  // Action type for the agent state of on hold.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_ON_HOLD = 6;
+  // Action type for the agent state of start of shift.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_SHIFT_START = 7;
+  // Action type for starting a shift late.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_SHIFT_START_LATE = 8;
+  // Action type for ending a shift early.
+  ADHERENCE_AGENT_RULE_ACTION_TYPE_SHIFT_END_EARLY = 9;
+}
+
+// Represents a agent rule action.
+message AdherenceAgentRuleAction {
+  // Type of ths action.
+  AdherenceAgentRuleActionType action_type = 1;
+}
+
+// Represents an adherence agent rule clause.
+message AdherenceAgentRuleClause {
+  // ID of this agent rule clause.
+  int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
+  // ID of the agent rule that this clause belongs to.
+  int64 adherence_agent_rule_id = 2 [jstype = JS_STRING];
+  // Action that this agent rule clause evaluates.
+  AdherenceAgentRuleAction action = 3;
+  // Condition that will be evaluated between the @action and the @amount.
+  AdherenceRuleCondition condition = 4;
+  // Amount to evaluate.
+  int32 amount = 5;
+  // Unit that the @amount is on.
+  AdherenceRuleUnit unit = 6;
 }
