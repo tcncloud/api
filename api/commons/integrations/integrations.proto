@@ -984,6 +984,13 @@ message ExecuteFlow {
 
     ExecuteSutherlandrevPaymentConnect sutherlandrev_payment_connect = 4201;
 
+    ExecuteFinviExileQueryRecords finvi_exile_query_records = 4301;
+    ExecuteFinviExileReadFields finvi_exile_read_fields = 4302;
+    ExecuteFinviExileWriteFields finvi_exile_write_fields = 4303;
+    ExecuteFinviExileExecuteLogic finvi_exile_execute_logic = 4304;
+    ExecuteFinviExileCreatePayment finvi_exile_create_payment = 4305;
+    ExecuteFinviExilePopAccount finvi_exile_pop_account = 4306;
+
     ExecuteNavigaDTICircCreatePayment naviga_dti_circ_create_payment = 4401;
     ExecuteNavigaDTICircChangeBilling naviga_dti_circ_change_billing = 4402;
 
@@ -1378,6 +1385,13 @@ message ExecuteSutherlandrevPaymentConnect {}
 
 message ExecuteDebugEcho {}
 message ExecuteDebugValidate {}
+
+message ExecuteFinviExileQueryRecords {}
+message ExecuteFinviExileReadFields {}
+message ExecuteFinviExileWriteFields {}
+message ExecuteFinviExileExecuteLogic {}
+message ExecuteFinviExileCreatePayment {}
+message ExecuteFinviExilePopAccount {}
 
 message ExecuteSwervepayCreateCustomer {}
 message ExecuteSwervepayQueryCustomerDetails {}
