@@ -4,6 +4,10 @@ package services.org.hunt_groups.v1alpha1;
 
 import "api/commons/org/huntgroup.proto";
 
+//
+// Exile Link
+//
+
 // ExileLink defines a link between a hunt group and the exile service.
 message ExileLink {
   // The sid or the unique ID of the exile link stored in the database.
@@ -73,3 +77,183 @@ message UpdateHuntGroupExileLinksRequest {
 
 // UpdateHuntGroupExileLinksResponse is the response message for the UpdateHuntGroupExileLinks RPC method.
 message UpdateHuntGroupExileLinksResponse {}
+
+//
+// Agent Triggers
+//
+
+// AgentTrigger is the entity for a hunt group agent trigger.
+message AgentTrigger {
+  // The sid of the agent trigger
+  int64 agent_trigger_sid = 1;
+  // The description of the agent trigger
+  string description = 2;
+  // The agent status option to use for the trigger
+  AgentStatusOption agent_status_option = 3;
+  // The action option to use for the trigger
+  TriggerActionOption trigger_action_option = 4;
+}
+
+// AgentStatusOption is the status option to use for the trigger
+message AgentStatusOption {
+  // The status of the agent on which the trigger is based
+  AgentStatus agent_status = 1;
+  // The duration of the trigger (in seconds)
+  // Used for agent status: all but Logged In
+  int64 duration = 2;
+  // The pause code to use for the trigger
+  // Use pause code only if either system_pause_code or custom_pause_code is set
+  // Used for agent status: Paused
+  TriggerPauseCode pause_code = 3;
+  // The call types to use for the trigger
+  // Used for agent status: On Call, Wrap Up
+  TriggerCallTypes call_types = 4;
+  // Whether to use the scheduled callback for the trigger
+  // Used for agent status: Manual Dial Call
+  bool scheduled_callback_present = 5;
+}
+
+// AgentStatus is the status of the agent on which the trigger is based
+enum AgentStatus {
+  // 0 explicitly means unspecified or invalid.
+  AGENT_STATUS_UNSPECIFIED = 0;
+  // The status for when the agent is logged in
+  AGENT_STATUS_LOGGED_IN = 1;
+  // The status for when the agent is waiting
+  AGENT_STATUS_WAITING = 2;
+  // The status for when the agent is paused
+  AGENT_STATUS_PAUSED = 3;
+  // The status for when the agent is on call
+  AGENT_STATUS_ON_CALL = 4;
+  // The status for when the agent is on a transfer call
+  AGENT_STATUS_TRANSFER_CALL = 5;
+  // The status for when the agent is on a transfer call and the transfer is lost
+  AGENT_STATUS_TRANSFER_LOST = 6;
+  // The status for when the agent is on a transfer call and the transfer target is lost
+  AGENT_STATUS_TRANSFER_TARGET_LOST = 7;
+  // The status for when the agent is on a preview call
+  AGENT_STATUS_PREVIEW_CALL = 8;
+  // The status for when the agent is on a manual dial call
+  AGENT_STATUS_MANUAL_DIAL_CALL = 9;
+  // The status for when the agent is wrapping up the call
+  AGENT_STATUS_WRAP_UP = 10;
+}
+
+// TriggerPauseCode is the pause code to use for the trigger
+message TriggerPauseCode {
+  oneof pause_code {
+    // The system pause code to use for the trigger
+    SystemPauseCode system_pause_code = 1;
+    // The custom pause code to use for the trigger
+    // It is name of a pause code from a pause code set
+    string custom_pause_code = 2;
+  }
+}
+
+// SystemPauseCode controls if a system Pause code is being used
+enum SystemPauseCode {
+  // 0 explicitly means unspecified or invalid.
+  SYSTEM_PAUSE_CODE_UNSPECIFIED = 0;
+  // The code for when the agent triggers the advance to paused action
+  SYSTEM_PAUSE_CODE_AGENT_TRIGGER_ADVANCE_TO_PAUSED = 1;
+  // The code for when the agent triggers the change password action
+  SYSTEM_PAUSE_CODE_CHANGE_PASSWORD = 2;
+  // The code for when the agent triggers the check voice mail action
+  SYSTEM_PAUSE_CODE_CHECK_VOICE_MAIL = 3;
+  // The code for when the agent triggers manually approve calls action
+  SYSTEM_PAUSE_CODE_MANUALLY_APPROVE_CALLS = 4;
+}
+
+// TriggerCallTypes is the call types to use for the trigger
+message TriggerCallTypes {
+  // The call type for outbound calls
+  bool outbound = 1;
+  // The call type for inbound calls
+  bool inbound = 2;
+  // The call type for internal calls
+  bool manual = 3;
+  // The call type for preview calls
+  bool preview = 4;
+}
+
+message TriggerActionOption {
+  // The action to take when the trigger is activated
+  TriggerAction action = 1;
+  // The message to be displayed when the trigger is activated
+  // Used for action: Display Message
+  string display_message = 2;
+  // The status to advance to when the trigger is activated
+  // Used for action: Advance Status
+  // Following are the valid status transitions:
+  // Waiting -> Paused
+  // Paused -> Waiting
+  // On Call -> Wrap Up
+  // Preview Call -> On Call, Waiting
+  // Manual Dial Call -> Waiting
+  // Wrap Up -> Waiting, Paused
+  AgentStatus advance_to_status = 3;
+  // The sid of the web link to execute when the trigger is activated
+  // Used for action: Execute Web Link
+  int64 web_link_sid = 4;
+  // The sid of the integration link to execute when the trigger is activated
+  // Used for action: Execute Integration Link
+  int64 integration_link_sid = 5;
+  // The sid of the exile link to execute when the trigger is activated
+  // Used for action: Execute Exile Link
+  int64 exile_link_sid = 6;
+}
+
+// TriggerAction is the action to take when the trigger is activated
+enum TriggerAction {
+  // 0 explicitly means unspecified or invalid.
+  TRIGGER_ACTION_UNSPECIFIED = 0;
+  // The action to advance the agent to a status
+  // Used for agent status: all but Logged In and all Transfer statuses
+  TRIGGER_ACTION_ADVANCE_TO_STATUS = 1;
+  // The action to display a message
+  TRIGGER_ACTION_DISPLAY_MESSAGE = 2;
+  // The action to eject the agent
+  TRIGGER_ACTION_EJECT_AGENT = 3;
+  // The action to execute a web link
+  TRIGGER_ACTION_EXECUTE_WEB_LINK = 4;
+  // The action to execute an integration link
+  TRIGGER_ACTION_EXECUTE_INTEGRATION_LINK = 5;
+  // The action to execute an exile link
+  TRIGGER_ACTION_EXECUTE_EXILE_LINK = 6;
+}
+
+// ListHuntGroupAgentTriggersRequest is the request message for the ListHuntGroupAgentTriggers rpc.
+message ListHuntGroupAgentTriggersRequest {
+  // The sid of the hunt group to list the triggers for
+  int64 hunt_group_sid = 1;
+}
+
+// ListHuntGroupAgentTriggersResponse is the response message for the ListHuntGroupAgentTriggers rpc.
+message ListHuntGroupAgentTriggersResponse {
+  // The list of agent triggers for the hunt group
+  repeated AgentTrigger agent_triggers = 1;
+}
+
+// CopyHuntGroupAgentTriggerRequest is the request message for the CopyHuntGroupAgentTrigger rpc.
+message CopyHuntGroupAgentTriggerRequest {
+  // The sid of the hunt group from which the trigger is copied
+  int64 from_hunt_group_sid = 1;
+  // The sid of the hunt group to which the trigger is copied
+  int64 to_hunt_group_sid = 2;
+  // The agent trigger to copy
+  AgentTrigger agent_trigger = 3;
+}
+
+// CopyHuntGroupAgentTriggerResponse is the response message for the CopyHuntGroupAgentTrigger rpc.
+message CopyHuntGroupAgentTriggerResponse {}
+
+// UpdateHuntGroupAgentTriggersRequest is the request message for the UpdateHuntGroupAgentTriggers rpc.
+message UpdateHuntGroupAgentTriggersRequest {
+  // The sid of the hunt group to update the trigger for
+  int64 hunt_group_sid = 1;
+  // The list of agent triggers to update
+  repeated AgentTrigger agent_triggers = 2;
+}
+
+// UpdateHuntGroupAgentTriggersResponse is the response message for the UpdateHuntGroupAgentTriggers rpc.
+message UpdateHuntGroupAgentTriggersResponse {}

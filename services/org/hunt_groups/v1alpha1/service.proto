@@ -6,8 +6,12 @@ import "annotations/authz.proto";
 import "google/api/annotations.proto";
 import "services/org/hunt_groups/v1alpha1/entities.proto";
 
-// HuntGroupsService
+// HuntGroupsService is the service for managing hunt groups and their related entities.
 service HuntGroupsService {
+  //
+  // Exile Link
+  //
+
   // ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
   rpc ListHuntGroupExileLinks(ListHuntGroupExileLinksRequest) returns (ListHuntGroupExileLinksResponse) {
     option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listhuntgroupexilelinks";
@@ -42,6 +46,49 @@ service HuntGroupsService {
   // delete any exile links that are not in the request.
   rpc UpdateHuntGroupExileLinks(UpdateHuntGroupExileLinksRequest) returns (UpdateHuntGroupExileLinksResponse) {
     option (google.api.http).post = "/services/org/huntgroups/v1alpha1/updatehuntgroupexilelinks";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  //
+  // Agent Triggers
+  //
+
+  // ListHuntGroupAgentTriggers returns a list of agent triggers for the given hunt group.
+  rpc ListHuntGroupAgentTriggers(ListHuntGroupAgentTriggersRequest) returns (ListHuntGroupAgentTriggersResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listhuntgroupagenttriggers";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ]
+    };
+  }
+
+  // CopyHuntGroupAgentTrigger copys an agent trigger to the given hunt group in the same org.
+  rpc CopyHuntGroupAgentTrigger(CopyHuntGroupAgentTriggerRequest) returns (CopyHuntGroupAgentTriggerResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/copyhuntgroupagenttrigger";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
+  rpc UpdateHuntGroupAgentTriggers(UpdateHuntGroupAgentTriggersRequest) returns (UpdateHuntGroupAgentTriggersResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/updatehuntgroupagenttriggers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [

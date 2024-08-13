@@ -437,19 +437,25 @@ message UpdateHuntGroupIntegrationLinksRequest {
 message UpdateHuntGroupIntegrationLinksResponse {}
 
 // ListAgentTriggersRequest is the request message for the ListAgentTriggers RPC method.
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggersRequest instead
 message ListAgentTriggersRequest {
+  option deprecated = true;
   // The sid of the hunt group to get the triggers for
   int64 hunt_group_sid = 1;
 }
 
 // ListAgentTriggersResponse is the response message for the ListAgentTriggers RPC method.
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggersResponse instead
 message ListAgentTriggersResponse {
+  option deprecated = true;
   // The list of agent triggers for the hunt group
   repeated api.commons.org.AgentTrigger agent_triggers = 1;
 }
 
 // CopyAgentTriggerRequest is the request message for the CopyAgentTrigger RPC method.
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTriggerRequest instead
 message CopyAgentTriggerRequest {
+  option deprecated = true;
   // The sid of the hunt group from which the trigger is copied
   int64 from_hunt_group_sid = 1;
   // The sid of the hunt group to which the trigger is copied
@@ -459,10 +465,15 @@ message CopyAgentTriggerRequest {
 }
 
 // CopyAgentTriggerResponse is the response message for the CopyAgentTrigger RPC method.
-message CopyAgentTriggerResponse {}
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTriggerResponse instead
+message CopyAgentTriggerResponse {
+  option deprecated = true;
+}
 
 // UpdateAgentTriggersRequest is the request message for the UpdateAgentTriggers RPC method.
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggersRequest instead
 message UpdateAgentTriggersRequest {
+  option deprecated = true;
   // The sid of the hunt group to update the trigger for
   int64 hunt_group_sid = 1;
   // The list of agent triggers to update
@@ -470,7 +481,10 @@ message UpdateAgentTriggersRequest {
 }
 
 // UpdateAgentTriggersResponse is the response message for the UpdateAgentTriggers RPC method.
-message UpdateAgentTriggersResponse {}
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggersResponse instead
+message UpdateAgentTriggersResponse {
+  option deprecated = true;
+}
 
 // The request message for ListHuntGroupScript
 message ListHuntGroupScriptsRequest {}

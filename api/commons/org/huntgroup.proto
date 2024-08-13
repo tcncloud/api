@@ -1115,7 +1115,9 @@ enum ParameterSourceType {
 }
 
 // AgentTrigger is the entity for agent triggers.
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.AgentTrigger instead
 message AgentTrigger {
+  option deprecated = true;
   // The sid of the agent trigger
   int64 agent_trigger_sid = 1;
   // The description of the agent trigger
@@ -1126,7 +1128,9 @@ message AgentTrigger {
   TriggerActionOption trigger_action_option = 4;
 }
 
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.AgentStatusOption instead
 message AgentStatusOption {
+  option deprecated = true;
   // The status of the agent on which the trigger is based
   AgentStatus agent_status = 1;
   // The duration of the trigger (in seconds)
@@ -1145,7 +1149,9 @@ message AgentStatusOption {
 }
 
 // AgentStatus is the status of the agent on which the trigger is based
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.AgentStatus instead
 enum AgentStatus {
+  option deprecated = true;
   // 0 explicitly means unspecified or invalid.
   AGENT_STATUS_UNSPECIFIED = 0;
   // The status for when the agent is logged in
@@ -1171,7 +1177,9 @@ enum AgentStatus {
 }
 
 // TriggerPauseCode is the pause code to use for the trigger
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.TriggerPauseCode instead
 message TriggerPauseCode {
+  option deprecated = true;
   oneof pause_code {
     // The system pause code to use for the trigger
     SystemPauseCode system_pause_code = 1;
@@ -1182,7 +1190,9 @@ message TriggerPauseCode {
 }
 
 // SystemPauseCode controls if a system Pause code is being used
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.SystemPauseCode instead
 enum SystemPauseCode {
+  option deprecated = true;
   // 0 explicitly means unspecified or invalid.
   SYSTEM_PAUSE_CODE_UNSPECIFIED = 0;
   // The code for when the agent triggers the advance to paused action
@@ -1196,7 +1206,9 @@ enum SystemPauseCode {
 }
 
 // TriggerCallTypes is the call types to use for the trigger
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.TriggerCallTypes instead
 message TriggerCallTypes {
+  option deprecated = true;
   // The call type for outbound calls
   bool outbound = 1;
   // The call type for inbound calls
@@ -1207,7 +1219,9 @@ message TriggerCallTypes {
   bool preview = 4;
 }
 
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.TriggerActionOption instead
 message TriggerActionOption {
+  option deprecated = true;
   // The action to take when the trigger is activated
   TriggerAction action = 1;
   // The message to be displayed when the trigger is activated
@@ -1232,7 +1246,9 @@ message TriggerActionOption {
 }
 
 // TriggerAction is the action to take when the trigger is activated
+// DEPRECATED: Use services.org.hunt_groups.v1alpha1.TriggerAction instead
 enum TriggerAction {
+  option deprecated = true;
   // 0 explicitly means unspecified or invalid.
   TRIGGER_ACTION_UNSPECIFIED = 0;
   // The action to advance the agent to a status
