@@ -8,4 +8,7 @@ message CountryCodePrefix {
   // The list of prefixes (if any) to match after successfully
   // matching the country code.
   repeated string prefixes = 2;
+  // The id of the matching rule.
+  string matching_rule_id = 3;
+  string name = 4;
 }

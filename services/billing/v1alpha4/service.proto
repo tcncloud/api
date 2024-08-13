@@ -35,6 +35,27 @@ service BillingService {
     };
   }
 
+  // Clones a billing plan
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CloneBillingPlan(CloneBillingPlanRequest) returns (CloneBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/clonebillingplan";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
   // Creates a new billing plan.
   // Required permissions:
   //   CUSTOMER_SUPPORT
@@ -153,6 +174,31 @@ service BillingService {
   //   - grpc.Unavailable: The operation is currently unavailable.
   rpc ApplyDefaultBillingPlanDraft(ApplyDefaultBillingPlanDraftRequest) returns (ApplyDefaultBillingPlanDraftResponse) {
     option (google.api.http).post = "/services/billing/v1alpha4/applydefaultbillingplandraft";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [
+            PERMISSION_CUSTOMER_SUPPORT,
+            PERMISSION_TCN_BILLING_ADMIN
+          ]
+        }
+      ]
+    };
+  }
+
+  // Clones a default billing plan.
+  // Required permissions:
+  //   CUSTOMER_SUPPORT
+  //   TCN_BILLING_ADMIN
+  // Errors:
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.NotFound: The billing plan was not found.
+  //   - grpc.PermissionDenied: The caller does not have the required permissions.
+  //   - grpc.Unavailable: The operation is currently unavailable.
+  rpc CloneDefaultBillingPlan(CloneDefaultBillingPlanRequest) returns (CloneDefaultBillingPlanResponse) {
+    option (google.api.http).post = "/services/billing/v1alpha4/clonedefaultbillingplan";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
