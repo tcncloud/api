@@ -38,6 +38,13 @@ enum FailType {
   FAIL_SCORECARD = 2; // fail the entire scorecard
 }
 
+// QuestionFocus defines the focus of a smart question (AKA 'about').
+enum QuestionFocus {
+  QUESTION_FOCUS_UNSPECIFIED = 0; // No question focus/about specified.
+  QUESTION_FOCUS_AGENT = 1; // Question is about the Agent(s).
+  QUESTION_FOCUS_CUSTOMER = 2; // Question is about the Customer.
+}
+
 // ScorecardState is state of the scorecard, which
 // determines if, or how, it can be used.
 enum ScorecardState {
@@ -237,6 +244,7 @@ message Question {
   string question = 4; // the question to display
   string description = 5; // extra info or context for the question
   repeated api.commons.Category categories = 6; // the categories associated with the question
+  QuestionFocus focus = 7; // which party the question is about
 }
 
 // ScorecardQuestion represents a question inside of a scorecard.
