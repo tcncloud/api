@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.explorer;
 
+import "annotations/authz.proto";
 import "api/v1alpha1/explorer/entities.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -12,11 +13,13 @@ service ExplorerService {
   rpc ListDatasourceSchemas(ListDatasourceSchemasRequest) returns (ListDatasourceSchemasResponse) {
     option (google.api.http).post = "/api/v1alpha1/explorer/explorer/listdatasourceschemas";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
   // Query queries a datasource.
   rpc Query(QueryRequest) returns (QueryResponse) {
     option (google.api.http).post = "/api/v1alpha1/explorer/explorer/query";
     option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
   }
 }
 
