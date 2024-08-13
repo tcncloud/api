@@ -2046,7 +2046,9 @@ service Org {
   }
 
   // ListAgentTriggers returns a list of agent triggers for the given hunt group.
+  // DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggers instead
   rpc ListAgentTriggers(ListAgentTriggersRequest) returns (ListAgentTriggersResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/listagenttriggers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2059,7 +2061,9 @@ service Org {
   }
 
   // CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+  // DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTrigger instead
   rpc CopyAgentTrigger(CopyAgentTriggerRequest) returns (CopyAgentTriggerResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/copyagenttrigger";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -2072,7 +2076,9 @@ service Org {
   }
 
   // UpdateAgentTriggers updates all agent triggers for the given hunt group.
+  // DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggers instead
   rpc UpdateAgentTriggers(UpdateAgentTriggersRequest) returns (UpdateAgentTriggersResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/api/v1alpha1/org/huntgroup/updateagenttriggers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
