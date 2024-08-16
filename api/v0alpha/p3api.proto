@@ -994,6 +994,15 @@ service P3Api {
         {permissions: PERMISSION_OMNI_BOSS}]
     };
   }
+
+  rpc GetMailMerge(GetMailMergeReq) returns (GetMailMergeRes) {
+    option (google.api.http).post = "/api/v0alpha/p3api/getmailmerge";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_AGENT}]
+    };
+  }
 }
 
 message GetAgentHuntGroupReq {
@@ -2981,4 +2990,24 @@ message ListSmsNumbersReq {}
 message ListSmsNumbersRes {
   // list of sms numbers
   repeated api.commons.SmsNumber sms_numbers = 1;
+}
+
+message GetMailMergeReq {
+  int64 client_sid = 1;
+  int64 agent_sid = 2;
+  MailMergeData data = 3;
+  int64 hunt_group_sid = 4;
+}
+
+message GetMailMergeRes {
+  map<string, string> agent_info = 1;
+  map<string, string> custom_data = 2;
+  map<string, string> data_collect = 3;
+  map<string, string> data_dip = 4;
+  map<string, string> ivr = 5;
+  map<string, string> scheduled_call = 6;
+  map<string, string> tts = 7;
+  map<string, string> zip_phone_metadata = 8;
+  map<string, string> journey_retrieved_data = 9;
+  map<string, string> integration_data = 10;
 }
