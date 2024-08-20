@@ -20,12 +20,14 @@ message ListProjectsRequest {
   // the parent of the listed projects
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference).child_type = "projects.omni.tcnapi.com/Project"
+    (google.api.resource_reference).child_type = "tcnapi.omni.projects.v1/Project"
   ];
   // returned page
   int32 page_size = 2 [(google.api.field_behavior) = OPTIONAL];
   // used to specify the page token
   string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+  // used to specify the filter
+  string filter = 4 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // response used listing all projects
@@ -41,7 +43,7 @@ message GetProjectRequest {
   // the name of the project
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference).type = "projects.omni.tcnapi.com/Project"
+    (google.api.resource_reference).type = "tcnapi.omni.projects.v1/Project"
   ];
 }
 
@@ -50,7 +52,7 @@ message CreateProjectRequest {
   // the parent of the project
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference).child_type = "projects.omni.tcnapi.com/Project"
+    (google.api.resource_reference).child_type = "tcnapi.omni.projects.v1/Project"
   ];
 
   // the project to be created
@@ -70,6 +72,6 @@ message DeleteProjectRequest {
   // the name of the project
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference).type = "projects.omni.tcnapi.com/Project"
+    (google.api.resource_reference).type = "tcnapi.omni.projects.v1/Project"
   ];
 }
