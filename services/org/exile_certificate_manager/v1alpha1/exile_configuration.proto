@@ -22,7 +22,10 @@ message CreateExileConfigurationRequest {
 // CreateExileConfigurationResponse is the response to creating a exile configuration
 message CreateExileConfigurationResponse {
   // The id of the exile configuration that was created.
-  string exile_configuration_id = 1;
+  // DEPRECATED: Use exile_configuration instead.
+  string exile_configuration_id = 1 [deprecated = true];
+  // The newly created exile configuration.
+  ExileConfiguration exile_configuration = 2;
 }
 
 // UpdateExileConfigurationRequest is the request to update a exile configuration
