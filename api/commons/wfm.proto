@@ -863,8 +863,10 @@ enum SchedulingActivityClassification {
   STANDARD_SCHEDULING_ACTIVITY = 0;
   // This wraps the On Call Skill Activity.
   ON_CALL_ACTIVITY = 1;
-  // The wraps the Time Off Non Skill Activity.
+  // This wraps the Time Off Non Skill Activity.
   TIME_OFF_ACTIVITY = 2;
+  // This wraps a Meeting Non Skill Activity
+  MEETING_ACTIVITY = 3;
 }
 
 // ID and type of a config entity.
