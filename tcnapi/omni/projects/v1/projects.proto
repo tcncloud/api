@@ -13,8 +13,8 @@ option java_package = "com.tcnapi.omni.projects.v1";
 // Project -
 message Project {
   option (google.api.resource) = {
-    type: "projects.omni.tcnapi.com/Project"
-    pattern: "org/{org}/region/{region}/projects/{project}"
+    type: "tcnapi.omni.projects.v1/Project"
+    pattern: "regions/{region}/orgs/{org}/projects/{project}"
     plural: "projects"
     singular: "project"
   };

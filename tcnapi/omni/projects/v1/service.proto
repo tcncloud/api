@@ -17,7 +17,7 @@ service Projects {
   // Method to list projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.method_signature) = "parent";
-    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"};
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{parent=regions/*/orgs/*}/projects"};
     option (annotations.authz) = {
       sets: [
         {
@@ -30,7 +30,7 @@ service Projects {
   // Method to get a rpoject
   rpc GetProject(GetProjectRequest) returns (Project) {
     option (google.api.method_signature) = "name";
-    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"};
+    option (google.api.http) = {get: "/tcnapi/omni/projects/v1/{name=regions/*/orgs/*/projects/*}"};
     option (annotations.authz) = {
       sets: [
         {
@@ -44,7 +44,7 @@ service Projects {
   rpc CreateProject(CreateProjectRequest) returns (Project) {
     option (google.api.method_signature) = "parent,project";
     option (google.api.http) = {
-      post: "/tcnapi/omni/projects/v1/{parent=org/*/region/*}/projects"
+      post: "/tcnapi/omni/projects/v1/{parent=regions/*/orgs/*}/projects"
       body: "project"
     };
     option (annotations.authz) = {
@@ -60,7 +60,7 @@ service Projects {
   rpc UpdateProject(UpdateProjectRequest) returns (Project) {
     option (google.api.method_signature) = "project,update_mask";
     option (google.api.http) = {
-      patch: "/tcnapi/omni/projects/v1/{project.name=org/*/region/*/projects/*}"
+      patch: "/tcnapi/omni/projects/v1/{project.name=regions/*/orgs/*/projects/*}"
       body: "project"
     };
     option (annotations.authz) = {
@@ -75,7 +75,7 @@ service Projects {
   // Method to delete a project
   rpc DeleteProject(DeleteProjectRequest) returns (Project) {
     option (google.api.method_signature) = "name";
-    option (google.api.http) = {delete: "/tcnapi/omni/projects/v1/{name=org/*/region/*/projects/*}"};
+    option (google.api.http) = {delete: "/tcnapi/omni/projects/v1/{name=regions/*/orgs/*/projects/*}"};
     option (annotations.authz) = {
       sets: [
         {
