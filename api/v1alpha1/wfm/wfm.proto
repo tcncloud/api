@@ -200,7 +200,7 @@ service WFM {
     };
   }
 
-  // Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+  // Gets the state of the cache for the org sending the request, and if the cache's state is not_loaded, or loading_failed,
   // it will start the loading task before returning the current state.
   // DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
   // Errors:
@@ -3582,6 +3582,141 @@ service WFM {
   //  - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
   rpc DeleteRgbaColor(DeleteRgbaColorRequest) returns (DeleteRgbaColorResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/deletergbacolor";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence @notification_config for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @notification_config are invalid.
+  //   - grpc.Internal: error occurs when creating the given @notification_config.
+  rpc CreateAdherenceRuleNotificationConfig(CreateAdherenceRuleNotificationConfigRequest) returns (CreateAdherenceRuleNotificationConfigResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherencerulenotificationconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence @notification_config_entry for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @notification_config_entry are invalid.
+  //   - grpc.Internal: error occurs when creating the given @notification_config_entry.
+  //   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
+  rpc CreateAdherenceRuleNotificationConfigEntry(CreateAdherenceRuleNotificationConfigEntryRequest) returns (CreateAdherenceRuleNotificationConfigEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherencerulenotificationconfigentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence departmental @rule for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @rule are invalid.
+  //   - grpc.Internal: error occurs when creating the given @rule.
+  rpc CreateAdherenceDepartmentalRule(CreateAdherenceDepartmentalRuleRequest) returns (CreateAdherenceDepartmentalRuleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherencedepartmentalrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence departmental rule @clause for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @clause are invalid.
+  //   - grpc.Internal: error occurs when creating the given @clause.
+  //   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
+  rpc CreateAdherenceDepartmentalRuleClause(CreateAdherenceDepartmentalRuleClauseRequest) returns (CreateAdherenceDepartmentalRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherencedepartmentalruleclause";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence agent @rule for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @rule are invalid.
+  //   - grpc.Internal: error occurs when creating the given @rule.
+  rpc CreateAdherenceAgentRule(CreateAdherenceAgentRuleRequest) returns (CreateAdherenceAgentRuleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherenceagentrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Creates the given adherence agent rule @clause for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @clause are invalid.
+  //   - grpc.Internal: error occurs when creating the given @clause.
+  //   - grpc.NotFound: agent rule with the @agent_rule_sid does not exist.
+  rpc CreateAdherenceAgentRuleClause(CreateAdherenceAgentRuleClauseRequest) returns (CreateAdherenceAgentRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createadherenceagentruleclause";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7601,3 +7736,75 @@ message DeleteRgbaColorRequest {
 
 // Request message for DeleteRgbaColor.
 message DeleteRgbaColorResponse {}
+
+// Request message for CreateAdherenceRuleNotificationConfig.
+message CreateAdherenceRuleNotificationConfigRequest {
+  // Notification config to create for the org sending the request.
+  api.commons.AdherenceRuleNotificationConfig notification_config = 1;
+}
+
+// Response message for CreateAdherenceRuleNotificationConfig.
+message CreateAdherenceRuleNotificationConfigResponse {
+  // ID of the created notification config.
+  int64 adherence_rule_notification_config_id = 1;
+}
+
+// Request message for CreateAdherenceRuleNotificationConfigEntry.
+message CreateAdherenceRuleNotificationConfigEntryRequest {
+  // Notification config entry to create for the org sending the request.
+  api.commons.AdherenceRuleNotificationConfigEntry notification_config_entry = 1;
+}
+
+// Response message for CreateAdherenceRuleNotificationConfigEntry.
+message CreateAdherenceRuleNotificationConfigEntryResponse {
+  // ID of the created notification config entry.
+  int64 adherence_rule_notification_config_entry_id = 1;
+}
+
+// Request message for CreateAdherenceDepartmentalRule.
+message CreateAdherenceDepartmentalRuleRequest {
+  // Departmental rule to create for the org sending the request.
+  api.commons.AdherenceDepartmentalRule rule = 1;
+}
+
+// Response message for CreateAdherenceDepartmentalRule.
+message CreateAdherenceDepartmentalRuleResponse {
+  // ID of the created departmental rule.
+  int64 adherence_departmental_rule_id = 1;
+}
+
+// Request message for CreateAdherenceDepartmentalRuleClause.
+message CreateAdherenceDepartmentalRuleClauseRequest {
+  // Departmental rule clause to create for the org sending the request.
+  api.commons.AdherenceDepartmentalRuleClause clause = 1;
+}
+
+// Response message for CreateAdherenceDepartmentalRuleClause.
+message CreateAdherenceDepartmentalRuleClauseResponse {
+  // ID of the created departmental rule clause.
+  int64 adherence_departmental_rule_clause_id = 1;
+}
+
+// Request message for CreateAdherenceAgentRule.
+message CreateAdherenceAgentRuleRequest {
+  // Agent rule to create for the org sending the request.
+  api.commons.AdherenceAgentRule rule = 1;
+}
+
+// Response message for CreateAdherenceAgentRule.
+message CreateAdherenceAgentRuleResponse {
+  // ID of the created agent rule.
+  int64 adherence_agent_rule_id = 1;
+}
+
+// Request message for CreateAdherenceAgentRuleClause.
+message CreateAdherenceAgentRuleClauseRequest {
+  // Agent rule clause to create for the org sending the request.
+  api.commons.AdherenceAgentRuleClause clause = 1;
+}
+
+// Response message for CreateAdherenceAgentRuleClause.
+message CreateAdherenceAgentRuleClauseResponse {
+  // ID of the created agent rule clause.
+  int64 adherence_agent_rule_clause_id = 1;
+}
