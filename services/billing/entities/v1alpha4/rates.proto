@@ -26,7 +26,8 @@ message MatchingRule {
   google.protobuf.Timestamp create_time = 3;
   google.protobuf.Timestamp delete_time = 4;
   google.protobuf.Timestamp update_time = 5;
+  MatchingConfig rule_config = 6;
   oneof matching_config {
-    CountryCodePrefix country_code_prefix = 100;
+    CountryCodePrefix country_code_prefix = 100 [deprecated = true];
   }
 }
