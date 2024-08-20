@@ -20,6 +20,7 @@ message ApplyDefaultBillingPlanDraftResponse {
 
 message CloneDefaultBillingPlanRequest {
   string billing_plan_id = 1;
+  string title = 2;
 }
 
 message CloneDefaultBillingPlanResponse {

@@ -2,6 +2,13 @@ syntax = "proto3";
 
 package services.billing.entities.v1alpha4;
 
+// MatchingConfig -
+message MatchingConfig {
+  oneof config {
+    CountryCodePrefix country_code_prefix = 1;
+  }
+}
+
 message CountryCodePrefix {
   // The country code to match.
   int32 country_code = 1;
