@@ -12,6 +12,7 @@ import "api/v1alpha1/scorecards/question.proto";
 import "api/v1alpha1/scorecards/scorecard.proto";
 import "api/v1alpha1/scorecards/scorecard_question.proto";
 import "api/v1alpha1/scorecards/section.proto";
+import "api/v1alpha1/scorecards/smart_question.proto";
 import "google/api/annotations.proto";
 
 service Scorecards {
@@ -634,6 +635,19 @@ service Scorecards {
       sets: [
         {
           permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ]
+    };
+  }
+
+  // CreateSmartQuestion creates a scorecard smart question.
+  rpc CreateSmartQuestion(CreateSmartQuestionRequest) returns (CreateSmartQuestionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createsmartquestion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
         }
       ]
     };

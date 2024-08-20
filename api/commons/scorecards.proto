@@ -292,6 +292,7 @@ message Section {
   int32 version = 8; // current version of the section
   int32 sort_order = 9; // order number of section
   repeated AutoQuestion auto_questions = 11; // the auto questions in the section
+  repeated SmartQuestion smart_questions = 12; // The smart questions in the section.
 }
 
 // Scorecard represents a scorecard (template).
@@ -363,4 +364,28 @@ enum RiskLevel {
   RISK_LEVEL_MEDIUM = 2;
   RISK_LEVEL_HIGH = 3;
   RISK_LEVEL_RISK_FREE = 4;
+}
+
+// SmartQuestion represents a question inside of a smart scorecard.
+message SmartQuestion {
+  int64 smart_question_id = 2; // Unique id of smart question.
+  int64 scorecard_id = 3; // Unique id of parent scorecard.
+  int64 section_id = 4; // Unique id of parent section.
+  int64 question_id = 5; // Optional. Library question id.
+  string description = 6; // Optional. Additional information on smart question.
+  string question = 7; // Question text to display/process.
+  repeated Answer answers = 8; // Answer options.
+  QuestionFocus focus = 11; // Which party the question is about.
+  int32 sort_order = 12; // Order number of smart question.
+
+  // Answer represents a single answer, including the associated score impact.
+  message Answer {
+    string answer = 1; // Answer text to display/process.
+
+    // Two results are possible: award points or fail.
+    oneof result {
+      int32 points = 2; // Points to award for answer.
+      api.commons.FailType fail_type = 3; // Failure type for answer.
+    }
+  }
 }
