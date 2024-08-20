@@ -17,6 +17,8 @@ message CreateExileCertificateRequest {
 message CreateExileCertificateResponse {
   // The base-64 encoded certificate that was created.
   string encoded_exile_certificate = 1;
+  // The newly created exile certificate.
+  ExileCertificate exile_certificate = 2;
 }
 
 // RevokeExileCertificateRequest is the request for revoking a exile certificate.
