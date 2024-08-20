@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api.v1alpha1.scorecards;
+
+import "api/commons/scorecards.proto";
+
+// CreateSmartQuestionRequest is the request to create a new smart question.
+message CreateSmartQuestionRequest {
+  api.commons.SmartQuestion smart_question = 1;
+}
+
+// CreateSmartQuestionResponse returns the created smart question.
+message CreateSmartQuestionResponse {
+  api.commons.SmartQuestion smart_question = 1;
+}
