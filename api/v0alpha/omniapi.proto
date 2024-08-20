@@ -1421,6 +1421,8 @@ message ListConversationsReq {
     ByTime by_time = 100;
     // list conversations by assigned user
     ByAssignedUser by_assigned_user = 101;
+    // list conversations by conversation sid
+    ByConversationSids by_conversation_sids = 102;
   }
 
   // message filter to list conversations by time
@@ -1441,6 +1443,16 @@ message ListConversationsReq {
     string user_id = 1;
     // the statuses of the conversations to retrieve, or empty if retrieving everything : deprecated because we moved to the main request.
     repeated api.commons.ConversationStatus statuses = 2 [deprecated = true];
+    // Optional. The number of listconversation to include in a single response. When not provided this defaults to 100.
+    uint32 page_size = 4;
+    //Optional. When provided all other request fields are ignored.
+    string page_token = 5;
+  }
+
+  // message filter to list conversations by conversation sids
+  message ByConversationSids {
+    // the conversation sid
+    repeated string conversation_sids = 1;
     // Optional. The number of listconversation to include in a single response. When not provided this defaults to 100.
     uint32 page_size = 4;
     //Optional. When provided all other request fields are ignored.
