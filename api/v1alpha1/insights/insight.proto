@@ -193,6 +193,16 @@ enum OutputConfigurationColumnSummaryType {
   OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX = 4;
 }
 
+// Enum for the Insight Contextual Action Type
+enum InsightContextualActionType {
+  // Unspecified
+  INSIGHT_CONTEXTUAL_ACTION_TYPE_UNSPECIFIED = 0;
+  // Contextual Action Type Link
+  INSIGHT_CONTEXTUAL_ACTION_TYPE_LINK = 1;
+  // Contextual Action Type Component
+  INSIGHT_CONTEXTUAL_ACTION_TYPE_COMPONENT = 2;
+}
+
 // Message for Table Visualization
 message TableVisualization {
   // Map of table column details
@@ -217,6 +227,8 @@ message TableColumnConfig {
   string description = 7;
   // The sorting direction of the column
   ColumnSort sort_direction = 8;
+  // insight contextual actions
+  InsightContextualAction insight_contextual_action = 9;
 }
 
 // FormatSeries contains the series of operations for a column operation
@@ -235,6 +247,30 @@ message ColumnOperation {
     // Series values for operation
     FormatSeries format_series = 3;
   }
+}
+
+// Message for Insight Contextual Action
+message InsightContextualAction {
+  // Type of the contextual action
+  InsightContextualActionType type = 1;
+  oneof action {
+    // Link action
+    LinkAction link = 2;
+    // Component action
+    ComponentAction component = 3;
+  }
+}
+
+// Message for Link Insight Contextual Action
+message LinkAction {
+  repeated string link_elements = 1;
+  map<string, string> component_value = 2;
+}
+
+// Message for Component Insight Contextual Action
+message ComponentAction {
+  string component_name = 1;
+  map<string, string> component_value = 2;
 }
 
 // Output configuration provides formatting options in post processing
