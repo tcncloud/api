@@ -45,6 +45,24 @@ service WFM {
     };
   }
 
+  // Create an initial set of demo activities for the org sending the requests.
+  // If any non skill activities already exist matching the names of the demo non skill activities, a second copy will not be created.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occurs when creating the activities or checking if they already exist.
+  rpc CreateInitialDemoActivities(CreateInitialDemoActivitiesRequest) returns (CreateInitialDemoActivitiesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createinitialdemoactivities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Retrieves all the skill profiles of the org sending the request.
   // Also it can return the skills of each of the returned profiles.
   // Errors:
@@ -3742,6 +3760,12 @@ message PerformInitialClientSetupResponse {
   // Setup status for the requested client.
   commons.InitialSetupStatus setup_status = 1;
 }
+
+// Request message for the CreateInitialDemoActivities RPC.
+message CreateInitialDemoActivitiesRequest {}
+
+// Response message for the CreateInitialDemoActivities RPC.
+message CreateInitialDemoActivitiesResponse {}
 
 // Message type specifying information regarding the skill that will associated with
 // SkillProfile and other entities.
