@@ -652,4 +652,30 @@ service Scorecards {
       ]
     };
   }
+
+  // UpdateSmartQuestion updates a smart question.
+  rpc UpdateSmartQuestion(UpdateSmartQuestionRequest) returns (UpdateSmartQuestionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatesmartquestion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ]
+    };
+  }
+
+  // DeleteSmartQuestion deletes a smart question.
+  rpc DeleteSmartQuestion(DeleteSmartQuestionRequest) returns (DeleteSmartQuestionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletesmartquestion";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ]
+    };
+  }
 }
