@@ -679,6 +679,7 @@ enum OmniMessageStatus {
   OMNI_OUTBOUND_MESSAGE_UNSUBSCRIBED = 16230; // recipient clicked on unsubscribe link
   OMNI_OUTBOUND_MESSAGE_MARKED_AS_SPAM = 16240; // message marked as spam
   OMNI_OUTBOUND_MESSAGE_BLOCKED = 16250; // message marked as blocked
+  OMNI_OUTBOUND_MESSAGE_UNCONFIRMED_DELIVERY = 16260; // message did not recieve delivery confirmation, this could be that the destination carrier does not send delivery confirmations, or this could be a failure
 
   OMNI_SYSTEM_MESSAGE = 16050; // message sent from system
 }
