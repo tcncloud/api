@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.scorecards;
 
 import "api/commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
 
 // CreateSmartQuestionRequest is the request to create a new smart question.
 message CreateSmartQuestionRequest {
@@ -11,5 +12,26 @@ message CreateSmartQuestionRequest {
 
 // CreateSmartQuestionResponse returns the created smart question.
 message CreateSmartQuestionResponse {
+  api.commons.SmartQuestion smart_question = 1;
+}
+
+// UpdateSmartQuestionRequest is the request to update a smart question.
+message UpdateSmartQuestionRequest {
+  api.commons.SmartQuestion smart_question = 1; // Required.
+  google.protobuf.FieldMask update_mask = 2; // Required.
+}
+
+// UpdateSmartQuestionResponse returns the updated smart question.
+message UpdateSmartQuestionResponse {
+  api.commons.SmartQuestion smart_question = 1;
+}
+
+// DeleteSmartQuestionRequest is the request to delete a smart question.
+message DeleteSmartQuestionRequest {
+  int64 smart_question_id = 2; // Required.
+}
+
+// DeleteSmartQuestionResponse returns the deleted smart question.
+message DeleteSmartQuestionResponse {
   api.commons.SmartQuestion smart_question = 1;
 }
