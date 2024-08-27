@@ -404,6 +404,9 @@ service Integrations {
         },
         {
           permissions: [PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_AGENT_ASSISTED_PORTAL]
         }
       ]
     };

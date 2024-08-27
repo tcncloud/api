@@ -245,6 +245,9 @@ enum Permission {
   }];
   // Enables agents to create manual conversations
   PERMISSION_MANUAL_CONVERSATION = 344 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+
+  //Enables agents to use agent assisted portals
+  PERMISSION_AGENT_ASSISTED_PORTAL = 345 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables Agents to change their own hunt group
   PERMISSION_CHANGE_OWN_HUNT_GROUP = 360 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables Agents to change their own skill groups
