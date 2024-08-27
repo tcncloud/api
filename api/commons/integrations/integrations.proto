@@ -714,6 +714,8 @@ message FieldDefinition {
   InvoiceDisplayType invoice_type = 7;
   // the helper text of the field. This is the text that helps explain the label name
   HelperText helper_text = 8;
+  // if it needs to be filled out before run time
+  bool required = 9;
 }
 
 // HelperText contains the text that explains a field definition on a form, and any other display options
