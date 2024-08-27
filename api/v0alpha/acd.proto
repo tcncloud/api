@@ -485,7 +485,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
@@ -496,7 +499,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
@@ -507,7 +513,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
@@ -518,7 +527,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
@@ -529,7 +541,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
@@ -540,7 +555,10 @@ service Acd {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_AGENT]
+          permissions: [
+            PERMISSION_AGENT,
+            PERMISSION_AGENT_ASSISTED_PORTAL
+          ]
         }
       ]
     };
