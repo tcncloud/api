@@ -180,8 +180,9 @@ message EvaluationQuestion {
 
     // two results are possible: award points or fail
     oneof result {
-      uint32 points = 2; // points to award if option selected
+      uint32 points = 2 [deprecated = true]; // deprecated; use answer_points
       FailType fail_type = 3; // how to fail if option selected (e.g. fail section)
+      int32 answer_points = 4; // points to award if option selected
     }
   }
 }
@@ -268,8 +269,9 @@ message ScorecardQuestion {
 
     // two results are possible: award points or fail
     oneof result {
-      uint32 points = 2; // points to award if option selected
+      uint32 points = 2 [deprecated = true]; // deprecated; use answer_points
       FailType fail_type = 3; // how to fail if option selected (e.g. fail section)
+      int32 answer_points = 4; // points to award if option selected
     }
   }
 
