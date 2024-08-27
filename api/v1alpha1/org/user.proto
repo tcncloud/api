@@ -52,6 +52,8 @@ message CreateUserRequest {
   api.commons.TimeZoneWrapper time_zone_override = 17;
   // The hunt group that the created user will belong to.
   int64 hunt_group_sid = 18;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 19;
 }
 
 // Response message for the CreateUser rpc.
@@ -227,6 +229,8 @@ message GetUserResponse {
   bool account_owner = 29;
   // if the user's email is verified
   bool email_verified = 30;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 31;
 }
 
 // Request message for GetUserByOrgId.
@@ -283,6 +287,8 @@ message GetUserByOrgIdResponse {
   bool account_owner = 22;
   // if the user's email is verified
   bool email_verified = 23;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 24;
 }
 
 // Request message for listAgents rpc.
@@ -536,6 +542,8 @@ message UpdateMyUserRequest {
   api.commons.TimeZoneWrapper time_zone_override = 3;
   // Default app the user starts on
   api.commons.OperatorApplications default_app = 4;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 5;
   // Mask to filter fields on organization entities in response.
   repeated string field_mask = 10;
 }
@@ -573,6 +581,8 @@ message UpdateUserRequest {
   string user_caller_id = 13;
   // A list of labels to assign to the user
   repeated string label_ids = 14;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 15;
 
   // Mask to filter fields on organization entities in response.
   repeated string field_mask = 20;
@@ -909,6 +919,9 @@ message GetUserSessionDataResponse {
     google.protobuf.Timestamp mfa_timestamp = 33;
     // Timestamp of of when a user must reset their password before
     google.protobuf.Timestamp password_reset_date = 34;
+
+    // The override for the users locale preferences
+    api.commons.LocalePreferences locale_preferences_override = 35;
   }
 
   // The user the data is about
