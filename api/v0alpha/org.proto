@@ -232,13 +232,7 @@ service Org {
   rpc GetMyUserDetails(GetMyUserDetailsRequest) returns (UserDetails) {
     option (google.api.http).post = "/api/v0alpha/org/user/mydetails";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
-        }
-      ]
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 
   rpc GetUserDetails(GetUserDetailsRequest) returns (UserDetails) {

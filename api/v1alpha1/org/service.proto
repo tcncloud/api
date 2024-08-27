@@ -2699,7 +2699,7 @@ service Org {
     };
   }
 
-  // P3Permissions
+  // P3 PERMISSIONS
 
   // ListP3PermissionGroups returns the list of p3 permission groups
   // for the user's org.
@@ -2811,6 +2811,8 @@ service Org {
     };
   }
 
+  // MFA
+
   // RefreshMfaLockout resets the lockout timer for the given user.
   rpc RefreshMfaLockout(RefreshMfaLockoutRequest) returns (RefreshMfaLockoutResponse) {
     option (google.api.http).post = "/api/v1alpha1/user/refreshmfalockout";
@@ -2857,7 +2859,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
       ]
     };
@@ -2883,7 +2885,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
       ]
     };
@@ -2906,26 +2908,14 @@ service Org {
   rpc GetMyUserMfaInfo(GetMyUserMfaInfoRequest) returns (GetMyUserMfaInfoResponse) {
     option (google.api.http).post = "/api/v1alpha1/user/getmyusermfainfo";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
-        }
-      ]
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
   rpc GetMyAllowedMfaMethods(GetMyAllowedMfaMethodsRequest) returns (GetMyAllowedMfaMethodsResponse) {
     option (google.api.http).post = "/api/v1alpha1/user/getmyallowedmfamethods";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
-        }
-      ]
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // GenerateTOTPSecret generates a new TOTP secret key for the current user and
@@ -2937,7 +2927,7 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
       ]
     };
@@ -2950,11 +2940,13 @@ service Org {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_USER_EDIT_OPTIONS]
+          permissions: [PERMISSION_USER_EDIT_PASSWORD]
         }
       ]
     };
   }
+
+  // BUSINESS HOURS
 
   // CreateBusinessHours persists times businesses are available.
   rpc CreateBusinessHours(CreateBusinessHoursRequest) returns (CreateBusinessHoursResponse) {
