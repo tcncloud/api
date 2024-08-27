@@ -68,17 +68,48 @@ enum StandardReportFilter {
   FILTER_BY_EXCLUDING_CANCELED_AND_INVALID = 35; // WHERE_ALL_EXCLUDING_INVALID_AND_CANCELED
 }
 
+// OperatorDisplayLanguage represents the language used in Operator.
+// - Organization Preferences: must be set to a valid language tag supported in Operator.
+// - User Preferences: If not set, the organization's default language is used.
+message OperatorDisplayLanguage {
+  // Display language in Operator for users of the organization.
+  // If set, must be a valid language tag supported in Operator.
+  // IETF BCP 47 - https://en.wikipedia.org/wiki/IETF_language_tag
+  string value = 1;
+}
+
+// OperatorLanguageDirection is an enum for the direction of the language.
+enum OperatorLanguageDirection {
+  // The language direction is unspecified.
+  // If unspecified in the user preference, the organization's default preference is used.
+  OPERATOR_LANGUAGE_DIRECTION_UNSPECIFIED = 0;
+  // The default direction inferred from the language.
+  // ie. by default, Arabic is right-to-left, English is left-to-right.
+  OPERATOR_LANGUAGE_DIRECTION_DEFAULT = 1;
+  // The language direction is left-to-right.
+  OPERATOR_LANGUAGE_DIRECTION_LEFT_TO_RIGHT = 2;
+  // The language direction is right-to-left.
+  OPERATOR_LANGUAGE_DIRECTION_RIGHT_TO_LEFT = 3;
+}
+
 // LocalePreferences represents the organization's locale settings.
 message LocalePreferences {
   // Display language in Operator for users of the organization.
   // Must be a valid language tag supported in Operator.
   // IETF BCP 47 - https://en.wikipedia.org/wiki/IETF_language_tag
-  string language_tag = 1;
+  // DEPRECATED: use operator_display_language instead.
+  string language_tag = 1 [deprecated = true];
   // The direction of the script in Operator used in the organization.
   // By default, it is set to false to indicate left-to-right.
-  bool use_script_direction_right_to_left = 2;
+  // DEPRECATED: use language_direction_preference instead.
+  bool use_script_direction_right_to_left = 2 [deprecated = true];
   // The default currency used in the organization.
   // Must be a valid currency code supported in Operator.
   // ISO 4217 - https://en.wikipedia.org/wiki/ISO_4217.
   string default_currency = 3;
+
+  // The display language in Operator for users of the organization.
+  OperatorDisplayLanguage operator_display_language = 4;
+  // The direction of the language used in the organization.
+  OperatorLanguageDirection operator_language_direction = 5;
 }

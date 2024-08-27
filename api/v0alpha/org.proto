@@ -3241,6 +3241,8 @@ message UserDetails {
   string email = 34;
   // if the user's email is verified
   bool email_verified = 36;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 37;
 
   // Trusts assigned to the user.
   repeated api.commons.org.Trust trusts = 200;
@@ -3379,6 +3381,8 @@ message UpdateUserRequest {
   repeated Label label_entities = 18;
   // The users email
   string email = 17;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 19;
   // List of all fields being updated
   google.protobuf.FieldMask field_mask = 100;
 }
@@ -3404,6 +3408,8 @@ message UpdateMyUserRequest {
   repeated Label label_entities = 18;
   // The users email
   string email = 17;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 19;
   // List of all fields being updated
   google.protobuf.FieldMask field_mask = 100;
 }
@@ -5408,6 +5414,8 @@ message CreateUserRequest {
   repeated string labels = 22;
   // User TimeZone with wrapper for nullable timezone
   api.commons.TimeZoneWrapper time_zone_override = 23;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 24;
 }
 
 message CreateUserResponse {
