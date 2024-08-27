@@ -20,4 +20,6 @@ enum LabeledEntity {
   LABELED_ENTITY_SKILL_GROUP = 1;
   // LABELED_ENTITY_USER is a user entity type.
   LABELED_ENTITY_USER = 2;
+  // LABELED_ENTITY_TICKET is a ticket entity type.
+  LABELED_ENTITY_TICKET = 3;
 }
