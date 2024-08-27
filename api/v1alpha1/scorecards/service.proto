@@ -12,6 +12,7 @@ import "api/v1alpha1/scorecards/question.proto";
 import "api/v1alpha1/scorecards/scorecard.proto";
 import "api/v1alpha1/scorecards/scorecard_question.proto";
 import "api/v1alpha1/scorecards/section.proto";
+import "api/v1alpha1/scorecards/smart_evaluation.proto";
 import "api/v1alpha1/scorecards/smart_question.proto";
 import "google/api/annotations.proto";
 
@@ -652,7 +653,6 @@ service Scorecards {
       ]
     };
   }
-
   // UpdateSmartQuestion updates a smart question.
   rpc UpdateSmartQuestion(UpdateSmartQuestionRequest) returns (UpdateSmartQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/updatesmartquestion";
@@ -674,6 +674,45 @@ service Scorecards {
       sets: [
         {
           permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ]
+    };
+  }
+
+  // ListSmartEvaluations lists smart evaluations
+  rpc ListSmartEvaluations(ListSmartEvaluationsRequest) returns (ListSmartEvaluationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/listsmartevaluations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ]
+    };
+  }
+
+  // DeleteSmartEvaluation deletes a smart evaluation
+  rpc DeleteSmartEvaluation(DeleteSmartEvaluationRequest) returns (DeleteSmartEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/deletesmartevaluation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ]
+    };
+  }
+
+  // GetSmartEvaluation gets a smart evaluation
+  rpc GetSmartEvaluation(GetSmartEvaluationRequest) returns (GetSmartEvaluationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/getsmartevaluation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
       ]
     };

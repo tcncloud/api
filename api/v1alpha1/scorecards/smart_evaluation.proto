@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package api.v1alpha1.scorecards;
+
+import "api/commons/scorecards.proto";
+import "google/protobuf/field_mask.proto";
+
+// CreateSmartEvaluationRequest represents a request to create a smart evaluation.
+message CreateSmartEvaluationRequest {
+  api.commons.SmartEvaluation smart_evaluation = 1;
+}
+
+// CreateSmartEvaluationResponse represents a response to create a smart evaluation.
+message CreateSmartEvaluationResponse {
+  api.commons.SmartEvaluation smart_evaluation = 1;
+}
+
+// ListSmartEvaluationsRequest represents a request to list smart evaluations.
+message ListSmartEvaluationsRequest {}
+
+// ListSmartEvaluationsResponse represents a response to list smart evaluations.
+message ListSmartEvaluationsResponse {
+  repeated api.commons.SmartEvaluation smart_evaluations = 1;
+}
+
+// UpdateSmartEvaluationRequest represents a request to update a smart evaluation.
+message UpdateSmartEvaluationRequest {
+  api.commons.SmartEvaluation smart_evaluation = 1; // Required - the smart evaluation  to update.
+  google.protobuf.FieldMask update_mask = 2; // Required - specification of which fields should be updated.
+}
+
+// UpdateSmartEvaluationResponse represents a response to update a smart evaluation.
+message UpdateSmartEvaluationResponse {
+  api.commons.SmartEvaluation smart_evaluation = 1;
+}
+
+// DeleteSmartEvaluationRequest represents a request to delete a smart evaluation.
+message DeleteSmartEvaluationRequest {
+  int64 smart_evaluation_id = 2;
+}
+
+// DeleteSmartEvaluationResponse represents a response to delete a smart evaluation.
+message DeleteSmartEvaluationResponse {}
+
+// GetSmartEvaluationRequest represents a request to get a smart evaluation.
+message GetSmartEvaluationRequest {
+  int64 smart_evaluation_id = 2;
+}
+
+// GetSmartEvaluationResponse represents a response to get a smart evaluation.
+message GetSmartEvaluationResponse {
+  api.commons.SmartEvaluation smart_evaluation = 1;
+}
