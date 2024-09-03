@@ -2572,6 +2572,8 @@ message SearchCollectionsPaginatedReq {
   int64 from = 5;
   // How many results to include in a page
   int64 page_size = 6;
+  // The last entry ID in the most recently returned page
+  string last_id = 7;
 }
 
 message Search {
@@ -2603,6 +2605,10 @@ message PaginatedSearchRes {
   repeated CollectionEntry entries = 1;
   // Specifies the total number of results
   int64 total = 2;
+  // Whether or not there is another page of results
+  bool more_results = 3;
+  // The last entry ID in the most recently grabbed page of results
+  string last_id = 4;
 }
 
 message GetCollectionEntriesReq {
