@@ -533,6 +533,16 @@ enum InvoiceDisplayType {
   PATIENT_ZIP_CODE = 209;
 }
 
+message Receipt {
+  repeated ReceiptField fields = 1;
+}
+
+message ReceiptField {
+  string name = 1;
+  string display_name = 2;
+  string value = 3;
+}
+
 message Invoices {
   repeated InvoiceField top_level_fields = 1;
   repeated Invoice invoices = 2;
