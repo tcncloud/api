@@ -277,10 +277,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -301,10 +298,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -514,10 +508,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -539,10 +530,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -641,10 +629,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -665,10 +650,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -767,10 +749,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
@@ -791,10 +770,7 @@ service BillingService {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [
-            PERMISSION_CUSTOMER_SUPPORT,
-            PERMISSION_TCN_BILLING_ADMIN
-          ]
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
