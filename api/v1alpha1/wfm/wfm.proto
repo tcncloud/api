@@ -7553,7 +7553,7 @@ message RgbaColor {
   float alpha = 4; // [0.0, 1.0]
   string name = 5;
   // ID of the rgba color.
-  int64 rgba_color_id = 6;
+  int64 rgba_color_id = 6 [jstype = JS_STRING];
 }
 
 // Request message for the HelloWorldWFMAdherence RPC.
@@ -7603,7 +7603,7 @@ message UpsertRealTimeManagementStateColorRequest {
   // The state to associate with @rgba_color_id.
   api.commons.RealTimeManagementState state = 1;
   // The rgba_color_id to create a state color association with.
-  int64 rgba_color_id = 2;
+  int64 rgba_color_id = 2 [jstype = JS_STRING];
 }
 
 // Response message for UpsertRealTimeManagementStateColor
@@ -7674,7 +7674,7 @@ message ListAgentLeavePetitionsResponse {
 // Request message for the ArchiveAgentLeavePetition.
 message ArchiveAgentLeavePetitionRequest {
   // ID of the agent leave petition to archive.
-  int64 agent_leave_petition_id = 1;
+  int64 agent_leave_petition_id = 1 [jstype = JS_STRING];
 }
 
 // Response message for the ArchiveAgentLeavePetition.
@@ -7686,7 +7686,7 @@ message ArchiveAgentLeavePetitionResponse {
 // Request message for the ResolveAgentLeavePetition.
 message ResolveAgentLeavePetitionRequest {
   // ID of the agent leave petition to approve or deny.
-  int64 agent_leave_petition_id = 1;
+  int64 agent_leave_petition_id = 1 [jstype = JS_STRING];
   // The status to resolve the petition to.
   commons.AgentLeavePetitionStatus petition_status = 2;
   // An optional comment to explain the approval or denial of the leave petition.
@@ -7710,7 +7710,7 @@ message ResolveAgentLeavePetitionResponse {
 // Request message for the CancelAgentLeavePetition.
 message CancelAgentLeavePetitionRequest {
   // ID of the agent leave petition to cancel.
-  int64 agent_leave_petition_id = 1;
+  int64 agent_leave_petition_id = 1 [jstype = JS_STRING];
 }
 
 // Response message for the CancelAgentLeavePetition.
@@ -7728,7 +7728,7 @@ message CreateRgbaColorRequest {
 // Response message for CreateRgbaColor.
 message CreateRgbaColorResponse {
   // ID of the newly created rgba color
-  int64 rgba_color_id = 1;
+  int64 rgba_color_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for ListRgbaColors.
@@ -7755,7 +7755,7 @@ message UpdateRgbaColorResponse {
 // Request message for DeleteRgbaColor.
 message DeleteRgbaColorRequest {
   // ID of the rgba color to delete.
-  int64 rgba_color_id = 1;
+  int64 rgba_color_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for DeleteRgbaColor.
@@ -7770,7 +7770,7 @@ message CreateAdherenceRuleNotificationConfigRequest {
 // Response message for CreateAdherenceRuleNotificationConfig.
 message CreateAdherenceRuleNotificationConfigResponse {
   // ID of the created notification config.
-  int64 adherence_rule_notification_config_id = 1;
+  int64 adherence_rule_notification_config_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for CreateAdherenceRuleNotificationConfigEntry.
@@ -7782,7 +7782,7 @@ message CreateAdherenceRuleNotificationConfigEntryRequest {
 // Response message for CreateAdherenceRuleNotificationConfigEntry.
 message CreateAdherenceRuleNotificationConfigEntryResponse {
   // ID of the created notification config entry.
-  int64 adherence_rule_notification_config_entry_id = 1;
+  int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for CreateAdherenceDepartmentalRule.
@@ -7794,7 +7794,7 @@ message CreateAdherenceDepartmentalRuleRequest {
 // Response message for CreateAdherenceDepartmentalRule.
 message CreateAdherenceDepartmentalRuleResponse {
   // ID of the created departmental rule.
-  int64 adherence_departmental_rule_id = 1;
+  int64 adherence_departmental_rule_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for CreateAdherenceDepartmentalRuleClause.
@@ -7806,7 +7806,7 @@ message CreateAdherenceDepartmentalRuleClauseRequest {
 // Response message for CreateAdherenceDepartmentalRuleClause.
 message CreateAdherenceDepartmentalRuleClauseResponse {
   // ID of the created departmental rule clause.
-  int64 adherence_departmental_rule_clause_id = 1;
+  int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for CreateAdherenceAgentRule.
@@ -7818,7 +7818,7 @@ message CreateAdherenceAgentRuleRequest {
 // Response message for CreateAdherenceAgentRule.
 message CreateAdherenceAgentRuleResponse {
   // ID of the created agent rule.
-  int64 adherence_agent_rule_id = 1;
+  int64 adherence_agent_rule_id = 1 [jstype = JS_STRING];
 }
 
 // Request message for CreateAdherenceAgentRuleClause.
@@ -7830,5 +7830,5 @@ message CreateAdherenceAgentRuleClauseRequest {
 // Response message for CreateAdherenceAgentRuleClause.
 message CreateAdherenceAgentRuleClauseResponse {
   // ID of the created agent rule clause.
-  int64 adherence_agent_rule_clause_id = 1;
+  int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
 }

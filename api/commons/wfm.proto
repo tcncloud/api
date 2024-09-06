@@ -827,7 +827,7 @@ enum AgentLeavePetitionStatus {
 // Represents an agent's request for time off.
 message AgentLeavePetition {
   // ID of the agent leave petition.
-  int64 agent_leave_petition_id = 1;
+  int64 agent_leave_petition_id = 1 [jstype = JS_STRING];
   // ID of the agent requesting the time off.
   int64 wfm_agent_sid = 2;
   // Current status of the time off request.
