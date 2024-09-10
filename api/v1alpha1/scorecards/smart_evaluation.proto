@@ -16,11 +16,60 @@ message CreateSmartEvaluationResponse {
 }
 
 // ListSmartEvaluationsRequest represents a request to list smart evaluations.
-message ListSmartEvaluationsRequest {}
+message ListSmartEvaluationsRequest {
+  // Optional. The order by which smart evaluations will be listed. Follows sql
+  // order by syntax. Defaults to "complete_time desc, smart_evaluation_id desc".
+  string order_by = 2;
+
+  // Optional - number of smart evaluations included in response. Defaults to 500.
+  int32 page_size = 3;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  string page_token = 4;
+
+  // Required. Fields to return.
+  //
+  // Example selecting score, section points, and question answer:
+  // {
+  //   paths: [
+  //     "score",
+  //     "smart_evaluation_section.points",
+  //     "smart_evaluation_section.smart_evaluation_question.answer"
+  //   ]
+  // }
+  google.protobuf.FieldMask return_fields = 5;
+
+  /*
+     Optional. The standard list filter as described in https://google.aip.dev/160.
+     Multiple comparisons can be provided when separated with a logical AND
+     operator. Supported fields, operators and functions are listed below.
+
+     +----------------------------+-----------+-----------------+-----------+
+     |                      field |      type |       operators | functions |
+     +----------------------------+-----------+-----------------+-----------+
+     |               scorecard_id |   integer |               = |       any |
+     |                category_id |   integer |               = |       any |
+     |              agent_user_id |    string |               = |       any |
+     |             transcript_sid |   integer | =, >=, <=, >, < |           |
+     |              complete_time | timestamp | =, >=, <=, >, < |           |
+     +----------------------------+-----------+-----------------+-----------+
+
+     Examples:
+       transcript_sid >= 1
+
+       scorecard_id = 0 AND
+       agent_user_id = any("00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001") AND
+       complete_time >= '2012-04-21T11:30:00-04:00'
+  */
+  string filter = 6;
+}
 
 // ListSmartEvaluationsResponse represents a response to list smart evaluations.
 message ListSmartEvaluationsResponse {
   repeated api.commons.SmartEvaluation smart_evaluations = 1;
+  // Token to retrieve the next page, or empty if there are no
+  // more entries in the list.
+  string next_page_token = 2;
 }
 
 // UpdateSmartEvaluationRequest represents a request to update a smart evaluation.
