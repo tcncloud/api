@@ -72,6 +72,22 @@ service AgentTrainingService {
     };
   }
 
+  // ListManagerDashboards lists manager dashboards.
+  rpc ListManagerDashboards(ListDashboardsRequest) returns (ListDashboardsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/listmanagerdashboards";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
+        }
+      ]
+    };
+  }
+
   // UpdateLearningOpportunity updates a learning opportunity.
   rpc UpdateLearningOpportunity(UpdateLearningOpportunityRequest) returns (UpdateLearningOpportunityResponse) {
     option (google.api.http).post = "/api/v1alpha1/agenttraining/agenttrainingservice/updatelearningopportunity";
