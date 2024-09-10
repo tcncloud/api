@@ -3661,6 +3661,29 @@ service WFM {
     };
   }
 
+  // Gets all adherence rule @notification_configs for the org sending the request.
+  // Configs will include their respective entries.
+  // Errors:
+  //   - grpc.Invalid: the request arguments are invalid.
+  //   - grpc.Internal: error occurs when getting the notification configs.
+  rpc ListAdherenceRuleNotificationConfigs(ListAdherenceRuleNotificationConfigsRequest) returns (ListAdherenceRuleNotificationConfigsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherencerulenotificationconfigs";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Creates the given adherence departmental @rule for the org sending the request.
   // Errors:
   //   - grpc.Invalid: the values on the given @rule are invalid.
@@ -3706,6 +3729,29 @@ service WFM {
     };
   }
 
+  // Gets all adherence departmental @rules for the org sending the request.
+  // Rules will include their respective clauses.
+  // Errors:
+  //   - grpc.Invalid: the request arguments are invalid.
+  //   - grpc.Internal: error occurs when getting the rules.
+  rpc ListAdherenceDepartmentalRules(ListAdherenceDepartmentalRulesRequest) returns (ListAdherenceDepartmentalRulesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherencedepartmentalrules";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Creates the given adherence agent @rule for the org sending the request.
   // Errors:
   //   - grpc.Invalid: the values on the given @rule are invalid.
@@ -3735,6 +3781,29 @@ service WFM {
   //   - grpc.NotFound: agent rule with the @agent_rule_sid does not exist.
   rpc CreateAdherenceAgentRuleClause(CreateAdherenceAgentRuleClauseRequest) returns (CreateAdherenceAgentRuleClauseResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createadherenceagentruleclause";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Gets all adherence agent @rules for the org sending the request.
+  // Rules will include their respective clauses.
+  // Errors:
+  //   - grpc.Invalid: the request arguments are invalid.
+  //   - grpc.Internal: error occurs when getting the rules.
+  rpc ListAdherenceAgentRules(ListAdherenceAgentRulesRequest) returns (ListAdherenceAgentRulesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherenceagentrules";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7785,6 +7854,15 @@ message CreateAdherenceRuleNotificationConfigEntryResponse {
   int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for ListAdherenceRuleNotificationConfigs.
+message ListAdherenceRuleNotificationConfigsRequest {}
+
+// Response message for ListAdherenceRuleNotificationConfigs.
+message ListAdherenceRuleNotificationConfigsResponse {
+  // Notification configs found for the org sending the request.
+  repeated api.commons.AdherenceRuleNotificationConfig notification_configs = 1;
+}
+
 // Request message for CreateAdherenceDepartmentalRule.
 message CreateAdherenceDepartmentalRuleRequest {
   // Departmental rule to create for the org sending the request.
@@ -7809,6 +7887,15 @@ message CreateAdherenceDepartmentalRuleClauseResponse {
   int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for ListAdherenceDepartmentalRules.
+message ListAdherenceDepartmentalRulesRequest {}
+
+// Response message for ListAdherenceDepartmentalRules.
+message ListAdherenceDepartmentalRulesResponse {
+  // Departmental rules found for the org sending the request.
+  repeated api.commons.AdherenceDepartmentalRule rules = 1;
+}
+
 // Request message for CreateAdherenceAgentRule.
 message CreateAdherenceAgentRuleRequest {
   // Agent rule to create for the org sending the request.
@@ -7831,4 +7918,13 @@ message CreateAdherenceAgentRuleClauseRequest {
 message CreateAdherenceAgentRuleClauseResponse {
   // ID of the created agent rule clause.
   int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
+}
+
+// Request message for ListAdherenceAgentRules.
+message ListAdherenceAgentRulesRequest {}
+
+// Response message for ListAdherenceAgentRules.
+message ListAdherenceAgentRulesResponse {
+  // Agent rules found for the org sending the request.
+  repeated api.commons.AdherenceAgentRule rules = 1;
 }
