@@ -203,6 +203,8 @@ enum InsightContextualActionType {
   INSIGHT_CONTEXTUAL_ACTION_TYPE_LINK = 1;
   // Contextual Action Type Component
   INSIGHT_CONTEXTUAL_ACTION_TYPE_COMPONENT = 2;
+  // Contextual Action Type Drill Through
+  INSIGHT_CONTEXTUAL_ACTION_TYPE_DRILL_THROUGH = 3;
 }
 
 // Message for Table Visualization
@@ -260,6 +262,8 @@ message InsightContextualAction {
     LinkAction link = 2;
     // Component action
     ComponentAction component = 3;
+    // Drill through action
+    DrillThroughAction drill_through = 4;
   }
 }
 
@@ -273,6 +277,18 @@ message LinkAction {
 message ComponentAction {
   string component_name = 1;
   map<string, string> component_value = 2;
+}
+
+// Message for Drill Through Insight Contextual Action
+message DrillThroughAction {
+  string insight_resource_id = 1;
+  repeated DrillThroughParameter drill_through_parameters = 2;
+}
+
+// Message for Drill Through
+message DrillThroughParameter {
+  string parameter_name = 1;
+  string column_name = 2;
 }
 
 // Output configuration provides formatting options in post processing
