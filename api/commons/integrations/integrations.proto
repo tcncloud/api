@@ -541,6 +541,12 @@ message ReceiptField {
   string name = 1;
   string display_name = 2;
   string value = 3;
+  // what the field should validate as,
+  //and how the front end should present the field to the user
+  Validation validation_type = 4;
+  // The datetime format allowed to use for date types.
+  // if left blank, a default set of format will be accepted
+  string format = 5;
 }
 
 message Invoices {
@@ -562,6 +568,12 @@ message InvoiceField {
   string name = 2;
   string display_name = 3;
   string value = 4;
+  // what the field should validate as,
+  //and how the front end should present the field to the user
+  Validation validation_type = 5;
+  // The datetime format allowed to use for date types.
+  // if left blank, a default set of format will be accepted
+  string format = 6;
 }
 
 message InvoiceTemplate {
