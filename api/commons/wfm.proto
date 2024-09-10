@@ -891,6 +891,8 @@ message AdherenceRuleNotificationConfig {
   int64 adherence_rule_notification_config_id = 1 [jstype = JS_STRING];
   // Name of the notification config.
   string name = 2;
+  // Entries that belong to this rule. Only used by List methods.
+  repeated AdherenceRuleNotificationConfigEntry entries = 3;
 }
 
 // Represents a user entry for a notification.
@@ -984,6 +986,8 @@ message AdherenceDepartmentalRule {
   AdherenceRuleRange rule_range = 6;
   // Custom date range to apply the rule, must only be set when @rule_range is CUSTOM_DATE_RANGE.
   DatetimeRange custom_range = 7;
+  // Clauses that belong to this rule. Only used by List methods.
+  repeated AdherenceDepartmentalRule clauses = 8;
 }
 
 // Represents an adherence departmental rule clause.
@@ -1020,6 +1024,8 @@ message AdherenceAgentRule {
   AdherenceRuleRequirementType rule_requirement_type = 4;
   // ID of the notification config that this rule will use/follow.
   int64 adherence_rule_notification_config_id = 5 [jstype = JS_STRING];
+  // Clauses that belong to this rule. Only used by List methods.
+  repeated AdherenceAgentRuleClause clauses = 6;
 }
 
 // Types of agent rule actions.
