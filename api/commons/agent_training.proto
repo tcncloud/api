@@ -25,6 +25,7 @@ message LearningOpportunity {
   oneof origin_identifier {
     int64 evaluation_id = 16; // (Scorecards) Evaluation created from.
     int64 auto_evaluation_id = 17; // (Scorecards) Auto Evaluation created from.
+    int64 smart_evaluation_id = 18; // (Scorecards) Smart Evaluation created from.
   }
 }
 
@@ -49,4 +50,5 @@ enum LearningOpportunityOrigin {
   FLAG_EVALUATION = 3; // Created from Flag Evaluation.
   CONVERSATION = 4; // Created from Conversation (voice analytics recordings).
   FLAGGED_CONVERSATION = 5; // Created from Flagged Conversation (voice analytics flagged recordings).
+  SMART_EVALUATION = 6; // Created from Smart Evaluation.
 }
