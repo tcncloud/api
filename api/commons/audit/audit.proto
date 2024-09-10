@@ -258,10 +258,11 @@ message AuditEvent {
     // Contact Manager event
     ContactManagerEntryAddEvent contact_manager_entry_add_event = 1200;
     ContactManagerEntryGetEncEvent contact_manager_entry_get_enc_event = 1201;
-    ContactManagerDeleteEvent contact_manager_delete_event = 1202;
-    ContactManagerKycEvent contact_manager_kyc_event = 1203;
+    ContactManagerDeleteEvent contact_manager_delete_event = 1202 [deprecated = true];
+    ContactManagerKycEvent contact_manager_kyc_event = 1203 [deprecated = true];
     ContactManagerEntryEditEvent contact_manager_entry_edit_event = 1204;
     ContactManagerListUploadEvent contact_manager_list_upload_event = 1205;
     ContactManagerKycEvent contact_manager_kyc_verification_event = 1206;
+    ContactManagerDeleteEvent contact_manager_entry_delete_event = 1207;
   }
 }

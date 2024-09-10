@@ -2,8 +2,10 @@ syntax = "proto3";
 
 package api.commons.audit;
 
-import "api/v1alpha1/contactmanager/contactmanager.proto";
+import "api/commons/classifier.proto";
+import "api/commons/contactmanager.proto";
 
+//payload for CreateContactEntry(upload) and AddContactEntry
 message ContactManagerEntryAddEvent {
   ContactManagerEntryEvent addEvent = 1; //add event
 }
@@ -16,22 +18,27 @@ message ContactManagerEntryEditEvent {
   ContactManagerEntryEvent editEvent = 1; //edit event
 }
 
-message ContactManagerDeleteEvent {}
+message ContactManagerDeleteEvent {
+  ContactManagerEntryEvent deleteEvent = 1; //delete event
+}
 
 //payload for add/edit/decrypt
 message ContactManagerEntryEvent {
   int64 ContactManagerListId = 1; //contact manager list id
-  int64 ContactManagerEntryId = 2; //contact manager entry id
+  int64 ContactManagerEntryId = 2; //contact manager entry
   repeated int64 ContactManagerEntryListIds = 3; //entry list Ids added/edited/decrypted
 }
 
-//payload for contact list upload
 //payload for contact list upload
 message ContactManagerListUploadEvent {
   int64 ContactManagerListId = 1; // Contact manager list ID
   int64 NumberOfContactsUploaded = 2; // Number of contacts received from LMS
   int64 NumberOfSuccessfulContactsUploaded = 3; // Number of contacts inserted
   int64 NumberOfFailedContacts = 4; // Number of contacts failed to be inserted
+  int64 NumberOfNewContacts = 5; // Number of new contacts in the list
+  int64 NumberOfDuplicateContacts = 6; //Number of duplicate contacts in the list
+  api.commons.ClassifierEntityType DeDupFieldType = 7;
+  api.commons.DeDuplicationMergeStrategy DeDupMergeStrategy = 8;
 }
 
 //payload for decrypt of ContactManagerEntry during KYC
