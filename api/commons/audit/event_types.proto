@@ -224,6 +224,9 @@ enum EventType {
   TICKET_TEMPLATE_STATE_CHANGE_EVENT = 613;
   // ticket-project-state event
   TICKET_PROJECT_STATE_CHANGE_EVENT = 614;
+  // ticket-add-contact-event
+  TICKET_CONTACT_ADD_EVENT = 615;
+
   // Compliance Events
   // rnd query event
   COMPLIANCE_RND_QUERY_EVENT = 700;
@@ -258,19 +261,20 @@ enum EventType {
   EVENT_TYPE_DELIVERY_SUCCESS = 1101;
 
   //ContactManager Events
-  // add event
+  //CreateContactEntry(upload) and AddContactEntry
   EVENT_TYPE_CONTACT_MANAGER_ADD_EVENT = 1200;
   // view event
   EVENT_TYPE_CONTACT_MANAGER_ENTRY_VIEW_EVENT = 1201;
   // kyc event
-  EVENT_TYPE_CONTACT_MANAGER_KYC_ENC_VIEW_EVENT = 1202;
+  EVENT_TYPE_CONTACT_MANAGER_KYC_ENC_VIEW_EVENT = 1202 [deprecated = true];
   // ttl event
-  EVENT_TYPE_CONTACT_MANAGER_TTL_EVENT = 1203;
+  EVENT_TYPE_CONTACT_MANAGER_TTL_EVENT = 1203 [deprecated = true];
   // edit event
   EVENT_TYPE_CONTACT_MANAGER_EDIT_EVENT = 1204;
   // upload event
   EVENT_TYPE_CONTACT_MANAGER_UPLOAD_EVENT = 1205;
-
   // KYC verification event
   EVENT_TYPE_CONTACT_MANAGER_VERIFICATION_EVENT = 1206;
+  //Contact Manager entry delete event
+  EVENT_TYPE_CONTACT_MANAGER_DELETE_EVENT = 1207;
 }

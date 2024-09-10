@@ -32,3 +32,8 @@ message ContactManagerEntryVal {
   string type = 1;
   string value = 2;
 }
+
+enum DeDuplicationMergeStrategy {
+  KEEP_EXISTING_LIST = 0;
+  REPLACE_EXISTING_LIST = 1;
+}
