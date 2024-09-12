@@ -3822,6 +3822,30 @@ service WFM {
     };
   }
 
+  // Updates the given adherence agent @rule for the org sending the request.
+  // Fields that can be updated are: name, selected_entity_id, selected_entity_type, rule_requirement_type, adherence_rule_notification_config_id.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @rule are invalid.
+  //   - grpc.NotFound: agent rule clause with @adherence_agent_rule_clause_id does not exist.
+  //   - grpc.Internal: error occurs when updating the given @rule.
+  rpc UpdateAdherenceAgentRule(UpdateAdherenceAgentRuleRequest) returns (UpdateAdherenceAgentRuleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherenceagentrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Creates the given adherence agent rule @clause for the org sending the request.
   // Errors:
   //   - grpc.Invalid: the values on the given @clause are invalid.
@@ -3829,6 +3853,30 @@ service WFM {
   //   - grpc.NotFound: agent rule with the @agent_rule_sid does not exist.
   rpc CreateAdherenceAgentRuleClause(CreateAdherenceAgentRuleClauseRequest) returns (CreateAdherenceAgentRuleClauseResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createadherenceagentruleclause";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Updates the given adherence agent rule @clause for the given @org_id.
+  // Fields that can be updated are: action_type, condition, amount, unit.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @clause are invalid.
+  //   - grpc.Internal: error occurs when updating the given @clause.
+  //   - grpc.NotFound: agent rule with the with @adherence_agent_rule_clause_id does not exist to update.
+  rpc UpdateAdherenceAgentRuleClause(UpdateAdherenceAgentRuleClauseRequest) returns (UpdateAdherenceAgentRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherenceagentruleclause";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7974,6 +8022,15 @@ message CreateAdherenceAgentRuleResponse {
   int64 adherence_agent_rule_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for UpdateAdherenceAgentRule.
+message UpdateAdherenceAgentRuleRequest {
+  // Agent rule to update.
+  api.commons.AdherenceAgentRule rule = 1;
+}
+
+// Response message for UpdateAdherenceAgentRule.
+message UpdateAdherenceAgentRuleResponse {}
+
 // Request message for CreateAdherenceAgentRuleClause.
 message CreateAdherenceAgentRuleClauseRequest {
   // Agent rule clause to create for the org sending the request.
@@ -7985,6 +8042,15 @@ message CreateAdherenceAgentRuleClauseResponse {
   // ID of the created agent rule clause.
   int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
 }
+
+// Request message for UpdateAdherenceAgentRuleClause.
+message UpdateAdherenceAgentRuleClauseRequest {
+  // Agent rule clause to update.
+  api.commons.AdherenceAgentRuleClause clause = 1;
+}
+
+// Response message for UpdateAdherenceAgentRuleClause.
+message UpdateAdherenceAgentRuleClauseResponse {}
 
 // Request message for ListAdherenceAgentRules.
 message ListAdherenceAgentRulesRequest {}
