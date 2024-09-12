@@ -3638,6 +3638,30 @@ service WFM {
     };
   }
 
+  // Updates the given adherence @notification_config for the org sending the request.
+  // Fields that can be updated are: name.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @notification_config are invalid.
+  //   - grpc.NotFound: the given notification config is not found.
+  //   - grpc.Internal: error occurs when updating the given @notification_config.
+  rpc UpdateAdherenceRuleNotificationConfig(UpdateAdherenceRuleNotificationConfigRequest) returns (UpdateAdherenceRuleNotificationConfigResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherencerulenotificationconfig";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Creates the given adherence @notification_config_entry for the org sending the request.
   // Errors:
   //   - grpc.Invalid: the values on the given @notification_config_entry are invalid.
@@ -3645,6 +3669,30 @@ service WFM {
   //   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
   rpc CreateAdherenceRuleNotificationConfigEntry(CreateAdherenceRuleNotificationConfigEntryRequest) returns (CreateAdherenceRuleNotificationConfigEntryResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createadherencerulenotificationconfigentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Updates the given adherence @notification_config_entry for the org sending the request.
+  // Fields that can be updated are: recipient_user_id, notification_medium, seconds_to_wait_for_no_response.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @notification_config_entry are invalid.
+  //   - grpc.NotFound: the given notification config entry is not found.
+  //   - grpc.Internal: error occurs when updating the given @notification_config_entry.
+  rpc UpdateAdherenceRuleNotificationConfigEntry(UpdateAdherenceRuleNotificationConfigEntryRequest) returns (UpdateAdherenceRuleNotificationConfigEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherencerulenotificationconfigentry";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7842,6 +7890,15 @@ message CreateAdherenceRuleNotificationConfigResponse {
   int64 adherence_rule_notification_config_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for UpdateAdherenceRuleNotificationConfig.
+message UpdateAdherenceRuleNotificationConfigRequest {
+  // Notification config to update.
+  api.commons.AdherenceRuleNotificationConfig notification_config = 1;
+}
+
+// Response message for UpdateAdherenceRuleNotificationConfig.
+message UpdateAdherenceRuleNotificationConfigResponse {}
+
 // Request message for CreateAdherenceRuleNotificationConfigEntry.
 message CreateAdherenceRuleNotificationConfigEntryRequest {
   // Notification config entry to create for the org sending the request.
@@ -7853,6 +7910,15 @@ message CreateAdherenceRuleNotificationConfigEntryResponse {
   // ID of the created notification config entry.
   int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
 }
+
+// Request message for UpdateAdherenceRuleNotificationConfigEntry.
+message UpdateAdherenceRuleNotificationConfigEntryRequest {
+  // Notification config entry to update.
+  api.commons.AdherenceRuleNotificationConfigEntry notification_config_entry = 1;
+}
+
+// Response message for UpdateAdherenceRuleNotificationConfigEntry.
+message UpdateAdherenceRuleNotificationConfigEntryResponse {}
 
 // Request message for ListAdherenceRuleNotificationConfigs.
 message ListAdherenceRuleNotificationConfigsRequest {}
