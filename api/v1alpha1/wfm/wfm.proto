@@ -3754,6 +3754,31 @@ service WFM {
     };
   }
 
+  // Updates the given adherence departmental @rule for the org sending the request.
+  // Fields that can be updated are: name, selected_entity_id, selected_entity_type, rule_requirement_type,
+  // rule_range, custom_range, adherence_rule_notification_config_id.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @rule are invalid.
+  //   - grpc.NotFound: departmental rule clause with @adherence_departmental_rule_clause_id does not exist.
+  //   - grpc.Internal: error occurs when updating the given @rule.
+  rpc UpdateAdherenceDepartmentalRule(UpdateAdherenceDepartmentalRuleRequest) returns (UpdateAdherenceDepartmentalRuleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherencedepartmentalrule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Creates the given adherence departmental rule @clause for the org sending the request.
   // Errors:
   //   - grpc.Invalid: the values on the given @clause are invalid.
@@ -3761,6 +3786,30 @@ service WFM {
   //   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
   rpc CreateAdherenceDepartmentalRuleClause(CreateAdherenceDepartmentalRuleClauseRequest) returns (CreateAdherenceDepartmentalRuleClauseResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createadherencedepartmentalruleclause";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Updates the given adherence departmental rule @clause for the given @org_id.
+  // Fields that can be updated are: action_type, condition, amount, unit, per_amount, per_unit.
+  // Errors:
+  //   - grpc.Invalid: the values on the given @clause are invalid.
+  //   - grpc.Internal: error occurs when updating the given @clause.
+  //   - grpc.NotFound: departmental rule with the with @adherence_departmental_rule_clause_id does not exist to update.
+  rpc UpdateAdherenceDepartmentalRuleClause(UpdateAdherenceDepartmentalRuleClauseRequest) returns (UpdateAdherenceDepartmentalRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updateadherencedepartmentalruleclause";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7989,6 +8038,15 @@ message CreateAdherenceDepartmentalRuleResponse {
   int64 adherence_departmental_rule_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for UpdateAdherenceDepartmentalRule.
+message UpdateAdherenceDepartmentalRuleRequest {
+  // Departmental rule to update.
+  api.commons.AdherenceDepartmentalRule rule = 1;
+}
+
+// Response message for UpdateAdherenceDepartmentalRule.
+message UpdateAdherenceDepartmentalRuleResponse {}
+
 // Request message for CreateAdherenceDepartmentalRuleClause.
 message CreateAdherenceDepartmentalRuleClauseRequest {
   // Departmental rule clause to create for the org sending the request.
@@ -8000,6 +8058,15 @@ message CreateAdherenceDepartmentalRuleClauseResponse {
   // ID of the created departmental rule clause.
   int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
 }
+
+// Request message for UpdateAdherenceDepartmentalRuleClause.
+message UpdateAdherenceDepartmentalRuleClauseRequest {
+  // Departmental rule clause to update.
+  api.commons.AdherenceDepartmentalRuleClause clause = 1;
+}
+
+// Response message for UpdateAdherenceDepartmentalRuleClause.
+message UpdateAdherenceDepartmentalRuleClauseResponse {}
 
 // Request message for ListAdherenceDepartmentalRules.
 message ListAdherenceDepartmentalRulesRequest {}
