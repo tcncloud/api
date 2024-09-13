@@ -1298,7 +1298,7 @@ service WFM {
     };
   }
 
-  // ListAgentScheduleGroups lists all schedulable agent groups for the given @entity and @org_id, filled with @member_wfm_agents.
+  // ListAgentScheduleGroups lists all schedulable agent groups for the given @entity filled with @member_wfm_agents for the org sending the request.
   // The given @entity must be either a Node or a ShiftTemplate.
   //
   // Errors:
@@ -3802,7 +3802,7 @@ service WFM {
     };
   }
 
-  // Updates the given adherence departmental rule @clause for the given @org_id.
+  // Updates the given adherence departmental rule @clause for the org sending the request.
   // Fields that can be updated are: action_type, condition, amount, unit, per_amount, per_unit.
   // Errors:
   //   - grpc.Invalid: the values on the given @clause are invalid.
@@ -3918,7 +3918,7 @@ service WFM {
     };
   }
 
-  // Updates the given adherence agent rule @clause for the given @org_id.
+  // Updates the given adherence agent rule @clause for the org sending the request.
   // Fields that can be updated are: action_type, condition, amount, unit.
   // Errors:
   //   - grpc.Invalid: the values on the given @clause are invalid.
