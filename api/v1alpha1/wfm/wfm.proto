@@ -1278,7 +1278,7 @@ service WFM {
     };
   }
 
-  // Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+  // Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications for the org sending the request.
   // Required permissions:
   //   NONE
   // Errors:
