@@ -3661,6 +3661,29 @@ service WFM {
     };
   }
 
+  // Deletes the notification config entry that has the given @adherence_rule_notification_config_entry_id for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the given @adherence_rule_notification_config_entry_id is invalid.
+  //   - grpc.Internal: error occurs when deleting the given @adherence_rule_notification_config_entry_id.
+  //   - grpc.NotFound: notification config with the @adherence_rule_notification_config_entry_id does not exist.
+  rpc DeleteAdherenceRuleNotificationConfigEntry(DeleteAdherenceRuleNotificationConfigEntryRequest) returns (DeleteAdherenceRuleNotificationConfigEntryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteadherencerulenotificationconfigentry";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Gets all adherence rule @notification_configs for the org sending the request.
   // Configs will include their respective entries.
   // Errors:
@@ -3713,6 +3736,29 @@ service WFM {
   //   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
   rpc CreateAdherenceDepartmentalRuleClause(CreateAdherenceDepartmentalRuleClauseRequest) returns (CreateAdherenceDepartmentalRuleClauseResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/createadherencedepartmentalruleclause";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Deletes the departmental rule clause that has the given @adherence_departmental_rule_clause_id for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the value of the given @adherence_departmental_rule_clause_id is invalid.
+  //   - grpc.Internal: error occurs when deleting the given @adherence_departmental_rule_clause_id.
+  //   - grpc.NotFound: departmental rule with the @adherence_departmental_rule_clause_id does not exist.
+  rpc DeleteAdherenceDepartmentalRuleClause(DeleteAdherenceDepartmentalRuleClauseRequest) returns (DeleteAdherenceDepartmentalRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteadherencedepartmentalruleclause";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -3804,6 +3850,29 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the rules.
   rpc ListAdherenceAgentRules(ListAdherenceAgentRulesRequest) returns (ListAdherenceAgentRulesResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listadherenceagentrules";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  // Deletes the agent rule clause that has the given @adherence_agent_rule_clause_id for the org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the value of the given @adherence_agent_rule_clause_id is invalid.
+  //   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
+  //   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
+  rpc DeleteAdherenceAgentRuleClause(DeleteAdherenceAgentRuleClauseRequest) returns (DeleteAdherenceAgentRuleClauseResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteadherenceagentruleclause";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -7854,6 +7923,15 @@ message CreateAdherenceRuleNotificationConfigEntryResponse {
   int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for DeleteAdherenceRuleNotificationConfigEntry.
+message DeleteAdherenceRuleNotificationConfigEntryRequest {
+  // ID of the notification config entry to delete.
+  int64 adherence_rule_notification_config_entry_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for DeleteAdherenceRuleNotificationConfigEntry.
+message DeleteAdherenceRuleNotificationConfigEntryResponse {}
+
 // Request message for ListAdherenceRuleNotificationConfigs.
 message ListAdherenceRuleNotificationConfigsRequest {}
 
@@ -7887,6 +7965,15 @@ message CreateAdherenceDepartmentalRuleClauseResponse {
   int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
 }
 
+// Request message for DeleteAdherenceDepartmentalRuleClause.
+message DeleteAdherenceDepartmentalRuleClauseRequest {
+  // ID of the departmental rule clause to delete.
+  int64 adherence_departmental_rule_clause_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for DeleteAdherenceDepartmentalRuleClause.
+message DeleteAdherenceDepartmentalRuleClauseResponse {}
+
 // Request message for ListAdherenceDepartmentalRules.
 message ListAdherenceDepartmentalRulesRequest {}
 
@@ -7919,6 +8006,15 @@ message CreateAdherenceAgentRuleClauseResponse {
   // ID of the created agent rule clause.
   int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
 }
+
+// Request message for DeleteAdherenceAgentRuleClause.
+message DeleteAdherenceAgentRuleClauseRequest {
+  // ID of the agent rule clause to delete.
+  int64 adherence_agent_rule_clause_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for DeleteAdherenceAgentRuleClause.
+message DeleteAdherenceAgentRuleClauseResponse {}
 
 // Request message for ListAdherenceAgentRules.
 message ListAdherenceAgentRulesRequest {}
