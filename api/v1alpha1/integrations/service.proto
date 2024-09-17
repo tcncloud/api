@@ -462,6 +462,8 @@ message ProcessReq {
   map<string, Value> params = 6;
   // can be left nil, used for verification requests
   repeated Condition conds = 7;
+  int64 call_sid = 10;
+  api.commons.CallType.Enum call_type = 11;
 }
 
 message ProcessRes {
@@ -1451,6 +1453,8 @@ message ProcessWorkflowReq {
   // params are what the user fills out before it is processed.
   // It will be merged with plugin instance data and potentially link data
   map<string, Value> params = 5;
+  int64 call_sid = 6;
+  api.commons.CallType.Enum call_type = 7;
 }
 
 message ProcessWorkflowRes {
