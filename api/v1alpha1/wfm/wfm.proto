@@ -1278,6 +1278,42 @@ service WFM {
     };
   }
 
+  // Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the arguments in the request are invalid.
+  //   - grpc.Internal: error occurs getting the patterns or their scheduling activity sids.
+  rpc ListPatternsForSchedulingActivityClassifications(ListPatternsForSchedulingActivityClassificationsRequest) returns (ListPatternsForSchedulingActivityClassificationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listpatternsforschedulingactivityclassifications";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Gets the time off scheduling activity for the org sending the request.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   -grpc.NotFound: the time off scheduling activity for the org is not found.
+  //   -grpc.Internal: error occurs when getting time off scheduling activity.
+  rpc GetTimeOffSchedulingActivity(GetTimeOffSchedulingActivityRequest) returns (GetTimeOffSchedulingActivityResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/gettimeoffschedulingactivity";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Creates an agent group with the provided parameters.
   // A successful response should contain the @agent_group_sid of the newly created entity.
   // The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -5219,6 +5255,30 @@ message GetOnCallSchedulingActivityReq {}
 message GetOnCallSchedulingActivityRes {
   // The on call scheduling activity
   SchedulingActivity on_call_scheduling_activity = 1;
+}
+
+// Request message for the ListPatternsForSchedulingActivityClassifications RPC
+message ListPatternsForSchedulingActivityClassificationsRequest {
+  // Entity to list the the patterns for.
+  ParentEntity parent_entity = 1;
+  // Scheduling Activity Classifications to get patterns for.
+  repeated commons.SchedulingActivityClassification scheduling_activity_classifications = 2;
+}
+
+message ListPatternsForSchedulingActivityClassificationsResponse {
+  // The requested open times patterns.
+  repeated OpenTimesPattern open_times_patterns = 1;
+  // The requested agent availability patterns.
+  repeated AgentAvailabilityPattern agent_availability_patterns = 2;
+}
+
+// Request message for the GetTimeOffSchedulingActivity RPC
+message GetTimeOffSchedulingActivityRequest {}
+
+// Response message for the GetTimeOffSchedulingActivity RPC
+message GetTimeOffSchedulingActivityResponse {
+  // The time off scheduling activity
+  SchedulingActivity scheduling_activity = 1;
 }
 
 // Represents a group of agents that have the same parent and other common properties.
