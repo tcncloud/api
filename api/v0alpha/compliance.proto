@@ -1070,7 +1070,9 @@ message ScrubListRes {
   api.commons.ContentType content_type = 3;
 
   int64 entries_added = 4;
-  repeated string invalid_entries = 5;
+  repeated string invalid_entries = 5 [deprecated = true];
+  int64 total_invalid = 6;
+  repeated api.commons.InvalidScrubListEntry invalid_list = 7;
 }
 
 message DeleteScrubListReq {

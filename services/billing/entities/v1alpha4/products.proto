@@ -66,5 +66,9 @@ message ProductConfig {
     // compliance (10000 - 10999)
     BasicConfig data_management_compliance_compliance_rnd_query = 10000;
     BasicConfig data_management_compliance_compliance_rnd_query_cached = 10001;
+
+    // vanalytics (20000 - 21000)
+    BasicConfig workforce_engagement_workforce_optimization_voice_analytics_call_transcripts = 20000;
+    BasicConfig workforce_engagement_workforce_optimization_voice_analytics_accumulated_call_transcripts = 20001;
   }
 }
