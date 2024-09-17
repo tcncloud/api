@@ -79,7 +79,7 @@ message UpdateHuntGroupExileLinksRequest {
 message UpdateHuntGroupExileLinksResponse {}
 
 //
-// Agent Triggers
+// Agent Trigger
 //
 
 // AgentTrigger is the entity for a hunt group agent trigger.
@@ -257,3 +257,22 @@ message UpdateHuntGroupAgentTriggersRequest {
 
 // UpdateHuntGroupAgentTriggersResponse is the response message for the UpdateHuntGroupAgentTriggers rpc.
 message UpdateHuntGroupAgentTriggersResponse {}
+
+//
+// Hunt Group
+//
+
+// AdminCopyHuntGroupToOrganizationRequest is the request message for the AdminCopyHuntGroupToOrganization rpc.
+message AdminCopyHuntGroupToOrganizationRequest {
+  // The id of the source organization where the hunt group is copied from.
+  string from_organization_id = 1;
+  // The id of the destination organization where the hunt group is copied to.
+  string to_organization_id = 2;
+  // The sid of the hunt group to copy.
+  int64 hunt_group_sid = 3;
+  // The name of the new hunt group.
+  string new_hunt_group_name = 4;
+}
+
+// AdminCopyHuntGroupToOrganizationResponse is the response message for the AdminCopyHuntGroupToOrganization rpc.
+message AdminCopyHuntGroupToOrganizationResponse {}
