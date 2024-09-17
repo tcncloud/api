@@ -47,6 +47,7 @@ enum TimeZone {
   TIME_ZONE_PACIFIC_CHATHAM = 41; // Pacific/Chatham
   TIME_ZONE_ASIA_SINGAPORE = 42; // Singapore
   TIME_ZONE_ASIA_JAPAN = 43; // Japan
+  TIME_ZONE_AMERICA_SANTIAGO = 44; // America/Santiago
 }
 
 message TimeZoneWrapper {
