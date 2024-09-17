@@ -971,6 +971,8 @@ enum AdherenceRuleUnit {
 
 // Represents an adherence departmental rule.
 message AdherenceDepartmentalRule {
+  reserved "clauses";
+  reserved 8;
   // ID of this departmental rule.
   int64 adherence_departmental_rule_id = 1 [jstype = JS_STRING];
   // Name of this departmental rule.
@@ -987,7 +989,7 @@ message AdherenceDepartmentalRule {
   // Custom date range to apply the rule, must only be set when @rule_range is CUSTOM_DATE_RANGE.
   DatetimeRange custom_range = 7;
   // Clauses that belong to this rule. Only used by List methods.
-  repeated AdherenceDepartmentalRule clauses = 8;
+  repeated AdherenceDepartmentalRuleClause rule_clauses = 9;
 }
 
 // Represents an adherence departmental rule clause.
@@ -1013,6 +1015,8 @@ message AdherenceDepartmentalRuleClause {
 
 // Represents an adherence agent rule.
 message AdherenceAgentRule {
+  reserved "clauses";
+  reserved 6;
   // ID of this agent rule.
   int64 adherence_agent_rule_id = 1 [jstype = JS_STRING];
   // Name of this agent rule.
@@ -1025,7 +1029,7 @@ message AdherenceAgentRule {
   // ID of the notification config that this rule will use/follow.
   int64 adherence_rule_notification_config_id = 5 [jstype = JS_STRING];
   // Clauses that belong to this rule. Only used by List methods.
-  repeated AdherenceAgentRuleClause clauses = 6;
+  repeated AdherenceAgentRuleClause rule_clauses = 7;
 }
 
 // Types of agent rule actions.
