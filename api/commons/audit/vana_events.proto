@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.commons.audit;
 
+import "api/commons/acd.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -105,4 +106,19 @@ message VanaPhraseCorrectionEvent {
 // VanaCreateTranscriptEvent represents a newly created transcript.
 message VanaCreateTranscriptEvent {
   int64 transcript_sid = 1;
+  oneof metadata {
+    Call call = 2;
+    Sms sms = 3;
+  }
+
+  message Call {
+    int64 call_sid = 1;
+    api.commons.CallType.Enum call_type = 2;
+    google.protobuf.Duration talk_time = 3;
+    google.protobuf.Duration audio_time = 4;
+  }
+
+  message Sms {
+    int64 conversation_sid = 1;
+  }
 }
