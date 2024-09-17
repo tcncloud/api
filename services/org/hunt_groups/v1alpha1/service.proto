@@ -57,7 +57,7 @@ service HuntGroupsService {
   }
 
   //
-  // Agent Triggers
+  // Agent Trigger
   //
 
   // ListHuntGroupAgentTriggers returns a list of agent triggers for the given hunt group.
@@ -94,6 +94,25 @@ service HuntGroupsService {
       sets: [
         {
           permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  //
+  // Hunt Group
+  //
+
+  // AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
+  // This will create a new hunt group in the destination organization with the same
+  // settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+  rpc AdminCopyHuntGroupToOrganization(AdminCopyHuntGroupToOrganizationRequest) returns (AdminCopyHuntGroupToOrganizationResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/admincopyhuntgrouptoorganization";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
         }
       ]
     };
