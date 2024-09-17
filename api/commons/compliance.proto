@@ -309,3 +309,8 @@ message RuleResponse {
   // the response from the plugin
   string plugin_response = 3;
 }
+
+message InvalidScrubListEntry {
+  string entry = 1;
+  string error_message = 2;
+}
