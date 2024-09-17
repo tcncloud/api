@@ -574,6 +574,17 @@ service Acd {
       ]
     };
   }
+  rpc ValidateField(ValidateFieldReq) returns (ValidateFieldRes) {
+    option (google.api.http).post = "/api/v0alpha/acd/validatefield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
 }
 
 message AgentGetStatusRequest {
@@ -1095,4 +1106,15 @@ message PopulateWorkflowFieldsReq {
 
 message PopulateWorkflowFieldsRes {
   map<string, api.v1alpha1.integrations.Value> values = 1;
+}
+
+message ValidateFieldReq {
+  int64 voice_session_sid = 1;
+  api.commons.integrations.Validation validation_type = 2;
+  string field_name = 3;
+}
+
+message ValidateFieldRes {
+  bool valid = 1;
+  string reason = 2;
 }
