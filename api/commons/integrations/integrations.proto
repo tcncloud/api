@@ -506,6 +506,8 @@ enum Validation {
 
   VALIDATION_ROUTING = 501;
   VALIDATION_ACCOUNT = 502;
+
+  VALIDATION_TRANSACTION_ID = 601;
 }
 
 enum InvoiceDisplayType {
