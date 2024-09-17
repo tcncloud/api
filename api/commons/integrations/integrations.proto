@@ -229,6 +229,8 @@ enum RequestMethod {
   REQUEST_METHOD_NTVB_SUBSCRIPTION_INFO = 2812;
   REQUEST_METHOD_NTVB_VACATION_STOP = 2813;
   REQUEST_METHOD_NTVB_AUTHTEST = 2814;
+  REQUEST_METHOD_NTVB_COMPLETE_PENDING_ORDER = 2815;
+  REQUEST_METHOD_NTVB_PLACE_ORDER = 2816;
 
   REQUEST_METHOD_ELAVON_CREDIT_CARD_SALE = 2901;
   REQUEST_METHOD_ELAVON_ADD_RECURRING = 2902;
@@ -304,6 +306,7 @@ enum RequestMethod {
   REQUEST_METHOD_NEWZWARE_VACATION_RESTART = 3807;
   REQUEST_METHOD_NEWZWARE_VACATION_UPDATE = 3808;
   REQUEST_METHOD_NEWZWARE_PHONE_LOOKUP_MULTI = 3809;
+  REQUEST_METHOD_NEWZWARE_SUBSCRIPTION_RESTART = 3810;
 
   REQUEST_METHOD_PRIOCOMMERCE_ACH_PAYMENT = 3901;
   REQUEST_METHOD_PRIOCOMMERCE_CC_PAYMENT = 3902;
@@ -922,6 +925,8 @@ message ExecuteFlow {
     ExecuteNtvbSubscriptionInfo ntvb_subscription_info = 2812;
     ExecuteNtvbVacationStop ntvb_vacation_stop = 2813;
     ExecuteNtvbAuthtest ntvb_authtest = 2814;
+    ExecuteNtvbCompletePendingOrder ntvb_complete_pending_order = 2815;
+    ExecuteNtvbPlaceOrder ntvb_place_order = 2816;
 
     ExecuteElavonCreditCardSale elavon_credit_card_sale = 2901;
     ExecuteElavonAddRecurring elavon_add_recurring = 2902;
@@ -997,6 +1002,7 @@ message ExecuteFlow {
     ExecuteNewzwareVacationRestart newzware_vacation_restart = 3807;
     ExecuteNewzwareVacationUpdate newzware_vacation_update = 3808;
     ExecuteNewzwarePhoneLookupMulti newzware_phone_lookup_multi = 3809;
+    ExecuteNewzwareSubscriptionRestart newzware_subscription_restart = 3810;
 
     ExecutePriocommerceAchPayment priocommerce_ach_payment = 3901;
     ExecutePriocommerceCcPayment priocommerce_cc_payment = 3902;
@@ -1308,6 +1314,8 @@ message ExecuteNtvbStartOutgoingCall {}
 message ExecuteNtvbSubscriptionInfo {}
 message ExecuteNtvbVacationStop {}
 message ExecuteNtvbAuthtest {}
+message ExecuteNtvbCompletePendingOrder {}
+message ExecuteNtvbPlaceOrder {}
 
 message ExecuteElavonCreditCardSale {}
 message ExecuteElavonAddRecurring {}
@@ -1383,6 +1391,7 @@ message ExecuteNewzwareComplaintUpdate {}
 message ExecuteNewzwareVacationRestart {}
 message ExecuteNewzwareVacationUpdate {}
 message ExecuteNewzwarePhoneLookupMulti {}
+message ExecuteNewzwareSubscriptionRestart {}
 
 message ExecutePriocommerceAchPayment {}
 message ExecutePriocommerceCcPayment {}
