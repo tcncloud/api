@@ -922,6 +922,9 @@ message GetUserSessionDataResponse {
 
     // The override for the users locale preferences
     api.commons.LocalePreferences locale_preferences_override = 35;
+
+    // The access token expiration time for the user.
+    google.protobuf.Timestamp access_token_expiration = 36;
   }
 
   // The user the data is about
