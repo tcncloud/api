@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons;
 
 import "api/commons/acd.proto";
+import "api/commons/omnichannel.proto";
 import "google/protobuf/timestamp.proto";
 
 // TODO: Enum names are not very intuitive; improve.
@@ -320,6 +321,7 @@ message Scorecard {
   repeated string custom_field_keys = 19; // Optional. Set of unique keys for custom key-value fields.
   repeated api.commons.CallType.Enum call_types = 20; // call types supported by scorecard
   google.protobuf.Timestamp updated_at = 21; // time scorecard was last updated
+  repeated api.commons.ChannelType channels = 22; // Channels supported by the scorecard.
 }
 
 // AutoQuestion represents an automatically scored question.
