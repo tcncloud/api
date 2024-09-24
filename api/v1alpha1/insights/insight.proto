@@ -143,6 +143,8 @@ enum OutputConfigurationType {
   OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES = 2;
   // Output configuration for pie chart format
   OUTPUT_CONFIGURATION_TYPE_PIE_CHART = 3;
+  // Output configuration for fixed width format
+  OUTPUT_CONFIGURATION_TYPE_FIXED_WIDTH = 4;
 }
 
 // Enum for Column Format Type
@@ -169,6 +171,8 @@ enum OperationType {
   OPERATION_TYPE_FORMAT_NUMBER = 9;
   // Precision operation
   OPERATION_TYPE_PRECISION = 10;
+  // PAD operation
+  OPERATION_TYPE_PAD = 11;
 }
 
 // ColumnSort specifies how a column should be sorted
@@ -241,6 +245,16 @@ message FormatSeries {
   repeated string format_parts = 1;
 }
 
+// PadOperation contains padding details
+message PadOperation {
+  // Character to pad the string with
+  string pad_character = 1;
+  // Flag to pad before or after the string
+  bool pad_left = 2;
+  // Size of the padding
+  int32 pad_size = 3;
+}
+
 // Message for ColumnOperation
 message ColumnOperation {
   // Operation type
@@ -250,6 +264,8 @@ message ColumnOperation {
     double float_value = 2;
     // Series values for operation
     FormatSeries format_series = 3;
+    // Pad operation
+    PadOperation pad_operation = 4;
   }
 }
 
