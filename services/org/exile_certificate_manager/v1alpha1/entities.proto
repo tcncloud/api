@@ -42,8 +42,14 @@ message ExileConfiguration {
   string description = 4;
   // The type of exile configuration
   ExileConfigurationType type = 5;
-  // The parameters of the exile configuration
-  // This is a JSON string with the following information:
+  // The parameters of the exile configuration (JSON string)
+  string parameters = 6;
+
+  // For the following configuration types:
+  // - Artiva HCX
+  // - Artiva RM
+  // - FACS
+  // the required parameters are:
   //   1. Database Host
   //   2. Database URL
   //   3. Database Port
@@ -51,7 +57,14 @@ message ExileConfiguration {
   //   5. Database Password
   //   6. Max Number Connections
   //   7. Max Number Exile Jobs
-  string parameters = 6;
+
+  // For the following configuration types:
+  // - Velosidy
+  // the required parameters are:
+  //   1. Username
+  //   2. Token
+  //   3. Gateway Url
+  //   4. Tenant Name
 }
 
 // ExileConfigurationType defines the types of exile configuration
@@ -66,4 +79,6 @@ enum ExileConfigurationType {
   EXILE_CONFIGURATION_TYPE_ARTIVA_RM = 3;
   // Type FACS specifies the configuration for FACS (parameters required).
   EXILE_CONFIGURATION_TYPE_FACS = 4;
+  // Type Velosidy specifies the configuration for Velosidy (parameters required).
+  EXILE_CONFIGURATION_TYPE_VELOSIDY = 5;
 }
