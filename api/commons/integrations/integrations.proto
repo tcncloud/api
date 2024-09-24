@@ -51,7 +51,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_NAVIGA_DTI_CIRC = 4400;
   INTEGRATION_TYPE_NAVIGA_DTI_CS = 4500;
   INTEGRATION_TYPE_SWERVEPAY = 4600;
-  INTEGRATION_TYPE_VERADIGM = 4700;
+  INTEGRATION_TYPE_VERADIGM = 4700 [deprecated = true];
+  INTEGRATION_TYPE_VERADIGM_PRACTICE_MANAGEMENT = 4800;
 
   INTEGRATION_TYPE_DEBUG = 5000;
 }
@@ -365,15 +366,25 @@ enum RequestMethod {
   REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_SALE = 4621;
   REQUEST_METHOD_SWERVEPAY_PROCESS_NEW_TRANSACTION_VALIDATE = 4622;
 
-  REQUEST_METHOD_VERADIGM_GET_TOKEN = 4701;
-  REQUEST_METHOD_VERADIGM_GET_USER_AUTHENTICATION = 4702;
-  REQUEST_METHOD_VERADIGM_GET_LOCATIONS = 4703;
-  REQUEST_METHOD_VERADIGM_GET_PATIENT_ACCOUNT_BALANCE = 4704;
-  REQUEST_METHOD_VERADIGM_GET_PAYMENTS = 4705;
-  REQUEST_METHOD_VERADIGM_GET_PLACES_OF_SERVICE = 4706;
-  REQUEST_METHOD_VERADIGM_SAVE_PAYMENT_TRANSACTION = 4707;
-  REQUEST_METHOD_VERADIGM_SAVE_REFUND_TRANSACTION = 4708;
-  REQUEST_METHOD_VERADIGM_SAVE_VOUCHER_PAYMENT = 4709;
+  REQUEST_METHOD_VERADIGM_GET_TOKEN = 4701 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_GET_USER_AUTHENTICATION = 4702 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_GET_LOCATIONS = 4703 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_GET_PATIENT_ACCOUNT_BALANCE = 4704 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_GET_PAYMENTS = 4705 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_GET_PLACES_OF_SERVICE = 4706 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_SAVE_PAYMENT_TRANSACTION = 4707 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_SAVE_REFUND_TRANSACTION = 4708 [deprecated = true];
+  REQUEST_METHOD_VERADIGM_SAVE_VOUCHER_PAYMENT = 4709 [deprecated = true];
+
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_TOKEN = 4801;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_USER_AUTHENTICATION = 4802;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_LOCATIONS = 4803;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_PATIENT_ACCOUNT_BALANCE = 4804;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_PAYMENTS = 4805;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_PLACES_OF_SERVICE = 4806;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_PAYMENT_TRANSACTION = 4807;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_REFUND_TRANSACTION = 4808;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_VOUCHER_PAYMENT = 4809;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -1073,13 +1084,23 @@ message ExecuteFlow {
     ExecuteSwervepayProcessNewTransactionSale swervepay_process_new_transaction_sale = 4621;
     ExecuteSwervepayProcessNewTransactionValidate swervepay_process_new_transaction_validate = 4622;
 
-    ExecuteVeradigmGetLocations veradigm_get_locations = 4701;
-    ExecuteVeradigmGetPatientAccountBalance veradigm_get_patient_account_balance = 4702;
-    ExecuteVeradigmGetPayments veradigm_get_payments = 4703;
-    ExecuteVeradigmGetPlacesOfService veradigm_get_places_of_service = 4704;
-    ExecuteVeradigmSavePaymentTransaction veradigm_save_payment_transaction = 4705;
-    ExecuteVeradigmSaveRefundTransaction veradigm_save_refund_transaction = 4706;
-    ExecuteVeradigmSaveVoucherPayment veradigm_save_voucher_payment = 4707;
+    ExecuteVeradigmGetLocations veradigm_get_locations = 4701 [deprecated = true];
+    ExecuteVeradigmGetPatientAccountBalance veradigm_get_patient_account_balance = 4702 [deprecated = true];
+    ExecuteVeradigmGetPayments veradigm_get_payments = 4703 [deprecated = true];
+    ExecuteVeradigmGetPlacesOfService veradigm_get_places_of_service = 4704 [deprecated = true];
+    ExecuteVeradigmSavePaymentTransaction veradigm_save_payment_transaction = 4705 [deprecated = true];
+    ExecuteVeradigmSaveRefundTransaction veradigm_save_refund_transaction = 4706 [deprecated = true];
+    ExecuteVeradigmSaveVoucherPayment veradigm_save_voucher_payment = 4707 [deprecated = true];
+
+    ExecuteVeradigmPracticeManagementGetToken veradigm_practice_management_get_token = 4801;
+    ExecuteVeradigmPracticeManagementGetUserAuthentication veradigm_practice_management_get_user_authentication = 4802;
+    ExecuteVeradigmPracticeManagementGetLocations veradigm_practice_management_get_locations = 4803;
+    ExecuteVeradigmPracticeManagementGetPatientAccountBalance veradigm_practice_management_get_patient_account_balance = 4804;
+    ExecuteVeradigmPracticeManagementGetPayments veradigm_practice_management_get_payments = 4805;
+    ExecuteVeradigmPracticeManagementGetPlacesOfService veradigm_practice_management_get_places_of_service = 4806;
+    ExecuteVeradigmPracticeManagementSavePaymentTransaction veradigm_practice_management_save_payment_transaction = 4807;
+    ExecuteVeradigmPracticeManagementSaveRefundTransaction veradigm_practice_management_save_refund_transaction = 4808;
+    ExecuteVeradigmPracticeManagementSaveVoucherPayment veradigm_practice_management_save_voucher_payment = 4809;
 
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
@@ -1473,10 +1494,34 @@ message ExecuteNavigaDTICSServiceErrorTrans {}
 message ExecuteNavigaDTICSStopInfo {}
 message ExecuteNavigaDTICSStopTrans {}
 
-message ExecuteVeradigmGetLocations {}
-message ExecuteVeradigmGetPatientAccountBalance {}
-message ExecuteVeradigmGetPayments {}
-message ExecuteVeradigmGetPlacesOfService {}
-message ExecuteVeradigmSavePaymentTransaction {}
-message ExecuteVeradigmSaveRefundTransaction {}
-message ExecuteVeradigmSaveVoucherPayment {}
+message ExecuteVeradigmGetLocations {
+  option deprecated = true;
+}
+message ExecuteVeradigmGetPatientAccountBalance {
+  option deprecated = true;
+}
+message ExecuteVeradigmGetPayments {
+  option deprecated = true;
+}
+message ExecuteVeradigmGetPlacesOfService {
+  option deprecated = true;
+}
+message ExecuteVeradigmSavePaymentTransaction {
+  option deprecated = true;
+}
+message ExecuteVeradigmSaveRefundTransaction {
+  option deprecated = true;
+}
+message ExecuteVeradigmSaveVoucherPayment {
+  option deprecated = true;
+}
+
+message ExecuteVeradigmPracticeManagementGetToken {}
+message ExecuteVeradigmPracticeManagementGetUserAuthentication {}
+message ExecuteVeradigmPracticeManagementGetLocations {}
+message ExecuteVeradigmPracticeManagementGetPatientAccountBalance {}
+message ExecuteVeradigmPracticeManagementGetPayments {}
+message ExecuteVeradigmPracticeManagementGetPlacesOfService {}
+message ExecuteVeradigmPracticeManagementSavePaymentTransaction {}
+message ExecuteVeradigmPracticeManagementSaveRefundTransaction {}
+message ExecuteVeradigmPracticeManagementSaveVoucherPayment {}
