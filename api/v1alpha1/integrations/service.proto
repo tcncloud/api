@@ -1425,6 +1425,7 @@ message Action {
 message Template {
   oneof val {
     api.commons.integrations.Invoices invoice_template = 1;
+    api.commons.integrations.Receipt receipt_template = 2;
   }
 }
 
