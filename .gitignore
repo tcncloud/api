@@ -16,3 +16,4 @@ pytcnapi
 *.py
 *.py?
 .DS_Store
+enum-csv
