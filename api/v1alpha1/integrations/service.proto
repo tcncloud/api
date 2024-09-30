@@ -411,6 +411,17 @@ service Integrations {
       ]
     };
   }
+  rpc InsertPrivateField(InsertPrivateFieldReq) returns (InsertPrivateFieldRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/insertprivatefield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    }
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1462,4 +1473,21 @@ message ProcessWorkflowRes {
   bool success = 1;
   // the response data from the process
   map<string, Value> data = 2;
+}
+
+enum PrivateFieldType {
+  UNKNOWN = 0;
+  PRIVATE_KEY = 1;
+}
+
+message InsertPrivateFieldReq {
+  string org_id = 1;
+  string name = 2;
+  string server = 3;
+  string value = 4;
+  PrivateFieldType private_field_type = 5;
+}
+
+message InsertPrivateFieldRes {
+  int32 private_field_id = 1;
 }
