@@ -420,7 +420,7 @@ service Integrations {
           permissions: [PERMISSION_INTEGRATIONS_VIEW]
         }
       ]
-    }
+    };
   }
 }
 
