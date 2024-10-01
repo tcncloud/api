@@ -15,4 +15,6 @@ message IdpClient {
   repeated string trusted_peers = 4;
   // The name of the client.
   string name = 5;
+  // The billing id
+  string billing_id = 6;
 }
