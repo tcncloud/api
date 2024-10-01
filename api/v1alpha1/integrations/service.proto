@@ -1482,9 +1482,8 @@ enum PrivateFieldType {
 
 message InsertPrivateFieldReq {
   string name = 1;
-  string server = 2;
-  string value = 3;
-  PrivateFieldType private_field_type = 4;
+  string value = 2;
+  PrivateFieldType private_field_type = 3;
 }
 
 message InsertPrivateFieldRes {
