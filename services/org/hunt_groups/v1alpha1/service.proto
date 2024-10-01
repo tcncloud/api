@@ -117,4 +117,17 @@ service HuntGroupsService {
       ]
     };
   }
+
+  // AdminListHuntGroups returns a list of hunt groups for the given organization.
+  rpc AdminListHuntGroups(AdminListHuntGroupsRequest) returns (AdminListHuntGroupsResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/adminlisthuntgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
 }

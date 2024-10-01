@@ -276,3 +276,23 @@ message AdminCopyHuntGroupToOrganizationRequest {
 
 // AdminCopyHuntGroupToOrganizationResponse is the response message for the AdminCopyHuntGroupToOrganization rpc.
 message AdminCopyHuntGroupToOrganizationResponse {}
+
+// AdminListHuntGroupsRequest is the request message for the AdminListHuntGroups rpc.
+message AdminListHuntGroupsRequest {
+  // The id of the organization to list the hunt groups for.
+  string org_id = 1;
+}
+
+// AdminListHuntGroupsResponse is the response message for the AdminListHuntGroups rpc.
+message AdminListHuntGroupsResponse {
+  // HuntGroup is the entity for a simplified hunt group details.
+  message HuntGroup {
+    // The hunt group sid.
+    int64 hunt_group_sid = 2;
+    // The name of the hunt group.
+    string hunt_group_name = 3;
+  }
+
+  // The list of hunt groups.
+  repeated HuntGroup hunt_groups = 1;
+}
