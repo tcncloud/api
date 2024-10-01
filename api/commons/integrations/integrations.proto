@@ -53,7 +53,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_SWERVEPAY = 4600;
   INTEGRATION_TYPE_VERADIGM = 4700 [deprecated = true];
   INTEGRATION_TYPE_VERADIGM_PRACTICE_MANAGEMENT = 4800;
-
+  INTEGRATION_TYPE_PDCFLOW = 4900;
   INTEGRATION_TYPE_DEBUG = 5000;
 }
 
@@ -385,6 +385,9 @@ enum RequestMethod {
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_PAYMENT_TRANSACTION = 4807;
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_REFUND_TRANSACTION = 4808;
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_VOUCHER_PAYMENT = 4809;
+
+  REQUEST_METHOD_PDCFLOW_TOKENIZE_CREDIT_CARD = 4901;
+  REQUEST_METHOD_PDCFLOW_CC_TRANSACTION = 4902;
 
   // just evaluates the request and sends back the data
   // this is useful for CompositeValue types, or when we are wanting to see
@@ -1102,6 +1105,9 @@ message ExecuteFlow {
     ExecuteVeradigmPracticeManagementSaveRefundTransaction veradigm_practice_management_save_refund_transaction = 4808;
     ExecuteVeradigmPracticeManagementSaveVoucherPayment veradigm_practice_management_save_voucher_payment = 4809;
 
+    ExecutePDCFlowTokenizeCreditCard pdcflow_tokenize_credit_card = 4901;
+    ExecutePDCFlowCCTransaction pdcflow_cc_transaction = 4902;
+
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
   }
@@ -1525,3 +1531,6 @@ message ExecuteVeradigmPracticeManagementGetPlacesOfService {}
 message ExecuteVeradigmPracticeManagementSavePaymentTransaction {}
 message ExecuteVeradigmPracticeManagementSaveRefundTransaction {}
 message ExecuteVeradigmPracticeManagementSaveVoucherPayment {}
+
+message ExecutePDCFlowTokenizeCreditCard {}
+message ExecutePDCFlowCCTransaction {}
