@@ -635,6 +635,9 @@ message OmniSuspend {
 message OmniCloseConversation {
   // primary asm session identifier
   google.protobuf.Int64Value primary_asm_session_sid = 1;
+  // user name used to display in the UI. This field is only set by
+  // the backend when the payload is being sent to the UI
+  string user_name = 2;
 }
 
 message OmniQueueInformation {
