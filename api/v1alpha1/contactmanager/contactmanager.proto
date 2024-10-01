@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.contactmanager;
 
+import "api/commons/classifier.proto";
 import "api/commons/contactmanager.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -72,6 +73,7 @@ message ContactManagerEntry {
   string value = 4;
   string type = 5;
   google.protobuf.Timestamp date_created = 6;
+  api.commons.ContactEntryStatus status = 7;
 }
 
 message ContactManagerList {
@@ -85,6 +87,7 @@ message ContactManagerList {
   int64 ttl = 7 [jstype = JS_STRING];
   google.protobuf.Timestamp date_created = 8;
   bool is_deleted = 9;
+  api.commons.ContactListStatus status = 10;
 }
 
 message ContactManagerEntryVal {
@@ -132,4 +135,18 @@ message ListContactsByEntityRequest {
 message ListContactsByEntityResponse {
   // Contacts associated to the entity
   repeated ContactManagerEntry contact_manager_entry = 1;
+}
+
+message GetContactFieldTypeRequest {
+  // Field name to be analyzed by presidio
+  string field_name = 1;
+  // Field value to be analyzed by presidio
+  string field_value = 2;
+  // Field Type - optional to provide more info
+  optional api.commons.ClassifierEntityType field_type = 3;
+}
+
+message GetContactFieldTypeResponse {
+  // Field type return on presidio analysis
+  api.commons.ClassifierEntityType field_type = 1;
 }

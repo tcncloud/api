@@ -113,4 +113,22 @@ service ContactManager {
       ]
     };
   }
+
+  /**
+     Get Contact Field Type
+  */
+  rpc GetContactFieldType(GetContactFieldTypeRequest) returns (GetContactFieldTypeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/getcontactfieldtype";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_APP]
+        }
+      ]
+    };
+  }
 }
