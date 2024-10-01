@@ -487,6 +487,9 @@ enum Validation {
   VALIDATION_LAST_4_SSN = 105;
   // value must be a US zip code.
   VALIDATION_US_ZIP = 106;
+  // value must be a month and year expiration for credit/debit cards,
+  // and must not be expired
+  VALIDATION_CC_EXPIRATION_DATE = 107;
 
   // values that are 200 < x < 300 are number-like fields
 
