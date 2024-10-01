@@ -37,3 +37,19 @@ enum DeDuplicationMergeStrategy {
   KEEP_EXISTING_LIST = 0;
   REPLACE_EXISTING_LIST = 1;
 }
+
+enum ContactListStatus {
+  //NEW
+  CONTACT_LIST_STATUS_NEW = 0;
+  //Future States
+  //SCHEDULED
+  //DONE
+}
+
+enum ContactEntryStatus {
+  CONTACT_ENTRY_STATUS_NEW = 0; //NEW
+  CONTACT_ENTRY_STATUS_INUSE = 1; //IN USE
+  CONTACT_ENTRY_STATUS_NOTREF = 2; //NOT REF
+  CONTACT_ENTRY_STATUS_DONE = 3; //DONE
+  CONTACT_ENTRY_STATUS_EXPIRED = 4; //EXPIRED
+}
