@@ -120,6 +120,7 @@ message OmnichannelAgentReassignConversationEvent {
 
 // OmnichannelCustomerTextMessageEvent - whenever a customer sends a text message
 message OmnichannelCustomerTextMessageEvent {
+  option deprecated = true;
   // the unique identifier for the conversation
   int64 conversation_sid = 3 [jstype = JS_STRING];
   // the message sent by the customer
@@ -130,6 +131,7 @@ message OmnichannelCustomerTextMessageEvent {
 
 // OmnichannelAgentTextMessageEvent - whenever an agent send a text message
 message OmnichannelAgentTextMessageEvent {
+  option deprecated = true;
   // the unique identifier for the conversation
   int64 conversation_sid = 3 [jstype = JS_STRING];
   // the message sent by the agent
@@ -144,6 +146,7 @@ message OmnichannelAgentTextMessageEvent {
 
 // OmnichannelManagerTextMessageEvent - whenever an agent send a text message
 message OmnichannelManagerTextMessageEvent {
+  option deprecated = true;
   // the unique identifier for the conversation
   int64 conversation_sid = 3 [jstype = JS_STRING];
   // the message sent by the agent
@@ -427,6 +430,7 @@ message OmnichannelUpdateModuleEvent {
 
 // OmnichannelAddSmsMessageSentAuditEvent - handle omnimessage and messageunits
 message OmnichannelSmsMessageSentModuleEvent {
+  option deprecated = true;
   // module id
   int64 module_sid = 1 [jstype = JS_STRING];
   // messageunits
@@ -439,6 +443,7 @@ message OmnichannelSmsMessageSentModuleEvent {
 
 // OmniChannelModuleInitialReplyEvent -
 message OmnichannelModuleInitialReplyEvent {
+  option deprecated = true;
   // org id
   string org_id = 1;
   // campaign_sid
@@ -457,6 +462,7 @@ message OmnichannelModuleInitialReplyEvent {
 
 // OmnichannelTaskMessageSentEvent -
 message OmnichannelTaskMessageSentEvent {
+  option deprecated = true;
   // task identifier
   int64 task_sid = 1;
   // campaign identifier
@@ -491,6 +497,7 @@ message OmnichannelConnectedInboxCreatedEvent {
 
 // Omnichannel
 message OmnichannelAgentMessageUnitsEvent {
+  option deprecated = true;
   // the omni message
   api.commons.OmniMessage message = 1;
   // the total number of messages sent
@@ -499,6 +506,7 @@ message OmnichannelAgentMessageUnitsEvent {
 
 // OmniChannelManagerMessageUnitsEvent -
 message OmnichannelManagerMessageUnitsEvent {
+  option deprecated = true;
   // the omni message
   api.commons.OmniMessage message = 1;
   // the total number of messages sent
@@ -507,6 +515,7 @@ message OmnichannelManagerMessageUnitsEvent {
 
 // OmniChannelCustomerMessageUnitsEvent -
 message OmnichannelCustomerMessageUnitsEvent {
+  option deprecated = true;
   // the omni message
   api.commons.OmniMessage message = 1;
   // the total number of messages sent
@@ -515,6 +524,7 @@ message OmnichannelCustomerMessageUnitsEvent {
 
 // OmnichannelSystemMessageUnitsEvent -
 message OmnichannelSystemMessageUnitsEvent {
+  option deprecated = true;
   // the omni message
   api.commons.OmniMessage message = 1;
   // the total number of messages sent
@@ -567,4 +577,29 @@ message OmnichannelManualApproveTaskRequeueEvent {
   string user_id = 2;
   // asm session sid
   int64 asm_session_sid = 3;
+}
+
+// OmnichannelMessageSentEvent -
+message OmnichannelMessageSentEvent {
+  int64 message_sid = 1;
+  api.commons.ChannelType channel_type = 2;
+  string sent_from = 3;
+  string sent_to = 4;
+  int64 message_size = 5;
+  int64 attachment_size = 6;
+  api.commons.OmniSenderType sender_type = 7;
+  string user_id = 8;
+}
+
+// OmnichannelProviderResponseEvent -
+message OmnichannelProviderResponseEvent {
+  int64 omni_message_sid = 1;
+  api.commons.ChannelType channel_type = 2;
+  string sent_from = 3;
+  string sent_to = 4;
+  int64 message_size = 5;
+  int64 attachment_size = 6;
+  api.commons.OmniSenderType sender_type = 7;
+  string user_id = 8;
+  int64 provider_message_count = 9;
 }
