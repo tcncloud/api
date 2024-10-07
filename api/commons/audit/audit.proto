@@ -65,9 +65,9 @@ message AuditEvent {
     // T10 event
     OmnichannelT10Event omnichannel_t10_event = 308;
     // customer sent a text message event
-    OmnichannelCustomerTextMessageEvent omnichannel_customer_text_Message_event = 309;
+    OmnichannelCustomerTextMessageEvent omnichannel_customer_text_Message_event = 309 [deprecated = true];
     // agent sent a text message event
-    OmnichannelAgentTextMessageEvent omnichannel_agent_text_message_event = 310;
+    OmnichannelAgentTextMessageEvent omnichannel_agent_text_message_event = 310 [deprecated = true];
     // finish wrap up event
     OmnichannelFinishWrapUpEvent omnichannel_finish_wrap_up_event = 311;
     // conversation closes and moves to wrap up event
@@ -81,7 +81,7 @@ message AuditEvent {
     // close conversation
     OmnichannelCloseConversationEvent omnichannel_close_conversation_event = 322;
     // manager sent a text message event
-    OmnichannelManagerTextMessageEvent omnichannel_manager_text_message_event = 332;
+    OmnichannelManagerTextMessageEvent omnichannel_manager_text_message_event = 332 [deprecated = true];
     //update campaign event
     OmnichannelUpdateCampaignEvent omnichannel_update_campaign_event = 330;
     //set conversation collected data details
@@ -118,23 +118,23 @@ message AuditEvent {
     //update module event
     OmnichannelUpdateModuleEvent omnichannel_update_module_event = 346;
     //  SmsMessageSent module event
-    OmnichannelSmsMessageSentModuleEvent omnichannel_add_sms_message_sent_module_event = 347;
+    OmnichannelSmsMessageSentModuleEvent omnichannel_add_sms_message_sent_module_event = 347 [deprecated = true];
     // ModuleInitialReply
-    OmnichannelModuleInitialReplyEvent omnichannel_module_initial_reply_event = 349;
+    OmnichannelModuleInitialReplyEvent omnichannel_module_initial_reply_event = 349 [deprecated = true];
     // a task message was sent for a campaign
-    OmnichannelTaskMessageSentEvent omnichannel_task_message_sent_event = 350;
+    OmnichannelTaskMessageSentEvent omnichannel_task_message_sent_event = 350 [deprecated = true];
     // a connected inbox poll event
     OmnichannelConnectedInboxPollEvent omnichannel_connected_inbox_poll_event = 351;
     // an event for when a connected inbox is created
     OmnichannelConnectedInboxCreatedEvent omnichannel_connected_inbox_created_event = 352;
     // an event for when the message units for an agent omni message were calculated
-    OmnichannelAgentMessageUnitsEvent omnichannel_agent_message_units_event = 353;
+    OmnichannelAgentMessageUnitsEvent omnichannel_agent_message_units_event = 353 [deprecated = true];
     // an event for when the message units for a manager omni message were calculated
-    OmnichannelManagerMessageUnitsEvent omnichannel_manager_message_units_event = 354;
+    OmnichannelManagerMessageUnitsEvent omnichannel_manager_message_units_event = 354 [deprecated = true];
     // an event for when the message units for a customer omni message were calculated
-    OmnichannelCustomerMessageUnitsEvent omnichannel_customer_message_units_event = 355;
+    OmnichannelCustomerMessageUnitsEvent omnichannel_customer_message_units_event = 355 [deprecated = true];
     // an event for when the message units for a system omni message were calculated
-    OmnichannelSystemMessageUnitsEvent omnichannel_system_message_units_event = 356;
+    OmnichannelSystemMessageUnitsEvent omnichannel_system_message_units_event = 356 [deprecated = true];
     // an event for when a payment link is sent
     OmnichannelPaymentLinkSentEvent omnichannel_payment_link_sent_event = 357;
 
@@ -148,6 +148,11 @@ message AuditEvent {
     OmnichannelManualApproveTaskRequeueEvent omnichannel_manual_approve_task_requeue_event = 361;
     // transcript saved
     OmnichannelTranscriptSavedEvent omnichannel_transcript_saved_event = 362;
+
+    // omni message event that encapsulates all omni messages sent
+    OmnichannelMessageSentEvent omnichannel_message_sent_event = 363;
+    // provider response for omni message sent
+    OmnichannelProviderResponseEvent omnichannel_provider_response_event = 364;
 
     /// Asm events 400
     // agent logged into asm event

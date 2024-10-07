@@ -43,9 +43,9 @@ enum EventType {
   // T10 trigger  eventType
   OMNICHANNEL_T10 = 308;
   // customer sent a text message event
-  OMNICHANNEL_CUSTOMER_TEXT_MESSAGE = 309;
+  OMNICHANNEL_CUSTOMER_TEXT_MESSAGE = 309 [deprecated = true];
   // agent sent a text message event
-  OMNICHANNEL_AGENT_TEXT_MESSAGE = 310;
+  OMNICHANNEL_AGENT_TEXT_MESSAGE = 310 [deprecated = true];
   // finish wrap up event
   OMNICHANNEL_FINISH_WRAP_UP = 311;
   // conversation closes and wrap up begins event
@@ -59,7 +59,7 @@ enum EventType {
   // conversation is closed
   OMNICHANNEL_CLOSE_CONVERSATION = 316;
   // manager sent a text message event
-  OMNICHANNEL_MANAGER_TEXT_MESSAGE = 332;
+  OMNICHANNEL_MANAGER_TEXT_MESSAGE = 332 [deprecated = true];
   // update event with campaign details
   OMNICHANNEL_UPDATE_CAMPAIGN = 330;
   // update event with set conversation collected data details
@@ -93,25 +93,25 @@ enum EventType {
   // update module event with details
   OMNICHANNEL_UPDATE_MODULE = 346;
   // send sms module event with details
-  OMNICHANNEL_MODULE_SMS_MESSAGE_SENT = 347;
+  OMNICHANNEL_MODULE_SMS_MESSAGE_SENT = 347 [deprecated = true];
   // update campaign to archive status event
   OMNICHANNEL_COMPLETE_CAMPAIGN = 348;
   // initial reply event for module
-  OMNICHANNEL_MODULE_INITIAL_REPLY = 349;
+  OMNICHANNEL_MODULE_INITIAL_REPLY = 349 [deprecated = true];
   // omnichannel task message sent
-  OMNICHANNEL_TASK_MESSAGE_SENT = 350;
+  OMNICHANNEL_TASK_MESSAGE_SENT = 350 [deprecated = true];
   // omnichannel connected inbox poll
   OMNICHANNEL_CONNECTED_INBOX_POLL = 351;
   // omnichannel connected inbox was created
   OMNICHANNEL_CONNECTED_INBOX_CREATED = 352;
   // omnichannel agent message units were calculated
-  OMNICHANNEL_AGENT_MESSAGE_UNITS = 353;
+  OMNICHANNEL_AGENT_MESSAGE_UNITS = 353 [deprecated = true];
   // omnichannel manager message units were calculated
-  OMNICHANNEL_MANAGER_MESSAGE_UNITS = 354;
+  OMNICHANNEL_MANAGER_MESSAGE_UNITS = 354 [deprecated = true];
   // omnichannel customer message units were calculated
-  OMNICHANNEL_CUSTOMER_MESSAGE_UNITS = 355;
+  OMNICHANNEL_CUSTOMER_MESSAGE_UNITS = 355 [deprecated = true];
   // omnichannel system message units were calculated
-  OMNICHANNEL_SYSTEM_MESSAGE_UNITS = 356;
+  OMNICHANNEL_SYSTEM_MESSAGE_UNITS = 356 [deprecated = true];
   // omnichannel payment link was sent
   OMNICHANNEL_PAYMENT_LINK_SENT = 357;
   //accepted manual approve task
@@ -124,6 +124,10 @@ enum EventType {
   OMNICHANNEL_MANUAL_APPROVE_TASK_REQUEUE = 361;
   //transcript saved
   OMNICHANNEL_TRANSCRIPT_SAVED = 362;
+  //omnichannel message
+  OMNICHANNEL_MESSAGE_SENT = 363;
+  //omnichannel provider response
+  OMNICHANNEL_PROVIDER_RESPONSE = 364;
 
   // ASM
   // agent logs into asm
