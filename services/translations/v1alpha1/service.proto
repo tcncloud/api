@@ -63,6 +63,24 @@ service TranslationsService {
     };
   }
 
+  // Creates a new Translation
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  //   - grpc.AlreadyExists: The template already exists for the given context and language (use override method).
+  rpc CreateTranslation(CreateTranslationRequest) returns (CreateTranslationResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/createtranslation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
   // Overrides the translation for a given translationID
   // Required permissions:
   //   - PERMISSION_CUSTOMER_SUPPORT
