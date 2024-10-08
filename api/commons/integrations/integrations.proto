@@ -580,6 +580,8 @@ message ReceiptField {
   // The datetime format allowed to use for date types.
   // if left blank, a default set of format will be accepted
   string format = 5;
+  //copiable says whether or not the ui should add a copy to clipboard button next to it
+  bool copiable = 6;
 }
 
 message Invoices {
