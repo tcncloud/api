@@ -55,6 +55,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_VERADIGM_PRACTICE_MANAGEMENT = 4800;
   INTEGRATION_TYPE_PDCFLOW = 4900;
   INTEGRATION_TYPE_DEBUG = 5000;
+  INTEGRATION_TYPE_ACQUIRED = 5100;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -395,6 +396,8 @@ enum RequestMethod {
   REQUEST_METHOD_DEBUG_ECHO = 5001;
   // this method takes a method id to another method and ensures the params are correct
   REQUESET_METHOD_DEBUG_VALIDATE = 5002;
+
+  REQUEST_METHOD_ACQUIRED_PROCESS_PAYMENT = 5101;
 }
 
 enum TransactionType {
@@ -1115,6 +1118,8 @@ message ExecuteFlow {
 
     ExecuteDebugEcho debug_echo = 5001;
     ExecuteDebugValidate debug_validate = 5002;
+
+    ExecuteAcquiredProcessPayment acquired_process_payment = 5101;
   }
 }
 
@@ -1539,3 +1544,5 @@ message ExecuteVeradigmPracticeManagementSaveVoucherPayment {}
 
 message ExecutePDCFlowTokenizeCreditCard {}
 message ExecutePDCFlowCCTransaction {}
+
+message ExecuteAcquiredProcessPayment {}
