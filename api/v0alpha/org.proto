@@ -3243,6 +3243,8 @@ message UserDetails {
   bool email_verified = 36;
   // The override for the users locale preferences
   api.commons.LocalePreferences locale_preferences_override = 37;
+  // Password reset date is the timestamp of when a user must reset their password by.
+  google.protobuf.Timestamp password_reset_date = 38;
 
   // Trusts assigned to the user.
   repeated api.commons.org.Trust trusts = 200;

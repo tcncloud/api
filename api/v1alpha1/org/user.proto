@@ -231,6 +231,8 @@ message GetUserResponse {
   bool email_verified = 30;
   // The override for the users locale preferences
   api.commons.LocalePreferences locale_preferences_override = 31;
+  // Password reset date is the timestamp of when a user must reset their password by.
+  google.protobuf.Timestamp password_reset_date = 32;
 }
 
 // Request message for GetUserByOrgId.
@@ -917,7 +919,7 @@ message GetUserSessionDataResponse {
 
     // Timestamp beyond which the user is required to have multi factor authentication set up
     google.protobuf.Timestamp mfa_timestamp = 33;
-    // Timestamp of of when a user must reset their password before
+    // Timestamp of when a user must reset their password before
     google.protobuf.Timestamp password_reset_date = 34;
 
     // The override for the users locale preferences
