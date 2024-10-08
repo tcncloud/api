@@ -79,6 +79,28 @@ message ListTranslationsResponse {
   repeated Translation translations = 1;
 }
 
+// CreateTranslationRequest is the request message for the CreateTranslation method.
+// Takes a template, language and a new translation.
+message CreateTranslationRequest {
+  // The context of the translation.
+  string context = 1;
+
+  // The original template.
+  string template = 2;
+
+  // The BCP 47 language tag of the translation.
+  string language_tag = 3;
+
+  // The new translation.
+  string translation = 4;
+}
+
+// CreateTranslationResponse is the response message for the CreateTranslation method.
+message CreateTranslationResponse {
+  // The created translation.
+  Translation translation = 1;
+}
+
 // UpdateTranslationRequest is the request message for the UpdateTranslation method.
 // Takes a translation ID and a new translation.
 message UpdateTranslationRequest {
