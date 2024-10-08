@@ -185,7 +185,7 @@ message TriggerActionOption {
   // The status to advance to when the trigger is activated
   // Used for action: Advance Status
   // Following are the valid status transitions:
-  // Waiting -> Paused
+  // Waiting -> Paused, Manual Dial Call
   // Paused -> Waiting
   // On Call -> Wrap Up
   // Preview Call -> On Call, Waiting
@@ -261,6 +261,19 @@ message UpdateHuntGroupAgentTriggersResponse {}
 //
 // Hunt Group
 //
+
+// CopyHuntGroupToOrganizationRequest is the request message for the CopyHuntGroupToOrganization rpc.
+message CopyHuntGroupToOrganizationRequest {
+  // The id of the destination organization where the hunt group is copied to.
+  string to_organization_id = 1;
+  // The sid of the hunt group to copy.
+  int64 hunt_group_sid = 2;
+  // The name of the new hunt group.
+  string new_hunt_group_name = 3;
+}
+
+// CopyHuntGroupToOrganizationResponse is the response message for the CopyHuntGroupToOrganization rpc.
+message CopyHuntGroupToOrganizationResponse {}
 
 // AdminCopyHuntGroupToOrganizationRequest is the request message for the AdminCopyHuntGroupToOrganization rpc.
 message AdminCopyHuntGroupToOrganizationRequest {

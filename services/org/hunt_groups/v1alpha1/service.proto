@@ -103,6 +103,22 @@ service HuntGroupsService {
   // Hunt Group
   //
 
+  // CopyHuntGroupToOrganization copies a hunt group to a different organization.
+  // The destination organization must be a child of the source organization.
+  // This would create a new hunt group in the destination organization with the same
+  // settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+  rpc CopyHuntGroupToOrganization(CopyHuntGroupToOrganizationRequest) returns (CopyHuntGroupToOrganizationResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/copyhuntgrouptoorganization";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COPY_TO_ORGANIZATION]
+        }
+      ]
+    };
+  }
+
   // AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
   // This will create a new hunt group in the destination organization with the same
   // settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
