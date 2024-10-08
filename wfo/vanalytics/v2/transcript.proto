@@ -169,7 +169,7 @@ message Sms {
   string caller_id = 4;
 
   // The omni campain this sms belongs to.
-  int64 campaign_sid = 5;
+  int64 campaign_sid = 5 [jstype = JS_STRING];
 
   // The phone data.
   message Phone {
