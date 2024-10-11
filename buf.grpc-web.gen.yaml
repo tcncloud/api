@@ -9,4 +9,4 @@ plugins:
     strategy: all
   - remote: buf.build/protocolbuffers/js
     out: tcnapi-grpc-web/src/
-    opt: import_style=commonjs
+    opt: import_style=commonjs_strict
