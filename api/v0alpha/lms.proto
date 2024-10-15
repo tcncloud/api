@@ -2506,6 +2506,7 @@ message CollectionMetadata {
   google.protobuf.Timestamp last_updated = 12;
   int64 search_count = 13;
   google.protobuf.Timestamp last_searched = 14;
+  repeated string primary_key = 15;
 }
 
 message CollectionEntry {
