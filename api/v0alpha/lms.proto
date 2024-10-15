@@ -423,6 +423,11 @@ service LMS {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+  rpc RetypeCollection(RetypeCollectionReq) returns (RetypeCollectionRes) {
+    option (google.api.http).post = "/api/v0alpha/lms/collections/retypecollection";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
   rpc DeleteCollection(DeleteCollectionReq) returns (google.protobuf.Empty) {
     option (google.api.http).post = "/api/v0alpha/lms/collections/delete";
     option (google.api.http).body = "*";
@@ -2489,6 +2494,33 @@ message ViewQueueReq {
   int64 after_event_id = 3;
   // max number of records to retrieve
   int64 number_of_records = 4;
+}
+
+message RetypeCollectionReq {
+  // the collection id we want to change
+  string collection_id = 3;
+  // the new primary key for the collection. each item in the array
+  // should be a field name on the collection
+  repeated string primary_key = 4;
+  // the keys are the field names in the collection, and the values should
+  // be the new field type for this field.
+  // this field is optional
+  map<string, api.commons.FieldType> field_types = 5;
+  // if true we retype a copy of this collection instead of doing it in place.
+  // new collection will have the new primary key and field types, and old
+  // collection will be unchanged.
+  // by default we change the actual collection.
+  bool as_copy = 6;
+}
+message RetypeCollectionRes {
+  // new collection_id if we copied the collection instead of retyping in place
+  string collection_id = 1;
+  int32 inserted_count = 2;
+  int32 updated_count = 3;
+  int32 rejected_count = 4;
+  int32 ignored_count = 5;
+  // the first 100 or so rejected entry_ids so we can look them up
+  repeated string rejected_entry_ids = 6;
 }
 
 message CollectionMetadata {
