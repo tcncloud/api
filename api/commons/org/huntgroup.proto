@@ -33,7 +33,7 @@ message GeneralSettings {
   bool enable_agent_gateway_title_bar = 1;
   // Default agent phone number dialing into IVR system. `AgentDialInNumber`
   string default_agent_dial_in = 2;
-  // Requires secondary confirmation to end call. `DisconnectConvirmation`
+  // Requires secondary confirmation to end call. `DisconnectConfirmation`
   bool require_end_call_confirmation = 3;
   // Enables authorization and whitelist by IP. `UseIpBasedAuth`
   bool enable_authorization_by_ip = 4;
@@ -52,6 +52,10 @@ message GeneralSettings {
   string default_agent_pause_option = 103;
   // Enable agents to switch between pause options. `Agent Pause Reset`
   bool enable_pause_option_reset = 104;
+  // Use this pause code instead of the trigger generated one.
+  string triggered_pause_status_pause_code_waiting = 105;
+  // Use this pause code instead of the trigger generated one.
+  string triggered_pause_status_pause_code_wrapup = 106;
 
   // Pause option set properties.
   message PauseOptionSet {
