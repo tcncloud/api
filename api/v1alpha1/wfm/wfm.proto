@@ -1218,6 +1218,9 @@ service WFM {
       sets: [
         {
           permissions: [PERMISSION_WFM]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
         }
       ]
     };
@@ -1273,6 +1276,9 @@ service WFM {
       sets: [
         {
           permissions: [PERMISSION_WFM]
+        },
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
         }
       ]
     };
@@ -4065,6 +4071,88 @@ service WFM {
         },
         {
           permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************AGENT PORTAL RPCS**********************************************************************/
+  /****************************************************************************************************************************************************/
+  /****************************************************************************************************************************************************/
+
+  // Gets the published schedule for the corresponding @datetime_range for the agent and org sending the request.
+  // Errors:
+  //   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+  //   - grpc.Internal: error occurs when getting the published schedule.
+  rpc AgentGetSchedule(AgentGetScheduleRequest) returns (AgentGetScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/agentgetschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
+        }
+      ]
+    };
+  }
+
+  // Lists agent leave petitions over the @datetime_range for the agent and org sending the request.
+  // If no @datetime_range is provided, petitions will be returned across all datetimes.
+  // If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+  // If no agent leave petitions are found for the given parameters, an empty list will be returned.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when listing the agent leave petitions.
+  rpc AgentListLeavePetitions(AgentListLeavePetitionsRequest) returns (AgentListLeavePetitionsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/agentlistleavepetitions";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
+        }
+      ]
+    };
+  }
+
+  // Creates an agent leave petition to request time off over the @requested_datetime_ranges for the agent and org sending the request.
+  // The @petition_comment must be set with a value.
+  // The @requested_datetime_ranges may not overlap each other.
+  // The number of working hours requested off should be set in @requested_hours_off.
+  // The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+  //   for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+  // The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when creating the time off request.
+  rpc AgentCreateLeavePetition(AgentCreateLeavePetitionRequest) returns (AgentCreateLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/agentcreateleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
+        }
+      ]
+    };
+  }
+
+  // Cancels the given @agent_leave_petition_id for the agent and organization sending the request.
+  // If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+  //   but any desired shifts must be added by the user after that leave is canceled.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+  //   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+  //   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+  rpc AgentCancelLeavePetition(AgentCancelLeavePetitionRequest) returns (AgentCancelLeavePetitionResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/agentcancelleavepetition";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
         }
       ]
     };
@@ -8282,4 +8370,71 @@ message ListAdherenceAgentRulesRequest {}
 message ListAdherenceAgentRulesResponse {
   // Agent rules found for the org sending the request.
   repeated api.commons.AdherenceAgentRule rules = 1;
+}
+
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+/*********************************************************AGENT PORTAL ENTITIES*************************************************************/
+/****************************************************************************************************************************************************/
+/****************************************************************************************************************************************************/
+
+// Request message for AgentGetSchedule.
+message AgentGetScheduleRequest {
+  // Datetime over which to get shifts.
+  commons.DatetimeRange datetime_range = 1;
+}
+
+// Response message for AgentGetSchedule.
+message AgentGetScheduleResponse {
+  // The requested shift instances, with member activities.
+  repeated ShiftInstance shift_instances = 1;
+}
+
+// Request message for AgentListLeavePetitions.
+message AgentListLeavePetitionsRequest {
+  // Datetime range over which agent leave petitions should be retrieved.
+  // Any agent leave petitions overlapping the datetime range may be returned.
+  commons.DatetimeRange datetime_range = 1;
+
+  // If true, archived agent leave petitions will be included in the response.
+  // Otherwise, no archived requests will be included in the response.
+  bool include_archived = 2;
+}
+
+// Response message for AgentListLeavePetitions.
+message AgentListLeavePetitionsResponse {
+  // All agent leave petitions requests matching the parameters in the request.
+  repeated commons.AgentLeavePetition agent_leave_petitions = 1;
+}
+
+// Request message for AgentCreateLeavePetition.
+message AgentCreateLeavePetitionRequest {
+  // All datetime ranges being requested for the time off.
+  // No overlap is allowed between the datetime ranges.
+  repeated commons.DatetimeRange requested_datetime_ranges = 1;
+
+  // A comment describing the reason for the time off request.
+  string petition_comment = 2;
+
+  // The number of working hours requested off.
+  // This does not need to relate directly to the datetime range being requested off,
+  // For example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+  float requested_hours_off = 3;
+}
+
+// Response message for AgentCreateLeavePetition.
+message AgentCreateLeavePetitionResponse {
+  commons.AgentLeavePetition agent_leave_petition = 1;
+}
+
+// Request message for AgentCancelLeavePetition.
+message AgentCancelLeavePetitionRequest {
+  // ID of the agent leave petition to cancel.
+  int64 agent_leave_petition_id = 1 [jstype = JS_STRING];
+}
+
+// Response message for AgentCancelLeavePetition.
+message AgentCancelLeavePetitionResponse {
+  // The canceled Agent Leave Petition.
+  api.commons.AgentLeavePetition agent_leave_petition = 1;
 }
