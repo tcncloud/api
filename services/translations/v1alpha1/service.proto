@@ -212,6 +212,24 @@ service TranslationsService {
     };
   }
 
+  // Delete translations by template and context
+  // Required permissions:
+  //   - PERMISSION_CUSTOMER_SUPPORT
+  // Errors:
+  //   - grpc.InvalidArgument: The request is not valid.
+  //   - grpc.NotFound: No translations found for the given template and context.
+  rpc DeleteTranslationsByTemplate(DeleteTranslationsByTemplateRequest) returns (DeleteTranslationsByTemplateResponse) {
+    option (google.api.http).post = "/services/translations/v1alpha1/deletetranslationsbytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
+
   // Bulk delete translations
   // Required permissions:
   //   - PERMISSION_CUSTOMER_SUPPORT
