@@ -224,6 +224,7 @@ message ProcessWorkflowReq {
   // params are what the user fills out before it is processed.
   // It will be merged with plugin instance data and potentially link data
   map<string, Value> params = 5;
+  api.commons.integrations.RequestOrigin request_origin = 6;
 }
 
 message ProcessWorkflowRes {
