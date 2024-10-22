@@ -210,6 +210,16 @@ message DisableContextRequest {
 }
 message DisableContextResponse {}
 
+// Req/Res for deleting translations by template and context
+message DeleteTranslationsByTemplateRequest {
+  // The original template for the translations.
+  string template = 1;
+
+  // The context of the translation.
+  string context = 2;
+}
+message DeleteTranslationsByTemplateResponse {}
+
 // Req/Res for bulk deleting translations
 message BulkDeleteTranslationsRequest {
   repeated string translation_ids = 1;
