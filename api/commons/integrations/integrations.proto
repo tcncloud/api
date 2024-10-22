@@ -56,6 +56,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_PDCFLOW = 4900;
   INTEGRATION_TYPE_DEBUG = 5000;
   INTEGRATION_TYPE_ACQUIRED = 5100;
+  INTEGRATION_TYPE_GENERIC = 5200;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -398,6 +399,8 @@ enum RequestMethod {
   REQUESET_METHOD_DEBUG_VALIDATE = 5002;
 
   REQUEST_METHOD_ACQUIRED_PROCESS_PAYMENT = 5101;
+
+  REQUEST_METHOD_GENERIC_REQUEST = 5201;
 }
 
 enum TransactionType {
@@ -1120,6 +1123,8 @@ message ExecuteFlow {
     ExecuteDebugValidate debug_validate = 5002;
 
     ExecuteAcquiredProcessPayment acquired_process_payment = 5101;
+
+    ExecuteGenericRequest generic_request = 5201;
   }
 }
 
@@ -1546,3 +1551,5 @@ message ExecutePDCFlowTokenizeCreditCard {}
 message ExecutePDCFlowCCTransaction {}
 
 message ExecuteAcquiredProcessPayment {}
+
+message ExecuteGenericRequest {}
