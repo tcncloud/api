@@ -211,10 +211,25 @@ enum InsightContextualActionType {
   INSIGHT_CONTEXTUAL_ACTION_TYPE_DRILL_THROUGH = 3;
 }
 
+enum QuoteCharacter {
+  // Unspecified
+  QUOTE_CHARACTER_UNSPECIFIED = 0;
+  // Double Quote
+  QUOTE_CHARACTER_DOUBLE_QUOTE = 1;
+  // Single Quote
+  QUOTE_CHARACTER_SINGLE_QUOTE = 2;
+}
+
 // Message for Table Visualization
 message TableVisualization {
   // Map of table column details
   repeated TableColumnConfig table_column_details = 1;
+  // Delimiter for csv exports
+  string delimiter = 2;
+  // Quote character for csv exports
+  QuoteCharacter quote_character = 3;
+  // Flag to include header in csv exports
+  bool no_header = 4;
 }
 
 // Message for Table Column Configuration
