@@ -418,6 +418,18 @@ enum RequestSource {
   REQUEST_SOURCE_LMS = 5;
 }
 
+// RequestOrigin is a new version of RequestSource
+// Its purpose is so whenever someone calls Process/ProcessWorkflow we know who called it.
+// That way we can keep stats and records for report data.
+enum RequestOrigin {
+  REQUEST_ORIGIN_UNKNOWN = 0;
+  REQUEST_ORIGIN_IVR = 1;
+  REQUEST_ORIGIN_AGENT_ASSISTED = 2;
+  REQUEST_ORIGIN_INTEGRATION_LINK = 3;
+  REQUEST_ORIGIN_FLOWS = 4;
+  REQUEST_ORIGIN_TEXT_2_PAY = 5;
+}
+
 enum TransactionResult {
   TRANSACTION_RESULT_SUCCESS = 0;
   TRANSACTION_RESULT_FAILED = 1;

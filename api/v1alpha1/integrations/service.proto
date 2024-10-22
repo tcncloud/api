@@ -475,6 +475,7 @@ message ProcessReq {
   repeated Condition conds = 7;
   int64 call_sid = 10;
   api.commons.CallType.Enum call_type = 11;
+  api.commons.integrations.RequestOrigin request_origin = 12;
 }
 
 message ProcessRes {
@@ -1160,6 +1161,7 @@ message IntegrationTransaction {
   google.protobuf.Timestamp created_on = 13;
   string config_name = 14;
   Conditions conds = 15;
+  api.commons.integrations.RequestOrigin request_origin = 16;
 }
 
 message MapString {
@@ -1467,6 +1469,7 @@ message ProcessWorkflowReq {
   map<string, Value> params = 5;
   int64 call_sid = 6;
   api.commons.CallType.Enum call_type = 7;
+  api.commons.integrations.RequestOrigin request_origin = 8;
 }
 
 message ProcessWorkflowRes {
