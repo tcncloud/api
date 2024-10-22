@@ -201,6 +201,10 @@ message TriggerActionOption {
   // The sid of the exile link to execute when the trigger is activated
   // Used for action: Execute Exile Link
   int64 exile_link_sid = 6;
+  // The pause code to apply for the trigger
+  // Use pause code only if either system_pause_code or custom_pause_code is set
+  // Applied when agent is in status: Paused
+  TriggerPauseCode pause_code = 7;
 }
 
 // TriggerAction is the action to take when the trigger is activated

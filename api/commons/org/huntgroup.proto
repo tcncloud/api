@@ -53,9 +53,9 @@ message GeneralSettings {
   // Enable agents to switch between pause options. `Agent Pause Reset`
   bool enable_pause_option_reset = 104;
   // Use this pause code instead of the trigger generated one.
-  string triggered_pause_status_pause_code_waiting = 105;
+  string triggered_pause_status_pause_code_waiting = 105 [deprecated = true];
   // Use this pause code instead of the trigger generated one.
-  string triggered_pause_status_pause_code_wrapup = 106;
+  string triggered_pause_status_pause_code_wrapup = 106 [deprecated = true];
 
   // Pause option set properties.
   message PauseOptionSet {
