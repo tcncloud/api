@@ -2281,6 +2281,41 @@ service WFM {
     };
   }
 
+  // Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
+  // If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+  // Errors:
+  //   - grpc.Invalid: the @draft_schedule_sid is invalid.
+  //   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
+  //   - grpc.Internal: error chceking for the build in progress.
+  rpc PollBuildInProgress(PollBuildInProgressRequest) returns (PollBuildInProgressResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/pollbuildinprogress";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Cancels the build in progress for the given @draft_schedule_sid.
+  // Errors:
+  //   - grpc.Invalid: the @draft_schedule_sid is invalid.
+  //   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
+  //   - grpc.Internal: error when cancelling the build or updating the build in progress table.
+  rpc CancelBuildInProgress(CancelBuildInProgressRequest) returns (CancelBuildInProgressResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/cancelbuildinprogress";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
   // Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
   // If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
@@ -6956,6 +6991,30 @@ message BuildDraftScheduleRes {
   // The scheduling result metric for the built schedule range.
   commons.SchedulingResultMetric scheduling_result_metric = 3;
 }
+
+// Request message for PollBuildInProgress RPC
+message PollBuildInProgressRequest {
+  // ID of the draft to check for a build in progress.
+  int64 draft_schedule_sid = 1;
+}
+
+// Response message for PollBuildInProgress RPC
+message PollBuildInProgressResponse {
+  // Start time of the build in progress, if @build_in_progress is true.
+  google.protobuf.Timestamp build_start_datetime = 1;
+  // If True: A build is currently in progress for the draft.
+  // If False: There is no build in progress for the draft.
+  bool build_in_progress = 2;
+}
+
+// Request message for CancelBuildInProgress RPC
+message CancelBuildInProgressRequest {
+  // ID of the draft to cancel the build for.
+  int64 draft_schedule_sid = 1;
+}
+
+// Response message for CancelBuildInProgress RPC
+message CancelBuildInProgressResponse {}
 
 // Request message for the PublishDraftSchedule RPC
 message PublishDraftScheduleReq {
