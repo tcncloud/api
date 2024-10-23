@@ -25,6 +25,9 @@ service ContactManager {
       sets: [
         {
           permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
         }
       ]
     };
@@ -76,6 +79,9 @@ service ContactManager {
       sets: [
         {
           permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
         }
       ]
     };
@@ -91,6 +97,9 @@ service ContactManager {
       sets: [
         {
           permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_AGENT]
         }
       ]
     };

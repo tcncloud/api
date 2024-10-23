@@ -281,4 +281,6 @@ enum EventType {
   EVENT_TYPE_CONTACT_MANAGER_VERIFICATION_EVENT = 1206;
   //Contact Manager entry delete event
   EVENT_TYPE_CONTACT_MANAGER_DELETE_EVENT = 1207;
+  //Contact Manager entry expunge event at TTL
+  EVENT_TYPE_CONTACT_MANAGER_EXPUNGE_EVENT = 1208;
 }

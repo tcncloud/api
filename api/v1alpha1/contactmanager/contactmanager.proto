@@ -20,9 +20,14 @@ message GetContactListResponse {
   repeated ContactManagerList contact_manager_list = 2;
 }
 message ListContactEntryListRequest {
-  int64 contact_manager_list_id = 1 [jstype = JS_STRING];
-  string org_id = 2;
+  optional int64 contact_manager_list_id = 1 [jstype = JS_STRING];
+  string org_id = 2 [deprecated = true];
   string project_id = 3;
+
+  // pagination fields - returned page
+  int32 page_size = 4;
+  // pagination fields - page token
+  string page_token = 5;
 }
 
 // List all Unencrypted Data. Encrypted Data would be sent On Double Click of the Record
@@ -31,6 +36,7 @@ message ListContactEntryListResponse {
   reserved 1;
   reserved "contact_entry";
   repeated ContactManagerEntry contact_manager_entry = 2;
+  string next_page_token = 3;
 }
 
 message GetEncContactEntryRequest {
@@ -68,7 +74,10 @@ message GetKYCKeysResponse {
 // Common messages deprecated
 message ContactManagerEntry {
   int64 contact_manager_entry_id = 1 [jstype = JS_STRING];
-  int64 contact_manager_entry_list_id = 2 [jstype = JS_STRING];
+  int64 contact_manager_entry_list_id = 2 [
+    jstype = JS_STRING,
+    deprecated = true
+  ];
   string key = 3;
   string value = 4;
   string type = 5;
@@ -96,12 +105,15 @@ message ContactManagerEntryVal {
 }
 
 message AddContactEntryRequest {
-  int64 contact_manager_list_id = 1 [jstype = JS_STRING];
+  optional int64 contact_manager_list_id = 1 [jstype = JS_STRING];
   // List of entries of a given contact
-  repeated Entry entry = 2;
+  repeated Entry entry = 2 [deprecated = true];
+  int64 project_sid = 3 [jstype = JS_STRING];
+  repeated ContactField field = 4;
 }
 
 message Entry {
+  option deprecated = true;
   string name = 1;
   string value = 2;
   string type = 3;
@@ -113,19 +125,29 @@ message AddContactEntryResponse {
 }
 
 message EditContactEntryRequest {
-  int64 contact_manager_list_id = 1;
+  optional int64 contact_manager_list_id = 1;
   int64 contact_manager_entry_id = 2;
-  repeated EditedEntry edited_entry = 3;
+  repeated EditedEntry edited_entry = 3 [deprecated = true];
+  repeated ContactField field = 4;
 }
 
 message EditedEntry {
+  option deprecated = true;
   int64 contact_manager_entry_list_id = 1;
   string name = 2;
   string value = 3; // The new value to be updated
   string type = 4;
 }
 
-message EditContactEntryResponse {}
+message ContactField {
+  string name = 1;
+  string value = 2;
+  string type = 3;
+}
+
+message EditContactEntryResponse {
+  repeated ContactField field = 1; //list of edited/inserted fields
+}
 
 message ListContactsByEntityRequest {
   int64 project_id = 1 [jstype = JS_STRING]; //Project Id of the contact
