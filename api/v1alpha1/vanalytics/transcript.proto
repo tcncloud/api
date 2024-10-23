@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.vanalytics;
 
 import "api/commons/acd.proto";
+import "api/commons/vanalytics.proto";
 import "api/v1alpha1/vanalytics/aclpb/aclpb.proto";
 import "api/v1alpha1/vanalytics/expr.proto";
 import "api/v1alpha1/vanalytics/transcript_summary.proto";
@@ -691,6 +692,49 @@ message Result {
   uint32 duration = 9;
   string text = 10;
   int64 hunt_group_sid = 11;
+  Sentiment sentiment = 12;
+}
+
+// The sentiment of a thread.
+message Sentiment {
+  // Overall sentiment estimate for the thread.
+  Estimate overall = 1;
+
+  // Worst dominating tone across thread samples.
+  api.commons.TranscriptSentimentTone worst = 2;
+
+  // Dominant tone across thread samples.
+  api.commons.TranscriptSentimentTone dominant = 3;
+
+  // Last dominating tone of the thread samples.
+  api.commons.TranscriptSentimentTone last = 4;
+
+  // Samples of the thread, split by offset and duration.
+  repeated Sample samples = 5;
+
+  // A sentiment sample.
+  message Sample {
+    // Estimate for the sample.
+    Estimate estimate = 1;
+
+    // Offset of the sample.
+    google.protobuf.Duration offset = 2;
+
+    // Duration of the sample (may be empty for certain transcript kinds).
+    google.protobuf.Duration duration = 3;
+  }
+
+  // A sentiment estimate.
+  message Estimate {
+    // Portion of text deemed positive.
+    float positive = 1;
+
+    // Portion of text deemed neutral.
+    float neutral = 2;
+
+    // Portion of text deemed negative.
+    float negative = 3;
+  }
 }
 
 message Segment {
