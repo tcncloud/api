@@ -269,5 +269,6 @@ message AuditEvent {
     ContactManagerListUploadEvent contact_manager_list_upload_event = 1205;
     ContactManagerKycEvent contact_manager_kyc_verification_event = 1206;
     ContactManagerDeleteEvent contact_manager_entry_delete_event = 1207;
+    ContactManagerDeleteEvent contact_manager_entry_expunge_event = 1208;
   }
 }
