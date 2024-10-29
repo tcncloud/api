@@ -145,6 +145,8 @@ enum OutputConfigurationType {
   OUTPUT_CONFIGURATION_TYPE_PIE_CHART = 3;
   // Output configuration for fixed width format
   OUTPUT_CONFIGURATION_TYPE_FIXED_WIDTH = 4;
+  // Output configuration for the timeline chart format
+  OUTPUT_CONFIGURATION_TYPE_TIMELINE = 5;
 }
 
 // Enum for Column Format Type
