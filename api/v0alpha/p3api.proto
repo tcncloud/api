@@ -1791,6 +1791,8 @@ message ListHuntGroupWebLinksReq {
   // this field should only be set on the request when the ui is in a "preview call" state when dealing with
   // preview calls
   bool isInitialPreview = 10;
+  // use this field when the ui is in a "preview call" state and no call sid is available
+  int64 task_sid = 11;
 }
 
 message ListHuntGroupWebLinksRes {
