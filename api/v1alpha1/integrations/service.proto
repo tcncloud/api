@@ -1388,6 +1388,8 @@ message GenerateEpicKeyPairRes {
 // The user doesn't need to do all the choices, just needs to select one to complete.
 message PortalSegment {
   repeated PortalWorkflow workflow_choices = 1;
+  string header_text = 2;
+  string footer_text = 3;
 }
 
 // a PortalWorkflow is an entity that describes a set of segments that must be completed in sequence.
@@ -1405,8 +1407,8 @@ message PortalWorkflow {
   // the data that appears on the user form. This is untrusted data.
   repeated api.commons.integrations.FieldDefinition form_fields = 4;
   // text presented to the user for this flow
-  string header_text = 6;
-  string footer_text = 7;
+  string header_text = 6 [deprecated = true]; //moving to the Portal Segment, workflow specific instruction will be on the fields helper text
+  string footer_text = 7 [deprecated = true]; //moving to the Portal Segment, workflow specific instruction will be on the fields helper text
   // if true we do not perform the actions in the "segments" array
   // instead we check pass/fail demo conditions and return demo results
   bool demo_mode = 8;
