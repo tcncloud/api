@@ -589,6 +589,7 @@ message OmnichannelMessageSentEvent {
   int64 attachment_size = 6;
   api.commons.OmniSenderType sender_type = 7;
   string user_id = 8;
+  api.commons.OmniMessageType message_type = 9;
 }
 
 // OmnichannelProviderResponseEvent -
@@ -602,4 +603,5 @@ message OmnichannelProviderResponseEvent {
   api.commons.OmniSenderType sender_type = 7;
   string user_id = 8;
   int64 provider_message_count = 9;
+  api.commons.OmniMessageType message_type = 10;
 }
