@@ -35,24 +35,24 @@ service Dashboards {
           permissions: [PERMISSION_DASHBOARDS_VIEW]
         },
         {
-          permissions: [PERMISSION_AGENT_PORTALS_VIEW],
+          permissions: [PERMISSION_AGENT_PORTALS_VIEW]
           taint: {
-            id: 3, // application - annotations.perms.Application
-            value: 1, // APPLICATION_AGENT  - annotations.perms.license.Application
+            id: 3 // application - annotations.perms.Application
+            value: 1 // APPLICATION_AGENT  - annotations.perms.license.Application
           }
         },
         {
-          permissions: [PERMISSION_SCORECARDS],
+          permissions: [PERMISSION_SCORECARDS]
           taint: {
-            id: 3, // application - annotations.perms.Application
-            value: 19, // APPLICATION_WFO_AGENT_MANAGER - annotations.perms.license.Application
+            id: 3 // application - annotations.perms.Application
+            value: 19 // APPLICATION_WFO_AGENT_MANAGER - annotations.perms.license.Application
           }
         },
         {
-          permissions: [PERMISSION_SCORECARDS_MANAGE],
+          permissions: [PERMISSION_SCORECARDS_MANAGE]
           taint: {
-            id: 3, // application - annotations.perms.Application
-            value: 19, // APPLICATION_WFO_AGENT_MANAGER - annotations.perms.license.Application
+            id: 3 // application - annotations.perms.Application
+            value: 19 // APPLICATION_WFO_AGENT_MANAGER - annotations.perms.license.Application
           }
         }
       ]
