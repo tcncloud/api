@@ -6980,6 +6980,8 @@ message BuildDraftScheduleReq {
   // Set to true to automatically generate agents to meet the requirements of the shift templates min and max agents.
   // Otherwise, no agents will be generated to meet these requirements.
   bool auto_generate_agents = 10;
+  // The scheduling target.
+  SchedulingTarget scheduling_target = 11;
 }
 
 // Response message for the BuildDraftSchedule RPC
