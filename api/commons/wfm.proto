@@ -568,6 +568,8 @@ enum DiagnosticCode {
   // 'Cannot generate shifts for Tour Shift Template that has no Agent Collections for Tour Patterns' type.
   // The diagnostic is reporting that there are no tour agent collections, which are required to schedule the tour pattern.
   TOUR_AGENT_COLLECTIONS_NEEDED_TO_SCHEDULE_TOUR = 70;
+  // DiagnosticNoPredictedCallsInShedulingRange integer value
+  NO_PREDICTED_CALLS_IN_SCHEDULING_RANGE = 71;
 }
 
 // Enum representing the type of a performance metric.
