@@ -1460,6 +1460,8 @@ message CjsImportProcess {
   string timezone = 7;
   // Specifies if a dedup should be performed when importing
   bool dedup = 8;
+  // If journey value is nil, set the field to zero
+  bool use_zero_values = 9;
 }
 
 message CjsExportProcess {
@@ -1520,6 +1522,8 @@ message CjsEnrichmentProcess {
   // Specifies what to do when there
   // is a duplicate match for the key in the collection
   api.commons.DedupKeyPolicy dedup_key_policy = 9;
+  // If journey value is nil, set the field to zero
+  bool use_zero_values = 10;
 }
 
 // this process downloads the records from the signed_url
@@ -2324,7 +2328,8 @@ message ReshapeAction {
   string field = 19;
   // will only execute on the matching type (defaults to ALL)
   api.commons.RecordType matching_type = 20 [deprecated = true];
-  FilterCheck predicate = 50;
+  FilterCheck predicate = 50 [deprecated = true];
+  FilterOperation operations = 55;
   oneof action {
     Rename rename = 22;
     AddValue add_value = 23;
