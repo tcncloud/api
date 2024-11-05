@@ -2,8 +2,12 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
+import "api/commons/acd.proto";
+import "api/commons/omnichannel.proto";
 import "api/commons/scorecards.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 // CreateEvaluationRequest is request to create a new evaluation
 message CreateEvaluationRequest {
@@ -145,4 +149,47 @@ message RestoreEvaluationRequest {
 // RestoreEvaluationReponse contains the restored evaluation
 message RestoreEvaluationResponse {
   api.commons.Evaluation evaluation = 1; // restored evaluation
+}
+
+// SampleAgentConversationsRequest is a request to sample conversations for evaluating.
+message SampleAgentConversationsRequest {
+  int64 scorecard_id = 3; // Required - determines applicable conversations.
+  google.protobuf.Timestamp start_time = 4; // Required - oldest samples applicable.
+  google.protobuf.Timestamp end_time = 5; // Optional - defaults to now.
+  int32 max_agent_evaluations = 6; // Required - maximum evaluations allowed per agent.
+  int32 sample_percentage = 7; // Optional - defaults to 100.
+  repeated string agent_user_ids = 8; // Optional - filter by agents.
+}
+
+// SampleAgentConversationsResponse returns the sampled conversations.
+message SampleAgentConversationsResponse {
+  repeated AgentConversation agent_conversations = 1;
+}
+
+// AgentConversation is an agent conversation returned by SampleAgentConversations.
+// Conversations with multiple agents are each returned once per agent.
+message AgentConversation {
+  int64 transcript_sid = 1; // Id of the conversation transcript.
+  api.commons.ChannelType channel = 2; // Conversation channel.
+  string agent_user_id = 3; // User id of the agent.
+  google.protobuf.Timestamp start_time = 4; // Timestamp of conversation start.
+
+  // Conversation metadata.
+  oneof metadata {
+    CallMetadata call_metadata = 10; // Metadata for a call conversation.
+    SmsMetadata sms_metadata = 11; // Metadata for an sms conversation.
+  }
+
+  message CallMetadata {
+    int64 call_sid = 1; // Id of the call.
+    api.commons.CallType.Enum call_type = 2; // Call type - i.e. manual, inbound, etc.
+    google.protobuf.Duration call_duration = 3; // Duration of call.
+    google.protobuf.Duration speech_duration = 4; // Duration of speech in call.
+    google.protobuf.Duration silence_duration = 5; // Duration of silence in call.
+  }
+
+  message SmsMetadata {
+    int64 conversation_sid = 1; // Id of the sms conversation.
+    int64 campaign_sid = 2; // Id of the campaign.
+  }
 }

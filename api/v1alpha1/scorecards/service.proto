@@ -511,6 +511,19 @@ service Scorecards {
     };
   }
 
+  // SampleAgentConversations
+  rpc SampleAgentConversations(SampleAgentConversationsRequest) returns (SampleAgentConversationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/sampleagentconversations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
+        }
+      ]
+    };
+  }
+
   // CreateAutoQuestion creates an auto question
   rpc CreateAutoQuestion(CreateAutoQuestionRequest) returns (CreateAutoQuestionResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/createautoquestion";
