@@ -5,6 +5,7 @@ package api.v1alpha1.insights;
 import "api/commons/insights.proto";
 import "api/v1alpha1/explorer/entities.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 
 // Insight is a data handling entity used to process data
 // Insight can represent an object that belongs to the user
@@ -20,7 +21,9 @@ message Insight {
   string resource_id = 9; // unique resource id of the insight
   bool standard_insight = 10; // whether the insight is a standard insight
   api.v1alpha1.explorer.DatasourceType datasource_type = 11; // datasource type of the insight
-  string datasource_name = 12; // primary datasource for filtering
+  string datasource_name = 12 [deprecated = true]; // primary datasource for filtering
+  google.protobuf.Timestamp create_time = 13; // create time of insight
+  google.protobuf.Timestamp update_time = 14; // update time of insight
 }
 
 // PublishInsightRequest is the request to publish an insight.
@@ -50,6 +53,10 @@ message CreateInsightResponse {
 // ListInsightsRequest is the request to list insights.
 message ListInsightsRequest {
   repeated api.commons.InsightPermissionType insight_permission_types = 2; // Optional - list of insight permission types to filter by
+}
+
+message ListInsightsStreamResponse {
+  Insight insights = 1; // Requested insights
 }
 
 // ListInsightsResponse contains the Insights that were listed.
@@ -344,6 +351,10 @@ message OutputConfiguration {
     // Table visualization data for the output configuration
     TableVisualization table_visualization = 8;
   }
+  // create time of output configuration
+  google.protobuf.Timestamp create_time = 9;
+  // update time of output configuration
+  google.protobuf.Timestamp update_time = 10;
 }
 
 // Request for creating a new output configuration
