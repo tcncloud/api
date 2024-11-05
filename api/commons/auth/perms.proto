@@ -215,7 +215,10 @@ enum Permission {
 
   // Enables access to agent.
   PERMISSION_AGENT = 300 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Permission for accepting calls on hold
   PERMISSION_ACCEPT_QUEUED_CALLS = 310 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
+  // Enables ability to view the hold queue/counts.
+  PERMISSION_VIEW_HOLD_QUEUE = 311 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Enables ability to view the campaign completion box.
   PERMISSION_VIEW_CAMPAIGN_COMPLETION = 320 [(annotations.perms.options) = {app: APPLICATION_AGENT}];
   // Ability to view voice mails for agents.
