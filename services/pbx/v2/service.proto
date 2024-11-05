@@ -108,6 +108,27 @@ service PBXService {
     };
   }
 
+  // Returns details of the SIP Account associated with the org_user_id
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc GetSIPAccountByUserId(GetSIPAccountByUserIdRequest) returns (GetSIPAccountByUserIdResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/getsipaccountbyuserid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ]
+    };
+  }
+
   // Returns details of all SIP Accounts associated with the authenticated callers ORG
   // Required permissions:
   //   PBX-MANAGER
@@ -287,6 +308,14 @@ message ListSIPAccountsRequest {}
 
 message ListSIPAccountsResponse {
   repeated SIPAccount sip_accounts = 1;
+}
+
+message GetSIPAccountByUserIdRequest {
+  string org_user_id = 1;
+}
+
+message GetSIPAccountByUserIdResponse {
+  SIPAccount sip_account = 1;
 }
 
 message GetSIPAccountRequest {
