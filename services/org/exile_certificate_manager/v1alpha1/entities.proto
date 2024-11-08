@@ -51,8 +51,8 @@ message ExileConfiguration {
   // - FACS
   // the required parameters are:
   //   1. Database Host
-  //   2. Database URL
-  //   3. Database Port
+  //   2. Database Port
+  //   3. Database Name
   //   4. Database Username
   //   5. Database Password
   //   6. Max Number Connections
@@ -61,10 +61,18 @@ message ExileConfiguration {
   // For the following configuration types:
   // - Velosidy
   // the required parameters are:
-  //   1. Username
-  //   2. Token
+  //   1. Client ID
+  //   2. ClientSecret
   //   3. Gateway Url
   //   4. Tenant Name
+
+  // For the following configuration types:
+  // - Latitude Classic
+  // - Latitude Liquid
+  // the required parameters are:
+  //   1. Client ID
+  //   2. Client Secret
+  //   3. Secure ID
 }
 
 // ExileConfigurationType defines the types of exile configuration
@@ -81,4 +89,8 @@ enum ExileConfigurationType {
   EXILE_CONFIGURATION_TYPE_FACS = 4;
   // Type Velosidy specifies the configuration for Velosidy (parameters required).
   EXILE_CONFIGURATION_TYPE_VELOSIDY = 5;
+  // Type Latitude Classic specifies the configuration for Latitude Classic (parameters required).
+  EXILE_CONFIGURATION_TYPE_LATITUDE_CLASSIC = 6;
+  // Type Latitude NextGen specifies the configuration for Latitude Liquid (parameters required).
+  EXILE_CONFIGURATION_TYPE_LATITUDE_LIQUID = 7;
 }
