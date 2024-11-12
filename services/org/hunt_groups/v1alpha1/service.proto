@@ -146,4 +146,17 @@ service HuntGroupsService {
       ]
     };
   }
+
+  // ListAgentScripts returns a list of agent scripts for the given organization.
+  rpc ListAgentScripts(ListAgentScriptsRequest) returns (stream ListAgentScriptsResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listagentscripts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_SCRIPTS_VIEW]
+        }
+      ]
+    };
+  }
 }

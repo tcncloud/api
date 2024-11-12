@@ -313,3 +313,24 @@ message AdminListHuntGroupsResponse {
   // The list of hunt groups.
   repeated HuntGroup hunt_groups = 1;
 }
+
+// The request message for ListAgentScripts
+message ListAgentScriptsRequest {}
+
+// The response message for ListAgentScripts
+message ListAgentScriptsResponse {
+  // Script is the entity for extendend agent script details
+  message Script {
+    // The script belonging to an org
+    api.commons.org.HuntGroupScript script = 1;
+    // The hunt groups that have been assigned this script
+    repeated int64 hunt_group_sids = 2;
+    // The outbound broadcast templates that have been assigned this script
+    repeated int64 outbound_broadcast_template_sids = 3;
+    // The inbound broadcast templates that have been assigned this script
+    repeated int64 inbound_broadcast_template_sids = 4;
+  }
+
+  // The list of agent scripts.
+  repeated Script scripts = 1;
+}
