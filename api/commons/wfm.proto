@@ -613,6 +613,20 @@ enum SchedulingTargetType {
   SERVICE_LEVEL = 1;
 }
 
+// enum representing the state of a draft build.
+enum BuildDraftStatus {
+  // No build has ever been started for this draft.
+  NO_BUILD = 0;
+  // The build is currently in progress.
+  IN_PROGRESS = 1;
+  // The build succeeded.
+  SUCCEEDED = 2;
+  // The build failed.
+  FAILED = 3;
+  // The build was canceled
+  CANCELED = 4;
+}
+
 // Filter for schedule selection.
 message ScheduleSelector {
   // ID of the schedule to select, not needed for Published schedules.

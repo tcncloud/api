@@ -2282,7 +2282,12 @@ service WFM {
   }
 
   // Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
-  // If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+  // If there is a build in progress @build_in_progress will be true.
+  // As long as there has been a build started for the given @draft_schedule_sid, @build_start_datetime will be set with the time that the build process started.
+  // If a build has been completed for the draft, @build_end_datetime will be set with the time that the build ended, otherwise it will be None.
+  // The @build_status gives the status of the most recent build for the draft.
+  // The @diagnostics will be set with any diagnostics encountered during the most recent build.
+  // Any errors encountered during the build process will be returned as INTERNAL_ERROR diagnostics.
   // Errors:
   //   - grpc.Invalid: the @draft_schedule_sid is invalid.
   //   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
@@ -2300,9 +2305,9 @@ service WFM {
   }
 
   // Cancels the build in progress for the given @draft_schedule_sid.
+  // If there was a build to cancel, @canceled_build will be returned as true, otherwise it will be false.
   // Errors:
   //   - grpc.Invalid: the @draft_schedule_sid is invalid.
-  //   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
   //   - grpc.Internal: error when cancelling the build or updating the build in progress table.
   rpc CancelBuildInProgress(CancelBuildInProgressRequest) returns (CancelBuildInProgressResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/cancelbuildinprogress";
@@ -7007,6 +7012,15 @@ message PollBuildInProgressResponse {
   // If True: A build is currently in progress for the draft.
   // If False: There is no build in progress for the draft.
   bool build_in_progress = 2;
+  // The end time of the most recent build session.
+  // Will be set to None if the most recent build attempt is still in progress.
+  google.protobuf.Timestamp build_end_datetime = 3;
+  // Status of the most recent build.
+  commons.BuildDraftStatus build_status = 4;
+  // Any diagnostics encountered.
+  // Errors encountered will be returned in the form of
+  // INTERNAL_ERROR level diagnostics.
+  repeated Diagnostic diagnostics = 5;
 }
 
 // Request message for CancelBuildInProgress RPC
@@ -7016,7 +7030,11 @@ message CancelBuildInProgressRequest {
 }
 
 // Response message for CancelBuildInProgress RPC
-message CancelBuildInProgressResponse {}
+message CancelBuildInProgressResponse {
+  // True if a build was cancelled.
+  // False if there was not a build to cancel.
+  bool canceled_build = 1;
+}
 
 // Request message for the PublishDraftSchedule RPC
 message PublishDraftScheduleReq {
