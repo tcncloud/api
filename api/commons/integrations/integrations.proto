@@ -1000,6 +1000,8 @@ message ExecuteFlow {
 
     ExecutePayScoutCreditCardSale payscout_credit_sale = 3101;
     ExecutePayScoutEcheckSale payscout_echeck_sale = 3102;
+    ExecutePayScoutCreditCardSaleRecurring payscout_credit_sale_recurring = 3103;
+    ExecutePayScoutEcheckSaleRecurring payscout_echeck_sale_recurring = 3104;
 
     ExecuteI2cEcho i2c_echo = 3201;
     ExecuteI2cBalanceInquiry i2c_balance_inquiry = 3202;
@@ -1416,6 +1418,8 @@ message ExecuteGlobalPaymentsReverseSaleOrRefund {}
 
 message ExecutePayScoutCreditCardSale {}
 message ExecutePayScoutEcheckSale {}
+message ExecutePayScoutCreditCardSaleRecurring {}
+message ExecutePayScoutEcheckSaleRecurring {}
 
 message ExecuteI2cEcho {}
 message ExecuteI2cBalanceInquiry {}
