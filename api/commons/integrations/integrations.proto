@@ -58,6 +58,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_ACQUIRED = 5100;
   INTEGRATION_TYPE_GENERIC = 5200;
   INTEGRATION_TYPE_HEALTHPAY24 = 5300;
+  INTEGRATION_TYPE_FINVI_FACS = 5400;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -404,6 +405,8 @@ enum RequestMethod {
   REQUEST_METHOD_GENERIC_REQUEST = 5201;
 
   REQUEST_METHOD_HEALTHPAY24_ACCOUNTS_RECEIVABLE = 5301;
+
+  REQUEST_METHOD_FINVI_FACS_PROCESS_PAYMENT = 5401;
 }
 
 enum TransactionType {
@@ -1142,6 +1145,8 @@ message ExecuteFlow {
     ExecuteGenericRequest generic_request = 5201;
 
     ExecuteHealthpay24AccountsReceivable healthpay24_accounts_receivable = 5301;
+
+    ExecuteFinviFacsProcessPayment finvi_facs_process_payment = 5401;
   }
 }
 
@@ -1572,3 +1577,5 @@ message ExecuteAcquiredProcessPayment {}
 message ExecuteGenericRequest {}
 
 message ExecuteHealthpay24AccountsReceivable {}
+
+message ExecuteFinviFacsProcessPayment {}
