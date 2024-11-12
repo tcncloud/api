@@ -1263,6 +1263,22 @@ service WFM {
     };
   }
 
+  // Lists all the scheduling activities for the org making the request.
+  // Their member non skill activities and pause codes will always be included.
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the activities or its members.
+  rpc ListSchedulingActivities(ListSchedulingActivitiesRequest) returns (ListSchedulingActivitiesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listschedulingactivities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Gets the on call scheduling activity for the org sending the request.
   // Required permissions:
   //   NONE
@@ -5500,6 +5516,8 @@ message SchedulingActivity {
   NonSkillActivity member_non_skill_activity = 4;
   // Distinguishes if this is a special scheduling activity.
   commons.SchedulingActivityClassification activity_classification = 5;
+  // List of all the pause codes that this activity allows.
+  repeated string pause_codes = 6;
 }
 
 // Request message for the ListCandidateSchedulingActivitiesReq RPC
@@ -5514,6 +5532,15 @@ message ListCandidateSchedulingActivitiesReq {
 
 // Response message for the ListCandidateSchedulingActivitiesRes RPC
 message ListCandidateSchedulingActivitiesRes {
+  repeated SchedulingActivity scheduling_activities = 1;
+}
+
+// Request message for the ListSchedulingActivities RPC
+message ListSchedulingActivitiesRequest {}
+
+// Response message for the ListCandidateSchedulingActivities RPC
+message ListSchedulingActivitiesResponse {
+  // List of scheduling activities for the org sending the request.
   repeated SchedulingActivity scheduling_activities = 1;
 }
 
