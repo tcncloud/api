@@ -1003,6 +1003,20 @@ service P3Api {
         {permissions: PERMISSION_AGENT}]
     };
   }
+
+  // Retrieves the pause codes from all the sets of the org sending the request.
+  // Duplicates codes between sets will be removed and only one copy kept.
+  // Resulting pause codes will be sorted alphabetically in ascending order.
+  // Errors:
+  //   - grpc.Internal: error occurs when getting the pause codes.
+  rpc ListDistinctPauseCodes(ListDistinctPauseCodesRequest) returns (ListDistinctPauseCodesResponse) {
+    option (google.api.http).post = "/api/v0alpha/p3api/listdistinctpausecodes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {permissions: PERMISSION_WFM}]
+    };
+  }
 }
 
 message GetAgentHuntGroupReq {
@@ -3012,4 +3026,13 @@ message GetMailMergeRes {
   map<string, string> zip_phone_metadata = 8;
   map<string, string> journey_retrieved_data = 9;
   map<string, string> integration_data = 10;
+}
+
+message ListDistinctPauseCodesRequest {}
+
+message ListDistinctPauseCodesResponse {
+  // Pause codes found for the org sending the request.
+  // Duplicates codes between sets will be removed and only one copy kept.
+  // Resulting pause codes will be sorted alphabetically in ascending order.
+  repeated string pause_codes = 1;
 }
