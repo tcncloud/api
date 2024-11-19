@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+// AccessTokensExpiringEvent is the event that is triggered when any users access tokens are expiring.
+message AccessTokensExpiringEvent {
+  // The id of the organization.
+  string org_id = 1;
+  // The report of all the users access tokens that are expiring.
+  string report = 2;
+}
