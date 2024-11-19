@@ -21,6 +21,30 @@ service ExplorerService {
     option (google.api.http).body = "*";
     option (annotations.authz) = {no_permissions: true};
   }
+
+  rpc GetSupportQuery(SupportQueryRequest) returns (SupportQueryResponse) {
+    option (google.api.http).post = "/api/v1alpha1/explorer/explorer/getsupportquery";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_SUPPORT_TCN_INSIGHTS_ADMIN]
+        }
+      ]
+    };
+  }
+
+  rpc GetQueryExplain(QueryExplainRequest) returns (QueryExplainResponse) {
+    option (google.api.http).post = "/api/v1alpha1/explorer/explorer/getqueryexplain";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CUSTOMER_SUPPORT]
+        }
+      ]
+    };
+  }
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
@@ -76,4 +100,37 @@ message QueryResponse {
   string result_url = 1;
   // result_size_bytes is the size of the result in bytes.
   int64 result_size_bytes = 2;
+}
+
+// SupportQueryRequest is the request to query a datasource with support permissions.
+message SupportQueryRequest {
+  // query_request is the query to execute.
+  QueryRequest query_request = 1;
+}
+
+// SupportQueryResponse contains the result of a datasource query with support permissions.
+message SupportQueryResponse {
+  // result_url is the URL to the result of the query.
+  string result_url = 1;
+  // result_size_bytes is the size of the result in bytes.
+  int64 result_size_bytes = 2;
+}
+
+// QueryExplainRequest is the request to retrieve debug data for a query.
+message QueryExplainRequest {
+  QueryRequest query_request = 1;
+}
+
+// QueryExplainResponse contains the result of a query explain.
+message QueryExplainResponse {
+  // result_url is the URL to the result of the query.
+  string result_url = 1;
+  // result_size_bytes is the size of the result in bytes.
+  int64 result_size_bytes = 2;
+  // the prql query string
+  string prql = 3;
+  // the sql query string
+  string sql = 4;
+  // the sql explain string
+  string explain = 5;
 }
