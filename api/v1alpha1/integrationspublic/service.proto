@@ -230,12 +230,15 @@ message ProcessWorkflowReq {
   // It will be merged with plugin instance data and potentially link data
   map<string, Value> params = 5;
   api.commons.integrations.RequestOrigin request_origin = 6;
+  // session_id is an optional field, only specific Portals will check the session before processing.
+  string session_id = 7;
 }
 
 message ProcessWorkflowRes {
   bool success = 1;
   // the response data from the process
   map<string, Value> data = 2;
+  string session_id = 3;
 }
 
 message GetLinkDetailsReq {
