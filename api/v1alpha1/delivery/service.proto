@@ -172,6 +172,9 @@ service DeliveryApi {
       sets: [
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS_FLAG]
         }
       ]
     };
@@ -216,6 +219,9 @@ service DeliveryApi {
       sets: [
         {
           permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_VIEW]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };

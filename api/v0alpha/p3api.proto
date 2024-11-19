@@ -119,6 +119,9 @@ service P3Api {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };
@@ -595,7 +598,13 @@ service P3Api {
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
-        {permissions: PERMISSION_ORG_VIEW}]
+        {
+          permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
+        }
+      ]
     };
   }
 

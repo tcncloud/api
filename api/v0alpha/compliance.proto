@@ -242,6 +242,9 @@ service Compliance {
       sets: [
         {
           permissions: [PERMISSION_COMPLIANCE]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };

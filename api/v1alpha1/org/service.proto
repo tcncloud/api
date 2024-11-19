@@ -971,6 +971,9 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };
@@ -1495,6 +1498,9 @@ service Org {
       sets: [
         {
           permissions: [PERMISSION_ORG_VIEW]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };

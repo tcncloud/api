@@ -270,6 +270,9 @@ service OmniApi {
         },
         {
           permissions: [PERMISSION_TICKETS_APP]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };
@@ -715,6 +718,9 @@ service OmniApi {
         },
         {
           permissions: [PERMISSION_AGENT]
+        },
+        {
+          permissions: [PERMISSION_VOICE_ANALYTICS]
         }
       ]
     };
