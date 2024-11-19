@@ -66,6 +66,27 @@ service PBXService {
     };
   }
 
+  // Returns details of all Ring Groups associated with a specific sip account
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.NotFound: The sip account does not exist or is not in the caller's ORG.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc ListRingGroupsBySipId(ListRingGroupsBySipIdRequest) returns (ListRingGroupsBySipIdResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/listringgroupsbysipid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ]
+    };
+  }
+
   // Returns details of the Ring Group associated with the ring_group_id
   // Required permissions:
   //   PBX-MANAGER
@@ -138,6 +159,27 @@ service PBXService {
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc ListSIPAccounts(ListSIPAccountsRequest) returns (ListSIPAccountsResponse) {
     option (google.api.http).post = "/services/pbx/v2/pbxservice/listsipaccounts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ]
+    };
+  }
+
+  // Returns details of all SIP Accounts associated with a specific ring group
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.InvalidArgument: The request is invalid.
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc ListSIPAccountsByRingGroupId(ListSIPAccountsByRingGroupIdRequest) returns (ListSIPAccountsByRingGroupIdResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/listsipaccountsbyringgroupid";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -310,6 +352,14 @@ message ListSIPAccountsResponse {
   repeated SIPAccount sip_accounts = 1;
 }
 
+message ListSIPAccountsByRingGroupIdRequest {
+  string ring_group_id = 1;
+}
+
+message ListSIPAccountsByRingGroupIdResponse {
+  repeated SIPAccount sip_accounts = 1;
+}
+
 message GetSIPAccountByUserIdRequest {
   string org_user_id = 1;
 }
@@ -337,6 +387,14 @@ message GetPBXUserResponse {
 message ListRingGroupsRequest {}
 
 message ListRingGroupsResponse {
+  repeated RingGroup groups = 1;
+}
+
+message ListRingGroupsBySipIdRequest {
+  string sip_account_id = 1;
+}
+
+message ListRingGroupsBySipIdResponse {
   repeated RingGroup groups = 1;
 }
 
