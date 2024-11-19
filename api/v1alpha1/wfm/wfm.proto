@@ -2185,11 +2185,7 @@ service WFM {
 
   // Gets the published schedule for the corresponding @datetime_range for the org sending the request.
   // Will create a published schedule if it does not exist already for the org sending the request.
-  // if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-  // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-  // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-  // if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-  // if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+  // Returns the published schedule without any shift instances.
   // Errors:
   //   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
   //   - grpc.NotFound: the @node_selector doesn't exist.
@@ -2264,7 +2260,7 @@ service WFM {
   // If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
   // If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
   // If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
-  // If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+  // Returns the updated schedule without any shift instances.
   // Errors:
   //   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
   //   - grpc.Internal: error occurs when updating the schedule or its instances.
@@ -2282,7 +2278,7 @@ service WFM {
 
   // Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
   // The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-  // @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
+  // Returns the draft schedule without any shift instances.
   // Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
   // If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
   rpc BuildDraftSchedule(BuildDraftScheduleReq) returns (BuildDraftScheduleRes) {
@@ -2341,7 +2337,7 @@ service WFM {
   // Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
   // If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
   // otherwise it will return those diagnostic errors and not publish the schedule.
-  // @include parameters are used when retrieving the resulting published schedule, and work in the same way as for GetDraftSchedule.
+  // does not return any shift instances on the published schedule.
   // Errors:
   //   - grpc.Invalid: the parameters in the @req are invalid..
   //   - grpc.NotFound: @draft_schedule_sid doesn't exist.
@@ -2381,12 +2377,7 @@ service WFM {
 
   // Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
   // The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-  // if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-  // @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
-  // if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-  // if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-  // if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-  // if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+  // Does not return any shift instances on the draft schedule.
   // Errors:
   //   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid.
   //   - grpc.NotFound: the @node_selector or @draft_schedule_sid doesn't exist.
@@ -6884,19 +6875,19 @@ message GetPublishedScheduleReq {
   // Date range to of the published to return.
   commons.DatetimeRange datetime_range = 1;
   // Set to true to include shift instances.
-  bool include_shift_instances = 2;
+  bool include_shift_instances = 2 [deprecated = true];
   // Set to true to include shift template in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_template = 3;
+  bool include_shift_template = 3 [deprecated = true];
   // Set to true to include shift segments in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_segments = 4;
+  bool include_shift_segments = 4 [deprecated = true];
   // Set to true to include scheduling activity in each of the returned shift segments.
   // Only effective when include_shift_instances and include_shift_segments are also set to true.
-  bool include_scheduling_activity = 5;
+  bool include_scheduling_activity = 5 [deprecated = true];
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
-  bool include_activity = 6;
+  bool include_activity = 6 [deprecated = true];
   // Optional field, if left nil all matching the given parameters will be included.
   ParentEntity node_selector = 7;
 }
@@ -6975,7 +6966,7 @@ message UpdateDraftScheduleReq {
   // Set to true to copy shift instances from the published schedule into regions of the schedule with no shift instances.
   bool copy_shifts_into_new_range = 6;
   // Set to true to get the draft schedule with the updated schedule range, shift instances, and shift segments
-  bool get_updated_shifts = 7;
+  bool get_updated_shifts = 7 [deprecated = true];
 }
 
 // Response message for the UpdateDraftSchedule RPC.
@@ -6996,19 +6987,19 @@ message BuildDraftScheduleReq {
   // The node that the shifts should be associated with.
   ParentEntity node_selector = 4;
   // Set to true to include shift instances.
-  bool include_shift_instances = 5;
+  bool include_shift_instances = 5 [deprecated = true];
   // Set to true to include shift template in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_template = 6;
+  bool include_shift_template = 6 [deprecated = true];
   // Set to true to include shift segments in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_segments = 7;
+  bool include_shift_segments = 7 [deprecated = true];
   // Set to true to include scheduling activity in each of the returned shift segments.
   // Only effective when include_shift_instances and include_shift_segments are also set to true.
-  bool include_scheduling_activity = 8;
+  bool include_scheduling_activity = 8 [deprecated = true];
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
-  bool include_activity = 9;
+  bool include_activity = 9 [deprecated = true];
   // Set to true to automatically generate agents to meet the requirements of the shift templates min and max agents.
   // Otherwise, no agents will be generated to meet these requirements.
   bool auto_generate_agents = 10;
@@ -7073,19 +7064,19 @@ message PublishDraftScheduleReq {
   commons.DatetimeRange datetime_range = 3;
   // Include fields determine what the returned published schedule will include
   // Set to true to include shift instances.
-  bool include_shift_instances = 4;
+  bool include_shift_instances = 4 [deprecated = true];
   // Set to true to include shift template in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_template = 5;
+  bool include_shift_template = 5 [deprecated = true];
   // Set to true to include shift segments in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_segments = 6;
+  bool include_shift_segments = 6 [deprecated = true];
   // Set to true to include scheduling activity in each of the returned shift segments.
   // Only effective when include_shift_instances and include_shift_segments are also set to true.
-  bool include_scheduling_activity = 7;
+  bool include_scheduling_activity = 7 [deprecated = true];
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
-  bool include_activity = 8;
+  bool include_activity = 8 [deprecated = true];
   // If set to true, it will publish the schedule regardless of any diagnostics errors,
   // otherwise it will return those diagnostic errors and not publish the schedule
   bool ignore_diagnostics_errors = 9;
@@ -7124,19 +7115,19 @@ message GetDraftScheduleReq {
   // If left blank, the current scheduling range for the scenario will be used
   commons.DatetimeRange datetime_range = 2;
   // Set to true to include shift instances.
-  bool include_shift_instances = 3;
+  bool include_shift_instances = 3 [deprecated = true];
   // Set to true to include shift template in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_template = 4;
+  bool include_shift_template = 4 [deprecated = true];
   // Set to true to include shift segments in each of the returned shift instances.
   // Only effective when include_shift_instances is also set to true.
-  bool include_shift_segments = 5;
+  bool include_shift_segments = 5 [deprecated = true];
   // Set to true to include scheduling activity in each of the returned shift segments.
   // Only effective when include_shift_instances and include_shift_segments are also set to true.
-  bool include_scheduling_activity = 6;
+  bool include_scheduling_activity = 6 [deprecated = true];
   // Set to true to include non skill activity in each of the returned scheduling activities.
   // Only effective when include_scheduling_activity, include_shift_segments and include_shift_instances are also set to true.
-  bool include_activity = 7;
+  bool include_activity = 7 [deprecated = true];
   // Optional field, if left nil all matching the given parameters will be included.
   ParentEntity node_selector = 8;
 }
