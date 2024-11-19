@@ -40,6 +40,8 @@ message SchemaField {
   bool is_primary_key = 3;
   bool is_low_cardinality = 4;
   string column_description = 5;
+  bool is_time_filter = 6;
+  bool is_default_time_filter = 7;
 }
 
 // Schema is a schema for a datasource.
@@ -48,6 +50,8 @@ message Schema {
   DatasourceType datasource_type = 2;
   repeated SchemaField fields = 3;
   string table_description = 4;
+  string category = 5;
+  string sub_category = 6;
 }
 
 // Parameter is a parameter for a query.
