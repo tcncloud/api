@@ -829,6 +829,23 @@ message AgentStateSequence {
   repeated AgentStateSegment state_segments = 3;
 }
 
+// Represents a single agent's state at a given point in time.
+message AdherenceAgentState {
+  // WFM agent sid that the state belongs to.
+  int64 wfm_agent_sid = 1;
+  // The datetime that the agent state starts.
+  google.protobuf.Timestamp start_datetime = 2;
+  // The adherence states of the agent at this point in time.
+  repeated api.commons.RealTimeManagementState adm_states = 3;
+  // Pause Code that the agent is using for this state. Only set when @adm_states contains PAUSED.
+  string pause_code = 4;
+}
+
+// Bundle of agent states, used when returned as a bundle in a map.
+message AdherenceAgentStates {
+  repeated api.commons.AdherenceAgentState agent_states = 1;
+}
+
 // The AgentLeavePetitionStatus, which is the current state of an agent's AgentLeavePetition for the scheduler service.
 enum AgentLeavePetitionStatus {
   // Not Set.
