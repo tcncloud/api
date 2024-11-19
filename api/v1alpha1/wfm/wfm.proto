@@ -3558,6 +3558,31 @@ service WFM {
     };
   }
 
+  // Gets the agent states for the given @wfm_agent_sids from the given @start_datetime to the @end_datetime
+  // or the current time if not set (start time not inclusive, end time inclusive).
+  // Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
+  // If zero states are found for a given agent, it will not be included in the resulting map.
+  // Errors:
+  //   - grpc.Invalid: arguments in the request are invalid.
+  //   - grpc.Internal: error occurs when getting the states.
+  rpc ListAdherenceAgentStates(ListAdherenceAgentStatesRequest) returns (ListAdherenceAgentStatesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherenceagentstates";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
+        },
+        {
+          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+        }
+      ]
+    };
+  }
+
   // Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
   // Errors:
   //   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -8125,6 +8150,26 @@ message ListRealTimeManagementStatesRequest {}
 message ListRealTimeManagementStatesResponse {
   // The states.
   repeated api.commons.RealTimeManagementState states = 1;
+}
+
+// Request message for the ListAdherenceAgentStates RPC.
+message ListAdherenceAgentStatesRequest {
+  // ID of the wfm agents to get the agent states for.
+  // All IDs must be for TCN agents.
+  repeated int64 wfm_agent_sids = 1;
+  // The datetime to start getting agent states from - not inclusive.
+  google.protobuf.Timestamp start_datetime = 2;
+  // An optional parameter - inclusive.
+  // If set, all agent states will be retrieved until the given @end_datetime.
+  // If not set, they will be retrieved until the current time.
+  google.protobuf.Timestamp end_datetime = 3;
+}
+
+// Response message for the ListAdherenceAgentStates RPC.
+message ListAdherenceAgentStatesResponse {
+  // The found agent states, grouped by wfm_agent_sid and ordered in ascending order by start_datetime.
+  // Key: @wfm_agent_sid - Value: List of agent states that the agent has.
+  map<int64, api.commons.AdherenceAgentStates> agent_states = 1;
 }
 
 // Combines RealTimeManagementState and RgbaColor.
