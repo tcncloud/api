@@ -59,6 +59,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_GENERIC = 5200;
   INTEGRATION_TYPE_HEALTHPAY24 = 5300;
   INTEGRATION_TYPE_FINVI_FACS = 5400;
+  INTEGRATION_TYPE_FINVI_VELOSIDY = 5500;
+  INTEGRATION_TYPE_CLOVER = 5600;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -409,6 +411,13 @@ enum RequestMethod {
   REQUEST_METHOD_HEALTHPAY24_ACCOUNTS_RECEIVABLE = 5301;
 
   REQUEST_METHOD_FINVI_FACS_PROCESS_PAYMENT = 5401;
+
+  REQUEST_METHOD_FINVI_VELOSIDY_ACCOUNT_SEARCH = 5501;
+  REQUEST_METHOD_FINVI_VELOSIDY_ONE_TIME_SALE = 5502;
+  REQUEST_METHOD_FINVI_VELOSIDY_PLAN_OFFER = 5503;
+  REQUEST_METHOD_FINVI_VELOSIDY_PLAN_RECURRING_CREATE = 5504;
+
+  REQUEST_METHOD_CLOVER_PAYMENT_CARD_SALE_TRANSACTION = 5601;
 }
 
 enum TransactionType {
@@ -1151,6 +1160,13 @@ message ExecuteFlow {
     ExecuteHealthpay24AccountsReceivable healthpay24_accounts_receivable = 5301;
 
     ExecuteFinviFacsProcessPayment finvi_facs_process_payment = 5401;
+
+    ExecuteFinviVelosidyAccountSearch finvi_velosidy_account_search = 5501;
+    ExecuteFinviVelosidyOneTimeSale finvi_velosidy_one_time_sale = 5502;
+    ExecuteFinviVelosidyPlanOffer finvi_velosidy_plan_offer = 5503;
+    ExecuteFinviVelosidyPlanRecurringCreate finvi_velosidy_plan_recurring_create = 5504;
+
+    ExecuteCloverPaymentCardSaleTransaction clover_payment_card_sale_transaction = 5601;
   }
 }
 
@@ -1585,3 +1601,10 @@ message ExecuteGenericRequest {}
 message ExecuteHealthpay24AccountsReceivable {}
 
 message ExecuteFinviFacsProcessPayment {}
+
+message ExecuteFinviVelosidyAccountSearch {}
+message ExecuteFinviVelosidyOneTimeSale {}
+message ExecuteFinviVelosidyPlanOffer {}
+message ExecuteFinviVelosidyPlanRecurringCreate {}
+
+message ExecuteCloverPaymentCardSaleTransaction {}
