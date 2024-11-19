@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package api.commons;
+
+import "google/protobuf/timestamp.proto";
+
+message HoldQueueCallStats {
+  // The id of the call.
+  string call_id = 1;
+
+  // The id of the org.
+  string org_id = 2;
+
+  // The id of the omni campaign that the call is associated with.
+  string campaign_id = 3;
+
+  // The phone number of the caller.
+  string phone_number = 4;
+
+  // The current status of the call.
+  HoldQueueMonitorStatus status = 5;
+
+  // The total time in milliseconds that the call was monitored. Will be
+  // undefined if the call is still being monitored.
+  int64 monitor_duration_millis = 7;
+
+  // The time that the call was monitored.
+  google.protobuf.Timestamp monitor_start_time = 8;
+
+  // The time that the call was no longer monitored. Will be undefined if
+  // the call is still being monitored.
+  google.protobuf.Timestamp monitor_end_time = 9;
+}
+
+enum HoldQueueMonitorStatus {
+  HOLD_QUEUE_MONITOR_STATUS_UNSPECIFIED = 0;
+  HOLD_QUEUE_MONITOR_STATUS_MONITORING = 1;
+  HOLD_QUEUE_MONITOR_STATUS_SUCCESS = 2;
+  HOLD_QUEUE_MONITOR_STATUS_FAILED = 3;
+}
