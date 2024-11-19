@@ -334,3 +334,52 @@ message ListAgentScriptsResponse {
   // The list of agent scripts.
   repeated Script scripts = 1;
 }
+
+// Request to create an agent campaign client info display template.
+message CreateAgentClientInfoDisplayTemplateRequest {
+  // template to add
+  api.commons.org.ClientInfoDisplayTemplate template = 1;
+}
+
+// Response for create agent campaign client info display template.
+message CreateAgentClientInfoDisplayTemplateResponse {
+  // the ID of the created display template.
+  int64 template_sid = 1;
+}
+
+// Request to update an agent campaign client info display template.
+message UpdateAgentClientInfoDisplayTemplateRequest {
+  // template to update
+  api.commons.org.ClientInfoDisplayTemplate template = 1;
+}
+
+// Response for update agent campaign client info display template.
+message UpdateAgentClientInfoDisplayTemplateResponse {}
+
+// Request to get an agent campaign client info display template by ID.
+message GetAgentClientInfoDisplayTemplateRequest {
+  int64 template_sid = 1;
+}
+
+// Response containing the agent client info display template.
+message GetAgentClientInfoDisplayTemplateResponse {
+  api.commons.org.ClientInfoDisplayTemplate template = 1;
+}
+
+// Request to list agent campaign client info display templates.
+message ListAgentClientInfoDisplayTemplatesRequest {}
+
+// Response including the agent campaign client info display template list.
+message ListAgentClientInfoDisplayTemplatesResponse {
+  // display templates
+  repeated api.commons.org.ClientInfoDisplayTemplate templates = 1;
+}
+
+// Request to delete an agent campaign client info display template.
+message DeleteAgentClientInfoDisplayTemplateRequest {
+  // the ID of the template to delete
+  int64 template_sid = 1;
+}
+
+// Response for delete agent campaign client info display template.
+message DeleteAgentClientInfoDisplayTemplateResponse {}

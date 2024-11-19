@@ -159,4 +159,69 @@ service HuntGroupsService {
       ]
     };
   }
+
+  // CreateAgentClientInfoDisplayTemplate persists the given template.
+  rpc CreateAgentClientInfoDisplayTemplate(CreateAgentClientInfoDisplayTemplateRequest) returns (CreateAgentClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/createagentclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UpdateAgentClientInfoDisplayTemplate persists changes to the given template.
+  rpc UpdateAgentClientInfoDisplayTemplate(UpdateAgentClientInfoDisplayTemplateRequest) returns (UpdateAgentClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/updateagentclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  // GetAgentClientInfoDisplayTemplate returns requested template.
+  rpc GetAgentClientInfoDisplayTemplate(GetAgentClientInfoDisplayTemplateRequest) returns (GetAgentClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/getagentclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ]
+    };
+  }
+
+  // ListAgentClientInfoDisplayTemplates returns org related templates.
+  rpc ListAgentClientInfoDisplayTemplates(ListAgentClientInfoDisplayTemplatesRequest) returns (ListAgentClientInfoDisplayTemplatesResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/listagentclientinfodisplaytemplates";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_VIEW]
+        }
+      ]
+    };
+  }
+
+  // DeleteAgentClientInfoDisplayTemplate removes the requested template.
+  rpc DeleteAgentClientInfoDisplayTemplate(DeleteAgentClientInfoDisplayTemplateRequest) returns (DeleteAgentClientInfoDisplayTemplateResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/deleteagentclientinfodisplaytemplate";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
 }
