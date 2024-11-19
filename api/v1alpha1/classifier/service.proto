@@ -3,12 +3,36 @@ syntax = "proto3";
 package api.v1alpha1.classifier;
 
 import "annotations/authz.proto";
+import "api/commons/classifier.proto";
 import "api/v1alpha1/classifier/entities.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 service ClassifierFileTemplates {
   rpc ParseFile(ParseFileRequest) returns (ParseFileResponse) {
     option (google.api.http).post = "/api/v1alpha1/classifier/file_templates/parse";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ]
+    };
+  }
+  rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/events/list";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_EDIT]
+        }
+      ]
+    };
+  }
+  rpc PeekList(PeekListRequest) returns (PeekListResponse) {
+    option (google.api.http).post = "/api/v1alpha1/classifier/events/preview";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -115,4 +139,96 @@ message GetFileTemplateRequest {
 }
 message GetFileTemplateResponse {
   FileTemplate file_template = 1;
+}
+
+message ListEventsRequest {
+  // which element we are looking at events for in the dag
+  string element_id = 1;
+  // the beginning of our time range
+  google.protobuf.Timestamp begin = 2;
+  // end of the time range
+  google.protobuf.Timestamp end = 3;
+  // group by step size.
+  // How big of a time range we group the records on.
+  // examples:
+  // - 1h = 1 hour increments (default)
+  // - 10m = 10 minute increments
+  // - 3d = 3 day increments
+  string time_range = 4;
+  // optional, if provided, we only show data that came from this entrypoint id
+  string entrypoint_id = 5;
+  // optional, if provided we only show data that fed through to this element from
+  // the parent_id
+  string parent_id = 6;
+}
+message ListEventsResponse {
+  message Row {
+    int64 input_record_count = 1;
+    int64 output_record_count = 2;
+    int64 discarded_record_count = 3;
+    // beginning of the time frame for this specific row.
+    // not the same as ListEventsRequest.begin.
+    google.protobuf.Timestamp begin = 4;
+    // end of the time frame for this specific row.
+    // not the same as ListEventsRequest.end.
+    google.protobuf.Timestamp end = 5;
+    // the element we are peeking at.
+    string element_id = 6;
+    // the entrypoints that were triggered during this time frame
+    repeated string entrypoints = 7;
+    // the parent paths that lead into this element that were triggered
+    // during this time frame.
+    repeated string parent_ids = 8;
+    // the columns used for these records. in this time frame
+    repeated string columns = 9;
+    // how long the element sat in the queue waiting to start processing, in seconds.
+    // a large number here, means upstream of this element took a really long time.
+    // the longer the DAG, the more time will be spent waiting to process, because
+    // processing has to happen in order.
+    int64 total_queue_wait_seconds = 10;
+    // how long the element took (in seconds) to process all the data on this hour.
+    // a long time here, means the element took a long time to execute its action
+    // on the input records.
+    int64 total_processing_seconds = 11;
+    // the latest 5 server messages that were for this element for this time range.
+    repeated string msgs = 12;
+  }
+  repeated Row rows = 1;
+}
+message PeekListRequest {
+  // our range we are looking at. Should be fetched from the ListEventsResponse.
+  // not setting begin/end results in us getting the last 12 hours.
+  google.protobuf.Timestamp begin = 1;
+  google.protobuf.Timestamp end = 2;
+  // tag is optionally given when queueing a file or sending data. It has significance to the client
+  // only. But we store it on all results for the operation so it can be searched.
+  // If provided here, we only show results with this matching tag.
+  string external_tag = 3;
+  // if empty we will start at begining/end of list
+  string page_token = 4;
+  // sort ascending instead of descending
+  bool asc = 5;
+  // how many records to get
+  int32 page_size = 6;
+
+  // which element we are looking at events for in the dag
+  string element_id = 7;
+  // the columns and ordering we want the results to be in
+  repeated string columns = 8;
+  // optional. If specified we will only look at results that went through
+  // the named entrypoint. Otherwise, we will look at all data that went through
+  // the node
+  string entrypoint_id = 9;
+  // optional. If specified we only look at results that came from this element's
+  // parent path. Otherwise we look at all data that went through the node.
+  string parent_id = 10;
+  // if true we look at the discarded records from this node.
+  // defaults to false, where we look at the kept records.
+  bool view_discards = 11;
+}
+message PeekListResponse {
+  // each item is a json record.
+  repeated string json_records = 1;
+  // the result_id.oid.record_index of where we left off, so we can paginate this call. See task notes for structure.
+  string page_token = 2;
 }
