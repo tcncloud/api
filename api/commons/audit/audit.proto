@@ -12,6 +12,7 @@ import "api/commons/audit/event_types.proto";
 import "api/commons/audit/events.proto";
 import "api/commons/audit/lms_events.proto";
 import "api/commons/audit/omnichannel_events.proto";
+import "api/commons/audit/organization_events.proto";
 import "api/commons/audit/scorecards_events.proto";
 import "api/commons/audit/tickets_events.proto";
 import "api/commons/audit/vana_events.proto";
@@ -270,5 +271,9 @@ message AuditEvent {
     ContactManagerKycEvent contact_manager_kyc_verification_event = 1206;
     ContactManagerDeleteEvent contact_manager_entry_delete_event = 1207;
     ContactManagerDeleteEvent contact_manager_entry_expunge_event = 1208;
+
+    // Organization Events
+    // AccessTokensExpiringEvent is the event that is triggered when any users access tokens are expiring.
+    AccessTokensExpiringEvent access_tokens_expiring_event = 1300;
   }
 }
