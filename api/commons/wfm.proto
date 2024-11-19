@@ -801,6 +801,9 @@ enum RealTimeManagementState {
 
   // The agent is logged out.
   LOGGED_OUT = 13;
+
+  // The agent is in pause.
+  PAUSE = 14;
 }
 
 // Represents an agents real time state over a period of time.
