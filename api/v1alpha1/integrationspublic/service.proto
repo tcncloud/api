@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.integrationspublic;
 
 import "api/commons/integrations/integrations.proto";
+import "api/v1alpha1/integrations/portals.proto";
 import "api/v1alpha1/integrations/service.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -34,6 +35,10 @@ service IntegrationsPublic {
   }
   rpc ProcessWorkflow(ProcessWorkflowReq) returns (ProcessWorkflowRes) {
     option (google.api.http).post = "/api/v1alpha1/integrationspublic/processworkflow";
+    option (google.api.http).body = "*";
+  }
+  rpc GetLinkDetails(GetLinkDetailsReq) returns (GetLinkDetailsRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrationspublic/getlinkdetails";
     option (google.api.http).body = "*";
   }
 }
@@ -231,4 +236,16 @@ message ProcessWorkflowRes {
   bool success = 1;
   // the response data from the process
   map<string, Value> data = 2;
+}
+
+message GetLinkDetailsReq {
+  PortalLinkId entity = 1;
+}
+
+message GetLinkDetailsRes {
+  api.v1alpha1.integrations.Portal portal = 1;
+  PortalConfig portal_config = 2;
+  bool expired = 3;
+  bool completed = 4;
+  api.v1alpha1.integrations.PortalDefinition portal_definition = 5;
 }
