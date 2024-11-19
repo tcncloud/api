@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package services.callmonitor.v1alpha1;
+
+import "annotations/authz.proto";
+import "api/commons/callmonitor.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service CallMonitorService {
+  rpc GetHoldQueueStats(GetHoldQueueStatsRequest) returns (GetHoldQueueStatsResponse) {
+    option (google.api.http).post = "/services/callmonitor/v1alpha1/getholdqueuestats";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+}
+
+message GetHoldQueueStatsRequest {
+  // The Org for which to report call monitoring stats.
+  string org_id = 1;
+
+  // The start time for reporting. Return only stats for calls initiated
+  // after this time.
+  google.protobuf.Timestamp start_time = 2;
+
+  // The end time for reporting. Return only stats for calls initiated
+  // before this time.
+  google.protobuf.Timestamp end_time = 3;
+
+  // Filter to restrict the reported calls.
+  message Filter {
+    // Report only calls that have this status.
+    api.commons.HoldQueueMonitorStatus status = 1;
+
+    // Report only calls associated with this omni campaign.
+    string campaign_id = 3;
+  }
+  Filter filter = 4;
+}
+
+message GetHoldQueueStatsResponse {
+  // Stats for individual calls in the hold queue.
+  repeated api.commons.HoldQueueCallStats stats = 1;
+
+  // The total number of calls that have been monitored.
+  int32 total_num_calls = 2;
+
+  // The total number of calls that have been successful.
+  int32 total_num_successful = 3;
+
+  // The total number of calls that have failed.
+  int32 total_num_failed = 4;
+
+  // The average duration of a monitor session.
+  int64 avg_monitor_duration_ms = 5;
+
+  // The total currently running monitor sessions.
+  int32 total_num_monitoring = 6;
+}
