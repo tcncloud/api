@@ -8511,7 +8511,7 @@ message ListAdherenceAgentRulesRequest {}
 // Response message for ListAdherenceAgentRules.
 message ListAdherenceAgentRulesResponse {
   // Agent rules found for the org sending the request.
-  repeated api.commons.AdherenceAgentRule rules = 1;
+  repeated commons.AdherenceAgentRule rules = 1;
 }
 
 /****************************************************************************************************************************************************/
