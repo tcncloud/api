@@ -45,3 +45,10 @@ enum TranscriptSentimentTone {
   TRANSCRIPT_SENTIMENT_TONE_NEUTRAL = 2;
   TRANSCRIPT_SENTIMENT_TONE_POSITIVE = 3;
 }
+
+// RecordingType enum enumerates recording types.
+enum RecordingType {
+  RECORDING_TYPE_TCN = 0;
+  RECORDING_TYPE_EXTERNAL = 1;
+  RECORDING_TYPE_VOICEMAIL = 2;
+}
