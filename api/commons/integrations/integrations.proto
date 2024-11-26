@@ -204,6 +204,7 @@ enum RequestMethod {
   REQUEST_METHOD_JOURNEY_LATEST = 2401;
   REQUEST_METHOD_JOURNEY_LIST = 2402;
   REQUEST_METHOD_JOURNEY_UPDATE = 2403;
+  REQUEST_METHOD_JOURNEY_SEARCH = 2404;
 
   REQUEST_METHOD_ATHENAHEALTH_GETPATIENTS = 2501;
   REQUEST_METHOD_ATHENAHEALTH_GETPATIENTSWITHID = 2502;
@@ -959,6 +960,7 @@ message ExecuteFlow {
     ExecuteJourneyLatest journey_latest = 2401;
     ExecuteJourneyList journey_list = 2402;
     ExecuteJourneyUpdate journey_update = 2403;
+    ExecuteJourneySearch journey_search = 2404;
 
     ExecuteAthenahealthGetPatients athenahealth_get_patients = 2501;
     ExecuteAthenahealthGetPatientsWithId athenahealth_get_patients_with_id = 2502;
@@ -1386,6 +1388,7 @@ message ExecuteVantivAchSale {}
 message ExecuteJourneyLatest {}
 message ExecuteJourneyList {}
 message ExecuteJourneyUpdate {}
+message ExecuteJourneySearch {}
 
 message ExecuteAthenahealthGetPatients {}
 message ExecuteAthenahealthGetPatientsWithId {}
