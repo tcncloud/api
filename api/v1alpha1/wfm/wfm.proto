@@ -725,6 +725,22 @@ service WFM {
     };
   }
 
+  // Gets the forecast data intervals for the given @skill_profile_category.
+  // Errors:
+  //   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+  //   - grpc.Internal: error occurs when getting the forecast data intervals.
+  rpc ListForecastIntervalsV2(ListForecastIntervalsV2Request) returns (ListForecastIntervalsV2Response) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listforecastintervalsv2";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Generates a regression forecast using the provided @regression_template.
   // It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
   // It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -5019,11 +5035,21 @@ message ListForecastIntervalsForSkillProfileReq {
 }
 
 // Request message for the ListForecastIntervals RPC
-// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 message ListForecastIntervalsReq {
-  option deprecated = true;
   // Category to get the forecast data intervals for.
   commons.SkillProfileCategory skill_profile_category = 1;
+}
+
+// Request message for the ListForecastIntervalsV2 RPC
+message ListForecastIntervalsV2Request {
+  // Category to get the forecast data intervals for.
+  commons.SkillProfileCategory skill_profile_category = 1;
+}
+
+// Response message for the ListForecastIntervalsV2 RPC
+message ListForecastIntervalsV2Response {
+  // Intervals found for the skill profile category.
+  repeated CallDataByInterval intervals = 1;
 }
 
 // Request message for the UpsertRegressionForecast RPC
