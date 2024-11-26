@@ -602,10 +602,11 @@ service Scorecards {
     };
   }
 
-  // StreamAutoEvaluations streams a list of auto evaluations
+  // DEPRECATED. Use ListAutoEvaluations.
   rpc StreamAutoEvaluations(StreamAutoEvaluationsRequest) returns (stream StreamAutoEvaluationsResponse) {
     option (google.api.http).post = "/api/v1alpha1/scorecards/scorecards/streamautoevaluations";
     option (google.api.http).body = "*";
+    option deprecated = true;
     option (annotations.authz) = {
       sets: [
         {
