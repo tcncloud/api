@@ -6779,6 +6779,89 @@ message PerformanceMetricV2 {
   float total_productive_fte_with_shrinkage_applied = 19;
 }
 
+message PerformanceMetricV3 {
+  // Performance Metrics for all skill collections over the measured datetime range.
+  Basic_PerformanceMetricV3 metrics_all_skills = 1;
+  // Pairs the skill collection to a v3 performance metric.
+  message MetricByCollection {
+    // Skill collections that metrics were calculated for.
+    api.commons.SkillProfileCategory skill_collection = 1;
+    // The metric for the @skill_collection.
+    Basic_PerformanceMetricV3 metric = 2;
+  }
+  // Performance Metrics sorted by skill collection over the measured datetime range.
+  repeated MetricByCollection metrics_by_skill_collection = 2;
+}
+
+// Defines a class that contains a Performance Metric for skill collections with a set of metric by interval
+message Basic_PerformanceMetricV3 {
+  // Datetime range over which the metrics were determined.
+  api.commons.DatetimeRange date_range = 1;
+  // Width of each interval in minutes.
+  int32 interval_width_in_minutes = 2;
+
+  // The total FTE required over the @date_range, as determined by the forecast.
+  float total_required_fte = 3;
+  // The total FTE the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte = 4;
+  // Total count of FTE scheduled to be on the phone / productive for a specific interval / duration of time.
+  float total_productive_fte = 5;
+  // The total FTE, minus shrinkage, the the schedule is likely to address with the current shift instances.
+  float total_achieved_fte_with_shrinkage_applied = 6;
+  // Total count of FTE, minus shrinkage, scheduled to be on the phone / productive / duration of time.
+  float total_productive_fte_with_shrinkage_applied = 7;
+
+  // Number of intervals in the @date_range with predicted calls.
+  int32 num_intervals_with_call_ftes = 8;
+  // Number of intervals in the @date_range with scheduled shifts.
+  int32 num_intervals_with_shift_ftes = 9;
+
+  // Number of intervals in @date_range with predicted calls but no scheduled shifts.
+  int32 num_intervals_with_call_ftes_but_no_shifts = 10;
+  // Number of intervals in @date_range with scheduled shifts but no predicted calls.
+  int32 num_intervals_with_shifts_but_no_call_ftes = 11;
+
+  // Total intervals with not enough scheduled FTE's to meet predicted calls.
+  float total_underscheduled_call_ftes = 12;
+  // Total intervals with more scheduled FTE's than required to meet predicted calls.
+  float total_overscheduled_call_ftes = 13;
+
+  // Percent of of calls where the service level is achieved.
+  float service_level_achieved_percent_calls = 14;
+  // The target seconds required to achieve the service level.
+  int32 service_level_achieved_target_seconds = 15;
+  // Estimated number of agents required to meet the target service level.
+  int32 estimated_total_agent_shortfall_for_service_level = 16;
+
+  // A list of metric intervals spanning @date_range.
+  repeated V3_MetricIntervalStat metric_intervals = 17;
+}
+
+message V3_MetricIntervalStat {
+  // Start time of the interval.
+  google.protobuf.Timestamp start_datetime = 1;
+  // Required FTEs for the interval.
+  float required_fte = 2;
+  // Achieved FTEs for the interval.
+  float achieved_fte = 3;
+  // Achieved FTEs for the interval after shrinkage is applied.
+  float achieved_fte_with_shrinkage_applied = 4;
+  // Number for Productive FTEs achieved during the interval.
+  float productive_fte = 5;
+  // Productive FTEs achieved after shrinkage is applied.
+  float productive_fte_with_shrinkage_applied = 6;
+  // The achieved service level percent for the interval.
+  float achieved_service_level_percent = 7;
+  // Estimated number of additional agents required to achieve the target service level.
+  float estimated_agent_shortfall_for_target_service_level = 8;
+  // Number of calls predicted for the interval.
+  int32 num_calls = 9;
+  // Number of agents scheduled to work during the interval.
+  int32 num_agents = 10;
+  // Number of agents required via erlang calculation.
+  int32 erlang_required_agents = 11;
+}
+
 // Represents a service level interval.
 message ServiceLevelInterval {
   // The start time of the interval.
@@ -7531,7 +7614,7 @@ message GetPerformanceMetricsReq {
   // The datetime range over which the metrics will be collected.
   commons.DatetimeRange datetime_range = 3;
   // Parameters to get metrics for.
-  repeated PerformanceMetricParameter metric_params = 4;
+  repeated PerformanceMetricParameter metric_params = 4 [deprecated = true];
   // The number of minutes to consolidate each metric interval into.
   // Must be a multiple of 5.
   int32 interval_width_in_minutes = 5;
@@ -7539,6 +7622,10 @@ message GetPerformanceMetricsReq {
   //    Requires that @node_selector be set to a call center node, as resync effects the entire schedule.
   // If set to false, this step will be skipped.
   bool resync_call_stats = 6;
+  // Target service level percentage to perform calculations around [0 to 100].
+  int32 service_level_target_percentage = 7;
+  // Target service level duration to perform calculations around.
+  int32 service_level_target_duration_seconds = 8;
 }
 
 // Response message for the GetPerformanceMetrics RPC.
@@ -7546,7 +7633,12 @@ message GetPerformanceMetricsRes {
   // Deprecated. Requested set of performance metrics.
   repeated PerformanceMetric performance_metrics = 1 [deprecated = true];
   // Requested set of performance metrics.
+  // These metrics will be deprecated once V3 metrics are fully integrated.
   repeated PerformanceMetricV2 performance_metrics_v2 = 2;
+  // Requested performance metrics.
+  PerformanceMetricV3 performance_metrics_v3 = 3;
+  // Any diagnostics encountered while generating the metrics.
+  repeated Diagnostic diagnostics = 4;
 }
 
 message SchedulingTarget {
