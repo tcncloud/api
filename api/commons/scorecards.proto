@@ -4,6 +4,7 @@ package api.commons;
 
 import "api/commons/acd.proto";
 import "api/commons/omnichannel.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 // TODO: Enum names are not very intuitive; improve.
@@ -322,6 +323,9 @@ message Scorecard {
   repeated api.commons.CallType.Enum call_types = 20; // call types supported by scorecard
   google.protobuf.Timestamp updated_at = 21; // time scorecard was last updated
   repeated api.commons.ChannelType channels = 22; // Channels supported by the scorecard.
+
+  google.protobuf.Duration minimum_call_length = 23; // Optional. Required length for voice conversations.
+  int32 minimum_sms_message_count = 24; // Optional. Required number of messages for sms conversations.
 }
 
 // AutoQuestion represents an automatically scored question.
