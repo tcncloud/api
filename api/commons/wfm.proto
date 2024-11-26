@@ -570,6 +570,9 @@ enum DiagnosticCode {
   TOUR_AGENT_COLLECTIONS_NEEDED_TO_SCHEDULE_TOUR = 70;
   // DiagnosticNoPredictedCallsInShedulingRange integer value
   NO_PREDICTED_CALLS_IN_SCHEDULING_RANGE = 71;
+  // DiagnosticMinShiftWidthDowMismatch integer value
+  // The diagnostic is reporting that the Shift Template has a DOW Pattern that is smaller than the template MIN_WDITH.
+  SHIFT_TEMPLATE_MIN_WIDTH_DOW_MISMATCH = 72;
 }
 
 // Enum representing the type of a performance metric.
