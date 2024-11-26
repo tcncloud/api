@@ -106,6 +106,8 @@ message QueryResponse {
 message SupportQueryRequest {
   // query_request is the query to execute.
   QueryRequest query_request = 1;
+  // include debug information in the response
+  bool debug = 2;
 }
 
 // SupportQueryResponse contains the result of a datasource query with support permissions.
@@ -114,6 +116,12 @@ message SupportQueryResponse {
   string result_url = 1;
   // result_size_bytes is the size of the result in bytes.
   int64 result_size_bytes = 2;
+  // the prql query string
+  string prql = 3;
+  // the sql query string
+  string sql = 4;
+  // the sql explain string
+  string explain = 5;
 }
 
 // QueryExplainRequest is the request to retrieve debug data for a query.

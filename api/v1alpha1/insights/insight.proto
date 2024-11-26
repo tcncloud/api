@@ -21,7 +21,7 @@ message Insight {
   string resource_id = 9; // unique resource id of the insight
   bool standard_insight = 10; // whether the insight is a standard insight
   api.v1alpha1.explorer.DatasourceType datasource_type = 11; // datasource type of the insight
-  string datasource_name = 12 [deprecated = true]; // primary datasource for filtering
+  string datasource_name = 12; // primary datasource for filtering
   google.protobuf.Timestamp create_time = 13; // create time of insight
   google.protobuf.Timestamp update_time = 14; // update time of insight
 }
