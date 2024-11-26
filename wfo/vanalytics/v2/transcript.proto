@@ -258,6 +258,9 @@ message Call {
   // The audio bytes for this call.
   int64 audio_bytes = 16;
 
+  // The recording type for this call.
+  api.commons.RecordingType recording_type = 17;
+
   // The phone data.
   message Phone {
     // The raw phone number.
@@ -687,6 +690,16 @@ message TranscriptQuery {
 
     // Query constraints on audio bytes.
     AudioBytes audio_bytes = 13;
+
+    // Query constraints on recording type.
+    RecordingType recording_type = 14;
+
+    // Query constraints on recording type.
+    message RecordingType {
+      // Requires all call specific transcript hits to have a recording type
+      // in the list.
+      repeated api.commons.RecordingType any = 1;
+    }
 
     // AudioBytes defines a query on audio_bytes.
     message AudioBytes {
