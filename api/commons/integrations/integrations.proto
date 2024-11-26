@@ -61,6 +61,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_FINVI_FACS = 5400;
   INTEGRATION_TYPE_FINVI_VELOSIDY = 5500;
   INTEGRATION_TYPE_CLOVER = 5600;
+  INTEGRATION_TYPE_NUVEI = 5700;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -418,6 +419,8 @@ enum RequestMethod {
   REQUEST_METHOD_FINVI_VELOSIDY_PLAN_RECURRING_CREATE = 5504;
 
   REQUEST_METHOD_CLOVER_PAYMENT_CARD_SALE_TRANSACTION = 5601;
+
+  REQUEST_METHOD_NUVEI_PAYMENT = 5701;
 }
 
 enum TransactionType {
@@ -1167,6 +1170,8 @@ message ExecuteFlow {
     ExecuteFinviVelosidyPlanRecurringCreate finvi_velosidy_plan_recurring_create = 5504;
 
     ExecuteCloverPaymentCardSaleTransaction clover_payment_card_sale_transaction = 5601;
+
+    ExecuteNuveiPayment nuvei_payment = 5701;
   }
 }
 
@@ -1608,3 +1613,5 @@ message ExecuteFinviVelosidyPlanOffer {}
 message ExecuteFinviVelosidyPlanRecurringCreate {}
 
 message ExecuteCloverPaymentCardSaleTransaction {}
+
+message ExecuteNuveiPayment {}
