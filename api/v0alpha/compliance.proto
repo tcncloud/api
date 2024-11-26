@@ -146,6 +146,22 @@ service Compliance {
     };
   }
 
+  // Updates a scrub list metadata
+  // The method will return an UpdateScrubListResponse.
+  // Required permissions:
+  //      PERMISSION_COMPLIANCE
+  rpc UpdateScrubList(UpdateScrubListRequest) returns (UpdateScrubListResponse) {
+    option (google.api.http).post = "/api/v0alpha/compliance/updatescrublist";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ]
+    };
+  }
+
   // Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
   // The method will return a ScrubListRes message that will
   // contain the results.
@@ -1015,7 +1031,15 @@ message CreateScrubListReq {
   string country_code = 12;
   repeated api.commons.ScrubEntryDetails scrub_entry_details = 13;
   bool durable = 14;
+  api.commons.Decompositions decompositions = 15;
 }
+
+message UpdateScrubListRequest {
+  string list_id = 2;
+  api.commons.Decompositions decompositions = 3;
+}
+
+message UpdateScrubListResponse {}
 
 // AddScrubListEntries request message
 message AddScrubListEntriesReq {
@@ -1100,6 +1124,7 @@ message ScrubEntry {
   google.protobuf.StringValue result = 13;
   api.commons.ContentType type = 14;
   google.protobuf.StringValue country_code = 15;
+  bool is_wild_card = 16;
 
   // audit
   google.protobuf.Timestamp created_on = 200;

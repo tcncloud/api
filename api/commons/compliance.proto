@@ -314,3 +314,13 @@ message InvalidScrubListEntry {
   string entry = 1;
   string error_message = 2;
 }
+
+message Decomposition {
+  string name = 1;
+  int32 start_digit = 2;
+  int32 end_digit = 3;
+}
+
+message Decompositions {
+  repeated Decomposition items = 1;
+}
