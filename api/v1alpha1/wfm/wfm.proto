@@ -1300,6 +1300,45 @@ service WFM {
     };
   }
 
+  // Creates the given @pause_codes for the given @scheduling_activity_sid.
+  // If a pause code already exists for that scheduling activity a new one won't be created.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the paremeters in the request are invalid.
+  //   - grpc.NotFound: the scheduling activity for the org is not found.
+  //   - grpc.Internal: error occurs when creating the pause codes.
+  rpc CreateSchedulingActivityPauseCodes(CreateSchedulingActivityPauseCodesRequest) returns (CreateSchedulingActivityPauseCodesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createschedulingactivitypausecodes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Deletes the given @pause_codes from the given @scheduling_activity_sid.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Invalid: the paremeters in the request are invalid.
+  //   - grpc.NotFound: the scheduling activity for the org is not found.
+  //   - grpc.Internal: error occurs when deleting the pause codes.
+  rpc DeleteSchedulingActivityPauseCodes(DeleteSchedulingActivityPauseCodesRequest) returns (DeleteSchedulingActivityPauseCodesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deleteschedulingactivitypausecodes";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications for the org sending the request.
   // Required permissions:
   //   NONE
@@ -3553,6 +3592,7 @@ service WFM {
   // or the current time if not set (start time not inclusive, end time inclusive).
   // Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
   // If zero states are found for a given agent, it will not be included in the resulting map.
+  // It also returns the latest datetime amongst all the states returned.
   // Errors:
   //   - grpc.Invalid: arguments in the request are invalid.
   //   - grpc.Internal: error occurs when getting the states.
@@ -5572,6 +5612,26 @@ message GetOnCallSchedulingActivityRes {
   // The on call scheduling activity
   SchedulingActivity on_call_scheduling_activity = 1;
 }
+
+// Request message for the CreateSchedulingActivityPauseCodes RPC
+message CreateSchedulingActivityPauseCodesRequest {
+  // ID of the scheduling activity to add the pause codes to.
+  int64 scheduling_activity_sid = 1;
+  // Pause codes to add to the scheduling activity.
+  repeated string pause_codes = 2;
+}
+
+message CreateSchedulingActivityPauseCodesResponse {}
+
+// Request message for the DeleteSchedulingActivityPauseCodes RPC
+message DeleteSchedulingActivityPauseCodesRequest {
+  // ID of the scheduling activity to remove the pause codes from.
+  int64 scheduling_activity_sid = 1;
+  // Pause codes to remove to the scheduling activity.
+  repeated string pause_codes = 2;
+}
+
+message DeleteSchedulingActivityPauseCodesResponse {}
 
 // Request message for the ListPatternsForSchedulingActivityClassifications RPC
 message ListPatternsForSchedulingActivityClassificationsRequest {
@@ -8253,6 +8313,10 @@ message ListAdherenceAgentStatesResponse {
   // The found agent states, grouped by wfm_agent_sid and ordered in ascending order by start_datetime.
   // Key: @wfm_agent_sid - Value: List of agent states that the agent has.
   map<int64, api.commons.AdherenceAgentStates> agent_states = 1;
+  // Lastest datetime found amongst all the returned states.
+  // If no agent states are returned, this date will be set to the @start_datetime from the request.
+  // This value should be used as input to this function whenever the next set of agent states is desired.
+  google.protobuf.Timestamp latest_agent_state_datetime = 2;
 }
 
 // Combines RealTimeManagementState and RgbaColor.
