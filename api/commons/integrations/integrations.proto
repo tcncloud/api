@@ -70,6 +70,7 @@ enum RequestMethod {
   REQUEST_METHOD_UNKNOWN = 0;
   REQUEST_METHOD_BRAINTREE_CREDITSALE = 101;
   REQUEST_METHOD_BRAINTREE_BANKSALE = 102;
+  REQUEST_METHOD_BRAINTREE_CREDITAUTHORIZEPAYMENT = 103;
 
   REQUEST_METHOD_RELATIENT_GETPATIENTBALANCE = 201;
   REQUEST_METHOD_RELATIENT_GETPATIENTCCTOKENS = 202;
@@ -263,6 +264,7 @@ enum RequestMethod {
   REQUEST_METHOD_PAY_SCOUT_ECHECK_SALE = 3102;
   REQUEST_METHOD_PAY_SCOUT_CREDIT_CARD_SALE_RECURRING = 3103;
   REQUEST_METHOD_PAY_SCOUT_ECHECK_SALE_RECURRING = 3104;
+  REQUEST_METHOD_PAY_SCOUT_GET_CONSUMER_FEE = 3105;
 
   REQUEST_METHOD_I2C_ECHO = 3201;
   REQUEST_METHOD_I2C_BALANCE_INQUIRY = 3202;
@@ -828,6 +830,7 @@ message ExecuteFlow {
   oneof value {
     ExecuteBraintreeCreditSale braintree_credit_sale = 101;
     ExecuteBraintreeBankSale braintree_bank_sale = 102;
+    ExecuteBraintreeCreditAuthorizePayment braintree_credit_authorize_payment = 103;
 
     ExecuteRelatientGetPatientBalance relatient_get_patient_balance = 201;
     ExecuteRelatientGetPatientCcTokens relatient_get_patient_cc_tokens = 202;
@@ -1021,6 +1024,7 @@ message ExecuteFlow {
     ExecutePayScoutEcheckSale payscout_echeck_sale = 3102;
     ExecutePayScoutCreditCardSaleRecurring payscout_credit_sale_recurring = 3103;
     ExecutePayScoutEcheckSaleRecurring payscout_echeck_sale_recurring = 3104;
+    ExecutePayScoutGetConsumerFee payscout_get_consumer_fee = 3105;
 
     ExecuteI2cEcho i2c_echo = 3201;
     ExecuteI2cBalanceInquiry i2c_balance_inquiry = 3202;
@@ -1258,6 +1262,7 @@ message PaymentSwervePayACH {}
 // execute flows
 message ExecuteBraintreeCreditSale {}
 message ExecuteBraintreeBankSale {}
+message ExecuteBraintreeCreditAuthorizePayment {}
 
 message ExecuteRelatientGetPatientBalance {}
 message ExecuteRelatientGetPatientCcTokens {}
@@ -1451,6 +1456,7 @@ message ExecutePayScoutCreditCardSale {}
 message ExecutePayScoutEcheckSale {}
 message ExecutePayScoutCreditCardSaleRecurring {}
 message ExecutePayScoutEcheckSaleRecurring {}
+message ExecutePayScoutGetConsumerFee {}
 
 message ExecuteI2cEcho {}
 message ExecuteI2cBalanceInquiry {}
