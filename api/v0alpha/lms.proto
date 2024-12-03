@@ -2920,4 +2920,23 @@ message FinviEntrypoint {
   bool disabled = 3;
   // Specifies the timezone to be used by the cron
   string timezone = 4;
+  // template string to use as the generated filename.
+  // any text inside double brackets "{{text}}"
+  // will be replaced with the value that field represents.
+  // choose from:
+  // - "element_id" id of LMS element
+  // - "element_name" name of LMS element
+  // - "pool_id" id of the pool on external system
+  // - "pool_name" the name of the pool/tableID on external system when calling pool.GetStatus
+  // - "YYYY-MM-DDTHH_mm_ss"
+  // - "YYYY-MM-DD"
+  // - "MM-DD-YYYYTHH_mm_ss"
+  // - "MM-DD-YYYY"
+  // - "HH"
+  // - "HH_mm_ss"
+  // - "UNIX"
+  // if left blank, the default template is used.
+  // expect more fields to be supported in future.
+  // default template looks like: "{{pool_id}}_{{element_id}}_{{UNIX}}"
+  string filename_pattern = 5;
 }
