@@ -34,7 +34,7 @@ message ListNewsArticlesRequest {
   google.protobuf.FieldMask field_mask = 100;
 }
 
-// Responseponse to list of news articles
+// Response to list of news articles
 message ListNewsArticlesResponse {
   // article details
   repeated NewsArticleDetails article_details = 1;
@@ -97,6 +97,9 @@ message PublishedArticleDetails {
   google.protobuf.Timestamp date_published = 3;
   // this flag determines if we show to user or not
   bool display_to_user = 4;
+  // this flag determines if we show to the user every time
+  // they log in (for compliance for example)
+  bool always_display = 5;
 }
 
 // user activity details
@@ -229,4 +232,127 @@ message UploadNewsArticleImageRequest {
 message UploadNewsArticleImageResponse {
   // uploaded image details
   NewsArticleImage image = 1;
+}
+
+// Request to create client news article
+message CreateClientArticleRequest {
+  // news article title
+  string title = 1;
+  // markdown content
+  string content = 2;
+  // article author
+  string author = 3;
+  // image reference id
+  string image_reference_id = 4;
+}
+
+// Response to create client news article
+message CreateClientArticleResponse {
+  // news article details
+  NewsArticleDetails article_details = 1;
+}
+
+// Request to update client news article
+message UpdateClientArticleRequest {
+  // the client news article fields specified to be updated
+  NewsArticleDetails article_details = 1;
+
+  // list of fields Requested to be updated
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Response to update client news article
+message UpdateClientArticleResponse {
+  // updated client news article
+  NewsArticleDetails article_details = 1;
+}
+
+// Request to list of client news articles
+message ListClientArticlesRequest {
+  // the statuses to select by when listing articles (if empty, selects all)
+  repeated api.commons.ArticleStatus statuses = 1;
+
+  // list of article details to be Requested
+  google.protobuf.FieldMask field_mask = 100;
+}
+
+// Response to list of client news articles
+message ListClientArticlesResponse {
+  // client article details
+  repeated NewsArticleDetails article_details = 1;
+}
+
+// Request to create published client article
+message CreatePublishedClientArticleRequest {
+  // news article identifier
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+  // determines if we show to user
+  bool display_to_user = 2;
+  // link to the published article
+  string article_link = 3;
+  // determines if we always show this article to the user on login
+  bool always_show = 4;
+}
+
+// Response to create published client article
+message CreatePublishedClientArticleResponse {
+  // news article details
+  PublishedArticleDetails published_article_details = 1;
+}
+
+// Request to get published client article by id
+message GetPublishedClientArticleByIdRequest {
+  // the unique published article sid
+  int64 published_article_sid = 1 [jstype = JS_STRING];
+}
+
+// Response to get published client article
+message GetPublishedClientArticleByIdResponse {
+  // published article details
+  PublishedArticleDetails published_article_details = 1;
+}
+
+// request to upload image for the client news article
+message StoreClientArticleImageRequest {
+  // NewsArticleImage
+  NewsArticleImage image = 1;
+}
+
+// response to client uploaded image
+message StoreClientArticleImageResponse {
+  // stored image details
+  NewsArticleImage image = 1;
+}
+
+// request to list all images for client article
+message ListImagesForClientArticleRequest {
+  // images for the new article sid
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+}
+
+// response to list all images for the client article
+message ListImagesForClientArticleResponse {
+  // images for the client news article
+  repeated NewsArticleImage news_article_images = 1;
+}
+
+// request to upload image for the client news article
+message UploadClientArticleImageRequest {
+  // image details
+  NewsArticleImage image = 1;
+}
+
+// response after uploading image for the client news article
+message UploadClientArticleImageResponse {
+  // uploaded image details
+  NewsArticleImage image = 1;
+}
+
+// Request to list of published client articles
+message ListPublishedClientArticlesRequest {}
+
+// Response to list of published client articles
+message ListPublishedClientArticlesResponse {
+  // published article details
+  repeated PublishedArticleDetails published_article_details = 1;
 }
