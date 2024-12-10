@@ -1,0 +1,305 @@
+syntax = "proto3";
+
+package api.v1alpha1.insights;
+
+// Pipeline contains a set of nodes
+message Pipeline {
+  // Pipeline nodes
+  repeated Node nodes = 1;
+}
+
+// Node describes the type of operations of a pipeline section
+message Node {
+  // Node id
+  string node_id = 1;
+  // from | filter | derive | group | join | select | aggregate | take
+  string type = 2;
+  // Node title
+  string title = 3;
+  // Input ids of other nodes
+  repeated string input_ids = 4;
+  // Output ids of the node
+  repeated string output_ids = 5;
+  // Node body
+  oneof body {
+    // From node
+    FromNode from_node = 6;
+    // Filter node
+    FilterNode filter_node = 7;
+    // Derive node
+    DeriveNode derive_node = 8;
+    // Group node
+    GroupNode group_node = 9;
+    // Join node
+    JoinNode join_node = 10;
+    // Select node
+    SelectNode select_node = 11;
+    // Aggregate node
+    AggregateNode aggregate_node = 12;
+    // Take node
+    TakeNode take_node = 13;
+    // Json node
+    JsonNode json_node = 14;
+    // Map node
+    MapNode map_node = 15;
+    // Replace node
+    ReplaceNode replace_node = 16;
+    // Sort node
+    SortNode sort_node = 17;
+    // String manipulation node
+    StringManipulationNode string_manipulation_node = 18;
+  }
+}
+
+// FromNode describes a dataset to select from
+message FromNode {
+  // The dataset to select from
+  string dataset = 1;
+}
+
+// FilterNode filters based on an expression
+message FilterNode {
+  // The expression to filter by
+  ExpressionNode expression = 3;
+}
+
+// DeriveNode derives a new column
+message DeriveNode {
+  // Resulting column name
+  string column_name = 3;
+  // Expression to apply to the new column
+  ExpressionNode expression = 4;
+}
+
+// GroupNode groups data
+message GroupNode {
+  // Columns to group by
+  repeated string group_by_columns = 1;
+  // The aggregate columns
+  repeated AggregationColumn aggregation_columns = 2;
+}
+
+// TakeNode restricts the number of rows
+message TakeNode {
+  // how many to limit by
+  int32 limit = 1;
+}
+
+// AggregateNode describes which columns to aggregate
+message AggregateNode {
+  // Aggregation columns
+  repeated AggregationColumn aggregation_columns = 2;
+}
+
+// AggregationColumn describes the aggregation column
+message AggregationColumn {
+  // column name
+  string name = 1;
+  // which columns to group by
+  repeated string group_by_columns = 2;
+  // which column to aggregate
+  string column_to_aggregate = 3;
+  // the aggregation function to apply
+  string aggregation_function = 4; // sum | avg | count | min | max | combine_string | unique_count
+}
+
+// Column describes a column
+message Column {
+  // key is the column name
+  string key = 1;
+  // data type of column
+  string data_type = 2;
+}
+
+// ExpressionNode describes a set of expressions
+message ExpressionNode {
+  // boolean_expression | number_expression | string_expression | date_extraction
+  // json_extraction | open_paren | close_paren | boolean_operand | boolean_expression
+  // boolean_operator | boolean_literal | column_name | number_literal | string_literal
+  // null | string_expression | date_extraction | json_extraction | number_expression
+  // parameter | number_parameter | date_parameter | boolean_parameter | string_parameter
+  string type = 1;
+  // Expression node value
+  string value = 2;
+  // list of sub expressions
+  repeated ExpressionNode children = 3;
+}
+
+// MapNode maps columns
+message MapNode {
+  // new column
+  Column new_column = 1;
+  // column to map
+  Column column_to_map = 2;
+  message Mapping {
+    // expression condition
+    ExpressionNode condition = 1;
+    // expression result
+    ExpressionNode result = 2;
+  }
+  // mappings
+  repeated Mapping mappings = 3;
+  // default expression value
+  ExpressionNode default_value = 4;
+  // is complex
+  bool is_complex = 5;
+}
+
+// JoinNode joins datasets
+message JoinNode {
+  // The type of join
+  string side = 1; // left | right | full | inner
+  // The join columns
+  repeated JoinColumn join_columns = 2;
+  // First parent
+  Parent first_parent = 3;
+  // Second parent
+  Parent second_parent = 4;
+}
+
+// JoinColumn describes a join column
+message JoinColumn {
+  // First parent column
+  string first_parent_column = 1;
+  // second parent column
+  string second_parent_column = 2;
+}
+
+// Parent describes a join node parent
+message Parent {
+  // parent_id
+  string parent_id = 1;
+  // parent title
+  string title = 2;
+  // map of renamed columns
+  map<string, string> renamed_columns = 3;
+}
+
+// SelectNode selects a set of columns
+message SelectNode {
+  // Column names to select
+  repeated string columns = 1;
+  // map of renamed columns
+  map<string, string> renamed_columns = 2;
+}
+
+// JsonTarget
+message JsonTarget {
+  // path parts
+  repeated string path_parts = 1;
+  // Column name
+  string column_name = 2;
+  // Result type
+  string result_type = 3; // string | number | boolean | array | object
+}
+
+// JsonNode
+message JsonNode {
+  // Type of operation
+  string type = 1; // unnest_to_columns | unnest | unpack
+  // Json column to apply the operation to
+  string json_column = 2;
+  // List of json targets
+  repeated JsonTarget targets = 3;
+  // Unnest to column node
+  UnnestToColumnsNode unnest_to_columns_node = 4;
+}
+
+// UnnestToColumnsNode
+message UnnestToColumnsNode {
+  // When the key is a column, take the value from the column
+  JsonTarget unnest_target = 1;
+  // Key target
+  JsonTarget key_target = 2;
+  // Value target
+  JsonTarget value_target = 3;
+  // Column
+  repeated string columns = 4;
+  // Primary keys
+  repeated string primary_keys = 5;
+  // Json columns
+  repeated Column json_columns = 6;
+}
+
+// Parameters
+message Parameters {
+  message Parameter {
+    // Parameter value
+    string value = 2;
+    // Parameter data type
+    string data_type = 3;
+  }
+  // Parameters map
+  map<string, Parameter> parameters = 1;
+}
+
+// ValuesReplacement
+message ValuesReplacement {
+  // Value in the column to replace
+  string target_value = 1;
+  // Target data type of replacement
+  string target_data_type = 2;
+  // Result of the replacement
+  ExpressionNode replacement_value = 3;
+}
+
+// ColumnReplacement
+message ColumnReplacement {
+  // Column to replace values in
+  repeated string column_names = 1;
+  // Values to replace
+  repeated ValuesReplacement values_replacements = 2;
+}
+
+// ReplaceNode
+message ReplaceNode {
+  // List of column replacements
+  repeated ColumnReplacement column_replacements = 1;
+  // Is complex
+  bool is_complex = 2;
+}
+
+// SortColumn
+message SortColumn {
+  // Column name to sort
+  string column_name = 1;
+  // Will determine sort direction
+  bool ascending = 2;
+}
+
+// SortNode describes which columns to sort
+message SortNode {
+  // Columns to sort
+  repeated SortColumn sort_columns = 1;
+}
+
+// StringManipulationSplit describes what value to split by
+message StringManipulationSplit {
+  // Split value
+  string split_by = 2;
+  // If true, index_extraction is required
+  bool is_index_extraction = 3;
+  // Index to extract after split
+  int32 index_extraction = 4;
+}
+
+// StringManipulationReplace describes how to replace values
+message StringManipulationReplace {
+  // Target string to replace
+  string target = 1;
+  // Value to replace with
+  string value = 2;
+}
+
+message StringManipulationNode {
+  // split | replace | lower | upper
+  string type = 1;
+  // Column to replace with
+  string source_column_name = 2;
+  // Target column to replace
+  string target_column_name = 3;
+  // Split operation
+  StringManipulationSplit string_manipulation_split = 4;
+  // Replace operation
+  StringManipulationReplace string_manipulation_replace = 5;
+}
