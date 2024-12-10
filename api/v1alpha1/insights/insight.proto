@@ -4,6 +4,7 @@ package api.v1alpha1.insights;
 
 import "api/commons/insights.proto";
 import "api/v1alpha1/explorer/entities.proto";
+import "api/v1alpha1/insights/insight_content.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -24,6 +25,9 @@ message Insight {
   string datasource_name = 12; // primary datasource for filtering
   google.protobuf.Timestamp create_time = 13; // create time of insight
   google.protobuf.Timestamp update_time = 14; // update time of insight
+  oneof insight_content { // insight content
+    Pipeline pipeline = 16; // pipeline
+  }
 }
 
 // PublishInsightRequest is the request to publish an insight.
@@ -155,6 +159,8 @@ enum OutputConfigurationType {
   OUTPUT_CONFIGURATION_TYPE_FIXED_WIDTH = 4;
   // Output configuration for the timeline chart format
   OUTPUT_CONFIGURATION_TYPE_TIMELINE = 5;
+  // Output configuration for the text values format
+  OUTPUT_CONFIGURATION_TYPE_TEXT_VALUES = 6;
 }
 
 // Enum for Column Format Type
@@ -240,6 +246,38 @@ message TableVisualization {
   QuoteCharacter quote_character = 3;
   // Flag to include header in csv exports
   bool no_header = 4;
+}
+
+// Message for Card Visualization
+message CardVisualization {
+  // List of values to display
+  repeated TextValue text_values = 1;
+}
+
+// Message for displaying a single text value
+message TextValue {
+  // List of dynamic conditions to dynamically render
+  repeated TextValueCondition conditions = 1;
+}
+
+// TextValueCondition describes the conditions to render
+message TextValueCondition {
+  // The expression for the condition
+  ExpressionNode expression = 1;
+  // Text value size
+  int64 size = 2;
+  // List of column operations
+  repeated ColumnOperation operations = 3;
+  // Icon name
+  string icon_name = 4;
+  // Message for color to display
+  message Color {
+    int64 red = 1;
+    int64 green = 2;
+    int64 blue = 3;
+  }
+  // Icon color
+  Color icon_color = 5;
 }
 
 // Message for Table Column Configuration
