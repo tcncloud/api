@@ -383,3 +383,23 @@ message DeleteAgentClientInfoDisplayTemplateRequest {
 
 // Response for delete agent campaign client info display template.
 message DeleteAgentClientInfoDisplayTemplateResponse {}
+
+// Request to assign agent campaign client info display template.
+message AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest {
+  // The template to be assigned
+  int64 template_sid = 1;
+  // The target hunt groups to assign the specified template.
+  repeated int64 hunt_group_sids = 2;
+}
+
+// Response for assign a template to hunt groups.
+message AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse {}
+
+// Request for removing templates from hunt groups.
+message UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest {
+  // The hunt groups from which to remove the template.
+  repeated int64 hunt_group_sids = 1;
+}
+
+// Response for removing templates from hunt groups.
+message UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse {}

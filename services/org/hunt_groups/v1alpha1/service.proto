@@ -224,4 +224,30 @@ service HuntGroupsService {
       ]
     };
   }
+
+  // AssignAgentClientInfoDisplayTemplateToHuntGroups assigns a display template to the specified groups.
+  rpc AssignAgentClientInfoDisplayTemplateToHuntGroups(AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest) returns (AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/assignagentclientinfodisplaytemplatetohuntgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
+
+  // UnassignAgentClientInfoDisplayTemplateFromHuntGroups removes display templates from the specified groups.
+  rpc UnassignAgentClientInfoDisplayTemplateFromHuntGroups(UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest) returns (UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse) {
+    option (google.api.http).post = "/services/org/huntgroups/v1alpha1/unassignagentclientinfodisplaytemplatefromhuntgroups";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_HUNTGROUP_EDIT]
+        }
+      ]
+    };
+  }
 }
