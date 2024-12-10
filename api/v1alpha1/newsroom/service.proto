@@ -165,4 +165,121 @@ service NewsroomAPI {
       ]
     };
   }
+
+  // create a client managed news article
+  rpc CreateClientArticle(CreateClientArticleRequest) returns (CreateClientArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/createclientarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // update a client managed news article
+  rpc UpdateClientArticle(UpdateClientArticleRequest) returns (UpdateClientArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/updateclientarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // list client managed news articles
+  rpc ListClientArticles(ListClientArticlesRequest) returns (ListClientArticlesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listclientarticles";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // create published client article
+  rpc CreatePublishedClientArticle(CreatePublishedClientArticleRequest) returns (CreatePublishedClientArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/createpublishedclientarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // get published client article details by the id
+  rpc GetPublishedClientArticleById(GetPublishedClientArticleByIdRequest) returns (GetPublishedClientArticleByIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/getpublishedclientarticlebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // upload newsroom image for the client news article
+  rpc StoreClientArticleImage(StoreClientArticleImageRequest) returns (StoreClientArticleImageResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/storeclientarticleimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // list newsroom client images
+  rpc ListImagesForClientArticle(ListImagesForClientArticleRequest) returns (ListImagesForClientArticleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listimagesforclientarticle";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // upload newsroom image for the client article
+  rpc UploadClientArticleImage(UploadClientArticleImageRequest) returns (UploadClientArticleImageResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/uploadclientarticleimage";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_CLIENT_CONTROL]
+        }
+      ]
+    };
+  }
+
+  // list published client articles
+  rpc ListPublishedClientArticles(ListPublishedClientArticlesRequest) returns (ListPublishedClientArticlesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/listpublishedclientarticles";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ]
+    };
+  }
 }
