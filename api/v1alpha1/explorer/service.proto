@@ -45,6 +45,27 @@ service ExplorerService {
       ]
     };
   }
+
+  // GetWeeksOfData returns the number of weeks of data an org is limited to and the cutoff date.
+  rpc GetWeeksOfData(GetWeeksOfDataRequest) returns (GetWeeksOfDataResponse) {
+    option (google.api.http).post = "/api/v1alpha1/explorer/explorer/getweeksofdata";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
+}
+
+// GetWeeksOfDataRequest is the request to get the number of weeks of data.
+message GetWeeksOfDataRequest {
+  // org_id to retrieve value for
+  string org_id = 1;
+}
+
+// GetWeeksOfDataResponse contains the number of weeks of data.
+message GetWeeksOfDataResponse {
+  // number of weeks of data
+  int32 weeks_of_data = 1;
+  // access_start_date is the start date of the data
+  google.protobuf.Timestamp access_start_date = 2;
 }
 
 // ListDatasourceSchemasRequest is the request to list datasource schemas.
