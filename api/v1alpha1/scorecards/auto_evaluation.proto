@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.scorecards;
 
+import "api/commons/omnichannel.proto";
 import "api/commons/scorecards.proto";
 
 // GetAutoEvaluationRequest is the request to get an auto evaluation
@@ -31,6 +32,7 @@ message ListAutoEvaluationsRequest {
   string page_token = 10;
 
   repeated api.commons.RiskLevel risk_levels = 11; // Optional - filter by risk level.
+  repeated api.commons.ChannelType channel_types = 12; // Optional. Filter by channel type.
 
   message CallSidFilter {
     repeated int64 any_of = 1; // Optional - filter by any of the provided sids.

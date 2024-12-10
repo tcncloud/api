@@ -141,6 +141,7 @@ message Evaluation {
 
   string deleted_by = 18; // tcn user id of person who deleted evaluation
   bool is_recoverable = 20; // whether the evaluation can be recovered or not.
+  api.commons.ChannelType channel_type = 22; // Channel type of the evaluated transcript.
 
   // CustomField represents a custom key-value pair defined by users.
   message CustomField {
@@ -205,6 +206,7 @@ message AutoEvaluation {
   int32 call_length = 16; // duration of the call audio
   ScorecardInfo scorecard_info = 17; // read-only info provided from the parent scorecard
   CategoryInfo category_info = 18; // read-only info provided from the parent category
+  api.commons.ChannelType channel_type = 19; // Channel type of the evaluated transcript.
 
   message ScorecardInfo {
     string title = 1; // title of the scorecard.
@@ -410,6 +412,7 @@ message SmartEvaluation {
   google.protobuf.Timestamp complete_time = 9; // Time the smart evaluation was completed.
   google.protobuf.Timestamp delete_time = 10; // Time the smart evaluation was deleted.
   repeated SmartEvaluationSection smart_evaluation_sections = 11; // Sections belonging to the smart evaluation.
+  api.commons.ChannelType channel_type = 12; // Channel type of the evaluated transcript.
 }
 
 // SmartEvaluationSection represents a section of a smart evaluation containing question(s).
