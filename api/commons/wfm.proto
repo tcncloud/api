@@ -811,6 +811,7 @@ enum RealTimeManagementState {
 
 // Represents an agents real time state over a period of time.
 message AgentStateSegment {
+  option deprecated = true;
   // The order that this agent state segment fits into the AgentStateSequence.
   // Sequence starts at 0.
   int32 order_in_rts = 1;
@@ -824,6 +825,7 @@ message AgentStateSegment {
 
 // Represents a sequence of real time states for a WFM agent.
 message AgentStateSequence {
+  option deprecated = true;
   // ID of the agent that the real time state sequence relates to.
   int64 wfm_agent_sid = 1;
   // The datetime where the agent state sequence starts.
