@@ -3561,12 +3561,14 @@ service WFM {
   // List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
   // If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
   // If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+  // DEPRECATED as of Dec/10/2024 - Use ListRealTimeManagementStates instead.
   // Errors:
   //   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
   //   - grpc.Internal: error occurs when listing the agent states.
   rpc ListAgentStatesForDay(ListAgentStatesForDayRequest) returns (ListAgentStatesForDayResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listagentstatesforday";
     option (google.api.http).body = "*";
+    option deprecated = true;
     option (annotations.authz) = {
       sets: [
         {
@@ -8298,6 +8300,7 @@ message HelloWorldWFMAdherenceResponse {
 
 // Request message for the ListAgentStatesForDay RPC.
 message ListAgentStatesForDayRequest {
+  option deprecated = true;
   // The datetime to start getting agent states from.
   google.protobuf.Timestamp start_datetime = 1;
   // An optional parameter.
@@ -8308,6 +8311,7 @@ message ListAgentStatesForDayRequest {
 
 // Response message for the ListAgentStatesForDay RPC.
 message ListAgentStatesForDayResponse {
+  option deprecated = true;
   // The list of requested agent states.
   repeated commons.AgentStateSequence agent_states = 1;
 }
