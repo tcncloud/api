@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package services.omnichannel.instant.v1alpha1;
+
+import "annotations/authz.proto";
+import "api/commons/acd.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service InstantDataService {
+  rpc StreamAgentEvents(StreamAgentEventsRequest) returns (stream StreamAgentEventsResponse) {
+    option (google.api.http).post = "/services/omnichannel/instant/v1alpha1/streamAgentEvents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+
+  rpc StreamCallerEvents(StreamCallerEventsRequest) returns (stream StreamCallerEventsResponse) {
+    option (google.api.http).post = "/services/omnichannel/instant/v1alpha1/streamCallerEvents";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_OMNI_BOSS]
+        }
+      ]
+    };
+  }
+}
+
+message StreamAgentEventsRequest {
+  // The org for which to stream events.
+  string org_id = 1;
+}
+
+message StreamAgentEventsResponse {
+  // One or more agent events. The initial response will contain a full
+  // snapshot of every agent's state. Each subsequent response will contain a
+  // single event.
+  repeated AgentEvent event = 1;
+}
+
+message StreamCallerEventsRequest {
+  // The org for which to stream events.
+  string org_id = 1;
+}
+
+message StreamCallerEventsResponse {
+  // One or more caller events. The initial response will contain a full
+  // snapshot of every caller's state. Each subsequent response will contain a
+  // single event.
+  repeated CallerEvent event = 1;
+}
+
+message AgentEvent {
+  string org_id = 1;
+  int64 client_sid = 2;
+  int64 agent_sid = 3;
+  string user_id = 4;
+  google.protobuf.Timestamp event_time = 5;
+
+  // A JSON blob representing the Agent's state.
+  string event_data = 6;
+}
+
+message CallerEvent {
+  string org_id = 1;
+  int64 client_sid = 2;
+  int64 caller_sid = 3;
+  api.commons.CallType.Enum caller_type = 4;
+  google.protobuf.Timestamp event_time = 5;
+
+  // A JSON blob resresenting the Caller's state.
+  string event_data = 6;
+}
