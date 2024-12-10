@@ -78,6 +78,7 @@ message ListEvaluationsRequest {
   // }
   google.protobuf.FieldMask return_fields = 10;
   bool is_deleted = 11; // Optional. If true, will only show deleted evaluations.
+  repeated api.commons.ChannelType channel_types = 14; // Optional. Filter by channel type.
 }
 
 // ListEvaluationsResponse returns a list of evaluations
