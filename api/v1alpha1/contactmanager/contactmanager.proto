@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package api.v1alpha1.contactmanager;
 
+import "api/commons/audit/audit.proto";
 import "api/commons/classifier.proto";
 import "api/commons/contactmanager.proto";
 import "google/protobuf/field_mask.proto";
@@ -78,25 +79,33 @@ message ContactManagerEntry {
     jstype = JS_STRING,
     deprecated = true
   ];
-  string key = 3;
-  string value = 4;
-  string type = 5;
+  string key = 3 [deprecated = true];
+  string value = 4 [deprecated = true];
+  string type = 5 [deprecated = true];
   google.protobuf.Timestamp date_created = 6;
   api.commons.ContactEntryStatus status = 7;
+  google.protobuf.Timestamp date_modified = 8;
+  int64 ttl = 9;
+  repeated string file_name = 10;
+  repeated ContactField field = 11;
 }
 
 message ContactManagerList {
   int64 contact_manager_list_id = 1 [jstype = JS_STRING];
   string org_id = 2;
   int64 project_id = 3 [jstype = JS_STRING];
-  string file_name = 4;
+  string file_name = 4 [deprecated = true];
   string description = 5;
   // List of Columns In The Contact List. UI to render table based on this list
-  repeated string list_details = 6;
-  int64 ttl = 7 [jstype = JS_STRING];
+  repeated string list_details = 6 [deprecated = true];
+  int64 ttl = 7 [
+    deprecated = true,
+    jstype = JS_STRING
+  ];
   google.protobuf.Timestamp date_created = 8;
   bool is_deleted = 9;
   api.commons.ContactListStatus status = 10;
+  string contact_manager_list_name = 11; //unique user friendly name for contact list
 }
 
 message ContactManagerEntryVal {
@@ -171,4 +180,23 @@ message GetContactFieldTypeRequest {
 message GetContactFieldTypeResponse {
   // Field type return on presidio analysis
   api.commons.ClassifierEntityType field_type = 1;
+}
+
+message ListContactActivityLogRequest {
+  string org_id = 1;
+  string project_id = 2;
+  int64 contact_manager_entry_id = 3 [jstype = JS_STRING];
+}
+
+message ListContactActivityLogResponse {
+  repeated ContactActivityLog contact_activity_log = 1;
+}
+
+message ContactActivityLog {
+  string org_id = 1;
+  string project_id = 2;
+  int64 contact_manager_entry_id = 3 [jstype = JS_STRING];
+  string event_user = 4;
+  // the retrieved audit event
+  api.commons.audit.AuditEvent event = 5;
 }
