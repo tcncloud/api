@@ -140,4 +140,19 @@ service ContactManager {
       ]
     };
   }
+
+  /**
+     List Audit history for a Contact
+  */
+  rpc ListContactActivityLog(ListContactActivityLogRequest) returns (ListContactActivityLogResponse) {
+    option (google.api.http).post = "/api/v1alpha1/contactmanager/contactmanager/listcontactactivitylog";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
+        }
+      ]
+    };
+  }
 }

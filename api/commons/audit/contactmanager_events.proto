@@ -24,12 +24,27 @@ message ContactManagerDeleteEvent {
 
 //payload for add/edit/decrypt
 message ContactManagerEntryEvent {
-  int64 ContactManagerListId = 1; //contact manager list id
-  int64 ContactManagerEntryId = 2; //contact manager entry
-  repeated int64 ContactManagerEntryListIds = 3; //entry list Ids added/edited/decrypted
+  int64 ContactManagerListId = 1 [deprecated = true]; //contact manager list id
+  int64 ContactManagerEntryId = 2; //contact manager entry id
+  repeated int64 ContactManagerEntryListIds = 3 [deprecated = true]; //entry list Ids added/edited/decrypted
+  repeated ContactFieldChanges FieldChanges = 4; //tracks changes in contact fields
+  optional int64 ContactUpdateTaskId = 5 [jstype = JS_STRING];
 }
 
-//payload for contact list upload
+message ContactFieldChanges {
+  AuditedContactField from_value = 1;
+  AuditedContactField to_value = 2;
+}
+
+// Single column in a contact
+message AuditedContactField {
+  int64 contact_field_id = 1;
+  string name = 2;
+  string type = 3;
+  optional string value = 4;
+}
+
+//payload for contact list upload or manual entry
 message ContactManagerListUploadEvent {
   int64 ContactManagerListId = 1; // Contact manager list ID
   int64 NumberOfContactsUploaded = 2; // Number of contacts received from LMS
@@ -39,6 +54,10 @@ message ContactManagerListUploadEvent {
   int64 NumberOfDuplicateContacts = 6; //Number of duplicate contacts in the list
   api.commons.ClassifierEntityType DeDupFieldType = 7;
   api.commons.DeDuplicationMergeStrategy DeDupMergeStrategy = 8;
+  string ContactManagerListName = 9;
+  optional string FileName = 10;
+  int64 UpdateTaskId = 11;
+  int64 Ttl = 12;
 }
 
 //payload for decrypt of ContactManagerEntry during KYC
@@ -47,4 +66,12 @@ message ContactManagerKycEvent {
   int64 ContactManagerEntryId = 2; //contact manager entry id
   repeated string types = 3; // kyc key (non pii) types
   repeated int64 ContactManagerEntryListIds = 4; //entry list Ids decrypted
+}
+
+//payload for associating contact with external events
+message ContactManagerEntityAssociationEvent {
+  int64 contact_manager_entry_id = 1;
+  string entity_id = 2;
+  bool deleted = 3;
+  bool is_active = 4;
 }

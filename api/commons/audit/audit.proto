@@ -271,6 +271,7 @@ message AuditEvent {
     ContactManagerKycEvent contact_manager_kyc_verification_event = 1206;
     ContactManagerDeleteEvent contact_manager_entry_delete_event = 1207;
     ContactManagerDeleteEvent contact_manager_entry_expunge_event = 1208;
+    ContactManagerEntityAssociationEvent contact_manager_entity_association_event = 1209;
 
     // Organization Events
     // AccessTokensExpiringEvent is the event that is triggered when any users access tokens are expiring.
