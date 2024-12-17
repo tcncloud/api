@@ -388,6 +388,8 @@ message OutputConfiguration {
     string blob = 7;
     // Table visualization data for the output configuration
     TableVisualization table_visualization = 8;
+    // Card visualization data for the output configuration
+    CardVisualization card_visualization = 11;
   }
   // create time of output configuration
   google.protobuf.Timestamp create_time = 9;
