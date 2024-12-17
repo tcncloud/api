@@ -4,6 +4,7 @@ package api.v0alpha;
 
 import "annotations/authz.proto";
 import "annotations/perms/license.proto";
+import "api/commons/bireportgenerator.proto";
 import "api/commons/org.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -416,6 +417,8 @@ message HistoricConfig {
   }
   // The default time zone to view the historic data by
   api.commons.TimeZone time_zone = 4;
+  // The time period quick filter
+  api.commons.TimePeriod time_period = 5;
 }
 
 // Real Time Dashboard type

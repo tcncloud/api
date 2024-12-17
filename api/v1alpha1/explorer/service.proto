@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.explorer;
 
 import "annotations/authz.proto";
+import "api/commons/bireportgenerator.proto";
 import "api/v1alpha1/explorer/entities.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -113,6 +114,11 @@ message QueryRequest {
   string comment = 11;
   // format is the format of the result.
   api.v1alpha1.explorer.ExportFormat format = 12;
+  // time period quick filter
+  // if time period is used, cannot use start_time and end_time
+  api.commons.TimePeriod time_period = 13;
+  // report_date is to seed the time period for, if empty, the default value is now
+  google.protobuf.Timestamp report_date = 14;
 }
 
 // QueryResponse contains the result of a datasource query.
