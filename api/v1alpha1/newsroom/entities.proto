@@ -356,3 +356,15 @@ message ListPublishedClientArticlesResponse {
   // published article details
   repeated PublishedArticleDetails published_article_details = 1;
 }
+
+// Request to get client article by id
+message GetClientArticleByIdRequest {
+  // the unique news article identifier
+  int64 new_article_sid = 1 [jstype = JS_STRING];
+}
+
+// Response to get client article
+message GetClientArticleByIdResponse {
+  // client article details
+  NewsArticleDetails article_details = 1;
+}
