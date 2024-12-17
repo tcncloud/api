@@ -282,4 +282,17 @@ service NewsroomAPI {
       ]
     };
   }
+
+  // get client article details by the id
+  rpc GetClientArticleById(GetClientArticleByIdRequest) returns (GetClientArticleByIdResponse) {
+    option (google.api.http).post = "/api/v1alpha1/newsroom/getclientarticlebyid";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_NEWSROOM_VIEW]
+        }
+      ]
+    };
+  }
 }
