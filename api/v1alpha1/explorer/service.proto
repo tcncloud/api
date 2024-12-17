@@ -122,6 +122,7 @@ message QueryRequest {
   api.commons.TimePeriod time_period = 15;
   // report_date is to seed the time period for, if empty, the default value is now
   google.protobuf.Timestamp report_date = 14;
+  
 }
 
 // QueryResponse contains the result of a datasource query.
