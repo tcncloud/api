@@ -42,6 +42,7 @@ message SchemaField {
   string column_description = 5;
   bool is_time_filter = 6;
   bool is_default_time_filter = 7;
+  bool is_join_column = 8;
 }
 
 // Schema is a schema for a datasource.

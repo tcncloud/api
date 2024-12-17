@@ -121,6 +121,8 @@ message QueryResponse {
   string result_url = 1;
   // result_size_bytes is the size of the result in bytes.
   int64 result_size_bytes = 2;
+  // map of datasources and a boolean indicating if the datasource is filtered by time
+  map<string, bool> time_filtered_datasources = 3;
 }
 
 // SupportQueryRequest is the request to query a datasource with support permissions.
@@ -143,6 +145,8 @@ message SupportQueryResponse {
   string sql = 4;
   // the sql explain string
   string explain = 5;
+  // map of datasources and a boolean indicating if the datasource is filtered by time
+  map<string, bool> time_filtered_datasources = 6;
 }
 
 // QueryExplainRequest is the request to retrieve debug data for a query.
@@ -162,4 +166,6 @@ message QueryExplainResponse {
   string sql = 4;
   // the sql explain string
   string explain = 5;
+  // map of datasources and a boolean indicating if the datasource is filtered by time
+  map<string, bool> time_filtered_datasources = 6;
 }
