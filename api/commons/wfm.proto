@@ -846,9 +846,32 @@ message AdherenceAgentState {
   string pause_code = 4;
 }
 
+// Represents a single violation for an agent's state at a given point in time.
+message AdherenceAgentStateViolation {
+  // WFM agent sid that the state belongs to.
+  int64 wfm_agent_sid = 1;
+  // The datetime that the violation starts.
+  google.protobuf.Timestamp start_datetime = 2;
+  // The expected adherence states that the agent should be at at this point in time.
+  repeated RealTimeManagementState expected_rtm_states = 3;
+  // Expected pause Code that the agent should be using if they were on Pause.
+  string expected_pause_code = 4;
+  // The actual adherence states that the agent is at this point in time.
+  repeated RealTimeManagementState actual_rtm_states = 5;
+  // Actual pause Code that the agent is using if they are on Pause.
+  string actual_pause_code = 6;
+  // Number of seconds that this violation took.
+  int32 violation_duration_seconds = 7;
+}
+
 // Bundle of agent states, used when returned as a bundle in a map.
 message AdherenceAgentStates {
   repeated AdherenceAgentState agent_states = 1;
+}
+
+// Bundle of agent state violations, used when returned as a bundle in a map.
+message AdherenceAgentStateViolations {
+  repeated AdherenceAgentStateViolation violations = 1;
 }
 
 // The AgentLeavePetitionStatus, which is the current state of an agent's AgentLeavePetition for the scheduler service.
