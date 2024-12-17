@@ -3138,6 +3138,8 @@ message GetTempUserTokenRes {
 message GetTempUserTokenByUserIdReq {
   // UserId that token is being created for
   string user_id = 1;
+  // OrgId that the token is being created for
+  string org_id = 2;
 }
 
 message GetTempUserTokenByUserIdRes {
