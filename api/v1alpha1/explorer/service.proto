@@ -119,7 +119,7 @@ message QueryRequest {
   api.v1alpha1.explorer.ExportFormat format = 12;
   // time period quick filter
   // if time period is used, cannot use start_time and end_time
-  api.commons.TimePeriod time_period = 13;
+  api.commons.TimePeriod time_period = 15;
   // report_date is to seed the time period for, if empty, the default value is now
   google.protobuf.Timestamp report_date = 14;
 }
