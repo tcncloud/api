@@ -4,6 +4,7 @@ package api.v1alpha1.explorer;
 
 import "annotations/authz.proto";
 import "api/v1alpha1/explorer/entities.proto";
+import "api/v1alpha1/insights/insight_content.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -95,6 +96,8 @@ message QueryRequest {
     string pipeline = 3;
     // prql query to execute
     string prql = 4;
+    // the insight body pipeline node
+    api.v1alpha1.insights.Pipeline insight_body = 13;
   }
   // org_id for ownership of the data
   repeated string org_ids = 5;
