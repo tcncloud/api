@@ -2187,6 +2187,7 @@ service WFM {
   }
 
   // Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
+  // Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
   // Errors:
   //   -grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
   //   -grpc.NotFound: the shift instances with the given @shift_instance_sids don't exist.
@@ -2577,6 +2578,7 @@ service WFM {
   // Creates a shift instance for the org sending the request with the provided parameters.
   // If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
   // A shift instance will be created for each wfm agent sid provided.
+  // Can only create shifts for the draft schedule. Published shifts require the CreatePublishedShift endpoint.
   // Errors:
   //   - grpc.Invalid: one or more fields in the request have invalid values.
   //   - grpc.Internal: error occurs when creating the shift instance.
@@ -2596,6 +2598,7 @@ service WFM {
   // Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
   // If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
   //   Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+  // Can only create shifts for the draft schedule. Published shifts with segments require the CreatePublishedShiftWithSegments endpoint.
   // Errors:
   //   -grpc.Invalid: one or more fields in the request have invalid values.
   //   -grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
@@ -2616,6 +2619,7 @@ service WFM {
   // Any shift segments will be split between the two shift instances at @time_to_split.
   // If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
   //   warning diagnostics will be returned and the instance will still be split.
+  // Can only split a shift on the draft schedule. To split a published shift use the SplitPublishedShift endpoint.
   // Errors:
   //   -grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
   //   -grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
@@ -2636,9 +2640,11 @@ service WFM {
   // Returns the swapped @shift_instances after they are succesfully updated.
   // If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
   // All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+  // Is only capable of swapping shifts on the draft schedule. To include shifts on the published schedule use the SwapPublishedShifts endpoint.
+  // If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
   // Errors:
-  //   - grpc.Invalid: one or more fields in the request have invalid values.
-  //   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
+  //   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2 or is on a published schedule.
+  //   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
   //   - grpc.Internal: error occurs when swapping the shift instances.
   rpc SwapShiftInstances(SwapShiftInstancesReq) returns (SwapShiftInstancesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/swapshiftinstances";
@@ -2670,9 +2676,12 @@ service WFM {
   }
 
   // Updates a shift instance for the org sending the request with the provided parameters.
+  // Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShift endpoint.
+  // If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
   // Errors:
   //   - grpc.Invalid: one or more fields in the request have invalid values.
   //   - grpc.Internal: error occurs when updating the shift instance.
+  //   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
   rpc UpdateShiftInstanceV2(UpdateShiftInstanceV2Req) returns (UpdateShiftInstanceV2Res) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancev2";
     option (google.api.http).body = "*";
@@ -2692,9 +2701,11 @@ service WFM {
   //
   // Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
   // If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+  // Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShiftWithSegments endpoint.
   // Errors:
   //   - grpc.Invalid: the request data is invalid.
   //   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+  //   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
   rpc UpdateShiftInstanceWithSegments(UpdateShiftInstanceWithSegmentsRequest) returns (UpdateShiftInstanceWithSegmentsResponse) {
     option (google.api.http).post = "/api/v1alpha1/wfm/updateshiftinstancewithsegments";
     option (google.api.http).body = "*";
@@ -2711,6 +2722,7 @@ service WFM {
   // If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
   //  then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
   // If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+  // This endpoint can only copy shifts to a draft schedule. To copy shifts to the published schedule use the CopyShiftsToPublishedSchedule endpoint.
   // Errors:
   //   - grpc.Invalid: one or more fields in the request have invalid values.
   //   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
@@ -3391,6 +3403,7 @@ service WFM {
   // Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
   // If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
   // Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+  // Only replaces the agent on the draft schedule. To replace the agent on a published schedule use the ReplaceAgentOnPublishedSchedule endpoint.
   // Errors:
   //   - grpc.Invalid: the request data is invalid.
   //   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
@@ -3409,6 +3422,7 @@ service WFM {
   // Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
   // Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
   // The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+  // Only removes agents from a draft schedule. To remove agents from the published schedule use the RemoveAgentFromPublishedSchedule endpoint.
   // Errors:
   //   - grpc.Invalid: the request data is invalid.
   //   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
@@ -3423,6 +3437,213 @@ service WFM {
       ]
     };
   }
+
+  /**************************************************************SCHEDULER PUBLISHED SCHEDULE EDITING RPCS********************************************************************/
+
+  // Creates a published shift instance for the org sending the request with the provided parameters, with shift segments matching @shift_template_sid.
+  // If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+  // A shift instance will be created for each wfm agent sid provided.
+  // Can only create shifts for the published schedule. Draft shifts require the CreateShiftInstanceV2 endpoint.
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when creating the shift instance.
+  //   - grpc.NotFound: the @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+  rpc CreatePublishedShift(CreatePublishedShiftRequest) returns (CreatePublishedShiftResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createpublishedshift";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+  // If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+  //   Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+  // Can only create shifts for the published schedule. Draft shifts with segments require the CreateShiftInstanceWithSegments endpoint.
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+  //   - grpc.Internal: error occurs when creating the shift instance or its members.
+  rpc CreatePublishedShiftWithSegments(CreatePublishedShiftWithSegmentsRequest) returns (CreatePublishedShiftWithSegmentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createpublishedshiftwithsegments";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Updates a shift instance on the published schedule for the org sending the request with the provided parameters.
+  // Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceV2 endpoint.
+  // If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.Internal: error occurs when updating the shift instance.
+  //   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+  rpc UpdatePublishedShift(UpdatePublishedShiftRequest) returns (UpdatePublishedShiftResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatepublishedshift";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Runs diagnostics on the given published @shift_instance for the org sending the request.
+  // If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+  // Otherwise, the shift will only be updated if there are no diagnostic errors.
+  // Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+  //
+  // Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+  // If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+  // Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceWithSegments endpoint.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+  //   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+  rpc UpdatePublishedShiftWithSegments(UpdatePublishedShiftWithSegmentsRequest) returns (UpdatePublishedShiftWithSegmentsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatepublishedshiftwithsegments";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Splits the published @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+  // Any shift segments will be split between the two shift instances at @time_to_split.
+  // If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+  //   warning diagnostics will be returned and the instance will still be split.
+  // Can only split a shift on the published schedule. To split a draft shift use the SplitShiftInstance endpoint.
+  // Errors:
+  //   -grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+  //   -grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+  //   -grpc.Internal: error occurs when creating or updating the shift instances.
+  rpc SplitPublishedShift(SplitPublishedShiftRequest) returns (SplitPublishedShiftResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/splitpublishedshift";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
+  // Returns the swapped @shift_instances after they are succesfully updated.
+  // If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+  // All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+  // Is capable of swapping shifts on the published schedule, but is not restricted from swapping shifts on the draft schedule as well.
+  // Users without permissions to swap published shifts can swap draft shifts with the SwapShiftInstances endpoint.
+  // If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2.
+  //   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when swapping the shift instances.
+  rpc SwapPublishedShifts(SwapPublishedShiftsRequest) returns (SwapPublishedShiftsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/swappublishedshifts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Deletes the published shift instances with the corresponding @shift_instance_sids for the org sending the request.
+  // Only deletes published shifts. To delete draft shifts use the DeleteShiftInstances endpoint.
+  // Errors:
+  //   -grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
+  //   -grpc.NotFound: the shift instances with the given @shift_instance_sids don't exist.
+  //   -grpc.Internal: error occurs when removing the shift instances.
+  rpc DeletePublishedShifts(DeletePublishedShiftsRequest) returns (DeletePublishedShiftsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/deletepublishedshifts";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add on the shifts for the given parameters on the published schedule for the org sending the request.
+  // If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+  // Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+  // Only replaces the agent on the published schedule. To replace the agent on a draft schedule use the ReplaceAgentOnScheduleV1 endpoint.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+  rpc ReplaceAgentOnPublishedSchedule(ReplaceAgentOnPublishedScheduleRequest) returns (ReplaceAgentOnPublishedScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/replaceagentonpublishedschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Removes the @wfm_agent_sid from published schedule over @datetime_range for the org sending the request.
+  // Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+  // The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+  // Only removes agents from the published schedule. To remove agents from a draft schedule use the RemoveAgentFromSchedule endpoint.
+  // Errors:
+  //   - grpc.Invalid: the request data is invalid.
+  //   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+  rpc RemoveAgentFromPublishedSchedule(RemoveAgentFromPublishedScheduleRequest) returns (RemoveAgentFromPublishedScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/removeagentfrompublishedschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Copies the given @shift_instance_sids to published schedule for the org sending the request.
+  // If there are any overlap conflicts on published schedule and @overlap_as_warning is set to false,
+  //  then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+  // This endpoint can only copy shifts to the published schedule. To copy shifts to a draft schedule use the CopyShiftInstancesToSchedule endpoint.
+  // Errors:
+  //   - grpc.Invalid: one or more fields in the request have invalid values.
+  //   - grpc.NotFound: the @shift_instance_sids do not exist for the org sending the request.
+  //   - grpc.Internal: error occurs when copying the shift instances.
+  rpc CopyShiftsToPublishedSchedule(CopyShiftsToPublishedScheduleRequest) returns (CopyShiftsToPublishedScheduleResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/copyshiftstopublishedschedule";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  /**************************************************************LEAVE MANAGEMENT RPCS********************************************************************/
 
   // Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
   // The @petition_comment must be set with a value.
@@ -8270,6 +8491,195 @@ message ReplaceAgentOnScheduleRes {
   repeated ShiftInstance updated_shift_instances = 1;
   // Any diagnostics raised due to overlap conflicts.
   repeated Diagnostic diagnostics = 2;
+}
+
+/**************************************************************SCHEDULER PUBLISHED SCHEDULE EDITING ENTITIES********************************************************************/
+
+//  Request message for the CreatePublishedShift RPC.
+message CreatePublishedShiftRequest {
+  // ID of the shift template for the shift instance.
+  int64 shift_template_sid = 1;
+  // Start datetime of the shift instance.
+  google.protobuf.Timestamp start_datetime = 2;
+  // Indicates whether the shift instance is locked.
+  bool is_locked = 3;
+  // ID of the wfm agents for the shift instance.
+  // If empty it will create a new unassigned WfmAgent for the shift instance.
+  // If given more than one sid, then a copy of the instance will be created for each agent.
+  repeated int64 wfm_agent_sids = 4;
+}
+
+// Response message for the CreatePublishedShift RPC.
+message CreatePublishedShiftResponse {
+  // Any shift instances that were created.
+  repeated ShiftInstance shift_instances = 1;
+  // Diagnostics to report cause if shift instances fail to build.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the CreatePublishedShiftWithSegments RPC.
+message CreatePublishedShiftWithSegmentsRequest {
+  // Shift instance with any member shift segments and shift segment call stats to create.
+  ShiftInstance shift_instance = 1;
+  // If set to true, it will create the shift regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not create the shift.
+  bool ignore_diagnostics_errors = 2;
+}
+
+// Response message for the CreatePublishedShiftWithSegments RPC.
+message CreatePublishedShiftWithSegmentsResponse {
+  // The newly created shift instance and any created shift instances and shift segment call stats.
+  ShiftInstance shift_instance = 1;
+  // Any diagnostics encountered when creating @shift_instance.
+  // If ignore_diagnostics_errors is true, then any diagnostic errors will be returned as warnings.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the UpdatePublishedShift RPC.
+message UpdatePublishedShiftRequest {
+  // ID of the shift instance to update.
+  int64 shift_instance_sid = 1;
+  // The new start time for the updated shift instance.
+  google.protobuf.Timestamp start_datetime = 2;
+  // The width of the updated shift instance
+  int32 width_in_minutes = 3;
+  // The updated wfm agent to be assigned to @shift_segment_sid.
+  int64 wfm_agent_sid = 4;
+  // If true, locks @shift_instance_sid, so that it may not be updated again without being unlocked.
+  // if true and the shift instance already is locked, the instance will not have any fields updated.
+  // If false, will unlock a currently locked shift instance and allow it to be updated.
+  bool is_locked = 5;
+
+  // the percentage shrinkage expected for this shift [0.0, 100.0]. 0.0 = no shrinkage,  100 = no agents
+  float planned_shrinkage_percent = 6;
+}
+
+// Response message for the UpdatePublishedShift RPC.
+message UpdatePublishedShiftResponse {
+  // The updated shift instance.
+  ShiftInstance shift_instance = 1;
+  // A list of diagnostics for any errors encountered, which prevented the update.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the UpdatePublishedShiftWithSegments RPC.
+message UpdatePublishedShiftWithSegmentsRequest {
+  // Instance to update with member shift segments to replace.
+  // Any existing shift segments belonging to the instances will be deleted.
+  ShiftInstance shift_instance = 1;
+  // If set to true, it will update the shift instance regardless of any diagnostics errors,
+  // otherwise it will return those diagnostic errors and not do the update.
+  bool ignore_diagnostics_errors = 2;
+}
+
+// Response message for the UpdatePublishedShiftWithSegments RPC.
+message UpdatePublishedShiftWithSegmentsResponse {
+  // Instance that was updated, with member shift segments and call stats.
+  ShiftInstance shift_instance = 1;
+  // A list of diagnostics for any errors encountered with the shift instance in the request.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the SplitPublishedShift RPC.
+message SplitPublishedShiftRequest {
+  // ID of the shift instance to split.
+  int64 shift_instance_sid = 1;
+  // The datetime at which to split the @shift_instance_sid.
+  google.protobuf.Timestamp time_to_split = 2;
+}
+
+// Response message for the SplitPublishedShift RPC.
+message SplitPublishedShiftResponse {
+  // The newly split shift instances and their shift segments.
+  repeated ShiftInstance shift_instances = 1;
+  // Diagnostics to report if shift templates specify a larger minimum shift length than resulting shifts have.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the SwapPublishedShifts RPC.
+message SwapPublishedShiftsRequest {
+  // ID of the wfm agent that will swap instances with @wfm_agent_sid2.
+  int64 wfm_agent_sid1 = 1;
+  // ID of the wfm agent that will swap instances with @wfm_agent_sid1.
+  int64 wfm_agent_sid2 = 2;
+  // IDs of the shift instances that will be swapped.
+  repeated int64 shift_instance_sids = 3;
+}
+
+// Response message for the SwapPublishedShifts RPC.
+message SwapPublishedShiftsResponse {
+  // Shift instances that were swapped.
+  repeated ShiftInstance shift_instances = 1;
+  // Diagnostics for any overlapping shift instances.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the DeletePublishedShifts RPC.
+message DeletePublishedShiftsRequest {
+  // IDs of shift instances to delete.
+  repeated int64 shift_instance_sids = 1;
+}
+
+// Response message for the DeletePublishedShifts RPC.
+message DeletePublishedShiftsResponse {}
+
+// Request message for the ReplaceAgentOnPublishedSchedule RPC.
+message ReplaceAgentOnPublishedScheduleRequest {
+  // An optional field used to limit the datetime range of the shifts being updated.
+  // If left blank, the full schedule range will be updated.
+  commons.DatetimeRange datetime_range = 1;
+  // An optional field indicating the node to get shifts from.
+  // Otherwise shifts will be updated for all nodes on the published schedule.
+  ParentEntity node_selector = 2;
+  // ID of the WFM agent to remove from the schedule.
+  int64 wfm_agent_sid_to_remove = 3;
+  // ID of the WFM agent to add to the schedule, in place of @wfm_agent_sid_to_remove.
+  int64 wfm_agent_sid_to_add = 4;
+  // If set to true, any overlapping shift conflicts will be skipped.
+  // Otherwise, any overlap conflicts will raise a diagnostic and prevent any shifts from being updated.
+  bool skip_overlapping_shifts = 5;
+}
+
+// Response message for the ReplaceAgentOnPublishedSchedule RPC.
+message ReplaceAgentOnPublishedScheduleResponse {
+  // The updated shift instances which were transfered to @wfm_agent_sid_to_add.
+  repeated ShiftInstance updated_shift_instances = 1;
+  // Any diagnostics raised due to overlap conflicts.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the RemoveAgentFromPublishedSchedule RPC.
+message RemoveAgentFromPublishedScheduleRequest {
+  // Datetime range over which the agent should be removed.
+  commons.DatetimeRange datetime_range = 1;
+  // ID of the agent to be removed.
+  int64 wfm_agent_sid = 2;
+  // The node that the shifts to be removed are associated with.
+  // If left blank, the agent may be removed from shifts associated with the entire scenario.
+  ParentEntity node_selector = 3;
+  // The schedule_scenario_sid that @node_selector and @wfm_agent_sid is associated with.
+  int64 schedule_scenario_sid = 4;
+}
+
+// Response message for the RemoveAgentFromPublishedSchedule RPC.
+message RemoveAgentFromPublishedScheduleResponse {
+  // ID of the newly created unassigned WFM agent.
+  int64 unassigned_wfm_agent_sid = 1;
+  // All shifts updated by the method, now assigned to @unassigned_wfm_agent_sid.
+  repeated ShiftInstance updated_shifts = 2;
+}
+
+// Request message for the CopyShiftsToPublishedSchedule RPC.
+message CopyShiftsToPublishedScheduleRequest {
+  // IDs of the shift instances to copy into @destination_schedule.
+  repeated int64 shift_instance_sids = 1;
+}
+
+// Response message for the CopyShiftsToPublishedSchedule RPC.
+message CopyShiftsToPublishedScheduleResponse {
+  // A list of diagnostics for any errors encountered, which prevented the copy.
+  // If @overlap_as_warning is set to true, warning diagnostics for overlaps may be returned after a sucessful copy.
+  repeated Diagnostic diagnostics = 1;
 }
 
 /****************************************************************************************************************************************************/
