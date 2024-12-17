@@ -82,6 +82,10 @@ enum RequestMethod {
   REQUEST_METHOD_RELATIENT_CREATE_FORTIS_CCTOKEN = 208;
   REQUEST_METHOD_RELATIENT_FORTIS_TOKEN_ACH_DEBIT_PAYMENT = 209;
   REQUEST_METHOD_RELATIENT_FORTIS_TOKEN_CC_PAYMENT = 210;
+  REQUEST_METHOD_RELATIENT_GETPATIENTBALANCE_NEW = 211;
+  REQUEST_METHOD_RELATIENT_GETPATIENTCCTOKENS_NEW = 212;
+  REQUEST_METHOD_RELATIENT_POSTPATIENTTOKEN_NEW = 213;
+  REQUEST_METHOD_RELATIENT_POSTPATIENTBALANCE_NEW = 214;
 
   REQUEST_METHOD_CYBERSOURCE_CREDITPAYMENT = 301;
   REQUEST_METHOD_CYBERSOURCE_ECHECKPAYMENT = 302;
@@ -842,6 +846,10 @@ message ExecuteFlow {
     ExecuteRelatientCreateFortisCctoken relatient_create_fortis_cctoken = 208;
     ExecuteRelatientFortisTokenAchDebitPayment relatient_fortis_token_ach_debit_payment = 209;
     ExecuteRelatientFortisTokenCcPayment relatient_fortis_token_cc_payment = 210;
+    ExecuteRelatientGetPatientBalanceNew relatient_get_patient_balance_new = 211;
+    ExecuteRelatientGetPatientCcTokensNew relatient_get_patient_cc_tokens_new = 212;
+    ExecuteRelatientPostPatientTokenNew relatient_post_patient_token_new = 213;
+    ExecuteRelatientPostPatientBalanceNew relatient_post_patient_balance_new = 214;
 
     ExecuteCybersourceCreditPayment cybersource_credit_payment = 301;
     ExecuteCybersourceEcheckPayment cybersource_echeck_payment = 302;
@@ -1274,6 +1282,10 @@ message ExecuteRelatientCreateFortisAchtoken {}
 message ExecuteRelatientCreateFortisCctoken {}
 message ExecuteRelatientFortisTokenAchDebitPayment {}
 message ExecuteRelatientFortisTokenCcPayment {}
+message ExecuteRelatientGetPatientBalanceNew {}
+message ExecuteRelatientGetPatientCcTokensNew {}
+message ExecuteRelatientPostPatientTokenNew {}
+message ExecuteRelatientPostPatientBalanceNew {}
 
 message ExecuteCybersourceCreditPayment {}
 message ExecuteCybersourceEcheckPayment {}
