@@ -1,18 +1,15 @@
 syntax = "proto3";
 
-package api.v1alpha1.insights;
+package api.v1alpha1.explorer;
 
 // Pipeline contains a set of nodes
-// DEPRECATED use api.v1alpha1.explorer.pipeline.Pipeline instead
 message Pipeline {
-  option deprecated = true;
   // Pipeline nodes
   repeated Node nodes = 1;
 }
 
 // Node describes the type of operations of a pipeline section
 message Node {
-  option deprecated = true;
   // Node id
   string node_id = 1;
   // from | filter | derive | group | join | select | aggregate | take
@@ -56,21 +53,18 @@ message Node {
 
 // FromNode describes a dataset to select from
 message FromNode {
-  option deprecated = true;
   // The dataset to select from
   string dataset = 1;
 }
 
 // FilterNode filters based on an expression
 message FilterNode {
-  option deprecated = true;
   // The expression to filter by
   ExpressionNode expression = 3;
 }
 
 // DeriveNode derives a new column
 message DeriveNode {
-  option deprecated = true;
   // Resulting column name
   string column_name = 3;
   // Expression to apply to the new column
@@ -79,7 +73,6 @@ message DeriveNode {
 
 // GroupNode groups data
 message GroupNode {
-  option deprecated = true;
   // Columns to group by
   repeated string group_by_columns = 1;
   // The aggregate columns
@@ -88,21 +81,18 @@ message GroupNode {
 
 // TakeNode restricts the number of rows
 message TakeNode {
-  option deprecated = true;
   // how many to limit by
   int32 limit = 1;
 }
 
 // AggregateNode describes which columns to aggregate
 message AggregateNode {
-  option deprecated = true;
   // Aggregation columns
   repeated AggregationColumn aggregation_columns = 2;
 }
 
 // AggregationColumn describes the aggregation column
 message AggregationColumn {
-  option deprecated = true;
   // column name
   string name = 1;
   // which columns to group by
@@ -115,7 +105,6 @@ message AggregationColumn {
 
 // Column describes a column
 message Column {
-  option deprecated = true;
   // key is the column name
   string key = 1;
   // data type of column
@@ -124,7 +113,6 @@ message Column {
 
 // ExpressionNode describes a set of expressions
 message ExpressionNode {
-  option deprecated = true;
   // boolean_expression | number_expression | string_expression | date_extraction
   // json_extraction | open_paren | close_paren | boolean_operand | boolean_expression
   // boolean_operator | boolean_literal | column_name | number_literal | string_literal
@@ -139,7 +127,6 @@ message ExpressionNode {
 
 // MapNode maps columns
 message MapNode {
-  option deprecated = true;
   // new column
   Column new_column = 1;
   // column to map
@@ -160,7 +147,6 @@ message MapNode {
 
 // JoinNode joins datasets
 message JoinNode {
-  option deprecated = true;
   // The type of join
   string side = 1; // left | right | full | inner
   // The join columns
@@ -173,7 +159,6 @@ message JoinNode {
 
 // JoinColumn describes a join column
 message JoinColumn {
-  option deprecated = true;
   // First parent column
   string first_parent_column = 1;
   // second parent column
@@ -182,7 +167,6 @@ message JoinColumn {
 
 // Parent describes a join node parent
 message Parent {
-  option deprecated = true;
   // parent_id
   string parent_id = 1;
   // parent title
@@ -193,7 +177,6 @@ message Parent {
 
 // SelectNode selects a set of columns
 message SelectNode {
-  option deprecated = true;
   // Column names to select
   repeated string columns = 1;
   // map of renamed columns
@@ -202,7 +185,6 @@ message SelectNode {
 
 // JsonTarget
 message JsonTarget {
-  option deprecated = true;
   // path parts
   repeated string path_parts = 1;
   // Column name
@@ -213,7 +195,6 @@ message JsonTarget {
 
 // JsonNode
 message JsonNode {
-  option deprecated = true;
   // Type of operation
   string type = 1; // unnest_to_columns | unnest | unpack
   // Json column to apply the operation to
@@ -226,7 +207,6 @@ message JsonNode {
 
 // UnnestToColumnsNode
 message UnnestToColumnsNode {
-  option deprecated = true;
   // When the key is a column, take the value from the column
   JsonTarget unnest_target = 1;
   // Key target
@@ -241,23 +221,8 @@ message UnnestToColumnsNode {
   repeated Column json_columns = 6;
 }
 
-// Parameters
-message Parameters {
-  option deprecated = true;
-  message Parameter {
-    option deprecated = true;
-    // Parameter value
-    string value = 2;
-    // Parameter data type
-    string data_type = 3;
-  }
-  // Parameters map
-  map<string, Parameter> parameters = 1;
-}
-
 // ValuesReplacement
 message ValuesReplacement {
-  option deprecated = true;
   // Value in the column to replace
   string target_value = 1;
   // Target data type of replacement
@@ -268,7 +233,6 @@ message ValuesReplacement {
 
 // ColumnReplacement
 message ColumnReplacement {
-  option deprecated = true;
   // Column to replace values in
   repeated string column_names = 1;
   // Values to replace
@@ -277,7 +241,6 @@ message ColumnReplacement {
 
 // ReplaceNode
 message ReplaceNode {
-  option deprecated = true;
   // List of column replacements
   repeated ColumnReplacement column_replacements = 1;
   // Is complex
@@ -286,7 +249,6 @@ message ReplaceNode {
 
 // SortColumn
 message SortColumn {
-  option deprecated = true;
   // Column name to sort
   string column_name = 1;
   // Will determine sort direction
@@ -295,14 +257,12 @@ message SortColumn {
 
 // SortNode describes which columns to sort
 message SortNode {
-  option deprecated = true;
   // Columns to sort
   repeated SortColumn sort_columns = 1;
 }
 
 // StringManipulationSplit describes what value to split by
 message StringManipulationSplit {
-  option deprecated = true;
   // Split value
   string split_by = 2;
   // If true, index_extraction is required
@@ -313,7 +273,6 @@ message StringManipulationSplit {
 
 // StringManipulationReplace describes how to replace values
 message StringManipulationReplace {
-  option deprecated = true;
   // Target string to replace
   string target = 1;
   // Value to replace with
@@ -321,7 +280,6 @@ message StringManipulationReplace {
 }
 
 message StringManipulationNode {
-  option deprecated = true;
   // split | replace | lower | upper
   string type = 1;
   // Column to replace with

@@ -5,7 +5,7 @@ package api.v1alpha1.explorer;
 import "annotations/authz.proto";
 import "api/commons/bireportgenerator.proto";
 import "api/v1alpha1/explorer/entities.proto";
-import "api/v1alpha1/insights/insight_content.proto";
+import "api/v1alpha1/explorer/pipeline.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -87,6 +87,8 @@ message ListDatasourceSchemasResponse {
 
 // QueryRequest is the request to query a datasource.
 message QueryRequest {
+  reserved 13;
+  reserved "insight_body";
   // datasource_name is the name of the datasource to query.
   string datasource_name = 1;
   // datasource_type is the type of the datasource to query.
@@ -97,8 +99,8 @@ message QueryRequest {
     string pipeline = 3;
     // prql query to execute
     string prql = 4;
-    // the insight body pipeline node
-    api.v1alpha1.insights.Pipeline insight_body = 13;
+    // query pipeline is a structured representation of a query
+    api.v1alpha1.explorer.Pipeline query_pipeline = 16;
   }
   // org_id for ownership of the data
   repeated string org_ids = 5;
