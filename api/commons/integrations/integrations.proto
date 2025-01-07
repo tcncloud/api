@@ -171,6 +171,12 @@ enum RequestMethod {
   REQUEST_METHOD_PAYWAY_SUBMITACHSALEREQUEST = 1803;
 
   REQUEST_METHOD_BILLINGTREE_SUBMITCARDSALEREQUEST = 1901;
+  REQUEST_METHOD_BILLINGTREE_GETACCESSTOKEN = 1902;
+  REQUEST_METHOD_BILLINGTREE_TOKENIZE_CARD = 1903;
+  REQUEST_METHOD_BILLINGTREE_TOKENIZE_ACH = 1904;
+  REQUEST_METHOD_BILLINGTREE_TRANSACTION_CARD_SALE = 1905;
+  REQUEST_METHOD_BILLINGTREE_TRANSACTION_ACH_SALE = 1906;
+  REQUEST_METHOD_BILLINGTREE_QUERYFEE = 1907;
 
   REQUEST_METHOD_EXPERIAN_CC_PAYMENT_REQUEST = 2001;
   REQUEST_METHOD_EXPERIAN_CC_PAYMENTPLANREQUEST = 2002;
@@ -937,6 +943,12 @@ message ExecuteFlow {
     ExecutePaywaySubmitACHSaleRequest payway_submit_ach_sale_request = 1803;
 
     ExecuteBillingtreeSubmitCardSaleRequest billingtree_submit_card_sale_request = 1901;
+    ExecuteBillingtreeGetAccessToken billingtree_get_access_token = 1902;
+    ExecuteBillingtreeTokenizeCard billingtree_tokenize_card = 1903;
+    ExecuteBillingtreeTokenizeAch billingtree_tokenize_ach = 1904;
+    ExecuteBillingtreeTransactionCardSale billingtree_transaction_card_sale = 1905;
+    ExecuteBillingtreeTransactionAchSale billingtree_transaction_ach_sale = 1906;
+    ExecuteBillingtreeQueryFee billingtree_query_fee = 1907;
 
     ExecuteExperianCcPaymentRequest experian_cc_payment_request = 2001;
     ExecuteExperianCcPaymentPlanRequest experian_cc_payment_plan_request = 2002;
@@ -1375,6 +1387,12 @@ message ExecutePaywayCreateTokenRequest {}
 message ExecutePaywaySubmitACHSaleRequest {}
 
 message ExecuteBillingtreeSubmitCardSaleRequest {}
+message ExecuteBillingtreeGetAccessToken {}
+message ExecuteBillingtreeTokenizeCard {}
+message ExecuteBillingtreeTokenizeAch {}
+message ExecuteBillingtreeTransactionCardSale {}
+message ExecuteBillingtreeTransactionAchSale {}
+message ExecuteBillingtreeQueryFee {}
 
 message ExecuteExperianCcPaymentRequest {}
 message ExecuteExperianCcPaymentPlanRequest {}
