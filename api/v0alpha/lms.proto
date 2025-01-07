@@ -638,7 +638,8 @@ message ListPoolsResponse {
 
 message Pool {
   string id = 1;
-  string desc = 3;
+  string name = 2;
+  string desc = 3 [deprecated = true];
 }
 
 message GetPublicKeyReq {}
