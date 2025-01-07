@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 
 service PBXService {
+  // DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
   // Returns details of all PBX Users associated with the authenticated callers ORG
   // Required permissions:
   //   PBX-MANAGER
@@ -15,6 +16,7 @@ service PBXService {
   //   - grpc.Internal: An internal error occurred.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc ListPBXUsers(ListPBXUsersRequest) returns (ListPBXUsersResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/pbx/v2/pbxservice/listpbxusers";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -26,6 +28,7 @@ service PBXService {
     };
   }
 
+  // DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
   // Returns details of the PBX User associated with the pbx_user_id
   // Required permissions:
   //   PBX-MANAGER
@@ -36,6 +39,7 @@ service PBXService {
   //   - grpc.NotFound: The user does not exist or is not in the caller's ORG.
   //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
   rpc GetPBXUser(GetPBXUserRequest) returns (GetPBXUserResponse) {
+    option deprecated = true;
     option (google.api.http).post = "/services/pbx/v2/pbxservice/getpbxuser";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
@@ -314,18 +318,27 @@ enum RingStrategy {
 // -------------------------
 // Entity Definitions
 // -------------------------
+
+// DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message PBXUser {
   string pbx_user_id = 1;
   string org_user_id = 2;
   repeated string sip_account_ids = 3;
 }
 
+// For displaying ring groups associated with an SIPAccount
+message SIPAccountRingGroup {
+  string ring_group_id = 1;
+  string ring_group_name = 2;
+}
+
 message SIPAccount {
   string sip_id = 1;
   bool is_active = 2;
   string extension = 3;
-  repeated string ring_group_ids = 4;
+  repeated string ring_group_ids = 4 [deprecated = true]; // DEPRECATED: We need names as well
   string org_user_id = 5;
+  repeated SIPAccountRingGroup ring_groups = 6;
 }
 
 message RingGroup {
@@ -340,8 +353,11 @@ message RingGroup {
 // -------------------------
 //  RPC Messages
 // -------------------------
+
+// DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message ListPBXUsersRequest {}
 
+// DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message ListPBXUsersResponse {
   repeated PBXUser users = 1;
 }
@@ -376,10 +392,12 @@ message GetSIPAccountResponse {
   repeated SIPAccount sip_account = 1;
 }
 
+// DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message GetPBXUserRequest {
   string pbx_user_id = 1; // Required: To fetch a specific user by ID.
 }
 
+// DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message GetPBXUserResponse {
   PBXUser user = 1;
 }
