@@ -305,6 +305,8 @@ message HuntGroupDetails {
     bool display_all_fields = 3;
     // The number of contact fields in the hunt group client info display template.
     int64 defined_field_count = 4;
+    // The sid in the xml_client_property table.
+    int64 template_sid = 5;
   }
 
   // WebLinkDetails is the entity for hunt group web link details.
