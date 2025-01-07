@@ -4,6 +4,7 @@ package api.commons.audit;
 
 import "api/commons/acd.proto";
 import "api/commons/scorecards.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -242,4 +243,23 @@ message ScorecardsCreateAutoEvaluationEvent {
   int64 transcript_sid = 6; // transcript sid for the call evaluated
   api.commons.RiskLevel risk_level = 7; // risk level of the evaluation
   api.commons.AutoEvaluation auto_evaluation = 8; // the auto evaluation being created
+}
+
+// ScorecardsCreateSmartEvaluationEvent represents the creation of an evaluation from a smart scorecard
+message ScorecardsCreateSmartEvaluationEvent {
+  int64 smart_evaluation_id = 1; // unique id of smart evaluation created
+  int64 transcript_sid = 2; // unique id of conversation transcript evaluated
+  oneof metadata {
+    Call call = 3; // metadata for call that triggered the scorecard
+    Sms sms = 4; // metadata for sms that triggered the scorecard
+  }
+
+  message Call {
+    int64 call_sid = 1; // unique when combined with call type
+    api.commons.CallType.Enum call_type = 2; // unique when combined with call sid
+  }
+
+  message Sms {
+    int64 conversation_sid = 1; // unique conversation identifier
+  }
 }
