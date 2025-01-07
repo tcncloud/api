@@ -855,13 +855,15 @@ message AdherenceAgentStateViolation {
   // The expected adherence states that the agent should be at at this point in time.
   repeated RealTimeManagementState expected_rtm_states = 3;
   // Expected pause Code that the agent should be using if they were on Pause.
-  string expected_pause_code = 4;
+  string expected_pause_code = 4 [deprecated = true];
   // The actual adherence states that the agent is at this point in time.
   repeated RealTimeManagementState actual_rtm_states = 5;
   // Actual pause Code that the agent is using if they are on Pause.
   string actual_pause_code = 6;
   // Number of seconds that this violation took.
   int32 violation_duration_seconds = 7;
+  // Expected pause codes that the agent should be using if they were on Pause.
+  repeated string expected_pause_codes = 8;
 }
 
 // Bundle of agent states, used when returned as a bundle in a map.
