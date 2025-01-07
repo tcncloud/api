@@ -2672,13 +2672,7 @@ service Org {
   rpc GetOrgLicenses(GetOrgLicensesRequest) returns (GetOrgLicensesResponse) {
     option (google.api.http).post = "/api/v1alpha1/org/org/getorglicenses";
     option (google.api.http).body = "*";
-    option (annotations.authz) = {
-      sets: [
-        {
-          permissions: [PERMISSION_ORG_VIEW]
-        }
-      ]
-    };
+    option (annotations.authz) = {no_permissions: true};
   }
 
   // UpdateLicenses updates an organization's licenses.
