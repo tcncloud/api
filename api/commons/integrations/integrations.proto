@@ -424,6 +424,8 @@ enum RequestMethod {
   REQUEST_METHOD_FINVI_VELOSIDY_ONE_TIME_SALE = 5502;
   REQUEST_METHOD_FINVI_VELOSIDY_PLAN_OFFER = 5503;
   REQUEST_METHOD_FINVI_VELOSIDY_PLAN_RECURRING_CREATE = 5504;
+  REQUEST_METHOD_FINVI_VELOSIDY_PENDING_PAYMENT = 5505;
+  REQUEST_METHOD_FINVI_VELOSIDY_PLAN_ONE_TIME_FUTURE = 5506;
 
   REQUEST_METHOD_CLOVER_PAYMENT_CARD_SALE_TRANSACTION = 5601;
 
@@ -1182,6 +1184,8 @@ message ExecuteFlow {
     ExecuteFinviVelosidyOneTimeSale finvi_velosidy_one_time_sale = 5502;
     ExecuteFinviVelosidyPlanOffer finvi_velosidy_plan_offer = 5503;
     ExecuteFinviVelosidyPlanRecurringCreate finvi_velosidy_plan_recurring_create = 5504;
+    ExecuteFinviVelosidyPendingPayment finvi_velosidy_pending_payment = 5505;
+    ExecuteFinviVelosidyPlanOneTimeFuture finvi_velosidy_plan_one_time_future = 5506;
 
     ExecuteCloverPaymentCardSaleTransaction clover_payment_card_sale_transaction = 5601;
 
@@ -1632,6 +1636,8 @@ message ExecuteFinviVelosidyAccountSearch {}
 message ExecuteFinviVelosidyOneTimeSale {}
 message ExecuteFinviVelosidyPlanOffer {}
 message ExecuteFinviVelosidyPlanRecurringCreate {}
+message ExecuteFinviVelosidyPendingPayment {}
+message ExecuteFinviVelosidyPlanOneTimeFuture {}
 
 message ExecuteCloverPaymentCardSaleTransaction {}
 
