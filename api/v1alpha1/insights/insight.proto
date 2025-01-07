@@ -4,6 +4,7 @@ package api.v1alpha1.insights;
 
 import "api/commons/insights.proto";
 import "api/v1alpha1/explorer/entities.proto";
+import "api/v1alpha1/explorer/pipeline.proto";
 import "api/v1alpha1/insights/insight_content.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
@@ -26,7 +27,8 @@ message Insight {
   google.protobuf.Timestamp create_time = 13; // create time of insight
   google.protobuf.Timestamp update_time = 14; // update time of insight
   oneof insight_content { // insight content
-    Pipeline pipeline = 16; // pipeline
+    Pipeline pipeline = 16 [deprecated = true]; // pipeline [DEPRECATED: use insight_body instead]
+    api.v1alpha1.explorer.Pipeline insight_body = 17; // pipeline representation of insight body
   }
 }
 
@@ -262,8 +264,9 @@ message TextValue {
 
 // TextValueCondition describes the conditions to render
 message TextValueCondition {
+  // DEPRECATED use expression_node instead
   // The expression for the condition
-  ExpressionNode expression = 1;
+  ExpressionNode expression = 1 [deprecated = true];
   // Text value size
   int64 size = 2;
   // List of column operations
@@ -278,6 +281,8 @@ message TextValueCondition {
   }
   // Icon color
   Color icon_color = 5;
+  // The expression for the condition
+  api.v1alpha1.explorer.ExpressionNode expression_node = 6;
 }
 
 // Message for Table Column Configuration
