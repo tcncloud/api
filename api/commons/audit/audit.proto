@@ -51,6 +51,8 @@ message AuditEvent {
     VanaFlagSummaryEvent vana_flag_summary_event = 203;
     VanaPhraseCorrectionEvent vana_phrase_correction_event = 204;
     VanaCreateTranscriptEvent vana_create_transcript_event = 205;
+    VanaCreateSentimentEvent vana_create_sentiment_event = 206;
+    VanaCreateSummaryEvent vana_create_summary_event = 207;
 
     /// Omnichannel Events class 300
     OmnichannelCreateProjectEvent omnichannel_create_project_event = 300;
@@ -224,6 +226,9 @@ message AuditEvent {
     ScorecardsCreateAutoEvaluationEvent scorecards_create_auto_evaluation_event = 521;
     // evaluation library evaluation updated
     ScorecardsUpdateEvaluationEvent scorecards_update_evaluation_event = 522;
+    // smart evaluation created from smart scorecard
+    ScorecardsCreateSmartEvaluationEvent scorecards_create_smart_evaluation_event = 523;
+
     //Tickets Events
     // EDIT update event
     TicketEvent ticket_event = 601;

@@ -122,3 +122,57 @@ message VanaCreateTranscriptEvent {
     int64 conversation_sid = 1;
   }
 }
+
+// VanaCreateSentimentEvent represents the sentiment created for a transcript.
+message VanaCreateSentimentEvent {
+  // Required. Unique transcript id.
+  int64 transcript_sid = 1;
+
+  // Required. Metadata for the conversation that triggered the sentiment.
+  oneof metadata {
+    Call call = 2;
+    Sms sms = 3;
+  }
+
+  // Call is call metadata.
+  message Call {
+    // Required. Unique when combined with call type.
+    int64 call_sid = 1;
+
+    // Required. Unique when combined with call sid.
+    api.commons.CallType.Enum call_type = 2; //
+  }
+
+  // SMS is the sms metadata.
+  message Sms {
+    // Required. Unique conversation identifier.
+    int64 conversation_sid = 1;
+  }
+}
+
+// VanaCreateSummaryEvent represents the summary created for a transcript.
+message VanaCreateSummaryEvent {
+  // Required. Unique transcript id.
+  int64 transcript_sid = 1;
+
+  // Required. Metadata for the conversation that triggered the summary.
+  oneof metadata {
+    Call call = 2;
+    Sms sms = 3;
+  }
+
+  // Call is call metadata.
+  message Call {
+    // Required. Unique when combined with call type.
+    int64 call_sid = 1;
+
+    // Required. Unique when combined with call sid.
+    api.commons.CallType.Enum call_type = 2; //
+  }
+
+  // SMS is the sms metadata.
+  message Sms {
+    // Required. Unique conversation identifier.
+    int64 conversation_sid = 1;
+  }
+}
