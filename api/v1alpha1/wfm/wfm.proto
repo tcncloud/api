@@ -17,6 +17,7 @@ syntax = "proto3";
 package api.v1alpha1.wfm;
 
 import "annotations/authz.proto";
+import "api/commons/omnichannel.proto";
 import "api/commons/org.proto";
 import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
@@ -4573,6 +4574,8 @@ message SkillProfile {
   float average_time_to_abort_in_seconds = 13;
   // indicates whether or not the averages were manually entered by the user (if false then the averages were automatically calculated from the historical data).
   bool are_averages_manual = 14;
+  // specifies what channels this skill profile applies to.
+  repeated commons.ChannelType channel_types = 15;
 }
 
 message SkillProfileGroup {
@@ -4606,6 +4609,9 @@ message ListSkillProfilesReq {
   bool active_only = 1;
   // If set to true the skills of skill profiles will be returned, otherwise they will not.
   bool with_skills = 2;
+  // Channel types to filter the skill profiles on, skill profiles with any of the given channel types will be returned.
+  // If left empty it will assume all channel types.
+  repeated commons.ChannelType channel_types = 3;
 }
 
 // Response message for the ListSkillProfiles RPC.
