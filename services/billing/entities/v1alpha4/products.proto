@@ -70,6 +70,7 @@ message ProductConfig {
     // vanalytics (20000 - 21000)
     BasicConfig workforce_engagement_workforce_optimization_voice_analytics_call_transcripts = 20000;
     BasicConfig workforce_engagement_workforce_optimization_voice_analytics_accumulated_call_transcripts = 20001;
+    BasicConfig workforce_engagement_workforce_optimization_voice_analytics_sms_transcripts = 20002;
 
     // wfo ai bundle (30000 - 31000)
     BasicConfig workforce_engagement_workforce_optimization_ai_bundle_smart_evaluations = 30000;
