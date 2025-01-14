@@ -961,6 +961,9 @@ service Org {
         },
         {
           permissions: [PERMISSION_SCORECARDS]
+        },
+        {
+          permissions: [PERMISSION_CONTACTMANAGER_ADMIN]
         }
       ]
     };
