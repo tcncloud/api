@@ -3767,13 +3767,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3793,13 +3787,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3815,13 +3803,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3841,13 +3823,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3863,13 +3839,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3885,13 +3855,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3908,13 +3872,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3930,13 +3888,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3951,13 +3903,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3974,13 +3920,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -3997,13 +3937,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4019,13 +3953,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4043,13 +3971,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4066,13 +3988,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4090,13 +4006,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4113,13 +4023,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4136,13 +4040,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4158,13 +4056,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4183,13 +4075,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4206,13 +4092,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4230,13 +4110,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4253,13 +4127,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4276,13 +4144,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4298,13 +4160,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4322,13 +4178,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4345,13 +4195,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4369,13 +4213,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4392,13 +4230,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
@@ -4415,13 +4247,7 @@ service WFM {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_WFM_ADHERENCE_ADMIN]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MANAGER]
-        },
-        {
-          permissions: [PERMISSION_WFM_ADHERENCE_MONITOR]
+          permissions: [PERMISSION_WFM]
         }
       ]
     };
