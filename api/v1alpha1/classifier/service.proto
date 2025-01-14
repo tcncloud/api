@@ -181,15 +181,19 @@ message ListEventsResponse {
     repeated string parent_ids = 8;
     // the columns used for these records. in this time frame
     repeated string columns = 9;
-    // how long the element sat in the queue waiting to start processing, in seconds.
+    // DEPRECATED: We use milliseconds now for a more precise time
+    int64 total_queue_wait_seconds = 10 [deprecated = true];
+    // DEPRECATED: We use milliseconds now for a more precise time
+    int64 total_processing_seconds = 11 [deprecated = true];
+    // how long the element sat in the queue waiting to start processing, in milliseconds.
     // a large number here, means upstream of this element took a really long time.
     // the longer the DAG, the more time will be spent waiting to process, because
     // processing has to happen in order.
-    int64 total_queue_wait_seconds = 10;
-    // how long the element took (in seconds) to process all the data on this hour.
+    int64 total_queue_wait_milliseconds = 13;
+    // how long the element took (in milliseconds) to process all the data on this hour.
     // a long time here, means the element took a long time to execute its action
     // on the input records.
-    int64 total_processing_seconds = 11;
+    int64 total_processing_milliseconds = 14;
     // the latest 5 server messages that were for this element for this time range.
     repeated string msgs = 12;
   }
