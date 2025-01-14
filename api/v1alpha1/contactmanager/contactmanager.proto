@@ -36,8 +36,9 @@ message ListContactEntryListRequest {
 message ListContactEntryListResponse {
   reserved 1;
   reserved "contact_entry";
-  repeated ContactManagerEntry contact_manager_entry = 2;
+  repeated ContactManagerEntry contact_manager_entry = 2 [deprecated = true]; // returns list of Contact Entry Fields. Consumer has to consolidate by ContactManagerEntryId.
   string next_page_token = 3;
+  repeated ContactManagerEntry cm_entry = 4; // returns list of Contact Entry with embedded Contact Fields
 }
 
 message GetEncContactEntryRequest {
@@ -88,6 +89,7 @@ message ContactManagerEntry {
   int64 ttl = 9;
   repeated string file_name = 10;
   repeated ContactField field = 11;
+  google.protobuf.Timestamp expiry_date = 12;
 }
 
 message ContactManagerList {
