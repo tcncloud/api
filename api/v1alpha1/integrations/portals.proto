@@ -253,6 +253,17 @@ service PortalManagerApi {
       ]
     };
   }
+  rpc ClonePluginInstance(ClonePluginInstanceReq) returns (ClonePluginInstanceRes) {
+    option (google.api.http).post = "/api/v1alpha1/portalmanager/cloneplugininstance";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
   rpc ListPluginInstance(ListPluginInstanceReq) returns (ListPluginInstanceRes) {
     option (google.api.http).post = "/api/v1alpha1/portalmanager/listplugininstances";
     option (google.api.http).body = "*";
@@ -476,6 +487,13 @@ message DeletePluginInstanceReq {
   PluginInstanceId entity = 1;
 }
 message DeletePluginInstanceRes {}
+message ClonePluginInstanceReq {
+  PluginInstanceId entity = 1;
+  string new_plugin_name = 2;
+}
+message ClonePluginInstanceRes {
+  PluginInstanceId entity = 1;
+}
 message ListPluginInstanceReq {
   PluginInstance entity = 1;
   google.protobuf.FieldMask mask = 2;
