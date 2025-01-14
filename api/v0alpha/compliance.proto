@@ -332,6 +332,18 @@ service Compliance {
     };
   }
 
+  rpc ScrubListDelete(ScrubListDeleteRequest) returns (google.longrunning.Operation) {
+    option (google.api.http).post = "/api/v0alpha/compliance/scrublistdelete";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ]
+    };
+  }
+
   rpc ExportScrubList(ExportScrubListReq) returns (ExportScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/exportscrublist";
     option (google.api.http).body = "*";
@@ -1262,6 +1274,13 @@ message ProcessScrubListDeleteUploadReq {
 }
 
 message ProcessScrubListDeleteUploadRes {}
+
+message ScrubListDeleteRequest {
+  string list_id = 10;
+  string notification_message = 11;
+}
+
+message ScrubListDeleteResponse {}
 
 message ExportScrubListReq {
   string list_id = 1;
