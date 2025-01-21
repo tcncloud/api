@@ -79,11 +79,24 @@ message ListEvaluationsRequest {
   google.protobuf.FieldMask return_fields = 10;
   bool is_deleted = 11; // Optional. If true, will only show deleted evaluations.
   repeated api.commons.ChannelType channel_types = 14; // Optional. Filter by channel type.
+
+  // Optional. The order evaluations will be listed. Follows sql order by
+  // syntax. When not provided the order defaults to "complete_time desc, evaluation_id desc".
+  string order_by = 15;
+
+  // Required. Number of evaluations included in response.
+  int32 page_size = 16;
+
+  // Optional. The next_page_token returned from a previous List request, if any.
+  string page_token = 17;
 }
 
 // ListEvaluationsResponse returns a list of evaluations
 message ListEvaluationsResponse {
   repeated api.commons.Evaluation evaluations = 1;
+  // Token to retrieve the next page, or empty if there are no
+  // more entries in the list.
+  string next_page_token = 2;
 }
 
 message PreviewEvaluationScoreRequest {
