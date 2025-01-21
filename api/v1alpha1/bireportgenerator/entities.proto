@@ -6,6 +6,7 @@ import "api/commons/bireportgenerator.proto";
 import "api/commons/enums.proto";
 import "api/commons/org.proto";
 import "api/commons/types.proto";
+import "google/protobuf/timestamp.proto";
 
 // ReportJob that can be scheduled to report dashboard data.
 message ReportJob {
@@ -47,4 +48,34 @@ message ReportJob {
   commons.CronExpression cron_expression = 18;
   // transfer_options are options used for the report delivery
   commons.TransferOptions transfer_options = 19;
+}
+
+// ReportLog describes information on a report log
+message ReportLog {
+  // org id of the report log
+  string org_id = 1;
+  // report log id
+  int64 report_log_id = 2;
+  // report job id
+  int64 report_job_id = 3 [jstype = JS_STRING];
+  // unique id of the job execution
+  string execution_id = 4;
+  // name of the report
+  string report_name = 5;
+  // the time that the report job was requested
+  google.protobuf.Timestamp job_requested_time = 6;
+  // the time that the report job was completed
+  google.protobuf.Timestamp job_completed_time = 7;
+  // result of the report job
+  bool success = 8;
+  // describes the error that last occurred for the job, if any
+  string failure_reason = 9;
+  // current attempt number of the report job
+  int64 attempt_number = 10;
+  // max attempts of the report job
+  int64 max_attempts = 11;
+  // create time of the report log
+  google.protobuf.Timestamp create_time = 12;
+  // update time of the report log
+  google.protobuf.Timestamp update_time = 13;
 }
