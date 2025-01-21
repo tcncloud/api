@@ -319,7 +319,7 @@ message ListAgentScriptsRequest {}
 
 // The response message for ListAgentScripts
 message ListAgentScriptsResponse {
-  // Script is the entity for extendend agent script details
+  // Script is the entity for extended agent script details
   message Script {
     // The script belonging to an org
     api.commons.org.HuntGroupScript script = 1;
@@ -372,7 +372,21 @@ message ListAgentClientInfoDisplayTemplatesRequest {}
 // Response including the agent campaign client info display template list.
 message ListAgentClientInfoDisplayTemplatesResponse {
   // display templates
-  repeated api.commons.org.ClientInfoDisplayTemplate templates = 1;
+  repeated api.commons.org.ClientInfoDisplayTemplate templates = 1 [deprecated = true];
+  // The display template and related info.
+  message TemplateInfo {
+    // The display template.
+    api.commons.org.ClientInfoDisplayTemplate template = 1;
+    // List of any hunt groups referencing the template.
+    repeated int64 hunt_group_sids = 2;
+    // List of any related outbound broadcast templates.
+    repeated int64 outbound_broadcast_template_sids = 3;
+    // List of any related inbound broadcast templates.
+    repeated int64 inbound_broadcast_template_sids = 4;
+  }
+
+  // The list of templates and info.
+  repeated TemplateInfo display_templates = 2;
 }
 
 // Request to delete an agent campaign client info display template.
