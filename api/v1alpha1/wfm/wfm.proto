@@ -1226,6 +1226,7 @@ service WFM {
   }
 
   // Lists the non skill activities that belong to the org sending the request.
+  // if @include_inactive is true then inactive non skill activities will also be included, otherwise only active activities will be returned.
   // Errors:.
   //   - grpc.Internal: error occurs when listing the activites.
   rpc ListNonSkillActivities(ListNonSkillActivitiesReq) returns (ListNonSkillActivitiesRes) {
@@ -1282,6 +1283,7 @@ service WFM {
 
   // Lists all the scheduling activities for the org making the request.
   // Their member non skill activities and pause codes will always be included.
+  // Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
   // Errors:
   //   - grpc.Internal: error occurs when getting the activities or its members.
   rpc ListSchedulingActivities(ListSchedulingActivitiesRequest) returns (ListSchedulingActivitiesResponse) {
@@ -5623,7 +5625,11 @@ message UpdateNonSkillActivityReq {
 message UpdateNonSkillActivityRes {}
 
 // Request message for the ListNonSkillActivities RPC
-message ListNonSkillActivitiesReq {}
+message ListNonSkillActivitiesReq {
+  // If true, inactive non skill activities will be included in the return value.
+  // Set to false by default.
+  bool include_inactive = 1;
+}
 
 // Response message for the ListNonSkillActivities RPC
 message ListNonSkillActivitiesRes {
