@@ -100,6 +100,8 @@ message PublishedArticleDetails {
   // this flag determines if we show to the user every time
   // they log in (for compliance for example)
   bool always_display = 5;
+  // differentiate between client and tcn articles
+  bool is_client_article = 6;
 }
 
 // user activity details
@@ -115,6 +117,8 @@ message UserActivity {
   message UserActivityDetails {
     // the unique published article identifier
     int64 published_article_sid = 1 [jstype = JS_STRING];
+    // the unique published client article identifier
+    int64 published_client_article_sid = 2 [jstype = JS_STRING];
   }
 }
 
@@ -163,6 +167,8 @@ message UserActivityRequest {
   int64 published_article_sid = 1 [jstype = JS_STRING];
   // this flag determines whether to allow news article popups while imitating/impersonating
   bool force = 2;
+  // the unique published client article identifier
+  int64 published_client_article_sid = 3 [jstype = JS_STRING];
 }
 
 // Response to user activity updates
