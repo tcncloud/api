@@ -263,6 +263,7 @@ enum RequestMethod {
   REQUEST_METHOD_ELAVON_UPDATE_INSTALLMENT = 2908;
   REQUEST_METHOD_ELAVON_DELETE_INSTALLMENT = 2909;
   REQUEST_METHOD_ELAVON_MCC_CREDIT_CARD_SALE = 2910;
+  REQUEST_METHOD_ELAVON_ELECTRONIC_CHECK_PURCHASE = 2911;
 
   REQUEST_METHOD_GLOBALPAYMENTS_CARDSALE = 3001;
   REQUEST_METHOD_GLOBALPAYMENTS_GET_TRANSACTION_BY_ID = 3002;
@@ -1035,6 +1036,7 @@ message ExecuteFlow {
     ExecuteElavonUpdateInstallment elavon_update_installment = 2908;
     ExecuteElavonDeleteInstallment elavon_delete_installment = 2909;
     ExecuteElavonMccCreditCardSale elavon_mcc_credit_card_sale = 2910;
+    ExecuteElavonElectronicCheckPurchase elavon_electronic_check_purchase = 2911;
 
     ExecuteGlobalPaymentsCardSale globalPayments_card_sale = 3001;
     ExecuteGlobalPaymentsGetTransactionByID globalPayments_get_transaction_by_id = 3002;
@@ -1479,6 +1481,7 @@ message ExecuteElavonHealthCareCCSale {}
 message ExecuteElavonAddInstallment {}
 message ExecuteElavonDeleteInstallment {}
 message ExecuteElavonUpdateInstallment {}
+message ExecuteElavonElectronicCheckPurchase {}
 
 message ExecuteGlobalPaymentsCardSale {}
 message ExecuteGlobalPaymentsGetTransactionByID {}
