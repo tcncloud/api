@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1alpha1.bireportgenerator;
 
 import "annotations/authz.proto";
+import "api/commons/bireportgenerator.proto";
 import "api/v1alpha1/bireportgenerator/entities.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
@@ -81,6 +82,18 @@ service BIReportGeneratorService {
       ]
     };
   }
+  // ListReportLogsStream lists report logs with streaming
+  rpc ListReportLogsStream(ListReportLogsStreamRequest) returns (stream ListReportLogsStreamResponse) {
+    option (google.api.http).post = "/api/v1alpha1/reportgenerator/reportgenerator/listreportlogsstream";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_REPORT_GENERATOR_EDIT]
+        }
+      ]
+    };
+  }
 }
 
 // CreateReportJobRequest is the request for creating a report job.
@@ -150,3 +163,17 @@ message GenerateReportRequest {
 
 // GenerateReportResponse is the response for generating a report.
 message GenerateReportResponse {}
+
+// ListReportLogsStreamRequest is the request for listing report logs with streaming
+message ListReportLogsStreamRequest {
+  // the start time window to list report logs
+  google.protobuf.Timestamp start_time = 1;
+  // the end time window to list report logs
+  google.protobuf.Timestamp end_time = 2;
+}
+
+// ListReportLogsStreamResponse is the response for listing report logs with streaming
+message ListReportLogsStreamResponse {
+  // report_log describes a report log
+  ReportLog report_log = 1;
+}
