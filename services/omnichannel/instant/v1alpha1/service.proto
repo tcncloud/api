@@ -65,7 +65,6 @@ message AgentEvent {
   google.protobuf.Timestamp event_time = 5;
   string agent_name = 7;
   string hunt_group_name = 8;
-  api.commons.AgentStatus.Enum status = 8;
 
   // A JSON blob representing the Agent's state.
   string event_data = 6;
@@ -77,7 +76,6 @@ message CallerEvent {
   int64 caller_sid = 3;
   api.commons.CallType.Enum caller_type = 4;
   google.protobuf.Timestamp event_time = 5;
-  api.commons.CallerStatus.Enum status = 7;
 
   // A JSON blob resresenting the Caller's state.
   string event_data = 6;
