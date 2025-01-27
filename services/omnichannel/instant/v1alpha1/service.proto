@@ -63,8 +63,9 @@ message AgentEvent {
   int64 agent_sid = 3;
   string user_id = 4;
   google.protobuf.Timestamp event_time = 5;
-  string agent_name = 7;
-  string hunt_group_name = 8;
+  string agent_first_name = 7;
+  string agent_last_name = 8;
+  string hunt_group_name = 9;
 
   // A JSON blob representing the Agent's state.
   string event_data = 6;
