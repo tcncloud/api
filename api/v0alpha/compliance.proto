@@ -1112,6 +1112,8 @@ message ScrubListRes {
   repeated string invalid_entries = 5 [deprecated = true];
   int64 total_invalid = 6;
   repeated api.commons.InvalidScrubListEntry invalid_list = 7;
+  string country_code = 8;
+  api.commons.Decompositions decompositions = 9;
 }
 
 message DeleteScrubListReq {
@@ -1259,6 +1261,7 @@ message ProcessScrubListUploadReq {
   api.commons.ContentType content_type = 10;
   string notification_message = 11;
   string country_code = 12;
+  api.commons.Decompositions decompositions = 13;
 }
 
 message ProcessScrubListUploadRes {

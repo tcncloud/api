@@ -332,6 +332,21 @@ message SIPAccountRingGroup {
   string ring_group_name = 2;
 }
 
+message OrgSkill {
+  string skill_sid = 1;
+  string skill_name = 2;
+}
+
+message OrgPermissionGroup {
+  string permission_group_id = 1;
+  string permission_group_name = 2;
+}
+
+message OrgHuntGroup {
+  string hunt_group_sid = 1;
+  string hunt_group_name = 2;
+}
+
 message SIPAccount {
   string sip_id = 1;
   bool is_active = 2;
@@ -339,6 +354,11 @@ message SIPAccount {
   repeated string ring_group_ids = 4 [deprecated = true]; // DEPRECATED: We need names as well
   string org_user_id = 5;
   repeated SIPAccountRingGroup ring_groups = 6;
+  string org_username = 7;
+  string org_full_name = 8;
+  OrgHuntGroup org_hunt_group = 9;
+  repeated OrgSkill org_skills = 10;
+  repeated OrgPermissionGroup org_permission_groups = 11;
 }
 
 message RingGroup {
