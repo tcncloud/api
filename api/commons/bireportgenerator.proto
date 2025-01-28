@@ -155,4 +155,6 @@ message TransferOptions {
   string transfer_config_sid = 1;
   // filename_parts are the parts to build the filename.
   repeated FilenamePart filename_parts = 2;
+  // delivery_definition_title is the title of the delivery definition.
+  string delivery_definition_title = 3;
 }
