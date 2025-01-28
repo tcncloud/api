@@ -4,7 +4,6 @@ package services.omnichannel.instant.v1alpha1;
 
 import "annotations/authz.proto";
 import "api/commons/acd.proto";
-import "api/commons/org/user.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -67,7 +66,6 @@ message AgentEvent {
   string agent_first_name = 7;
   string agent_last_name = 8;
   string hunt_group_name = 9;
-  repeated .api.commons.org.Skill skills = 10;
 
   // A JSON blob representing the Agent's state.
   string event_data = 6;
