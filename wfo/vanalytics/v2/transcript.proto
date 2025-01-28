@@ -29,6 +29,8 @@ message Transcript {
     Call call = 1;
     // Sms specific transcript metadata.
     Sms sms = 2;
+    // Chat specific transcript metadata.
+    Chat chat = 3;
   }
 
   reserved 11;
@@ -362,6 +364,57 @@ message Call {
   }
 }
 
+// Chat defines channel specific transcript metadata.
+message Chat {
+  // The unique identifier of the chat conversation.
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+
+  // The text from the chat in threads.
+  repeated Thread threads = 2;
+
+  // The phone data.
+  Phone phone = 3;
+
+  // The customer name.
+  string customer_name = 5;
+
+  // The omni campain this chat belongs to.
+  int64 campaign_sid = 6 [jstype = JS_STRING];
+
+  // The email address.
+  string email_address = 7;
+
+  // A thread is the text from one participant.
+  message Thread {
+    // The unique identifier of the thread.
+    int32 id = 1;
+
+    // The text of the thread in segments.
+    repeated Segment segments = 2;
+
+    // The user id of the participant on this thread.
+    string user_id = 3;
+
+    // The sentiment of the thread.
+    Sentiment sentiment = 4;
+  }
+
+  // A segment of text.
+  message Segment {
+    // The text in the segment.
+    string text = 1;
+
+    // The offset time duration from the beginning of the conversation.
+    google.protobuf.Duration offset = 2;
+  }
+
+  // The phone data.
+  message Phone {
+    // The raw phone number.
+    string raw = 12;
+  }
+}
+
 // The sentiment of a thread.
 message Sentiment {
   // Overall sentiment estimate for the thread.
@@ -651,6 +704,9 @@ message TranscriptQuery {
 
     // Query constraints on sms metadata.
     Sms sms = 2;
+
+    // Query constraints on chat metadata.
+    Chat chat = 3;
   }
 
   // Query constraints on call metadata.
@@ -978,6 +1034,49 @@ message TranscriptQuery {
       // Requires all sms specific transcript hits to have a campaign sid
       // in the list.
       repeated int64 any = 1 [jstype = JS_STRING];
+    }
+  }
+
+  // Query constraints on chat metadata.
+  message Chat {
+    // Query constraints on conversation sid.
+    ConversationSid conversation_sid = 1;
+
+    // Query constraints on campaign sid.
+    CampaignSid campaign_sid = 2;
+
+    // Query constraints on customer name.
+    CustomerName customer_name = 3;
+
+    // Query constraints on email address.
+    EmailAddress email_address = 4;
+
+    // Query constraints on conversation sid.
+    message ConversationSid {
+      // Requires all chat specific transcript hits to have a conversation sid
+      // in the list.
+      repeated int64 any = 1 [jstype = JS_STRING];
+    }
+
+    // Query constraints on campaign sid.
+    message CampaignSid {
+      // Requires all chat specific transcript hits to have a campaign sid
+      // in the list.
+      repeated int64 any = 1 [jstype = JS_STRING];
+    }
+
+    // Query constraints on customer name.
+    message CustomerName {
+      // Requires all chat specific transcript hits to have a customer name
+      // in the list.
+      repeated string any = 1;
+    }
+
+    // Query constraints on email address.
+    message EmailAddress {
+      // Requires all chat specific transcript hits to have an email address
+      // in the list.
+      repeated string any = 1;
     }
   }
 
