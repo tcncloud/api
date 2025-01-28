@@ -408,6 +408,9 @@ enum RequestMethod {
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_PAYMENT_TRANSACTION = 4807;
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_REFUND_TRANSACTION = 4808;
   REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_SAVE_VOUCHER_PAYMENT = 4809;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_PRACTITIONERS = 4810;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_TRANSACTION_CODES = 4811;
+  REQUEST_METHOD_VERADIGM_PRACTICE_MANAGEMENT_GET_DEPARTMENTS = 4812;
 
   REQUEST_METHOD_PDCFLOW_TOKENIZE_CREDIT_CARD = 4901;
   REQUEST_METHOD_PDCFLOW_CC_TRANSACTION = 4902;
@@ -1179,6 +1182,9 @@ message ExecuteFlow {
     ExecuteVeradigmPracticeManagementSavePaymentTransaction veradigm_practice_management_save_payment_transaction = 4807;
     ExecuteVeradigmPracticeManagementSaveRefundTransaction veradigm_practice_management_save_refund_transaction = 4808;
     ExecuteVeradigmPracticeManagementSaveVoucherPayment veradigm_practice_management_save_voucher_payment = 4809;
+    ExecuteVeradigmPracticeManagementGetPractitioners veradigm_practice_management_get_practitioners = 4810;
+    ExecuteVeradigmPracticeManagementGetTransactionCodes veradigm_practice_management_get_transaction_codes = 4811;
+    ExecuteVeradigmPracticeManagementGetDepartments veradigm_practice_management_get_departments = 4812;
 
     ExecutePDCFlowTokenizeCreditCard pdcflow_tokenize_credit_card = 4901;
     ExecutePDCFlowCCTransaction pdcflow_cc_transaction = 4902;
@@ -1641,6 +1647,9 @@ message ExecuteVeradigmPracticeManagementGetPlacesOfService {}
 message ExecuteVeradigmPracticeManagementSavePaymentTransaction {}
 message ExecuteVeradigmPracticeManagementSaveRefundTransaction {}
 message ExecuteVeradigmPracticeManagementSaveVoucherPayment {}
+message ExecuteVeradigmPracticeManagementGetPractitioners {}
+message ExecuteVeradigmPracticeManagementGetTransactionCodes {}
+message ExecuteVeradigmPracticeManagementGetDepartments {}
 
 message ExecutePDCFlowTokenizeCreditCard {}
 message ExecutePDCFlowCCTransaction {}
