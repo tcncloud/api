@@ -7,6 +7,14 @@ package api.commons.audit;
 /// Billing events
 ///
 
+// BillingAccumulateItemsEvent is fired when a rated item needs to be accumulated
+message BillingAccumulateItemsEvent {
+  string org_id = 1;
+  int32 product_type = 2;
+  repeated int64 event_log_ids = 3;
+  string billing_cycle = 4;
+}
+
 // BillingCommitBillingPlanEvent is fired when a billing plan is committed
 message BillingCommitBillingPlanEvent {
   option deprecated = true;
@@ -85,6 +93,7 @@ message BillingUpdateRateDefinitionEvent {
 }
 
 message BillingRatedItemsGeneratedEvent {
+  option deprecated = true;
   repeated RatedItem rated_items = 1;
 
   message RatedItem {
