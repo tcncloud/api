@@ -21,6 +21,7 @@ import "api/commons/omnichannel.proto";
 import "api/commons/org.proto";
 import "api/commons/wfm.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
@@ -4404,6 +4405,13 @@ message SkillProfile {
   bool are_averages_manual = 14;
   // specifies what channels this skill profile applies to.
   repeated commons.ChannelType channel_types = 15;
+  // metadata related to sms conversations.
+  SmsMetadata sms = 16;
+
+  message SmsMetadata {
+    // average lenth of a conversation.
+    google.protobuf.Duration average_conversation_length = 1;
+  }
 }
 
 message SkillProfileGroup {
