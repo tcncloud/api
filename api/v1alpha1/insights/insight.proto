@@ -248,6 +248,10 @@ message TableVisualization {
   QuoteCharacter quote_character = 3;
   // Flag to include header in csv exports
   bool no_header = 4;
+  // Header background color
+  string header_background_color = 5;
+  // Header text color
+  string header_text_color = 6;
 }
 
 // Message for Card Visualization
