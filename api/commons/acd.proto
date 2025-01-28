@@ -513,6 +513,8 @@ message TransferMember {
   string identifier = 1;
   string display_label = 2;
   TransferMemberType member_type = 3;
+  string phone_number = 4;
+  bool is_muted = 5;
   oneof locatable_data {
     AgentSession agent_session = 100;
     CallerSid caller_sid = 101;
