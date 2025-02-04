@@ -52,6 +52,8 @@ message CreateUserRequest {
   api.commons.TimeZoneWrapper time_zone_override = 17;
   // The hunt group that the created user will belong to.
   int64 hunt_group_sid = 18;
+  // Whether the user needs to set their password upon initial login
+  bool password_reset_required = 19;
 }
 
 // Response message for the CreateUser rpc.
