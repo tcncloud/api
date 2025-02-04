@@ -48,6 +48,8 @@ enum TimeZone {
   TIME_ZONE_ASIA_SINGAPORE = 42; // Singapore
   TIME_ZONE_ASIA_JAPAN = 43; // Japan
   TIME_ZONE_AMERICA_SANTIAGO = 44; // America/Santiago
+  TIME_ZONE_AMERICA_BOGOTA = 45; // America/Bogota
+  TIME_ZONE_AMERICA_LIMA = 46; // America/Lima
 }
 
 message TimeZoneWrapper {
