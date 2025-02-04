@@ -590,6 +590,7 @@ message OmnichannelMessageSentEvent {
   api.commons.OmniSenderType sender_type = 7;
   string user_id = 8;
   api.commons.OmniMessageType message_type = 9;
+  api.commons.SmsNumberProvider provider_type = 10;
 }
 
 // OmnichannelProviderResponseEvent -
@@ -604,6 +605,7 @@ message OmnichannelProviderResponseEvent {
   string user_id = 8;
   int64 provider_message_count = 9;
   api.commons.OmniMessageType message_type = 10;
+  api.commons.SmsNumberProvider provider_type = 11;
 }
 
 // OmnichannelProviderMessageFailedEvent -

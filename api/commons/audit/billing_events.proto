@@ -11,8 +11,9 @@ package api.commons.audit;
 message BillingAccumulateItemsEvent {
   string org_id = 1;
   int32 product_type = 2;
-  repeated int64 event_log_ids = 3;
+  repeated int64 event_log_ids = 3 [deprecated = true];
   string billing_cycle = 4;
+  repeated bytes event_data = 5;
 }
 
 // BillingCommitBillingPlanEvent is fired when a billing plan is committed
