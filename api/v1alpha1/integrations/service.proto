@@ -10,6 +10,7 @@ import "api/commons/perms.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
 
 service Integrations {
   // combine rquest parameters with the config parameters and run the integration method
@@ -413,6 +414,17 @@ service Integrations {
   }
   rpc InsertPrivateField(InsertPrivateFieldReq) returns (InsertPrivateFieldRes) {
     option (google.api.http).post = "/api/v1alpha1/integrations/insertprivatefield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
+  rpc CalculateFees(CalculateFeesReq) returns (CalculateFeesRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/calculatefees";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -1441,6 +1453,7 @@ message Template {
   oneof val {
     api.commons.integrations.Invoices invoice_template = 1;
     api.commons.integrations.Receipt receipt_template = 2;
+    api.commons.integrations.Payment payment_template = 3;
   }
 }
 
@@ -1493,4 +1506,17 @@ message InsertPrivateFieldReq {
 
 message InsertPrivateFieldRes {
   int32 private_field_id = 1;
+}
+
+message CalculateFeesReq {
+  repeated api.commons.integrations.Fee fees = 2;
+  map<string, Value> params = 3; // form fields collected during portal execution. Some data cannot be set at the plugin level because it is a runtime parameter.
+  int64 call_sid = 4; // used for BI
+  api.commons.CallType.Enum call_type = 5; // used for BI
+  api.commons.integrations.RequestOrigin request_origin = 6; // used for BI
+}
+
+message CalculateFeesRes {
+  map<string, google.type.Money> calculated_fees = 1; // key: fee name, field: fee amount
+  google.type.Money total_amount_due = 2;
 }
