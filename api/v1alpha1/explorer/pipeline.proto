@@ -48,6 +48,8 @@ message Node {
     SortNode sort_node = 17;
     // String manipulation node
     StringManipulationNode string_manipulation_node = 18;
+    // Transpose node
+    TransposeNode transpose_node = 19;
   }
 }
 
@@ -290,4 +292,22 @@ message StringManipulationNode {
   StringManipulationSplit string_manipulation_split = 4;
   // Replace operation
   StringManipulationReplace string_manipulation_replace = 5;
+}
+
+// Transpose node will pivot a dataset based off of the key column
+message TransposeNode {
+  // columns to group by
+  repeated string group_by_columns = 1;
+  // column to pivot on
+  string key_column = 2;
+  // options describe the extracted columns
+  repeated Option options = 3;
+  message Option {
+    // the extracted column name
+    string key_name = 2;
+    // the column that contains the extracted values
+    string value_column = 3;
+    // resulting type of the extracted column
+    string value_type = 4;
+  }
 }
