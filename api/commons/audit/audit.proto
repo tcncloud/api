@@ -263,6 +263,7 @@ message AuditEvent {
     BillingUpdateInvoiceEvent billing_update_invoice_event = 1009 [deprecated = true];
     BillingUpdateRateDefinitionEvent billing_update_rate_definition_event = 1010 [deprecated = true];
     BillingRatedItemsGeneratedEvent billing_rated_items_generated_event = 1011;
+    BillingAccumulateItemsEvent billing_accumulate_items_event = 1012;
 
     // Delivery Events class 1100
     DeliveryFailureEvent delivery_failure_event = 1100;
