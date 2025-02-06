@@ -314,7 +314,22 @@ service DeliveryApi {
       ]
     };
   }
+  rpc SendTestEmail(SendTestEmailReq) returns (SendTestEmailRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/sendtestemail";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ]
+    };
+  }
 }
+
+message SendTestEmailReq {}
+
+message SendTestEmailRes {}
 
 message CreateTransferConfigReq {
   TransferConfig entity = 1;
