@@ -315,7 +315,7 @@ service DeliveryApi {
     };
   }
   rpc TriggerTestOutboundDelivery(TriggerTestOutboundDeliveryReq) returns (TriggerTestOutboundDeliveryRes) {
-    option (google.api.http).post = "/api/v1alpha1/delivery/sendtestemail";
+    option (google.api.http).post = "/api/v1alpha1/delivery/triggertestoutbounddelivery";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
