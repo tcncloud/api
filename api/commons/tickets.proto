@@ -407,3 +407,19 @@ message EditAttribute {
   string to_val = 3;
   bool is_edited = 4;
 }
+
+// CustomFields - Fields for ticket
+message CustomField {
+  // The snowflake id of a custom field.
+  int64 custom_field_sid = 1 [jstype = JS_STRING];
+  // custom_field_name
+  string custom_field_name = 2;
+  // custom_field_value
+  string custom_field_value = 3;
+  // custom_field_type
+  string custom_field_type = 4;
+  // date_modified
+  google.protobuf.Timestamp date_modified = 5;
+  // True/False Identifies if a custom fields deleted
+  bool is_deleted = 6;
+}
