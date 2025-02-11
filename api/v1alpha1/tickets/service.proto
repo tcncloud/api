@@ -491,4 +491,43 @@ service Tickets {
       ]
     };
   }
+
+  // Public method to create a Custom Field
+  rpc CreateCustomField(CreateCustomFieldRequest) returns (CreateCustomFieldResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/createcustomfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ]
+    };
+  }
+
+  // Public method to Edit a Custom Field
+  rpc EditCustomField(EditCustomFieldRequest) returns (EditCustomFieldResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/editcustomfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ]
+    };
+  }
+
+  // Public method to all Custom Fileds
+  rpc ListCustomFields(ListCustomFieldsRequest) returns (ListCustomFieldsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/tickets/tickets/listcustomfield";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_TICKETS_APP]
+        }
+      ]
+    };
+  }
 }
