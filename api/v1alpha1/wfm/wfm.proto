@@ -1266,6 +1266,7 @@ service WFM {
   // If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
   // Member non skill activity of each scheduling activity will be included in the response.
   // The on call scheduling activity will always be included.
+  // Reason codes will be included with the returned scheduling activities.
   // Errors:
   //   - grpc.Invalid: the @parent_of_rule is invalid.
   //   - grpc.NotFound: @parent_of_rule doesn't exist
@@ -1285,6 +1286,7 @@ service WFM {
   // Lists all the scheduling activities for the org making the request.
   // Their member non skill activities and pause codes will always be included.
   // Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
+  // Reason codes will be included with the returned scheduling activities.
   // Errors:
   //   - grpc.Internal: error occurs when getting the activities or its members.
   rpc ListSchedulingActivities(ListSchedulingActivitiesRequest) returns (ListSchedulingActivitiesResponse) {
@@ -1300,6 +1302,7 @@ service WFM {
   }
 
   // Gets the on call scheduling activity for the org sending the request.
+  // Reason codes will be included with the returned scheduling activity.
   // Required permissions:
   //   NONE
   // Errors:
@@ -2180,6 +2183,81 @@ service WFM {
   //   - grpc.Internal: error occurs when getting the config entities.
   rpc ListConfigEntities(ListConfigEntitiesReq) returns (ListConfigEntitiesRes) {
     option (google.api.http).post = "/api/v1alpha1/wfm/listconfigentities";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Creates the given reason code for the org sending the request.
+  // If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+  //   - grpc.Internal: error occours when creating the reason code.
+  rpc CreateReasonCode(CreateReasonCodeRequest) returns (CreateReasonCodeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/createreasoncode";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Updates the given reason code for the org sending the request.
+  // If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+  //   - grpc.Internal: error occours when updating the reason code.
+  rpc UpdateReasonCode(UpdateReasonCodeRequest) returns (UpdateReasonCodeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/updatereasoncode";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Gets the default reason code for the given @scheduling_activity_sid and the org sending the request.
+  // If there is currently no default reason code for the scheduling activity, returns nil instead.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occours when getting the default reason code.
+  rpc GetDefaultReasonCode(GetDefaultReasonCodeRequest) returns (GetDefaultReasonCodeResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/getdefaultreasoncode";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Lists the reason codes for @scheduling_activity_sids and the org sending the request.
+  // If include_inactive is set to true, inactivate reason codes will be included in the response.
+  // Otherwise, only active reason codes will be included.
+  // Required permissions:
+  //   NONE
+  // Errors:
+  //   - grpc.Internal: error occours when listing the reason codes.
+  rpc ListReasonCodes(ListReasonCodesRequest) returns (ListReasonCodesResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listreasoncodes";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -5674,6 +5752,8 @@ message SchedulingActivity {
   commons.SchedulingActivityClassification activity_classification = 5;
   // List of all the pause codes that this activity allows.
   repeated string pause_codes = 6;
+  // List of all reason codes associated with this activity.
+  repeated commons.ReasonCode reason_codes = 7;
 }
 
 // Request message for the ListCandidateSchedulingActivitiesReq RPC
@@ -6677,6 +6757,58 @@ message ListConfigEntitiesRes {
   }
 }
 
+// Request message for CreateReasonCode RPC.
+message CreateReasonCodeRequest {
+  // Reason code to create.
+  commons.ReasonCode reason_code = 1;
+}
+
+// Response message for CreateReasonCode RPC.
+message CreateReasonCodeResponse {
+  // ID of the newly created reason code.
+  int64 reason_code_id = 1 [jstype = JS_STRING];
+}
+
+// Request message for UpdateReasonCode RPC.
+message UpdateReasonCodeRequest {
+  // Reason code to update.
+  commons.ReasonCode reason_code = 1;
+}
+
+// Response message for UpdateReasonCode RPC.
+message UpdateReasonCodeResponse {}
+
+// Request message for GetDefaultReasonCode RPC.
+message GetDefaultReasonCodeRequest {
+  // SID of the scheduling actvity to get the default reason code for.
+  int64 scheduling_activity_sid = 1 [jstype = JS_STRING];
+}
+
+// Response message for GetDefaultReasonCode RPC.
+message GetDefaultReasonCodeResponse {
+  // The default reason code, if one exists.
+  commons.ReasonCode default_reason_code = 1;
+}
+
+// Request message for ListReasonCodes RPC.
+message ListReasonCodesRequest {
+  // Scheduling Activity SIDs to get the reason codes for.
+  repeated int64 scheduling_activity_sids = 1;
+  // If True, includes inactive reason codes in the response.
+  // If False, only active reason codes will be included.
+  bool include_inactive = 2;
+}
+
+// Response message for ListReasonCodes RPC.
+message ListReasonCodesResponse {
+  message ReasonCodes {
+    // A list of reason codes
+    repeated commons.ReasonCode reason_codes = 1;
+  }
+  // A map from the scheduling activity sid to their reason codes.
+  map<int64, ReasonCodes> reason_codes_by_scheduling_activity = 1;
+}
+
 // Message type specifying the parameters of a diagnostic
 message Diagnostic {
   // The diagnostic level describes the class of the diagnostic message.
@@ -7131,6 +7263,8 @@ message ShiftSegment {
   SchedulingActivity scheduling_activity = 8;
   // Per-skill call stats.
   repeated ShiftSegmentCallStat call_stats_by_skill_collection = 9;
+  // The reason code ID associated with the shift segment.
+  int64 reason_code_id = 10 [jstype = JS_STRING];
 }
 
 // Request message for the GetPublishedSchedule RPC
