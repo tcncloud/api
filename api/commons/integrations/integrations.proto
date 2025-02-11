@@ -64,6 +64,8 @@ enum IntegrationType {
   INTEGRATION_TYPE_FINVI_VELOSIDY = 5500;
   INTEGRATION_TYPE_CLOVER = 5600;
   INTEGRATION_TYPE_NUVEI = 5700;
+  INTEGRATION_TYPE_CALLIPAY = 5800;
+  INTEGRATION_TYPE_TRATTA = 5900;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -442,6 +444,14 @@ enum RequestMethod {
   REQUEST_METHOD_CLOVER_PAYMENT_CARD_SALE_TRANSACTION = 5601;
 
   REQUEST_METHOD_NUVEI_PAYMENT = 5701;
+
+  REQUEST_METHOD_CALLIPAY_CC_PAYMENT = 5801;
+  REQUEST_METHOD_CALLIPAY_CHECK_PAYMENT = 5802;
+
+  REQUEST_METHOD_TRATTA_CHARGE_CC = 5901;
+  REQUEST_METHOD_TRATTA_CHARGE_ACH = 5902;
+  REQUEST_METHOD_TRATTA_CHARGE_CC_POST_DATED = 5903;
+  REQUEST_METHOD_TRATTA_CHARGE_ACH_POST_DATED = 5904;
 }
 
 enum TransactionType {
@@ -1262,6 +1272,14 @@ message ExecuteFlow {
     ExecuteCloverPaymentCardSaleTransaction clover_payment_card_sale_transaction = 5601;
 
     ExecuteNuveiPayment nuvei_payment = 5701;
+
+    ExecuteCallipayCcPayment callipay_cc_payment = 5801;
+    ExecuteCallipayCheckPayment callipay_check_payment = 5802;
+
+    ExecuteTrattaCcCharge tratta_cc_charge = 5901;
+    ExecuteTrattaAchCharge tratta_ach_charge = 5902;
+    ExecuteTrattaCcChargePostDated tratta_cc_charge_post_dated = 5903;
+    ExecuteTrattaAchChargePostDated tratta_ach_charge_post_dated = 5904;
   }
 }
 
@@ -1724,3 +1742,11 @@ message ExecuteFinviVelosidyPlanOneTimeFuture {}
 message ExecuteCloverPaymentCardSaleTransaction {}
 
 message ExecuteNuveiPayment {}
+
+message ExecuteCallipayCcPayment {}
+message ExecuteCallipayCheckPayment {}
+
+message ExecuteTrattaCcCharge {}
+message ExecuteTrattaAchCharge {}
+message ExecuteTrattaCcChargePostDated {}
+message ExecuteTrattaAchChargePostDated {}
