@@ -446,6 +446,64 @@ message ListTicketsByEntityRefResponse {
   repeated api.commons.Ticket tickets = 1;
 }
 
+// CreateCustomFieldRequest
+message CreateCustomFieldRequest {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+  // repeated custom fields
+  repeated api.commons.CustomField custom_field = 3;
+}
+
+// CreateCustomFieldResponse
+message CreateCustomFieldResponse {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+  // repeated custom fields
+  repeated api.commons.CustomField custom_field = 3;
+}
+
+// EditCustomFieldRequest -
+message EditCustomFieldRequest {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+  // repeated custom fields
+  repeated api.commons.CustomField edit_value = 3;
+}
+
+// EditCustomFieldResponse -
+message EditCustomFieldResponse {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+  // repeated custom fields
+  repeated api.commons.CustomField edited_custom_field = 3;
+}
+
+// ListCustomFieldsRequest
+message ListCustomFieldsRequest {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+}
+
+// ListCustomFieldsResponse -
+message ListCustomFieldsResponse {
+  // ticket_code
+  string ticket_code = 1;
+  // project_id
+  int64 project_id = 2 [jstype = JS_STRING];
+  // list of custom sfields
+  repeated api.commons.CustomField custom_fields = 3;
+}
+
 //should this be in a separate folder / file
 message EntityRef {
   string org_id = 1;

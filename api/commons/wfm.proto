@@ -301,6 +301,24 @@ enum ConfigRelationshipType {
   IS_MEMBER_OF = 2;
 }
 
+// Represents a Reason Code.
+message ReasonCode {
+  // ID of the Reason Code.
+  int64 reason_code_id = 1 [jstype = JS_STRING];
+  // Name of the Reason Code.
+  string name = 2;
+  // The Scheduling Activity SID that the Reason Code is associated with.
+  int64 scheduling_activity_sid = 3 [jstype = JS_STRING];
+  // Indicates that this is a planned Reason Code.
+  bool is_planned = 4;
+  // Indicates that this is a paid Reason Code.
+  bool is_paid = 5;
+  // Set to true if the Reason Code is the default for @scheduling_activity_sid.
+  bool is_default = 6;
+  // Datetime that the Reason Code was set to inactive.
+  google.protobuf.Timestamp datetime_set_to_inactive = 7;
+}
+
 // Enum representing the level of a diagnostic.
 enum DiagnosticLevel {
   // The diagnostic is reporting an information level report.
@@ -864,6 +882,8 @@ message AdherenceAgentStateViolation {
   int32 violation_duration_seconds = 7;
   // Expected pause codes that the agent should be using if they were on Pause.
   repeated string expected_pause_codes = 8;
+  // ID of the violation.
+  int64 adherence_agent_state_violation_id = 9 [jstype = JS_STRING];
 }
 
 // Bundle of agent states, used when returned as a bundle in a map.
