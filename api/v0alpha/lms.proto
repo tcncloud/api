@@ -1488,6 +1488,7 @@ message CjsExportProcess {
   bool update = 9;
   // Field to use for updating
   string update_key_field = 10;
+  bool replace_invalid_with_null = 11;
 }
 
 message CjsEnrichmentProcess {
