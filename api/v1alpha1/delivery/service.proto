@@ -314,7 +314,24 @@ service DeliveryApi {
       ]
     };
   }
+  rpc TriggerDemoOutboundDelivery(TriggerDemoOutboundDeliveryReq) returns (TriggerDemoOutboundDeliveryRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/triggerdemooutbounddelivery";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_DELIVERY_NOTIFICATIONS_EDIT]
+        }
+      ]
+    };
+  }
 }
+
+message TriggerDemoOutboundDeliveryReq {
+  string transfer_config_name = 1;
+}
+
+message TriggerDemoOutboundDeliveryRes {}
 
 message CreateTransferConfigReq {
   TransferConfig entity = 1;
