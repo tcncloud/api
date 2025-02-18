@@ -328,7 +328,7 @@ service DeliveryApi {
 }
 
 message TriggerDemoOutboundDeliveryReq {
-  string TransferConfigName = 1;
+  string transfer_config_name = 1;
 }
 
 message TriggerDemoOutboundDeliveryRes {}
