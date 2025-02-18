@@ -417,9 +417,21 @@ message CustomField {
   // custom_field_value
   string custom_field_value = 3;
   // custom_field_type
-  string custom_field_type = 4;
+  string custom_field_type = 4 [deprecated = true];
   // date_modified
   google.protobuf.Timestamp date_modified = 5;
   // True/False Identifies if a custom fields deleted
   bool is_deleted = 6;
+  // custom_field_enum_type
+  TicketCustomFieldType ticket_custom_field_type = 8;
+}
+
+// CustomFieldType -
+enum TicketCustomFieldType {
+  TICKET_CUSTOMFIELD_TYPE_BOOLEAN = 0;
+  TICKET_CUSTOMFIELD_TYPE_STRING = 1;
+  TICKET_CUSTOMFIELD_TYPE_NUMBER = 2;
+  TICKET_CUSTOMFIELD_TYPE_DATETIME = 3;
+  TICKET_CUSTOMFIELD_TYPE_MULTISELECT = 4;
+  TICKET_CUSTOMFIELD_TYPE_SINGLESELECT = 5;
 }
