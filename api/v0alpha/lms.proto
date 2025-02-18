@@ -2370,6 +2370,24 @@ message ContactManagerSink {
   // how long the data uploaded to this list lives for
   // if nil we default to the duration for 30 days
   google.protobuf.Duration lifetime = 9;
+  string user_id = 10;
+  DeDuplication de_duplication_info = 11;
+
+  // Details for De-Duplication Feature (For Contact Manager Sink)
+  message DeDuplication {
+    DeDuplicationFieldType field_type = 1; // The field type used to identify the De-Duplication
+    DeDuplicationMergeStrategy merge_strategy = 2; // The strategy to execute on a duplicate contact with exact match
+  }
+
+  enum DeDuplicationFieldType {
+    PHONE_NUMBER = 0;
+    EMAIL_ADDRESS = 1;
+  }
+
+  enum DeDuplicationMergeStrategy {
+    KEEP_EXISTING_LIST = 0;
+    REPLACE_EXISTING_LIST = 1;
+  }
 }
 
 message SumProcess {
