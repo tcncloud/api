@@ -314,8 +314,8 @@ service DeliveryApi {
       ]
     };
   }
-  rpc TriggerTestOutboundDelivery(TriggerTestOutboundDeliveryReq) returns (TriggerTestOutboundDeliveryRes) {
-    option (google.api.http).post = "/api/v1alpha1/delivery/triggertestoutbounddelivery";
+  rpc TriggerDemoOutboundDelivery(TriggerDemoOutboundDeliveryReq) returns (TriggerDemoOutboundDeliveryRes) {
+    option (google.api.http).post = "/api/v1alpha1/delivery/triggerdemooutbounddelivery";
     option (google.api.http).body = "*";
     option (annotations.authz) = {
       sets: [
@@ -327,11 +327,11 @@ service DeliveryApi {
   }
 }
 
-message TriggerTestOutboundDeliveryReq {
+message TriggerDemoOutboundDeliveryReq {
   string TransferConfigName = 1;
 }
 
-message TriggerTestOutboundDeliveryRes {}
+message TriggerDemoOutboundDeliveryRes {}
 
 message CreateTransferConfigReq {
   TransferConfig entity = 1;
