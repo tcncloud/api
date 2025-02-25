@@ -3911,6 +3911,47 @@ service WFM {
     };
   }
 
+  // Lists the adherence agent states using the given parameters for the org sending the request.
+  // Accepts filtering by either @wfm_agent_sids, @datetime_range, or both. At least one of the two fields must be set.
+  // If @wfm_agent_sids is nil, violations will be returned for all agents after @start_datetime.
+  // If @wfm_agent_sids is set, violations will only be returned for those agents.
+  // If @datetime_range is nil, violations starting at any point in time for @wfm_agent_sids will be returned.
+  // If @datetime_range is set, any violations that start within @datetime_range will be included.
+  // If @include_resolved is true, resolved and unresolved violations will be returned. Otherwise only unresolved violations will be included in the response.
+  // Errors:
+  //   - grpc.Invalid: arguments in the request are invalid.
+  //   - grpc.Internal: error occurs when getting the violations.
+  rpc ListAdherenceAgentStateViolations(ListAdherenceAgentStateViolationsRequest) returns (ListAdherenceAgentStateViolationsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherenceagentstateviolations";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
+  // Resolves the given adherence agent state violation.
+  // If the violation is already resolved, then the original resolution will be overwritten.
+  // Only updates the @resolved_activity_sid, @resolved_reason_code_id, @resolution_comment, and @resolved_by_user_id fields.
+  // The @resolved_by_user_id field will be ignored and overwritten to match the user sending the request.
+  // Errors:
+  //   - grpc.Invalid: arguments in the request are invalid.
+  //   - grpc.Internal: error occurs when resolving the violation.
+  rpc ResolveAdherenceAgentStateViolation(ResolveAdherenceAgentStateViolationRequest) returns (ResolveAdherenceAgentStateViolationResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/resolveadherenceagentstateviolation";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
   // Errors:
   //   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -8746,6 +8787,38 @@ message ListAdherenceAgentStatesResponse {
   // If zero violations are found for a given agent, that key will not be included in the resulting map.
   // Only set when @include_violations is True.
   map<int64, api.commons.AdherenceAgentStateViolations> agent_state_violations = 3;
+}
+
+// Request message for the ListAdherenceAgentStateViolations RPC.
+message ListAdherenceAgentStateViolationsRequest {
+  // The datetime range to get violations across. If left empty, violations will be obtained across all datetimes.
+  // Any violation that starts within the given range will be included in the response.
+  commons.DatetimeRange datetime_range = 1;
+  // IDs of the agents to get violations for.
+  // If left empty, violations will be returned for all agents.
+  repeated int64 wfm_agent_sids = 2;
+  // If set to True, resolved violations will be included in the response.
+  // Otherwise, only unresolved violations will be included.
+  bool include_resolved = 3;
+}
+
+// Response message for the ListAdherenceAgentStateViolations RPC.
+message ListAdherenceAgentStateViolationsResponse {
+  map<int64, api.commons.AdherenceAgentStateViolations> agent_state_violations = 1;
+  // Any diagnostics encountered when listing the the violations.
+  repeated Diagnostic diagnostics = 2;
+}
+
+// Request message for the ResolveAdherenceAgentStateViolation RPC.
+message ResolveAdherenceAgentStateViolationRequest {
+  // The agent state violation to resolve.
+  api.commons.AdherenceAgentStateViolation resolved_violation = 1;
+}
+
+// Response message for the ResolveAdherenceAgentStateViolation RPC.
+message ResolveAdherenceAgentStateViolationResponse {
+  // Any diagnostics encountered when resolving the the violations.
+  repeated Diagnostic diagnostics = 1;
 }
 
 // Combines RealTimeManagementState and RgbaColor.

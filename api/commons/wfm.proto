@@ -884,6 +884,22 @@ message AdherenceAgentStateViolation {
   repeated string expected_pause_codes = 8;
   // ID of the violation.
   int64 adherence_agent_state_violation_id = 9 [jstype = JS_STRING];
+  // The ID of the activity that the agent was scheduled for.
+  int64 expected_scheduling_activity_sid = 10 [jstype = JS_STRING];
+  // The ID of the reason code that the agent was scheduled for.
+  int64 expected_reason_code_id = 11 [jstype = JS_STRING];
+  // The ID of the activity that the agent's pause code indicated they were actually doing.
+  int64 actual_scheduling_activity_sid = 12 [jstype = JS_STRING];
+  // The ID of the reason code that the agent's pause code indicated they were actually doing.
+  int64 actual_reason_code_id = 13 [jstype = JS_STRING];
+  // The ID of the scheduling activity that the agent will be reported as.
+  int64 resolved_activity_sid = 14 [jstype = JS_STRING];
+  // The ID of the reason code that the agent will be reported as.
+  int64 resolved_reason_code_id = 15 [jstype = JS_STRING];
+  // The comment left by the user upon resolution.
+  string resolution_comment = 16;
+  // ID of the user who resolved this violation.
+  string resolved_by_user_id = 17;
 }
 
 // Bundle of agent states, used when returned as a bundle in a map.
