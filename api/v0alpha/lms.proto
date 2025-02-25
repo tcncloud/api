@@ -2371,7 +2371,7 @@ message ContactManagerSink {
   // how long the data uploaded to this list lives for
   // if nil we default to the duration for 30 days
   google.protobuf.Duration lifetime = 9;
-  string user_id = 10;
+  string user_id = 10 [deprecated = true];
   DeDuplication de_duplication_info = 11;
 
   // Details for De-Duplication Feature (For Contact Manager Sink)
