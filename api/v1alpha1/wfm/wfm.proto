@@ -4416,6 +4416,25 @@ service WFM {
       ]
     };
   }
+
+  // Sets the adherence service to the @agent_state_simulation_level for the org sending the request.
+  // By setting the @agent_state_simulation_level to NO_SIMULATION, the adherence manager will function normally, using the live agent states.
+  // By setting the @agent_state_simulation_level to SIMULATED_AGENT_STATES, the adherence manager will instead simulate agent states and their violations.
+  // This allows demonstrations of the adherence functions of the app to be done before the client has any agents working.
+  // Errors:
+  //   - grpc.Invalid: the given @agent_state_simulation_level is invalid
+  //   - grpc.Internal: error occurs when updating the simulation level for the org sending the request.
+  rpc SetAgentStateSimulationLevelForOrg(SetAgentStateSimulationLevelForOrgRequest) returns (SetAgentStateSimulationLevelForOrgResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/setagentstatesimulationlevelfororg";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT_PORTAL]
+        }
+      ]
+    };
+  }
 }
 
 // Request message for the PerformInitialClientSetup RPC.
@@ -9165,3 +9184,12 @@ message AgentCancelLeavePetitionResponse {
   // The canceled Agent Leave Petition.
   api.commons.AgentLeavePetition agent_leave_petition = 1;
 }
+
+// Request message for SetAgentStateSimulationLevelForOrg.
+message SetAgentStateSimulationLevelForOrgRequest {
+  // agent state simulation level to set the org to.
+  api.commons.AgentStateSimulationLevel agent_state_simulation_level = 1;
+}
+
+// Response message for SetAgentStateSimulationLevelForOrg
+message SetAgentStateSimulationLevelForOrgResponse {}

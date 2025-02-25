@@ -827,6 +827,15 @@ enum RealTimeManagementState {
   PAUSE = 14;
 }
 
+// The AgentStateSimulationLevel, which is used to demo agent states on the adherence app, when there are no states to view otherwise.
+enum AgentStateSimulationLevel {
+  // Not set or no simulation active.
+  // The default level of simulation.
+  NO_SIMULATION = 0;
+  // Simulates the agent states, but not the predicted calls.
+  SIMULATED_AGENT_STATES = 1;
+}
+
 // Represents an agents real time state over a period of time.
 message AgentStateSegment {
   option deprecated = true;
