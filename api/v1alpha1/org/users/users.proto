@@ -54,6 +54,8 @@ message CreateUserRequest {
   int64 hunt_group_sid = 18;
   // Whether the user needs to set their password upon initial login
   bool password_reset_required = 19;
+  // The override for the users locale preferences
+  api.commons.LocalePreferences locale_preferences_override = 20;
 }
 
 // Response message for the CreateUser rpc.
