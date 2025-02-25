@@ -8,3 +8,13 @@ message TicketEvent {
   api.commons.EditTicket editticket = 1;
   string created_by_id = 2;
 }
+
+message TicketCustomFieldCreateEvent {
+  api.commons.TicketCustomFieldAuditLog ticket_custom_field_audit_log = 1;
+  string created_by_id = 2;
+}
+
+message TicketCustomFieldEditEvent {
+  api.commons.TicketCustomFieldAuditLog ticket_custom_field_audit_log = 1;
+  string created_by_id = 2;
+}

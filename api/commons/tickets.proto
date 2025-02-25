@@ -426,6 +426,26 @@ message CustomField {
   TicketCustomFieldType ticket_custom_field_type = 8;
 }
 
+// TicketCustomFieldAuditLog - Represents an audit log entry for changes to a ticket's custom fields.
+message TicketCustomFieldAuditLog {
+  // The list of custom field  attributes.
+  repeated CustomFieldAttribute custom_field_attributes = 1;
+  // The ticket code associated with the audit log entry.
+  string ticket_code = 2;
+}
+
+// CustomFieldAttribute - Represents a single edited attribute within a ticket's custom field.
+message CustomFieldAttribute {
+  // The unique identifier of the custom field.
+  int64 custom_field_id = 1 [jstype = JS_STRING];
+  // The unique identifier of the custom field.
+  TicketCustomFieldType custom_field_type = 2;
+  // The new value of the attribute after editing - only for edit event.
+  string edited_value = 3;
+  // The previous value of the attribute before editing - only for edit events.
+  string previous_value = 4;
+}
+
 // CustomFieldType -
 enum TicketCustomFieldType {
   TICKET_CUSTOMFIELD_TYPE_BOOLEAN = 0;
