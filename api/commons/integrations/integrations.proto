@@ -66,6 +66,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_NUVEI = 5700;
   INTEGRATION_TYPE_CALLIPAY = 5800;
   INTEGRATION_TYPE_TRATTA = 5900;
+  INTEGRATION_TYPE_FORTIS = 6000;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -268,6 +269,7 @@ enum RequestMethod {
   REQUEST_METHOD_ELAVON_DELETE_INSTALLMENT = 2909;
   REQUEST_METHOD_ELAVON_MCC_CREDIT_CARD_SALE = 2910;
   REQUEST_METHOD_ELAVON_ELECTRONIC_CHECK_PURCHASE = 2911;
+  REQUEST_METHOD_ELAVON_SUBMIT_INSTALLMENT_PAYMENT = 2912;
 
   REQUEST_METHOD_GLOBALPAYMENTS_CARDSALE = 3001;
   REQUEST_METHOD_GLOBALPAYMENTS_GET_TRANSACTION_BY_ID = 3002;
@@ -453,6 +455,11 @@ enum RequestMethod {
   REQUEST_METHOD_TRATTA_CHARGE_ACH = 5902;
   REQUEST_METHOD_TRATTA_CHARGE_CC_POST_DATED = 5903;
   REQUEST_METHOD_TRATTA_CHARGE_ACH_POST_DATED = 5904;
+
+  REQUEST_METHOD_FORTIS_CREATE_ACHTOKEN = 6001;
+  REQUEST_METHOD_FORTIS_CREATE_CCTOKEN = 6002;
+  REQUEST_METHOD_FORTIS_TOKEN_ACH_DEBIT_PAYMENT = 6003;
+  REQUEST_METHOD_FORTIS_TOKEN_CC_PAYMENT = 6004;
 }
 
 enum TransactionType {
@@ -1103,6 +1110,7 @@ message ExecuteFlow {
     ExecuteElavonDeleteInstallment elavon_delete_installment = 2909;
     ExecuteElavonMccCreditCardSale elavon_mcc_credit_card_sale = 2910;
     ExecuteElavonElectronicCheckPurchase elavon_electronic_check_purchase = 2911;
+    ExecuteElavonSubmitInstallmentSale elavon_submit_installment_sale = 2912;
 
     ExecuteGlobalPaymentsCardSale globalPayments_card_sale = 3001;
     ExecuteGlobalPaymentsGetTransactionByID globalPayments_get_transaction_by_id = 3002;
@@ -1282,6 +1290,11 @@ message ExecuteFlow {
     ExecuteTrattaAchCharge tratta_ach_charge = 5902;
     ExecuteTrattaCcChargePostDated tratta_cc_charge_post_dated = 5903;
     ExecuteTrattaAchChargePostDated tratta_ach_charge_post_dated = 5904;
+
+    ExecuteFortisCreateAchtoken fortis_create_achtoken = 6001;
+    ExecuteFortisCreateCctoken fortis_create_cctoken = 6002;
+    ExecuteFortisTokenAchDebitPayment fortis_token_ach_debit_payment = 6003;
+    ExecuteFortisTokenCcPayment fortis_token_cc_payment = 6004;
   }
 }
 
@@ -1560,6 +1573,7 @@ message ExecuteElavonAddInstallment {}
 message ExecuteElavonDeleteInstallment {}
 message ExecuteElavonUpdateInstallment {}
 message ExecuteElavonElectronicCheckPurchase {}
+message ExecuteElavonSubmitInstallmentSale {}
 
 message ExecuteGlobalPaymentsCardSale {}
 message ExecuteGlobalPaymentsGetTransactionByID {}
@@ -1753,3 +1767,8 @@ message ExecuteTrattaCcCharge {}
 message ExecuteTrattaAchCharge {}
 message ExecuteTrattaCcChargePostDated {}
 message ExecuteTrattaAchChargePostDated {}
+
+message ExecuteFortisCreateAchtoken {}
+message ExecuteFortisCreateCctoken {}
+message ExecuteFortisTokenAchDebitPayment {}
+message ExecuteFortisTokenCcPayment {}
