@@ -3855,6 +3855,23 @@ service WFM {
     };
   }
 
+  // Lists any diagnostics found in the WFM Adherence App for the org sending the request.
+  // Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
+  // Errors:
+  //   - grpc.Internal: error occurs when generating the diagnostics.
+  rpc ListAdherenceDiagnostics(ListAdherenceDiagnosticsRequest) returns (ListAdherenceDiagnosticsResponse) {
+    option (google.api.http).post = "/api/v1alpha1/wfm/listadherencediagnostics";
+    option (google.api.http).body = "*";
+    option deprecated = true;
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_WFM]
+        }
+      ]
+    };
+  }
+
   // List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
   // If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
   // If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -8748,6 +8765,16 @@ message HelloWorldWFMAdherenceResponse {
   string hello_message = 1;
 }
 
+// Request message for ListAdherenceDiagnostics RPC.
+message ListAdherenceDiagnosticsRequest {}
+
+// Response message for ListAdherenceDiagnostics RPC.
+message ListAdherenceDiagnosticsResponse {
+  // Diagnostics for the adherence application.
+  // Provides details on any changes the user needs to make for the app to work properly.
+  repeated Diagnostic diagnostics = 1;
+}
+
 // Request message for the ListAgentStatesForDay RPC.
 message ListAgentStatesForDayRequest {
   option deprecated = true;
@@ -8806,6 +8833,8 @@ message ListAdherenceAgentStatesResponse {
   // If zero violations are found for a given agent, that key will not be included in the resulting map.
   // Only set when @include_violations is True.
   map<int64, api.commons.AdherenceAgentStateViolations> agent_state_violations = 3;
+  // Any diagnostics encountered when getting the agent states or violations.
+  repeated Diagnostic diagnostics = 5;
 }
 
 // Request message for the ListAdherenceAgentStateViolations RPC.
