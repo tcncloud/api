@@ -234,6 +234,10 @@ message AuditEvent {
     //Tickets Events
     // EDIT update event
     TicketEvent ticket_event = 601;
+    // custom field creation event
+    TicketCustomFieldCreateEvent ticket_custom_field_create_event = 616;
+    // custom field update event
+    TicketCustomFieldEditEvent ticket_custom_field_edit_event = 617;
 
     // Compliance events
     // compliance rnd query event
