@@ -31,6 +31,10 @@ message GhostNotification {
     AgentQueuedCallsNotification agent_queued_calls_notification = 9;
     // notification that an auth token will soon expire
     AuthTokenExpiration auth_token_expiration_notification = 11;
+    // notification that a message has been received
+    OmniMessageReceieved omni_message_received = 12;
+    // notification that a conversations has been assigned
+    OmniConversationAssigned omni_conversation_assigned = 13;
     // ... undetermined other possible payloads
   }
 }
@@ -81,4 +85,18 @@ message AuthTokenExpiration {
   string token = 1;
   // The token expiration
   google.protobuf.Timestamp expiration = 2;
+}
+
+// Alert that a conversations has been assigned to an agent
+message OmniConversationAssigned {
+  // The conversation id
+  int64 conversation_sid = 1;
+}
+
+// Alert that a message has been received by an agent
+message OmniMessageReceieved {
+  // the sid for the conversation the message was sent in
+  int64 conversation_sid = 1;
+  // the message that was sent
+  string message = 2;
 }
