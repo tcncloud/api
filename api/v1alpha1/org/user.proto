@@ -548,6 +548,8 @@ message UpdateMyUserRequest {
   api.commons.OperatorApplications default_app = 4;
   // The override for the users locale preferences
   api.commons.LocalePreferences locale_preferences_override = 5;
+  // If the user wants notification sounds to play
+  bool play_notification_sounds = 6;
   // Mask to filter fields on organization entities in response.
   repeated string field_mask = 10;
 }
@@ -929,6 +931,9 @@ message GetUserSessionDataResponse {
 
     // The access token expiration time for the user.
     google.protobuf.Timestamp access_token_expiration = 36;
+
+    // If the user wants notification sounds to play
+    bool play_notification_sounds = 37;
   }
 
   // The user the data is about
