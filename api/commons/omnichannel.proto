@@ -140,6 +140,8 @@ message OmniCampaignModuleConfig {
   // The country code and postal code field together determine timezone for email time based compliance rulesets
   // country code
   int32 country_code = 24;
+  // country code sid
+  int64 country_code_sid = 27;
   // postal code field
   string postal_code_field = 25;
   // allows the user to configure a custom message for when a conversation times out, or to disable the message all together
