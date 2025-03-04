@@ -173,10 +173,18 @@ message Sms {
   // The omni campain this sms belongs to.
   int64 campaign_sid = 5 [jstype = JS_STRING];
 
+  // The agent responses for this conversation.
+  map<string, AgentResponse> agent_response = 6;
+
   // The phone data.
   message Phone {
     // The raw phone number.
     string raw = 12;
+  }
+
+  // AgentResponse contains the agent responses aka dispositions.
+  message AgentResponse {
+    repeated string values = 1;
   }
 
   // A thread is the text from one participant.
@@ -384,6 +392,9 @@ message Chat {
   // The email address.
   string email_address = 7;
 
+  // The agent responses for this conversation.
+  map<string, AgentResponse> agent_response = 8;
+
   // A thread is the text from one participant.
   message Thread {
     // The unique identifier of the thread.
@@ -412,6 +423,11 @@ message Chat {
   message Phone {
     // The raw phone number.
     string raw = 12;
+  }
+
+  // AgentResponse contains the agent responses aka dispositions.
+  message AgentResponse {
+    repeated string values = 1;
   }
 }
 
@@ -548,6 +564,9 @@ message TranscriptQuery {
 
   // Query constraints on skills.
   SkillsQuery skills = 10;
+
+  // Query constraints on agent response.
+  AgentResponse agent_response = 11;
 
   // Query constraints on skills.
   message SkillsQuery {
@@ -1077,6 +1096,73 @@ message TranscriptQuery {
       // Requires all chat specific transcript hits to have an email address
       // in the list.
       repeated string any = 1;
+    }
+  }
+
+  // Query constraints on agent response.
+  message AgentResponse {
+    // Optional. Groups AgentResponse conditions with logical and.
+    repeated AgentResponse and = 1;
+
+    // Optional. Groups AgentResponse conditions with logical or.
+    repeated AgentResponse or = 2;
+
+    // Optional. Queries for what does not match the agent response query.
+    bool not = 3;
+
+    // Optional. Key to query on.
+    Key key = 4;
+
+    // Optional. Queries values for the given keys. If no keys are provided then
+    // it will run the query on all values.
+    Values values = 5;
+
+    // Optional. Queries values as numbers for the given keys.
+    Numbers numbers = 6;
+
+    // Values defines a query on values.
+    message Values {
+      // Optional. Queries where value in list provided.
+      repeated string in = 1;
+
+      // Optional. Queries where value for key starts with given string.
+      string starts_with = 2;
+
+      // Optional. Queries where value for key contains given string.
+      string contains = 3;
+    }
+
+    // Numbers defines a query on values as numbers.
+    message Numbers {
+      // Optional. Queries where value in list provided.
+      repeated double in = 1;
+
+      // Optional. Queries where greater than or equal.
+      google.protobuf.DoubleValue gte = 2;
+
+      // Optional. Queries where less than or equal.
+      google.protobuf.DoubleValue lte = 3;
+
+      // Optional. Queries where greater than.
+      google.protobuf.DoubleValue gt = 4;
+
+      // Optional. Queries where less than.
+      google.protobuf.DoubleValue lt = 5;
+
+      // Optional. Queries where equal to.
+      google.protobuf.DoubleValue eq = 6;
+    }
+
+    // Key defines a query on the key.
+    message Key {
+      // Optional. Queries where key in list provided.
+      repeated string in = 1;
+
+      // Optional. Queries where key starts with given string.
+      string starts_with = 2;
+
+      // Optional. Queries where key contains given string.
+      string contains = 3;
     }
   }
 
