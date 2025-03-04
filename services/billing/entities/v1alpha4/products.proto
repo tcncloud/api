@@ -81,5 +81,8 @@ message ProductConfig {
 
     BasicConfig workforce_engagement_workforce_optimization_ai_bundle_summaries = 30020;
     BasicConfig workforce_engagement_workforce_optimization_ai_bundle_accumulated_summaries = 30021;
+
+    // workforce management (40000 - 49999)
+    BasicConfig workforce_engagement_workforce_management_scheduler_agents = 40000;
   }
 }
