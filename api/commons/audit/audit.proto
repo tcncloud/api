@@ -33,6 +33,9 @@ message AuditEvent {
   // this is an UUID so we can deduplicate at consumer side
   string audit_id = 5;
 
+  // Timestamp when this event is "effective" (i.e. when the event is considered to have happened). Optional.
+  google.protobuf.Timestamp effective_time = 6;
+
   // Application-specific identifier.
   // All aplications that generate audit events must have a unique numerical ID assigned within a specific event class
   // Vana 200 Omni 300 Asm 400 ....
