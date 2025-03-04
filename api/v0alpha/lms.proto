@@ -1095,6 +1095,10 @@ message Process {
     ContactManagerSink contact_manager_sink = 77;
     SumProcess sum = 78;
     FinviEntrypoint finvi_entrypoint = 79;
+    // Will import a list of contact manager temp file from lms
+    ContactManagementEnrichment contact_management_enrichment = 80;
+    // TicketExchangeSink
+    TicketExchangeSink ticket_exchange_sink = 81;
   }
 }
 
@@ -2959,4 +2963,30 @@ message FinviEntrypoint {
   // expect more fields to be supported in future.
   // default template looks like: "{{pool_id}}_{{element_id}}_{{UNIX}}"
   string filename_pattern = 5;
+}
+
+// ContactManagementEnrichment
+message ContactManagementEnrichment {
+  // project id of the list we are using for enrichment
+  string project_id = 1;
+  // name - optional
+  string contact_list_name = 2;
+  // if blank we export all fields.
+  // if provided, we export only the fields listed here
+  repeated string fields = 3;
+  // same deduplication options from the contact manager sink
+  ContactManagerSink.DeDuplication de_duplication_info = 4;
+  // if true we will create the contact if it doesn't exist
+  bool insert_if_missing = 5;
+}
+
+// TicketExchangeSink
+message TicketExchangeSink {
+  //sent to ticketing application when sink is run. Ticket is created in this project.
+  string project_id = 1;
+  //selected template
+  string template_id = 2;
+  // if blank we export all fields.
+  // if provided, we export only the fields listed here
+  repeated string fields = 3;
 }
