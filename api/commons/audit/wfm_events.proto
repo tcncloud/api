@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "google/protobuf/timestamp.proto";
+
+// WFMPublishScheduleEvent represents the publishing of a wfm schedule.
+message WFMPublishScheduleEvent {
+  // Required. Unique published schedule id.
+  int64 published_schedule_sid = 1;
+
+  // Required. Agents included in the schedule.
+  repeated string user_ids = 2;
+}

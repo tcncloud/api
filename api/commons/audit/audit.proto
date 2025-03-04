@@ -16,6 +16,7 @@ import "api/commons/audit/organization_events.proto";
 import "api/commons/audit/scorecards_events.proto";
 import "api/commons/audit/tickets_events.proto";
 import "api/commons/audit/vana_events.proto";
+import "api/commons/audit/wfm_events.proto";
 import "google/protobuf/timestamp.proto";
 
 // This represents a generic audit event that is sent to the audit service
@@ -291,5 +292,8 @@ message AuditEvent {
     // Organization Events
     // AccessTokensExpiringEvent is the event that is triggered when any users access tokens are expiring.
     AccessTokensExpiringEvent access_tokens_expiring_event = 1300;
+
+    // WFM Events class 1400
+    WFMPublishScheduleEvent wfm_publish_schedule_event = 1400;
   }
 }

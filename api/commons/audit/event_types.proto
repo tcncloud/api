@@ -300,4 +300,8 @@ enum EventType {
   // Organization Events
   // Organization event when any users access tokens are expiring.
   EVENT_TYPE_ORGANIZATION_ACCESS_TOKENS_EXPIRING_EVENT = 1300;
+
+  // Workforce Management Events
+  // publish schedule event
+  EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT = 1400;
 }
