@@ -213,6 +213,18 @@ service Compliance {
     };
   }
 
+  rpc DeleteAllListEntries(DeleteAllListEntriesRequest) returns (DeleteAllListEntriesResponse) {
+    option (google.api.http).post = "/api/v0alpha/compliance/deletealllistentries";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_COMPLIANCE]
+        }
+      ]
+    };
+  }
+
   rpc GetScrubList(GetScrubListReq) returns (ScrubListRes) {
     option (google.api.http).post = "/api/v0alpha/compliance/getScrublist";
     option (google.api.http).body = "*";
@@ -1794,3 +1806,9 @@ message ScrubListDownloadRequest {
 message ConsentListDownloadRequest {
   string consent_profile_id = 4;
 }
+
+message DeleteAllListEntriesRequest {
+  string list_id = 2;
+}
+
+message DeleteAllListEntriesResponse {}
