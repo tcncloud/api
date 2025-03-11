@@ -268,7 +268,7 @@ message TextValue {
 
 // TextValueCondition describes the conditions to render
 message TextValueCondition {
-  // DEPRECATED use expression_node instead
+  // DEPRECATED use condition/result expression instead
   // The expression for the condition
   ExpressionNode expression = 1 [deprecated = true];
   // Text value size
@@ -285,8 +285,13 @@ message TextValueCondition {
   }
   // Icon color
   Color icon_color = 5;
+  // DEPRECATED use condition/result expression instead
   // The expression for the condition
-  api.v1alpha1.explorer.ExpressionNode expression_node = 6;
+  api.v1alpha1.explorer.ExpressionNode expression_node = 6 [deprecated = true];
+  // The condition to determine whether to render this value
+  api.v1alpha1.explorer.ExpressionNode condition_expression = 7;
+  // The result for the condition
+  api.v1alpha1.explorer.ExpressionNode result_expression = 8;
 }
 
 // Message for Table Column Configuration
