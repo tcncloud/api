@@ -26,7 +26,7 @@ service ClassifierFileTemplates {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_LMS_EDIT]
+          permissions: [PERMISSION_LMS_VIEW]
         }
       ]
     };
@@ -37,7 +37,7 @@ service ClassifierFileTemplates {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_LMS_EDIT]
+          permissions: [PERMISSION_LMS_VIEW]
         }
       ]
     };
@@ -70,7 +70,7 @@ service ClassifierFileTemplates {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_LMS_EDIT]
+          permissions: [PERMISSION_LMS_VIEW]
         }
       ]
     };
@@ -81,7 +81,7 @@ service ClassifierFileTemplates {
     option (annotations.authz) = {
       sets: [
         {
-          permissions: [PERMISSION_LMS_EDIT]
+          permissions: [PERMISSION_LMS_VIEW]
         }
       ]
     };
