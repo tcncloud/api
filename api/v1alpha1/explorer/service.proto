@@ -134,6 +134,10 @@ message QueryResponse {
   int64 result_size_bytes = 2;
   // map of datasources and a boolean indicating if the datasource is filtered by time
   map<string, bool> time_filtered_datasources = 3;
+  // post processing table query
+  string post_processing_table_query = 4;
+  // post processing summary query
+  string post_processing_summary_query = 5;
 }
 
 // SupportQueryRequest is the request to query a datasource with support permissions.
@@ -158,6 +162,10 @@ message SupportQueryResponse {
   string explain = 5;
   // map of datasources and a boolean indicating if the datasource is filtered by time
   map<string, bool> time_filtered_datasources = 6;
+  // post processing query
+  string post_processing_table_query = 7;
+  // post processing summary query
+  string post_processing_summary_query = 8;
 }
 
 // QueryExplainRequest is the request to retrieve debug data for a query.
@@ -179,4 +187,8 @@ message QueryExplainResponse {
   string explain = 5;
   // map of datasources and a boolean indicating if the datasource is filtered by time
   map<string, bool> time_filtered_datasources = 6;
+  // post processing table query
+  string post_processing_table_query = 7;
+  // post processing summary query
+  string post_processing_summary_query = 8;
 }
