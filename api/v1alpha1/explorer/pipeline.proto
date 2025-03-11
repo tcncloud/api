@@ -6,6 +6,8 @@ package api.v1alpha1.explorer;
 message Pipeline {
   // Pipeline nodes
   repeated Node nodes = 1;
+  // Format query returns a query to format the data in post processing
+  FormatQuery format_query = 2;
 }
 
 // Node describes the type of operations of a pipeline section
@@ -310,4 +312,90 @@ message TransposeNode {
     // resulting type of the extracted column
     string value_type = 4;
   }
+}
+
+// FormatQuery contains operations to apply in post processing
+message FormatQuery {
+  // Table column configurations
+  repeated TableColumnConfig table_column_configs = 1;
+}
+
+// Message for Table Column Configuration
+message TableColumnConfig {
+  // Operations to be performed on the column
+  repeated ColumnOperation operations = 5;
+  // Summary for the column (AVG, SUM, MIN, MAX)
+  ColumnSummaryType column_summary = 6;
+}
+
+// FormatSeries contains the series of operations for a column operation
+message FormatSeries {
+  // The series of format parts
+  repeated string format_parts = 1;
+}
+
+// PadOperation contains padding details
+message PadOperation {
+  // Character to pad the string with
+  string pad_character = 1;
+  // Flag to pad before or after the string
+  bool pad_left = 2;
+  // Size of the padding
+  int32 pad_size = 3;
+}
+
+// Message for ColumnOperation
+message ColumnOperation {
+  // Operation type
+  OperationType operation_type = 1;
+  oneof operation_value {
+    // Float value for operation
+    double float_value = 2;
+    // Series values for operation
+    FormatSeries format_series = 3;
+    // Pad operation
+    PadOperation pad_operation = 4;
+  }
+}
+
+// Enum for Column Format Type
+enum OperationType {
+  // Unspecified
+  OPERATION_TYPE_UNSPECIFIED = 0;
+  // Date format type
+  OPERATION_TYPE_DATE = 1;
+  // Prefix format type
+  OPERATION_TYPE_PREFIX = 2;
+  // Suffix format type
+  OPERATION_TYPE_SUFFIX = 3;
+  // Duration format type
+  OPERATION_TYPE_DURATION = 4;
+  // Add operation
+  OPERATION_TYPE_ADD = 5;
+  // Subract operation
+  OPERATION_TYPE_SUBTRACT = 6;
+  // Multiply operation
+  OPERATION_TYPE_MULTIPLY = 7;
+  // Divide operation
+  OPERATION_TYPE_DIVIDE = 8;
+  // Format number operation
+  OPERATION_TYPE_FORMAT_NUMBER = 9;
+  // Precision operation
+  OPERATION_TYPE_PRECISION = 10;
+  // PAD operation
+  OPERATION_TYPE_PAD = 11;
+}
+
+// Enum for Column Summary Type
+enum ColumnSummaryType {
+  // Unspecified
+  COLUMN_SUMMARY_TYPE_UNSPECIFIED = 0;
+  // Sumamry type Average
+  COLUMN_SUMMARY_TYPE_AVG = 1;
+  // Summary type Summation
+  COLUMN_SUMMARY_TYPE_SUM = 2;
+  // Summary type Minimum
+  COLUMN_SUMMARY_TYPE_MIN = 3;
+  // Summary type Maximum
+  COLUMN_SUMMARY_TYPE_MAX = 4;
 }
