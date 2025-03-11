@@ -297,6 +297,7 @@ enum OperatorApplications {
   AGENT_BETA_APP = 32; // Agent Beta
   NEWSROOM_APP = 33; // Newsroom
   CONTACTMANAGER_APP = 34; //Contact Manager
+  KNOWLEDGE_BASE_APP = 35; // Knowledge Base
 }
 
 enum AnnouncementMixingOption {
