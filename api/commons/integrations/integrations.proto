@@ -67,6 +67,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_CALLIPAY = 5800;
   INTEGRATION_TYPE_TRATTA = 5900;
   INTEGRATION_TYPE_FORTIS = 6000;
+  INTEGRATION_TYPE_BLINKPAYMENT = 6100;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -460,6 +461,9 @@ enum RequestMethod {
   REQUEST_METHOD_FORTIS_CREATE_CCTOKEN = 6002;
   REQUEST_METHOD_FORTIS_TOKEN_ACH_DEBIT_PAYMENT = 6003;
   REQUEST_METHOD_FORTIS_TOKEN_CC_PAYMENT = 6004;
+
+  REQUEST_METHOD_BLINKPAYMENT_CHARGE_CC = 6101;
+  REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH = 6102;
 }
 
 enum TransactionType {
@@ -1295,6 +1299,9 @@ message ExecuteFlow {
     ExecuteFortisCreateCctoken fortis_create_cctoken = 6002;
     ExecuteFortisTokenAchDebitPayment fortis_token_ach_debit_payment = 6003;
     ExecuteFortisTokenCcPayment fortis_token_cc_payment = 6004;
+
+    ExecuteBlinkPaymentChargeCc blinkpayment_charge_cc = 6101;
+    ExecuteBlinkPaymentChargeAch blinkpayment_charge_ach = 6102;
   }
 }
 
@@ -1772,3 +1779,6 @@ message ExecuteFortisCreateAchtoken {}
 message ExecuteFortisCreateCctoken {}
 message ExecuteFortisTokenAchDebitPayment {}
 message ExecuteFortisTokenCcPayment {}
+
+message ExecuteBlinkPaymentChargeCc {}
+message ExecuteBlinkPaymentChargeAch {}
