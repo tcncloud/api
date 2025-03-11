@@ -620,4 +620,9 @@ enum Permission {
   PERMISSION_CONTACTMANAGER_ADMIN = 5100 [(annotations.perms.options) = {app: APPLICATION_CONTACTMANAGER}];
 
   PERMISSION_CONTACTMANAGER_APP = 5101 [(annotations.perms.options) = {app: APPLICATION_CONTACTMANAGER}];
+
+  /*
+   * Knowledge Base
+   */
+  PERMISSION_KNOWLEDGE_BASE_EDIT = 5200 [(annotations.perms.options) = {app: APPLICATION_KNOWLEDGE_BASE}];
 }
