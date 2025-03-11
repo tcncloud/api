@@ -444,6 +444,10 @@ message CustomFieldAttribute {
   string edited_value = 3;
   // The previous value of the attribute before editing - only for edit events.
   string previous_value = 4;
+  // custom filed name -
+  string custom_field_name = 5;
+  // The status of field types
+  TicketCustomFieldStatus ticket_custom_field_status = 6;
 }
 
 // CustomFieldType -
@@ -454,4 +458,11 @@ enum TicketCustomFieldType {
   TICKET_CUSTOMFIELD_TYPE_DATETIME = 3;
   TICKET_CUSTOMFIELD_TYPE_MULTISELECT = 4;
   TICKET_CUSTOMFIELD_TYPE_SINGLESELECT = 5;
+}
+
+// TicketCustomFieldAStatus
+enum TicketCustomFieldStatus {
+  Ticket_Custom_Field_Status_Added = 0;
+  Ticket_Custom_Field_Status_Updated = 1;
+  Ticket_Custom_Field_Status_Deleted = 2;
 }
