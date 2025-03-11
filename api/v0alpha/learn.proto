@@ -305,6 +305,19 @@ service Learn {
       ]
     };
   }
+
+  // upload url for file updates
+  rpc GetUpdateUrl(GetUpdateUrlReq) returns (GetUpdateUrlRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/getupdateurl";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LEARN_EDIT]
+        }
+      ]
+    };
+  }
 }
 
 // request to check if learning page url exists
@@ -680,4 +693,12 @@ message UploadStaticImageReq {
 message UploadStaticImageRes {
   // updated image details
   LearnImage image = 1;
+}
+
+message GetUpdateUrlReq {}
+message GetUpdateUrlRes {
+  // the url of the file uploaded
+  string url = 1;
+  //  the identifier of the file
+  string id = 2;
 }
