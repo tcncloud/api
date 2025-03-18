@@ -654,8 +654,8 @@ message Fee {
 
 // A percentage value broken down into an integer and fractional part.
 message Percentage {
-  int32 integer_value = 1; // Whole number part of the percentage. Ex: 5 in 5.25%
-  int32 fractional_value = 2; // Decimal portion (e.g., 25 in 5.25%), limited to 4 digits.
+  int32 integer_value = 1; // Whole number part of the percentage. Ex: 5 in 5.23%
+  int32 fractional_value = 2; // Decimal portion (e.g., 2300 is .23 in 5.23%, 230 is .023 in 5.023%, 23 is .0023 in 5.0023%, 2 is .0002 in 5.0002%), limited to 4 digits.
 }
 
 // A flat rate plus a percentage of the amount due.
@@ -667,7 +667,6 @@ message FlatAndPercentage {
 // some integration method, or http req, or other internal way to lookup what the rate should be right now.
 message Lookup {
   // use the data from this plugin instance to the request for the the lookup.
-  // optional
   string plugin_instance_id = 1;
   RequestMethod method = 2; // this will be deprecated soon, when we move to request method naming convention. Regardless, let's use it for now.
   // must be able to be interpreted as a number.
