@@ -755,6 +755,8 @@ message OmniConversation {
   OmniConversationResult result = 22;
   // time the status was changed
   google.protobuf.Timestamp last_state_changed_time = 23;
+  // the id of the task
+  google.protobuf.Int64Value task_sid = 24;
 
   // metadata details related to the conversation
   message ConversationDetails {
