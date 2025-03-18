@@ -625,4 +625,9 @@ enum Permission {
    * Knowledge Base
    */
   PERMISSION_KNOWLEDGE_BASE_EDIT = 5200 [(annotations.perms.options) = {app: APPLICATION_KNOWLEDGE_BASE}];
+
+  /*
+   * Rule Engine
+   */
+  PERMISSION_RULE_ENGINE = 5300 [(annotations.perms.options) = {app: APPLICATION_RULE_ENGINE}];
 }
