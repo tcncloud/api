@@ -172,6 +172,9 @@ service Vanalytics {
       sets: [
         {
           permissions: [PERMISSION_VOICE_ANALYTICS]
+        },
+        {
+          permissions: [PERMISSION_SCORECARDS_EVALUATE]
         }
       ]
     };
