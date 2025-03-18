@@ -173,6 +173,7 @@ message SampleAgentConversationsRequest {
   int32 max_agent_evaluations = 6; // Required - maximum evaluations allowed per agent.
   int32 sample_percentage = 7; // Optional - defaults to 100.
   repeated string agent_user_ids = 8; // Optional - filter by agents.
+  int64 filter_sid = 9; // Optional - filter by saved transcript filter.
 }
 
 // SampleAgentConversationsResponse returns the sampled conversations.
