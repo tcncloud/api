@@ -2602,6 +2602,7 @@ service WFM {
   // @include_shift_segments must be true to take effect.
   // If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
   // activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+  // The given @shift_instance_sids must all belong to the given @schedule_type.
   // Errors:
   //   - grpc.Invalid: @shift_instance_sids in the request are invalid.
   //   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
@@ -2859,6 +2860,7 @@ service WFM {
   // Lists shift segments for the specified shift instances for the org sending the request.
   // If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
   // If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
+  // The given @shift_instance_sids must all belong to the given @schedule_type.
   // Errors:
   //   - grpc.Invalid: the request data is invalid.
   //   - grpc.NotFound: a shift instance doesn't exist.
@@ -7682,6 +7684,9 @@ message ListShiftInstancesBySidReq {
   // Set to true to include shift segment call stats in each of the returned shift segments.
   // Only effective when @include_shift_segments is also set to true.
   bool include_shift_segment_call_stats = 6;
+  // The schedule type that the shift instances are associated with.
+  // All @shift_instance_sids must belong to the same type of schedule.
+  commons.ScheduleType schedule_type = 7;
 }
 
 // Response message for the ListShiftInstancesBySid RPC
@@ -7903,6 +7908,8 @@ message CopyShiftInstancesToScheduleReq {
   // If set to true, overlapping shifts will be permitted, and return a warning diagnostic after persisting.
   // Otherwise, any overlapping shifts for agents in the @destination_schedule will return an error diagnostic and no shifts will be copied.
   bool overlap_as_warning = 3;
+  // The type of schedule that the @shift_instance_sids are associated with.
+  commons.ScheduleType source_schedule_type = 4;
 }
 
 // Response message for the CopyShiftInstancesToSchedule RPC
@@ -7954,6 +7961,9 @@ message ListShiftSegmentsByShiftInstanceSidsReq {
   bool include_scheduling_activity = 2;
   // Set to true to include the non skill activity for the scheduling activities returned (if those are set to be included).
   bool include_activity = 3;
+  // The schedule type that the shift instance sids are associated with.
+  // All @shift_instance_sids must belong to the same type of schedule.
+  commons.ScheduleType schedule_type = 4;
 }
 
 // ListShiftSegmentsByShiftInstanceSids response.
