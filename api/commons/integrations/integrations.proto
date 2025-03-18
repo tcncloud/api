@@ -68,6 +68,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_TRATTA = 5900;
   INTEGRATION_TYPE_FORTIS = 6000;
   INTEGRATION_TYPE_BLINKPAYMENT = 6100;
+  INTEGRATION_TYPE_WAYSTAR = 6200;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -464,6 +465,9 @@ enum RequestMethod {
 
   REQUEST_METHOD_BLINKPAYMENT_CHARGE_CC = 6101;
   REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH = 6102;
+
+  REQUEST_METHOD_WAYSTAR_CC_PAYMENT = 6201;
+  REQUEST_METHOD_WAYSTAR_ACH_PAYMENT = 6202;
 }
 
 enum TransactionType {
@@ -1301,6 +1305,9 @@ message ExecuteFlow {
 
     ExecuteBlinkPaymentChargeCc blinkpayment_charge_cc = 6101;
     ExecuteBlinkPaymentChargeAch blinkpayment_charge_ach = 6102;
+
+    ExecuteWayStarCcPayment waystar_cc_payment = 6201;
+    ExecuteWayStarAchPayment waystar_ach_payment = 6202;
   }
 }
 
@@ -1781,3 +1788,6 @@ message ExecuteFortisTokenCcPayment {}
 
 message ExecuteBlinkPaymentChargeCc {}
 message ExecuteBlinkPaymentChargeAch {}
+
+message ExecuteWayStarCcPayment {}
+message ExecuteWayStarAchPayment {}
