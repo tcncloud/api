@@ -30,6 +30,7 @@ message Insight {
     Pipeline pipeline = 16 [deprecated = true]; // pipeline [DEPRECATED: use insight_body instead]
     api.v1alpha1.explorer.Pipeline insight_body = 17; // pipeline representation of insight body
   }
+  ExportOptions export_options = 18; // export options for the insight
 }
 
 // PublishInsightRequest is the request to publish an insight.
@@ -238,16 +239,26 @@ enum QuoteCharacter {
   QUOTE_CHARACTER_SINGLE_QUOTE = 2;
 }
 
+// Message for Export Options
+message ExportOptions {
+  // Delimiter for file exports
+  string delimiter = 1;
+  // Quote character for file exports
+  QuoteCharacter quote_character = 2;
+  // Flag to include header in file exports
+  bool no_header = 3;
+}
+
 // Message for Table Visualization
 message TableVisualization {
   // Map of table column details
   repeated TableColumnConfig table_column_details = 1;
   // Delimiter for csv exports
-  string delimiter = 2;
+  string delimiter = 2 [deprecated = true];
   // Quote character for csv exports
-  QuoteCharacter quote_character = 3;
+  QuoteCharacter quote_character = 3 [deprecated = true];
   // Flag to include header in csv exports
-  bool no_header = 4;
+  bool no_header = 4 [deprecated = true];
   // Header background color
   string header_background_color = 5;
   // Header text color
