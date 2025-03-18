@@ -318,6 +318,14 @@ service Learn {
       ]
     };
   }
+
+  // integration with knowledge-retriever
+  // search the knowledge base
+  rpc AdvancedSearch(AdvancedSearchReq) returns (AdvancedSearchRes) {
+    option (google.api.http).post = "/api/v0alpha/learn/advancedsearch";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {no_permissions: true};
+  }
 }
 
 // request to check if learning page url exists
@@ -701,4 +709,12 @@ message GetUpdateUrlRes {
   string url = 1;
   //  the identifier of the file
   string id = 2;
+}
+
+message AdvancedSearchReq {
+  string user_prompt = 1;
+}
+message AdvancedSearchRes {
+  string answer = 1;
+  repeated string sources = 2;
 }
