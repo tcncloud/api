@@ -1629,10 +1629,16 @@ message ListContactListsReq {
     ByProject by_project = 100;
   }
 
-  // ByProject - filter to list campaigns by project
+  // ByProject - filter to list contacts by project
   message ByProject {
     // project identifier
     int64 project_sid = 1 [jstype = JS_STRING];
+    // Optional. The number of contacts to include in a single response. When  not provided
+    // this defaults to 100.
+    uint32 page_size = 2;
+    // Optional. The next_page_token returned from a previous List request, if any.
+    // When provided all other request fields are ignored.
+    string page_token = 3;
   }
 }
 
@@ -1640,6 +1646,9 @@ message ListContactListsReq {
 message ListContactListsRes {
   // the listed contact lists
   repeated api.commons.ContactList contact_lists = 1;
+  // Token to retrieve the next page of contacts, or empty if there are
+  // no more contact in the list.
+  string next_page_token = 2;
 }
 
 // GetAvailableHeadersReq - request to retrieve all available headers for contact lists
