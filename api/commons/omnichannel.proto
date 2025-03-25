@@ -87,6 +87,9 @@ message OmniCampaignModule {
     // the number of tasks that are canceled
     google.protobuf.Int64Value canceled_task_count = 7;
   }
+  // campaign module operating time based on the tasks timezone-determined by the sms number,
+  // and zip code in the task's data fields, then reverts to campaign timezone if neither are present; nullable
+  WeekdayTimeRange hours_of_operation_timezone = 13;
 }
 
 // OmniCampaignModuleConfig -
