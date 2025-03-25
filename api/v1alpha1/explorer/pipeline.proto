@@ -322,6 +322,8 @@ message FormatQuery {
 
 // Message for Table Column Configuration
 message TableColumnConfig {
+  // Name of the column
+  string column_name = 1;
   // Operations to be performed on the column
   repeated ColumnOperation operations = 5;
   // Summary for the column (AVG, SUM, MIN, MAX)
