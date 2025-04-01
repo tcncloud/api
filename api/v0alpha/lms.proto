@@ -3096,9 +3096,17 @@ message ContactManagementEnrichment {
   // if provided, we export only the fields listed here
   repeated string fields = 3;
   // same deduplication options from the contact manager sink
-  ContactManagerSink.DeDuplication de_duplication_info = 4;
+  ContactManagerSink.DeDuplication de_duplication_info = 4 [deprecated = true];
   // if true we will create the contact if it doesn't exist
   bool insert_if_missing = 5;
+  // search criteria enum
+  SearchFieldType search_field_type = 6;
+
+  enum SearchFieldType {
+    NONE = 0;
+    PHONE_NUMBER = 1;
+    EMAIL_ADDRESS = 2;
+  }
 }
 
 // TicketExchangeSink
