@@ -90,6 +90,8 @@ message OmniCampaignModule {
   // campaign module operating time based on the tasks timezone-determined by the sms number,
   // and zip code in the task's data fields, then reverts to campaign timezone if neither are present; nullable
   WeekdayTimeRange hours_of_operation_timezone = 13;
+  // indicates if the tasks associated with a campaign should be ordered based on the task.timezone_offset
+  bool global_timezone_ordering = 14;
 }
 
 // OmniCampaignModuleConfig -
