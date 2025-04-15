@@ -434,6 +434,28 @@ service Integrations {
       ]
     };
   }
+  rpc GetIntegrationSettings(GetIntegrationSettingsReq) returns (GetIntegrationSettingsRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/getintegrationsettings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
+  rpc UpsertIntegrationSettings(UpsertIntegrationSettingsReq) returns (UpsertIntegrationSettingsRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/upsertintegrationsettings";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1520,3 +1542,20 @@ message CalculateFeesRes {
   map<string, google.type.Money> calculated_fees = 1; // key: fee name, field: fee amount
   google.type.Money total_amount_due = 2;
 }
+
+message IntegrationSettings {
+  repeated api.commons.integrations.IntegrationType allowed_integrations = 1;
+  // there is probably potential for more org specific settings within integrations that we can store in the future.
+}
+
+message GetIntegrationSettingsReq {}
+
+message GetIntegrationSettingsRes {
+  repeated api.commons.integrations.IntegrationType allowed_integrations = 1;
+}
+
+message UpsertIntegrationSettingsReq {
+  IntegrationSettings entity = 1;
+}
+
+message UpsertIntegrationSettingsRes {}
