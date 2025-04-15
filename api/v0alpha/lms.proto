@@ -2139,6 +2139,22 @@ message DateTimeModifier {
   int32 hours = 5;
   int32 minutes = 6;
   int32 seconds = 7;
+  // a string in the format: '10y9w8d7h6m5s'
+  // prefix any op with a '-' to subtract: '-10y9w8d-7h6m5s'
+  string duration = 8;
+}
+
+message DateTimeFieldModifier {
+  string years_field = 1;
+  string weeks_field = 3;
+  string days_field = 4;
+  string hours_field = 5;
+  string minutes_field = 6;
+  string seconds_field = 7;
+  // a field name to a string that should be interpreted as
+  // a string in the format: '10y9w8d7h6m5s'
+  string duration_field = 8;
+  bool negate = 9;
 }
 
 message DateTime {
@@ -2303,6 +2319,7 @@ message ReshapeAction {
   // add or subtract a datetime modifier to the field
   message AddDate {
     DateTimeModifier datetime = 45;
+    DateTimeFieldModifier datetime_field_modifier = 46;
   }
   // add two fields values together. If field is time-like, other_field must be
   // either number or timestamp
