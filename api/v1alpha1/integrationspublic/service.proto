@@ -47,6 +47,10 @@ service IntegrationsPublic {
     option (google.api.http).post = "/api/v1alpha1/integrationspublic/calculatefees";
     option (google.api.http).body = "*";
   }
+  rpc DeliverReceipt(DeliverReceiptReq) returns (DeliverReceiptRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrationspublic/deliverreceipt";
+    option (google.api.http).body = "*";
+  }
 }
 
 message Values {
@@ -271,4 +275,20 @@ message CalculateFeesReq {
 message CalculateFeesRes {
   map<string, google.type.Money> calculated_fees = 1; // key: fee name, field: fee amount
   google.type.Money total_amount_due = 2;
+}
+
+message DeliverReceiptReq {
+  oneof delivery_method {
+    EmailReceipt email_receipt = 3;
+    // adding sms, and pdf download in the future if requested
+  }
+  string receipt_id = 6; // used to look up the populated receipt template in tmp storage
+}
+
+message EmailReceipt {
+  string to_addr = 1;
+}
+
+message DeliverReceiptRes {
+  // empty for now, can send back an fts url if we decide to allow them to download a pdf of the receipt
 }
