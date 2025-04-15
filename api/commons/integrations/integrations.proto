@@ -158,6 +158,7 @@ enum RequestMethod {
   REQUEST_METHOD_INTERPROSE_SUBMITCARDSALEREQUESTBYACH = 1603;
   REQUEST_METHOD_INTERPROSE_LOOKUPPAYMENTID = 1604;
   REQUEST_METHOD_INTERPROSE_LOOKUPACCOUNTBYFORMID = 1605;
+  REQUEST_METHOD_INTERPROSE_GETBUNDLE = 1606;
 
   REQUEST_METHOD_DALLASNEWS_SEARCHBYPHONE = 1701;
   REQUEST_METHOD_DALLASNEWS_SEARCHBYZIPSTREET = 1702;
@@ -1008,6 +1009,7 @@ message ExecuteFlow {
     ExecuteInterproseSubmitCardSaleRequestByAch interprose_submit_card_sale_request_by_ach = 1603;
     ExecuteInterproseLookupPaymentId interprose_lookup_payment_id = 1604;
     ExecuteInterproseLookupAccountByFormId interprose_lookup_account_by_form_id = 1605;
+    ExecuteInterproseGetBundle interprose_get_bundle = 1606;
 
     ExecuteDallasnewsSearchByPhone dallasnews_search_by_phone = 1701;
     ExecuteDallasnewsSearchByZipStreet dallasnews_search_by_zip_street = 1702;
@@ -1477,6 +1479,7 @@ message ExecuteInterproseSubmitCardSaleRequestByCc {}
 message ExecuteInterproseSubmitCardSaleRequestByAch {}
 message ExecuteInterproseLookupPaymentId {}
 message ExecuteInterproseLookupAccountByFormId {}
+message ExecuteInterproseGetBundle {}
 
 message ExecuteDallasnewsSearchByPhone {}
 message ExecuteDallasnewsSearchByZipStreet {}
