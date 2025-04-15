@@ -30,7 +30,8 @@ message Insight {
     Pipeline pipeline = 16 [deprecated = true]; // pipeline [DEPRECATED: use insight_body instead]
     api.v1alpha1.explorer.Pipeline insight_body = 17; // pipeline representation of insight body
   }
-  ExportOptions export_options = 18; // export options for the insight
+  ExportOptions export_options = 18 [deprecated = true]; // use data_export_options instead
+  api.v1alpha1.explorer.ExportOptions data_export_options = 19; // export options for the insight
 }
 
 // PublishInsightRequest is the request to publish an insight.
@@ -241,6 +242,7 @@ enum QuoteCharacter {
 
 // Message for Export Options
 message ExportOptions {
+  option deprecated = true;
   // Delimiter for file exports
   string delimiter = 1;
   // Quote character for file exports

@@ -7,6 +7,8 @@ enum ExportFormat {
   REPORT_FORMAT_UNSPECIFIED = 0;
   REPORT_FORMAT_CSV = 1;
   REPORT_FORMAT_PARQUET = 2;
+  REPORT_FORMAT_TSV = 3;
+  REPORT_FORMAT_TXT = 4;
 }
 
 // SchemaType is an enum for the type of a schema field.
@@ -63,4 +65,44 @@ message Parameters {
     string data_type = 3;
   }
   map<string, Parameter> parameters = 1;
+}
+
+// Represents a result file, including its URL and size in bytes.
+message ResultFile {
+  string url = 1;
+  int64 size_bytes = 2;
+}
+
+// Represents the type of result.
+enum ResultType {
+  // Unspecified is the raw result.
+  RESULT_TYPE_UNSPECIFIED = 0;
+  // Raw is the raw result from the pipeline with no formatting applied.
+  RESULT_TYPE_FORMAT = 1;
+  // Summary is the formatted summary result from the pipeline.
+  RESULT_TYPE_SUMMARY = 2;
+  // Report is the combined report of Format and Summary.
+  RESULT_TYPE_REPORT = 3;
+}
+
+// QuoteCharacter specifies the quote character
+enum QuoteCharacter {
+  // Unspecified
+  QUOTE_CHARACTER_UNSPECIFIED = 0;
+  // Double Quote
+  QUOTE_CHARACTER_DOUBLE_QUOTE = 1;
+  // Single Quote
+  QUOTE_CHARACTER_SINGLE_QUOTE = 2;
+}
+
+// Message for Export Options
+message ExportOptions {
+  // Delimiter for file exports
+  string delimiter = 1;
+  // Quote character for file exports
+  QuoteCharacter quote_character = 2;
+  // Flag to include header in file exports
+  bool no_header = 3;
+  // result format
+  ExportFormat export_format = 4;
 }
