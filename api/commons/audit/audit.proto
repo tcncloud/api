@@ -13,6 +13,7 @@ import "api/commons/audit/events.proto";
 import "api/commons/audit/lms_events.proto";
 import "api/commons/audit/omnichannel_events.proto";
 import "api/commons/audit/organization_events.proto";
+import "api/commons/audit/p3_amqp_events.proto";
 import "api/commons/audit/scorecards_events.proto";
 import "api/commons/audit/tickets_events.proto";
 import "api/commons/audit/vana_events.proto";
@@ -295,5 +296,9 @@ message AuditEvent {
 
     // WFM Events class 1400
     WFMPublishScheduleEvent wfm_publish_schedule_event = 1400;
+
+    // P3 AMQP Events class 1500
+    P3AMQPCallResultEvent p3_amqp_call_result_event = 1500;
+    P3AMQPAgentResponseEvent p3_amqp_agent_response_event = 1501;
   }
 }
