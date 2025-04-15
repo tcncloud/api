@@ -89,6 +89,9 @@ message ListEvaluationsRequest {
 
   // Optional. The next_page_token returned from a previous List request, if any.
   string page_token = 17;
+
+  // Optional. Filter by status.
+  repeated api.commons.EvaluationState statuses = 18;
 }
 
 // ListEvaluationsResponse returns a list of evaluations
