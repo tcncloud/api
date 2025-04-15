@@ -193,6 +193,7 @@ message AgentConversation {
   oneof metadata {
     CallMetadata call_metadata = 10; // Metadata for a call conversation.
     SmsMetadata sms_metadata = 11; // Metadata for an sms conversation.
+    ChatMetadata chat_metadata = 12; // Metdata for a chat conversation.
   }
 
   message CallMetadata {
@@ -205,6 +206,11 @@ message AgentConversation {
 
   message SmsMetadata {
     int64 conversation_sid = 1; // Id of the sms conversation.
+    int64 campaign_sid = 2; // Id of the campaign.
+  }
+
+  message ChatMetadata {
+    int64 conversation_sid = 1; // Id of the chat conversation.
     int64 campaign_sid = 2; // Id of the campaign.
   }
 }
