@@ -688,6 +688,18 @@ service LMS {
       ]
     };
   }
+
+  rpc GetPipelineCanvasEvents(GetPipelineCanvasEventsReq) returns (GetPipelineCanvasEventsRes) {
+    option (google.api.http).post = "/api/v0alpha/lms/pipeline-canvases/get-pipeline-canvas-events";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_LMS_VIEW]
+        }
+      ]
+    };
+  }
 }
 
 message PipelineCanvasMetadata {
@@ -747,6 +759,18 @@ message GetPipelineCanvasReq {
 
 message GetPipelineCanvasRes {
   PipelineCanvas pipeline_canvas = 1;
+}
+
+message GetPipelineCanvasEventsReq {
+  int64 pipeline_canvas_sid = 1 [jstype = JS_STRING];
+}
+
+// all events in a pipeline canvas
+message GetPipelineCanvasEventsRes {
+  // map of element_id to number of queued events
+  map<string, int64> queued_events = 1;
+  // map of element_id to number of events in process
+  map<string, int64> processing_events = 2;
 }
 
 message ListPoolsRequest {}
