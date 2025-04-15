@@ -124,6 +124,11 @@ message QueryRequest {
   api.commons.TimePeriod time_period = 15;
   // report_date is to seed the time period for, if empty, the default value is now
   google.protobuf.Timestamp report_date = 14;
+  // export options for post processing operations
+  ExportOptions export_options = 17;
+  // result types for the query
+  // raw result type always included
+  repeated ResultType result_types = 18;
 }
 
 // QueryResponse contains the result of a datasource query.
@@ -138,6 +143,10 @@ message QueryResponse {
   string post_processing_table_query = 4;
   // post processing summary query
   string post_processing_summary_query = 5;
+  // result urls per result type
+  // raw result type always included
+  // the key is the enum value of ResultType
+  map<int32, ResultFile> result_urls = 6;
 }
 
 // SupportQueryRequest is the request to query a datasource with support permissions.
@@ -166,6 +175,10 @@ message SupportQueryResponse {
   string post_processing_table_query = 7;
   // post processing summary query
   string post_processing_summary_query = 8;
+  // result urls per result type
+  // raw result type always included
+  // the key is the enum value of ResultType
+  map<int32, ResultFile> result_urls = 9;
 }
 
 // QueryExplainRequest is the request to retrieve debug data for a query.
@@ -191,4 +204,8 @@ message QueryExplainResponse {
   string post_processing_table_query = 7;
   // post processing summary query
   string post_processing_summary_query = 8;
+  // result urls per result type
+  // raw result type always included
+  // the key is the enum value of ResultType
+  map<int32, ResultFile> result_urls = 9;
 }
