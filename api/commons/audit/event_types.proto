@@ -304,4 +304,10 @@ enum EventType {
   // Workforce Management Events
   // publish schedule event
   EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT = 1400;
+
+  //P3AMQP Events
+  // Call result event
+  EVENT_TYPE_P3_AMQP_CALL_RESULT_EVENT = 1500;
+  // Agent response event
+  EVENT_TYPE_P3_AMQP_AGENT_RESPONSE_EVENT = 1501;
 }

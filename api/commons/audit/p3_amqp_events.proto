@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package api.commons.audit;
+
+import "api/commons/acd.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+///
+/// This file contains events from Class 1500
+/// P3 AMQP events
+///
+
+// P3AMQPCallResultEvent represents a P3 call result event created based on an AMQP message
+message P3AMQPCallResultEvent {
+  // The call result.
+  int64 result = 1 [jstype = JS_STRING];
+  // The campaign sid.
+  int64 campaign_sid = 2 [jstype = JS_STRING];
+  // The time of call.
+  google.protobuf.Timestamp time_of_call = 3;
+  // The call type.
+  api.commons.CallType.Enum call_type = 4;
+  // The client sid.
+  int64 client_sid = 5 [jstype = JS_STRING];
+  // The call duration.
+  google.protobuf.Duration duration = 6;
+  // The group description.
+  string group_description = 7;
+  // The end time of of call.
+  google.protobuf.Timestamp end_time_of_call = 8;
+  // The phone number of the caller.
+  string phone_number = 9;
+  // The task sid.
+  int64 task_sid = 10 [jstype = JS_STRING];
+  // The call sid.
+  int64 call_sid = 11 [jstype = JS_STRING];
+  // The caller id.
+  string caller_id = 12;
+  // The dtmf responses.
+  string dtmf_responses = 13;
+}
+
+// P3AMQPCallResultEvent represents a P3 call result event created based on an AMQP message
+message P3AMQPAgentResponseEvent {
+  // The client sid.
+  int64 client_sid = 1 [jstype = JS_STRING];
+  // The agent sid.
+  int64 agent_sid = 2 [jstype = JS_STRING];
+  // The hunt group sid.
+  int64 hunt_group_sid = 3 [jstype = JS_STRING];
+  // The call type.
+  api.commons.CallType.Enum call_type = 4;
+  // The campaign sid.
+  int64 campaign_sid = 5 [jstype = JS_STRING];
+  // The call sid.
+  int64 call_sid = 6 [jstype = JS_STRING];
+  // The aggregation methods.
+  repeated string aggregation_methods = 7;
+  // The agent name.
+  string agent_name = 8;
+  // The hunt group name.
+  string hunt_group_name = 9;
+  // The responses map.
+  map<string, string> responses_map = 10;
+}
