@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.commons.org;
 
 import "api/commons/ana.proto";
+import "api/commons/classifier.proto";
 import "api/commons/country.proto";
 import "api/commons/enums.proto";
 import "api/commons/lms.proto";
@@ -523,8 +524,7 @@ message Scorecards {
   }
 }
 
-// Preferences for voice analytics. Primarily consumed and interpreted by
-// localmixer when mixing and transcribing call recordings.
+// Preferences for voice analytics.
 message VoiceAnalyticsPreferences {
   // Org ID.
   string org_id = 1;
@@ -566,6 +566,9 @@ message VoiceAnalytics {
     oneof where {
       // Optional. Redact numbers.
       Number number = 1;
+
+      // Optional. Detected entity to redact.
+      api.commons.ClassifierEntityType redact_entity = 2;
     }
   }
 
