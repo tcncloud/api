@@ -987,6 +987,11 @@ message OmniTask {
     // name of the contact list
     google.protobuf.StringValue contact_list_name = 1;
   }
+
+  // tracks the timezone difference for tasks
+  // -13 represents absent offset
+  // can be used for prioritizing and ordering based on destination timezone
+  float timezone_offset = 16;
 }
 
 // TaskConfig -
