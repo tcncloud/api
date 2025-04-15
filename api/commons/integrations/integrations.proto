@@ -613,6 +613,10 @@ enum Validation {
   VALIDATION_ACCOUNT = 502;
 
   VALIDATION_TRANSACTION_ID = 601;
+
+  // a select is for a predefined list of values,
+  // these values are given on the "formats" field of the field defintition proto.
+  VALIDATION_SELECT = 701;
 }
 
 enum InvoiceDisplayType {
