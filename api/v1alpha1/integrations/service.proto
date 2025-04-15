@@ -456,6 +456,17 @@ service Integrations {
       ]
     };
   }
+  rpc DeliverReceipt(DeliverReceiptReq) returns (DeliverReceiptRes) {
+    option (google.api.http).post = "/api/v1alpha1/integrations/deliverreceipt";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_INTEGRATIONS_VIEW]
+        }
+      ]
+    };
+  }
 }
 
 message ListJourneyConfigsReq {}
@@ -1559,3 +1570,19 @@ message UpsertIntegrationSettingsReq {
 }
 
 message UpsertIntegrationSettingsRes {}
+
+message DeliverReceiptReq {
+  oneof delivery_method {
+    EmailReceipt email_receipt = 3;
+    // adding sms, and pdf download in the future if requested
+  }
+  string receipt_id = 6; // used to look up the populated receipt template in tmp storage
+}
+
+message EmailReceipt {
+  string to_addr = 1;
+}
+
+message DeliverReceiptRes {
+  // empty for now, can send back an fts url if we decide to allow them to download a pdf of the receipt
+}

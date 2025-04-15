@@ -658,6 +658,10 @@ enum InvoiceDisplayType {
 
 message Receipt {
   repeated ReceiptField fields = 1;
+  // campaign identifier
+  int64 campaign_sid = 2;
+  // campaign module identifier
+  int64 campaign_module_sid = 3;
 }
 
 message Payment {
