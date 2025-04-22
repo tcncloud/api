@@ -1395,6 +1395,8 @@ message SendOmniMessageReq {
   string ui_reference_id = 5;
   // channel type
   api.commons.ChannelType channel_type = 6;
+  // the message format
+  api.commons.MessageFormat message_format = 7;
 }
 
 // Request to update a campaign
