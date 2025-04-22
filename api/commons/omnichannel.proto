@@ -92,6 +92,8 @@ message OmniCampaignModule {
   WeekdayTimeRange hours_of_operation_timezone = 13;
   // indicates if the tasks associated with a campaign should be ordered based on the task.timezone_offset
   bool global_timezone_ordering = 14;
+  // indicates what happens to pending tasks when a campaign leaves hours of operation
+  OmniTaskCarryOverBehavior task_carry_over_behavior = 15;
 }
 
 // OmniCampaignModuleConfig -
@@ -1291,4 +1293,9 @@ enum OmniMessageType {
   OMNI_MESSAGE_TYPE_REQUEST_QUEUE_INFORMATION = 14;
   OMNI_MESSAGE_TYPE_OFFLOADED_TEXT_MESSAGE = 15;
   OMNI_MESSAGE_TYPE_CANNED_MESSAGE = 16;
+}
+
+enum OmniTaskCarryOverBehavior {
+  OMNI_TASK_CARRY_OVER_PAUSE = 0;
+  OMNI_TASK_CARRY_OVER_CANCEL = 1;
 }
