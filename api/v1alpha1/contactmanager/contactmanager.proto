@@ -121,6 +121,8 @@ message AddContactEntryRequest {
   repeated Entry entry = 2 [deprecated = true];
   int64 project_sid = 3 [jstype = JS_STRING];
   repeated ContactField field = 4;
+  // Country code for the Phone Number
+  string country_code = 5;
 }
 
 message Entry {

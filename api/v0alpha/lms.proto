@@ -2604,6 +2604,9 @@ message ContactManagerSink {
     KEEP_EXISTING_LIST = 0;
     REPLACE_EXISTING_LIST = 1;
   }
+
+  // Country code for the Phone Number
+  string country_code = 12;
 }
 
 message SumProcess {
@@ -3197,6 +3200,9 @@ message ContactManagementEnrichment {
     PHONE_NUMBER = 1;
     EMAIL_ADDRESS = 2;
   }
+
+  // Country code for the Phone Number
+  string country_code = 7;
 }
 
 // TicketExchangeSink
