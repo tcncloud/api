@@ -69,6 +69,7 @@ enum IntegrationType {
   INTEGRATION_TYPE_FORTIS = 6000;
   INTEGRATION_TYPE_BLINKPAYMENT = 6100;
   INTEGRATION_TYPE_WAYSTAR = 6200;
+  INTEGRATION_TYPE_ACIWORLDWIDE = 6300;
 }
 
 // all supported methods that can be called prefixed with the integration_type
@@ -469,6 +470,9 @@ enum RequestMethod {
 
   REQUEST_METHOD_WAYSTAR_CC_PAYMENT = 6201;
   REQUEST_METHOD_WAYSTAR_ACH_PAYMENT = 6202;
+
+  REQUEST_METHOD_ACIWORLDWIDE_CHARGE_CC = 6301;
+  REQUEST_METHOD_ACIWORLDWIDE_CHARGE_ACH = 6302;
 }
 
 enum TransactionType {
@@ -1318,6 +1322,9 @@ message ExecuteFlow {
 
     ExecuteWayStarCcPayment waystar_cc_payment = 6201;
     ExecuteWayStarAchPayment waystar_ach_payment = 6202;
+
+    ExecuteACIWorldwideCcPayment aciworldwide_cc_payment = 6301;
+    ExecuteACIWorldwideAchPayment aciworldwide_ach_payment = 6302;
   }
 }
 
@@ -1802,3 +1809,6 @@ message ExecuteBlinkPaymentChargeAch {}
 
 message ExecuteWayStarCcPayment {}
 message ExecuteWayStarAchPayment {}
+
+message ExecuteACIWorldwideCcPayment {}
+message ExecuteACIWorldwideAchPayment {}
