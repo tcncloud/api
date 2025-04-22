@@ -585,6 +585,17 @@ service Acd {
       ]
     };
   }
+  rpc ListAgentsVoiceStatuses(ListAgentsVoiceStatusesRequest) returns (ListAgentsVoiceStatusesReply) {
+    option (google.api.http).post = "/api/v0alpha/acd/listagentsvoicestatuses";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_AGENT]
+        }
+      ]
+    };
+  }
 }
 
 message AgentGetStatusRequest {
@@ -1117,4 +1128,27 @@ message ValidateFieldReq {
 message ValidateFieldRes {
   bool valid = 1;
   string reason = 2;
+}
+
+message ListAgentsVoiceStatusesRequest {
+  repeated string skills = 1;
+  bool all_skills_required = 2;
+  string page_token = 3;
+}
+
+message ListAgentsVoiceStatusesReply {
+  repeated AgentVoiceStatusDetails agent_details = 1;
+  string next_page_token = 2;
+}
+
+message AgentVoiceStatusDetails {
+  int64 agent_sid = 1;
+  int64 hunt_group_sid = 2;
+  int64 current_session_sid = 3;
+  string first_name = 4;
+  string last_name = 5;
+  int64 status = 6;
+  api.commons.AgentStatus.Enum status_desc = 7;
+  repeated string skills = 8;
+  repeated string pbx_extensions = 9;
 }
