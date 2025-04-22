@@ -715,11 +715,23 @@ message PipelineCanvas {
   repeated Element elements = 2;
 }
 
+message EntrypointMetadata {
+  string element_id = 1;
+  string name = 2;
+  string cron_string = 3;
+  // last time this entrypoint was processed
+  google.protobuf.Timestamp last_run_time = 4;
+  // recent_error_message will be populated if this
+  // entrypoint failed recently
+  string recent_error_message = 5;
+}
+
 message PipelineCanvasPreview {
   PipelineCanvasMetadata metadata = 1;
   repeated string entrypoints = 2;
   repeated string exchanges = 3;
   int64 element_count = 4;
+  repeated EntrypointMetadata entrypoint_metadata = 5;
 }
 
 message CreatePipelineCanvasReq {
@@ -771,6 +783,8 @@ message GetPipelineCanvasEventsRes {
   map<string, int64> queued_events = 1;
   // map of element_id to number of events in process
   map<string, int64> processing_events = 2;
+  // map of entrypoint to recent error messages preventing processing
+  map<string, string> entrypoint_failures = 3;
 }
 
 message ListPoolsRequest {}
