@@ -2369,24 +2369,59 @@ message ReshapeAction {
   }
   // Represents a message for division operation.
   message Divide {
-    // The default value to be used if no other value is provided.
-    double default_value = 1;
+    option deprecated = true;
+    // The default value to be used if no other value is provided. DEPRECATED.
+    double default_value = 1 [deprecated = true];
     // The divisor to be used for the division operation.
-    double divisor = 2;
+    double divisor = 2 [deprecated = true];
   }
+
+  // divide a field value by a static value. Set field value to be the result.
+  message DivideValue {
+    double value = 1;
+  }
+
+  // Divide two fields values. Set field value to be the result.
+  message DivideField {
+    FieldIndex other_field = 12;
+  }
+
   // Represents a message for multiplication operation.
   message Multiply {
-    // The default value to be used if no other value is provided.
-    double default_value = 1;
+    option deprecated = true;
+    // The default value to be used if no other value is provided. DEPRECATED.
+    double default_value = 1 [deprecated = true];
     // The multiplier to be used for the multiplication operation.
-    double multiplier = 2;
+    double multiplier = 2 [deprecated = true];
   }
+
+  // Multiply a field value by a static value. Set field value to be the result.
+  message MultiplyValue {
+    double value = 1;
+  }
+
+  // Multiply two fields values. Set field value to be the result.
+  message MultiplyField {
+    FieldIndex other_field = 12;
+  }
+
   // Represents a message for modulo operation.
   message Modulo {
-    // The default value to be used if no other value is provided.
-    int32 default_value = 1;
-    // The modulus to be used for the modulo operation.
-    int32 modulus = 2;
+    option deprecated = true;
+    // The default value to be used if no other value is provided. DEPRECATED.
+    int32 default_value = 1 [deprecated = true];
+    // The modulus to be used for the modulo operation. DEPRECATED.
+    int32 modulus = 2 [deprecated = true];
+  }
+
+  // Modulo a field value by a static value. Set field value to be the result.
+  message ModuloValue {
+    double value = 1;
+  }
+
+  // Modulo two fields values. Set field value to be the result.
+  message ModuloField {
+    FieldIndex other_field = 12;
   }
 
   // will remove "field" from the record
