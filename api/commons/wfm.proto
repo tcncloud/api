@@ -167,11 +167,11 @@ message CallProfileGroupAvgs {
 }
 
 enum RegressionForecasterAvgsProcessingType {
-  // a complete forecast is built for each skill profile for ACW/ASA/AHT/ATAB
+  // a complete forecast is built for each skill profile for ACW/ASA/ATT/ATAB
   FORECAST = 0;
-  // an average from the training data is built for each skill profile for ACW/ASA/AHT/ATAB
+  // an average from the training data is built for each skill profile for ACW/ASA/ATT/ATAB
   AVERAGES = 1;
-  // Fixed values are used for  ACW/ASA/AHT/ATAB
+  // Fixed values are used for  ACW/ASA/ATT/ATAB
   FIXED_AVERAGES = 2;
 }
 
