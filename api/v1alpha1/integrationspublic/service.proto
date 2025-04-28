@@ -278,6 +278,7 @@ message CalculateFeesRes {
 }
 
 message DeliverReceiptReq {
+  PortalLinkId entity = 1;
   oneof delivery_method {
     EmailReceipt email_receipt = 3;
     // adding sms, and pdf download in the future if requested
