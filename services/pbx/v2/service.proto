@@ -154,6 +154,25 @@ service PBXService {
     };
   }
 
+  // Returns sip credentials for registering an SIP Account
+  // Required permissions:
+  //   PBX-MANAGER
+  // Errors:
+  //   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+  //   - grpc.Internal: An internal error occurred.
+  //   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+  rpc GetSIPCredentials(GetSIPCredentialsRequest) returns (GetSIPCredentialsResponse) {
+    option (google.api.http).post = "/services/pbx/v2/pbxservice/getsipcredentials";
+    option (google.api.http).body = "*";
+    option (annotations.authz) = {
+      sets: [
+        {
+          permissions: [PERMISSION_PBX_MANAGER_VIEW]
+        }
+      ]
+    };
+  }
+
   // Returns details of all SIP Accounts associated with the authenticated callers ORG
   // Required permissions:
   //   PBX-MANAGER
@@ -420,6 +439,14 @@ message GetPBXUserRequest {
 // DEPRECATED: This message is deprecated and may be removed in future versions. (No longer need PBX Users)
 message GetPBXUserResponse {
   PBXUser user = 1;
+}
+
+message GetSIPCredentialsRequest {}
+
+message GetSIPCredentialsResponse {
+  string sip_domain = 1; // register URL to connect to kamailio for this cluster
+  string user_uri = 2; // user register URI
+  string session_token = 3; // generated user session token for registering SIPAccount
 }
 
 message ListRingGroupsRequest {}
