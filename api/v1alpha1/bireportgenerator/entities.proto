@@ -8,6 +8,16 @@ import "api/commons/org.proto";
 import "api/commons/types.proto";
 import "google/protobuf/timestamp.proto";
 
+// ReportParameters are the parameters for the report.
+message ReportParameters {
+  message Parameter {
+    string value = 2;
+    string data_type = 3;
+  }
+  // parameter key to value/data_type
+  map<string, Parameter> parameters = 1;
+}
+
 // ReportJob that can be scheduled to report dashboard data.
 message ReportJob {
   // unique identifier for the report job
@@ -48,6 +58,10 @@ message ReportJob {
   commons.CronExpression cron_expression = 18;
   // transfer_options are options used for the report delivery
   commons.TransferOptions transfer_options = 19;
+  // report_parameters are parameters for the query
+  ReportParameters report_parameters = 20;
+  // whether to send a report only if there is no data in the entire report
+  bool send_only_when_empty = 21;
 }
 
 // ReportLog describes information on a report log
