@@ -163,6 +163,8 @@ message AuditEvent {
     OmnichannelProviderResponseEvent omnichannel_provider_response_event = 364;
     // message failed response for provider for undelivered sms mesages
     OmnichannelProviderMessageFailedEvent omnichannel_provider_message_failed_event = 365;
+    // inbound provider message event
+    OmnichannelInboundProviderMessageEvent omnichannel_inbound_provider_message_event = 366;
 
     /// Asm events 400
     // agent logged into asm event

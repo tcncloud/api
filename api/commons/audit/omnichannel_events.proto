@@ -623,3 +623,19 @@ message OmnichannelProviderMessageFailedEvent {
   api.commons.SmsNumberProvider provider = 11;
   api.commons.OmniMessageStatus status = 12;
 }
+
+// OmnichannelInboundProviderMessageEvent -
+message OmnichannelInboundProviderMessageEvent {
+  int64 omni_message_sid = 1;
+  api.commons.ChannelType channel_type = 2;
+  string sent_from = 3;
+  string sent_to = 4;
+  int64 message_size = 5;
+  int64 attachment_size = 6;
+  api.commons.OmniSenderType sender_type = 7;
+  string user_id = 8;
+  int64 provider_message_count = 9;
+  api.commons.OmniMessageType message_type = 10;
+  api.commons.SmsNumberProvider provider = 11;
+  api.commons.OmniMessageStatus status = 12;
+}
