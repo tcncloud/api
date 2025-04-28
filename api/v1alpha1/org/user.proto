@@ -56,6 +56,8 @@ message CreateUserRequest {
   api.commons.LocalePreferences locale_preferences_override = 19;
   // Whether the user needs to set their password upon initial login
   bool password_reset_required = 20;
+  // If the user wants notification sounds to play
+  bool play_notification_sounds = 21;
 }
 
 // Response message for the CreateUser rpc.
@@ -235,6 +237,8 @@ message GetUserResponse {
   api.commons.LocalePreferences locale_preferences_override = 31;
   // Password reset date is the timestamp of when a user must reset their password by.
   google.protobuf.Timestamp password_reset_date = 32;
+  // If the user wants notification sounds to play
+  bool play_notification_sounds = 33;
 }
 
 // Request message for GetUserByOrgId.
@@ -293,6 +297,8 @@ message GetUserByOrgIdResponse {
   bool email_verified = 23;
   // The override for the users locale preferences
   api.commons.LocalePreferences locale_preferences_override = 24;
+  // If the user wants notification sounds to play
+  bool play_notification_sounds = 25;
 }
 
 // Request message for listAgents rpc.
@@ -589,6 +595,8 @@ message UpdateUserRequest {
   repeated string label_ids = 14;
   // The override for the users locale preferences
   api.commons.LocalePreferences locale_preferences_override = 15;
+  // If the user wants notification sounds to play
+  bool play_notification_sounds = 16;
 
   // Mask to filter fields on organization entities in response.
   repeated string field_mask = 20;
