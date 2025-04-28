@@ -4553,7 +4553,8 @@ message SkillProfile {
   // average time that calls took to be answered.
   float average_speed_of_answer_in_seconds = 10;
   // average duration of answered calls.
-  float average_handle_time_in_seconds = 11;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 11 [deprecated = true];
   // average time that agents spent in wrap up.
   float average_after_call_work_in_seconds = 12;
   // average time that callers waited before hanging unanswered calls.
@@ -4564,6 +4565,8 @@ message SkillProfile {
   repeated commons.ChannelType channel_types = 15;
   // metadata related to sms conversations.
   SmsMetadata sms = 16;
+  // average talk duration of answered calls.
+  float average_talk_time_in_seconds = 17;
 
   message SmsMetadata {
     // average lenth of a conversation.
@@ -4583,7 +4586,8 @@ message SkillProfileGroup {
   // average time that calls took to be answered.
   float average_speed_of_answer_in_seconds = 5;
   // average duration of answered calls.
-  float average_handle_time_in_seconds = 6;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 6 [deprecated = true];
   // average time that agents spent in wrap up.
   float average_after_call_work_in_seconds = 7;
   // average time that callers waited before hanging unanswered calls.
@@ -4594,6 +4598,8 @@ message SkillProfileGroup {
   repeated int64 skill_profile_sids = 10;
   // Datetime that the group was set to inactive, if not set then the group is currently active.
   google.protobuf.Timestamp datetime_set_to_inactive = 11;
+  // average talk duration of answered calls.
+  float average_talk_time_in_seconds = 12;
 }
 
 // Request message for the ListSkillProfiles RPC.
@@ -4624,13 +4630,16 @@ message UpdateSkillProfileReq {
   // average time that calls took to be answered.
   float average_speed_of_answer_in_seconds = 4;
   // average duration of answered calls.
-  float average_handle_time_in_seconds = 5;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 5 [deprecated = true];
   // average time that agents spent in wrap up.
   float average_after_call_work_in_seconds = 6;
   // average time that callers waited before hanging unanswered calls.
   float average_time_to_abort_in_seconds = 7;
   // indicates whether or not the averages were manually entered by the user (if false then the averages were automatically calculated from the historical data).
   bool are_averages_manual = 8;
+  // average talk duration of answered calls.
+  float average_talk_time_in_seconds = 9;
 }
 
 // Response message for the UpdateSkillProfile RPC.
@@ -4730,7 +4739,8 @@ message HistoricalDataInterval {
   // average time that calls took to be answered.
   google.protobuf.FloatValue average_speed_of_answer_in_seconds = 3;
   // average duration of answered calls.
-  google.protobuf.FloatValue average_handle_time_in_seconds = 4;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  google.protobuf.FloatValue average_handle_time_in_seconds = 4 [deprecated = true];
   // average time that agents spent in wrap up.
   google.protobuf.FloatValue average_after_call_work_in_seconds = 5;
   // average time that callers waited before hanging unanswered calls.
@@ -4747,7 +4757,8 @@ message HistoricalDataInterval {
   // original average time that calls took to be answered.
   google.protobuf.FloatValue original_average_speed_of_answer_in_seconds = 10;
   // original average duration of answered calls.
-  google.protobuf.FloatValue original_average_handle_time_in_seconds = 11;
+  // Deprecated as of Apr/25/2025: use original_average_talk_time_in_seconds instead.
+  google.protobuf.FloatValue original_average_handle_time_in_seconds = 11 [deprecated = true];
   // original average time that agents spent in wrap up.
   google.protobuf.FloatValue original_average_after_call_work_in_seconds = 12;
   // original average time that callers waited before hanging unanswered calls.
@@ -4758,6 +4769,10 @@ message HistoricalDataInterval {
   int32 original_total_abandoned_calls = 15;
   // Skill profile category that the interval belongs to.
   commons.SkillProfileCategory skill_profile_category = 16;
+  // average talk duration of answered calls.
+  google.protobuf.FloatValue average_talk_time_in_seconds = 17;
+  // original average talk duration of answered calls.
+  google.protobuf.FloatValue original_average_talk_time_in_seconds = 18;
 }
 
 // Request message for the GetClientHistoryCacheInfo RPC.
@@ -4832,7 +4847,8 @@ message CallProfileTemplate {
   // call profile for ASA
   commons.CallProfileGroupAvgs average_speed_of_answer_profile = 5;
   // call profile for AHT
-  commons.CallProfileGroupAvgs average_handle_time_profile = 6;
+  // Deprecated as of Apr/25/2025: use average_talk_time_profile instead.
+  commons.CallProfileGroupAvgs average_handle_time_profile = 6 [deprecated = true];
   // call profile for ACW
   commons.CallProfileGroupAvgs average_after_call_work_profile = 7;
   // call profile for ATAB
@@ -4840,7 +4856,8 @@ message CallProfileTemplate {
   // Fixed average for speed of answer
   float fixed_average_speed_of_answer = 9;
   // Fixed average for handle time
-  float fixed_average_handle_time = 10;
+  // Deprecated as of Apr/25/2025: use fixed_average_talk_time instead.
+  float fixed_average_handle_time = 10 [deprecated = true];
   // Fixed average for after call work
   float fixed_average_after_call_work = 11;
   // Fixed average for time to abort
@@ -4849,6 +4866,10 @@ message CallProfileTemplate {
   bool default_to_fixed_averages_forecast = 13;
   // Time zone in IANA format that the call profile template is in.
   string time_zone = 14;
+  // call profile for ATT
+  commons.CallProfileGroupAvgs average_talk_time_profile = 15;
+  // Fixed average for talk time
+  float fixed_average_talk_time = 16;
 }
 
 // Request message for the BuildCallProfileTemplateForSkillProfile RPC.
@@ -5034,7 +5055,8 @@ message CallDataByInterval {
   // optional
   float average_speed_of_answer_in_seconds = 4;
   // optional
-  float average_handle_time_in_seconds = 5;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 5 [deprecated = true];
   // optional
   float average_after_call_work_in_seconds = 6;
   // optional
@@ -5050,6 +5072,8 @@ message CallDataByInterval {
   int32 interval_width_in_minutes = 11;
   // Skill profile category that the interval belongs to.
   commons.SkillProfileCategory skill_profile_category = 12;
+  // optional - average talk duration of answered calls.
+  float average_talk_time_in_seconds = 13;
 }
 
 // Request message for the BuildProfileForecastByIntervalWithStats RPC
@@ -5174,7 +5198,8 @@ message BuildRegressionForecastByIntervalReq {
   // optional
   float average_speed_of_answer_in_seconds = 1;
   // optional
-  float average_handle_time_in_seconds = 2;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 2 [deprecated = true];
   // optional
   float average_after_call_work_in_seconds = 3;
   // optional
@@ -5183,6 +5208,8 @@ message BuildRegressionForecastByIntervalReq {
   RegressionTemplate regression_template = 5;
   // IDs of the skill profiles to generate the forecasts,
   repeated int64 skill_profile_sids_to_forecast = 6;
+  // optional - average talk duration.
+  float average_talk_time_in_seconds = 7;
 }
 
 // Request message for the BuildRegressionForecastByIntervalWithStats RPC
@@ -5191,7 +5218,8 @@ message BuildRegressionForecastByIntervalWithStatsReq {
   // optional
   float average_speed_of_answer_in_seconds = 1;
   // optional
-  float average_handle_time_in_seconds = 2;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 2 [deprecated = true];
   // optional
   float average_after_call_work_in_seconds = 3;
   // optional
@@ -5200,6 +5228,8 @@ message BuildRegressionForecastByIntervalWithStatsReq {
   RegressionTemplate regression_template = 5;
   // IDs of the skill profiles to generate the forecasts,
   repeated int64 skill_profile_sids_to_forecast = 6;
+  // optional - average talk duration.
+  float average_talk_time_in_seconds = 7;
 }
 
 // Represents the statistics of a given forecast
@@ -5221,11 +5251,14 @@ message GetForecastStatisticsRes {
   // root-mean-squared error between actual and predicted acw
   float rms_error_ACW = 8;
   // root-mean-squared error between actual and predicted aht
-  float rms_error_AHT = 9;
+  // Deprecated as of Apr/25/2025: use rms_error_ATT instead.
+  float rms_error_AHT = 9 [deprecated = true];
   // Indicates whether or not the stats generated were invalid
   bool are_stats_invalid = 10;
   // Message explaining why the stats were invalid
   string invalid_reason = 11;
+  // root-mean-squared error between actual and predicted att
+  float rms_error_ATT = 12;
 }
 
 // Response message for BuildRegressionForecastByIntervalWithStats RPC
@@ -5281,14 +5314,16 @@ message UpsertRegressionForecastReq {
   // the following only apply for avgs_processing_type=RegressionForecasterAvgsProcessingType.FIXED_AVERAGES
   // optional
   float average_speed_of_answer_in_seconds = 2;
-  // optional
-  float average_handle_time_in_seconds = 3;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 3 [deprecated = true];
   // optional
   float average_after_call_work_in_seconds = 4;
   // optional
   float average_time_to_abort_in_seconds = 5;
   // IDs of the skill Profiles of which to save the generated forecast.
   repeated int64 skill_profile_sids_to_forecast = 6;
+  // optional - average talk duration.
+  float average_talk_time_in_seconds = 7;
 }
 
 // Response message for the UpsertRegressionForecast RPC
@@ -5382,9 +5417,11 @@ message CalculateTrainingDataAveragesForSkillProfileReq {
 message CalculateTrainingDataAveragesForSkillProfileRes {
   // averages found in the training data set.
   float average_speed_of_answer_in_seconds = 1;
-  float average_handle_time_in_seconds = 2;
+  // Deprecated as of Apr/25/2025: use average_talk_time_in_seconds instead.
+  float average_handle_time_in_seconds = 2 [deprecated = true];
   float average_after_call_work_in_seconds = 3;
   float average_time_to_abort_in_seconds = 4;
+  float average_talk_time_in_seconds = 5;
 }
 
 // Request message for the UpdateSkillProfileAveragesUsingHistoricalData RPC
