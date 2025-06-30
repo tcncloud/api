@@ -31,6 +31,8 @@ message Transcript {
     Sms sms = 2;
     // Chat specific transcript metadata.
     Chat chat = 3;
+    // Email specific transcript metadata.
+    Email email = 4;
   }
 
   reserved 11;
@@ -431,6 +433,65 @@ message Chat {
   }
 }
 
+// Email specific transcript metadata.
+message Email {
+  // The unique identifier of the email conversation.
+  int64 conversation_sid = 1 [jstype = JS_STRING];
+
+  // The text from the email in threads.
+  repeated Thread threads = 2;
+
+  // The client email address.
+  string client_email_address = 3;
+
+  // The agent email address.
+  string agent_email_address = 4;
+
+  // The omni campain this email belongs to.
+  int64 campaign_sid = 5 [jstype = JS_STRING];
+
+  // The agent responses for this conversation.
+  map<string, AgentResponse> agent_response = 6;
+
+  // AgentResponse contains the agent responses aka dispositions.
+  message AgentResponse {
+    repeated string values = 1;
+  }
+
+  // A thread is the text from one participant.
+  message Thread {
+    // The unique identifier of the thread.
+    int32 id = 1;
+
+    // The text of the thread in segments.
+    repeated Segment segments = 2;
+
+    // The user id of the participant on this thread.
+    string user_id = 3;
+
+    // The sentiment of the thread.
+    Sentiment sentiment = 4;
+  }
+
+  // A segment of text.
+  message Segment {
+    // The text in the segment.
+    string text = 1;
+
+    // The offset time duration from the beginning of the conversation.
+    google.protobuf.Duration offset = 2;
+
+    // The attachments associated with the segment.
+    repeated Attachment attachments = 3;
+
+    // Attachment metadata.
+    message Attachment {
+      // The unique identifier of the attachment.
+      int64 attachment_sid = 1 [jstype = JS_STRING];
+    }
+  }
+}
+
 // The sentiment of a thread.
 message Sentiment {
   // Overall sentiment estimate for the thread.
@@ -726,6 +787,9 @@ message TranscriptQuery {
 
     // Query constraints on chat metadata.
     Chat chat = 3;
+
+    // Query constraints on email metadata.
+    Email email = 4;
   }
 
   // Query constraints on call metadata.
@@ -1095,6 +1159,49 @@ message TranscriptQuery {
     message EmailAddress {
       // Requires all chat specific transcript hits to have an email address
       // in the list.
+      repeated string any = 1;
+    }
+  }
+
+  // Query constraints on email metadata.
+  message Email {
+    // Query constraints on conversation sid.
+    ConversationSid conversation_sid = 1;
+
+    // Query constraints on campaign sid.
+    CampaignSid campaign_sid = 2;
+
+    // Query constraints on client email address.
+    ClientEmailAddress client_email_address = 3;
+
+    // Query constraints on agent email address.
+    AgentEmailAddress agent_email_address = 4;
+
+    // Query constraints on conversation sid.
+    message ConversationSid {
+      // Requires all email specific transcript hits to have a conversation sid
+      // in the list.
+      repeated int64 any = 1;
+    }
+
+    // Query constraints on campaign sid.
+    message CampaignSid {
+      // Requires all email specific transcript hits to have a campaign sid
+      // in the list.
+      repeated int64 any = 1;
+    }
+
+    // Query constraints on client email address.
+    message ClientEmailAddress {
+      // Requires all email specific transcript hits to have a client email
+      // address in the list.
+      repeated string any = 1;
+    }
+
+    // Query constraints on agent email address.
+    message AgentEmailAddress {
+      // Requires all email specific transcript hits to have an agent email
+      // address in the list.
       repeated string any = 1;
     }
   }
