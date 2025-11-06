@@ -7,6 +7,6 @@ plugins:
       - service=grpc-web
       - binary
     strategy: all
-  - remote: buf.build/protocolbuffers/js
+  - remote: buf.build/protocolbuffers/js:v3.21.2
     out: tcnapi-grpc-web/src/
     opt: import_style=commonjs
