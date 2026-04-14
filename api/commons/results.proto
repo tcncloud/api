@@ -23,6 +23,19 @@ enum CallResult {
   CALL_RESULT_MACHINE_HANGUP = 3200; // "CALL_MACHINE_HANGUP", "Machine Hangup", "MAH", "Call was detected as answering machine and the TCN system hung up"),
   CALL_RESULT_MACHINE_FAILED = 3300; // "CALL_RESULT_MACHINE_FAILED", "Machine Undeliverable", "MAF", "Call was detected as answering machine but remote machine hungup on TCN" ),
 
+  CALL_RESULT_CALL_SCREENING_IOS = 3400; // "CALL_RESULT_CALL_SCREENING_IOS", "Call Screening iOS", "CSI", "Call was detected as using Apple call screening"),
+  CALL_RESULT_CALL_SCREENING_GOOGLE = 3410; // "CALL_RESULT_CALL_SCREENING_GOOGLE", "Call Screening Google", "CSG", "Call was detected as using Google call screening"),
+  CALL_RESULT_CALL_SCREENING_ANDROID = 3420; // "CALL_RESULT_CALL_SCREENING_ANDROID", "Call Screening Android", "CSA", "Call was detected as using Android call screening"),
+  CALL_RESULT_CALL_SCREENING_VOICEMAIL = 3430; // "CALL_RESULT_CALL_SCREENING_VOICEMAIL", "Call Screening Voicemail", "CSV", "Call was detected as on hold or voicemail system with screening"),
+  CALL_RESULT_CALL_SCREENING_IVR = 3440; // "CALL_RESULT_CALL_SCREENING_IVR", "Call Screening IVR", "CIV", "Call was detected as using a screening IVR"),
+  CALL_RESULT_CALL_SCREENING_SPAM = 3450; // "CALL_RESULT_CALL_SCREENING_SPAM", "Call Screening Spam", "CSS", "Call was detected as using spam or smart blocker"),
+  CALL_RESULT_VOICEMAIL_MAILBOX_FULL = 3500; // "CALL_RESULT_VOICEMAIL_MAILBOX_FULL", "Voicemail Mailbox Full", "VMF", "Call was detected as on voicemail and the mailbox is full"),
+  CALL_RESULT_VOICEMAIL_ERROR = 3510; // "CALL_RESULT_VOICEMAIL_ERROR", "Voicemail Error", "VME", "Call was detected as on voicemail and encountered an error"),
+  CALL_RESULT_VOICEMAIL_IVR = 3520; // "CALL_RESULT_VOICEMAIL_IVR", "Voicemail IVR", "VMI", "Call was detected as on voicemail which required a button press to leave message"),
+  CALL_RESULT_NOT_AVAILABLE = 3600; // "CALL_RESULT_NOT_AVAILABLE", "Not Available", "NAV", "Phone number determined as not available"),
+  CALL_RESULT_NOT_AVAILABLE_WRONG_NUMBER = 3610; // "CALL_RESULT_NOT_AVAILABLE_WRONG_NUMBER", "Wrong Number", "WNG", "Phone number determined to be invalid, not in service, or disconnected"),
+  CALL_RESULT_ERROR_UNCLASSIFIABLE = 3700; // "CALL_RESULT_ERROR_UNCLASSIFIABLE", "Unclassifiable Error", "UCE", "General smart AMD detection error"),
+
   CALL_RESULT_FAX = 4000; // "CALL_FAX", "Fax", "FAX", "Fax was detected, no other details available"),
   CALL_RESULT_FAX_DELIVERED = 4100; // "CALL_FAX_DELIVERED", "Fax Delivered", "FAD", "Fax machine detected and a fax was sent"),
 
